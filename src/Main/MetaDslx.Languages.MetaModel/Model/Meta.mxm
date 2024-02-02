@@ -19,6 +19,7 @@ class MetaNamespace $Namespace : MetaDeclaration
 class MetaModel : MetaDeclaration
 {
 	derived string NamespaceName;
+	string Uri;
 }
 
 class MetaConstant : MetaDeclaration
@@ -68,6 +69,8 @@ class MetaProperty : MetaDeclaration
 	string? SymbolProperty;
 	bool IsContainment;
 	bool IsDerived;
+	bool IsReadOnly;
+	string? DefaultValue;
 	MetaProperty[] OppositeProperties opposite OppositeProperties;
 	MetaProperty[] SubsettedProperties;
 	MetaProperty[] RedefinedProperties;

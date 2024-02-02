@@ -60,6 +60,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
+                case MetaSyntaxKind.KUri:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
                 case MetaSyntaxKind.KOpposite:
@@ -135,6 +136,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
+                case MetaSyntaxKind.KUri:
                 case MetaSyntaxKind.TLBrace:
                 case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
@@ -203,6 +205,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
+                case MetaSyntaxKind.KUri:
                 case MetaSyntaxKind.TLBrace:
                 case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
@@ -294,6 +297,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KSymbol;
                 case "void": 
                     return MetaSyntaxKind.KVoid;
+                case "uri": 
+                    return MetaSyntaxKind.KUri;
                 case "{": 
                     return MetaSyntaxKind.TLBrace;
                 case "}": 
@@ -419,6 +424,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "KSymbol";
                 case MetaSyntaxKind.KVoid: 
                     return "KVoid";
+                case MetaSyntaxKind.KUri: 
+                    return "KUri";
                 case MetaSyntaxKind.TLBrace: 
                     return "TLBrace";
                 case MetaSyntaxKind.TRBrace: 
@@ -505,6 +512,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "Identifier";
                 case MetaSyntaxKind.MainBlock1: 
                     return "MainBlock1";
+                case MetaSyntaxKind.MetaModelBlock1: 
+                    return "MetaModelBlock1";
                 case MetaSyntaxKind.MetaEnumBlock1: 
                     return "MetaEnumBlock1";
                 case MetaSyntaxKind.MetaEnumBlock1literalsBlock: 
@@ -629,6 +638,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "symbol";
                 case MetaSyntaxKind.KVoid: 
                     return "void";
+                case MetaSyntaxKind.KUri: 
+                    return "uri";
                 case MetaSyntaxKind.TLBrace: 
                     return "{";
                 case MetaSyntaxKind.TRBrace: 
@@ -709,6 +720,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType: 
                 case MetaSyntaxKind.KSymbol: 
                 case MetaSyntaxKind.KVoid: 
+                case MetaSyntaxKind.KUri: 
                 case MetaSyntaxKind.KContains: 
                 case MetaSyntaxKind.KDerived: 
                 case MetaSyntaxKind.KOpposite: 
@@ -752,6 +764,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             yield return MetaSyntaxKind.KType;
             yield return MetaSyntaxKind.KSymbol;
             yield return MetaSyntaxKind.KVoid;
+            yield return MetaSyntaxKind.KUri;
             yield return MetaSyntaxKind.KContains;
             yield return MetaSyntaxKind.KDerived;
             yield return MetaSyntaxKind.KOpposite;
@@ -819,6 +832,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KSymbol;
                 case "void": 
                     return MetaSyntaxKind.KVoid;
+                case "uri": 
+                    return MetaSyntaxKind.KUri;
                 case "contains": 
                     return MetaSyntaxKind.KContains;
                 case "derived": 

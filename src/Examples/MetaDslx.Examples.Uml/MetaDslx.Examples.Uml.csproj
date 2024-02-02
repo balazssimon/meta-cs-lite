@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,10 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Languages\MetaDslx.Languages.Uml-v2.5.1\MetaDslx.Languages.Uml-v2.5.1.csproj" />
-  </ItemGroup>
 
 	<!--ItemGroup>
     <PackageReference Include="MetaDslx.Languages.Uml" Version="0.3.1" />

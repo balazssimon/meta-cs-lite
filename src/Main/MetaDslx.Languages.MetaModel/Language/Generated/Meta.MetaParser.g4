@@ -12,7 +12,7 @@ pr_Using
     :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaModel
-    :  E_KMetamodel=LR_KMetamodel  E_Name=pr_Name  E_TSemicolon=LR_TSemicolon
+    :  E_KMetamodel=LR_KMetamodel  E_Name=pr_Name  E_TSemicolon=LR_TSemicolon  E_Block=pr_MetaModelBlock1?
     ;
 pr_MetaDeclaration
     :  E_MetaConstant=pr_MetaConstant #pr_MetaDeclarationAlt1
@@ -63,6 +63,9 @@ pr_Identifier
     ;
 pr_MainBlock1
     :  E_declarations=pr_MetaModel  E_declarations1+=pr_MetaDeclaration*
+    ;
+pr_MetaModelBlock1
+    :  E_KUri=LR_KUri  E_uri=LR_TString  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaEnumBlock1
     :  E_TLBrace=LR_TLBrace   E_literals1=pr_MetaEnumLiteral(E_TComma1+=LR_TComma E_literals2+=pr_MetaEnumLiteral)*  E_TRBrace=LR_TRBrace

@@ -282,19 +282,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.Using(this.Token(MetaSyntaxKind.KUsing), namespaces, this.Token(MetaSyntaxKind.TSemicolon));
         }
 
-        public MetaModelSyntax MetaModel(__SyntaxToken kMetamodel, NameSyntax name, __SyntaxToken tSemicolon)
+        public MetaModelSyntax MetaModel(__SyntaxToken kMetamodel, NameSyntax name, __SyntaxToken tSemicolon, MetaModelBlock1Syntax block)
         {
             if (kMetamodel.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kMetamodel));
             if (kMetamodel.RawKind != (int)MetaSyntaxKind.KMetamodel) throw new __ArgumentException(nameof(kMetamodel));
             if (name is null) throw new __ArgumentNullException(nameof(name));
             if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
             if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
-            return (MetaModelSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaModel((__InternalSyntaxToken)kMetamodel.Node, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (MetaModelSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaModel((__InternalSyntaxToken)kMetamodel.Node, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tSemicolon.Node, (InternalSyntax.MetaModelBlock1Green)block.Green).CreateRed();
         }
         
         public MetaModelSyntax MetaModel(NameSyntax name)
         {
-            return this.MetaModel(this.Token(MetaSyntaxKind.KMetamodel), name, this.Token(MetaSyntaxKind.TSemicolon));
+            return this.MetaModel(this.Token(MetaSyntaxKind.KMetamodel), name, this.Token(MetaSyntaxKind.TSemicolon), default);
         }
 
         public MetaDeclarationAlt1Syntax MetaDeclarationAlt1(MetaConstantSyntax metaConstant)
@@ -480,6 +480,22 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             if (declarations1 is null) throw new __ArgumentNullException(nameof(declarations1));
             return (MainBlock1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MainBlock1((InternalSyntax.MetaModelGreen)declarations1.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.MetaDeclarationGreen>(declarations2.Node)).CreateRed();
+        }
+
+        public MetaModelBlock1Syntax MetaModelBlock1(__SyntaxToken kUri, __SyntaxToken uri, __SyntaxToken tSemicolon)
+        {
+            if (kUri.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kUri));
+            if (kUri.RawKind != (int)MetaSyntaxKind.KUri) throw new __ArgumentException(nameof(kUri));
+            if (uri.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(uri));
+            if (uri.RawKind != (int)MetaSyntaxKind.TString) throw new __ArgumentException(nameof(uri));
+            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
+            if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
+            return (MetaModelBlock1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaModelBlock1((__InternalSyntaxToken)kUri.Node, (__InternalSyntaxToken)uri.Node, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+        }
+        
+        public MetaModelBlock1Syntax MetaModelBlock1(__SyntaxToken uri)
+        {
+            return this.MetaModelBlock1(this.Token(MetaSyntaxKind.KUri), this.Token(MetaSyntaxKind.TString), this.Token(MetaSyntaxKind.TSemicolon));
         }
 
         public MetaEnumBlock1Syntax MetaEnumBlock1(__SyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals, __SyntaxToken tRBrace)
@@ -754,6 +770,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 typeof(QualifierSyntax),
                 typeof(IdentifierSyntax),
                 typeof(MainBlock1Syntax),
+                typeof(MetaModelBlock1Syntax),
                 typeof(MetaEnumBlock1Syntax),
                 typeof(MetaEnumBlock1literalsBlockSyntax),
                 typeof(MetaClassBlock1Alt1Syntax),

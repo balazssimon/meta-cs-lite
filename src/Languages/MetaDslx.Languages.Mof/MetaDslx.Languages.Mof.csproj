@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\Versions.props" />
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="Generators\*.mxg" />
+		<AdditionalFiles Include="Model\*.mxm" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" />
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
+		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" />
+	</ItemGroup>
+
+</Project>

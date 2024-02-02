@@ -1299,11 +1299,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         private __InternalSyntaxToken _kMetamodel;
         private NameGreen _name;
         private __InternalSyntaxToken _tSemicolon;
+        private MetaModelBlock1Green _block;
     
-        public MetaModelGreen(MetaSyntaxKind kind, __InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon)
+        public MetaModelGreen(MetaSyntaxKind kind, __InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon, MetaModelBlock1Green block)
             : base(kind, null, null)
         {
-            SlotCount = 3;
+            SlotCount = 4;
             if (kMetamodel != null)
             {
                 AdjustFlagsAndWidth(kMetamodel);
@@ -1318,13 +1319,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(tSemicolon);
                 _tSemicolon = tSemicolon;
+            }
+            if (block != null)
+            {
+                AdjustFlagsAndWidth(block);
+                _block = block;
             }
         }
     
-        public MetaModelGreen(MetaSyntaxKind kind, __InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public MetaModelGreen(MetaSyntaxKind kind, __InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon, MetaModelBlock1Green block, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 3;
+            SlotCount = 4;
             if (kMetamodel != null)
             {
                 AdjustFlagsAndWidth(kMetamodel);
@@ -1339,6 +1345,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(tSemicolon);
                 _tSemicolon = tSemicolon;
+            }
+            if (block != null)
+            {
+                AdjustFlagsAndWidth(block);
+                _block = block;
             }
         }
     
@@ -1351,6 +1362,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         public __InternalSyntaxToken KMetamodel { get { return _kMetamodel; } }
         public NameGreen Name { get { return _name; } }
         public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
+        public MetaModelBlock1Green Block { get { return _block; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1364,6 +1376,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 case 0: return _kMetamodel;
                 case 1: return _name;
                 case 2: return _tSemicolon;
+                case 3: return _block;
                 default: return null;
             }
         }
@@ -1374,25 +1387,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new MetaModelGreen(this.Kind, _kMetamodel, _name, _tSemicolon, diagnostics, this.GetAnnotations());
+            return new MetaModelGreen(this.Kind, _kMetamodel, _name, _tSemicolon, _block, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new MetaModelGreen(this.Kind, _kMetamodel, _name, _tSemicolon, this.GetDiagnostics(), annotations);
+            return new MetaModelGreen(this.Kind, _kMetamodel, _name, _tSemicolon, _block, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new MetaModelGreen(this.Kind, _kMetamodel, _name, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
+            return new MetaModelGreen(this.Kind, _kMetamodel, _name, _tSemicolon, _block, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public MetaModelGreen Update(__InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon)
+        public MetaModelGreen Update(__InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon, MetaModelBlock1Green block)
         {
-            if (_kMetamodel != kMetamodel || _name != name || _tSemicolon != tSemicolon)
+            if (_kMetamodel != kMetamodel || _name != name || _tSemicolon != tSemicolon || _block != block)
             {
-                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaModel(kMetamodel, name, tSemicolon);
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaModel(kMetamodel, name, tSemicolon, block);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -3461,6 +3474,119 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
                 return (MainBlock1Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    
+    internal class MetaModelBlock1Green : GreenSyntaxNode
+    {
+        internal static new readonly MetaModelBlock1Green __Missing = new MetaModelBlock1Green();
+        private __InternalSyntaxToken _kUri;
+        private __InternalSyntaxToken _uri;
+        private __InternalSyntaxToken _tSemicolon;
+    
+        public MetaModelBlock1Green(MetaSyntaxKind kind, __InternalSyntaxToken kUri, __InternalSyntaxToken uri, __InternalSyntaxToken tSemicolon)
+            : base(kind, null, null)
+        {
+            SlotCount = 3;
+            if (kUri != null)
+            {
+                AdjustFlagsAndWidth(kUri);
+                _kUri = kUri;
+            }
+            if (uri != null)
+            {
+                AdjustFlagsAndWidth(uri);
+                _uri = uri;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
+            }
+        }
+    
+        public MetaModelBlock1Green(MetaSyntaxKind kind, __InternalSyntaxToken kUri, __InternalSyntaxToken uri, __InternalSyntaxToken tSemicolon, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 3;
+            if (kUri != null)
+            {
+                AdjustFlagsAndWidth(kUri);
+                _kUri = kUri;
+            }
+            if (uri != null)
+            {
+                AdjustFlagsAndWidth(uri);
+                _uri = uri;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
+            }
+        }
+    
+        private MetaModelBlock1Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.MetaModelBlock1, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken KUri { get { return _kUri; } }
+        public __InternalSyntaxToken Uri { get { return _uri; } }
+        public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaModelBlock1Syntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _kUri;
+                case 1: return _uri;
+                case 2: return _tSemicolon;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaModelBlock1Green(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaModelBlock1Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new MetaModelBlock1Green(this.Kind, _kUri, _uri, _tSemicolon, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new MetaModelBlock1Green(this.Kind, _kUri, _uri, _tSemicolon, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new MetaModelBlock1Green(this.Kind, _kUri, _uri, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public MetaModelBlock1Green Update(__InternalSyntaxToken kUri, __InternalSyntaxToken uri, __InternalSyntaxToken tSemicolon)
+        {
+            if (_kUri != kUri || _uri != uri || _tSemicolon != tSemicolon)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaModelBlock1(kUri, uri, tSemicolon);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (MetaModelBlock1Green)newNode;
             }
             return this;
         }

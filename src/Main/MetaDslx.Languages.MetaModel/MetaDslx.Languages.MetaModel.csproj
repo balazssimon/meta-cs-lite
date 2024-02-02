@@ -12,15 +12,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Remove="Compiler\**" />
-		<None Remove="Compiler\**" />
-	</ItemGroup>
-	<!--
-		<Compile Remove="Language\Generated\**" />
-	  <None Remove="Language\Generated\**" />
-	-->
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
 		<PackageReference Include="Antlr4.Runtime.Standard" Version="$(Antlr4RuntimeStandardVersion)" />

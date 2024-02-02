@@ -289,7 +289,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaModelGreen MetaModel(__InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon)
+        internal MetaModelGreen MetaModel(__InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon, MetaModelBlock1Green block)
         {
             #if DEBUG
                 if (kMetamodel is null) throw new __ArgumentNullException(nameof(kMetamodel));
@@ -298,17 +298,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
                 if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaModel, kMetamodel, name, tSemicolon, out hash);
-            if (cached != null) return (MetaModelGreen)cached;
-        
-            var result = new MetaModelGreen(MetaSyntaxKind.MetaModel, kMetamodel, name, tSemicolon);
-            if (hash >= 0)
-            {
-                __SyntaxNodeCache.AddNode(result, hash);
-            }
-        
-            return result;
+            return new MetaModelGreen(MetaSyntaxKind.MetaModel, kMetamodel, name, tSemicolon, block);
         }
         
         internal MetaDeclarationAlt1Green MetaDeclarationAlt1(MetaConstantGreen metaConstant)
@@ -653,6 +643,29 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             if (cached != null) return (MainBlock1Green)cached;
         
             var result = new MainBlock1Green(MetaSyntaxKind.MainBlock1, declarations1, declarations2.Node);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal MetaModelBlock1Green MetaModelBlock1(__InternalSyntaxToken kUri, __InternalSyntaxToken uri, __InternalSyntaxToken tSemicolon)
+        {
+            #if DEBUG
+                if (kUri is null) throw new __ArgumentNullException(nameof(kUri));
+                if (kUri.RawKind != (int)MetaSyntaxKind.KUri) throw new __ArgumentException(nameof(kUri));
+                if (uri is null) throw new __ArgumentNullException(nameof(uri));
+                if (uri.RawKind != (int)MetaSyntaxKind.TString) throw new __ArgumentException(nameof(uri));
+                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
+                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaModelBlock1, kUri, uri, tSemicolon, out hash);
+            if (cached != null) return (MetaModelBlock1Green)cached;
+        
+            var result = new MetaModelBlock1Green(MetaSyntaxKind.MetaModelBlock1, kUri, uri, tSemicolon);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

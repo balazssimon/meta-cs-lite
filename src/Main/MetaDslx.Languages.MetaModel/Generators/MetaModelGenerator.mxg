@@ -170,10 +170,11 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
         [end foreach]
         _classInfosByName = classInfosByName.ToImmutable();
         _model = new __Model();
-        var f = new __MetaModelFactory(_model);
+        var cf = new __[mm.Name]ModelFactory(_model);
         [foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
             _[c.Name.ToCamelCase()] = f.[c.Type.Name]();
         [end foreach]
+        var f = new __MetaModelFactory(_model);
         [foreach (var obj in Objects)]
             var [GetName(obj)] = f.[obj.MInfo.MetaType.Name]();
         [end foreach]
@@ -201,7 +202,7 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
     public override string MName => nameof([mm.Name]);
     public override string MNamespace => "[Namespace]";
     public override __ModelVersion MVersion => default;
-    public override string MUri => "[mm.FullName]";
+    public override string MUri => "[mm.Uri ?? mm.FullName]";
     public override string MPrefix => "[string.Concat(mm.Name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c)))]";
     public override __Model MModel => _model;
 
@@ -220,7 +221,7 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
     [end foreach]
 
     [foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
-        public static [ToCSharp(c.Type)] [c.Name] => ((I[mm.Name])Instance).[c.Name];
+        public static [ToCSharp(c.Type)] [c.Name] => ((I[mm.Name])MInstance).[c.Name];
     [end foreach]
 
     [foreach (var enm in Enums)]

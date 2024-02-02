@@ -93,6 +93,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             try
             {
                 this.Visit(node.Name);
+                if (node.Block != null)
+                {
+                    this.Visit(node.Block);
+                }
             }
             finally
             {
@@ -717,6 +721,29 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             finally
             {
                 this.End(__annot2);
+            }
+        }
+
+        public virtual void VisitMetaModelBlock1(MetaModelBlock1Syntax node)
+        {
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Uri");
+            this.Begin(__annot1, node.Uri);
+            try
+            {
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(string));
+                this.Begin(__annot0, node.Uri);
+                try
+                {
+                    //this.VisitToken(node.Uri);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
+            }
+            finally
+            {
+                this.End(__annot1);
             }
         }
 

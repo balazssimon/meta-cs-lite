@@ -40,6 +40,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         void VisitQualifier(QualifierSyntax node);
         void VisitIdentifier(IdentifierSyntax node);
         void VisitMainBlock1(MainBlock1Syntax node);
+        void VisitMetaModelBlock1(MetaModelBlock1Syntax node);
         void VisitMetaEnumBlock1(MetaEnumBlock1Syntax node);
         void VisitMetaEnumBlock1literalsBlock(MetaEnumBlock1literalsBlockSyntax node);
         void VisitMetaClassBlock1Alt1(MetaClassBlock1Alt1Syntax node);
@@ -186,6 +187,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
+        public virtual void VisitMetaModelBlock1(MetaModelBlock1Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
         public virtual void VisitMetaEnumBlock1(MetaEnumBlock1Syntax node)
         {
             this.DefaultVisit(node);
@@ -324,6 +330,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitQualifier(QualifierSyntax node);
         TResult VisitIdentifier(IdentifierSyntax node);
         TResult VisitMainBlock1(MainBlock1Syntax node);
+        TResult VisitMetaModelBlock1(MetaModelBlock1Syntax node);
         TResult VisitMetaEnumBlock1(MetaEnumBlock1Syntax node);
         TResult VisitMetaEnumBlock1literalsBlock(MetaEnumBlock1literalsBlockSyntax node);
         TResult VisitMetaClassBlock1Alt1(MetaClassBlock1Alt1Syntax node);
@@ -470,6 +477,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
+        public virtual TResult VisitMetaModelBlock1(MetaModelBlock1Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
         public virtual TResult VisitMetaEnumBlock1(MetaEnumBlock1Syntax node)
         {
             return this.DefaultVisit(node);
@@ -608,6 +620,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitQualifier(QualifierSyntax node, TArg argument);
         TResult VisitIdentifier(IdentifierSyntax node, TArg argument);
         TResult VisitMainBlock1(MainBlock1Syntax node, TArg argument);
+        TResult VisitMetaModelBlock1(MetaModelBlock1Syntax node, TArg argument);
         TResult VisitMetaEnumBlock1(MetaEnumBlock1Syntax node, TArg argument);
         TResult VisitMetaEnumBlock1literalsBlock(MetaEnumBlock1literalsBlockSyntax node, TArg argument);
         TResult VisitMetaClassBlock1Alt1(MetaClassBlock1Alt1Syntax node, TArg argument);
@@ -750,6 +763,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual TResult VisitMainBlock1(MainBlock1Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitMetaModelBlock1(MetaModelBlock1Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -903,7 +921,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var kMetamodel = this.VisitToken(node.KMetamodel);
             var name = (NameSyntax)this.Visit(node.Name);
             var tSemicolon = this.VisitToken(node.TSemicolon);
-            return node.Update(kMetamodel, name, tSemicolon);
+            var block = (MetaModelBlock1Syntax)this.Visit(node.Block);
+            return node.Update(kMetamodel, name, tSemicolon, block);
         }
 
         public virtual SyntaxNode VisitMetaDeclarationAlt1(MetaDeclarationAlt1Syntax node)
@@ -1047,6 +1066,14 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var declarations1 = (MetaModelSyntax)this.Visit(node.Declarations1);
             var declarations2 = this.VisitList(node.Declarations2);
             return node.Update(declarations1, declarations2);
+        }
+
+        public virtual SyntaxNode VisitMetaModelBlock1(MetaModelBlock1Syntax node)
+        {
+            var kUri = this.VisitToken(node.KUri);
+            var uri = this.VisitToken(node.Uri);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(kUri, uri, tSemicolon);
         }
 
         public virtual SyntaxNode VisitMetaEnumBlock1(MetaEnumBlock1Syntax node)

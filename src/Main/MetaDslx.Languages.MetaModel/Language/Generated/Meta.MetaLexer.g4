@@ -33,6 +33,7 @@ LR_KDecimal: 'decimal';
 LR_KType: 'type';
 LR_KSymbol: 'symbol';
 LR_KVoid: 'void';
+LR_KUri: 'uri';
 LR_TLBrace: '{';
 LR_TRBrace: '}';
 LR_TDollar: '$';
