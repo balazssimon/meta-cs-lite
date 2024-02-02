@@ -53,6 +53,11 @@
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassifier.cs" />
     <Compile Include="Languages\MetaGenerator\MetaGeneratorDefinition.cs" />
     <Compile Include="Languages\MetaGenerator\MetaGeneratorLanguageClient.cs" />
+    <Compile Include="Languages\MetaModel\Classification\MetaModelClassificationDefinitions.cs" />
+    <Compile Include="Languages\MetaModel\Classification\MetaModelClassificationProvider.cs" />
+    <Compile Include="Languages\MetaModel\Classification\MetaModelClassificationTypes.cs" />
+    <Compile Include="Languages\MetaModel\Classification\MetaModelClassifier.cs" />
+    <Compile Include="Languages\MetaModel\MetaModelDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MetaDslx.VisualStudioPackage.cs" />
     <Compile Include="Utilities\Extensions.cs" />
@@ -73,6 +78,9 @@
     <Reference Include="System.ComponentModel.Composition" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard">
+      <Version>4.13.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Client">
       <Version>17.3.3101</Version>
     </PackageReference>
@@ -91,9 +99,17 @@
       <Project>{b913c6f2-9ae8-47f3-87a0-f26d2323e0a5}</Project>
       <Name>MetaDslx.CodeAnalysis.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MetaDslx.CodeAnalysis.Parsers.Antlr\MetaDslx.CodeAnalysis.Parsers.Antlr.csproj">
+      <Project>{1635a5db-6336-4ad5-aa87-aa568e352da8}</Project>
+      <Name>MetaDslx.CodeAnalysis.Parsers.Antlr</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj">
       <Project>{95212699-0E82-40A4-907C-E348A58F6ADE}</Project>
       <Name>MetaDslx.Languages.MetaGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj">
+      <Project>{441e9f61-fcd4-44da-a9f4-7124e1214c55}</Project>
+      <Name>MetaDslx.Languages.MetaModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

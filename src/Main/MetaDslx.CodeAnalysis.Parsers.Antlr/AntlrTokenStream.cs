@@ -184,6 +184,11 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
         public InternalSyntaxToken ConsumeGreenToken(IToken token, AntlrSyntaxParser parser)
         {
             var factory = parser.Language.InternalSyntaxFactory;
+            return ConsumeGreenToken(token, factory, parser);
+        }
+
+        public InternalSyntaxToken ConsumeGreenToken(IToken token, InternalSyntaxFactory factory, AntlrSyntaxParser? parser)
+        {
             var isMissing = token.TokenIndex < 0;
             if (isMissing) ((AntlrSyntaxToken)token).TokenIndex = _greenIndex;
             var currentIndex = token.TokenIndex;
@@ -231,7 +236,7 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
             return ConsumeGreenToken(green, parser);
         }
 
-        public InternalSyntaxToken ConsumeGreenToken(InternalSyntaxToken green, AntlrSyntaxParser parser)
+        public InternalSyntaxToken ConsumeGreenToken(InternalSyntaxToken green, AntlrSyntaxParser? parser)
         {
             var startPosition = _greenPosition;
             _greenPosition += green.FullWidth;
@@ -245,15 +250,18 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
                     errors.Add(diag.WithOffset(diag.Offset - startPosition));
                 }
             }
-            for (int i = _parserErrorPosition; i < parser.Diagnostics.Count; ++i)
+            if (parser is not null)
             {
-                var diag = parser.Diagnostics[i];
-                if (diag.Offset >= startPosition && diag.Offset < _greenPosition ||
-                    green.IsMissing && diag.Offset == startPosition + 1 ||
-                    green.RawKind == (int)InternalSyntaxKind.Eof)
+                for (int i = _parserErrorPosition; i < parser.Diagnostics.Count; ++i)
                 {
-                    _parserErrorPosition = i + 1;
-                    errors.Add(diag.WithOffset(diag.Offset - startPosition));
+                    var diag = parser.Diagnostics[i];
+                    if (diag.Offset >= startPosition && diag.Offset < _greenPosition ||
+                        green.IsMissing && diag.Offset == startPosition + 1 ||
+                        green.RawKind == (int)InternalSyntaxKind.Eof)
+                    {
+                        _parserErrorPosition = i + 1;
+                        errors.Add(diag.WithOffset(diag.Offset - startPosition));
+                    }
                 }
             }
             if (errors.Count > 0)

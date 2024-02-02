@@ -51,7 +51,10 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
 
         public override (InternalSyntaxToken? NextToken, IncrementalTokenData IncrementalTokenData) Lex()
         {
-            return default;
+            throw new NotImplementedException();
+            //var token = _tokenStream.LT(1);
+            //_tokenStream.Consume();
+            //var green = _tokenStream.ConsumeGreenToken(token, Language.InternalSyntaxFactory, null);
         }
 
         public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
