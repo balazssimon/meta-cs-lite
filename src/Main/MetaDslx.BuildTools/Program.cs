@@ -41,7 +41,7 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
@@ -307,9 +307,8 @@ namespace MetaDslx.BuildTools
                                 {
 #if MetaDslxBootstrap
                                     MetadataReference.CreateFromMetaModel(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.MInstance)
-                                    //MetadataReference.CreateFromModel(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.MInstance.MModel)
 #else
-                                    MetadataReference.CreateFromMetaModel(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance)
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaCompiler.Model.Compiler.MInstance)
 #endif
             },
                                 options: CompilationOptions.Default.WithConcurrentBuild(false));

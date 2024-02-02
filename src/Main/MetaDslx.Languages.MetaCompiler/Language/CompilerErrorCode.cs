@@ -15,6 +15,11 @@ namespace MetaDslx.Languages.MetaCompiler
         public static readonly DiagnosticDescriptor ERR_IncompatibleAltReturnType = DiagnosticDescriptor.Error(nameof(ERR_IncompatibleAltReturnType), "Incompatible alt return type", "The return type '{0}' of the alternative '{1}' is not assignable to the return type '{2}' of the rule '{3}'");
 
         /// <summary>
+        /// The alternative must have a return value of type '{0}'
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_AltMustHaveReturnValue = DiagnosticDescriptor.Error(nameof(ERR_AltMustHaveReturnValue), "Alt must have return value", "The alternative must have a return value of type '{0}'");
+
+        /// <summary>
         /// The expression '{0}' of type '{1}' is not assignable to the expected type '{2}'
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_IncompatibleExpressionType = DiagnosticDescriptor.Error(nameof(ERR_IncompatibleExpressionType), "Incompatible expression type", "The expression '{0}' of type '{1}' is not assignable to the expected type '{2}'");
@@ -37,12 +42,7 @@ namespace MetaDslx.Languages.MetaCompiler
         /// <summary>
         /// Value of type '{0}' cannot be assigned to the expected type '{1}'
         /// </summary>
-        public static readonly DiagnosticDescriptor ERR_ValueTypeMismatch = DiagnosticDescriptor.Error(nameof(ERR_ValueTypeMismatch), "Value type mismatch", "Value of type '{0}' cannot be assigned to the expected type '{1}' [{2}]");
-
-        /// <summary>
-        /// Block '{0}' is in a circular reference
-        /// </summary>
-        public static readonly DiagnosticDescriptor ERR_CircularBlockReference = DiagnosticDescriptor.Error(nameof(ERR_CircularBlockReference), "Circular block reference", "Block '{0}' is in a circular reference");
+        public static readonly DiagnosticDescriptor ERR_ValueTypeMismatch = DiagnosticDescriptor.Error(nameof(ERR_ValueTypeMismatch), "Value type mismatch", "Value of type '{0}' cannot be assigned to the expected type '{1}'");
 
         /// <summary>
         /// Rule '{0}' with return type '{1}' should be assigned to a property

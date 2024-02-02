@@ -1,4 +1,6 @@
-﻿using MetaDslx.CodeAnalysis;
+﻿using MetaDslx.Languages.MetaCompiler.Compiler.Syntax;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.Languages.MetaModel.Compiler.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,12 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
                     case CompilerSyntaxKind.RuleBlock1Alt2:
                         var alt2 = (RuleBlock1Alt2Syntax)node;
                         return ExtractName(alt2.Identifier);
+                    case CompilerSyntaxKind.AlternativeBlock1Block1Alt1:
+                        var alt3 = (AlternativeBlock1Block1Alt1Syntax)node;
+                        return ExtractName(alt3.ReturnType);
+                    case CompilerSyntaxKind.AlternativeBlock1Block1Alt2:
+                        var alt4 = (AlternativeBlock1Block1Alt2Syntax)node;
+                        return ExtractName(alt4.Identifier);
                     default:
                         break;
                 }

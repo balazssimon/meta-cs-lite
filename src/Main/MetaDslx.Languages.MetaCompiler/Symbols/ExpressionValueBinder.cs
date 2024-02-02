@@ -5,6 +5,7 @@ using MetaDslx.CodeAnalysis.Binding.Lookup;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -16,20 +17,17 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
-    using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
-    using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
-
-    internal class ExpressionValueBinder : ValueBinder
+    internal class ExpressionValueBinder : UseBinder
     {
         private ExpressionSymbol? _containingExpression;
-        private PAlternativeSymbol? _containingPAlternative;
-        private AnnotationArgumentSymbol? _containingAnnotationArgument;
-        private ImmutableArray<DeclarationSymbol> _targetProperties;
-        private ImmutableArray<LookupKey> _expectedTypes;
+        private MetaType _modelObjectType;
+        private MetaType _expectedType;
 
-        public SingleExpressionBlock1Syntax? Syntax => base.Syntax.AsNode() as SingleExpressionBlock1Syntax;
-        public SingleExpressionBlock1Alt2Syntax? TokensSyntax => this.Syntax as SingleExpressionBlock1Alt2Syntax;
-        public SingleExpressionBlock1Alt3Syntax? QualifierSyntax => this.Syntax as SingleExpressionBlock1Alt3Syntax;
+        public ExpressionValueBinder()
+            : base(types: ImmutableArray.Create(typeof(MetaSymbol)))
+        {
+            
+        }
 
         public ExpressionSymbol? ContainingExpression 
         {
@@ -43,183 +41,85 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
-        public PAlternativeSymbol? ContainingPAlternativeSymbol
+        public MetaType ExpectedType
         {
             get
             {
-                if (_containingPAlternative is null)
+                if (_expectedType.IsDefault)
                 {
-                    Interlocked.CompareExchange(ref _containingPAlternative, ContainingExpression?.ContainingPAlternativeSymbol, null);
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var expectedType = GetExpectedType(diagnostics, cancellationToken: default);
+                    this.AddDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    _expectedType.InterlockedInitialize(expectedType);
                 }
-                return _containingPAlternative;
+                return _expectedType;
             }
         }
 
-        public AnnotationArgumentSymbol? ContainingAnnotationArgumentSymbol
+        private MetaType GetExpectedType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            get
+            var expr = this.ContainingExpression;
+            if (expr is null) return default;
+            MetaType result = default;
+            var arg = expr.GetInnermostContainingSymbol<AnnotationArgumentSymbol>();
+            if (arg is not null)
             {
-                if (_containingAnnotationArgument is null)
-                {
-                    Interlocked.CompareExchange(ref _containingAnnotationArgument, ContainingExpression?.ContainingAnnotationArgumentSymbol, null);
-                }
-                return _containingAnnotationArgument;
+                result = arg.ParameterType;
             }
-        }
-
-        public ImmutableArray<DeclarationSymbol> TargetProperties
-        {
-            get
+            else
             {
-                if (_targetProperties.IsDefault)
+                var alt = expr.GetInnermostContainingSymbol<PAlternativeSymbol>();
+                if (alt is not null)
                 {
-                    var arg = ContainingAnnotationArgumentSymbol;
-                    if (arg is not null)
+                    result = alt.ExpectedType;
+                }
+                else
+                {
+                    var token = expr.GetInnermostContainingSymbol<TokenSymbol>();
+                    if (token is not null)
                     {
-                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, arg.Parameter is null ? ImmutableArray<DeclarationSymbol>.Empty : ImmutableArray.Create(arg.Parameter));
+                        result = token.ExpectedType;
                     }
                     else
                     {
-                        var alt = ContainingPAlternativeSymbol;
-                        if (alt is not null)
-                        {
-                            var block = alt?.ContainingSymbol as PBlockSymbol;
-                            var blockElem = block?.ContainingSymbol as PElementSymbol;
-                            if (blockElem is not null)
-                            {
-                                var targetProperties = ArrayBuilder<DeclarationSymbol>.GetInstance();
-                                foreach (var prop in blockElem.SymbolProperty)
-                                {
-                                    if (prop.OriginalSymbol is DeclarationSymbol declaredSymbol)
-                                    {
-                                        targetProperties.Add(declaredSymbol);
-                                    }
-                                }
-                                ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, targetProperties.ToImmutableAndFree());
-                            }
-                            else
-                            {
-                                ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, ImmutableArray<DeclarationSymbol>.Empty);
-                            }
-                        }
+                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the expected type of the expression"));
                     }
                 }
-                return _targetProperties;
+            }
+            var containingAlt = expr.GetOutermostContainingSymbol<PAlternativeSymbol>();
+            if (containingAlt is not null)
+            {
+                _modelObjectType = containingAlt.ReturnType.AsTypeSymbol(Compilation);
+            }
+            if (result.IsDefaultOrNull) return result;
+            if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsDefaultOrNull)
+            {
+                return coreType;
+            }
+            else
+            {
+                return default;
             }
         }
 
-        private ImmutableArray<LookupKey> GetExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override void AdjustFinalLookupContext(LookupContext context)
         {
-            if (_expectedTypes.IsDefault)
+            if (context.Qualifier is null)
             {
-                var targetProperties = TargetProperties;
-                if (targetProperties.IsDefaultOrEmpty)
+                var expectedType = ExpectedType;
+                if (expectedType.IsEnum)
                 {
-                    var expectedType = ContainingPAlternativeSymbol?.ReturnType ?? default;
-                    expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken);
-                    ImmutableInterlocked.InterlockedInitialize(ref _expectedTypes, ImmutableArray.Create(new LookupKey(default, coreType)));
+                    context.Qualifier = expectedType.AsTypeSymbol(this.Compilation);
                 }
-                else
+                if (expectedType.FullName == typeof(ModelProperty).FullName)
                 {
-                    var expectedTypes = ArrayBuilder<LookupKey>.GetInstance();
-                    foreach (var targetProperty in TargetProperties)
-                    {
-                        var property = targetProperty as ICSharpSymbol;
-                        var csType = (property?.CSharpSymbol as IPropertySymbol)?.Type ?? (property?.CSharpSymbol as IParameterSymbol)?.Type;
-                        if (csType is not null)
-                        {
-                            var type = MetaType.FromTypeSymbol(property.SymbolFactory.GetSymbol<TypeSymbol>(csType, diagnostics, cancellationToken));
-                            type.TryGetCoreType(out var coreType, diagnostics, cancellationToken);
-                            expectedTypes.Add(new LookupKey(targetProperty, coreType));
-                        }
-                        else
-                        {
-                            expectedTypes.Add(default);
-                        }
-                    }
-                    ImmutableInterlocked.InterlockedInitialize(ref _expectedTypes, expectedTypes.ToImmutableAndFree());
+                    context.Qualifier = _modelObjectType.AsTypeSymbol(this.Compilation);
                 }
             }
-            return _expectedTypes;
+            base.AdjustFinalLookupContext(context);
         }
 
-        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
-        {
-            var diagnostics = DiagnosticBag.GetInstance();
-            var expectedTypes = GetExpectedTypes(diagnostics, cancellationToken);
-            var result = ArrayBuilder<object?>.GetInstance();
-            foreach (var expectedType in expectedTypes)
-            {
-                if (ComputeValue(expectedType.Type, out var value, diagnostics, cancellationToken))
-                {
-                    result.Add(value);
-                }
-                else
-                {
-                    result.Add(null);
-                }
-            }
-            this.AddDiagnostics(diagnostics);
-            diagnostics.Free();
-            return result.ToImmutableAndFree();
-        }
-
-        protected override bool ComputeValue(MetaType expectedType, out object? value, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            if (expectedType.IsEnum)
-            {
-                if (expectedType.TryGetEnumValue(this.RawValue, out var enumLiteral, diagnostics, cancellationToken))
-                {
-                    value = enumLiteral;
-                    return true;
-                }
-            }
-            if (expectedType.SpecialType == CodeAnalysis.SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType)
-            {
-                value = this.BindSymbol(expectedType, diagnostics, cancellationToken);
-                return true;
-            }
-            return base.ComputeValue(expectedType, out value, diagnostics, cancellationToken);
-        }
-
-        private object? BindSymbol(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            var identifiers = ImmutableArray<SyntaxNodeOrToken>.Empty;
-            if (this.TokensSyntax is not null)
-            {
-                identifiers = ImmutableArray.Create<SyntaxNodeOrToken>(this.TokensSyntax.Tokens);
-            }
-            else if (this.QualifierSyntax is not null)
-            {
-                identifiers = this.QualifierSyntax.SimpleQualifier.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
-            }
-            if (identifiers.Length == 0) return null;
-            var context = this.AllocateLookupContext();
-            context.Diagnose = true;
-            if (expectedType.SpecialType == SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) 
-            {
-                context.Validators.Add(LookupValidators.TypeOnly);
-            }
-            //var identifiers = qualifier.Element.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
-            var result = this.BindQualifiedName(context, identifiers);
-            diagnostics.AddRange(context.Diagnostics);
-            context.Free();
-            return result[result.Length - 1];
-        }
-
-        private class LookupKey
-        {
-            private readonly MetaSymbol _property;
-            private readonly MetaType _type;
-
-            public LookupKey(MetaSymbol property, MetaType type)
-            {
-                _property = property;
-                _type = type;
-            }
-
-            public MetaSymbol Property => _property;
-            public MetaType Type => _type;
-        }
+        
     }
 }

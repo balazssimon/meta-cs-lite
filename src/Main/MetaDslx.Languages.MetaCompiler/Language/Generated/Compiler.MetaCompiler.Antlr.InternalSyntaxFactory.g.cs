@@ -10,14 +10,14 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax.InternalSyntax
 {
     public partial class CompilerInternalSyntaxFactory : IAntlrSyntaxFactory
     {
-	    AntlrLexer IAntlrSyntaxFactory.CreateAntlrLexer(ICharStream input)
-	    {
-	        return new CompilerLexer(input);
-	    }
-	
-	    AntlrParser IAntlrSyntaxFactory.CreateAntlrParser(ITokenStream input)
-	    {
-	        return new CompilerParser(input);
-	    }
+        AntlrLexer IAntlrSyntaxFactory.CreateAntlrLexer(ICharStream input)
+        {
+            return new CompilerLexer(input);
+        }
+
+        AntlrParser IAntlrSyntaxFactory.CreateAntlrParser(ITokenStream input)
+        {
+            return new CompilerParser(input);
+        }
     }
 }

@@ -3,11 +3,11 @@ using MetaDslx.CodeAnalysis.PooledObjects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
+using System.IO;
 
 namespace MetaDslx.Languages.MetaCompiler.Generators
 {
@@ -21,6 +21,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
     public partial class RoslynApiGenerator
     {
         private readonly Language _language;
+        private List<Rule>? _rulesAndBlocks;
 
         public RoslynApiGenerator(Language language)
         {
@@ -36,6 +37,20 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
 
         public IList<Token> Tokens => Grammar.Tokens;
         public IList<Rule> Rules => Grammar.Rules;
+        public IList<Block> Blocks => Grammar.Blocks;
+        public IList<Rule> RulesAndBlocks
+        {
+            get
+            {
+                if (_rulesAndBlocks is null)
+                {
+                    _rulesAndBlocks = new List<Rule>();
+                    _rulesAndBlocks.AddRange(Grammar.Rules);
+                    _rulesAndBlocks.AddRange(Grammar.Blocks);
+                }
+                return _rulesAndBlocks;
+            }
+        }
         public IList<Token> FixedTokens => Grammar.Tokens.Where(t => t.IsFixed).ToList();
         public IList<Token> NonFixedTokens => Grammar.Tokens.Where(t => !t.IsFixed).ToList();
         public IList<Fragment> Fragments => Grammar.GrammarRules.OfType<Fragment>().ToList();
@@ -65,7 +80,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     {
                         foreach (var diag in antlrTool.Diagnostics)
                         {
-                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
+                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath ?? path, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
                             diagnostics.Add(metaDiag);
                         }
                     }
@@ -83,7 +98,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         }
                         if (code is not null)
                         {
-                            result.Add(($"Antlr.{fileName}.g.cs", code));
+                            result.Add(($"MetaCompiler.Antlr.{fileName}.g.cs", code));
                         }
                     }
                 }
@@ -104,7 +119,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     {
                         foreach (var diag in antlrTool.Diagnostics)
                         {
-                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
+                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath ?? path, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
                             diagnostics.Add(metaDiag);
                         }
                     }
@@ -122,15 +137,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         }
                         if (code is not null)
                         {
-                            result.Add(($"Antlr.{fileName}.g.cs", code));
+                            result.Add(($"MetaCompiler.Antlr.{fileName}.g.cs", code));
                         }
                     }
                     var syntaxLexerCode = GenerateAntlrSyntaxLexer();
-                    result.Add(($"Antlr.SyntaxLexer.g.cs", syntaxLexerCode));
+                    result.Add(($"MetaCompiler.Antlr.SyntaxLexer.g.cs", syntaxLexerCode));
                     var syntaxParserCode = GenerateAntlrSyntaxParser();
-                    result.Add(($"Antlr.SyntaxParser.g.cs", syntaxParserCode));
+                    result.Add(($"MetaCompiler.Antlr.SyntaxParser.g.cs", syntaxParserCode));
                     var syntaxFactoryCode = GenerateAntlrInternalSyntaxFactory();
-                    result.Add(($"Antlr.InternalSyntaxFactory.g.cs", syntaxFactoryCode));
+                    result.Add(($"MetaCompiler.Antlr.InternalSyntaxFactory.g.cs", syntaxFactoryCode));
                 }
             }
             catch (Exception ex)

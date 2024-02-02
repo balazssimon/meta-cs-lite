@@ -247,66 +247,82 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
         internal sealed class DummySyntaxTree : CompilerSyntaxTree
         {
             private readonly CompilerSyntaxNode _node;
+
             public DummySyntaxTree()
             {
                 _node = this.CloneNodeAsRoot((MainSyntax)MainGreen.__Missing.CreateRed());
             }
+
             public override string ToString()
             {
                 return string.Empty;
             }
+
             public override SourceText GetText(CancellationToken cancellationToken)
             {
                 return SourceText.From(string.Empty, Encoding.UTF8);
             }
+
             public override bool TryGetText(out SourceText text)
             {
                 text = SourceText.From(string.Empty, Encoding.UTF8);
                 return true;
             }
+
             public override Encoding Encoding
             {
                 get { return Encoding.UTF8; }
             }
+
             public override int Length
             {
                 get { return 0; }
             }
+
             public override ParseOptions Options
             {
                 get { return CompilerParseOptions.Default; }
             }
+
             public override string FilePath
             {
                 get { return string.Empty; }
             }
+
             public override SyntaxReference GetReference(SyntaxNode node)
             {
                 return new SimpleSyntaxReference(node);
             }
+
             public override CompilerSyntaxNode GetRoot(CancellationToken cancellationToken)
             {
                 return _node;
             }
+
             public override bool TryGetRoot(out CompilerSyntaxNode root)
             {
                 root = _node;
                 return true;
             }
+
             public override bool HasCompilationUnitRoot
             {
                 get { return true; }
             }
+
             protected override IncrementalParseData ParseData => IncrementalParseData.Empty;
+
             public override SyntaxTree WithRootAndOptions(SyntaxNode root, ParseOptions options)
             {
                 return Language.SyntaxFactory.MakeSyntaxTree((CompilerSyntaxNode)root, options: (CompilerParseOptions)options, path: FilePath, encoding: null);
             }
+
             public override SyntaxTree WithFilePath(string path)
             {
                 return Language.SyntaxFactory.MakeSyntaxTree(_node, options: this.Options, path: path, encoding: null);
             }
         }
+
         private class ParsedSyntaxTree : CompilerSyntaxTree
         {
             private readonly CompilerParseOptions _options;
@@ -317,6 +333,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
             private readonly Encoding? _encodingOpt;
             private readonly SourceHashAlgorithm _checksumAlgorithm;
             private SourceText _lazyText;
+
             internal ParsedSyntaxTree(SourceText? textOpt, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm, string path, CompilerParseOptions options, CompilerSyntaxNode root, IncrementalParseData parseData, bool cloneRoot = true)
             {
                 Debug.Assert(root != null);
@@ -331,11 +348,14 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
                 _parseData = parseData;
                 _hasCompilationUnitRoot = root.Kind == CompilerSyntaxKind.Main;
             }
+
             protected override IncrementalParseData ParseData => _parseData;
+
             public override string FilePath
             {
                 get { return _path; }
             }
+
             public override SourceText GetText(CancellationToken cancellationToken)
             {
                 if (_lazyText == null)
@@ -344,28 +364,34 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
                 }
                 return _lazyText;
             }
+
             public override bool TryGetText(out SourceText text)
             {
                 text = _lazyText;
                 return text != null;
             }
+
             public override Encoding Encoding
             {
                 get { return _encodingOpt; }
             }
+
             public override int Length
             {
                 get { return _root.FullSpan.Length; }
             }
+
             public override CompilerSyntaxNode GetRoot(CancellationToken cancellationToken)
             {
                 return _root;
             }
+
             public override bool TryGetRoot(out CompilerSyntaxNode root)
             {
                 root = _root;
                 return true;
             }
+
             public override bool HasCompilationUnitRoot
             {
                 get
@@ -373,6 +399,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
                     return _hasCompilationUnitRoot;
                 }
             }
+
             public override ParseOptions Options
             {
                 get
@@ -380,10 +407,12 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
                     return _options;
                 }
             }
+
             public override SyntaxReference GetReference(SyntaxNode node)
             {
                 return new SimpleSyntaxReference(node);
             }
+
             public override SyntaxTree WithRootAndOptions(SyntaxNode root, ParseOptions options)
             {
                 if (ReferenceEquals(_root, root) && ReferenceEquals(_options, options))
@@ -399,6 +428,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
                     (CompilerSyntaxNode)root,
                     this.ParseData);
             }
+
             public override SyntaxTree WithFilePath(string path)
             {
                 if (_path == path)
@@ -428,6 +458,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
                     parseData: parseData.WithDirectives(DirectiveStack.Empty))
             {
             }
+
             protected override bool SupportsLocations
             {
                 get { return true; }

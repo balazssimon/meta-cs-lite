@@ -177,9 +177,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             return false;
         }
 
-        protected virtual MetaType CompleteProperty_Type(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override TypeSymbol CompleteProperty_AttributeClass(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(Type), diagnostics, cancellationToken);
+            return base.CompleteProperty_AttributeClass(diagnostics, cancellationToken);
         }
 
         protected virtual ImmutableArray<AnnotationArgumentSymbol> CompleteProperty_Arguments(DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -261,6 +261,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 else if (j < selectedParameters.Length)
                 {
                     argParams.Add(selectedParameters[j]);
+                }
+                else
+                {
+                    argParams.Add(null);
                 }
             }
             return (selectedConstructor, argParams.ToImmutableAndFree());

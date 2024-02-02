@@ -7,7 +7,6 @@ metamodel Compiler;
 
 abstract class $Declaration
 {
-	contains Annotation[] Annotations;// $Attributes;
 	string? $Name;
 	Declaration? Parent opposite Declarations;
 	contains Declaration[] Declarations opposite Parent;
@@ -22,10 +21,11 @@ class Language : Declaration
 {
 	derived string Namespace;
 
+	type[] BaseLanguages;
 	contains Grammar Grammar subsets Declaration.Declarations;
 }
 
-class $Grammar : Declaration
+class Grammar : Declaration
 {
 	Language Language redefines Declaration.Parent;
 	contains GrammarRule[] GrammarRules redefines Declaration.Declarations;
@@ -33,13 +33,13 @@ class $Grammar : Declaration
 	contains TokenKind[] TokenKinds;
 	contains Token[] Tokens subsets GrammarRules;
 	contains Rule[] Rules subsets GrammarRules;
+	Block[] Blocks;
 
 	Token? DefaultWhitespace;
 	Token? DefaultEndOfLine;
 	Token? DefaultSeparator;
 	Token? DefaultIdentifier;
 	Rule? MainRule;
-	string? RootTypeName;
 }
 
 class $Annotation
@@ -75,6 +75,7 @@ class BinderArgument
 
 class CSharpElement
 {
+	contains Annotation[] Annotations;
 	string CSharpName;
 	string AntlrName;
 	contains Binder[] Binders;
@@ -218,12 +219,11 @@ class LBlock : LElementValue
 	contains LAlternative[] Alternatives;
 }
 
-abstract class Rule $ParserRule : GrammarRule
+class Rule $ParserRule : GrammarRule
 {
 	type $ReturnType;
 	contains Alternative[] $Alternatives;
-	bool AllowMerge;
-	bool SubClass;
+	Alternative? BaseRule;
 
 	derived string GreenName;
 	derived string RedName;
@@ -260,14 +260,9 @@ enum Assignment
 
 class Element $PElement : CSharpElement
 {
-	contains Annotation[] NameAnnotations;
-	symbol[] $SymbolProperty;
+	string? $Name;
 	Assignment $Assignment;
-	contains Annotation[] ValueAnnotations;
 	contains ElementValue $Value;
-	Multiplicity Multiplicity;
-
-	string? Name;
 
 	derived bool IsToken;
 	derived bool IsList;
@@ -298,6 +293,8 @@ class Element $PElement : CSharpElement
 
 abstract class ElementValue $Symbol : CSharpElement
 {
+	Multiplicity Multiplicity;
+
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
 
@@ -326,7 +323,7 @@ class Eof : ElementValue
 	derived string RedType;
 }
 
-class Keyword : ElementValue
+class Fixed : ElementValue
 {
 	string Text;
 }
@@ -341,8 +338,12 @@ class TokenAlts : ElementValue
 	derived string RedType;
 }
 
-class Block $PBlock : Rule, ElementValue
+class Block $PBlock : ElementValue, Rule
 {
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class SeparatedList : ElementValue
@@ -372,3 +373,4 @@ class ArrayExpression : Expression
 {
 	Expression[] Items;
 }
+

@@ -12,8 +12,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
@@ -23,12 +23,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         {
             public static readonly CompletionPart StartComputingProperty_ReturnType = new CompletionPart(nameof(StartComputingProperty_ReturnType));
             public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
-            public static readonly CompletionPart StartComputingProperty_NeverNull = new CompletionPart(nameof(StartComputingProperty_NeverNull));
-            public static readonly CompletionPart FinishComputingProperty_NeverNull = new CompletionPart(nameof(FinishComputingProperty_NeverNull));
             public static readonly CompletionPart StartComputingProperty_Alternatives = new CompletionPart(nameof(StartComputingProperty_Alternatives));
             public static readonly CompletionPart FinishComputingProperty_Alternatives = new CompletionPart(nameof(FinishComputingProperty_Alternatives));
-            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
-            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Members = DeclarationSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclarationSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclarationSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -40,18 +36,14 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
-                    StartComputingProperty_NeverNull, FinishComputingProperty_NeverNull,
                     StartComputingProperty_Alternatives, FinishComputingProperty_Alternatives,
-                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private ImmutableArray<MetaType> _expectedTypes;
         private MetaType _returnType;
-        private bool _neverNull;
         private ImmutableArray<PAlternativeSymbol> _alternatives;
 
         public ParserRuleSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
@@ -63,8 +55,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         public RuleSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as RuleSyntax;
 
-        public GrammarSymbol? ContainingGrammarSymbol => this.ContainingSymbol as GrammarSymbol;
-
         [ModelProperty]
         public MetaType ReturnType
         {
@@ -75,17 +65,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
-
-        [ModelProperty]
-        public bool NeverNull
-        {
-            get
-            {
-                ForceComplete(CompletionParts.FinishComputingProperty_NeverNull, null, default);
-                return _neverNull;
-            }
-        }
-
         [ModelProperty]
         public ImmutableArray<PAlternativeSymbol> Alternatives
         {
@@ -93,15 +72,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_Alternatives, null, default);
                 return _alternatives;
-            }
-        }
-
-        public ImmutableArray<MetaType> ExpectedTypes
-        {
-            get
-            {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
-                return _expectedTypes;
             }
         }
 
@@ -119,18 +89,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 }
                 return true;
             }
-            else if (incompletePart == CompletionParts.StartComputingProperty_NeverNull || incompletePart == CompletionParts.FinishComputingProperty_NeverNull)
-            {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_NeverNull))
-                {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    _neverNull = CompleteProperty_NeverNull(diagnostics, cancellationToken);
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_NeverNull);
-                }
-                return true;
-            }
             else if (incompletePart == CompletionParts.StartComputingProperty_Alternatives || incompletePart == CompletionParts.FinishComputingProperty_Alternatives)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Alternatives))
@@ -143,18 +101,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 }
                 return true;
             }
-            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
-            {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
-                {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    _expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
-                }
-                return true;
-            }
             else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
             {
                 return true;
@@ -164,12 +110,12 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
-        }
-
-        protected virtual bool CompleteProperty_NeverNull(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(NeverNull), diagnostics, cancellationToken);
+            var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+            if (returnType.IsDefaultOrNull)
+            {
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Could not determine the return type of the rule '{Name}'"));
+            }
+            return returnType;
         }
 
         protected virtual ImmutableArray<PAlternativeSymbol> CompleteProperty_Alternatives(DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -177,15 +123,20 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
         }
 
-        protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            if (this.ReturnType.IsNull) return ImmutableArray<MetaType>.Empty;
-            else return ImmutableArray.Create(this.ReturnType);
-        }
-
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
+            var returnType = this.ReturnType;
+            if (!returnType.IsDefaultOrNull)
+            {
+                foreach (var alt in this.Alternatives)
+                {
+                    if (!returnType.IsAssignableFrom(alt.ReturnType))
+                    {
+                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnType, alt.Location, alt.ReturnType, alt.Name, this.ReturnType, this.Name));
+                    }
+                }
+            }
         }
     }
 }

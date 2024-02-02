@@ -7,22 +7,24 @@ using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
-using MetaDslx.Languages.MetaCompiler.Model;
 using MetaDslx.Languages.MetaCompiler.Symbols;
-//using metamodel MetaDslx.Languages.MetaCompiler.Model.Compiler;
+using MetaDslx.Languages.MetaCompiler.Model;
 
 language Compiler;
 
 Main returns Namespace:
-	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
-	Using*
+	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
+	('using' Using ';')*
 	[Scope](declarations+=LanguageDeclaration)
 	eof;
 
-Using returns ImportSymbol : 'using' namespaces+=#{NamespaceSymbol|Qualifier} ';';
+Using returns ImportSymbol 
+	: alt UsingMetaModel returns ImportMetaModelSymbol: 'metamodel' metaModelSymbols+=#{MetaDslx.Modeling.MetaModel,MetaDslx.Languages.MetaModel.Model.MetaModel|Qualifier}
+	| namespaces+=#{NamespaceSymbol|Qualifier} 
+	;
 
 LanguageDeclaration returns MetaDslx.Languages.MetaCompiler.Model.Language: 
-	'language' name=Name ';' 
+	'language' Name (':' baseLanguages+=[Use(types:MetaDslx.CodeAnalysis.Language,suffixes:"Language")]Qualifier (',' baseLanguages+=[Use(types:MetaDslx.CodeAnalysis.Language,suffixes:"Language")]Qualifier)*)? ';' 
 	grammar=Grammar;
 
 Grammar: [Scope](grammarRules+=GrammarRule*);
@@ -30,17 +32,22 @@ Grammar: [Scope](grammarRules+=GrammarRule*);
 GrammarRule: Rule | LexerRule;
 
 Rule: annotations+=ParserAnnotation* [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
-Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
-Element: (nameAnnotations+=ParserAnnotation* symbolProperty=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
+Alternative: (annotations+=ParserAnnotation* 'alt' [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':')? elements+=Element+ ('=>' returnValue=Expression)?;
+Element: (annotations+=ParserAnnotation* Name assignment=Assignment)? value=ElementValue;
 ElementValue: Block | Eof1 | Fixed | RuleRef;
-Block: '(' alternatives+=Alternative ('|' alternatives+=Alternative)* ')';
-RuleRef: grammarRule=#GrammarRule | '#' referencedTypes+=TypeReference | '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' ;
+Block: annotations+=ParserAnnotation* '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')' multiplicity=Multiplicity?;
+BlockAlternative returns Alternative: elements+=Element+ ('=>' returnValue=Expression)?;
+RuleRef
+	: annotations+=ParserAnnotation* grammarRule=#GrammarRule  multiplicity=Multiplicity?
+	| annotations+=ParserAnnotation* '#' referencedTypes+=TypeReference  multiplicity=Multiplicity?
+	| annotations+=ParserAnnotation* '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}'  multiplicity=Multiplicity?
+	;
 Eof1 returns Eof: 'eof';
-Fixed: text=TString;
+Fixed: annotations+=ParserAnnotation* text=TString multiplicity=Multiplicity?;
 
 LexerRule: Token | Fragment;
-Token: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
-Fragment: 'fragment' name=Name ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+Token: annotations+=LexerAnnotation* ('token' Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+Fragment: 'fragment' Name ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;
@@ -56,11 +63,11 @@ LRange: startChar=TString '..' endChar=TString;
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
 Expression: SingleExpression | ArrayExpression;
-SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TString | TInteger | TDecimal | PrimitiveType | Qualifier);
+SingleExpression returns Expression: value=[Value]('null' | 'true' | 'false' | TString | TInteger | TDecimal | PrimitiveType) | value=[ExpressionValue]Qualifier;
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
-ParserAnnotation returns MetaDslx.Languages.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')'? ']';
-LexerAnnotation returns MetaDslx.Languages.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')'? ']';
+ParserAnnotation returns MetaDslx.Languages.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier ('(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')')? ']';
+LexerAnnotation returns MetaDslx.Languages.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier ('(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')')? ']';
 AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
 Assignment
@@ -79,35 +86,45 @@ Multiplicity
 	| '+?' => NonGreedyOneOrMore
 	;
 
-TypeReferenceIdentifier returns type: PrimitiveType | #MetaType;
-TypeReference returns type: PrimitiveType | #{MetaType|Qualifier};
+TypeReferenceIdentifier returns type: PrimitiveType | #type;
+TypeReference returns type: PrimitiveType | #{type|Qualifier};
 
 PrimitiveType returns type
-	: 'bool'
-	| 'int'
-	| 'double'
+	: 'object'
+	| 'bool'
+	| 'char'
 	| 'string'
+	| 'byte'
+	| 'sbyte'
+	| 'short'
+	| 'ushort'
+	| 'int'
+	| 'uint'
+	| 'long'
+	| 'ulong'
+	| 'float'
+	| 'double'
+	| 'decimal'
 	| 'type'
 	| 'symbol'
-	| 'object'
 	| 'void'
 	;
 
 [Name]
-Name: identifier=Identifier;
+Name returns void: Identifier;
 
 [Qualifier]
-Qualifier: identifiers+=Identifier ('.' identifiers+=Identifier)*;
+Qualifier returns void: Identifier ('.' Identifier)*;
 
 [DefaultReference]
 [Identifier]
-Identifier: name=TIdentifier | name=TVerbatimIdentifier;
+Identifier returns void: TIdentifier | TVerbatimIdentifier;
 
 [Number]
 token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
 
 [Number]
-token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+token TDecimal returns string: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
 [DefaultIdentifier]
 token TIdentifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
