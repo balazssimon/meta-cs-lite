@@ -12,8 +12,7 @@ language Meta;
 Main returns MetaNamespace:
 	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
-	declarations+=MetaModel
-	declarations+=MetaDeclaration*
+	[Scope](declarations+=MetaModel declarations+=MetaDeclaration*)
 	eof;
 
 Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';

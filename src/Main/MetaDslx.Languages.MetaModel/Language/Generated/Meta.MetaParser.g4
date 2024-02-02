@@ -6,7 +6,7 @@ options
 } 
 
 pr_Main
-    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  E_UsingList+=pr_Using*  E_declarations=pr_MetaModel  E_declarations1+=pr_MetaDeclaration*  E_EndOfFileToken=EOF
+    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  E_UsingList+=pr_Using*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
     ;
 pr_Using
     :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier  E_TSemicolon=LR_TSemicolon
@@ -60,6 +60,9 @@ pr_Qualifier
     ;
 pr_Identifier
     :  E_Token=(LR_TIdentifier | LR_TVerbatimIdentifier)
+    ;
+pr_MainBlock1
+    :  E_declarations=pr_MetaModel  E_declarations1+=pr_MetaDeclaration*
     ;
 pr_MetaEnumliteralsBlock
     :  E_TComma1=LR_TComma  E_literals2=pr_MetaEnumLiteral

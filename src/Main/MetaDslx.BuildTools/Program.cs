@@ -148,8 +148,8 @@ namespace MetaDslx.BuildTools
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
-                    //await CompileMetaModels(compilation, mxmFiles);
-                    await CompileMetaLanguages(compilation, mxlFiles);
+                    await CompileMetaModels(compilation, mxmFiles);
+                    //await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
                 // Perform analysis...

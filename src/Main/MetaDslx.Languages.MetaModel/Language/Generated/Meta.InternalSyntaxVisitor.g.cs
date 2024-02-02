@@ -27,6 +27,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         public virtual void VisitNameGreen(NameGreen node) => this.DefaultVisit(node);
         public virtual void VisitQualifierGreen(QualifierGreen node) => this.DefaultVisit(node);
         public virtual void VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
+        public virtual void VisitMainBlock1Green(MainBlock1Green node) => this.DefaultVisit(node);
         public virtual void VisitMetaEnumliteralsBlockGreen(MetaEnumliteralsBlockGreen node) => this.DefaultVisit(node);
         public virtual void VisitMetaClassBlock1Alt1Green(MetaClassBlock1Alt1Green node) => this.DefaultVisit(node);
         public virtual void VisitMetaClassBlock1Alt2Green(MetaClassBlock1Alt2Green node) => this.DefaultVisit(node);
@@ -75,6 +76,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         public virtual TResult VisitNameGreen(NameGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitQualifierGreen(QualifierGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
+        public virtual TResult VisitMainBlock1Green(MainBlock1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitMetaEnumliteralsBlockGreen(MetaEnumliteralsBlockGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitMetaClassBlock1Alt1Green(MetaClassBlock1Alt1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitMetaClassBlock1Alt2Green(MetaClassBlock1Alt2Green node) => this.DefaultVisit(node);

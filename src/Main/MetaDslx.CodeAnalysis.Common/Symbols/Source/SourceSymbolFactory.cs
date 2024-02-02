@@ -280,8 +280,15 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                     if (symbolValueSuccess && mobjValueSuccess)
                                     {
                                         builder.Add((TValue)symbolValue);
-                                        var box = slot.Add(mobjValue);
-                                        if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
+                                        try
+                                        {
+                                            var box = slot.Add(mobjValue);
+                                            if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not assign value {mobjValue} to {slot} in SourceSymbolFactory: {ex.ToString()}"));
+                                        }
                                     }
                                 }
                             }
@@ -328,8 +335,15 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                     var mobjValueSuccess = converter.TryConvertTo(value, slot.Property.SlotProperty.Type, out var mobjValue, (Binder)valueBinder, diagnostics, cancellationToken);
                                     if (mobjValueSuccess)
                                     {
-                                        var box = slot.Add(mobjValue);
-                                        if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
+                                        try
+                                        {
+                                            var box = slot.Add(mobjValue);
+                                            if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not assign value {mobjValue} to {slot} in SourceSymbolFactory: {ex.ToString()}"));
+                                        }
                                     }
                                 }
                             }

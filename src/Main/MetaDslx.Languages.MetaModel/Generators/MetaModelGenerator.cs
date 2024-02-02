@@ -57,7 +57,15 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type is Type t) return $"global::{t.FullName}";
             if (type is MetaNullableType nt)
             {
-                return $"{ToCSharp(nt.InnerType)}?";
+                if (nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType ||
+                    nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
+                {
+                    return ToCSharp(nt.InnerType);
+                }
+                else
+                {
+                    return $"{ToCSharp(nt.InnerType)}?";
+                }
             }
             if (type is MetaArrayType at)
             {
@@ -88,7 +96,15 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type is Type t) return $"global::{t.FullName}";
             if (type is MetaNullableType nt)
             {
-                return $"{ToCSharp(nt.InnerType)}?";
+                if (nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType ||
+                    nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
+                {
+                    return ToCSharp(nt.InnerType);
+                }
+                else
+                {
+                    return $"{ToCSharp(nt.InnerType)}?";
+                }
             }
             if (type is MetaArrayType at)
             {
@@ -256,7 +272,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type is MetaDslx.CodeAnalysis.MetaType camt)
             {
                 type = camt.OriginalModelObject;
-                if (type is null && camt.SpecialType != CodeAnalysis.SpecialType.None) type = camt.FullName;
+                if (type is null && camt.MetaKeyword is not null) type = camt.MetaKeyword;
                 if (type is null) type = camt.Original;
             }
             return type;

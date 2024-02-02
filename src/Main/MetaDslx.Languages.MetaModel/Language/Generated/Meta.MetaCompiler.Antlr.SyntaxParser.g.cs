@@ -115,20 +115,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 }
                 var usingList = usingListBuilder.ToList();
                 _pool.Free(usingListBuilder);
-                MetaModelGreen? declarations1 = null;
-                if (context.E_declarations is not null) declarations1 = (MetaModelGreen?)this.Visit(context.E_declarations) ?? MetaModelGreen.__Missing;
-                else declarations1 = MetaModelGreen.__Missing;
-                var E_declarations1Context = context._E_declarations1;
-                var declarations2Builder = _pool.Allocate<MetaDeclarationGreen>();
-                for (int i = 0; i < E_declarations1Context.Count; ++i)
-                {
-                    if (E_declarations1Context[i] is not null) declarations2Builder.Add((MetaDeclarationGreen?)this.Visit(E_declarations1Context[i]) ?? MetaDeclarationGreen.__Missing);
-                    else declarations2Builder.Add(MetaDeclarationGreen.__Missing);
-                }
-                var declarations2 = declarations2Builder.ToList();
-                _pool.Free(declarations2Builder);
+                MainBlock1Green? block = null;
+                if (context.E_Block is not null) block = (MainBlock1Green?)this.Visit(context.E_Block) ?? MainBlock1Green.__Missing;
+                else block = MainBlock1Green.__Missing;
                 var endOfFileToken = (InternalSyntaxToken?)this.VisitTerminal(context.E_EndOfFileToken, MetaSyntaxKind.Eof);
-                return _factory.Main(kNamespace, qualifier, tSemicolon, usingList, declarations1, declarations2, endOfFileToken);
+                return _factory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
             }
             
             public override GreenNode? VisitPr_Using(MetaParser.Pr_UsingContext? context)
@@ -427,6 +418,24 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 if (context.LR_TVerbatimIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TVerbatimIdentifier());
                 if (token is null) token = _factory.None;
                 return _factory.Identifier(token);
+            }
+            
+            public override GreenNode? VisitPr_MainBlock1(MetaParser.Pr_MainBlock1Context? context)
+            {
+                if (context == null) return MainBlock1Green.__Missing;
+                MetaModelGreen? declarations1 = null;
+                if (context.E_declarations is not null) declarations1 = (MetaModelGreen?)this.Visit(context.E_declarations) ?? MetaModelGreen.__Missing;
+                else declarations1 = MetaModelGreen.__Missing;
+                var E_declarations1Context = context._E_declarations1;
+                var declarations2Builder = _pool.Allocate<MetaDeclarationGreen>();
+                for (int i = 0; i < E_declarations1Context.Count; ++i)
+                {
+                    if (E_declarations1Context[i] is not null) declarations2Builder.Add((MetaDeclarationGreen?)this.Visit(E_declarations1Context[i]) ?? MetaDeclarationGreen.__Missing);
+                    else declarations2Builder.Add(MetaDeclarationGreen.__Missing);
+                }
+                var declarations2 = declarations2Builder.ToList();
+                _pool.Free(declarations2Builder);
+                return _factory.MainBlock1(declarations1, declarations2);
             }
             
             public override GreenNode? VisitPr_MetaEnumliteralsBlock(MetaParser.Pr_MetaEnumliteralsBlockContext? context)

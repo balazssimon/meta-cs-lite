@@ -425,6 +425,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "Qualifier";
                 case MetaSyntaxKind.Identifier: 
                     return "Identifier";
+                case MetaSyntaxKind.MainBlock1: 
+                    return "MainBlock1";
                 case MetaSyntaxKind.MetaEnumliteralsBlock: 
                     return "MetaEnumliteralsBlock";
                 case MetaSyntaxKind.MetaClassBlock1Alt1: 

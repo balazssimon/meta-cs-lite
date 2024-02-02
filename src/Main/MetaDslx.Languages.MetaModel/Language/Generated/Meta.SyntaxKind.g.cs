@@ -103,6 +103,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         Name,
         Qualifier,
         Identifier,
+        MainBlock1,
         MetaEnumliteralsBlock,
         MetaClassBlock1Alt1,
         MetaClassBlock1Alt2,

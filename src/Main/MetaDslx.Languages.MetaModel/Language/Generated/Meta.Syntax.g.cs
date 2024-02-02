@@ -167,8 +167,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     {
         private QualifierSyntax _qualifier;
         private __SyntaxNode _usingList;
-        private MetaModelSyntax _declarations1;
-        private __SyntaxNode _declarations2;
+        private MainBlock1Syntax _block;
     
         public MainSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -214,20 +213,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax>(red);
             } 
         }
-        public MetaModelSyntax Declarations1 
+        public MainBlock1Syntax Block 
         { 
             get
             {
-            var red = this.GetRed(ref this._declarations1, 4);
+            var red = this.GetRed(ref this._block, 4);
             return red;
-            } 
-        }
-        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> Declarations2 
-        { 
-            get
-            {
-            var red = this.GetRed(ref this._declarations2, 5);
-            return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax>(red);
             } 
         }
         public __SyntaxToken EndOfFileToken 
@@ -236,7 +227,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
             var greenToken = green.EndOfFileToken;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(6), this.GetChildIndex(6));
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
             } 
         }
     
@@ -246,8 +237,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             {
                 case 1: return this.GetRed(ref this._qualifier, 1);
                 case 3: return this.GetRed(ref this._usingList, 3);
-                case 4: return this.GetRed(ref this._declarations1, 4);
-                case 5: return this.GetRed(ref this._declarations2, 5);
+                case 4: return this.GetRed(ref this._block, 4);
                 default: return null;
             }
         }
@@ -258,30 +248,29 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             {
                 case 1: return this._qualifier;
                 case 3: return this._usingList;
-                case 4: return this._declarations1;
-                case 5: return this._declarations2;
+                case 4: return this._block;
                 default: return null;
             }
         }
     
         public MainSyntax WithKNamespace(__SyntaxToken kNamespace)
         {
-            return this.Update(kNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Declarations1, this.Declarations2, this.EndOfFileToken);
+            return this.Update(kNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax WithQualifier(QualifierSyntax qualifier)
         {
-            return this.Update(this.KNamespace, qualifier, this.TSemicolon, this.UsingList, this.Declarations1, this.Declarations2, this.EndOfFileToken);
+            return this.Update(this.KNamespace, qualifier, this.TSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax WithTSemicolon(__SyntaxToken tSemicolon)
         {
-            return this.Update(this.KNamespace, this.Qualifier, tSemicolon, this.UsingList, this.Declarations1, this.Declarations2, this.EndOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, tSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax WithUsingList(global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList)
         {
-            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, usingList, this.Declarations1, this.Declarations2, this.EndOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, usingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax AddUsingList(params UsingSyntax[] usingList)
@@ -289,32 +278,22 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.WithUsingList(this.UsingList.AddRange(usingList));
         }
     
-        public MainSyntax WithDeclarations1(MetaModelSyntax declarations1)
+        public MainSyntax WithBlock(MainBlock1Syntax block)
         {
-            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, declarations1, this.Declarations2, this.EndOfFileToken);
-        }
-    
-        public MainSyntax WithDeclarations2(global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations2)
-        {
-            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Declarations1, declarations2, this.EndOfFileToken);
-        }
-    
-        public MainSyntax AddDeclarations2(params MetaDeclarationSyntax[] declarations2)
-        {
-            return this.WithDeclarations2(this.Declarations2.AddRange(declarations2));
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, block, this.EndOfFileToken);
         }
     
         public MainSyntax WithEndOfFileToken(__SyntaxToken endOfFileToken)
         {
-            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Declarations1, this.Declarations2, endOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Block, endOfFileToken);
         }
     
     
-        public MainSyntax Update(__SyntaxToken kNamespace, QualifierSyntax qualifier, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MetaModelSyntax declarations1, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations2, __SyntaxToken endOfFileToken)
+        public MainSyntax Update(__SyntaxToken kNamespace, QualifierSyntax qualifier, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
         {
-            if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.TSemicolon != tSemicolon || this.UsingList != usingList || this.Declarations1 != declarations1 || this.Declarations2 != declarations2 || this.EndOfFileToken != endOfFileToken)
+            if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.TSemicolon != tSemicolon || this.UsingList != usingList || this.Block != block || this.EndOfFileToken != endOfFileToken)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, tSemicolon, usingList, declarations1, declarations2, endOfFileToken);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -2407,6 +2386,104 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
             visitor.VisitIdentifier(this);
+        }
+    
+    }
+    
+    public sealed class MainBlock1Syntax : MetaSyntaxNode
+    {
+        private MetaModelSyntax _declarations1;
+        private __SyntaxNode _declarations2;
+    
+        public MainBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public MainBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public MetaModelSyntax Declarations1 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._declarations1, 0);
+            return red;
+            } 
+        }
+        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> Declarations2 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._declarations2, 1);
+            return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax>(red);
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return this.GetRed(ref this._declarations1, 0);
+                case 1: return this.GetRed(ref this._declarations2, 1);
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return this._declarations1;
+                case 1: return this._declarations2;
+                default: return null;
+            }
+        }
+    
+        public MainBlock1Syntax WithDeclarations1(MetaModelSyntax declarations1)
+        {
+            return this.Update(declarations1, this.Declarations2);
+        }
+    
+        public MainBlock1Syntax WithDeclarations2(global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations2)
+        {
+            return this.Update(this.Declarations1, declarations2);
+        }
+    
+        public MainBlock1Syntax AddDeclarations2(params MetaDeclarationSyntax[] declarations2)
+        {
+            return this.WithDeclarations2(this.Declarations2.AddRange(declarations2));
+        }
+    
+    
+        public MainBlock1Syntax Update(MetaModelSyntax declarations1, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations2)
+        {
+            if (this.Declarations1 != declarations1 || this.Declarations2 != declarations2)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MainBlock1(declarations1, declarations2);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MainBlock1Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMainBlock1(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMainBlock1(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMainBlock1(this);
         }
     
     }
