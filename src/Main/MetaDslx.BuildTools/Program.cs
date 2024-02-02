@@ -37,9 +37,9 @@ namespace MetaDslx.BuildTools
         private static readonly string[] BootstrapProjects =
         [
 #if MetaDslxBootstrap
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
-            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
 #endif
@@ -231,8 +231,8 @@ namespace MetaDslx.BuildTools
                 foreach (var mxm in model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>())
                 {
                     var modelFilePath = mxm.MSourceLocation?.GetLineSpan().Path;
-                    var xmi = new XmiSerializer();
-                    xmi.WriteModelToFile(Path.Combine(modelFilePath + ".xmi"), model);
+                    //var xmi = new XmiSerializer();
+                    //xmi.WriteModelToFile(Path.Combine(modelFilePath + ".xmi"), model);
                     if (!mxmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
 #if MetaDslxBootstrap
@@ -278,8 +278,26 @@ namespace MetaDslx.BuildTools
                 var mxlTrees = ArrayBuilder<SyntaxTree>.GetInstance();
                 foreach (var filePath in filePaths)
                 {
-                    var mxlCode = await File.ReadAllTextAsync(filePath);
-                    var mxlTree = CompilerSyntaxTree.ParseText(mxlCode, path: filePath);
+                    var mxlCode = new StringBuilder();
+                    var inheritsFromCommon = false;
+                    using (var reader = new StreamReader(filePath))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = await reader.ReadLineAsync();
+                            if (line == null) break;
+                            mxlCode.AppendLine(line);
+                            if (line.Contains("language") && line.Contains(":") && (line.Contains("Common") || line.Contains("CommonLanguage")))
+                            {
+                                inheritsFromCommon = true;
+                            }
+                        }
+                    }
+                    if (inheritsFromCommon)
+                    {
+                        mxlCode.AppendLine(CommonLanguage.Rules);
+                    }
+                    var mxlTree = CompilerSyntaxTree.ParseText(mxlCode.ToString(), path: filePath);
                     mxlTrees.Add(mxlTree);
                 }
                 var mxlCompiler = Compilation.Create("Meta",
@@ -307,8 +325,8 @@ namespace MetaDslx.BuildTools
                 foreach (var language in languages)
                 {
                     var modelFilePath = language.MSourceLocation?.GetLineSpan().Path;
-                    var xmi = new XmiSerializer();
-                    xmi.WriteModelToFile(Path.Combine(Path.Combine(Path.GetDirectoryName(modelFilePath), "Generated"), Path.GetFileNameWithoutExtension(modelFilePath) + ".Raw.xmi"), language.MModel);
+                    //var xmi = new XmiSerializer();
+                    //xmi.WriteModelToFile(Path.Combine(Path.Combine(Path.GetDirectoryName(modelFilePath), "Generated"), Path.GetFileNameWithoutExtension(modelFilePath) + ".Raw.xmi"), language.MModel);
                     if (!mxlDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
                         var pp = new CompilerModelPostProcessor(language);
@@ -340,8 +358,8 @@ namespace MetaDslx.BuildTools
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             var langFileName = Path.GetFileNameWithoutExtension(originalFilePath);
             Directory.CreateDirectory(outputDir);
-            var xmi = new XmiSerializer();
-            xmi.WriteModelToFile(Path.Combine(outputDir, langFileName + ".xmi"), language.MModel);
+            //var xmi = new XmiSerializer();
+            //xmi.WriteModelToFile(Path.Combine(outputDir, langFileName + ".xmi"), language.MModel);
             var generator = new MetaCompiler.Generators.RoslynApiGenerator(language);
             var antlrDiagnostics = MetaDslx.CodeAnalysis.DiagnosticBag.GetInstance();
             var antlrCodes = generator.GenerateAntlr(originalFilePath, antlrDiagnostics, default);

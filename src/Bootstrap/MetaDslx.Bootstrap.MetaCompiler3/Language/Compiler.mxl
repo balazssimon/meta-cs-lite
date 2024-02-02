@@ -10,7 +10,7 @@ using MetaDslx.Modeling;
 using MetaDslx.Bootstrap.MetaCompiler3.Symbols;
 using MetaDslx.Bootstrap.MetaCompiler3.Model;
 
-language Compiler : Common;
+language Compiler;
 
 Main returns Namespace:
 	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
