@@ -226,7 +226,16 @@ namespace MetaDslx.Languages.MetaModel.Generators
             {
                 return StringUtilities.EncodeString(value.ToString());
             }
+            if (propertyType == typeof(MetaDslx.CodeAnalysis.MetaSymbol))
+            {
+                var symbolValue = value.ToString();
+                if (value.GetType() == typeof(bool)) symbolValue = symbolValue.ToLower();
+                if (value.GetType() == typeof(string)) symbolValue = symbolValue.EncodeString();
+                return $"__MetaSymbol.FromValue({symbolValue})";
+            }
             var type = value.GetType();
+            if (type == typeof(bool)) return value.ToString().ToLower();
+            if (type == typeof(string)) return value.ToString().EncodeString();
             if (type.IsPrimitive) return value.ToString();
             return GetName(value);
         }

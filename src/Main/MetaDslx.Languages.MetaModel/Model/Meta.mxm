@@ -70,7 +70,7 @@ class MetaProperty : MetaDeclaration
 	bool IsContainment;
 	bool IsDerived;
 	bool IsReadOnly;
-	string? DefaultValue;
+	object? DefaultValue;
 	MetaProperty[] OppositeProperties opposite OppositeProperties;
 	MetaProperty[] SubsettedProperties;
 	MetaProperty[] RedefinedProperties;

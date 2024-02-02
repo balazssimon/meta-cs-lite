@@ -430,7 +430,8 @@ namespace MetaDslx.Modeling.Meta
                 var slotProperties = builder.ToImmutableAndClear();
                 var slotFlags = ComputeSlotFlags(slotProperties.Select(sp => sp.Flags));
                 var slotKeyFlags = ComputeSlotFlags(slotProperties.Select(sp => sp.KeyFlags));
-                var slot = MakePropertySlot(propIds[slotIndex], slotProperties, propIds[slotIndex].DefaultValue, slotFlags, slotKeyFlags);
+                var slotDefaultValue = slotProperties.Where(sp => sp.DefaultValue is not null).Select(sp => sp.DefaultValue).FirstOrDefault();
+                var slot = MakePropertySlot(propIds[slotIndex], slotProperties, slotDefaultValue, slotFlags, slotKeyFlags);
                 slots.Add(slot);
                 slotPropToSlot.Add(propIds[slotIndex], slot);
             }
@@ -551,7 +552,7 @@ namespace MetaDslx.Modeling.Meta
         protected abstract bool IsEnumType(TType type);
         protected abstract bool IsValueType(TType type);
         protected abstract bool IsPrimitiveType(TType type);
-        protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags);
+        protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags);
         protected abstract MetaPropertyInfo<TType, TProperty, TOperation> MakePropertyInfo(
             MetaPropertySlot<TType, TProperty, TOperation> slot,
             ImmutableArray<MetaProperty<TType, TProperty, TOperation>> oppositeProperties,

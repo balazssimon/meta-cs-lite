@@ -141,7 +141,7 @@ namespace MetaDslx.Modeling
 
         protected Box? CreateBox()
         {
-            return Model.CreateBox(this);
+            return Model?.CreateBox(this);
         }
 
         public override string ToString()

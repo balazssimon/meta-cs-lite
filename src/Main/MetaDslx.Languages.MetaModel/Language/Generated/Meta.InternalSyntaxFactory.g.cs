@@ -289,7 +289,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaModelGreen MetaModel(__InternalSyntaxToken kMetamodel, NameGreen name, __InternalSyntaxToken tSemicolon, MetaModelBlock1Green block)
+        internal MetaModelGreen MetaModel(__InternalSyntaxToken kMetamodel, NameGreen name, MetaModelBlock1Green block, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
                 if (kMetamodel is null) throw new __ArgumentNullException(nameof(kMetamodel));
@@ -298,7 +298,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
                 if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new MetaModelGreen(MetaSyntaxKind.MetaModel, kMetamodel, name, tSemicolon, block);
+            return new MetaModelGreen(MetaSyntaxKind.MetaModel, kMetamodel, name, block, tSemicolon);
         }
         
         internal MetaDeclarationAlt1Green MetaDeclarationAlt1(MetaConstantGreen metaConstant)
@@ -419,7 +419,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return new MetaClassGreen(MetaSyntaxKind.MetaClass, isAbstract, kClass, block1, block2, block3);
         }
         
-        internal MetaPropertyGreen MetaProperty(MetaPropertyBlock1Green block1, MetaTypeReferenceGreen type, MetaPropertyBlock2Green block2, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock3Green> block3, __InternalSyntaxToken tSemicolon)
+        internal MetaPropertyGreen MetaProperty(MetaPropertyBlock1Green block1, MetaTypeReferenceGreen type, MetaPropertyBlock2Green block2, MetaPropertyBlock3Green block3, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock4Green> block4, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
                 if (type is null) throw new __ArgumentNullException(nameof(type));
@@ -427,7 +427,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
                 if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new MetaPropertyGreen(MetaSyntaxKind.MetaProperty, block1, type, block2, block3.Node, tSemicolon);
+            return new MetaPropertyGreen(MetaSyntaxKind.MetaProperty, block1, type, block2, block3, block4.Node, tSemicolon);
         }
         
         internal MetaOperationGreen MetaOperation(MetaTypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, MetaOperationBlock1Green block, __InternalSyntaxToken tRParen, __InternalSyntaxToken tSemicolon)
@@ -579,6 +579,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
+        internal ValueGreen Value(__InternalSyntaxToken token)
+        {
+            #if DEBUG
+                if (token is null) throw new __ArgumentNullException(nameof(token));
+                if (token.RawKind != (int)MetaSyntaxKind.TString && token.RawKind != (int)MetaSyntaxKind.TInteger && token.RawKind != (int)MetaSyntaxKind.TDecimal && token.RawKind != (int)MetaSyntaxKind.KTrue && token.RawKind != (int)MetaSyntaxKind.KFalse && token.RawKind != (int)MetaSyntaxKind.KNull) throw new __ArgumentException(nameof(token));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.Value, token, out hash);
+            if (cached != null) return (ValueGreen)cached;
+        
+            var result = new ValueGreen(MetaSyntaxKind.Value, token);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
         internal NameGreen Name(IdentifierGreen identifier)
         {
             #if DEBUG
@@ -651,21 +670,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaModelBlock1Green MetaModelBlock1(__InternalSyntaxToken kUri, __InternalSyntaxToken uri, __InternalSyntaxToken tSemicolon)
+        internal MetaModelBlock1Green MetaModelBlock1(__InternalSyntaxToken tEq, __InternalSyntaxToken uri)
         {
             #if DEBUG
-                if (kUri is null) throw new __ArgumentNullException(nameof(kUri));
-                if (kUri.RawKind != (int)MetaSyntaxKind.KUri) throw new __ArgumentException(nameof(kUri));
+                if (tEq is null) throw new __ArgumentNullException(nameof(tEq));
+                if (tEq.RawKind != (int)MetaSyntaxKind.TEq) throw new __ArgumentException(nameof(tEq));
                 if (uri is null) throw new __ArgumentNullException(nameof(uri));
                 if (uri.RawKind != (int)MetaSyntaxKind.TString) throw new __ArgumentException(nameof(uri));
-                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
-                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaModelBlock1, kUri, uri, tSemicolon, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaModelBlock1, tEq, uri, out hash);
             if (cached != null) return (MetaModelBlock1Green)cached;
         
-            var result = new MetaModelBlock1Green(MetaSyntaxKind.MetaModelBlock1, kUri, uri, tSemicolon);
+            var result = new MetaModelBlock1Green(MetaSyntaxKind.MetaModelBlock1, tEq, uri);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -849,17 +866,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock1Alt1Green MetaPropertyBlock1Alt1(__InternalSyntaxToken isContainment)
+        internal MetaPropertyBlock1Alt1Green MetaPropertyBlock1Alt1(__InternalSyntaxToken isReadOnly, __InternalSyntaxToken isContainment)
         {
             #if DEBUG
+                if (isReadOnly is not null && (isReadOnly.RawKind != (int)MetaSyntaxKind.KReadonly)) throw new __ArgumentException(nameof(isReadOnly));
                 if (isContainment is null) throw new __ArgumentNullException(nameof(isContainment));
                 if (isContainment.RawKind != (int)MetaSyntaxKind.KContains) throw new __ArgumentException(nameof(isContainment));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt1, isContainment, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt1, isReadOnly, isContainment, out hash);
             if (cached != null) return (MetaPropertyBlock1Alt1Green)cached;
         
-            var result = new MetaPropertyBlock1Alt1Green(MetaSyntaxKind.MetaPropertyBlock1Alt1, isContainment);
+            var result = new MetaPropertyBlock1Alt1Green(MetaSyntaxKind.MetaPropertyBlock1Alt1, isReadOnly, isContainment);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -879,6 +897,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             if (cached != null) return (MetaPropertyBlock1Alt2Green)cached;
         
             var result = new MetaPropertyBlock1Alt2Green(MetaSyntaxKind.MetaPropertyBlock1Alt2, isDerived);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal MetaPropertyBlock1Alt3Green MetaPropertyBlock1Alt3(__InternalSyntaxToken isReadOnly)
+        {
+            #if DEBUG
+                if (isReadOnly is null) throw new __ArgumentNullException(nameof(isReadOnly));
+                if (isReadOnly.RawKind != (int)MetaSyntaxKind.KReadonly) throw new __ArgumentException(nameof(isReadOnly));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt3, isReadOnly, out hash);
+            if (cached != null) return (MetaPropertyBlock1Alt3Green)cached;
+        
+            var result = new MetaPropertyBlock1Alt3Green(MetaSyntaxKind.MetaPropertyBlock1Alt3, isReadOnly);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -925,17 +962,37 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock3Alt1Green MetaPropertyBlock3Alt1(__InternalSyntaxToken kOpposite, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> oppositeProperties)
+        internal MetaPropertyBlock3Green MetaPropertyBlock3(__InternalSyntaxToken tEq, ValueGreen defaultValue)
+        {
+            #if DEBUG
+                if (tEq is null) throw new __ArgumentNullException(nameof(tEq));
+                if (tEq.RawKind != (int)MetaSyntaxKind.TEq) throw new __ArgumentException(nameof(tEq));
+                if (defaultValue is null) throw new __ArgumentNullException(nameof(defaultValue));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock3, tEq, defaultValue, out hash);
+            if (cached != null) return (MetaPropertyBlock3Green)cached;
+        
+            var result = new MetaPropertyBlock3Green(MetaSyntaxKind.MetaPropertyBlock3, tEq, defaultValue);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal MetaPropertyBlock4Alt1Green MetaPropertyBlock4Alt1(__InternalSyntaxToken kOpposite, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> oppositeProperties)
         {
             #if DEBUG
                 if (kOpposite is null) throw new __ArgumentNullException(nameof(kOpposite));
                 if (kOpposite.RawKind != (int)MetaSyntaxKind.KOpposite) throw new __ArgumentException(nameof(kOpposite));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock3Alt1, kOpposite, oppositeProperties.Node, out hash);
-            if (cached != null) return (MetaPropertyBlock3Alt1Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock4Alt1, kOpposite, oppositeProperties.Node, out hash);
+            if (cached != null) return (MetaPropertyBlock4Alt1Green)cached;
         
-            var result = new MetaPropertyBlock3Alt1Green(MetaSyntaxKind.MetaPropertyBlock3Alt1, kOpposite, oppositeProperties.Node);
+            var result = new MetaPropertyBlock4Alt1Green(MetaSyntaxKind.MetaPropertyBlock4Alt1, kOpposite, oppositeProperties.Node);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -944,17 +1001,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock3Alt2Green MetaPropertyBlock3Alt2(__InternalSyntaxToken kSubsets, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> subsettedProperties)
+        internal MetaPropertyBlock4Alt2Green MetaPropertyBlock4Alt2(__InternalSyntaxToken kSubsets, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> subsettedProperties)
         {
             #if DEBUG
                 if (kSubsets is null) throw new __ArgumentNullException(nameof(kSubsets));
                 if (kSubsets.RawKind != (int)MetaSyntaxKind.KSubsets) throw new __ArgumentException(nameof(kSubsets));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock3Alt2, kSubsets, subsettedProperties.Node, out hash);
-            if (cached != null) return (MetaPropertyBlock3Alt2Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock4Alt2, kSubsets, subsettedProperties.Node, out hash);
+            if (cached != null) return (MetaPropertyBlock4Alt2Green)cached;
         
-            var result = new MetaPropertyBlock3Alt2Green(MetaSyntaxKind.MetaPropertyBlock3Alt2, kSubsets, subsettedProperties.Node);
+            var result = new MetaPropertyBlock4Alt2Green(MetaSyntaxKind.MetaPropertyBlock4Alt2, kSubsets, subsettedProperties.Node);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -963,17 +1020,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock3Alt3Green MetaPropertyBlock3Alt3(__InternalSyntaxToken kRedefines, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> redefinedProperties)
+        internal MetaPropertyBlock4Alt3Green MetaPropertyBlock4Alt3(__InternalSyntaxToken kRedefines, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> redefinedProperties)
         {
             #if DEBUG
                 if (kRedefines is null) throw new __ArgumentNullException(nameof(kRedefines));
                 if (kRedefines.RawKind != (int)MetaSyntaxKind.KRedefines) throw new __ArgumentException(nameof(kRedefines));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock3Alt3, kRedefines, redefinedProperties.Node, out hash);
-            if (cached != null) return (MetaPropertyBlock3Alt3Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock4Alt3, kRedefines, redefinedProperties.Node, out hash);
+            if (cached != null) return (MetaPropertyBlock4Alt3Green)cached;
         
-            var result = new MetaPropertyBlock3Alt3Green(MetaSyntaxKind.MetaPropertyBlock3Alt3, kRedefines, redefinedProperties.Node);
+            var result = new MetaPropertyBlock4Alt3Green(MetaSyntaxKind.MetaPropertyBlock4Alt3, kRedefines, redefinedProperties.Node);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -982,7 +1039,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock3Alt1oppositePropertiesBlockGreen MetaPropertyBlock3Alt1oppositePropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen oppositeProperties)
+        internal MetaPropertyBlock4Alt1oppositePropertiesBlockGreen MetaPropertyBlock4Alt1oppositePropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen oppositeProperties)
         {
             #if DEBUG
                 if (tComma is null) throw new __ArgumentNullException(nameof(tComma));
@@ -990,10 +1047,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (oppositeProperties is null) throw new __ArgumentNullException(nameof(oppositeProperties));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock3Alt1oppositePropertiesBlock, tComma, oppositeProperties, out hash);
-            if (cached != null) return (MetaPropertyBlock3Alt1oppositePropertiesBlockGreen)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock4Alt1oppositePropertiesBlock, tComma, oppositeProperties, out hash);
+            if (cached != null) return (MetaPropertyBlock4Alt1oppositePropertiesBlockGreen)cached;
         
-            var result = new MetaPropertyBlock3Alt1oppositePropertiesBlockGreen(MetaSyntaxKind.MetaPropertyBlock3Alt1oppositePropertiesBlock, tComma, oppositeProperties);
+            var result = new MetaPropertyBlock4Alt1oppositePropertiesBlockGreen(MetaSyntaxKind.MetaPropertyBlock4Alt1oppositePropertiesBlock, tComma, oppositeProperties);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -1002,7 +1059,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock3Alt2subsettedPropertiesBlockGreen MetaPropertyBlock3Alt2subsettedPropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen subsettedProperties)
+        internal MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen MetaPropertyBlock4Alt2subsettedPropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen subsettedProperties)
         {
             #if DEBUG
                 if (tComma is null) throw new __ArgumentNullException(nameof(tComma));
@@ -1010,10 +1067,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (subsettedProperties is null) throw new __ArgumentNullException(nameof(subsettedProperties));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock3Alt2subsettedPropertiesBlock, tComma, subsettedProperties, out hash);
-            if (cached != null) return (MetaPropertyBlock3Alt2subsettedPropertiesBlockGreen)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock4Alt2subsettedPropertiesBlock, tComma, subsettedProperties, out hash);
+            if (cached != null) return (MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen)cached;
         
-            var result = new MetaPropertyBlock3Alt2subsettedPropertiesBlockGreen(MetaSyntaxKind.MetaPropertyBlock3Alt2subsettedPropertiesBlock, tComma, subsettedProperties);
+            var result = new MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen(MetaSyntaxKind.MetaPropertyBlock4Alt2subsettedPropertiesBlock, tComma, subsettedProperties);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -1022,7 +1079,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock3Alt3redefinedPropertiesBlockGreen MetaPropertyBlock3Alt3redefinedPropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen redefinedProperties)
+        internal MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen MetaPropertyBlock4Alt3redefinedPropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen redefinedProperties)
         {
             #if DEBUG
                 if (tComma is null) throw new __ArgumentNullException(nameof(tComma));
@@ -1030,10 +1087,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (redefinedProperties is null) throw new __ArgumentNullException(nameof(redefinedProperties));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock3Alt3redefinedPropertiesBlock, tComma, redefinedProperties, out hash);
-            if (cached != null) return (MetaPropertyBlock3Alt3redefinedPropertiesBlockGreen)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock4Alt3redefinedPropertiesBlock, tComma, redefinedProperties, out hash);
+            if (cached != null) return (MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen)cached;
         
-            var result = new MetaPropertyBlock3Alt3redefinedPropertiesBlockGreen(MetaSyntaxKind.MetaPropertyBlock3Alt3redefinedPropertiesBlock, tComma, redefinedProperties);
+            var result = new MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen(MetaSyntaxKind.MetaPropertyBlock4Alt3redefinedPropertiesBlock, tComma, redefinedProperties);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

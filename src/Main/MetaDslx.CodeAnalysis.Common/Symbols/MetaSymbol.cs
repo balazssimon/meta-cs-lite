@@ -147,6 +147,7 @@ namespace MetaDslx.CodeAnalysis
         {
             if (IsDefault) return "default";
             if (IsNull) return "null";
+            if (_original?.GetType() == typeof(bool)) return _original.ToString().ToLower();
             return _original?.ToString();
         }
 

@@ -14,7 +14,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 {
     public sealed class MetaMetaPropertySlot : MetaPropertySlot<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>
     {
-        public MetaMetaPropertySlot(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags) 
+        public MetaMetaPropertySlot(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags) 
             : base(slotProperty, slotProperties, defaultValue, flags, keyFlags)
         {
         }

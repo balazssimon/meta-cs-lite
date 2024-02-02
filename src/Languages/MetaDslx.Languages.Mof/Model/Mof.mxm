@@ -2,8 +2,7 @@
 
 using MetaDslx.CodeAnalysis.Symbols;
 
-metamodel Mof; 
-uri "http://www.omg.org/spec/MOF";
+metamodel Mof = "http://www.omg.org/spec/MOF";
 
 // Boolean is used for logical expressions, consisting of the predefined values true and false.
 const PrimitiveType Boolean;
@@ -37,7 +36,11 @@ class Comment
 class Tag $Symbol
 {
 	string $Name;
-	string Value;
+	string? Value;
+	string XStr = "abc";
+	int XInt = 4;
+	double XDouble = 3.5;
+	bool XBool = true;
 	Element[] Element opposite Element.Tag;
 }
 
@@ -82,7 +85,7 @@ abstract class $Namespace : NamedElement
 abstract class Classifier $Type : Type, Namespace
 {
 	bool IsAbstract;
-	/*readonly*/ contains Generalization[] Generalization opposite Generalization.General, Generalization.Specific;
+	readonly contains Generalization[] Generalization opposite Generalization.General, Generalization.Specific;
 }
 
 class Package $Namespace : Namespace, PackageableElement
@@ -127,7 +130,7 @@ abstract class Feature
 abstract class MultiplicityElement : Element
 {
 	bool IsOrdered;
-	bool IsUnique; // TODO: default = "true";
+	bool IsUnique = true;
 	ValueSpecification LowerValue subsets Element.OwnedElement opposite ValueSpecification.OwningLower;
 	ValueSpecification UpperValue subsets Element.OwnedElement opposite ValueSpecification.OwningUpper;
 	derived long Lower;

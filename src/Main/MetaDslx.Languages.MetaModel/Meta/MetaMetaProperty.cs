@@ -21,6 +21,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
             var flags = ModelPropertyFlags.None;
             if (underlyingProperty.IsContainment) flags |= ModelPropertyFlags.Containment;
             if (underlyingProperty.IsDerived) flags |= ModelPropertyFlags.Derived;
+            if (underlyingProperty.IsReadOnly) flags |= ModelPropertyFlags.ReadOnly;
             if (underlyingProperty.SymbolProperty == "Name") flags |= ModelPropertyFlags.Name;
             if (underlyingProperty.SymbolProperty == "Type") flags |= ModelPropertyFlags.Type;
             _originalFlags = flags;
@@ -30,7 +31,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public override bool HasSetter => true;
 
-        public override MetaSymbol DefaultValue => default;
+        public override object? DefaultValue => UnderlyingProperty.DefaultValue;
 
         public override string? SymbolProperty => UnderlyingProperty.SymbolProperty;
 

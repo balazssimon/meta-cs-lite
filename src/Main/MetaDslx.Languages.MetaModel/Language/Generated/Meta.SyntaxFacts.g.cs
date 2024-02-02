@@ -60,7 +60,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
-                case MetaSyntaxKind.KUri:
+                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
                 case MetaSyntaxKind.KOpposite:
@@ -103,6 +103,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             switch (kind)
             {
                 case MetaSyntaxKind.Eof:
+                case MetaSyntaxKind.KNull:
+                case MetaSyntaxKind.KTrue:
+                case MetaSyntaxKind.KFalse:
                 case MetaSyntaxKind.TComma:
                 case MetaSyntaxKind.TUtf8Bom:
                 case MetaSyntaxKind.KNamespace:
@@ -136,11 +139,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
-                case MetaSyntaxKind.KUri:
+                case MetaSyntaxKind.TEq:
                 case MetaSyntaxKind.TLBrace:
                 case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
                 case MetaSyntaxKind.TColon:
+                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
                 case MetaSyntaxKind.KOpposite:
@@ -172,6 +176,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (kind)
             {
+                case MetaSyntaxKind.KNull:
+                case MetaSyntaxKind.KTrue:
+                case MetaSyntaxKind.KFalse:
                 case MetaSyntaxKind.TComma:
                 case MetaSyntaxKind.TUtf8Bom:
                 case MetaSyntaxKind.KNamespace:
@@ -205,11 +212,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
-                case MetaSyntaxKind.KUri:
+                case MetaSyntaxKind.TEq:
                 case MetaSyntaxKind.TLBrace:
                 case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
                 case MetaSyntaxKind.TColon:
+                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
                 case MetaSyntaxKind.KOpposite:
@@ -231,6 +239,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (text)
             {
+                case "null": 
+                    return MetaSyntaxKind.KNull;
+                case "true": 
+                    return MetaSyntaxKind.KTrue;
+                case "false": 
+                    return MetaSyntaxKind.KFalse;
                 case ",": 
                     return MetaSyntaxKind.TComma;
                 case "\u00ef\u00bb\u00bf": 
@@ -297,8 +311,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KSymbol;
                 case "void": 
                     return MetaSyntaxKind.KVoid;
-                case "uri": 
-                    return MetaSyntaxKind.KUri;
+                case "=": 
+                    return MetaSyntaxKind.TEq;
                 case "{": 
                     return MetaSyntaxKind.TLBrace;
                 case "}": 
@@ -307,6 +321,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.TDollar;
                 case ":": 
                     return MetaSyntaxKind.TColon;
+                case "readonly": 
+                    return MetaSyntaxKind.KReadonly;
                 case "contains": 
                     return MetaSyntaxKind.KContains;
                 case "derived": 
@@ -358,6 +374,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "ConflictMarkerTrivia";
                 case MetaSyntaxKind.Eof:
                     return "Eof";
+                case MetaSyntaxKind.KNull: 
+                    return "KNull";
+                case MetaSyntaxKind.KTrue: 
+                    return "KTrue";
+                case MetaSyntaxKind.KFalse: 
+                    return "KFalse";
                 case MetaSyntaxKind.TComma: 
                     return "TComma";
                 case MetaSyntaxKind.TUtf8Bom: 
@@ -424,8 +446,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "KSymbol";
                 case MetaSyntaxKind.KVoid: 
                     return "KVoid";
-                case MetaSyntaxKind.KUri: 
-                    return "KUri";
+                case MetaSyntaxKind.TEq: 
+                    return "TEq";
                 case MetaSyntaxKind.TLBrace: 
                     return "TLBrace";
                 case MetaSyntaxKind.TRBrace: 
@@ -434,6 +456,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "TDollar";
                 case MetaSyntaxKind.TColon: 
                     return "TColon";
+                case MetaSyntaxKind.KReadonly: 
+                    return "KReadonly";
                 case MetaSyntaxKind.KContains: 
                     return "KContains";
                 case MetaSyntaxKind.KDerived: 
@@ -504,6 +528,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "TypeReferenceAlt2";
                 case MetaSyntaxKind.PrimitiveType: 
                     return "PrimitiveType";
+                case MetaSyntaxKind.Value: 
+                    return "Value";
                 case MetaSyntaxKind.Name: 
                     return "Name";
                 case MetaSyntaxKind.Qualifier: 
@@ -536,22 +562,26 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "MetaPropertyBlock1Alt1";
                 case MetaSyntaxKind.MetaPropertyBlock1Alt2: 
                     return "MetaPropertyBlock1Alt2";
+                case MetaSyntaxKind.MetaPropertyBlock1Alt3: 
+                    return "MetaPropertyBlock1Alt3";
                 case MetaSyntaxKind.MetaPropertyBlock2Alt1: 
                     return "MetaPropertyBlock2Alt1";
                 case MetaSyntaxKind.MetaPropertyBlock2Alt2: 
                     return "MetaPropertyBlock2Alt2";
-                case MetaSyntaxKind.MetaPropertyBlock3Alt1: 
-                    return "MetaPropertyBlock3Alt1";
-                case MetaSyntaxKind.MetaPropertyBlock3Alt2: 
-                    return "MetaPropertyBlock3Alt2";
-                case MetaSyntaxKind.MetaPropertyBlock3Alt3: 
-                    return "MetaPropertyBlock3Alt3";
-                case MetaSyntaxKind.MetaPropertyBlock3Alt1oppositePropertiesBlock: 
-                    return "MetaPropertyBlock3Alt1oppositePropertiesBlock";
-                case MetaSyntaxKind.MetaPropertyBlock3Alt2subsettedPropertiesBlock: 
-                    return "MetaPropertyBlock3Alt2subsettedPropertiesBlock";
-                case MetaSyntaxKind.MetaPropertyBlock3Alt3redefinedPropertiesBlock: 
-                    return "MetaPropertyBlock3Alt3redefinedPropertiesBlock";
+                case MetaSyntaxKind.MetaPropertyBlock3: 
+                    return "MetaPropertyBlock3";
+                case MetaSyntaxKind.MetaPropertyBlock4Alt1: 
+                    return "MetaPropertyBlock4Alt1";
+                case MetaSyntaxKind.MetaPropertyBlock4Alt2: 
+                    return "MetaPropertyBlock4Alt2";
+                case MetaSyntaxKind.MetaPropertyBlock4Alt3: 
+                    return "MetaPropertyBlock4Alt3";
+                case MetaSyntaxKind.MetaPropertyBlock4Alt1oppositePropertiesBlock: 
+                    return "MetaPropertyBlock4Alt1oppositePropertiesBlock";
+                case MetaSyntaxKind.MetaPropertyBlock4Alt2subsettedPropertiesBlock: 
+                    return "MetaPropertyBlock4Alt2subsettedPropertiesBlock";
+                case MetaSyntaxKind.MetaPropertyBlock4Alt3redefinedPropertiesBlock: 
+                    return "MetaPropertyBlock4Alt3redefinedPropertiesBlock";
                 case MetaSyntaxKind.MetaOperationBlock1: 
                     return "MetaOperationBlock1";
                 case MetaSyntaxKind.MetaOperationBlock1parametersBlock: 
@@ -572,6 +602,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (kind)
             {
+                case MetaSyntaxKind.KNull: 
+                    return "null";
+                case MetaSyntaxKind.KTrue: 
+                    return "true";
+                case MetaSyntaxKind.KFalse: 
+                    return "false";
                 case MetaSyntaxKind.TComma: 
                     return ",";
                 case MetaSyntaxKind.TUtf8Bom: 
@@ -638,8 +674,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "symbol";
                 case MetaSyntaxKind.KVoid: 
                     return "void";
-                case MetaSyntaxKind.KUri: 
-                    return "uri";
+                case MetaSyntaxKind.TEq: 
+                    return "=";
                 case MetaSyntaxKind.TLBrace: 
                     return "{";
                 case MetaSyntaxKind.TRBrace: 
@@ -648,6 +684,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "$";
                 case MetaSyntaxKind.TColon: 
                     return ":";
+                case MetaSyntaxKind.KReadonly: 
+                    return "readonly";
                 case MetaSyntaxKind.KContains: 
                     return "contains";
                 case MetaSyntaxKind.KDerived: 
@@ -695,6 +733,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch(kind)
             {
+                case MetaSyntaxKind.KNull: 
+                case MetaSyntaxKind.KTrue: 
+                case MetaSyntaxKind.KFalse: 
                 case MetaSyntaxKind.KNamespace: 
                 case MetaSyntaxKind.KUsing: 
                 case MetaSyntaxKind.KMetamodel: 
@@ -720,7 +761,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType: 
                 case MetaSyntaxKind.KSymbol: 
                 case MetaSyntaxKind.KVoid: 
-                case MetaSyntaxKind.KUri: 
+                case MetaSyntaxKind.KReadonly: 
                 case MetaSyntaxKind.KContains: 
                 case MetaSyntaxKind.KDerived: 
                 case MetaSyntaxKind.KOpposite: 
@@ -739,6 +780,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 
         public global::System.Collections.Generic.IEnumerable<MetaSyntaxKind> GetReservedKeywordKinds()
         {
+            yield return MetaSyntaxKind.KNull;
+            yield return MetaSyntaxKind.KTrue;
+            yield return MetaSyntaxKind.KFalse;
             yield return MetaSyntaxKind.KNamespace;
             yield return MetaSyntaxKind.KUsing;
             yield return MetaSyntaxKind.KMetamodel;
@@ -764,7 +808,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             yield return MetaSyntaxKind.KType;
             yield return MetaSyntaxKind.KSymbol;
             yield return MetaSyntaxKind.KVoid;
-            yield return MetaSyntaxKind.KUri;
+            yield return MetaSyntaxKind.KReadonly;
             yield return MetaSyntaxKind.KContains;
             yield return MetaSyntaxKind.KDerived;
             yield return MetaSyntaxKind.KOpposite;
@@ -782,6 +826,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch(text)
             {
+                case "null": 
+                    return MetaSyntaxKind.KNull;
+                case "true": 
+                    return MetaSyntaxKind.KTrue;
+                case "false": 
+                    return MetaSyntaxKind.KFalse;
                 case "namespace": 
                     return MetaSyntaxKind.KNamespace;
                 case "using": 
@@ -832,8 +882,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KSymbol;
                 case "void": 
                     return MetaSyntaxKind.KVoid;
-                case "uri": 
-                    return MetaSyntaxKind.KUri;
+                case "readonly": 
+                    return MetaSyntaxKind.KReadonly;
                 case "contains": 
                     return MetaSyntaxKind.KContains;
                 case "derived": 

@@ -456,21 +456,21 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red;
             } 
         }
+        public MetaModelBlock1Syntax Block 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._block, 2);
+            return red;
+            } 
+        }
         public __SyntaxToken TSemicolon 
         { 
             get
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaModelGreen)this.Green;
             var greenToken = green.TSemicolon;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
-            } 
-        }
-        public MetaModelBlock1Syntax Block 
-        { 
-            get
-            {
-            var red = this.GetRed(ref this._block, 3);
-            return red;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
             } 
         }
     
@@ -479,7 +479,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             switch (index)
             {
                 case 1: return this.GetRed(ref this._name, 1);
-                case 3: return this.GetRed(ref this._block, 3);
+                case 2: return this.GetRed(ref this._block, 2);
                 default: return null;
             }
         }
@@ -489,37 +489,37 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             switch (index)
             {
                 case 1: return this._name;
-                case 3: return this._block;
+                case 2: return this._block;
                 default: return null;
             }
         }
     
         public MetaModelSyntax WithKMetamodel(__SyntaxToken kMetamodel)
         {
-            return this.Update(kMetamodel, this.Name, this.TSemicolon, this.Block);
+            return this.Update(kMetamodel, this.Name, this.Block, this.TSemicolon);
         }
     
         public MetaModelSyntax WithName(NameSyntax name)
         {
-            return this.Update(this.KMetamodel, name, this.TSemicolon, this.Block);
-        }
-    
-        public MetaModelSyntax WithTSemicolon(__SyntaxToken tSemicolon)
-        {
-            return this.Update(this.KMetamodel, this.Name, tSemicolon, this.Block);
+            return this.Update(this.KMetamodel, name, this.Block, this.TSemicolon);
         }
     
         public MetaModelSyntax WithBlock(MetaModelBlock1Syntax block)
         {
-            return this.Update(this.KMetamodel, this.Name, this.TSemicolon, block);
+            return this.Update(this.KMetamodel, this.Name, block, this.TSemicolon);
+        }
+    
+        public MetaModelSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.KMetamodel, this.Name, this.Block, tSemicolon);
         }
     
     
-        public MetaModelSyntax Update(__SyntaxToken kMetamodel, NameSyntax name, __SyntaxToken tSemicolon, MetaModelBlock1Syntax block)
+        public MetaModelSyntax Update(__SyntaxToken kMetamodel, NameSyntax name, MetaModelBlock1Syntax block, __SyntaxToken tSemicolon)
         {
-            if (this.KMetamodel != kMetamodel || this.Name != name || this.TSemicolon != tSemicolon || this.Block != block)
+            if (this.KMetamodel != kMetamodel || this.Name != name || this.Block != block || this.TSemicolon != tSemicolon)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaModel(kMetamodel, name, tSemicolon, block);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaModel(kMetamodel, name, block, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -1233,7 +1233,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         private MetaPropertyBlock1Syntax _block1;
         private MetaTypeReferenceSyntax _type;
         private MetaPropertyBlock2Syntax _block2;
-        private __SyntaxNode _block3;
+        private MetaPropertyBlock3Syntax _block3;
+        private __SyntaxNode _block4;
     
         public MetaPropertySyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -1269,12 +1270,20 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red;
             } 
         }
-        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock3Syntax> Block3 
+        public MetaPropertyBlock3Syntax Block3 
         { 
             get
             {
             var red = this.GetRed(ref this._block3, 3);
-            return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock3Syntax>(red);
+            return red;
+            } 
+        }
+        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> Block4 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._block4, 4);
+            return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax>(red);
             } 
         }
         public __SyntaxToken TSemicolon 
@@ -1283,7 +1292,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyGreen)this.Green;
             var greenToken = green.TSemicolon;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
             } 
         }
     
@@ -1295,6 +1304,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case 1: return this.GetRed(ref this._type, 1);
                 case 2: return this.GetRed(ref this._block2, 2);
                 case 3: return this.GetRed(ref this._block3, 3);
+                case 4: return this.GetRed(ref this._block4, 4);
                 default: return null;
             }
         }
@@ -1307,46 +1317,52 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case 1: return this._type;
                 case 2: return this._block2;
                 case 3: return this._block3;
+                case 4: return this._block4;
                 default: return null;
             }
         }
     
         public MetaPropertySyntax WithBlock1(MetaPropertyBlock1Syntax block1)
         {
-            return this.Update(block1, this.Type, this.Block2, this.Block3, this.TSemicolon);
+            return this.Update(block1, this.Type, this.Block2, this.Block3, this.Block4, this.TSemicolon);
         }
     
         public MetaPropertySyntax WithType(MetaTypeReferenceSyntax type)
         {
-            return this.Update(this.Block1, type, this.Block2, this.Block3, this.TSemicolon);
+            return this.Update(this.Block1, type, this.Block2, this.Block3, this.Block4, this.TSemicolon);
         }
     
         public MetaPropertySyntax WithBlock2(MetaPropertyBlock2Syntax block2)
         {
-            return this.Update(this.Block1, this.Type, block2, this.Block3, this.TSemicolon);
+            return this.Update(this.Block1, this.Type, block2, this.Block3, this.Block4, this.TSemicolon);
         }
     
-        public MetaPropertySyntax WithBlock3(global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock3Syntax> block3)
+        public MetaPropertySyntax WithBlock3(MetaPropertyBlock3Syntax block3)
         {
-            return this.Update(this.Block1, this.Type, this.Block2, block3, this.TSemicolon);
+            return this.Update(this.Block1, this.Type, this.Block2, block3, this.Block4, this.TSemicolon);
         }
     
-        public MetaPropertySyntax AddBlock3(params MetaPropertyBlock3Syntax[] block3)
+        public MetaPropertySyntax WithBlock4(global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4)
         {
-            return this.WithBlock3(this.Block3.AddRange(block3));
+            return this.Update(this.Block1, this.Type, this.Block2, this.Block3, block4, this.TSemicolon);
+        }
+    
+        public MetaPropertySyntax AddBlock4(params MetaPropertyBlock4Syntax[] block4)
+        {
+            return this.WithBlock4(this.Block4.AddRange(block4));
         }
     
         public MetaPropertySyntax WithTSemicolon(__SyntaxToken tSemicolon)
         {
-            return this.Update(this.Block1, this.Type, this.Block2, this.Block3, tSemicolon);
+            return this.Update(this.Block1, this.Type, this.Block2, this.Block3, this.Block4, tSemicolon);
         }
     
     
-        public MetaPropertySyntax Update(MetaPropertyBlock1Syntax block1, MetaTypeReferenceSyntax type, MetaPropertyBlock2Syntax block2, global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock3Syntax> block3, __SyntaxToken tSemicolon)
+        public MetaPropertySyntax Update(MetaPropertyBlock1Syntax block1, MetaTypeReferenceSyntax type, MetaPropertyBlock2Syntax block2, MetaPropertyBlock3Syntax block3, global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4, __SyntaxToken tSemicolon)
         {
-            if (this.Block1 != block1 || this.Type != type || this.Block2 != block2 || this.Block3 != block3 || this.TSemicolon != tSemicolon)
+            if (this.Block1 != block1 || this.Type != type || this.Block2 != block2 || this.Block3 != block3 || this.Block4 != block4 || this.TSemicolon != tSemicolon)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaProperty(block1, type, block2, block3, tSemicolon);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaProperty(block1, type, block2, block3, block4, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -2139,6 +2155,81 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
     }
     
+    public sealed class ValueSyntax : MetaSyntaxNode
+    {
+    
+        public ValueSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public ValueSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken Token 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.ValueGreen)this.Green;
+            var greenToken = green.Token;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public ValueSyntax WithToken(__SyntaxToken token)
+        {
+            return this.Update(token);
+        }
+    
+    
+        public ValueSyntax Update(__SyntaxToken token)
+        {
+            if (this.Token != token)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.Value(token);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (ValueSyntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitValue(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitValue(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitValue(this);
+        }
+    
+    }
+    
     public sealed class NameSyntax : MetaSyntaxNode
     {
         private IdentifierSyntax _identifier;
@@ -2484,12 +2575,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     
-        public __SyntaxToken KUri 
+        public __SyntaxToken TEq 
         { 
             get
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaModelBlock1Green)this.Green;
-            var greenToken = green.KUri;
+            var greenToken = green.TEq;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
         }
@@ -2500,15 +2591,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaModelBlock1Green)this.Green;
             var greenToken = green.Uri;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
-            } 
-        }
-        public __SyntaxToken TSemicolon 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaModelBlock1Green)this.Green;
-            var greenToken = green.TSemicolon;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
         }
     
@@ -2528,27 +2610,22 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaModelBlock1Syntax WithKUri(__SyntaxToken kUri)
+        public MetaModelBlock1Syntax WithTEq(__SyntaxToken tEq)
         {
-            return this.Update(kUri, this.Uri, this.TSemicolon);
+            return this.Update(tEq, this.Uri);
         }
     
         public MetaModelBlock1Syntax WithUri(__SyntaxToken uri)
         {
-            return this.Update(this.KUri, uri, this.TSemicolon);
-        }
-    
-        public MetaModelBlock1Syntax WithTSemicolon(__SyntaxToken tSemicolon)
-        {
-            return this.Update(this.KUri, this.Uri, tSemicolon);
+            return this.Update(this.TEq, uri);
         }
     
     
-        public MetaModelBlock1Syntax Update(__SyntaxToken kUri, __SyntaxToken uri, __SyntaxToken tSemicolon)
+        public MetaModelBlock1Syntax Update(__SyntaxToken tEq, __SyntaxToken uri)
         {
-            if (this.KUri != kUri || this.Uri != uri || this.TSemicolon != tSemicolon)
+            if (this.TEq != tEq || this.Uri != uri)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaModelBlock1(kUri, uri, tSemicolon);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaModelBlock1(tEq, uri);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -3457,13 +3534,22 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     
+        public __SyntaxToken IsReadOnly 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt1Green)this.Green;
+            var greenToken = green.IsReadOnly;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
         public __SyntaxToken IsContainment 
         { 
             get
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt1Green)this.Green;
             var greenToken = green.IsContainment;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
         }
     
@@ -3483,17 +3569,22 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
+        public MetaPropertyBlock1Alt1Syntax WithIsReadOnly(__SyntaxToken isReadOnly)
+        {
+            return this.Update(isReadOnly, this.IsContainment);
+        }
+    
         public MetaPropertyBlock1Alt1Syntax WithIsContainment(__SyntaxToken isContainment)
         {
-            return this.Update(isContainment);
+            return this.Update(this.IsReadOnly, isContainment);
         }
     
     
-        public MetaPropertyBlock1Alt1Syntax Update(__SyntaxToken isContainment)
+        public MetaPropertyBlock1Alt1Syntax Update(__SyntaxToken isReadOnly, __SyntaxToken isContainment)
         {
-            if (this.IsContainment != isContainment)
+            if (this.IsReadOnly != isReadOnly || this.IsContainment != isContainment)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt1(isContainment);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt1(isReadOnly, isContainment);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -3589,6 +3680,80 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
             visitor.VisitMetaPropertyBlock1Alt2(this);
+        }
+    
+    }
+    public sealed class MetaPropertyBlock1Alt3Syntax : MetaPropertyBlock1Syntax
+    {
+    
+        public MetaPropertyBlock1Alt3Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public MetaPropertyBlock1Alt3Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken IsReadOnly 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt3Green)this.Green;
+            var greenToken = green.IsReadOnly;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public MetaPropertyBlock1Alt3Syntax WithIsReadOnly(__SyntaxToken isReadOnly)
+        {
+            return this.Update(isReadOnly);
+        }
+    
+    
+        public MetaPropertyBlock1Alt3Syntax Update(__SyntaxToken isReadOnly)
+        {
+            if (this.IsReadOnly != isReadOnly)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt3(isReadOnly);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MetaPropertyBlock1Alt3Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMetaPropertyBlock1Alt3(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMetaPropertyBlock1Alt3(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMetaPropertyBlock1Alt3(this);
         }
     
     }
@@ -3787,29 +3952,120 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    public abstract class MetaPropertyBlock3Syntax : MetaSyntaxNode
+    
+    public sealed class MetaPropertyBlock3Syntax : MetaSyntaxNode
     {
-        protected MetaPropertyBlock3Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        private ValueSyntax _defaultValue;
+    
+        public MetaPropertyBlock3Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        protected MetaPropertyBlock3Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaPropertyBlock3Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken TEq 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock3Green)this.Green;
+            var greenToken = green.TEq;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+        public ValueSyntax DefaultValue 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._defaultValue, 1);
+            return red;
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this.GetRed(ref this._defaultValue, 1);
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this._defaultValue;
+                default: return null;
+            }
+        }
+    
+        public MetaPropertyBlock3Syntax WithTEq(__SyntaxToken tEq)
+        {
+            return this.Update(tEq, this.DefaultValue);
+        }
+    
+        public MetaPropertyBlock3Syntax WithDefaultValue(ValueSyntax defaultValue)
+        {
+            return this.Update(this.TEq, defaultValue);
+        }
+    
+    
+        public MetaPropertyBlock3Syntax Update(__SyntaxToken tEq, ValueSyntax defaultValue)
+        {
+            if (this.TEq != tEq || this.DefaultValue != defaultValue)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock3(tEq, defaultValue);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MetaPropertyBlock3Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMetaPropertyBlock3(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMetaPropertyBlock3(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMetaPropertyBlock3(this);
+        }
+    
+    }
+    public abstract class MetaPropertyBlock4Syntax : MetaSyntaxNode
+    {
+        protected MetaPropertyBlock4Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        protected MetaPropertyBlock4Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
     }
     
-    public sealed class MetaPropertyBlock3Alt1Syntax : MetaPropertyBlock3Syntax
+    public sealed class MetaPropertyBlock4Alt1Syntax : MetaPropertyBlock4Syntax
     {
         private __SyntaxNode _oppositeProperties;
     
-        public MetaPropertyBlock3Alt1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        public MetaPropertyBlock4Alt1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public MetaPropertyBlock3Alt1Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaPropertyBlock4Alt1Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -3818,7 +4074,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock3Alt1Green)this.Green;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock4Alt1Green)this.Green;
             var greenToken = green.KOpposite;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3850,61 +4106,61 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock3Alt1Syntax WithKOpposite(__SyntaxToken kOpposite)
+        public MetaPropertyBlock4Alt1Syntax WithKOpposite(__SyntaxToken kOpposite)
         {
             return this.Update(kOpposite, this.OppositeProperties);
         }
     
-        public MetaPropertyBlock3Alt1Syntax WithOppositeProperties(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> oppositeProperties)
+        public MetaPropertyBlock4Alt1Syntax WithOppositeProperties(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> oppositeProperties)
         {
             return this.Update(this.KOpposite, oppositeProperties);
         }
     
-        public MetaPropertyBlock3Alt1Syntax AddOppositeProperties(params QualifierSyntax[] oppositeProperties)
+        public MetaPropertyBlock4Alt1Syntax AddOppositeProperties(params QualifierSyntax[] oppositeProperties)
         {
             return this.WithOppositeProperties(this.OppositeProperties.AddRange(oppositeProperties));
         }
     
     
-        public MetaPropertyBlock3Alt1Syntax Update(__SyntaxToken kOpposite, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> oppositeProperties)
+        public MetaPropertyBlock4Alt1Syntax Update(__SyntaxToken kOpposite, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> oppositeProperties)
         {
             if (this.KOpposite != kOpposite || this.OppositeProperties != oppositeProperties)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock3Alt1(kOpposite, oppositeProperties);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock4Alt1(kOpposite, oppositeProperties);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaPropertyBlock3Alt1Syntax)newNode;
+                return (MetaPropertyBlock4Alt1Syntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitMetaPropertyBlock3Alt1(this, argument);
+            return visitor.VisitMetaPropertyBlock4Alt1(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitMetaPropertyBlock3Alt1(this);
+            return visitor.VisitMetaPropertyBlock4Alt1(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitMetaPropertyBlock3Alt1(this);
+            visitor.VisitMetaPropertyBlock4Alt1(this);
         }
     
     }
-    public sealed class MetaPropertyBlock3Alt2Syntax : MetaPropertyBlock3Syntax
+    public sealed class MetaPropertyBlock4Alt2Syntax : MetaPropertyBlock4Syntax
     {
         private __SyntaxNode _subsettedProperties;
     
-        public MetaPropertyBlock3Alt2Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        public MetaPropertyBlock4Alt2Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public MetaPropertyBlock3Alt2Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaPropertyBlock4Alt2Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -3913,7 +4169,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock3Alt2Green)this.Green;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock4Alt2Green)this.Green;
             var greenToken = green.KSubsets;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3945,61 +4201,61 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock3Alt2Syntax WithKSubsets(__SyntaxToken kSubsets)
+        public MetaPropertyBlock4Alt2Syntax WithKSubsets(__SyntaxToken kSubsets)
         {
             return this.Update(kSubsets, this.SubsettedProperties);
         }
     
-        public MetaPropertyBlock3Alt2Syntax WithSubsettedProperties(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> subsettedProperties)
+        public MetaPropertyBlock4Alt2Syntax WithSubsettedProperties(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> subsettedProperties)
         {
             return this.Update(this.KSubsets, subsettedProperties);
         }
     
-        public MetaPropertyBlock3Alt2Syntax AddSubsettedProperties(params QualifierSyntax[] subsettedProperties)
+        public MetaPropertyBlock4Alt2Syntax AddSubsettedProperties(params QualifierSyntax[] subsettedProperties)
         {
             return this.WithSubsettedProperties(this.SubsettedProperties.AddRange(subsettedProperties));
         }
     
     
-        public MetaPropertyBlock3Alt2Syntax Update(__SyntaxToken kSubsets, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> subsettedProperties)
+        public MetaPropertyBlock4Alt2Syntax Update(__SyntaxToken kSubsets, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> subsettedProperties)
         {
             if (this.KSubsets != kSubsets || this.SubsettedProperties != subsettedProperties)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock3Alt2(kSubsets, subsettedProperties);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock4Alt2(kSubsets, subsettedProperties);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaPropertyBlock3Alt2Syntax)newNode;
+                return (MetaPropertyBlock4Alt2Syntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitMetaPropertyBlock3Alt2(this, argument);
+            return visitor.VisitMetaPropertyBlock4Alt2(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitMetaPropertyBlock3Alt2(this);
+            return visitor.VisitMetaPropertyBlock4Alt2(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitMetaPropertyBlock3Alt2(this);
+            visitor.VisitMetaPropertyBlock4Alt2(this);
         }
     
     }
-    public sealed class MetaPropertyBlock3Alt3Syntax : MetaPropertyBlock3Syntax
+    public sealed class MetaPropertyBlock4Alt3Syntax : MetaPropertyBlock4Syntax
     {
         private __SyntaxNode _redefinedProperties;
     
-        public MetaPropertyBlock3Alt3Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        public MetaPropertyBlock4Alt3Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public MetaPropertyBlock3Alt3Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaPropertyBlock4Alt3Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -4008,7 +4264,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock3Alt3Green)this.Green;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock4Alt3Green)this.Green;
             var greenToken = green.KRedefines;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4040,62 +4296,62 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock3Alt3Syntax WithKRedefines(__SyntaxToken kRedefines)
+        public MetaPropertyBlock4Alt3Syntax WithKRedefines(__SyntaxToken kRedefines)
         {
             return this.Update(kRedefines, this.RedefinedProperties);
         }
     
-        public MetaPropertyBlock3Alt3Syntax WithRedefinedProperties(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> redefinedProperties)
+        public MetaPropertyBlock4Alt3Syntax WithRedefinedProperties(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> redefinedProperties)
         {
             return this.Update(this.KRedefines, redefinedProperties);
         }
     
-        public MetaPropertyBlock3Alt3Syntax AddRedefinedProperties(params QualifierSyntax[] redefinedProperties)
+        public MetaPropertyBlock4Alt3Syntax AddRedefinedProperties(params QualifierSyntax[] redefinedProperties)
         {
             return this.WithRedefinedProperties(this.RedefinedProperties.AddRange(redefinedProperties));
         }
     
     
-        public MetaPropertyBlock3Alt3Syntax Update(__SyntaxToken kRedefines, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> redefinedProperties)
+        public MetaPropertyBlock4Alt3Syntax Update(__SyntaxToken kRedefines, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> redefinedProperties)
         {
             if (this.KRedefines != kRedefines || this.RedefinedProperties != redefinedProperties)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock3Alt3(kRedefines, redefinedProperties);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock4Alt3(kRedefines, redefinedProperties);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaPropertyBlock3Alt3Syntax)newNode;
+                return (MetaPropertyBlock4Alt3Syntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitMetaPropertyBlock3Alt3(this, argument);
+            return visitor.VisitMetaPropertyBlock4Alt3(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitMetaPropertyBlock3Alt3(this);
+            return visitor.VisitMetaPropertyBlock4Alt3(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitMetaPropertyBlock3Alt3(this);
+            visitor.VisitMetaPropertyBlock4Alt3(this);
         }
     
     }
     
-    public sealed class MetaPropertyBlock3Alt1oppositePropertiesBlockSyntax : MetaSyntaxNode
+    public sealed class MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _oppositeProperties;
     
-        public MetaPropertyBlock3Alt1oppositePropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        public MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public MetaPropertyBlock3Alt1oppositePropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -4104,7 +4360,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock3Alt1oppositePropertiesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock4Alt1oppositePropertiesBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4136,57 +4392,57 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock3Alt1oppositePropertiesBlockSyntax WithTComma(__SyntaxToken tComma)
+        public MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax WithTComma(__SyntaxToken tComma)
         {
             return this.Update(tComma, this.OppositeProperties);
         }
     
-        public MetaPropertyBlock3Alt1oppositePropertiesBlockSyntax WithOppositeProperties(QualifierSyntax oppositeProperties)
+        public MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax WithOppositeProperties(QualifierSyntax oppositeProperties)
         {
             return this.Update(this.TComma, oppositeProperties);
         }
     
     
-        public MetaPropertyBlock3Alt1oppositePropertiesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax oppositeProperties)
+        public MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax oppositeProperties)
         {
             if (this.TComma != tComma || this.OppositeProperties != oppositeProperties)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock3Alt1oppositePropertiesBlock(tComma, oppositeProperties);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock4Alt1oppositePropertiesBlock(tComma, oppositeProperties);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaPropertyBlock3Alt1oppositePropertiesBlockSyntax)newNode;
+                return (MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitMetaPropertyBlock3Alt1oppositePropertiesBlock(this, argument);
+            return visitor.VisitMetaPropertyBlock4Alt1oppositePropertiesBlock(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitMetaPropertyBlock3Alt1oppositePropertiesBlock(this);
+            return visitor.VisitMetaPropertyBlock4Alt1oppositePropertiesBlock(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitMetaPropertyBlock3Alt1oppositePropertiesBlock(this);
+            visitor.VisitMetaPropertyBlock4Alt1oppositePropertiesBlock(this);
         }
     
     }
     
-    public sealed class MetaPropertyBlock3Alt2subsettedPropertiesBlockSyntax : MetaSyntaxNode
+    public sealed class MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _subsettedProperties;
     
-        public MetaPropertyBlock3Alt2subsettedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        public MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public MetaPropertyBlock3Alt2subsettedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -4195,7 +4451,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock3Alt2subsettedPropertiesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4227,57 +4483,57 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock3Alt2subsettedPropertiesBlockSyntax WithTComma(__SyntaxToken tComma)
+        public MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax WithTComma(__SyntaxToken tComma)
         {
             return this.Update(tComma, this.SubsettedProperties);
         }
     
-        public MetaPropertyBlock3Alt2subsettedPropertiesBlockSyntax WithSubsettedProperties(QualifierSyntax subsettedProperties)
+        public MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax WithSubsettedProperties(QualifierSyntax subsettedProperties)
         {
             return this.Update(this.TComma, subsettedProperties);
         }
     
     
-        public MetaPropertyBlock3Alt2subsettedPropertiesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax subsettedProperties)
+        public MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax subsettedProperties)
         {
             if (this.TComma != tComma || this.SubsettedProperties != subsettedProperties)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock3Alt2subsettedPropertiesBlock(tComma, subsettedProperties);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock4Alt2subsettedPropertiesBlock(tComma, subsettedProperties);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaPropertyBlock3Alt2subsettedPropertiesBlockSyntax)newNode;
+                return (MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitMetaPropertyBlock3Alt2subsettedPropertiesBlock(this, argument);
+            return visitor.VisitMetaPropertyBlock4Alt2subsettedPropertiesBlock(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitMetaPropertyBlock3Alt2subsettedPropertiesBlock(this);
+            return visitor.VisitMetaPropertyBlock4Alt2subsettedPropertiesBlock(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitMetaPropertyBlock3Alt2subsettedPropertiesBlock(this);
+            visitor.VisitMetaPropertyBlock4Alt2subsettedPropertiesBlock(this);
         }
     
     }
     
-    public sealed class MetaPropertyBlock3Alt3redefinedPropertiesBlockSyntax : MetaSyntaxNode
+    public sealed class MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _redefinedProperties;
     
-        public MetaPropertyBlock3Alt3redefinedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        public MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public MetaPropertyBlock3Alt3redefinedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -4286,7 +4542,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock3Alt3redefinedPropertiesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4318,43 +4574,43 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock3Alt3redefinedPropertiesBlockSyntax WithTComma(__SyntaxToken tComma)
+        public MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax WithTComma(__SyntaxToken tComma)
         {
             return this.Update(tComma, this.RedefinedProperties);
         }
     
-        public MetaPropertyBlock3Alt3redefinedPropertiesBlockSyntax WithRedefinedProperties(QualifierSyntax redefinedProperties)
+        public MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax WithRedefinedProperties(QualifierSyntax redefinedProperties)
         {
             return this.Update(this.TComma, redefinedProperties);
         }
     
     
-        public MetaPropertyBlock3Alt3redefinedPropertiesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax redefinedProperties)
+        public MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax redefinedProperties)
         {
             if (this.TComma != tComma || this.RedefinedProperties != redefinedProperties)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock3Alt3redefinedPropertiesBlock(tComma, redefinedProperties);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock4Alt3redefinedPropertiesBlock(tComma, redefinedProperties);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaPropertyBlock3Alt3redefinedPropertiesBlockSyntax)newNode;
+                return (MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitMetaPropertyBlock3Alt3redefinedPropertiesBlock(this, argument);
+            return visitor.VisitMetaPropertyBlock4Alt3redefinedPropertiesBlock(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitMetaPropertyBlock3Alt3redefinedPropertiesBlock(this);
+            return visitor.VisitMetaPropertyBlock4Alt3redefinedPropertiesBlock(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitMetaPropertyBlock3Alt3redefinedPropertiesBlock(this);
+            visitor.VisitMetaPropertyBlock4Alt3redefinedPropertiesBlock(this);
         }
     
     }

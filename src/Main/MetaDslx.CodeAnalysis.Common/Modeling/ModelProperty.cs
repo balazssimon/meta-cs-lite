@@ -11,11 +11,11 @@ namespace MetaDslx.Modeling
         private MetaType _declaringType;
         private string _name;
         private MetaType _type;
-        private MetaSymbol? _defaultValue;
+        private object? _defaultValue;
         private ModelPropertyFlags _flags;
         private string? _symbolProperty;
 
-        public ModelProperty(MetaType declaringType, string name, MetaType type, MetaSymbol? defaultValue, ModelPropertyFlags flags, string? symbolProperty = null)
+        public ModelProperty(MetaType declaringType, string name, MetaType type, object? defaultValue, ModelPropertyFlags flags, string? symbolProperty = null)
         {
             _declaringType = declaringType;
             _name = name;
@@ -32,7 +32,7 @@ namespace MetaDslx.Modeling
         public string QualifiedName => $"{_declaringType.Name}.{_name}";
         public ModelPropertyFlags Flags => _flags;
         public MetaType Type => _type;
-        public MetaSymbol? DefaultValue => _defaultValue;
+        public object? DefaultValue => _defaultValue;
         public string? SymbolProperty => _symbolProperty;
         public bool IsDerived => _flags.HasFlag(ModelPropertyFlags.Derived);
         public bool IsDerivedUnion => _flags.HasFlag(ModelPropertyFlags.DerivedUnion);

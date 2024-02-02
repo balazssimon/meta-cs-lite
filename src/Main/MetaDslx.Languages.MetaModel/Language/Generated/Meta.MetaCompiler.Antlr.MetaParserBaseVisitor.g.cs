@@ -234,6 +234,16 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_PrimitiveType([NotNull] MetaParser.Pr_PrimitiveTypeContext context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_Value"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_Value([NotNull] MetaParser.Pr_ValueContext context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_Name"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -400,6 +410,17 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_MetaPropertyBlock1Alt2([NotNull] MetaParser.Pr_MetaPropertyBlock1Alt2Context context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock1Alt3</c>
+	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock1"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_MetaPropertyBlock1Alt3([NotNull] MetaParser.Pr_MetaPropertyBlock1Alt3Context context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock2Alt1</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock2"/>.
 	/// <para>
@@ -422,8 +443,7 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_MetaPropertyBlock2Alt2([NotNull] MetaParser.Pr_MetaPropertyBlock2Alt2Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock3Alt1</c>
-	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock3"/>.
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaPropertyBlock3"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -431,10 +451,10 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaPropertyBlock3Alt1([NotNull] MetaParser.Pr_MetaPropertyBlock3Alt1Context context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaPropertyBlock3([NotNull] MetaParser.Pr_MetaPropertyBlock3Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock3Alt2</c>
-	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock3"/>.
+	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock4Alt1</c>
+	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock4"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -442,10 +462,10 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaPropertyBlock3Alt2([NotNull] MetaParser.Pr_MetaPropertyBlock3Alt2Context context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaPropertyBlock4Alt1([NotNull] MetaParser.Pr_MetaPropertyBlock4Alt1Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock3Alt3</c>
-	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock3"/>.
+	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock4Alt2</c>
+	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock4"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -453,9 +473,10 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaPropertyBlock3Alt3([NotNull] MetaParser.Pr_MetaPropertyBlock3Alt3Context context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaPropertyBlock4Alt2([NotNull] MetaParser.Pr_MetaPropertyBlock4Alt2Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaPropertyBlock3Alt1oppositePropertiesBlock"/>.
+	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock4Alt3</c>
+	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock4"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -463,9 +484,9 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaPropertyBlock3Alt1oppositePropertiesBlock([NotNull] MetaParser.Pr_MetaPropertyBlock3Alt1oppositePropertiesBlockContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaPropertyBlock4Alt3([NotNull] MetaParser.Pr_MetaPropertyBlock4Alt3Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaPropertyBlock3Alt2subsettedPropertiesBlock"/>.
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaPropertyBlock4Alt1oppositePropertiesBlock"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -473,9 +494,9 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaPropertyBlock3Alt2subsettedPropertiesBlock([NotNull] MetaParser.Pr_MetaPropertyBlock3Alt2subsettedPropertiesBlockContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaPropertyBlock4Alt1oppositePropertiesBlock([NotNull] MetaParser.Pr_MetaPropertyBlock4Alt1oppositePropertiesBlockContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaPropertyBlock3Alt3redefinedPropertiesBlock"/>.
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaPropertyBlock4Alt2subsettedPropertiesBlock"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -483,7 +504,17 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaPropertyBlock3Alt3redefinedPropertiesBlock([NotNull] MetaParser.Pr_MetaPropertyBlock3Alt3redefinedPropertiesBlockContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaPropertyBlock4Alt2subsettedPropertiesBlock([NotNull] MetaParser.Pr_MetaPropertyBlock4Alt2subsettedPropertiesBlockContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaPropertyBlock4Alt3redefinedPropertiesBlock"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_MetaPropertyBlock4Alt3redefinedPropertiesBlock([NotNull] MetaParser.Pr_MetaPropertyBlock4Alt3redefinedPropertiesBlockContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaOperationBlock1"/>.
 	/// <para>

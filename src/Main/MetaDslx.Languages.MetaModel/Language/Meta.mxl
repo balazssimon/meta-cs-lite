@@ -18,7 +18,7 @@ Main returns MetaNamespace:
 
 Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';
 
-MetaModel: 'metamodel' Name ';' ('uri' uri=TString ';')?;
+MetaModel: 'metamodel' Name ('=' uri=TString)? ';';
 
 MetaDeclaration: MetaConstant | MetaEnum | MetaClass;
 
@@ -71,4 +71,4 @@ PrimitiveType returns type
 	| 'void'
 	;
 
-Value returns symbol: TString | TInteger | TDecimal; 
+Value returns symbol: TString | TInteger | TDecimal | KTrue | KFalse | KNull; 

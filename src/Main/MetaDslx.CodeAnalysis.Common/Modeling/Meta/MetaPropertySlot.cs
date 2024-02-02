@@ -8,7 +8,7 @@ namespace MetaDslx.Modeling.Meta
 {
     public abstract class MetaPropertySlot<TType, TProperty, TOperation>
     {
-        public MetaPropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags)
+        public MetaPropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags)
         {
             SlotProperty = slotProperty;
             SlotProperties = slotProperties;
@@ -19,7 +19,7 @@ namespace MetaDslx.Modeling.Meta
 
         public MetaProperty<TType, TProperty, TOperation> SlotProperty { get; }
         public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> SlotProperties { get; }
-        public MetaSymbol DefaultValue { get; }
+        public object? DefaultValue { get; }
         public ModelPropertyFlags Flags { get; }
         public ModelPropertyFlags KeyFlags { get; }
     }

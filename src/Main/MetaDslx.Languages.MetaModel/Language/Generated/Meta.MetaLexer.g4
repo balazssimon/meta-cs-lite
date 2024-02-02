@@ -1,5 +1,8 @@
 lexer grammar MetaLexer;
 
+LR_KNull: 'null';
+LR_KTrue: 'true';
+LR_KFalse: 'false';
 LR_TComma: ',';
 LR_TUtf8Bom: '\u00ef' '\u00bb' '\u00bf' -> channel(HIDDEN);
 LR_KNamespace: 'namespace';
@@ -33,11 +36,12 @@ LR_KDecimal: 'decimal';
 LR_KType: 'type';
 LR_KSymbol: 'symbol';
 LR_KVoid: 'void';
-LR_KUri: 'uri';
+LR_TEq: '=';
 LR_TLBrace: '{';
 LR_TRBrace: '}';
 LR_TDollar: '$';
 LR_TColon: ':';
+LR_KReadonly: 'readonly';
 LR_KContains: 'contains';
 LR_KDerived: 'derived';
 LR_KOpposite: 'opposite';

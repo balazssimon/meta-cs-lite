@@ -17,6 +17,10 @@ Qualifier returns void: Identifier ('.' Identifier)*;
 [Identifier]
 Identifier returns void: TIdentifier | TVerbatimIdentifier;
 
+token KNull: 'null';
+token KTrue returns bool: 'true';
+token KFalse returns bool: 'false';
+
 [Number]
 token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
 
