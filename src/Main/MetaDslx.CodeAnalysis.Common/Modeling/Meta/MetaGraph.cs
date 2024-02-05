@@ -19,16 +19,20 @@ namespace MetaDslx.Modeling.Meta
         private HashSet<TType> _classTypes;
         private Dictionary<TType, MetaClass<TType, TProperty, TOperation>> _classMap;
         private ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> _classes;
+        private DiagnosticBag _diagnostics;
 
         public MetaGraph(IEnumerable<TType> classTypes)
         {
             _classTypes = new HashSet<TType>(classTypes);
+            _diagnostics = new DiagnosticBag();
         }
 
         public MetaClass<TType, TProperty, TOperation> GetMetaClass(TType classType)
         {
             return _classMap[classType];
         }
+
+        public ImmutableArray<Diagnostic> Diagnostics => _diagnostics.ToReadOnly();
 
         public ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> ClassesInTopologicalOrder => Compute();
 
@@ -47,6 +51,7 @@ namespace MetaDslx.Modeling.Meta
                 ComputeSlots(cls);
                 ComputeOperations(cls);
             }
+            Validate();
             return _classes;
         }
 
@@ -541,6 +546,26 @@ namespace MetaDslx.Modeling.Meta
                 modelOperationInfos.Add(op, opInfo);
             }
             cls.ModelOperationInfos = modelOperationInfos.ToImmutable();
+        }
+
+        private void Validate()
+        {
+            foreach (var cls in _classes)
+            {
+                foreach (var prop in cls.DeclaredProperties)
+                {
+                    var info = cls.ModelPropertyInfos[prop];
+                    foreach (var oprop in info.OppositeProperties)
+                    {
+                        var ocls = oprop.DeclaringType;
+                        var oinfo = ocls.ModelPropertyInfos[oprop];
+                        if (!oinfo.OppositeProperties.Contains(prop))
+                        {
+                            _diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_NonMutualOpposite, prop.Location, prop, oprop));
+                        }
+                    }
+                }
+            }
         }
 
         protected abstract MetaClass<TType, TProperty, TOperation> MakeClass(TType classType);

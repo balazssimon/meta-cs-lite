@@ -27,6 +27,8 @@ namespace MetaDslx.Languages.MetaModel.Meta
             _originalFlags = flags;
         }
 
+        public override Location? Location => UnderlyingProperty.MLocation;
+
         public override string Name => UnderlyingProperty.Name;
 
         public override bool HasSetter => true;

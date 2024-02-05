@@ -5048,18 +5048,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
     internal class MetaPropertyBlock1Alt1Green : MetaPropertyBlock1Green
     {
         internal static new readonly MetaPropertyBlock1Alt1Green __Missing = new MetaPropertyBlock1Alt1Green();
-        private __InternalSyntaxToken _isReadOnly;
         private __InternalSyntaxToken _isContainment;
     
-        public MetaPropertyBlock1Alt1Green(MetaSyntaxKind kind, __InternalSyntaxToken isReadOnly, __InternalSyntaxToken isContainment)
+        public MetaPropertyBlock1Alt1Green(MetaSyntaxKind kind, __InternalSyntaxToken isContainment)
             : base(kind, null, null)
         {
-            SlotCount = 2;
-            if (isReadOnly != null)
-            {
-                AdjustFlagsAndWidth(isReadOnly);
-                _isReadOnly = isReadOnly;
-            }
+            SlotCount = 1;
             if (isContainment != null)
             {
                 AdjustFlagsAndWidth(isContainment);
@@ -5067,15 +5061,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public MetaPropertyBlock1Alt1Green(MetaSyntaxKind kind, __InternalSyntaxToken isReadOnly, __InternalSyntaxToken isContainment, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public MetaPropertyBlock1Alt1Green(MetaSyntaxKind kind, __InternalSyntaxToken isContainment, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 2;
-            if (isReadOnly != null)
-            {
-                AdjustFlagsAndWidth(isReadOnly);
-                _isReadOnly = isReadOnly;
-            }
+            SlotCount = 1;
             if (isContainment != null)
             {
                 AdjustFlagsAndWidth(isContainment);
@@ -5089,7 +5078,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public __InternalSyntaxToken IsReadOnly { get { return _isReadOnly; } }
         public __InternalSyntaxToken IsContainment { get { return _isContainment; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -5101,8 +5089,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
             switch (index)
             {
-                case 0: return _isReadOnly;
-                case 1: return _isContainment;
+                case 0: return _isContainment;
                 default: return null;
             }
         }
@@ -5113,25 +5100,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new MetaPropertyBlock1Alt1Green(this.Kind, _isReadOnly, _isContainment, diagnostics, this.GetAnnotations());
+            return new MetaPropertyBlock1Alt1Green(this.Kind, _isContainment, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new MetaPropertyBlock1Alt1Green(this.Kind, _isReadOnly, _isContainment, this.GetDiagnostics(), annotations);
+            return new MetaPropertyBlock1Alt1Green(this.Kind, _isContainment, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new MetaPropertyBlock1Alt1Green(this.Kind, _isReadOnly, _isContainment, this.GetDiagnostics(), this.GetAnnotations());
+            return new MetaPropertyBlock1Alt1Green(this.Kind, _isContainment, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public MetaPropertyBlock1Alt1Green Update(__InternalSyntaxToken isReadOnly, __InternalSyntaxToken isContainment)
+        public MetaPropertyBlock1Alt1Green Update(__InternalSyntaxToken isContainment)
         {
-            if (_isReadOnly != isReadOnly || _isContainment != isContainment)
+            if (_isContainment != isContainment)
             {
-                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt1(isReadOnly, isContainment);
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt1(isContainment);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);

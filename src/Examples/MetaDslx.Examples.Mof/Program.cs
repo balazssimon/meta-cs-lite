@@ -26,6 +26,6 @@ if (diagnostics.Length == 0)
 }
 
 var writeOptions = new MofXmiWriteOptions();
-writeOptions.ModelToUriMap.Add(uml, @"..\..\..\UML2.xmi");
-writeOptions.ModelToUriMap.Add(primitiveTypes, @"..\..\..\PrimitiveTypes2.xmi");
+writeOptions.ModelToFileMap.Add(uml, @"..\..\..\UML2.xmi");
+writeOptions.ModelToFileMap.Add(primitiveTypes, @"..\..\..\PrimitiveTypes2.xmi");
 xmi.WriteModelGroupToFile(modelGroup, writeOptions);

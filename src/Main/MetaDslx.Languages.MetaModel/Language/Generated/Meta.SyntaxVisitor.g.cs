@@ -1321,9 +1321,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 
         public virtual SyntaxNode VisitMetaPropertyBlock1Alt1(MetaPropertyBlock1Alt1Syntax node)
         {
-            var isReadOnly = this.VisitToken(node.IsReadOnly);
             var isContainment = this.VisitToken(node.IsContainment);
-            return node.Update(isReadOnly, isContainment);
+            return node.Update(isContainment);
         }
 
         public virtual SyntaxNode VisitMetaPropertyBlock1Alt2(MetaPropertyBlock1Alt2Syntax node)

@@ -71,7 +71,7 @@ class MetaProperty : MetaDeclaration
 	bool IsDerived;
 	bool IsReadOnly;
 	object? DefaultValue;
-	MetaProperty[] OppositeProperties opposite OppositeProperties;
+	MetaProperty[] OppositeProperties;// opposite OppositeProperties; -> don't automatically map it to the other side
 	MetaProperty[] SubsettedProperties;
 	MetaProperty[] RedefinedProperties;
 }

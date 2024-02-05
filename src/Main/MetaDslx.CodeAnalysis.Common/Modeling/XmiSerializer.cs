@@ -628,57 +628,25 @@ namespace MetaDslx.Modeling
                 if (prop.IsContainment && prop.IsModelObject)
                 {
                     var slot = obj.MGetSlot(prop);
-                    bool singleValue = prop.IsCollection && slot.Values.Take(2).Count() == 1;
-                    if (prop.IsCollection && !singleValue)
+                    foreach (IModelObject child in slot.Values)
                     {
-                        var children = slot.AsCollection();
-                        if (children != null)
+                        if (child == null) continue;
+                        if (written.Add(child))
                         {
-                            foreach (IModelObject child in children)
-                            {
-                                if (child == null) continue;
-                                if (written.Add(child))
-                                {
-                                    this.WriteObject(child, prop.Name);
-                                }
-                                else
-                                {
-                                    _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
-                                    if (child.MModel == _currentModel)
-                                    {
-                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.MId);
-                                    }
-                                    else
-                                    {
-                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(child));
-                                    }
-                                    _currentXmlWriter.WriteEndElement();
-                                }
-                            }
+                            this.WriteObject(child, prop.Name);
                         }
-                    }
-                    else
-                    {
-                        var child = (singleValue ? slot.AsCollection()[0] : slot.AsSingle()?.Value) as IModelObject;
-                        if (child != null)
+                        else
                         {
-                            if (written.Add(child))
+                            _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
+                            if (child.MModel == _currentModel)
                             {
-                                this.WriteObject(child, prop.Name);
+                                _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.MId);
                             }
                             else
                             {
-                                _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
-                                if (child.MModel == _currentModel)
-                                {
-                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.MId);
-                                }
-                                else
-                                {
-                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(child));
-                                }
-                                _currentXmlWriter.WriteEndElement();
+                                _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(child));
                             }
+                            _currentXmlWriter.WriteEndElement();
                         }
                     }
                 }
@@ -1124,7 +1092,6 @@ namespace MetaDslx.Modeling
                         }
                         else
                         {
-
                             try
                             {
                                 parentSlot.Add(obj);

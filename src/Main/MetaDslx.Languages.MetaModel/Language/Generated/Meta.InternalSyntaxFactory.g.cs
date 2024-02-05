@@ -960,18 +960,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock1Alt1Green MetaPropertyBlock1Alt1(__InternalSyntaxToken isReadOnly, __InternalSyntaxToken isContainment)
+        internal MetaPropertyBlock1Alt1Green MetaPropertyBlock1Alt1(__InternalSyntaxToken isContainment)
         {
             #if DEBUG
-                if (isReadOnly is not null && (isReadOnly.RawKind != (int)MetaSyntaxKind.KReadonly)) throw new __ArgumentException(nameof(isReadOnly));
                 if (isContainment is null) throw new __ArgumentNullException(nameof(isContainment));
                 if (isContainment.RawKind != (int)MetaSyntaxKind.KContains) throw new __ArgumentException(nameof(isContainment));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt1, isReadOnly, isContainment, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt1, isContainment, out hash);
             if (cached != null) return (MetaPropertyBlock1Alt1Green)cached;
         
-            var result = new MetaPropertyBlock1Alt1Green(MetaSyntaxKind.MetaPropertyBlock1Alt1, isReadOnly, isContainment);
+            var result = new MetaPropertyBlock1Alt1Green(MetaSyntaxKind.MetaPropertyBlock1Alt1, isContainment);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

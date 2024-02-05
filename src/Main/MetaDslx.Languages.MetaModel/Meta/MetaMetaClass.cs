@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Symbols;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
@@ -22,6 +23,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
         }
 
         public MetaClass UnderlyingClass => (MetaClass)UnderlyingType.OriginalModelObject;
+        public override Location? Location => UnderlyingClass.MLocation;
 
         public override string Name => UnderlyingClass.Name;
 

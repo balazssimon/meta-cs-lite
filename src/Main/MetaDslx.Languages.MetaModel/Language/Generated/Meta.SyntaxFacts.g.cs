@@ -63,9 +63,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
-                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
+                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
@@ -147,9 +147,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
                 case MetaSyntaxKind.TColon:
-                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
+                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
@@ -220,9 +220,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
                 case MetaSyntaxKind.TColon:
-                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
+                case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
@@ -324,12 +324,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.TDollar;
                 case ":": 
                     return MetaSyntaxKind.TColon;
-                case "readonly": 
-                    return MetaSyntaxKind.KReadonly;
                 case "contains": 
                     return MetaSyntaxKind.KContains;
                 case "derived": 
                     return MetaSyntaxKind.KDerived;
+                case "readonly": 
+                    return MetaSyntaxKind.KReadonly;
                 case "opposite": 
                     return MetaSyntaxKind.KOpposite;
                 case "subsets": 
@@ -459,12 +459,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "TDollar";
                 case MetaSyntaxKind.TColon: 
                     return "TColon";
-                case MetaSyntaxKind.KReadonly: 
-                    return "KReadonly";
                 case MetaSyntaxKind.KContains: 
                     return "KContains";
                 case MetaSyntaxKind.KDerived: 
                     return "KDerived";
+                case MetaSyntaxKind.KReadonly: 
+                    return "KReadonly";
                 case MetaSyntaxKind.KOpposite: 
                     return "KOpposite";
                 case MetaSyntaxKind.KSubsets: 
@@ -697,12 +697,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "$";
                 case MetaSyntaxKind.TColon: 
                     return ":";
-                case MetaSyntaxKind.KReadonly: 
-                    return "readonly";
                 case MetaSyntaxKind.KContains: 
                     return "contains";
                 case MetaSyntaxKind.KDerived: 
                     return "derived";
+                case MetaSyntaxKind.KReadonly: 
+                    return "readonly";
                 case MetaSyntaxKind.KOpposite: 
                     return "opposite";
                 case MetaSyntaxKind.KSubsets: 
@@ -774,9 +774,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType: 
                 case MetaSyntaxKind.KSymbol: 
                 case MetaSyntaxKind.KVoid: 
-                case MetaSyntaxKind.KReadonly: 
                 case MetaSyntaxKind.KContains: 
                 case MetaSyntaxKind.KDerived: 
+                case MetaSyntaxKind.KReadonly: 
                 case MetaSyntaxKind.KOpposite: 
                 case MetaSyntaxKind.KSubsets: 
                 case MetaSyntaxKind.KRedefines: 
@@ -821,9 +821,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             yield return MetaSyntaxKind.KType;
             yield return MetaSyntaxKind.KSymbol;
             yield return MetaSyntaxKind.KVoid;
-            yield return MetaSyntaxKind.KReadonly;
             yield return MetaSyntaxKind.KContains;
             yield return MetaSyntaxKind.KDerived;
+            yield return MetaSyntaxKind.KReadonly;
             yield return MetaSyntaxKind.KOpposite;
             yield return MetaSyntaxKind.KSubsets;
             yield return MetaSyntaxKind.KRedefines;
@@ -895,12 +895,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KSymbol;
                 case "void": 
                     return MetaSyntaxKind.KVoid;
-                case "readonly": 
-                    return MetaSyntaxKind.KReadonly;
                 case "contains": 
                     return MetaSyntaxKind.KContains;
                 case "derived": 
                     return MetaSyntaxKind.KDerived;
+                case "readonly": 
+                    return MetaSyntaxKind.KReadonly;
                 case "opposite": 
                     return MetaSyntaxKind.KOpposite;
                 case "subsets": 

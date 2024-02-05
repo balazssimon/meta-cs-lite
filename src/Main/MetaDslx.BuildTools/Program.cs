@@ -239,9 +239,17 @@ namespace MetaDslx.BuildTools
                     {
                         var isMetaMetaModel = modelFilePath?.Contains("MetaDslx.Languages.MetaModel") ?? false;
                         var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(isMetaMetaModel, model, mxm);
-                        var csharpCode = generator.Generate();
-                        var csharpFilePath = $"{modelFilePath}.cs";
-                        await AddGeneratedFile(csharpFilePath, csharpCode);
+                        var genDiagnostics = generator.Diagnostics;
+                        foreach (var diag in genDiagnostics)
+                        {
+                            await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+                        }
+                        if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                        {
+                            var csharpCode = generator.Generate();
+                            var csharpFilePath = $"{modelFilePath}.cs";
+                            await AddGeneratedFile(csharpFilePath, csharpCode);
+                        }
                     }
                 }
                 mxmTrees.Free();

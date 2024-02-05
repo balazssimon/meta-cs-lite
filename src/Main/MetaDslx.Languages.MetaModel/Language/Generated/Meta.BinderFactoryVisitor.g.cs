@@ -1114,28 +1114,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitMetaPropertyBlock1Alt1(MetaPropertyBlock1Alt1Syntax node)
         {
-            if (node.IsReadOnly.GetMetaKind() != MetaSyntaxKind.None)
-            {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsReadOnly", values: ImmutableArray.Create<object?>(true));
-                this.Begin(__annot0, node.IsReadOnly);
-                try
-                {
-                    //this.VisitToken(node.IsReadOnly);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
-            }
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsContainment", values: ImmutableArray.Create<object?>(true));
-            this.Begin(__annot1, node.IsContainment);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsContainment", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsContainment);
             try
             {
                 //this.VisitToken(node.IsContainment);
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot0);
             }
         }
 

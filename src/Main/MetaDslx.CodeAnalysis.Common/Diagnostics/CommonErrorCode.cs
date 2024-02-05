@@ -21,7 +21,12 @@ namespace MetaDslx.CodeAnalysis
         /// <summary>
         /// The following meta types are not used from the imported meta model '{0}': {1}
         /// </summary>
-        public static readonly DiagnosticDescriptor WRN_UnusedMetaTypes = DiagnosticDescriptor.Warning(nameof(WRN_UnusedMetaTypes), "Unsed meta types", "The following meta types are not used from the imported meta model '{0}': {1}");
+        public static readonly DiagnosticDescriptor WRN_UnusedMetaTypes = DiagnosticDescriptor.Warning(nameof(WRN_UnusedMetaTypes), "Unused meta types", "The following meta types are not used from the imported meta model '{0}': {1}");
+
+        /// <summary>
+        /// Properties '{0}' and '{1}' are not mutually opposite of each other
+        /// </summary>
+        public static readonly DiagnosticDescriptor WRN_NonMutualOpposite = DiagnosticDescriptor.Warning(nameof(WRN_NonMutualOpposite), "Opposite mismatch", "Properties '{0}' and '{1}' are not mutually opposite of each other");
 
         /// <summary>
         /// Provided source code kind is unsupported or invalid: '{0}'

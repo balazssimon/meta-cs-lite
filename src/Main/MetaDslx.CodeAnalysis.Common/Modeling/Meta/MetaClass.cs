@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
@@ -13,6 +14,7 @@ namespace MetaDslx.Modeling.Meta
         }
 
         public TType UnderlyingType { get; }
+        public abstract Location? Location { get; }
 
         public abstract string Name { get; }
         public abstract object? SymbolType { get; set; }

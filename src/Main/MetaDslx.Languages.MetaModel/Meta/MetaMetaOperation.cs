@@ -1,4 +1,5 @@
-﻿using MetaDslx.Languages.MetaModel.Model;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace MetaDslx.Languages.MetaModel.Meta
             : base(declaringType, underlyingOperation)
         {
         }
+
+        public override Location? Location => UnderlyingOperation.MLocation;
 
         public override string Name => UnderlyingOperation.Name;
 

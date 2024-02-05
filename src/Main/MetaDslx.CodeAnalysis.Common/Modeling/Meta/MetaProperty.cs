@@ -15,6 +15,7 @@ namespace MetaDslx.Modeling.Meta
 
         public MetaClass<TType, TProperty, TOperation> DeclaringType { get; }
         public TProperty UnderlyingProperty { get; }
+        public abstract Location? Location { get; }
 
         public abstract string Name { get; }
         public abstract TType OriginalType { get; }

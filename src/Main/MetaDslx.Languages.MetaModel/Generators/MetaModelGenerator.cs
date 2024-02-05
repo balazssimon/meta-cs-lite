@@ -47,6 +47,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
         public ImmutableArray<MetaEnum> Enums => _enums;
         public ImmutableArray<IModelObject> Objects => _objects;
         public MetaMetaGraph Graph => _graph;
+        public ImmutableArray<MetaDslx.CodeAnalysis.Diagnostic> Diagnostics => _graph.Diagnostics;
 
         public string ToCSharp(object? type)
         {

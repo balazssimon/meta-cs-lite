@@ -639,17 +639,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return (MetaClassBlock3Block1Alt2Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaClassBlock3Block1Alt2((InternalSyntax.MetaOperationGreen)operations.Green).CreateRed();
         }
 
-        public MetaPropertyBlock1Alt1Syntax MetaPropertyBlock1Alt1(__SyntaxToken isReadOnly, __SyntaxToken isContainment)
+        public MetaPropertyBlock1Alt1Syntax MetaPropertyBlock1Alt1(__SyntaxToken isContainment)
         {
-            if (isReadOnly.RawKind != (int)__InternalSyntaxKind.None && (isReadOnly.RawKind != (int)MetaSyntaxKind.KReadonly)) throw new __ArgumentException(nameof(isReadOnly));
             if (isContainment.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isContainment));
             if (isContainment.RawKind != (int)MetaSyntaxKind.KContains) throw new __ArgumentException(nameof(isContainment));
-            return (MetaPropertyBlock1Alt1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt1((__InternalSyntaxToken)isReadOnly.Node, (__InternalSyntaxToken)isContainment.Node).CreateRed();
+            return (MetaPropertyBlock1Alt1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt1((__InternalSyntaxToken)isContainment.Node).CreateRed();
         }
         
         public MetaPropertyBlock1Alt1Syntax MetaPropertyBlock1Alt1()
         {
-            return this.MetaPropertyBlock1Alt1(default, this.Token(MetaSyntaxKind.KContains));
+            return this.MetaPropertyBlock1Alt1(this.Token(MetaSyntaxKind.KContains));
         }
 
         public MetaPropertyBlock1Alt2Syntax MetaPropertyBlock1Alt2(__SyntaxToken isDerived)

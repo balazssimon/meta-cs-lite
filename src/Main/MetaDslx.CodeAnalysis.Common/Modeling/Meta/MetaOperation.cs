@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +15,7 @@ namespace MetaDslx.Modeling.Meta
 
         public MetaClass<TType, TProperty, TOperation> DeclaringType { get; }
         public TOperation UnderlyingOperation { get; }
+        public abstract Location? Location { get; }
 
         public abstract string Name { get; }
         public abstract string Signature { get; }

@@ -615,9 +615,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             public override GreenNode? VisitPr_MetaPropertyBlock1Alt1(MetaParser.Pr_MetaPropertyBlock1Alt1Context? context)
             {
                 if (context == null) return MetaPropertyBlock1Alt1Green.__Missing;
-                var isReadOnly = (InternalSyntaxToken?)this.VisitTerminal(context.E_isReadOnly);
                 var isContainment = (InternalSyntaxToken?)this.VisitTerminal(context.E_isContainment, MetaSyntaxKind.KContains);
-                return _factory.MetaPropertyBlock1Alt1(isReadOnly, isContainment);
+                return _factory.MetaPropertyBlock1Alt1(isContainment);
             }
             
             public override GreenNode? VisitPr_MetaPropertyBlock1Alt2(MetaParser.Pr_MetaPropertyBlock1Alt2Context? context)
@@ -630,7 +629,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             public override GreenNode? VisitPr_MetaPropertyBlock1Alt3(MetaParser.Pr_MetaPropertyBlock1Alt3Context? context)
             {
                 if (context == null) return MetaPropertyBlock1Alt3Green.__Missing;
-                var isReadOnly = (InternalSyntaxToken?)this.VisitTerminal(context.E_isReadOnly1, MetaSyntaxKind.KReadonly);
+                var isReadOnly = (InternalSyntaxToken?)this.VisitTerminal(context.E_isReadOnly, MetaSyntaxKind.KReadonly);
                 return _factory.MetaPropertyBlock1Alt3(isReadOnly);
             }
             

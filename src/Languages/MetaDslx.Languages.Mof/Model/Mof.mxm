@@ -81,7 +81,7 @@ abstract class $Namespace : NamedElement
 abstract class Classifier $Type : Type, Namespace
 {
 	bool IsAbstract;
-	readonly contains Generalization[] Generalization opposite Generalization.General, Generalization.Specific;
+	contains Generalization[] Generalization opposite Generalization.Specific;
 }
 
 class Package $Namespace : Namespace, PackageableElement
@@ -218,7 +218,7 @@ enum ParameterDirectionKind
 
 class Generalization : DirectedRelationship
 {
-	Classifier General subsets DirectedRelationship.Target opposite Classifier.Generalization;
+	Classifier General subsets DirectedRelationship.Target;
 	Classifier Specific subsets DirectedRelationship.Source, Element.Owner opposite Classifier.Generalization;
 }
 

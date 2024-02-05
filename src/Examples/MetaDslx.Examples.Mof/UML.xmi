@@ -5585,31 +5585,31 @@ endif)</body>
                   </ownedRule>
                   <ownedParameter xmi:type="uml:Parameter" xmi:id="State-redefinitionContext.1-result" name="result" direction="return" type="Classifier"/>
                </ownedOperation>
-               <ownedOperation xmi:type="uml:Operation" xmi:id="State-isConsistentWith" name="isConsistentWith" isQuery="true" bodyCondition="State-isConsistentWith-spec">
-                  <precondition xmi:idref="State-isConsistentWith-pre"/>
+               <ownedOperation xmi:type="uml:Operation" xmi:id="Vertex-State-isConsistentWith" name="isConsistentWith" isQuery="true" bodyCondition="Vertex-State-isConsistentWith-spec">
+                  <precondition xmi:idref="Vertex-State-isConsistentWith-pre"/>
                   <redefinedOperation xmi:idref="RedefinableElement-isConsistentWith"/>
-                  <ownedComment xmi:type="uml:Comment" xmi:id="State-isConsistentWith-_ownedComment.0" body="The query isRedefinitionContextValid specifies that the redefinition context of a redefining Vertex is properly related to the redefinition context of the redefined Vertex if the owner of the redefining Vertex is a redefinition of the owner of the redefined Vertex. Note that the owner of a Vertex may be a Region, a StateMachine (for a connectionPoint Pseudostate), or a State (for a connectionPoint Pseudostate or a connection ConnectionPointReference), all of which are RedefinableElements.">
-                     <annotatedElement xmi:idref="State-isConsistentWith"/>
+                  <ownedComment xmi:type="uml:Comment" xmi:id="Vertex-State-isConsistentWith-_ownedComment.0" body="The query isRedefinitionContextValid specifies that the redefinition context of a redefining Vertex is properly related to the redefinition context of the redefined Vertex if the owner of the redefining Vertex is a redefinition of the owner of the redefined Vertex. Note that the owner of a Vertex may be a Region, a StateMachine (for a connectionPoint Pseudostate), or a State (for a connectionPoint Pseudostate or a connection ConnectionPointReference), all of which are RedefinableElements.">
+                     <annotatedElement xmi:idref="Vertex-State-isConsistentWith"/>
                   </ownedComment>
-                  <ownedRule xmi:type="uml:Constraint" xmi:id="State-isConsistentWith-pre" name="pre">
-                     <constrainedElement xmi:idref="State-isConsistentWith"/>
-                     <specification xmi:type="uml:OpaqueExpression" xmi:id="State-isConsistentWith-pre-_specification">
+                  <ownedRule xmi:type="uml:Constraint" xmi:id="Vertex-State-isConsistentWith-pre" name="pre">
+                     <constrainedElement xmi:idref="Vertex-State-isConsistentWith"/>
+                     <specification xmi:type="uml:OpaqueExpression" xmi:id="Vertex-State-isConsistentWith-pre-_specification">
                         <body>redefiningElement.isRedefinitionContextValid(self)</body>
                         <language>OCL</language>
                      </specification>
                   </ownedRule>
-                  <ownedRule xmi:type="uml:Constraint" xmi:id="State-isConsistentWith-spec" name="spec">
-                     <constrainedElement xmi:idref="State-isConsistentWith"/>
-                     <specification xmi:type="uml:OpaqueExpression" xmi:id="State-isConsistentWith-spec-_specification">
+                  <ownedRule xmi:type="uml:Constraint" xmi:id="Vertex-State-isConsistentWith-spec" name="spec">
+                     <constrainedElement xmi:idref="Vertex-State-isConsistentWith"/>
+                     <specification xmi:type="uml:OpaqueExpression" xmi:id="Vertex-State-isConsistentWith-spec-_specification">
                         <body>result = (redefinedElement.oclIsKindOf(Vertex) and
   owner.oclAsType(RedefinableElement).redefinedElement-&gt;includes(redefinedElement.owner))</body>
                         <language>OCL</language>
                      </specification>
                   </ownedRule>
-                  <ownedParameter xmi:type="uml:Parameter" xmi:id="State-isConsistentWith-result" name="result" direction="return">
+                  <ownedParameter xmi:type="uml:Parameter" xmi:id="Vertex-State-isConsistentWith-result" name="result" direction="return">
                      <type href="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean"/>
                   </ownedParameter>
-                  <ownedParameter xmi:type="uml:Parameter" xmi:id="State-isConsistentWith-redefiningElement" name="redefiningElement" type="RedefinableElement"/>
+                  <ownedParameter xmi:type="uml:Parameter" xmi:id="Vertex-State-isConsistentWith-redefiningElement" name="redefiningElement" type="RedefinableElement"/>
                </ownedOperation>
             </packagedElement>
             <packagedElement xmi:type="uml:Enumeration" xmi:id="PseudostateKind" name="PseudostateKind">
@@ -18089,5 +18089,5 @@ Sequence{1..result-&gt;size()}-&gt;forAll(i |
             </packagedElement>
          </packagedElement>
 	</uml:Package>
-  <mofext:Tag xmi:id="UML_mofTag0" xmi:type="mofext:Tag" name="org.omg.xmi.nsPrefix" element="UML"/>
+  <mofext:Tag xmi:id="UML_mofTag0" xmi:type="mofext:Tag" name="org.omg.xmi.nsPrefix" element="_0"/>
 </xmi:XMI>

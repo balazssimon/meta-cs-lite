@@ -3919,22 +3919,13 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     
-        public __SyntaxToken IsReadOnly 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt1Green)this.Green;
-            var greenToken = green.IsReadOnly;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-            } 
-        }
         public __SyntaxToken IsContainment 
         { 
             get
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt1Green)this.Green;
             var greenToken = green.IsContainment;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
         }
     
@@ -3954,22 +3945,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock1Alt1Syntax WithIsReadOnly(__SyntaxToken isReadOnly)
-        {
-            return this.Update(isReadOnly, this.IsContainment);
-        }
-    
         public MetaPropertyBlock1Alt1Syntax WithIsContainment(__SyntaxToken isContainment)
         {
-            return this.Update(this.IsReadOnly, isContainment);
+            return this.Update(isContainment);
         }
     
     
-        public MetaPropertyBlock1Alt1Syntax Update(__SyntaxToken isReadOnly, __SyntaxToken isContainment)
+        public MetaPropertyBlock1Alt1Syntax Update(__SyntaxToken isContainment)
         {
-            if (this.IsReadOnly != isReadOnly || this.IsContainment != isContainment)
+            if (this.IsContainment != isContainment)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt1(isReadOnly, isContainment);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt1(isContainment);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
