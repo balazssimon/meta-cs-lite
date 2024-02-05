@@ -22,7 +22,7 @@ namespace MetaDslx.LanguageServer
         private readonly DocumentSelector _documentSelector = new DocumentSelector(
             new DocumentFilter()
             {
-                Pattern = "**/*.mgen"
+                Pattern = "**/*.mxg"
             }
         );
 
@@ -77,7 +77,7 @@ namespace MetaDslx.LanguageServer
 
         TextDocumentAttributes ITextDocumentIdentifier.GetTextDocumentAttributes(DocumentUri uri)
         {
-            return new TextDocumentAttributes(uri, "mgen");
+            return new TextDocumentAttributes(uri, "mxg");
         }
 
         Task<Unit> IRequestHandler<DidChangeTextDocumentParams, Unit>.Handle(DidChangeTextDocumentParams request, CancellationToken cancellationToken)

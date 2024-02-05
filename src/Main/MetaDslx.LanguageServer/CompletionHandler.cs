@@ -22,7 +22,7 @@ namespace MetaDslx.LanguageServer
         private readonly DocumentSelector _documentSelector = new DocumentSelector(
             new DocumentFilter()
             {
-                Pattern = "**/*.mgen"
+                Pattern = "**/*.mxg"
             }
         );
 
@@ -39,7 +39,7 @@ namespace MetaDslx.LanguageServer
 
         public async Task<CompletionList> Handle(CompletionParams request, CancellationToken cancellationToken)
         {
-            var result = new CompletionList();
+            CompletionList result = null;
             var compiler = _documentManager.GetCompiler(request.TextDocument.Uri) as MetaGeneratorDocumentCompiler;
             if (compiler?.Parser != null)
             {

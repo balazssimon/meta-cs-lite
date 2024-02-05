@@ -998,17 +998,36 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaPropertyBlock1Alt3Green MetaPropertyBlock1Alt3(__InternalSyntaxToken isReadOnly)
+        internal MetaPropertyBlock1Alt3Green MetaPropertyBlock1Alt3(__InternalSyntaxToken isUnion)
+        {
+            #if DEBUG
+                if (isUnion is null) throw new __ArgumentNullException(nameof(isUnion));
+                if (isUnion.RawKind != (int)MetaSyntaxKind.KUnion) throw new __ArgumentException(nameof(isUnion));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt3, isUnion, out hash);
+            if (cached != null) return (MetaPropertyBlock1Alt3Green)cached;
+        
+            var result = new MetaPropertyBlock1Alt3Green(MetaSyntaxKind.MetaPropertyBlock1Alt3, isUnion);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal MetaPropertyBlock1Alt4Green MetaPropertyBlock1Alt4(__InternalSyntaxToken isReadOnly)
         {
             #if DEBUG
                 if (isReadOnly is null) throw new __ArgumentNullException(nameof(isReadOnly));
                 if (isReadOnly.RawKind != (int)MetaSyntaxKind.KReadonly) throw new __ArgumentException(nameof(isReadOnly));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt3, isReadOnly, out hash);
-            if (cached != null) return (MetaPropertyBlock1Alt3Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt4, isReadOnly, out hash);
+            if (cached != null) return (MetaPropertyBlock1Alt4Green)cached;
         
-            var result = new MetaPropertyBlock1Alt3Green(MetaSyntaxKind.MetaPropertyBlock1Alt3, isReadOnly);
+            var result = new MetaPropertyBlock1Alt4Green(MetaSyntaxKind.MetaPropertyBlock1Alt4, isReadOnly);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

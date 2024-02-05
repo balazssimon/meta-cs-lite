@@ -242,5 +242,10 @@ namespace Roslyn.Utilities
             return true;
         }
 
+        public static string? EncodeHtml(this string? text)
+        {
+            if (text is null) return null;
+            else return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("'", "&apos;").Replace("\"", "&quot;");
+        }
     }
 }

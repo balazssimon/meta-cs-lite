@@ -305,6 +305,13 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaPropertyBlock1Alt3([NotNull] MetaParser.Pr_MetaPropertyBlock1Alt3Context context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock1Alt4</c>
+	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_MetaPropertyBlock1Alt4([NotNull] MetaParser.Pr_MetaPropertyBlock1Alt4Context context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_MetaPropertyBlock2Alt1</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaPropertyBlock2"/>.
 	/// </summary>

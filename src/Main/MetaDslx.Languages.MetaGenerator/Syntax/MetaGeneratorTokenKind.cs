@@ -12,6 +12,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         Whitespace,
         EndOfLine,
         IgnoredEndOfLine,
+        ForcedEndOfLine,
         SingleLineComment,
         MultiLineComment,
         Identifier,

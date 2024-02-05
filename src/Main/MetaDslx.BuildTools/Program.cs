@@ -145,7 +145,7 @@ namespace MetaDslx.BuildTools
                 {
                     await CompileMetaGenerator(mxgFile);
                 }
-                //*/
+                /*/
                 var compilation = await project.GetCompilationAsync() as CSharpCompilation;
                 if (compilation is not null)
                 {

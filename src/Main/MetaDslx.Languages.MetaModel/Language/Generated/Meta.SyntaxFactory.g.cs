@@ -663,16 +663,28 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.MetaPropertyBlock1Alt2(this.Token(MetaSyntaxKind.KDerived));
         }
 
-        public MetaPropertyBlock1Alt3Syntax MetaPropertyBlock1Alt3(__SyntaxToken isReadOnly)
+        public MetaPropertyBlock1Alt3Syntax MetaPropertyBlock1Alt3(__SyntaxToken isUnion)
         {
-            if (isReadOnly.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isReadOnly));
-            if (isReadOnly.RawKind != (int)MetaSyntaxKind.KReadonly) throw new __ArgumentException(nameof(isReadOnly));
-            return (MetaPropertyBlock1Alt3Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt3((__InternalSyntaxToken)isReadOnly.Node).CreateRed();
+            if (isUnion.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isUnion));
+            if (isUnion.RawKind != (int)MetaSyntaxKind.KUnion) throw new __ArgumentException(nameof(isUnion));
+            return (MetaPropertyBlock1Alt3Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt3((__InternalSyntaxToken)isUnion.Node).CreateRed();
         }
         
         public MetaPropertyBlock1Alt3Syntax MetaPropertyBlock1Alt3()
         {
-            return this.MetaPropertyBlock1Alt3(this.Token(MetaSyntaxKind.KReadonly));
+            return this.MetaPropertyBlock1Alt3(this.Token(MetaSyntaxKind.KUnion));
+        }
+
+        public MetaPropertyBlock1Alt4Syntax MetaPropertyBlock1Alt4(__SyntaxToken isReadOnly)
+        {
+            if (isReadOnly.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isReadOnly));
+            if (isReadOnly.RawKind != (int)MetaSyntaxKind.KReadonly) throw new __ArgumentException(nameof(isReadOnly));
+            return (MetaPropertyBlock1Alt4Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt4((__InternalSyntaxToken)isReadOnly.Node).CreateRed();
+        }
+        
+        public MetaPropertyBlock1Alt4Syntax MetaPropertyBlock1Alt4()
+        {
+            return this.MetaPropertyBlock1Alt4(this.Token(MetaSyntaxKind.KReadonly));
         }
 
         public MetaPropertyBlock2Alt1Syntax MetaPropertyBlock2Alt1(IdentifierSyntax identifier, __SyntaxToken tDollar, IdentifierSyntax symbolProperty)
@@ -858,6 +870,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 typeof(MetaPropertyBlock1Alt1Syntax),
                 typeof(MetaPropertyBlock1Alt2Syntax),
                 typeof(MetaPropertyBlock1Alt3Syntax),
+                typeof(MetaPropertyBlock1Alt4Syntax),
                 typeof(MetaPropertyBlock2Alt1Syntax),
                 typeof(MetaPropertyBlock2Alt2Syntax),
                 typeof(MetaPropertyBlock3Syntax),

@@ -57,7 +57,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         public MetaGeneratorToken Lex()
         {
             var token = FetchNextToken();
-            if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
+            if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine || token.Kind == MetaGeneratorTokenKind.ForcedEndOfLine)
             {
                 ++_line;
                 _column = 0;
@@ -130,7 +130,8 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 }
                 if (token.Kind == MetaGeneratorTokenKind.EndOfFile ||
                     token.Kind == MetaGeneratorTokenKind.EndOfLine ||
-                    token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
+                    token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine ||
+                    token.Kind == MetaGeneratorTokenKind.ForcedEndOfLine)
                 {
                     break;
                 }
@@ -171,6 +172,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         case MetaGeneratorTokenKind.Whitespace:
                         case MetaGeneratorTokenKind.EndOfLine:
                         case MetaGeneratorTokenKind.IgnoredEndOfLine:
+                        case MetaGeneratorTokenKind.ForcedEndOfLine:
                         case MetaGeneratorTokenKind.SingleLineComment:
                         case MetaGeneratorTokenKind.MultiLineComment:
                             continue;
@@ -274,10 +276,18 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 _computeRelativeIndent = true;
             }
             var lastToken = _tokens[_tokens.Count - 1];
-            if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine && (expressionCount == 0 && !emptyLine || endsWithEndStatement))
+            if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
-                lastToken.Kind = MetaGeneratorTokenKind.IgnoredEndOfLine;
-                _tokens[_tokens.Count - 1] = lastToken;
+                if (expressionCount == 0 && !emptyLine || endsWithEndStatement)
+                {
+                    lastToken.Kind = MetaGeneratorTokenKind.IgnoredEndOfLine;
+                    _tokens[_tokens.Count - 1] = lastToken;
+                }
+                else if (emptyLine)
+                {
+                    lastToken.Kind = MetaGeneratorTokenKind.ForcedEndOfLine;
+                    _tokens[_tokens.Count - 1] = lastToken;
+                }
             }
             var firstToken = _tokens[0];
             if (firstToken.Kind == MetaGeneratorTokenKind.TemplateOutputWhitespace)
@@ -358,7 +368,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     _indentStack.AddRange(newIndentStack);
                     newIndentStack.Free();
                 }
-                if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine)
+                if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine || lastToken.Kind == MetaGeneratorTokenKind.ForcedEndOfLine)
                 {
                     var hasWhitespace = false;
                     for (int i = 0; i < _tokens.Count; ++i)

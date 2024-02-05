@@ -43,6 +43,7 @@ LR_TDollar: '$';
 LR_TColon: ':';
 LR_KContains: 'contains';
 LR_KDerived: 'derived';
+LR_KUnion: 'union';
 LR_KReadonly: 'readonly';
 LR_KOpposite: 'opposite';
 LR_KSubsets: 'subsets';

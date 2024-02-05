@@ -1142,6 +1142,20 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitMetaPropertyBlock1Alt3(MetaPropertyBlock1Alt3Syntax node)
         {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsUnion", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsUnion);
+            try
+            {
+                //this.VisitToken(node.IsUnion);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+        }
+
+        public virtual void VisitMetaPropertyBlock1Alt4(MetaPropertyBlock1Alt4Syntax node)
+        {
             var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsReadOnly", values: ImmutableArray.Create<object?>(true));
             this.Begin(__annot0, node.IsReadOnly);
             try

@@ -22,6 +22,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
             if (underlyingProperty.IsContainment) flags |= ModelPropertyFlags.Containment;
             if (underlyingProperty.IsDerived) flags |= ModelPropertyFlags.Derived;
             if (underlyingProperty.IsReadOnly) flags |= ModelPropertyFlags.ReadOnly;
+            if (underlyingProperty.IsUnion) flags |= ModelPropertyFlags.DerivedUnion;
             if (underlyingProperty.SymbolProperty == "Name") flags |= ModelPropertyFlags.Name;
             if (underlyingProperty.SymbolProperty == "Type") flags |= ModelPropertyFlags.Type;
             _originalFlags = flags;

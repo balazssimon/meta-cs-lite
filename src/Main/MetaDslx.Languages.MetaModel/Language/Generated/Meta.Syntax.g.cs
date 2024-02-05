@@ -4067,12 +4067,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     
-        public __SyntaxToken IsReadOnly 
+        public __SyntaxToken IsUnion 
         { 
             get
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt3Green)this.Green;
-            var greenToken = green.IsReadOnly;
+            var greenToken = green.IsUnion;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
         }
@@ -4093,17 +4093,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaPropertyBlock1Alt3Syntax WithIsReadOnly(__SyntaxToken isReadOnly)
+        public MetaPropertyBlock1Alt3Syntax WithIsUnion(__SyntaxToken isUnion)
         {
-            return this.Update(isReadOnly);
+            return this.Update(isUnion);
         }
     
     
-        public MetaPropertyBlock1Alt3Syntax Update(__SyntaxToken isReadOnly)
+        public MetaPropertyBlock1Alt3Syntax Update(__SyntaxToken isUnion)
         {
-            if (this.IsReadOnly != isReadOnly)
+            if (this.IsUnion != isUnion)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt3(isReadOnly);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt3(isUnion);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -4125,6 +4125,80 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
             visitor.VisitMetaPropertyBlock1Alt3(this);
+        }
+    
+    }
+    public sealed class MetaPropertyBlock1Alt4Syntax : MetaPropertyBlock1Syntax
+    {
+    
+        public MetaPropertyBlock1Alt4Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public MetaPropertyBlock1Alt4Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken IsReadOnly 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt4Green)this.Green;
+            var greenToken = green.IsReadOnly;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public MetaPropertyBlock1Alt4Syntax WithIsReadOnly(__SyntaxToken isReadOnly)
+        {
+            return this.Update(isReadOnly);
+        }
+    
+    
+        public MetaPropertyBlock1Alt4Syntax Update(__SyntaxToken isReadOnly)
+        {
+            if (this.IsReadOnly != isReadOnly)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt4(isReadOnly);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MetaPropertyBlock1Alt4Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMetaPropertyBlock1Alt4(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMetaPropertyBlock1Alt4(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMetaPropertyBlock1Alt4(this);
         }
     
     }

@@ -422,7 +422,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     EndOutputSpan();
                 }
             }
-            else if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
+            else if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine || token.Kind == MetaGeneratorTokenKind.ForcedEndOfLine)
             {
                 StartInputSpan();
                 EatToken();
@@ -432,6 +432,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     _currentTemplateInfo.Outputs.Add(templateOutputSpan);
                 }
                 if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
+                {
+                    _osb.WriteLine("__cb.AppendLine();");
+                    _osb.WriteLine("__cb.Pop();");
+                }
+                if (token.Kind == MetaGeneratorTokenKind.ForcedEndOfLine)
                 {
                     _osb.WriteLine("__cb.WriteLine();");
                     _osb.WriteLine("__cb.Pop();");
@@ -593,13 +598,13 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                             break;
                         case MetaGeneratorLexer.MultiLineKeyword: 
                             _osb.WriteLine("__cb.SingleLineMode = false;");
-                            if (stmt.HasEndOfLine) _osb.WriteLine("__cb.WriteLine();");
+                            if (stmt.HasEndOfLine) _osb.WriteLine("__cb.AppendLine();");
                                 break;
                         case MetaGeneratorLexer.SkipLineEndKeyword: 
                             _osb.WriteLine("__cb.SkipLineEnd = true;"); 
                             break;
                         case MetaGeneratorLexer.ForceLineEndIndentKeyword: 
-                            _osb.WriteLine("__cb.WriteLine();"); 
+                            _osb.WriteLine("__cb.AppendLine(true);"); 
                             break;
                         case MetaGeneratorLexer.RelativeIndentKeyword: 
                             break;
@@ -958,7 +963,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 if (token.Kind == MetaGeneratorTokenKind.TemplateControlEnd) foundTemplateControlEnd = true;
                 if (!allowTemplateControlEnd || foundTemplateControlEnd)
                 {
-                    if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine) return true;
+                    if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine || token.Kind == MetaGeneratorTokenKind.ForcedEndOfLine) return true;
                 }
                 token = _tokens.PeekToken(++index);
             }
@@ -972,7 +977,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             {
                 return true;
             }
-            if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
+            if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine || token.Kind == MetaGeneratorTokenKind.ForcedEndOfLine)
             {
                 return true;
             }
@@ -1000,7 +1005,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
 
         private bool IsWhitespaceOrComment(MetaGeneratorToken token)
         {
-            return token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine || token.Kind == MetaGeneratorTokenKind.Whitespace || token.Kind == MetaGeneratorTokenKind.SingleLineComment || token.Kind == MetaGeneratorTokenKind.MultiLineComment;
+            return token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine || token.Kind == MetaGeneratorTokenKind.ForcedEndOfLine || token.Kind == MetaGeneratorTokenKind.Whitespace || token.Kind == MetaGeneratorTokenKind.SingleLineComment || token.Kind == MetaGeneratorTokenKind.MultiLineComment;
         }
 
         private void Error(string message)

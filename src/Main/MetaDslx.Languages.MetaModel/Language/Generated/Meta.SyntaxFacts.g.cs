@@ -65,6 +65,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KVoid:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
+                case MetaSyntaxKind.KUnion:
                 case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
@@ -149,6 +150,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TColon:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
+                case MetaSyntaxKind.KUnion:
                 case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
@@ -222,6 +224,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TColon:
                 case MetaSyntaxKind.KContains:
                 case MetaSyntaxKind.KDerived:
+                case MetaSyntaxKind.KUnion:
                 case MetaSyntaxKind.KReadonly:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
@@ -328,6 +331,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KContains;
                 case "derived": 
                     return MetaSyntaxKind.KDerived;
+                case "union": 
+                    return MetaSyntaxKind.KUnion;
                 case "readonly": 
                     return MetaSyntaxKind.KReadonly;
                 case "opposite": 
@@ -463,6 +468,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "KContains";
                 case MetaSyntaxKind.KDerived: 
                     return "KDerived";
+                case MetaSyntaxKind.KUnion: 
+                    return "KUnion";
                 case MetaSyntaxKind.KReadonly: 
                     return "KReadonly";
                 case MetaSyntaxKind.KOpposite: 
@@ -577,6 +584,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "MetaPropertyBlock1Alt2";
                 case MetaSyntaxKind.MetaPropertyBlock1Alt3: 
                     return "MetaPropertyBlock1Alt3";
+                case MetaSyntaxKind.MetaPropertyBlock1Alt4: 
+                    return "MetaPropertyBlock1Alt4";
                 case MetaSyntaxKind.MetaPropertyBlock2Alt1: 
                     return "MetaPropertyBlock2Alt1";
                 case MetaSyntaxKind.MetaPropertyBlock2Alt2: 
@@ -701,6 +710,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "contains";
                 case MetaSyntaxKind.KDerived: 
                     return "derived";
+                case MetaSyntaxKind.KUnion: 
+                    return "union";
                 case MetaSyntaxKind.KReadonly: 
                     return "readonly";
                 case MetaSyntaxKind.KOpposite: 
@@ -776,6 +787,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KVoid: 
                 case MetaSyntaxKind.KContains: 
                 case MetaSyntaxKind.KDerived: 
+                case MetaSyntaxKind.KUnion: 
                 case MetaSyntaxKind.KReadonly: 
                 case MetaSyntaxKind.KOpposite: 
                 case MetaSyntaxKind.KSubsets: 
@@ -823,6 +835,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             yield return MetaSyntaxKind.KVoid;
             yield return MetaSyntaxKind.KContains;
             yield return MetaSyntaxKind.KDerived;
+            yield return MetaSyntaxKind.KUnion;
             yield return MetaSyntaxKind.KReadonly;
             yield return MetaSyntaxKind.KOpposite;
             yield return MetaSyntaxKind.KSubsets;
@@ -899,6 +912,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KContains;
                 case "derived": 
                     return MetaSyntaxKind.KDerived;
+                case "union": 
+                    return MetaSyntaxKind.KUnion;
                 case "readonly": 
                     return MetaSyntaxKind.KReadonly;
                 case "opposite": 

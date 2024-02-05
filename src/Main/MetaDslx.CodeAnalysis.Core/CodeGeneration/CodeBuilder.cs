@@ -282,6 +282,7 @@ namespace MetaDslx.CodeGeneration
 
         public void Write(ReadOnlySpan<char> value)
         {
+            if (value.Length == 0) return;
             if (_dontSplitMultiLineValues)
             {
                 WriteWithoutSplit(value);

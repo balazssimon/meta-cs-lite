@@ -103,7 +103,8 @@ pr_MetaClassBlock3Block1
 pr_MetaPropertyBlock1
     :  E_isContainment=LR_KContains #pr_MetaPropertyBlock1Alt1
     |  E_isDerived=LR_KDerived #pr_MetaPropertyBlock1Alt2
-    |  E_isReadOnly=LR_KReadonly #pr_MetaPropertyBlock1Alt3
+    |  E_isUnion=LR_KUnion #pr_MetaPropertyBlock1Alt3
+    |  E_isReadOnly=LR_KReadonly #pr_MetaPropertyBlock1Alt4
     ;
 pr_MetaPropertyBlock2
     :  E_Identifier=pr_Identifier?  E_TDollar=LR_TDollar  E_symbolProperty=pr_Identifier #pr_MetaPropertyBlock2Alt1

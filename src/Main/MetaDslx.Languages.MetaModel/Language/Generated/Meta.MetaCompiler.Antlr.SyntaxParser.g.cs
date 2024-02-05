@@ -629,8 +629,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             public override GreenNode? VisitPr_MetaPropertyBlock1Alt3(MetaParser.Pr_MetaPropertyBlock1Alt3Context? context)
             {
                 if (context == null) return MetaPropertyBlock1Alt3Green.__Missing;
+                var isUnion = (InternalSyntaxToken?)this.VisitTerminal(context.E_isUnion, MetaSyntaxKind.KUnion);
+                return _factory.MetaPropertyBlock1Alt3(isUnion);
+            }
+            
+            public override GreenNode? VisitPr_MetaPropertyBlock1Alt4(MetaParser.Pr_MetaPropertyBlock1Alt4Context? context)
+            {
+                if (context == null) return MetaPropertyBlock1Alt4Green.__Missing;
                 var isReadOnly = (InternalSyntaxToken?)this.VisitTerminal(context.E_isReadOnly, MetaSyntaxKind.KReadonly);
-                return _factory.MetaPropertyBlock1Alt3(isReadOnly);
+                return _factory.MetaPropertyBlock1Alt4(isReadOnly);
             }
             
             public override GreenNode? VisitPr_MetaPropertyBlock2Alt1(MetaParser.Pr_MetaPropertyBlock2Alt1Context? context)
