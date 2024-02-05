@@ -354,18 +354,41 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 return _factory.PrimitiveType(token);
             }
             
-            public override GreenNode? VisitPr_Value(MetaParser.Pr_ValueContext? context)
+            public override GreenNode? VisitPr_ValueAlt1(MetaParser.Pr_ValueAlt1Context? context)
             {
-                if (context == null) return ValueGreen.__Missing;
-                InternalSyntaxToken? token = null;
-                if (context.LR_TString() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TString());
-                if (context.LR_TInteger() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TInteger());
-                if (context.LR_TDecimal() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TDecimal());
-                if (context.LR_KTrue() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KTrue());
-                if (context.LR_KFalse() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KFalse());
-                if (context.LR_KNull() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KNull());
-                if (token is null) token = _factory.None;
-                return _factory.Value(token);
+                if (context == null) return ValueAlt1Green.__Missing;
+                var tString = (InternalSyntaxToken?)this.VisitTerminal(context.E_TString, MetaSyntaxKind.TString);
+                return _factory.ValueAlt1(tString);
+            }
+            
+            public override GreenNode? VisitPr_ValueAlt2(MetaParser.Pr_ValueAlt2Context? context)
+            {
+                if (context == null) return ValueAlt2Green.__Missing;
+                var tInteger = (InternalSyntaxToken?)this.VisitTerminal(context.E_TInteger, MetaSyntaxKind.TInteger);
+                return _factory.ValueAlt2(tInteger);
+            }
+            
+            public override GreenNode? VisitPr_ValueAlt3(MetaParser.Pr_ValueAlt3Context? context)
+            {
+                if (context == null) return ValueAlt3Green.__Missing;
+                var tDecimal = (InternalSyntaxToken?)this.VisitTerminal(context.E_TDecimal, MetaSyntaxKind.TDecimal);
+                return _factory.ValueAlt3(tDecimal);
+            }
+            
+            public override GreenNode? VisitPr_ValueAlt4(MetaParser.Pr_ValueAlt4Context? context)
+            {
+                if (context == null) return ValueAlt4Green.__Missing;
+                TBooleanGreen? tBoolean = null;
+                if (context.E_TBoolean is not null) tBoolean = (TBooleanGreen?)this.Visit(context.E_TBoolean) ?? TBooleanGreen.__Missing;
+                else tBoolean = TBooleanGreen.__Missing;
+                return _factory.ValueAlt4(tBoolean);
+            }
+            
+            public override GreenNode? VisitPr_ValueAlt5(MetaParser.Pr_ValueAlt5Context? context)
+            {
+                if (context == null) return ValueAlt5Green.__Missing;
+                var kNull = (InternalSyntaxToken?)this.VisitTerminal(context.E_KNull, MetaSyntaxKind.KNull);
+                return _factory.ValueAlt5(kNull);
             }
             
             public override GreenNode? VisitPr_Name(MetaParser.Pr_NameContext? context)
@@ -414,6 +437,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 if (context.LR_TVerbatimIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TVerbatimIdentifier());
                 if (token is null) token = _factory.None;
                 return _factory.Identifier(token);
+            }
+            
+            public override GreenNode? VisitPr_TBoolean(MetaParser.Pr_TBooleanContext? context)
+            {
+                if (context == null) return TBooleanGreen.__Missing;
+                InternalSyntaxToken? token = null;
+                if (context.LR_KTrue() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KTrue());
+                if (context.LR_KFalse() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KFalse());
+                if (token is null) token = _factory.None;
+                return _factory.TBoolean(token);
             }
             
             public override GreenNode? VisitPr_MainBlock1(MetaParser.Pr_MainBlock1Context? context)

@@ -155,11 +155,40 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_PrimitiveType([NotNull] MetaParser.Pr_PrimitiveTypeContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="MetaParser.pr_Value"/>.
+	/// Visit a parse tree produced by the <c>pr_ValueAlt1</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_Value([NotNull] MetaParser.Pr_ValueContext context);
+	Result VisitPr_ValueAlt1([NotNull] MetaParser.Pr_ValueAlt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt2</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ValueAlt2([NotNull] MetaParser.Pr_ValueAlt2Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt3</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ValueAlt3([NotNull] MetaParser.Pr_ValueAlt3Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt4</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ValueAlt4([NotNull] MetaParser.Pr_ValueAlt4Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt5</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ValueAlt5([NotNull] MetaParser.Pr_ValueAlt5Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_Name"/>.
 	/// </summary>
@@ -178,6 +207,12 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_Identifier([NotNull] MetaParser.Pr_IdentifierContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_TBoolean"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_TBoolean([NotNull] MetaParser.Pr_TBooleanContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_MainBlock1"/>.
 	/// </summary>

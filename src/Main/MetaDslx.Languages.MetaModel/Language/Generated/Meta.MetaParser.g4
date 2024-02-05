@@ -53,7 +53,11 @@ pr_PrimitiveType
     :  E_Token=(LR_KObject | LR_KBool | LR_KChar | LR_KString | LR_KByte | LR_KSbyte | LR_KShort | LR_KUshort | LR_KInt | LR_KUint | LR_KLong | LR_KUlong | LR_KFloat | LR_KDouble | LR_KDecimal | LR_KType | LR_KSymbol | LR_KVoid)
     ;
 pr_Value
-    :  E_Token=(LR_TString | LR_TInteger | LR_TDecimal | LR_KTrue | LR_KFalse | LR_KNull)
+    :  E_TString=LR_TString #pr_ValueAlt1
+    |  E_TInteger=LR_TInteger #pr_ValueAlt2
+    |  E_TDecimal=LR_TDecimal #pr_ValueAlt3
+    |  E_TBoolean=pr_TBoolean #pr_ValueAlt4
+    |  E_KNull=LR_KNull #pr_ValueAlt5
     ;
 pr_Name
     :  E_Identifier=pr_Identifier
@@ -63,6 +67,9 @@ pr_Qualifier
     ;
 pr_Identifier
     :  E_Token=(LR_TIdentifier | LR_TVerbatimIdentifier)
+    ;
+pr_TBoolean
+    :  E_Token=(LR_KTrue | LR_KFalse)
     ;
 pr_MainBlock1
     :  E_declarations=pr_MetaModel  E_declarations1+=pr_MetaDeclaration*

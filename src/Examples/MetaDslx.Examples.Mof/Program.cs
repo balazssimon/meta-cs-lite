@@ -4,11 +4,28 @@ using MetaDslx.Languages.Mof.Model;
 Console.WriteLine("Hello, World!");
 
 var xmi = new MofXmiSerializer();
-var model = xmi.ReadModelFromFile(@"..\..\..\StandardProfile.xmi", Mof.MInstance);
+var readOptions = new MofXmiReadOptions();
+readOptions.UriToFileMap.Add("http://www.omg.org/spec/UML/20161101/UML.xmi", @"UML.xmi");
+readOptions.UriToFileMap.Add("http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi", @"PrimitiveTypes.xmi");
+var modelGroup = xmi.ReadModelGroupFromFile(@"..\..\..\UML.xmi", readOptions, out var diagnostics);
+var models = modelGroup.Models.ToArray();
+var uml = models[0];
+var primitiveTypes = models[1];
 
-foreach (var mobj in model.Objects)
+foreach (var diag in diagnostics)
 {
-    Console.WriteLine(mobj.MName);
+    Console.WriteLine(diag);
 }
 
-xmi.WriteModelToFile(@"..\..\..\StandardProfile2.xmi", model);
+if (diagnostics.Length == 0)
+{
+    foreach (var mobj in uml.Objects)
+    {
+        Console.WriteLine(mobj.MName);
+    }
+}
+
+var writeOptions = new MofXmiWriteOptions();
+writeOptions.ModelToUriMap.Add(uml, @"..\..\..\UML2.xmi");
+writeOptions.ModelToUriMap.Add(primitiveTypes, @"..\..\..\PrimitiveTypes2.xmi");
+xmi.WriteModelGroupToFile(modelGroup, writeOptions);

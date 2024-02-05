@@ -154,8 +154,8 @@ namespace MetaDslx.Languages.MetaModel.Model
             classInfosByName.Add("MetaProperty", MetaPropertyInfo);
             _classInfosByName = classInfosByName.ToImmutable();
             _model = new __Model();
-            var cf = new MetaModelFactory(_model);
-            var f = new __MetaModelFactory(_model);
+            var cf = new MetaModelFactory(_model, this);
+            var f = new __MetaModelFactory(_model, this);
             var obj1 = f.MetaNamespace();
             var obj2 = f.MetaNamespace();
             var obj3 = f.MetaNamespace();
@@ -585,6 +585,11 @@ namespace MetaDslx.Languages.MetaModel.Model
     {
         public MetaModelFactory(__Model model)
             : base(model, Meta.MInstance)
+        {
+        }
+    
+        internal MetaModelFactory(__Model model, Meta metaModel)
+            : base(model, metaModel)
         {
         }
     

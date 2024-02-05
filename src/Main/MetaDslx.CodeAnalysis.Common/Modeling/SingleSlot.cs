@@ -16,7 +16,7 @@ namespace MetaDslx.Modeling
         public SingleSlot(ModelObject owner, ModelPropertySlot property)
             : base(owner, property)
         {
-            _box = CreateBox();
+            _box = new Box(this);
         }
 
         public override SlotKind Kind => SlotKind.Single;

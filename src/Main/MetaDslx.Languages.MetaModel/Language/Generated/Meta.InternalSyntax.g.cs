@@ -3131,88 +3131,441 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         }
     }
     
-    
-    internal class ValueGreen : GreenSyntaxNode
+    internal abstract class ValueGreen : GreenSyntaxNode
     {
-        internal static new readonly ValueGreen __Missing = new ValueGreen();
-        private __InternalSyntaxToken _token;
+        internal static readonly ValueGreen __Missing = ValueAlt1Green.__Missing;
     
-        public ValueGreen(MetaSyntaxKind kind, __InternalSyntaxToken token)
+        protected ValueGreen(MetaSyntaxKind kind, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+        }
+    }
+    
+    internal class ValueAlt1Green : ValueGreen
+    {
+        internal static new readonly ValueAlt1Green __Missing = new ValueAlt1Green();
+        private __InternalSyntaxToken _tString;
+    
+        public ValueAlt1Green(MetaSyntaxKind kind, __InternalSyntaxToken tString)
             : base(kind, null, null)
         {
             SlotCount = 1;
-            if (token != null)
+            if (tString != null)
             {
-                AdjustFlagsAndWidth(token);
-                _token = token;
+                AdjustFlagsAndWidth(tString);
+                _tString = tString;
             }
         }
     
-        public ValueGreen(MetaSyntaxKind kind, __InternalSyntaxToken token, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public ValueAlt1Green(MetaSyntaxKind kind, __InternalSyntaxToken tString, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 1;
-            if (token != null)
+            if (tString != null)
             {
-                AdjustFlagsAndWidth(token);
-                _token = token;
+                AdjustFlagsAndWidth(tString);
+                _tString = tString;
             }
         }
     
-        private ValueGreen()
-            : base((MetaSyntaxKind)MetaSyntaxKind.Value, null, null)
+        private ValueAlt1Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.ValueAlt1, null, null)
         {
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public __InternalSyntaxToken Token { get { return _token; } }
+        public __InternalSyntaxToken TString { get { return _tString; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.ValueSyntax(this, (MetaSyntaxNode)parent, position);
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.ValueAlt1Syntax(this, (MetaSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
         {
             switch (index)
             {
-                case 0: return _token;
+                case 0: return _tString;
                 default: return null;
             }
         }
     
-        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitValueGreen(this);
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitValueAlt1Green(this);
     
-        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitValueGreen(this);
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitValueAlt1Green(this);
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new ValueGreen(this.Kind, _token, diagnostics, this.GetAnnotations());
+            return new ValueAlt1Green(this.Kind, _tString, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new ValueGreen(this.Kind, _token, this.GetDiagnostics(), annotations);
+            return new ValueAlt1Green(this.Kind, _tString, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new ValueGreen(this.Kind, _token, this.GetDiagnostics(), this.GetAnnotations());
+            return new ValueAlt1Green(this.Kind, _tString, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public ValueGreen Update(__InternalSyntaxToken token)
+        public ValueAlt1Green Update(__InternalSyntaxToken tString)
         {
-            if (_token != token)
+            if (_tString != tString)
             {
-                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.Value(token);
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt1(tString);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
-                return (ValueGreen)newNode;
+                return (ValueAlt1Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    internal class ValueAlt2Green : ValueGreen
+    {
+        internal static new readonly ValueAlt2Green __Missing = new ValueAlt2Green();
+        private __InternalSyntaxToken _tInteger;
+    
+        public ValueAlt2Green(MetaSyntaxKind kind, __InternalSyntaxToken tInteger)
+            : base(kind, null, null)
+        {
+            SlotCount = 1;
+            if (tInteger != null)
+            {
+                AdjustFlagsAndWidth(tInteger);
+                _tInteger = tInteger;
+            }
+        }
+    
+        public ValueAlt2Green(MetaSyntaxKind kind, __InternalSyntaxToken tInteger, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 1;
+            if (tInteger != null)
+            {
+                AdjustFlagsAndWidth(tInteger);
+                _tInteger = tInteger;
+            }
+        }
+    
+        private ValueAlt2Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.ValueAlt2, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken TInteger { get { return _tInteger; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.ValueAlt2Syntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _tInteger;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitValueAlt2Green(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitValueAlt2Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new ValueAlt2Green(this.Kind, _tInteger, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new ValueAlt2Green(this.Kind, _tInteger, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new ValueAlt2Green(this.Kind, _tInteger, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public ValueAlt2Green Update(__InternalSyntaxToken tInteger)
+        {
+            if (_tInteger != tInteger)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt2(tInteger);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (ValueAlt2Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    internal class ValueAlt3Green : ValueGreen
+    {
+        internal static new readonly ValueAlt3Green __Missing = new ValueAlt3Green();
+        private __InternalSyntaxToken _tDecimal;
+    
+        public ValueAlt3Green(MetaSyntaxKind kind, __InternalSyntaxToken tDecimal)
+            : base(kind, null, null)
+        {
+            SlotCount = 1;
+            if (tDecimal != null)
+            {
+                AdjustFlagsAndWidth(tDecimal);
+                _tDecimal = tDecimal;
+            }
+        }
+    
+        public ValueAlt3Green(MetaSyntaxKind kind, __InternalSyntaxToken tDecimal, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 1;
+            if (tDecimal != null)
+            {
+                AdjustFlagsAndWidth(tDecimal);
+                _tDecimal = tDecimal;
+            }
+        }
+    
+        private ValueAlt3Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.ValueAlt3, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken TDecimal { get { return _tDecimal; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.ValueAlt3Syntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _tDecimal;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitValueAlt3Green(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitValueAlt3Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new ValueAlt3Green(this.Kind, _tDecimal, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new ValueAlt3Green(this.Kind, _tDecimal, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new ValueAlt3Green(this.Kind, _tDecimal, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public ValueAlt3Green Update(__InternalSyntaxToken tDecimal)
+        {
+            if (_tDecimal != tDecimal)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt3(tDecimal);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (ValueAlt3Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    internal class ValueAlt4Green : ValueGreen
+    {
+        internal static new readonly ValueAlt4Green __Missing = new ValueAlt4Green();
+        private TBooleanGreen _tBoolean;
+    
+        public ValueAlt4Green(MetaSyntaxKind kind, TBooleanGreen tBoolean)
+            : base(kind, null, null)
+        {
+            SlotCount = 1;
+            if (tBoolean != null)
+            {
+                AdjustFlagsAndWidth(tBoolean);
+                _tBoolean = tBoolean;
+            }
+        }
+    
+        public ValueAlt4Green(MetaSyntaxKind kind, TBooleanGreen tBoolean, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 1;
+            if (tBoolean != null)
+            {
+                AdjustFlagsAndWidth(tBoolean);
+                _tBoolean = tBoolean;
+            }
+        }
+    
+        private ValueAlt4Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.ValueAlt4, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public TBooleanGreen TBoolean { get { return _tBoolean; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.ValueAlt4Syntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _tBoolean;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitValueAlt4Green(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitValueAlt4Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new ValueAlt4Green(this.Kind, _tBoolean, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new ValueAlt4Green(this.Kind, _tBoolean, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new ValueAlt4Green(this.Kind, _tBoolean, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public ValueAlt4Green Update(TBooleanGreen tBoolean)
+        {
+            if (_tBoolean != tBoolean)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt4(tBoolean);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (ValueAlt4Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    internal class ValueAlt5Green : ValueGreen
+    {
+        internal static new readonly ValueAlt5Green __Missing = new ValueAlt5Green();
+        private __InternalSyntaxToken _kNull;
+    
+        public ValueAlt5Green(MetaSyntaxKind kind, __InternalSyntaxToken kNull)
+            : base(kind, null, null)
+        {
+            SlotCount = 1;
+            if (kNull != null)
+            {
+                AdjustFlagsAndWidth(kNull);
+                _kNull = kNull;
+            }
+        }
+    
+        public ValueAlt5Green(MetaSyntaxKind kind, __InternalSyntaxToken kNull, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 1;
+            if (kNull != null)
+            {
+                AdjustFlagsAndWidth(kNull);
+                _kNull = kNull;
+            }
+        }
+    
+        private ValueAlt5Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.ValueAlt5, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken KNull { get { return _kNull; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.ValueAlt5Syntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _kNull;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitValueAlt5Green(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitValueAlt5Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new ValueAlt5Green(this.Kind, _kNull, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new ValueAlt5Green(this.Kind, _kNull, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new ValueAlt5Green(this.Kind, _kNull, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public ValueAlt5Green Update(__InternalSyntaxToken kNull)
+        {
+            if (_kNull != kNull)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt5(kNull);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (ValueAlt5Green)newNode;
             }
             return this;
         }
@@ -3474,6 +3827,93 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
                 return (IdentifierGreen)newNode;
+            }
+            return this;
+        }
+    }
+    
+    
+    internal class TBooleanGreen : GreenSyntaxNode
+    {
+        internal static new readonly TBooleanGreen __Missing = new TBooleanGreen();
+        private __InternalSyntaxToken _token;
+    
+        public TBooleanGreen(MetaSyntaxKind kind, __InternalSyntaxToken token)
+            : base(kind, null, null)
+        {
+            SlotCount = 1;
+            if (token != null)
+            {
+                AdjustFlagsAndWidth(token);
+                _token = token;
+            }
+        }
+    
+        public TBooleanGreen(MetaSyntaxKind kind, __InternalSyntaxToken token, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 1;
+            if (token != null)
+            {
+                AdjustFlagsAndWidth(token);
+                _token = token;
+            }
+        }
+    
+        private TBooleanGreen()
+            : base((MetaSyntaxKind)MetaSyntaxKind.TBoolean, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken Token { get { return _token; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.TBooleanSyntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _token;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitTBooleanGreen(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitTBooleanGreen(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new TBooleanGreen(this.Kind, _token, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new TBooleanGreen(this.Kind, _token, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new TBooleanGreen(this.Kind, _token, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public TBooleanGreen Update(__InternalSyntaxToken token)
+        {
+            if (_token != token)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.TBoolean(token);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (TBooleanGreen)newNode;
             }
             return this;
         }

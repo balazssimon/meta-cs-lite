@@ -17,8 +17,13 @@ Qualifier returns void: Identifier ('.' Identifier)*;
 [Identifier]
 Identifier returns void: TIdentifier | TVerbatimIdentifier;
 
+TBoolean returns bool: KTrue | KFalse;
+
+[Keyword]
 token KNull: 'null';
+[Keyword]
 token KTrue returns bool: 'true';
+[Keyword]
 token KFalse returns bool: 'false';
 
 [Number]

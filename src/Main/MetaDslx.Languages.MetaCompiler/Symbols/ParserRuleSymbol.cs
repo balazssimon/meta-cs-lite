@@ -131,7 +131,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             {
                 foreach (var alt in this.Alternatives)
                 {
-                    if (!returnType.IsAssignableFrom(alt.ReturnType))
+                    if (!returnType.IsAssignableFrom(alt.ReturnType) && returnType.SpecialType != SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
                     {
                         diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnType, alt.Location, alt.ReturnType, alt.Name, this.ReturnType, this.Name));
                     }

@@ -539,7 +539,7 @@ namespace MetaDslx.Modeling
             HashSet<IModelObject> written = new HashSet<IModelObject>();
             foreach (var prop in obj.MProperties)
             {
-                if (prop.IsDerived) continue;
+                if (prop.IsDerived || prop.IsDerivedUnion) continue;
                 bool oppositeIsContainment = obj.MInfo.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
                 var slot = obj.MGetSlot(prop);
@@ -579,7 +579,7 @@ namespace MetaDslx.Modeling
             }
             foreach (var prop in obj.MProperties)
             {
-                if (prop.IsDerived) continue;
+                if (prop.IsDerived || prop.IsDerivedUnion) continue;
                 bool oppositeIsContainment = obj.MInfo.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
                 var slot = obj.MGetSlot(prop);
@@ -668,15 +668,7 @@ namespace MetaDslx.Modeling
                             }
                             else
                             {
-                                if (child.MModel == _currentModel)
-                                {
-                                    _currentXmlWriter.WriteAttributeString(Xmi, prop.Name.ToCamelCase(), _options.XmiNamespace, child.MId);
-                                }
-                                else
-                                {
-                                    _currentXmlWriter.WriteAttributeString(Xmi, prop.Name.ToCamelCase(), _options.XmiNamespace, ExternalIdRef(child));
-                                }
-                                /*_currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
+                                _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
                                 if (child.MModel == _currentModel)
                                 {
                                     _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.MId);
@@ -685,7 +677,7 @@ namespace MetaDslx.Modeling
                                 {
                                     _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(child));
                                 }
-                                _currentXmlWriter.WriteEndElement();*/
+                                _currentXmlWriter.WriteEndElement();
                             }
                         }
                     }
@@ -966,6 +958,11 @@ namespace MetaDslx.Modeling
             return new ExternalFileLocation(_fileUri?.AbsolutePath ?? string.Empty, new TextSpan(), lineSpan);
         }
 
+        internal void AddWarning(XObject location, string message)
+        {
+            _xmiReader.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.WRN_XmiWarning, GetLocation(location), message));
+        }
+
         internal void AddError(XObject location, string message)
         {
             _xmiReader.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_XmiError, GetLocation(location), message));
@@ -1121,20 +1118,28 @@ namespace MetaDslx.Modeling
                     var parentSlot = parent?.MGetSlot(parentPropertyName);
                     if (parentSlot != null)
                     {
-                        try
+                        if (parentSlot.IsReadOnly)
                         {
-                            parentSlot.Add(obj);
+                            this.AddWarning(element, $"Property '{parentPropertyName}' of model object '{obj}' is read only.");
                         }
-                        catch (ModelException mex)
+                        else
                         {
-                            this.AddError(element, mex);
+
+                            try
+                            {
+                                parentSlot.Add(obj);
+                            }
+                            catch (ModelException mex)
+                            {
+                                this.AddError(element, mex);
+                            }
                         }
                     }
                     this.RegisterObjectByPosition(element, obj);
                     foreach (var nameProp in obj.MInfo.AllDeclaredProperties.Where(p => p.IsName))
                     {
                         var nameSlot = obj.MGetSlot(nameProp);
-                        if (nameSlot is null) continue;
+                        if (nameSlot is null || nameSlot.IsReadOnly) continue;
                         var nameAttr = element.Attribute(nameProp.Name.ToCamelCase());
                         if (nameAttr != null)
                         {
@@ -1313,6 +1318,10 @@ namespace MetaDslx.Modeling
             if (slot == null)
             {
                 this.AddError(location, $"Model object '{obj}' has no '{propertyName}' property.");
+            }
+            else if (slot.IsReadOnly)
+            {
+                this.AddWarning(location, $"Property '{propertyName}' of model object '{obj}' is read only.");
             }
             else
             {

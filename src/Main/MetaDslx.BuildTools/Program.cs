@@ -237,12 +237,8 @@ namespace MetaDslx.BuildTools
                     //xmi.WriteModelToFile(Path.Combine(modelFilePath + ".xmi"), model);
                     if (!mxmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
-#if MetaDslxBootstrap
-                        var bootstrap = true;
-#else
-                        var bootstrap = false;
-#endif
-                        var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(bootstrap, model, mxm);
+                        var isMetaMetaModel = modelFilePath?.Contains("MetaDslx.Languages.MetaModel") ?? false;
+                        var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(isMetaMetaModel, model, mxm);
                         var csharpCode = generator.Generate();
                         var csharpFilePath = $"{modelFilePath}.cs";
                         await AddGeneratedFile(csharpFilePath, csharpCode);

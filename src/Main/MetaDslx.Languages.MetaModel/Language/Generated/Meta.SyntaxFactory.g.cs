@@ -458,11 +458,43 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return (PrimitiveTypeSyntax)MetaLanguage.Instance.InternalSyntaxFactory.PrimitiveType((__InternalSyntaxToken)token.Node).CreateRed();
         }
 
-        public ValueSyntax Value(__SyntaxToken token)
+        public ValueAlt1Syntax ValueAlt1(__SyntaxToken tString)
         {
-            if (token.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(token));
-            if (token.RawKind != (int)MetaSyntaxKind.TString && token.RawKind != (int)MetaSyntaxKind.TInteger && token.RawKind != (int)MetaSyntaxKind.TDecimal && token.RawKind != (int)MetaSyntaxKind.KTrue && token.RawKind != (int)MetaSyntaxKind.KFalse && token.RawKind != (int)MetaSyntaxKind.KNull) throw new __ArgumentException(nameof(token));
-            return (ValueSyntax)MetaLanguage.Instance.InternalSyntaxFactory.Value((__InternalSyntaxToken)token.Node).CreateRed();
+            if (tString.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tString));
+            if (tString.RawKind != (int)MetaSyntaxKind.TString) throw new __ArgumentException(nameof(tString));
+            return (ValueAlt1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt1((__InternalSyntaxToken)tString.Node).CreateRed();
+        }
+
+        public ValueAlt2Syntax ValueAlt2(__SyntaxToken tInteger)
+        {
+            if (tInteger.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tInteger));
+            if (tInteger.RawKind != (int)MetaSyntaxKind.TInteger) throw new __ArgumentException(nameof(tInteger));
+            return (ValueAlt2Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt2((__InternalSyntaxToken)tInteger.Node).CreateRed();
+        }
+
+        public ValueAlt3Syntax ValueAlt3(__SyntaxToken tDecimal)
+        {
+            if (tDecimal.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tDecimal));
+            if (tDecimal.RawKind != (int)MetaSyntaxKind.TDecimal) throw new __ArgumentException(nameof(tDecimal));
+            return (ValueAlt3Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt3((__InternalSyntaxToken)tDecimal.Node).CreateRed();
+        }
+
+        public ValueAlt4Syntax ValueAlt4(TBooleanSyntax tBoolean)
+        {
+            if (tBoolean is null) throw new __ArgumentNullException(nameof(tBoolean));
+            return (ValueAlt4Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt4((InternalSyntax.TBooleanGreen)tBoolean.Green).CreateRed();
+        }
+
+        public ValueAlt5Syntax ValueAlt5(__SyntaxToken kNull)
+        {
+            if (kNull.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kNull));
+            if (kNull.RawKind != (int)MetaSyntaxKind.KNull) throw new __ArgumentException(nameof(kNull));
+            return (ValueAlt5Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt5((__InternalSyntaxToken)kNull.Node).CreateRed();
+        }
+        
+        public ValueAlt5Syntax ValueAlt5()
+        {
+            return this.ValueAlt5(this.Token(MetaSyntaxKind.KNull));
         }
 
         public NameSyntax Name(IdentifierSyntax identifier)
@@ -481,6 +513,13 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             if (token.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(token));
             if (token.RawKind != (int)MetaSyntaxKind.TIdentifier && token.RawKind != (int)MetaSyntaxKind.TVerbatimIdentifier) throw new __ArgumentException(nameof(token));
             return (IdentifierSyntax)MetaLanguage.Instance.InternalSyntaxFactory.Identifier((__InternalSyntaxToken)token.Node).CreateRed();
+        }
+
+        public TBooleanSyntax TBoolean(__SyntaxToken token)
+        {
+            if (token.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(token));
+            if (token.RawKind != (int)MetaSyntaxKind.KTrue && token.RawKind != (int)MetaSyntaxKind.KFalse) throw new __ArgumentException(nameof(token));
+            return (TBooleanSyntax)MetaLanguage.Instance.InternalSyntaxFactory.TBoolean((__InternalSyntaxToken)token.Node).CreateRed();
         }
 
         public MainBlock1Syntax MainBlock1(MetaModelSyntax declarations1, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations2)
@@ -797,10 +836,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 typeof(TypeReferenceAlt1Syntax),
                 typeof(TypeReferenceAlt2Syntax),
                 typeof(PrimitiveTypeSyntax),
-                typeof(ValueSyntax),
+                typeof(ValueAlt1Syntax),
+                typeof(ValueAlt2Syntax),
+                typeof(ValueAlt3Syntax),
+                typeof(ValueAlt4Syntax),
+                typeof(ValueAlt5Syntax),
                 typeof(NameSyntax),
                 typeof(QualifierSyntax),
                 typeof(IdentifierSyntax),
+                typeof(TBooleanSyntax),
                 typeof(MainBlock1Syntax),
                 typeof(MetaModelBlock1Syntax),
                 typeof(MetaEnumBlock1Syntax),

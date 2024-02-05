@@ -2154,26 +2154,38 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
-    public sealed class ValueSyntax : MetaSyntaxNode
+    public abstract class ValueSyntax : MetaSyntaxNode
     {
-    
-        public ValueSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        protected ValueSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public ValueSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        protected ValueSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    }
+    
+    public sealed class ValueAlt1Syntax : ValueSyntax
+    {
+    
+        public ValueAlt1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public ValueAlt1Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
     
-        public __SyntaxToken Token 
+        public __SyntaxToken TString 
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.ValueGreen)this.Green;
-            var greenToken = green.Token;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.ValueAlt1Green)this.Green;
+            var greenToken = green.TString;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
         }
@@ -2194,38 +2206,336 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public ValueSyntax WithToken(__SyntaxToken token)
+        public ValueAlt1Syntax WithTString(__SyntaxToken tString)
         {
-            return this.Update(token);
+            return this.Update(tString);
         }
     
     
-        public ValueSyntax Update(__SyntaxToken token)
+        public ValueAlt1Syntax Update(__SyntaxToken tString)
         {
-            if (this.Token != token)
+            if (this.TString != tString)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.Value(token);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.ValueAlt1(tString);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (ValueSyntax)newNode;
+                return (ValueAlt1Syntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitValue(this, argument);
+            return visitor.VisitValueAlt1(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitValue(this);
+            return visitor.VisitValueAlt1(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitValue(this);
+            visitor.VisitValueAlt1(this);
+        }
+    
+    }
+    public sealed class ValueAlt2Syntax : ValueSyntax
+    {
+    
+        public ValueAlt2Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public ValueAlt2Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken TInteger 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.ValueAlt2Green)this.Green;
+            var greenToken = green.TInteger;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public ValueAlt2Syntax WithTInteger(__SyntaxToken tInteger)
+        {
+            return this.Update(tInteger);
+        }
+    
+    
+        public ValueAlt2Syntax Update(__SyntaxToken tInteger)
+        {
+            if (this.TInteger != tInteger)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.ValueAlt2(tInteger);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (ValueAlt2Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitValueAlt2(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitValueAlt2(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitValueAlt2(this);
+        }
+    
+    }
+    public sealed class ValueAlt3Syntax : ValueSyntax
+    {
+    
+        public ValueAlt3Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public ValueAlt3Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken TDecimal 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.ValueAlt3Green)this.Green;
+            var greenToken = green.TDecimal;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public ValueAlt3Syntax WithTDecimal(__SyntaxToken tDecimal)
+        {
+            return this.Update(tDecimal);
+        }
+    
+    
+        public ValueAlt3Syntax Update(__SyntaxToken tDecimal)
+        {
+            if (this.TDecimal != tDecimal)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.ValueAlt3(tDecimal);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (ValueAlt3Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitValueAlt3(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitValueAlt3(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitValueAlt3(this);
+        }
+    
+    }
+    public sealed class ValueAlt4Syntax : ValueSyntax
+    {
+        private TBooleanSyntax _tBoolean;
+    
+        public ValueAlt4Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public ValueAlt4Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public TBooleanSyntax TBoolean 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._tBoolean, 0);
+            return red;
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return this.GetRed(ref this._tBoolean, 0);
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return this._tBoolean;
+                default: return null;
+            }
+        }
+    
+        public ValueAlt4Syntax WithTBoolean(TBooleanSyntax tBoolean)
+        {
+            return this.Update(tBoolean);
+        }
+    
+    
+        public ValueAlt4Syntax Update(TBooleanSyntax tBoolean)
+        {
+            if (this.TBoolean != tBoolean)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.ValueAlt4(tBoolean);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (ValueAlt4Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitValueAlt4(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitValueAlt4(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitValueAlt4(this);
+        }
+    
+    }
+    public sealed class ValueAlt5Syntax : ValueSyntax
+    {
+    
+        public ValueAlt5Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public ValueAlt5Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken KNull 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.ValueAlt5Green)this.Green;
+            var greenToken = green.KNull;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public ValueAlt5Syntax WithKNull(__SyntaxToken kNull)
+        {
+            return this.Update(kNull);
+        }
+    
+    
+        public ValueAlt5Syntax Update(__SyntaxToken kNull)
+        {
+            if (this.KNull != kNull)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.ValueAlt5(kNull);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (ValueAlt5Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitValueAlt5(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitValueAlt5(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitValueAlt5(this);
         }
     
     }
@@ -2460,6 +2770,81 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
             visitor.VisitIdentifier(this);
+        }
+    
+    }
+    
+    public sealed class TBooleanSyntax : MetaSyntaxNode
+    {
+    
+        public TBooleanSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public TBooleanSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken Token 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.TBooleanGreen)this.Green;
+            var greenToken = green.Token;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public TBooleanSyntax WithToken(__SyntaxToken token)
+        {
+            return this.Update(token);
+        }
+    
+    
+        public TBooleanSyntax Update(__SyntaxToken token)
+        {
+            if (this.Token != token)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.TBoolean(token);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (TBooleanSyntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitTBoolean(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitTBoolean(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitTBoolean(this);
         }
     
     }

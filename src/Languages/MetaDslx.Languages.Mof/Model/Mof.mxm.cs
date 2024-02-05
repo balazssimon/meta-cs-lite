@@ -438,7 +438,7 @@ namespace MetaDslx.Languages.Mof.Model
             classInfosByName.Add("PrimitiveDataValue", PrimitiveDataValueInfo);
             _classInfosByName = classInfosByName.ToImmutable();
             _model = new __Model();
-            var cf = new MofModelFactory(_model);
+            var cf = new MofModelFactory(_model, this);
             _boolean = cf.PrimitiveType();
             _integer = cf.PrimitiveType();
             _real = cf.PrimitiveType();
@@ -2244,12 +2244,12 @@ namespace MetaDslx.Languages.Mof.Model
             : base(model, Mof.MInstance)
         {
         }
-
+    
         internal MofModelFactory(__Model model, Mof metaModel)
             : base(model, metaModel)
         {
         }
-
+    
         public Comment Comment(string? id = null)
         {
             return (Comment)Mof.CommentInfo.Create(Model, id)!;

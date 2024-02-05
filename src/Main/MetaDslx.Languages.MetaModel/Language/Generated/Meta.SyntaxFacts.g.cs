@@ -35,6 +35,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (syntaxKind)
             {
+                case MetaSyntaxKind.KNull:
+                case MetaSyntaxKind.KTrue:
+                case MetaSyntaxKind.KFalse:
                 case MetaSyntaxKind.KNamespace:
                 case MetaSyntaxKind.KUsing:
                 case MetaSyntaxKind.KMetamodel:
@@ -528,14 +531,24 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "TypeReferenceAlt2";
                 case MetaSyntaxKind.PrimitiveType: 
                     return "PrimitiveType";
-                case MetaSyntaxKind.Value: 
-                    return "Value";
+                case MetaSyntaxKind.ValueAlt1: 
+                    return "ValueAlt1";
+                case MetaSyntaxKind.ValueAlt2: 
+                    return "ValueAlt2";
+                case MetaSyntaxKind.ValueAlt3: 
+                    return "ValueAlt3";
+                case MetaSyntaxKind.ValueAlt4: 
+                    return "ValueAlt4";
+                case MetaSyntaxKind.ValueAlt5: 
+                    return "ValueAlt5";
                 case MetaSyntaxKind.Name: 
                     return "Name";
                 case MetaSyntaxKind.Qualifier: 
                     return "Qualifier";
                 case MetaSyntaxKind.Identifier: 
                     return "Identifier";
+                case MetaSyntaxKind.TBoolean: 
+                    return "TBoolean";
                 case MetaSyntaxKind.MainBlock1: 
                     return "MainBlock1";
                 case MetaSyntaxKind.MetaModelBlock1: 

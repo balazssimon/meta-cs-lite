@@ -184,11 +184,6 @@ namespace MetaDslx.Modeling
             if (ValidationOptions.ValidateReadOnly && _readOnly) throw new ModelException(message is null ? $"The model '{_name}' is read only." : $"{message}: the model '{_name}' is read only.");
         }
 
-        internal protected virtual Box CreateBox(ISlot slot)
-        {
-            return new Box(slot);
-        }
-
         internal protected virtual ValueInfo CreateValueInfo(object? forValue)
         {
             return new ValueInfo(forValue);

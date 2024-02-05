@@ -9,7 +9,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class Box
+    public sealed class Box
     {
         private static readonly ConditionalWeakTable<Box, ValueInfo> s_valueInfos = new ConditionalWeakTable<Box, ValueInfo>();
         private static readonly object DefaultValue = new object();
@@ -114,15 +114,15 @@ namespace MetaDslx.Modeling
             }
         }
 
-        protected ValueInfo? TryGetValueInfo()
+        private ValueInfo? TryGetValueInfo()
         {
             if (s_valueInfos.TryGetValue(this, out var valueInfo)) return valueInfo;
             else return null;
         }
 
-        protected ValueInfo GetValueInfo()
+        private ValueInfo GetValueInfo()
         {
-            return s_valueInfos.GetValue(this, mobj => Model.CreateValueInfo(mobj));
+            return s_valueInfos.GetValue(this, mobj => Model?.CreateValueInfo(mobj));
         }
 
         public override int GetHashCode()

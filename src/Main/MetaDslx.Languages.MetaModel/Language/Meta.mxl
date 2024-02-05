@@ -71,4 +71,4 @@ PrimitiveType returns type
 	| 'void'
 	;
 
-Value returns symbol: TString | TInteger | TDecimal | KTrue | KFalse | KNull; 
+Value returns symbol: TString | TInteger | TDecimal | TBoolean | KNull; 

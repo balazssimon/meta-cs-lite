@@ -139,11 +139,6 @@ namespace MetaDslx.Modeling
             }
         }
 
-        protected Box? CreateBox()
-        {
-            return Model?.CreateBox(this);
-        }
-
         public override string ToString()
         {
             return $"'{Property.QualifiedName}' in '{Owner}'";

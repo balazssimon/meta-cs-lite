@@ -170,11 +170,11 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
         [end foreach]
         _classInfosByName = classInfosByName.ToImmutable();
         _model = new __Model();
-        var cf = new [mm.Name]ModelFactory(_model);
+        var cf = new [mm.Name]ModelFactory(_model, this);
         [foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
             _[c.Name.ToCamelCase()] = cf.[c.Type.Name]();
         [end foreach]
-        var f = new __MetaModelFactory(_model);
+        var f = [if (IsMetaMetaModel)]new __MetaModelFactory(_model, this)[else]new __MetaModelFactory(_model)[end if];
         [foreach (var obj in Objects)]
             var [GetName(obj)] = f.[obj.MInfo.MetaType.Name]();
         [end foreach]
@@ -244,6 +244,11 @@ public class [mm.Name]ModelFactory : __ModelFactory
 {
     public [mm.Name]ModelFactory(__Model model)
         : base(model, [mm.Name].MInstance)
+    {
+    }
+
+    internal [mm.Name]ModelFactory(__Model model, [mm.Name] metaModel)
+        : base(model, metaModel)
     {
     }
 

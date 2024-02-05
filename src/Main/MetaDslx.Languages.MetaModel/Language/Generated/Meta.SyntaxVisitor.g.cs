@@ -36,10 +36,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         void VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node);
         void VisitTypeReferenceAlt2(TypeReferenceAlt2Syntax node);
         void VisitPrimitiveType(PrimitiveTypeSyntax node);
-        void VisitValue(ValueSyntax node);
+        void VisitValueAlt1(ValueAlt1Syntax node);
+        void VisitValueAlt2(ValueAlt2Syntax node);
+        void VisitValueAlt3(ValueAlt3Syntax node);
+        void VisitValueAlt4(ValueAlt4Syntax node);
+        void VisitValueAlt5(ValueAlt5Syntax node);
         void VisitName(NameSyntax node);
         void VisitQualifier(QualifierSyntax node);
         void VisitIdentifier(IdentifierSyntax node);
+        void VisitTBoolean(TBooleanSyntax node);
         void VisitMainBlock1(MainBlock1Syntax node);
         void VisitMetaModelBlock1(MetaModelBlock1Syntax node);
         void VisitMetaEnumBlock1(MetaEnumBlock1Syntax node);
@@ -170,7 +175,27 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitValue(ValueSyntax node)
+        public virtual void VisitValueAlt1(ValueAlt1Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitValueAlt2(ValueAlt2Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitValueAlt3(ValueAlt3Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitValueAlt4(ValueAlt4Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitValueAlt5(ValueAlt5Syntax node)
         {
             this.DefaultVisit(node);
         }
@@ -186,6 +211,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual void VisitIdentifier(IdentifierSyntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitTBoolean(TBooleanSyntax node)
         {
             this.DefaultVisit(node);
         }
@@ -344,10 +374,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node);
         TResult VisitTypeReferenceAlt2(TypeReferenceAlt2Syntax node);
         TResult VisitPrimitiveType(PrimitiveTypeSyntax node);
-        TResult VisitValue(ValueSyntax node);
+        TResult VisitValueAlt1(ValueAlt1Syntax node);
+        TResult VisitValueAlt2(ValueAlt2Syntax node);
+        TResult VisitValueAlt3(ValueAlt3Syntax node);
+        TResult VisitValueAlt4(ValueAlt4Syntax node);
+        TResult VisitValueAlt5(ValueAlt5Syntax node);
         TResult VisitName(NameSyntax node);
         TResult VisitQualifier(QualifierSyntax node);
         TResult VisitIdentifier(IdentifierSyntax node);
+        TResult VisitTBoolean(TBooleanSyntax node);
         TResult VisitMainBlock1(MainBlock1Syntax node);
         TResult VisitMetaModelBlock1(MetaModelBlock1Syntax node);
         TResult VisitMetaEnumBlock1(MetaEnumBlock1Syntax node);
@@ -478,7 +513,27 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitValue(ValueSyntax node)
+        public virtual TResult VisitValueAlt1(ValueAlt1Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitValueAlt2(ValueAlt2Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitValueAlt3(ValueAlt3Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitValueAlt4(ValueAlt4Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitValueAlt5(ValueAlt5Syntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -494,6 +549,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual TResult VisitIdentifier(IdentifierSyntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitTBoolean(TBooleanSyntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -652,10 +712,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node, TArg argument);
         TResult VisitTypeReferenceAlt2(TypeReferenceAlt2Syntax node, TArg argument);
         TResult VisitPrimitiveType(PrimitiveTypeSyntax node, TArg argument);
-        TResult VisitValue(ValueSyntax node, TArg argument);
+        TResult VisitValueAlt1(ValueAlt1Syntax node, TArg argument);
+        TResult VisitValueAlt2(ValueAlt2Syntax node, TArg argument);
+        TResult VisitValueAlt3(ValueAlt3Syntax node, TArg argument);
+        TResult VisitValueAlt4(ValueAlt4Syntax node, TArg argument);
+        TResult VisitValueAlt5(ValueAlt5Syntax node, TArg argument);
         TResult VisitName(NameSyntax node, TArg argument);
         TResult VisitQualifier(QualifierSyntax node, TArg argument);
         TResult VisitIdentifier(IdentifierSyntax node, TArg argument);
+        TResult VisitTBoolean(TBooleanSyntax node, TArg argument);
         TResult VisitMainBlock1(MainBlock1Syntax node, TArg argument);
         TResult VisitMetaModelBlock1(MetaModelBlock1Syntax node, TArg argument);
         TResult VisitMetaEnumBlock1(MetaEnumBlock1Syntax node, TArg argument);
@@ -786,7 +851,27 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitValue(ValueSyntax node, TArg argument)
+        public virtual TResult VisitValueAlt1(ValueAlt1Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitValueAlt2(ValueAlt2Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitValueAlt3(ValueAlt3Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitValueAlt4(ValueAlt4Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitValueAlt5(ValueAlt5Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -802,6 +887,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual TResult VisitIdentifier(IdentifierSyntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitTBoolean(TBooleanSyntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -1098,10 +1188,34 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return node.Update(token);
         }
 
-        public virtual SyntaxNode VisitValue(ValueSyntax node)
+        public virtual SyntaxNode VisitValueAlt1(ValueAlt1Syntax node)
         {
-            var token = this.VisitToken(node.Token);
-            return node.Update(token);
+            var tString = this.VisitToken(node.TString);
+            return node.Update(tString);
+        }
+
+        public virtual SyntaxNode VisitValueAlt2(ValueAlt2Syntax node)
+        {
+            var tInteger = this.VisitToken(node.TInteger);
+            return node.Update(tInteger);
+        }
+
+        public virtual SyntaxNode VisitValueAlt3(ValueAlt3Syntax node)
+        {
+            var tDecimal = this.VisitToken(node.TDecimal);
+            return node.Update(tDecimal);
+        }
+
+        public virtual SyntaxNode VisitValueAlt4(ValueAlt4Syntax node)
+        {
+            var tBoolean = (TBooleanSyntax)this.Visit(node.TBoolean);
+            return node.Update(tBoolean);
+        }
+
+        public virtual SyntaxNode VisitValueAlt5(ValueAlt5Syntax node)
+        {
+            var kNull = this.VisitToken(node.KNull);
+            return node.Update(kNull);
         }
 
         public virtual SyntaxNode VisitName(NameSyntax node)
@@ -1117,6 +1231,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual SyntaxNode VisitIdentifier(IdentifierSyntax node)
+        {
+            var token = this.VisitToken(node.Token);
+            return node.Update(token);
+        }
+
+        public virtual SyntaxNode VisitTBoolean(TBooleanSyntax node)
         {
             var token = this.VisitToken(node.Token);
             return node.Update(token);

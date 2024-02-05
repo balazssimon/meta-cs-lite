@@ -72,7 +72,7 @@ namespace MetaDslx.Modeling
                     {
                         Property.ThrowModelException(mp => mp.IsSingle, mp => $"{GetInsertMessage(mp, item)}: this collection can only contain a single item.");
                     }
-                    var box = CreateBox();
+                    var box = new Box(this);
                     box.Value = item;
                     _boxes.Insert(index, box);
                     valueAdded = true;

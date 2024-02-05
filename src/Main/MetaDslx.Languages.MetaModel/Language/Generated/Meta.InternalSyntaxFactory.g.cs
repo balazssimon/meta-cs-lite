@@ -579,17 +579,92 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal ValueGreen Value(__InternalSyntaxToken token)
+        internal ValueAlt1Green ValueAlt1(__InternalSyntaxToken tString)
         {
             #if DEBUG
-                if (token is null) throw new __ArgumentNullException(nameof(token));
-                if (token.RawKind != (int)MetaSyntaxKind.TString && token.RawKind != (int)MetaSyntaxKind.TInteger && token.RawKind != (int)MetaSyntaxKind.TDecimal && token.RawKind != (int)MetaSyntaxKind.KTrue && token.RawKind != (int)MetaSyntaxKind.KFalse && token.RawKind != (int)MetaSyntaxKind.KNull) throw new __ArgumentException(nameof(token));
+                if (tString is null) throw new __ArgumentNullException(nameof(tString));
+                if (tString.RawKind != (int)MetaSyntaxKind.TString) throw new __ArgumentException(nameof(tString));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.Value, token, out hash);
-            if (cached != null) return (ValueGreen)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ValueAlt1, tString, out hash);
+            if (cached != null) return (ValueAlt1Green)cached;
         
-            var result = new ValueGreen(MetaSyntaxKind.Value, token);
+            var result = new ValueAlt1Green(MetaSyntaxKind.ValueAlt1, tString);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal ValueAlt2Green ValueAlt2(__InternalSyntaxToken tInteger)
+        {
+            #if DEBUG
+                if (tInteger is null) throw new __ArgumentNullException(nameof(tInteger));
+                if (tInteger.RawKind != (int)MetaSyntaxKind.TInteger) throw new __ArgumentException(nameof(tInteger));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ValueAlt2, tInteger, out hash);
+            if (cached != null) return (ValueAlt2Green)cached;
+        
+            var result = new ValueAlt2Green(MetaSyntaxKind.ValueAlt2, tInteger);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal ValueAlt3Green ValueAlt3(__InternalSyntaxToken tDecimal)
+        {
+            #if DEBUG
+                if (tDecimal is null) throw new __ArgumentNullException(nameof(tDecimal));
+                if (tDecimal.RawKind != (int)MetaSyntaxKind.TDecimal) throw new __ArgumentException(nameof(tDecimal));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ValueAlt3, tDecimal, out hash);
+            if (cached != null) return (ValueAlt3Green)cached;
+        
+            var result = new ValueAlt3Green(MetaSyntaxKind.ValueAlt3, tDecimal);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal ValueAlt4Green ValueAlt4(TBooleanGreen tBoolean)
+        {
+            #if DEBUG
+                if (tBoolean is null) throw new __ArgumentNullException(nameof(tBoolean));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ValueAlt4, tBoolean, out hash);
+            if (cached != null) return (ValueAlt4Green)cached;
+        
+            var result = new ValueAlt4Green(MetaSyntaxKind.ValueAlt4, tBoolean);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal ValueAlt5Green ValueAlt5(__InternalSyntaxToken kNull)
+        {
+            #if DEBUG
+                if (kNull is null) throw new __ArgumentNullException(nameof(kNull));
+                if (kNull.RawKind != (int)MetaSyntaxKind.KNull) throw new __ArgumentException(nameof(kNull));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ValueAlt5, kNull, out hash);
+            if (cached != null) return (ValueAlt5Green)cached;
+        
+            var result = new ValueAlt5Green(MetaSyntaxKind.ValueAlt5, kNull);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -644,6 +719,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             if (cached != null) return (IdentifierGreen)cached;
         
             var result = new IdentifierGreen(MetaSyntaxKind.Identifier, token);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal TBooleanGreen TBoolean(__InternalSyntaxToken token)
+        {
+            #if DEBUG
+                if (token is null) throw new __ArgumentNullException(nameof(token));
+                if (token.RawKind != (int)MetaSyntaxKind.KTrue && token.RawKind != (int)MetaSyntaxKind.KFalse) throw new __ArgumentException(nameof(token));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.TBoolean, token, out hash);
+            if (cached != null) return (TBooleanGreen)cached;
+        
+            var result = new TBooleanGreen(MetaSyntaxKind.TBoolean, token);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

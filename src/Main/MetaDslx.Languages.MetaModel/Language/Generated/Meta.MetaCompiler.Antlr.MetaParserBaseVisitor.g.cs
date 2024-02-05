@@ -234,7 +234,8 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_PrimitiveType([NotNull] MetaParser.Pr_PrimitiveTypeContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="MetaParser.pr_Value"/>.
+	/// Visit a parse tree produced by the <c>pr_ValueAlt1</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -242,7 +243,51 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_Value([NotNull] MetaParser.Pr_ValueContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_ValueAlt1([NotNull] MetaParser.Pr_ValueAlt1Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt2</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_ValueAlt2([NotNull] MetaParser.Pr_ValueAlt2Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt3</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_ValueAlt3([NotNull] MetaParser.Pr_ValueAlt3Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt4</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_ValueAlt4([NotNull] MetaParser.Pr_ValueAlt4Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt5</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_ValueAlt5([NotNull] MetaParser.Pr_ValueAlt5Context context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_Name"/>.
 	/// <para>
@@ -273,6 +318,16 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_Identifier([NotNull] MetaParser.Pr_IdentifierContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_TBoolean"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_TBoolean([NotNull] MetaParser.Pr_TBooleanContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_MainBlock1"/>.
 	/// <para>
