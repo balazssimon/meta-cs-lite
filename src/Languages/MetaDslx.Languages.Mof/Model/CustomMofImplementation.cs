@@ -23,12 +23,12 @@ namespace MetaDslx.Languages.Mof.Model
 
         public override long MultiplicityElement_Lower(MultiplicityElement _this)
         {
-            throw new NotImplementedException();
+            return ((LiteralInteger)_this.LowerValue)?.Value ?? 0;
         }
 
         public override long MultiplicityElement_Upper(MultiplicityElement _this)
         {
-            throw new NotImplementedException();
+            return ((LiteralUnlimitedNatural)_this.UpperValue)?.Value ?? 1;
         }
 
         public override Namespace NamedElement_MemberNamespace(NamedElement _this)

@@ -2244,7 +2244,12 @@ namespace MetaDslx.Languages.Mof.Model
             : base(model, Mof.MInstance)
         {
         }
-    
+
+        internal MofModelFactory(__Model model, Mof metaModel)
+            : base(model, metaModel)
+        {
+        }
+
         public Comment Comment(string? id = null)
         {
             return (Comment)Mof.CommentInfo.Create(Model, id)!;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmi:XMI xmlns:m="http://www.omg.org/spec/MOF" xmlns:xmi="http://www.omg.org/spec/XMI">
+  <m:Package xmi:type="m:Package" xmi:id="_0" uRI="http://www.omg.org/spec/PrimitiveTypes/20161101" name="PrimitiveTypes" tag="_1">
+    <packagedElement xmi:type="m:PrimitiveType" xmi:id="Boolean" name="Boolean" comment="Boolean-_ownedComment.0" tag="_2">
+      <ownedComment xmi:type="m:Comment" xmi:id="Boolean-_ownedComment.0" annotatedElement="Boolean" body="Boolean is used for logical expressions, consisting of the predefined values true and false." />
+    </packagedElement>
+    <packagedElement xmi:type="m:PrimitiveType" xmi:id="Integer" name="Integer" comment="Integer-_ownedComment.0" tag="_3">
+      <ownedComment xmi:type="m:Comment" xmi:id="Integer-_ownedComment.0" annotatedElement="Integer" body="Integer is a primitive type representing integer values." />
+    </packagedElement>
+    <packagedElement xmi:type="m:PrimitiveType" xmi:id="Real" name="Real" comment="Real-_ownedComment.0" tag="_4">
+      <ownedComment xmi:type="m:Comment" xmi:id="Real-_ownedComment.0" annotatedElement="Real" body="Real is a primitive type representing the mathematical concept of real." />
+    </packagedElement>
+    <packagedElement xmi:type="m:PrimitiveType" xmi:id="String" name="String" comment="String-_ownedComment.0" tag="_5">
+      <ownedComment xmi:type="m:Comment" xmi:id="String-_ownedComment.0" annotatedElement="String" body="String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters." />
+    </packagedElement>
+    <packagedElement xmi:type="m:PrimitiveType" xmi:id="UnlimitedNatural" name="UnlimitedNatural" comment="UnlimitedNatural-_ownedComment.0" tag="_6">
+      <ownedComment xmi:type="m:Comment" xmi:id="UnlimitedNatural-_ownedComment.0" annotatedElement="UnlimitedNatural" body="UnlimitedNatural is a primitive type representing unlimited natural values." />
+    </packagedElement>
+    <ownedMember xmi:idref="Boolean" />
+    <ownedMember xmi:idref="Integer" />
+    <ownedMember xmi:idref="Real" />
+    <ownedMember xmi:idref="String" />
+    <ownedMember xmi:idref="UnlimitedNatural" />
+  </m:Package>
+  <m:Tag xmi:type="m:Tag" xmi:id="_1" element="_0" name="org.omg.xmi.nsPrefix" value="primitives" />
+  <m:Tag xmi:type="m:Tag" xmi:id="_2" element="Boolean" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#boolean" />
+  <m:Tag xmi:type="m:Tag" xmi:id="_3" element="Integer" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#integer" />
+  <m:Tag xmi:type="m:Tag" xmi:id="_4" element="Real" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#double" />
+  <m:Tag xmi:type="m:Tag" xmi:id="_5" element="String" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#string" />
+  <m:Tag xmi:type="m:Tag" xmi:id="_6" element="UnlimitedNatural" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#string" />
+</xmi:XMI>

@@ -12,6 +12,8 @@ namespace MetaDslx.Modeling
     
         public ModelFactory(Model model, MetaModel metaModel)
         {
+            if (model is null) throw new ArgumentNullException(nameof(model));
+            if (metaModel is null) throw new ArgumentNullException(nameof(metaModel));
             _model = model;
             _metaModel = metaModel;
         }

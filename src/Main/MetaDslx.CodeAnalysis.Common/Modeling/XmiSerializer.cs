@@ -543,11 +543,12 @@ namespace MetaDslx.Modeling
                 bool oppositeIsContainment = obj.MInfo.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
                 var slot = obj.MGetSlot(prop);
-                if (prop.IsSingle && (!prop.IsContainment || !prop.IsModelObject))
+                bool singleValue = prop.IsCollection && slot.Values.Take(2).Count() == 1;
+                if ((prop.IsSingle || singleValue) && (!prop.IsContainment || !prop.IsModelObject))
                 {
                     if (prop.IsModelObject)
                     {
-                        var value = slot.AsSingle()?.Value as IModelObject;
+                        var value = (singleValue ? slot.AsCollection()[0] : slot.AsSingle()?.Value) as IModelObject;
                         if (value != null)
                         {
                             if (value.MModel == _currentModel)
@@ -564,7 +565,7 @@ namespace MetaDslx.Modeling
                     {
                         if (!slot.IsDefault)
                         {
-                            var value = slot.AsSingle()?.Value;
+                            var value = singleValue ? slot.AsCollection()[0] : slot.AsSingle()?.Value;
                             if (value != null)
                             {
                                 var valueStr = value.ToString();
@@ -582,7 +583,8 @@ namespace MetaDslx.Modeling
                 bool oppositeIsContainment = obj.MInfo.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
                 var slot = obj.MGetSlot(prop);
-                if (prop.IsCollection && (!prop.IsContainment || !prop.IsModelObject))
+                bool singleValue = prop.IsCollection && slot.Values.Take(2).Count() == 1;
+                if ((prop.IsCollection && !singleValue) && (!prop.IsContainment || !prop.IsModelObject))
                 {
                     if (prop.IsModelObject)
                     {
@@ -626,7 +628,8 @@ namespace MetaDslx.Modeling
                 if (prop.IsContainment && prop.IsModelObject)
                 {
                     var slot = obj.MGetSlot(prop);
-                    if (prop.IsCollection)
+                    bool singleValue = prop.IsCollection && slot.Values.Take(2).Count() == 1;
+                    if (prop.IsCollection && !singleValue)
                     {
                         var children = slot.AsCollection();
                         if (children != null)
@@ -656,7 +659,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        var child = slot.AsSingle()?.Value as IModelObject;
+                        var child = (singleValue ? slot.AsCollection()[0] : slot.AsSingle()?.Value) as IModelObject;
                         if (child != null)
                         {
                             if (written.Add(child))
@@ -665,7 +668,15 @@ namespace MetaDslx.Modeling
                             }
                             else
                             {
-                                _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
+                                if (child.MModel == _currentModel)
+                                {
+                                    _currentXmlWriter.WriteAttributeString(Xmi, prop.Name.ToCamelCase(), _options.XmiNamespace, child.MId);
+                                }
+                                else
+                                {
+                                    _currentXmlWriter.WriteAttributeString(Xmi, prop.Name.ToCamelCase(), _options.XmiNamespace, ExternalIdRef(child));
+                                }
+                                /*_currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
                                 if (child.MModel == _currentModel)
                                 {
                                     _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.MId);
@@ -674,7 +685,7 @@ namespace MetaDslx.Modeling
                                 {
                                     _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(child));
                                 }
-                                _currentXmlWriter.WriteEndElement();
+                                _currentXmlWriter.WriteEndElement();*/
                             }
                         }
                     }
@@ -1122,7 +1133,7 @@ namespace MetaDslx.Modeling
                     this.RegisterObjectByPosition(element, obj);
                     foreach (var nameProp in obj.MInfo.AllDeclaredProperties.Where(p => p.IsName))
                     {
-                        var nameSlot = parent?.MGetSlot(nameProp);
+                        var nameSlot = obj.MGetSlot(nameProp);
                         if (nameSlot is null) continue;
                         var nameAttr = element.Attribute(nameProp.Name.ToCamelCase());
                         if (nameAttr != null)
