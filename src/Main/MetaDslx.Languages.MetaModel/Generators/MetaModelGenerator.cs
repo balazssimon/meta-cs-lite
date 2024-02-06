@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Security;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 
 namespace MetaDslx.Languages.MetaModel.Generators
 {
@@ -233,9 +234,9 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 if (value.GetType() == typeof(bool)) symbolValue = symbolValue.ToLower();
                 if (value.GetType() == typeof(string)) symbolValue = symbolValue.EncodeString();
                 if (value is MetaEnumLiteral lit2) symbolValue = $"{lit2.MParent?.MName}.{lit2.MName}";
-                if (value is Symbol)
+                if (value is IModelSymbol msym2)
                 {
-                    return GetName(value);
+                    return GetName(msym2.ModelObject);
                 }
                 return $"__MetaSymbol.FromValue({symbolValue})";
             }
@@ -243,6 +244,10 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type == typeof(bool)) return value.ToString().ToLower();
             if (type == typeof(string)) return value.ToString().EncodeString();
             if (type.IsPrimitive) return value.ToString();
+            if (value is IModelSymbol msym)
+            {
+                return GetName(msym.ModelObject);
+            }
             return GetName(value);
         }
 

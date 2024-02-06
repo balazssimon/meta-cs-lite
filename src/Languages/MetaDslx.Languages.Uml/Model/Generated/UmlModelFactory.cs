@@ -37,967 +37,967 @@ namespace MetaDslx.Languages.Uml.Model
     
         public Abstraction Abstraction(string? id = null)
         {
-            return (Abstraction)Uml.AbstractionInfo.Create(Model, id)!;
+            return (Abstraction)Uml.AbstractionInfo.Create(base.Model, id)!;
         }
     
         public AcceptEventAction AcceptEventAction(string? id = null)
         {
-            return (AcceptEventAction)Uml.AcceptEventActionInfo.Create(Model, id)!;
+            return (AcceptEventAction)Uml.AcceptEventActionInfo.Create(base.Model, id)!;
         }
     
         public AcceptCallAction AcceptCallAction(string? id = null)
         {
-            return (AcceptCallAction)Uml.AcceptCallActionInfo.Create(Model, id)!;
+            return (AcceptCallAction)Uml.AcceptCallActionInfo.Create(base.Model, id)!;
         }
     
         public ActionExecutionSpecification ActionExecutionSpecification(string? id = null)
         {
-            return (ActionExecutionSpecification)Uml.ActionExecutionSpecificationInfo.Create(Model, id)!;
+            return (ActionExecutionSpecification)Uml.ActionExecutionSpecificationInfo.Create(base.Model, id)!;
         }
     
         public ActionInputPin ActionInputPin(string? id = null)
         {
-            return (ActionInputPin)Uml.ActionInputPinInfo.Create(Model, id)!;
+            return (ActionInputPin)Uml.ActionInputPinInfo.Create(base.Model, id)!;
         }
     
         public Class Class(string? id = null)
         {
-            return (Class)Uml.ClassInfo.Create(Model, id)!;
+            return (Class)Uml.ClassInfo.Create(base.Model, id)!;
         }
     
         public Activity Activity(string? id = null)
         {
-            return (Activity)Uml.ActivityInfo.Create(Model, id)!;
+            return (Activity)Uml.ActivityInfo.Create(base.Model, id)!;
         }
     
         public ActivityFinalNode ActivityFinalNode(string? id = null)
         {
-            return (ActivityFinalNode)Uml.ActivityFinalNodeInfo.Create(Model, id)!;
+            return (ActivityFinalNode)Uml.ActivityFinalNodeInfo.Create(base.Model, id)!;
         }
     
         public ActivityParameterNode ActivityParameterNode(string? id = null)
         {
-            return (ActivityParameterNode)Uml.ActivityParameterNodeInfo.Create(Model, id)!;
+            return (ActivityParameterNode)Uml.ActivityParameterNodeInfo.Create(base.Model, id)!;
         }
     
         public ActivityPartition ActivityPartition(string? id = null)
         {
-            return (ActivityPartition)Uml.ActivityPartitionInfo.Create(Model, id)!;
+            return (ActivityPartition)Uml.ActivityPartitionInfo.Create(base.Model, id)!;
         }
     
         public Actor Actor(string? id = null)
         {
-            return (Actor)Uml.ActorInfo.Create(Model, id)!;
+            return (Actor)Uml.ActorInfo.Create(base.Model, id)!;
         }
     
         public AddStructuralFeatureValueAction AddStructuralFeatureValueAction(string? id = null)
         {
-            return (AddStructuralFeatureValueAction)Uml.AddStructuralFeatureValueActionInfo.Create(Model, id)!;
+            return (AddStructuralFeatureValueAction)Uml.AddStructuralFeatureValueActionInfo.Create(base.Model, id)!;
         }
     
         public AddVariableValueAction AddVariableValueAction(string? id = null)
         {
-            return (AddVariableValueAction)Uml.AddVariableValueActionInfo.Create(Model, id)!;
+            return (AddVariableValueAction)Uml.AddVariableValueActionInfo.Create(base.Model, id)!;
         }
     
         public AnyReceiveEvent AnyReceiveEvent(string? id = null)
         {
-            return (AnyReceiveEvent)Uml.AnyReceiveEventInfo.Create(Model, id)!;
+            return (AnyReceiveEvent)Uml.AnyReceiveEventInfo.Create(base.Model, id)!;
         }
     
         public Association Association(string? id = null)
         {
-            return (Association)Uml.AssociationInfo.Create(Model, id)!;
+            return (Association)Uml.AssociationInfo.Create(base.Model, id)!;
         }
     
         public AssociationClass AssociationClass(string? id = null)
         {
-            return (AssociationClass)Uml.AssociationClassInfo.Create(Model, id)!;
+            return (AssociationClass)Uml.AssociationClassInfo.Create(base.Model, id)!;
         }
     
         public BehaviorExecutionSpecification BehaviorExecutionSpecification(string? id = null)
         {
-            return (BehaviorExecutionSpecification)Uml.BehaviorExecutionSpecificationInfo.Create(Model, id)!;
+            return (BehaviorExecutionSpecification)Uml.BehaviorExecutionSpecificationInfo.Create(base.Model, id)!;
         }
     
         public BroadcastSignalAction BroadcastSignalAction(string? id = null)
         {
-            return (BroadcastSignalAction)Uml.BroadcastSignalActionInfo.Create(Model, id)!;
+            return (BroadcastSignalAction)Uml.BroadcastSignalActionInfo.Create(base.Model, id)!;
         }
     
         public CallBehaviorAction CallBehaviorAction(string? id = null)
         {
-            return (CallBehaviorAction)Uml.CallBehaviorActionInfo.Create(Model, id)!;
+            return (CallBehaviorAction)Uml.CallBehaviorActionInfo.Create(base.Model, id)!;
         }
     
         public CallEvent CallEvent(string? id = null)
         {
-            return (CallEvent)Uml.CallEventInfo.Create(Model, id)!;
+            return (CallEvent)Uml.CallEventInfo.Create(base.Model, id)!;
         }
     
         public CallOperationAction CallOperationAction(string? id = null)
         {
-            return (CallOperationAction)Uml.CallOperationActionInfo.Create(Model, id)!;
+            return (CallOperationAction)Uml.CallOperationActionInfo.Create(base.Model, id)!;
         }
     
         public CentralBufferNode CentralBufferNode(string? id = null)
         {
-            return (CentralBufferNode)Uml.CentralBufferNodeInfo.Create(Model, id)!;
+            return (CentralBufferNode)Uml.CentralBufferNodeInfo.Create(base.Model, id)!;
         }
     
         public ChangeEvent ChangeEvent(string? id = null)
         {
-            return (ChangeEvent)Uml.ChangeEventInfo.Create(Model, id)!;
+            return (ChangeEvent)Uml.ChangeEventInfo.Create(base.Model, id)!;
         }
     
         public ClassifierTemplateParameter ClassifierTemplateParameter(string? id = null)
         {
-            return (ClassifierTemplateParameter)Uml.ClassifierTemplateParameterInfo.Create(Model, id)!;
+            return (ClassifierTemplateParameter)Uml.ClassifierTemplateParameterInfo.Create(base.Model, id)!;
         }
     
         public Clause Clause(string? id = null)
         {
-            return (Clause)Uml.ClauseInfo.Create(Model, id)!;
+            return (Clause)Uml.ClauseInfo.Create(base.Model, id)!;
         }
     
         public ClearAssociationAction ClearAssociationAction(string? id = null)
         {
-            return (ClearAssociationAction)Uml.ClearAssociationActionInfo.Create(Model, id)!;
+            return (ClearAssociationAction)Uml.ClearAssociationActionInfo.Create(base.Model, id)!;
         }
     
         public ClearStructuralFeatureAction ClearStructuralFeatureAction(string? id = null)
         {
-            return (ClearStructuralFeatureAction)Uml.ClearStructuralFeatureActionInfo.Create(Model, id)!;
+            return (ClearStructuralFeatureAction)Uml.ClearStructuralFeatureActionInfo.Create(base.Model, id)!;
         }
     
         public ClearVariableAction ClearVariableAction(string? id = null)
         {
-            return (ClearVariableAction)Uml.ClearVariableActionInfo.Create(Model, id)!;
+            return (ClearVariableAction)Uml.ClearVariableActionInfo.Create(base.Model, id)!;
         }
     
         public Collaboration Collaboration(string? id = null)
         {
-            return (Collaboration)Uml.CollaborationInfo.Create(Model, id)!;
+            return (Collaboration)Uml.CollaborationInfo.Create(base.Model, id)!;
         }
     
         public CollaborationUse CollaborationUse(string? id = null)
         {
-            return (CollaborationUse)Uml.CollaborationUseInfo.Create(Model, id)!;
+            return (CollaborationUse)Uml.CollaborationUseInfo.Create(base.Model, id)!;
         }
     
         public CombinedFragment CombinedFragment(string? id = null)
         {
-            return (CombinedFragment)Uml.CombinedFragmentInfo.Create(Model, id)!;
+            return (CombinedFragment)Uml.CombinedFragmentInfo.Create(base.Model, id)!;
         }
     
         public Comment Comment(string? id = null)
         {
-            return (Comment)Uml.CommentInfo.Create(Model, id)!;
+            return (Comment)Uml.CommentInfo.Create(base.Model, id)!;
         }
     
         public CommunicationPath CommunicationPath(string? id = null)
         {
-            return (CommunicationPath)Uml.CommunicationPathInfo.Create(Model, id)!;
+            return (CommunicationPath)Uml.CommunicationPathInfo.Create(base.Model, id)!;
         }
     
         public Component Component(string? id = null)
         {
-            return (Component)Uml.ComponentInfo.Create(Model, id)!;
+            return (Component)Uml.ComponentInfo.Create(base.Model, id)!;
         }
     
         public ComponentRealization ComponentRealization(string? id = null)
         {
-            return (ComponentRealization)Uml.ComponentRealizationInfo.Create(Model, id)!;
+            return (ComponentRealization)Uml.ComponentRealizationInfo.Create(base.Model, id)!;
         }
     
         public ConditionalNode ConditionalNode(string? id = null)
         {
-            return (ConditionalNode)Uml.ConditionalNodeInfo.Create(Model, id)!;
+            return (ConditionalNode)Uml.ConditionalNodeInfo.Create(base.Model, id)!;
         }
     
         public ConnectableElementTemplateParameter ConnectableElementTemplateParameter(string? id = null)
         {
-            return (ConnectableElementTemplateParameter)Uml.ConnectableElementTemplateParameterInfo.Create(Model, id)!;
+            return (ConnectableElementTemplateParameter)Uml.ConnectableElementTemplateParameterInfo.Create(base.Model, id)!;
         }
     
         public ConnectionPointReference ConnectionPointReference(string? id = null)
         {
-            return (ConnectionPointReference)Uml.ConnectionPointReferenceInfo.Create(Model, id)!;
+            return (ConnectionPointReference)Uml.ConnectionPointReferenceInfo.Create(base.Model, id)!;
         }
     
         public Connector Connector(string? id = null)
         {
-            return (Connector)Uml.ConnectorInfo.Create(Model, id)!;
+            return (Connector)Uml.ConnectorInfo.Create(base.Model, id)!;
         }
     
         public ConnectorEnd ConnectorEnd(string? id = null)
         {
-            return (ConnectorEnd)Uml.ConnectorEndInfo.Create(Model, id)!;
+            return (ConnectorEnd)Uml.ConnectorEndInfo.Create(base.Model, id)!;
         }
     
         public ConsiderIgnoreFragment ConsiderIgnoreFragment(string? id = null)
         {
-            return (ConsiderIgnoreFragment)Uml.ConsiderIgnoreFragmentInfo.Create(Model, id)!;
+            return (ConsiderIgnoreFragment)Uml.ConsiderIgnoreFragmentInfo.Create(base.Model, id)!;
         }
     
         public Constraint Constraint(string? id = null)
         {
-            return (Constraint)Uml.ConstraintInfo.Create(Model, id)!;
+            return (Constraint)Uml.ConstraintInfo.Create(base.Model, id)!;
         }
     
         public Continuation Continuation(string? id = null)
         {
-            return (Continuation)Uml.ContinuationInfo.Create(Model, id)!;
+            return (Continuation)Uml.ContinuationInfo.Create(base.Model, id)!;
         }
     
         public ControlFlow ControlFlow(string? id = null)
         {
-            return (ControlFlow)Uml.ControlFlowInfo.Create(Model, id)!;
+            return (ControlFlow)Uml.ControlFlowInfo.Create(base.Model, id)!;
         }
     
         public CreateLinkAction CreateLinkAction(string? id = null)
         {
-            return (CreateLinkAction)Uml.CreateLinkActionInfo.Create(Model, id)!;
+            return (CreateLinkAction)Uml.CreateLinkActionInfo.Create(base.Model, id)!;
         }
     
         public CreateLinkObjectAction CreateLinkObjectAction(string? id = null)
         {
-            return (CreateLinkObjectAction)Uml.CreateLinkObjectActionInfo.Create(Model, id)!;
+            return (CreateLinkObjectAction)Uml.CreateLinkObjectActionInfo.Create(base.Model, id)!;
         }
     
         public CreateObjectAction CreateObjectAction(string? id = null)
         {
-            return (CreateObjectAction)Uml.CreateObjectActionInfo.Create(Model, id)!;
+            return (CreateObjectAction)Uml.CreateObjectActionInfo.Create(base.Model, id)!;
         }
     
         public DataStoreNode DataStoreNode(string? id = null)
         {
-            return (DataStoreNode)Uml.DataStoreNodeInfo.Create(Model, id)!;
+            return (DataStoreNode)Uml.DataStoreNodeInfo.Create(base.Model, id)!;
         }
     
         public DataType DataType(string? id = null)
         {
-            return (DataType)Uml.DataTypeInfo.Create(Model, id)!;
+            return (DataType)Uml.DataTypeInfo.Create(base.Model, id)!;
         }
     
         public DecisionNode DecisionNode(string? id = null)
         {
-            return (DecisionNode)Uml.DecisionNodeInfo.Create(Model, id)!;
+            return (DecisionNode)Uml.DecisionNodeInfo.Create(base.Model, id)!;
         }
     
         public Dependency Dependency(string? id = null)
         {
-            return (Dependency)Uml.DependencyInfo.Create(Model, id)!;
+            return (Dependency)Uml.DependencyInfo.Create(base.Model, id)!;
         }
     
         public DestroyLinkAction DestroyLinkAction(string? id = null)
         {
-            return (DestroyLinkAction)Uml.DestroyLinkActionInfo.Create(Model, id)!;
+            return (DestroyLinkAction)Uml.DestroyLinkActionInfo.Create(base.Model, id)!;
         }
     
         public DestroyObjectAction DestroyObjectAction(string? id = null)
         {
-            return (DestroyObjectAction)Uml.DestroyObjectActionInfo.Create(Model, id)!;
+            return (DestroyObjectAction)Uml.DestroyObjectActionInfo.Create(base.Model, id)!;
         }
     
         public DestructionOccurrenceSpecification DestructionOccurrenceSpecification(string? id = null)
         {
-            return (DestructionOccurrenceSpecification)Uml.DestructionOccurrenceSpecificationInfo.Create(Model, id)!;
+            return (DestructionOccurrenceSpecification)Uml.DestructionOccurrenceSpecificationInfo.Create(base.Model, id)!;
         }
     
         public ElementImport ElementImport(string? id = null)
         {
-            return (ElementImport)Uml.ElementImportInfo.Create(Model, id)!;
+            return (ElementImport)Uml.ElementImportInfo.Create(base.Model, id)!;
         }
     
         public ExceptionHandler ExceptionHandler(string? id = null)
         {
-            return (ExceptionHandler)Uml.ExceptionHandlerInfo.Create(Model, id)!;
+            return (ExceptionHandler)Uml.ExceptionHandlerInfo.Create(base.Model, id)!;
         }
     
         public ExecutionOccurrenceSpecification ExecutionOccurrenceSpecification(string? id = null)
         {
-            return (ExecutionOccurrenceSpecification)Uml.ExecutionOccurrenceSpecificationInfo.Create(Model, id)!;
+            return (ExecutionOccurrenceSpecification)Uml.ExecutionOccurrenceSpecificationInfo.Create(base.Model, id)!;
         }
     
         public ExpansionNode ExpansionNode(string? id = null)
         {
-            return (ExpansionNode)Uml.ExpansionNodeInfo.Create(Model, id)!;
+            return (ExpansionNode)Uml.ExpansionNodeInfo.Create(base.Model, id)!;
         }
     
         public ExpansionRegion ExpansionRegion(string? id = null)
         {
-            return (ExpansionRegion)Uml.ExpansionRegionInfo.Create(Model, id)!;
+            return (ExpansionRegion)Uml.ExpansionRegionInfo.Create(base.Model, id)!;
         }
     
         public Extend Extend(string? id = null)
         {
-            return (Extend)Uml.ExtendInfo.Create(Model, id)!;
+            return (Extend)Uml.ExtendInfo.Create(base.Model, id)!;
         }
     
         public ExtensionEnd ExtensionEnd(string? id = null)
         {
-            return (ExtensionEnd)Uml.ExtensionEndInfo.Create(Model, id)!;
+            return (ExtensionEnd)Uml.ExtensionEndInfo.Create(base.Model, id)!;
         }
     
         public ExtensionPoint ExtensionPoint(string? id = null)
         {
-            return (ExtensionPoint)Uml.ExtensionPointInfo.Create(Model, id)!;
+            return (ExtensionPoint)Uml.ExtensionPointInfo.Create(base.Model, id)!;
         }
     
         public FinalState FinalState(string? id = null)
         {
-            return (FinalState)Uml.FinalStateInfo.Create(Model, id)!;
+            return (FinalState)Uml.FinalStateInfo.Create(base.Model, id)!;
         }
     
         public FlowFinalNode FlowFinalNode(string? id = null)
         {
-            return (FlowFinalNode)Uml.FlowFinalNodeInfo.Create(Model, id)!;
+            return (FlowFinalNode)Uml.FlowFinalNodeInfo.Create(base.Model, id)!;
         }
     
         public ForkNode ForkNode(string? id = null)
         {
-            return (ForkNode)Uml.ForkNodeInfo.Create(Model, id)!;
+            return (ForkNode)Uml.ForkNodeInfo.Create(base.Model, id)!;
         }
     
         public Gate Gate(string? id = null)
         {
-            return (Gate)Uml.GateInfo.Create(Model, id)!;
+            return (Gate)Uml.GateInfo.Create(base.Model, id)!;
         }
     
         public Generalization Generalization(string? id = null)
         {
-            return (Generalization)Uml.GeneralizationInfo.Create(Model, id)!;
+            return (Generalization)Uml.GeneralizationInfo.Create(base.Model, id)!;
         }
     
         public GeneralOrdering GeneralOrdering(string? id = null)
         {
-            return (GeneralOrdering)Uml.GeneralOrderingInfo.Create(Model, id)!;
+            return (GeneralOrdering)Uml.GeneralOrderingInfo.Create(base.Model, id)!;
         }
     
         public Image Image(string? id = null)
         {
-            return (Image)Uml.ImageInfo.Create(Model, id)!;
+            return (Image)Uml.ImageInfo.Create(base.Model, id)!;
         }
     
         public Include Include(string? id = null)
         {
-            return (Include)Uml.IncludeInfo.Create(Model, id)!;
+            return (Include)Uml.IncludeInfo.Create(base.Model, id)!;
         }
     
         public InitialNode InitialNode(string? id = null)
         {
-            return (InitialNode)Uml.InitialNodeInfo.Create(Model, id)!;
+            return (InitialNode)Uml.InitialNodeInfo.Create(base.Model, id)!;
         }
     
         public InputPin InputPin(string? id = null)
         {
-            return (InputPin)Uml.InputPinInfo.Create(Model, id)!;
+            return (InputPin)Uml.InputPinInfo.Create(base.Model, id)!;
         }
     
         public Artifact Artifact(string? id = null)
         {
-            return (Artifact)Uml.ArtifactInfo.Create(Model, id)!;
+            return (Artifact)Uml.ArtifactInfo.Create(base.Model, id)!;
         }
     
         public Deployment Deployment(string? id = null)
         {
-            return (Deployment)Uml.DeploymentInfo.Create(Model, id)!;
+            return (Deployment)Uml.DeploymentInfo.Create(base.Model, id)!;
         }
     
         public DeploymentSpecification DeploymentSpecification(string? id = null)
         {
-            return (DeploymentSpecification)Uml.DeploymentSpecificationInfo.Create(Model, id)!;
+            return (DeploymentSpecification)Uml.DeploymentSpecificationInfo.Create(base.Model, id)!;
         }
     
         public Duration Duration(string? id = null)
         {
-            return (Duration)Uml.DurationInfo.Create(Model, id)!;
+            return (Duration)Uml.DurationInfo.Create(base.Model, id)!;
         }
     
         public DurationConstraint DurationConstraint(string? id = null)
         {
-            return (DurationConstraint)Uml.DurationConstraintInfo.Create(Model, id)!;
+            return (DurationConstraint)Uml.DurationConstraintInfo.Create(base.Model, id)!;
         }
     
         public DurationInterval DurationInterval(string? id = null)
         {
-            return (DurationInterval)Uml.DurationIntervalInfo.Create(Model, id)!;
+            return (DurationInterval)Uml.DurationIntervalInfo.Create(base.Model, id)!;
         }
     
         public DurationObservation DurationObservation(string? id = null)
         {
-            return (DurationObservation)Uml.DurationObservationInfo.Create(Model, id)!;
+            return (DurationObservation)Uml.DurationObservationInfo.Create(base.Model, id)!;
         }
     
         public Device Device(string? id = null)
         {
-            return (Device)Uml.DeviceInfo.Create(Model, id)!;
+            return (Device)Uml.DeviceInfo.Create(base.Model, id)!;
         }
     
         public Enumeration Enumeration(string? id = null)
         {
-            return (Enumeration)Uml.EnumerationInfo.Create(Model, id)!;
+            return (Enumeration)Uml.EnumerationInfo.Create(base.Model, id)!;
         }
     
         public EnumerationLiteral EnumerationLiteral(string? id = null)
         {
-            return (EnumerationLiteral)Uml.EnumerationLiteralInfo.Create(Model, id)!;
+            return (EnumerationLiteral)Uml.EnumerationLiteralInfo.Create(base.Model, id)!;
         }
     
         public ExecutionEnvironment ExecutionEnvironment(string? id = null)
         {
-            return (ExecutionEnvironment)Uml.ExecutionEnvironmentInfo.Create(Model, id)!;
+            return (ExecutionEnvironment)Uml.ExecutionEnvironmentInfo.Create(base.Model, id)!;
         }
     
         public Expression Expression(string? id = null)
         {
-            return (Expression)Uml.ExpressionInfo.Create(Model, id)!;
+            return (Expression)Uml.ExpressionInfo.Create(base.Model, id)!;
         }
     
         public Extension Extension(string? id = null)
         {
-            return (Extension)Uml.ExtensionInfo.Create(Model, id)!;
+            return (Extension)Uml.ExtensionInfo.Create(base.Model, id)!;
         }
     
         public FunctionBehavior FunctionBehavior(string? id = null)
         {
-            return (FunctionBehavior)Uml.FunctionBehaviorInfo.Create(Model, id)!;
+            return (FunctionBehavior)Uml.FunctionBehaviorInfo.Create(base.Model, id)!;
         }
     
         public GeneralizationSet GeneralizationSet(string? id = null)
         {
-            return (GeneralizationSet)Uml.GeneralizationSetInfo.Create(Model, id)!;
+            return (GeneralizationSet)Uml.GeneralizationSetInfo.Create(base.Model, id)!;
         }
     
         public InformationFlow InformationFlow(string? id = null)
         {
-            return (InformationFlow)Uml.InformationFlowInfo.Create(Model, id)!;
+            return (InformationFlow)Uml.InformationFlowInfo.Create(base.Model, id)!;
         }
     
         public InformationItem InformationItem(string? id = null)
         {
-            return (InformationItem)Uml.InformationItemInfo.Create(Model, id)!;
+            return (InformationItem)Uml.InformationItemInfo.Create(base.Model, id)!;
         }
     
         public InstanceSpecification InstanceSpecification(string? id = null)
         {
-            return (InstanceSpecification)Uml.InstanceSpecificationInfo.Create(Model, id)!;
+            return (InstanceSpecification)Uml.InstanceSpecificationInfo.Create(base.Model, id)!;
         }
     
         public InstanceValue InstanceValue(string? id = null)
         {
-            return (InstanceValue)Uml.InstanceValueInfo.Create(Model, id)!;
+            return (InstanceValue)Uml.InstanceValueInfo.Create(base.Model, id)!;
         }
     
         public Interaction Interaction(string? id = null)
         {
-            return (Interaction)Uml.InteractionInfo.Create(Model, id)!;
+            return (Interaction)Uml.InteractionInfo.Create(base.Model, id)!;
         }
     
         public InteractionConstraint InteractionConstraint(string? id = null)
         {
-            return (InteractionConstraint)Uml.InteractionConstraintInfo.Create(Model, id)!;
+            return (InteractionConstraint)Uml.InteractionConstraintInfo.Create(base.Model, id)!;
         }
     
         public InteractionOperand InteractionOperand(string? id = null)
         {
-            return (InteractionOperand)Uml.InteractionOperandInfo.Create(Model, id)!;
+            return (InteractionOperand)Uml.InteractionOperandInfo.Create(base.Model, id)!;
         }
     
         public InteractionUse InteractionUse(string? id = null)
         {
-            return (InteractionUse)Uml.InteractionUseInfo.Create(Model, id)!;
+            return (InteractionUse)Uml.InteractionUseInfo.Create(base.Model, id)!;
         }
     
         public Interface Interface(string? id = null)
         {
-            return (Interface)Uml.InterfaceInfo.Create(Model, id)!;
+            return (Interface)Uml.InterfaceInfo.Create(base.Model, id)!;
         }
     
         public InterfaceRealization InterfaceRealization(string? id = null)
         {
-            return (InterfaceRealization)Uml.InterfaceRealizationInfo.Create(Model, id)!;
+            return (InterfaceRealization)Uml.InterfaceRealizationInfo.Create(base.Model, id)!;
         }
     
         public InterruptibleActivityRegion InterruptibleActivityRegion(string? id = null)
         {
-            return (InterruptibleActivityRegion)Uml.InterruptibleActivityRegionInfo.Create(Model, id)!;
+            return (InterruptibleActivityRegion)Uml.InterruptibleActivityRegionInfo.Create(base.Model, id)!;
         }
     
         public Interval Interval(string? id = null)
         {
-            return (Interval)Uml.IntervalInfo.Create(Model, id)!;
+            return (Interval)Uml.IntervalInfo.Create(base.Model, id)!;
         }
     
         public IntervalConstraint IntervalConstraint(string? id = null)
         {
-            return (IntervalConstraint)Uml.IntervalConstraintInfo.Create(Model, id)!;
+            return (IntervalConstraint)Uml.IntervalConstraintInfo.Create(base.Model, id)!;
         }
     
         public JoinNode JoinNode(string? id = null)
         {
-            return (JoinNode)Uml.JoinNodeInfo.Create(Model, id)!;
+            return (JoinNode)Uml.JoinNodeInfo.Create(base.Model, id)!;
         }
     
         public Lifeline Lifeline(string? id = null)
         {
-            return (Lifeline)Uml.LifelineInfo.Create(Model, id)!;
+            return (Lifeline)Uml.LifelineInfo.Create(base.Model, id)!;
         }
     
         public LinkEndData LinkEndData(string? id = null)
         {
-            return (LinkEndData)Uml.LinkEndDataInfo.Create(Model, id)!;
+            return (LinkEndData)Uml.LinkEndDataInfo.Create(base.Model, id)!;
         }
     
         public LinkEndCreationData LinkEndCreationData(string? id = null)
         {
-            return (LinkEndCreationData)Uml.LinkEndCreationDataInfo.Create(Model, id)!;
+            return (LinkEndCreationData)Uml.LinkEndCreationDataInfo.Create(base.Model, id)!;
         }
     
         public LinkEndDestructionData LinkEndDestructionData(string? id = null)
         {
-            return (LinkEndDestructionData)Uml.LinkEndDestructionDataInfo.Create(Model, id)!;
+            return (LinkEndDestructionData)Uml.LinkEndDestructionDataInfo.Create(base.Model, id)!;
         }
     
         public LiteralBoolean LiteralBoolean(string? id = null)
         {
-            return (LiteralBoolean)Uml.LiteralBooleanInfo.Create(Model, id)!;
+            return (LiteralBoolean)Uml.LiteralBooleanInfo.Create(base.Model, id)!;
         }
     
         public LiteralInteger LiteralInteger(string? id = null)
         {
-            return (LiteralInteger)Uml.LiteralIntegerInfo.Create(Model, id)!;
+            return (LiteralInteger)Uml.LiteralIntegerInfo.Create(base.Model, id)!;
         }
     
         public LiteralNull LiteralNull(string? id = null)
         {
-            return (LiteralNull)Uml.LiteralNullInfo.Create(Model, id)!;
+            return (LiteralNull)Uml.LiteralNullInfo.Create(base.Model, id)!;
         }
     
         public LiteralReal LiteralReal(string? id = null)
         {
-            return (LiteralReal)Uml.LiteralRealInfo.Create(Model, id)!;
+            return (LiteralReal)Uml.LiteralRealInfo.Create(base.Model, id)!;
         }
     
         public LiteralString LiteralString(string? id = null)
         {
-            return (LiteralString)Uml.LiteralStringInfo.Create(Model, id)!;
+            return (LiteralString)Uml.LiteralStringInfo.Create(base.Model, id)!;
         }
     
         public LiteralUnlimitedNatural LiteralUnlimitedNatural(string? id = null)
         {
-            return (LiteralUnlimitedNatural)Uml.LiteralUnlimitedNaturalInfo.Create(Model, id)!;
+            return (LiteralUnlimitedNatural)Uml.LiteralUnlimitedNaturalInfo.Create(base.Model, id)!;
         }
     
         public LoopNode LoopNode(string? id = null)
         {
-            return (LoopNode)Uml.LoopNodeInfo.Create(Model, id)!;
+            return (LoopNode)Uml.LoopNodeInfo.Create(base.Model, id)!;
         }
     
         public Manifestation Manifestation(string? id = null)
         {
-            return (Manifestation)Uml.ManifestationInfo.Create(Model, id)!;
+            return (Manifestation)Uml.ManifestationInfo.Create(base.Model, id)!;
         }
     
         public MergeNode MergeNode(string? id = null)
         {
-            return (MergeNode)Uml.MergeNodeInfo.Create(Model, id)!;
+            return (MergeNode)Uml.MergeNodeInfo.Create(base.Model, id)!;
         }
     
         public Message Message(string? id = null)
         {
-            return (Message)Uml.MessageInfo.Create(Model, id)!;
+            return (Message)Uml.MessageInfo.Create(base.Model, id)!;
         }
     
         public Model Model(string? id = null)
         {
-            return (Model)Uml.ModelInfo.Create(Model, id)!;
+            return (Model)Uml.ModelInfo.Create(base.Model, id)!;
         }
     
         public Node Node(string? id = null)
         {
-            return (Node)Uml.NodeInfo.Create(Model, id)!;
+            return (Node)Uml.NodeInfo.Create(base.Model, id)!;
         }
     
         public ObjectFlow ObjectFlow(string? id = null)
         {
-            return (ObjectFlow)Uml.ObjectFlowInfo.Create(Model, id)!;
+            return (ObjectFlow)Uml.ObjectFlowInfo.Create(base.Model, id)!;
         }
     
         public OccurrenceSpecification OccurrenceSpecification(string? id = null)
         {
-            return (OccurrenceSpecification)Uml.OccurrenceSpecificationInfo.Create(Model, id)!;
+            return (OccurrenceSpecification)Uml.OccurrenceSpecificationInfo.Create(base.Model, id)!;
         }
     
         public MessageOccurrenceSpecification MessageOccurrenceSpecification(string? id = null)
         {
-            return (MessageOccurrenceSpecification)Uml.MessageOccurrenceSpecificationInfo.Create(Model, id)!;
+            return (MessageOccurrenceSpecification)Uml.MessageOccurrenceSpecificationInfo.Create(base.Model, id)!;
         }
     
         public OpaqueExpression OpaqueExpression(string? id = null)
         {
-            return (OpaqueExpression)Uml.OpaqueExpressionInfo.Create(Model, id)!;
+            return (OpaqueExpression)Uml.OpaqueExpressionInfo.Create(base.Model, id)!;
         }
     
         public OperationTemplateParameter OperationTemplateParameter(string? id = null)
         {
-            return (OperationTemplateParameter)Uml.OperationTemplateParameterInfo.Create(Model, id)!;
+            return (OperationTemplateParameter)Uml.OperationTemplateParameterInfo.Create(base.Model, id)!;
         }
     
         public Package Package(string? id = null)
         {
-            return (Package)Uml.PackageInfo.Create(Model, id)!;
+            return (Package)Uml.PackageInfo.Create(base.Model, id)!;
         }
     
         public PackageImport PackageImport(string? id = null)
         {
-            return (PackageImport)Uml.PackageImportInfo.Create(Model, id)!;
+            return (PackageImport)Uml.PackageImportInfo.Create(base.Model, id)!;
         }
     
         public PackageMerge PackageMerge(string? id = null)
         {
-            return (PackageMerge)Uml.PackageMergeInfo.Create(Model, id)!;
+            return (PackageMerge)Uml.PackageMergeInfo.Create(base.Model, id)!;
         }
     
         public Parameter Parameter(string? id = null)
         {
-            return (Parameter)Uml.ParameterInfo.Create(Model, id)!;
+            return (Parameter)Uml.ParameterInfo.Create(base.Model, id)!;
         }
     
         public ParameterSet ParameterSet(string? id = null)
         {
-            return (ParameterSet)Uml.ParameterSetInfo.Create(Model, id)!;
+            return (ParameterSet)Uml.ParameterSetInfo.Create(base.Model, id)!;
         }
     
         public PartDecomposition PartDecomposition(string? id = null)
         {
-            return (PartDecomposition)Uml.PartDecompositionInfo.Create(Model, id)!;
+            return (PartDecomposition)Uml.PartDecompositionInfo.Create(base.Model, id)!;
         }
     
         public OpaqueAction OpaqueAction(string? id = null)
         {
-            return (OpaqueAction)Uml.OpaqueActionInfo.Create(Model, id)!;
+            return (OpaqueAction)Uml.OpaqueActionInfo.Create(base.Model, id)!;
         }
     
         public OpaqueBehavior OpaqueBehavior(string? id = null)
         {
-            return (OpaqueBehavior)Uml.OpaqueBehaviorInfo.Create(Model, id)!;
+            return (OpaqueBehavior)Uml.OpaqueBehaviorInfo.Create(base.Model, id)!;
         }
     
         public Operation Operation(string? id = null)
         {
-            return (Operation)Uml.OperationInfo.Create(Model, id)!;
+            return (Operation)Uml.OperationInfo.Create(base.Model, id)!;
         }
     
         public OutputPin OutputPin(string? id = null)
         {
-            return (OutputPin)Uml.OutputPinInfo.Create(Model, id)!;
+            return (OutputPin)Uml.OutputPinInfo.Create(base.Model, id)!;
         }
     
         public Property Property(string? id = null)
         {
-            return (Property)Uml.PropertyInfo.Create(Model, id)!;
+            return (Property)Uml.PropertyInfo.Create(base.Model, id)!;
         }
     
         public Port Port(string? id = null)
         {
-            return (Port)Uml.PortInfo.Create(Model, id)!;
+            return (Port)Uml.PortInfo.Create(base.Model, id)!;
         }
     
         public PrimitiveType PrimitiveType(string? id = null)
         {
-            return (PrimitiveType)Uml.PrimitiveTypeInfo.Create(Model, id)!;
+            return (PrimitiveType)Uml.PrimitiveTypeInfo.Create(base.Model, id)!;
         }
     
         public Profile Profile(string? id = null)
         {
-            return (Profile)Uml.ProfileInfo.Create(Model, id)!;
+            return (Profile)Uml.ProfileInfo.Create(base.Model, id)!;
         }
     
         public ProfileApplication ProfileApplication(string? id = null)
         {
-            return (ProfileApplication)Uml.ProfileApplicationInfo.Create(Model, id)!;
+            return (ProfileApplication)Uml.ProfileApplicationInfo.Create(base.Model, id)!;
         }
     
         public ProtocolConformance ProtocolConformance(string? id = null)
         {
-            return (ProtocolConformance)Uml.ProtocolConformanceInfo.Create(Model, id)!;
+            return (ProtocolConformance)Uml.ProtocolConformanceInfo.Create(base.Model, id)!;
         }
     
         public ProtocolStateMachine ProtocolStateMachine(string? id = null)
         {
-            return (ProtocolStateMachine)Uml.ProtocolStateMachineInfo.Create(Model, id)!;
+            return (ProtocolStateMachine)Uml.ProtocolStateMachineInfo.Create(base.Model, id)!;
         }
     
         public ProtocolTransition ProtocolTransition(string? id = null)
         {
-            return (ProtocolTransition)Uml.ProtocolTransitionInfo.Create(Model, id)!;
+            return (ProtocolTransition)Uml.ProtocolTransitionInfo.Create(base.Model, id)!;
         }
     
         public Pseudostate Pseudostate(string? id = null)
         {
-            return (Pseudostate)Uml.PseudostateInfo.Create(Model, id)!;
+            return (Pseudostate)Uml.PseudostateInfo.Create(base.Model, id)!;
         }
     
         public QualifierValue QualifierValue(string? id = null)
         {
-            return (QualifierValue)Uml.QualifierValueInfo.Create(Model, id)!;
+            return (QualifierValue)Uml.QualifierValueInfo.Create(base.Model, id)!;
         }
     
         public RaiseExceptionAction RaiseExceptionAction(string? id = null)
         {
-            return (RaiseExceptionAction)Uml.RaiseExceptionActionInfo.Create(Model, id)!;
+            return (RaiseExceptionAction)Uml.RaiseExceptionActionInfo.Create(base.Model, id)!;
         }
     
         public ReadExtentAction ReadExtentAction(string? id = null)
         {
-            return (ReadExtentAction)Uml.ReadExtentActionInfo.Create(Model, id)!;
+            return (ReadExtentAction)Uml.ReadExtentActionInfo.Create(base.Model, id)!;
         }
     
         public ReadIsClassifiedObjectAction ReadIsClassifiedObjectAction(string? id = null)
         {
-            return (ReadIsClassifiedObjectAction)Uml.ReadIsClassifiedObjectActionInfo.Create(Model, id)!;
+            return (ReadIsClassifiedObjectAction)Uml.ReadIsClassifiedObjectActionInfo.Create(base.Model, id)!;
         }
     
         public ReadLinkAction ReadLinkAction(string? id = null)
         {
-            return (ReadLinkAction)Uml.ReadLinkActionInfo.Create(Model, id)!;
+            return (ReadLinkAction)Uml.ReadLinkActionInfo.Create(base.Model, id)!;
         }
     
         public ReadLinkObjectEndAction ReadLinkObjectEndAction(string? id = null)
         {
-            return (ReadLinkObjectEndAction)Uml.ReadLinkObjectEndActionInfo.Create(Model, id)!;
+            return (ReadLinkObjectEndAction)Uml.ReadLinkObjectEndActionInfo.Create(base.Model, id)!;
         }
     
         public ReadLinkObjectEndQualifierAction ReadLinkObjectEndQualifierAction(string? id = null)
         {
-            return (ReadLinkObjectEndQualifierAction)Uml.ReadLinkObjectEndQualifierActionInfo.Create(Model, id)!;
+            return (ReadLinkObjectEndQualifierAction)Uml.ReadLinkObjectEndQualifierActionInfo.Create(base.Model, id)!;
         }
     
         public ReadSelfAction ReadSelfAction(string? id = null)
         {
-            return (ReadSelfAction)Uml.ReadSelfActionInfo.Create(Model, id)!;
+            return (ReadSelfAction)Uml.ReadSelfActionInfo.Create(base.Model, id)!;
         }
     
         public ReadStructuralFeatureAction ReadStructuralFeatureAction(string? id = null)
         {
-            return (ReadStructuralFeatureAction)Uml.ReadStructuralFeatureActionInfo.Create(Model, id)!;
+            return (ReadStructuralFeatureAction)Uml.ReadStructuralFeatureActionInfo.Create(base.Model, id)!;
         }
     
         public ReadVariableAction ReadVariableAction(string? id = null)
         {
-            return (ReadVariableAction)Uml.ReadVariableActionInfo.Create(Model, id)!;
+            return (ReadVariableAction)Uml.ReadVariableActionInfo.Create(base.Model, id)!;
         }
     
         public Realization Realization(string? id = null)
         {
-            return (Realization)Uml.RealizationInfo.Create(Model, id)!;
+            return (Realization)Uml.RealizationInfo.Create(base.Model, id)!;
         }
     
         public Reception Reception(string? id = null)
         {
-            return (Reception)Uml.ReceptionInfo.Create(Model, id)!;
+            return (Reception)Uml.ReceptionInfo.Create(base.Model, id)!;
         }
     
         public ReclassifyObjectAction ReclassifyObjectAction(string? id = null)
         {
-            return (ReclassifyObjectAction)Uml.ReclassifyObjectActionInfo.Create(Model, id)!;
+            return (ReclassifyObjectAction)Uml.ReclassifyObjectActionInfo.Create(base.Model, id)!;
         }
     
         public RedefinableTemplateSignature RedefinableTemplateSignature(string? id = null)
         {
-            return (RedefinableTemplateSignature)Uml.RedefinableTemplateSignatureInfo.Create(Model, id)!;
+            return (RedefinableTemplateSignature)Uml.RedefinableTemplateSignatureInfo.Create(base.Model, id)!;
         }
     
         public ReduceAction ReduceAction(string? id = null)
         {
-            return (ReduceAction)Uml.ReduceActionInfo.Create(Model, id)!;
+            return (ReduceAction)Uml.ReduceActionInfo.Create(base.Model, id)!;
         }
     
         public Region Region(string? id = null)
         {
-            return (Region)Uml.RegionInfo.Create(Model, id)!;
+            return (Region)Uml.RegionInfo.Create(base.Model, id)!;
         }
     
         public RemoveStructuralFeatureValueAction RemoveStructuralFeatureValueAction(string? id = null)
         {
-            return (RemoveStructuralFeatureValueAction)Uml.RemoveStructuralFeatureValueActionInfo.Create(Model, id)!;
+            return (RemoveStructuralFeatureValueAction)Uml.RemoveStructuralFeatureValueActionInfo.Create(base.Model, id)!;
         }
     
         public RemoveVariableValueAction RemoveVariableValueAction(string? id = null)
         {
-            return (RemoveVariableValueAction)Uml.RemoveVariableValueActionInfo.Create(Model, id)!;
+            return (RemoveVariableValueAction)Uml.RemoveVariableValueActionInfo.Create(base.Model, id)!;
         }
     
         public ReplyAction ReplyAction(string? id = null)
         {
-            return (ReplyAction)Uml.ReplyActionInfo.Create(Model, id)!;
+            return (ReplyAction)Uml.ReplyActionInfo.Create(base.Model, id)!;
         }
     
         public SendObjectAction SendObjectAction(string? id = null)
         {
-            return (SendObjectAction)Uml.SendObjectActionInfo.Create(Model, id)!;
+            return (SendObjectAction)Uml.SendObjectActionInfo.Create(base.Model, id)!;
         }
     
         public SendSignalAction SendSignalAction(string? id = null)
         {
-            return (SendSignalAction)Uml.SendSignalActionInfo.Create(Model, id)!;
+            return (SendSignalAction)Uml.SendSignalActionInfo.Create(base.Model, id)!;
         }
     
         public SequenceNode SequenceNode(string? id = null)
         {
-            return (SequenceNode)Uml.SequenceNodeInfo.Create(Model, id)!;
+            return (SequenceNode)Uml.SequenceNodeInfo.Create(base.Model, id)!;
         }
     
         public Slot Slot(string? id = null)
         {
-            return (Slot)Uml.SlotInfo.Create(Model, id)!;
+            return (Slot)Uml.SlotInfo.Create(base.Model, id)!;
         }
     
         public StartClassifierBehaviorAction StartClassifierBehaviorAction(string? id = null)
         {
-            return (StartClassifierBehaviorAction)Uml.StartClassifierBehaviorActionInfo.Create(Model, id)!;
+            return (StartClassifierBehaviorAction)Uml.StartClassifierBehaviorActionInfo.Create(base.Model, id)!;
         }
     
         public StartObjectBehaviorAction StartObjectBehaviorAction(string? id = null)
         {
-            return (StartObjectBehaviorAction)Uml.StartObjectBehaviorActionInfo.Create(Model, id)!;
+            return (StartObjectBehaviorAction)Uml.StartObjectBehaviorActionInfo.Create(base.Model, id)!;
         }
     
         public StateInvariant StateInvariant(string? id = null)
         {
-            return (StateInvariant)Uml.StateInvariantInfo.Create(Model, id)!;
+            return (StateInvariant)Uml.StateInvariantInfo.Create(base.Model, id)!;
         }
     
         public Signal Signal(string? id = null)
         {
-            return (Signal)Uml.SignalInfo.Create(Model, id)!;
+            return (Signal)Uml.SignalInfo.Create(base.Model, id)!;
         }
     
         public SignalEvent SignalEvent(string? id = null)
         {
-            return (SignalEvent)Uml.SignalEventInfo.Create(Model, id)!;
+            return (SignalEvent)Uml.SignalEventInfo.Create(base.Model, id)!;
         }
     
         public State State(string? id = null)
         {
-            return (State)Uml.StateInfo.Create(Model, id)!;
+            return (State)Uml.StateInfo.Create(base.Model, id)!;
         }
     
         public StateMachine StateMachine(string? id = null)
         {
-            return (StateMachine)Uml.StateMachineInfo.Create(Model, id)!;
+            return (StateMachine)Uml.StateMachineInfo.Create(base.Model, id)!;
         }
     
         public Stereotype Stereotype(string? id = null)
         {
-            return (Stereotype)Uml.StereotypeInfo.Create(Model, id)!;
+            return (Stereotype)Uml.StereotypeInfo.Create(base.Model, id)!;
         }
     
         public StringExpression StringExpression(string? id = null)
         {
-            return (StringExpression)Uml.StringExpressionInfo.Create(Model, id)!;
+            return (StringExpression)Uml.StringExpressionInfo.Create(base.Model, id)!;
         }
     
         public StructuredActivityNode StructuredActivityNode(string? id = null)
         {
-            return (StructuredActivityNode)Uml.StructuredActivityNodeInfo.Create(Model, id)!;
+            return (StructuredActivityNode)Uml.StructuredActivityNodeInfo.Create(base.Model, id)!;
         }
     
         public Substitution Substitution(string? id = null)
         {
-            return (Substitution)Uml.SubstitutionInfo.Create(Model, id)!;
+            return (Substitution)Uml.SubstitutionInfo.Create(base.Model, id)!;
         }
     
         public TemplateBinding TemplateBinding(string? id = null)
         {
-            return (TemplateBinding)Uml.TemplateBindingInfo.Create(Model, id)!;
+            return (TemplateBinding)Uml.TemplateBindingInfo.Create(base.Model, id)!;
         }
     
         public TemplateParameter TemplateParameter(string? id = null)
         {
-            return (TemplateParameter)Uml.TemplateParameterInfo.Create(Model, id)!;
+            return (TemplateParameter)Uml.TemplateParameterInfo.Create(base.Model, id)!;
         }
     
         public TemplateParameterSubstitution TemplateParameterSubstitution(string? id = null)
         {
-            return (TemplateParameterSubstitution)Uml.TemplateParameterSubstitutionInfo.Create(Model, id)!;
+            return (TemplateParameterSubstitution)Uml.TemplateParameterSubstitutionInfo.Create(base.Model, id)!;
         }
     
         public TemplateSignature TemplateSignature(string? id = null)
         {
-            return (TemplateSignature)Uml.TemplateSignatureInfo.Create(Model, id)!;
+            return (TemplateSignature)Uml.TemplateSignatureInfo.Create(base.Model, id)!;
         }
     
         public TestIdentityAction TestIdentityAction(string? id = null)
         {
-            return (TestIdentityAction)Uml.TestIdentityActionInfo.Create(Model, id)!;
+            return (TestIdentityAction)Uml.TestIdentityActionInfo.Create(base.Model, id)!;
         }
     
         public TimeConstraint TimeConstraint(string? id = null)
         {
-            return (TimeConstraint)Uml.TimeConstraintInfo.Create(Model, id)!;
+            return (TimeConstraint)Uml.TimeConstraintInfo.Create(base.Model, id)!;
         }
     
         public TimeEvent TimeEvent(string? id = null)
         {
-            return (TimeEvent)Uml.TimeEventInfo.Create(Model, id)!;
+            return (TimeEvent)Uml.TimeEventInfo.Create(base.Model, id)!;
         }
     
         public TimeExpression TimeExpression(string? id = null)
         {
-            return (TimeExpression)Uml.TimeExpressionInfo.Create(Model, id)!;
+            return (TimeExpression)Uml.TimeExpressionInfo.Create(base.Model, id)!;
         }
     
         public TimeInterval TimeInterval(string? id = null)
         {
-            return (TimeInterval)Uml.TimeIntervalInfo.Create(Model, id)!;
+            return (TimeInterval)Uml.TimeIntervalInfo.Create(base.Model, id)!;
         }
     
         public TimeObservation TimeObservation(string? id = null)
         {
-            return (TimeObservation)Uml.TimeObservationInfo.Create(Model, id)!;
+            return (TimeObservation)Uml.TimeObservationInfo.Create(base.Model, id)!;
         }
     
         public Transition Transition(string? id = null)
         {
-            return (Transition)Uml.TransitionInfo.Create(Model, id)!;
+            return (Transition)Uml.TransitionInfo.Create(base.Model, id)!;
         }
     
         public Trigger Trigger(string? id = null)
         {
-            return (Trigger)Uml.TriggerInfo.Create(Model, id)!;
+            return (Trigger)Uml.TriggerInfo.Create(base.Model, id)!;
         }
     
         public UnmarshallAction UnmarshallAction(string? id = null)
         {
-            return (UnmarshallAction)Uml.UnmarshallActionInfo.Create(Model, id)!;
+            return (UnmarshallAction)Uml.UnmarshallActionInfo.Create(base.Model, id)!;
         }
     
         public Usage Usage(string? id = null)
         {
-            return (Usage)Uml.UsageInfo.Create(Model, id)!;
+            return (Usage)Uml.UsageInfo.Create(base.Model, id)!;
         }
     
         public UseCase UseCase(string? id = null)
         {
-            return (UseCase)Uml.UseCaseInfo.Create(Model, id)!;
+            return (UseCase)Uml.UseCaseInfo.Create(base.Model, id)!;
         }
     
         public ValuePin ValuePin(string? id = null)
         {
-            return (ValuePin)Uml.ValuePinInfo.Create(Model, id)!;
+            return (ValuePin)Uml.ValuePinInfo.Create(base.Model, id)!;
         }
     
         public ValueSpecificationAction ValueSpecificationAction(string? id = null)
         {
-            return (ValueSpecificationAction)Uml.ValueSpecificationActionInfo.Create(Model, id)!;
+            return (ValueSpecificationAction)Uml.ValueSpecificationActionInfo.Create(base.Model, id)!;
         }
     
         public Variable Variable(string? id = null)
         {
-            return (Variable)Uml.VariableInfo.Create(Model, id)!;
+            return (Variable)Uml.VariableInfo.Create(base.Model, id)!;
         }
     
     }

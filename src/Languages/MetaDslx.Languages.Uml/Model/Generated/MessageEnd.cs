@@ -27,9 +27,9 @@ namespace MetaDslx.Languages.Uml.Model
     {
         Message Message { get; set; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<MessageEnd> OppositeEnd(global::MetaDslx.Modeling.ICollectionSlot<MessageEnd> result);
+        global::System.Collections.Generic.IList<MessageEnd> OppositeEnd(global::System.Collections.Generic.IList<MessageEnd> result);
         bool IsSend(bool result);
         bool IsReceive(bool result);
-        global::MetaDslx.Modeling.ICollectionSlot<InteractionFragment> EnclosingFragment(global::MetaDslx.Modeling.ICollectionSlot<InteractionFragment> result);
+        global::System.Collections.Generic.IList<InteractionFragment> EnclosingFragment(global::System.Collections.Generic.IList<InteractionFragment> result);
     }
 }

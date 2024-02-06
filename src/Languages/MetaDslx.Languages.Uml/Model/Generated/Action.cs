@@ -32,8 +32,8 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Constraint> LocalPrecondition { get; }
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> Output { get; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<Action> AllActions(global::MetaDslx.Modeling.ICollectionSlot<Action> result);
-        global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> AllOwnedNodes(global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> result);
+        global::System.Collections.Generic.IList<Action> AllActions(global::System.Collections.Generic.IList<Action> result);
+        global::System.Collections.Generic.IList<ActivityNode> AllOwnedNodes(global::System.Collections.Generic.IList<ActivityNode> result);
         Behavior ContainingBehavior(Behavior result);
     }
 }

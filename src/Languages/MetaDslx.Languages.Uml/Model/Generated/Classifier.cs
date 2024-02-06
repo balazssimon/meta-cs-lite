@@ -42,21 +42,21 @@ namespace MetaDslx.Languages.Uml.Model
         new ClassifierTemplateParameter TemplateParameter { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<UseCase> UseCase { get; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<Feature> AllFeatures(global::MetaDslx.Modeling.ICollectionSlot<Feature> result);
-        global::MetaDslx.Modeling.ICollectionSlot<Classifier> AllParents(global::MetaDslx.Modeling.ICollectionSlot<Classifier> result);
+        global::System.Collections.Generic.IList<Feature> AllFeatures(global::System.Collections.Generic.IList<Feature> result);
+        global::System.Collections.Generic.IList<Classifier> AllParents(global::System.Collections.Generic.IList<Classifier> result);
         bool ConformsTo(bool result, Type other);
         bool HasVisibilityOf(bool result, NamedElement n);
-        global::MetaDslx.Modeling.ICollectionSlot<NamedElement> Inherit(global::MetaDslx.Modeling.ICollectionSlot<NamedElement> result, global::MetaDslx.Modeling.ICollectionSlot<NamedElement> inhs);
-        global::MetaDslx.Modeling.ICollectionSlot<NamedElement> InheritableMembers(global::MetaDslx.Modeling.ICollectionSlot<NamedElement> result, Classifier c);
+        global::System.Collections.Generic.IList<NamedElement> Inherit(global::System.Collections.Generic.IList<NamedElement> result, global::System.Collections.Generic.IList<NamedElement> inhs);
+        global::System.Collections.Generic.IList<NamedElement> InheritableMembers(global::System.Collections.Generic.IList<NamedElement> result, Classifier c);
         bool IsTemplate(bool result);
         bool MaySpecializeType(bool result, Classifier c);
-        global::MetaDslx.Modeling.ICollectionSlot<Classifier> Parents(global::MetaDslx.Modeling.ICollectionSlot<Classifier> result);
-        global::MetaDslx.Modeling.ICollectionSlot<Interface> DirectlyRealizedInterfaces(global::MetaDslx.Modeling.ICollectionSlot<Interface> result);
-        global::MetaDslx.Modeling.ICollectionSlot<Interface> DirectlyUsedInterfaces(global::MetaDslx.Modeling.ICollectionSlot<Interface> result);
-        global::MetaDslx.Modeling.ICollectionSlot<Interface> AllRealizedInterfaces(global::MetaDslx.Modeling.ICollectionSlot<Interface> result);
-        global::MetaDslx.Modeling.ICollectionSlot<Interface> AllUsedInterfaces(global::MetaDslx.Modeling.ICollectionSlot<Interface> result);
+        global::System.Collections.Generic.IList<Classifier> Parents(global::System.Collections.Generic.IList<Classifier> result);
+        global::System.Collections.Generic.IList<Interface> DirectlyRealizedInterfaces(global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> DirectlyUsedInterfaces(global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> AllRealizedInterfaces(global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> AllUsedInterfaces(global::System.Collections.Generic.IList<Interface> result);
         bool IsSubstitutableFor(Classifier contract, bool result);
-        global::MetaDslx.Modeling.ICollectionSlot<Property> AllAttributes(global::MetaDslx.Modeling.ICollectionSlot<Property> result);
-        global::MetaDslx.Modeling.ICollectionSlot<StructuralFeature> AllSlottableFeatures(global::MetaDslx.Modeling.ICollectionSlot<StructuralFeature> result);
+        global::System.Collections.Generic.IList<Property> AllAttributes(global::System.Collections.Generic.IList<Property> result);
+        global::System.Collections.Generic.IList<StructuralFeature> AllSlottableFeatures(global::System.Collections.Generic.IList<StructuralFeature> result);
     }
 }

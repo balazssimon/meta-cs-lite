@@ -30,6 +30,6 @@ namespace MetaDslx.Languages.Uml.Model
         bool IsDeterminate { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> Result { get; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<Action> AllActions(global::MetaDslx.Modeling.ICollectionSlot<Action> result);
+        global::System.Collections.Generic.IList<Action> AllActions(global::System.Collections.Generic.IList<Action> result);
     }
 }

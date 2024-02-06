@@ -46,6 +46,6 @@ namespace MetaDslx.Languages.Uml.Model
         bool IsCompatibleWith(bool result, ParameterableElement p);
         bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
         bool IsNavigable(bool result);
-        global::MetaDslx.Modeling.ICollectionSlot<Type> SubsettingContext(global::MetaDslx.Modeling.ICollectionSlot<Type> result);
+        global::System.Collections.Generic.IList<Type> SubsettingContext(global::System.Collections.Generic.IList<Type> result);
     }
 }

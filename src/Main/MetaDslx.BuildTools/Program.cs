@@ -45,8 +45,8 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
-            @"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
-            //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
+            //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
+            @"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
 #endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;

@@ -27,6 +27,6 @@ namespace MetaDslx.Languages.Uml.Model
     {
         OutputPin Result { get; set; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<Property> OpenEnd(global::MetaDslx.Modeling.ICollectionSlot<Property> result);
+        global::System.Collections.Generic.IList<Property> OpenEnd(global::System.Collections.Generic.IList<Property> result);
     }
 }

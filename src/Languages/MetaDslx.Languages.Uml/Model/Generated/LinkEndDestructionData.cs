@@ -28,6 +28,6 @@ namespace MetaDslx.Languages.Uml.Model
         InputPin DestroyAt { get; set; }
         bool IsDestroyDuplicates { get; set; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<InputPin> AllPins(global::MetaDslx.Modeling.ICollectionSlot<InputPin> result);
+        global::System.Collections.Generic.IList<InputPin> AllPins(global::System.Collections.Generic.IList<InputPin> result);
     }
 }

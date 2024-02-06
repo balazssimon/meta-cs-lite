@@ -314,7 +314,7 @@ public class [MetaModel.Name]ModelFactory : __ModelFactory
     [foreach (var cls in Classes.Where(c => !c.IsAbstract))]
         public [ToCSharp(cls)] [cls.Name](string? id = null)
         {
-            return ([ToCSharp(cls)])[MetaModel.Name].[cls.Name]Info.Create(Model, id)!;
+            return ([ToCSharp(cls)])[MetaModel.Name].[cls.Name]Info.Create(base.Model, id)!;
         }
 
     [end foreach]
@@ -382,7 +382,7 @@ public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.
     [end foreach]
 
     [foreach (var op in cls.Operations)]
-        [ToCSharp(op.ReturnType)] [op.Name]([foreach (var param in op.Parameters) separator ", "][ToCSharp(param.Type)] [param.Name][end foreach]);
+        [ToCSharpOpType(op.ReturnType)] [op.Name]([foreach (var param in op.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name][end foreach]);
     [end foreach]
 }
 end template

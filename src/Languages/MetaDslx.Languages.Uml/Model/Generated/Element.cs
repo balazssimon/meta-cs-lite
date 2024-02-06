@@ -29,7 +29,7 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Element> OwnedElement { get; }
         Element Owner { get; set; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<Element> AllOwnedElements(global::MetaDslx.Modeling.ICollectionSlot<Element> result);
+        global::System.Collections.Generic.IList<Element> AllOwnedElements(global::System.Collections.Generic.IList<Element> result);
         bool MustBeOwned(bool result);
     }
 }

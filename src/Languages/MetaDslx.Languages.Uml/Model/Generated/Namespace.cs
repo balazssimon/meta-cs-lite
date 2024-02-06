@@ -32,9 +32,9 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Constraint> OwnedRule { get; }
         global::MetaDslx.Modeling.ICollectionSlot<PackageImport> PackageImport { get; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<PackageableElement> ExcludeCollisions(global::MetaDslx.Modeling.ICollectionSlot<PackageableElement> result, global::MetaDslx.Modeling.ICollectionSlot<PackageableElement> imps);
-        global::MetaDslx.Modeling.ICollectionSlot<string> GetNamesOfMember(global::MetaDslx.Modeling.ICollectionSlot<string> result, NamedElement element);
-        global::MetaDslx.Modeling.ICollectionSlot<PackageableElement> ImportMembers(global::MetaDslx.Modeling.ICollectionSlot<PackageableElement> result, global::MetaDslx.Modeling.ICollectionSlot<PackageableElement> imps);
+        global::System.Collections.Generic.IList<PackageableElement> ExcludeCollisions(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps);
+        global::System.Collections.Generic.IList<string> GetNamesOfMember(global::System.Collections.Generic.IList<string> result, NamedElement element);
+        global::System.Collections.Generic.IList<PackageableElement> ImportMembers(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps);
         bool MembersAreDistinguishable(bool result);
     }
 }

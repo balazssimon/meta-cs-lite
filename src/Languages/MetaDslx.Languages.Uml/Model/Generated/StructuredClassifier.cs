@@ -30,6 +30,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::System.Collections.Generic.IList<Property> Part { get; }
         global::MetaDslx.Modeling.ICollectionSlot<ConnectableElement> Role { get; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<ConnectableElement> AllRoles(global::MetaDslx.Modeling.ICollectionSlot<ConnectableElement> result);
+        global::System.Collections.Generic.IList<ConnectableElement> AllRoles(global::System.Collections.Generic.IList<ConnectableElement> result);
     }
 }

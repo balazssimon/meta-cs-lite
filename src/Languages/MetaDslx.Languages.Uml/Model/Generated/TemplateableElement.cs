@@ -29,6 +29,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<TemplateBinding> TemplateBinding { get; }
     
         bool IsTemplate(bool result);
-        global::MetaDslx.Modeling.ICollectionSlot<ParameterableElement> ParameterableElements(global::MetaDslx.Modeling.ICollectionSlot<ParameterableElement> result);
+        global::System.Collections.Generic.IList<ParameterableElement> ParameterableElements(global::System.Collections.Generic.IList<ParameterableElement> result);
     }
 }

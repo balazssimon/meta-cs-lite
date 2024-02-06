@@ -32,8 +32,8 @@ namespace MetaDslx.Languages.Uml.Model
         string QualifiedName { get; }
         global::MetaDslx.Languages.Uml.Model.VisibilityKind Visibility { get; set; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<Namespace> AllNamespaces(global::MetaDslx.Modeling.ICollectionSlot<Namespace> result);
-        global::MetaDslx.Modeling.ICollectionSlot<Package> AllOwningPackages(global::MetaDslx.Modeling.ICollectionSlot<Package> result);
+        global::System.Collections.Generic.IList<Namespace> AllNamespaces(global::System.Collections.Generic.IList<Namespace> result);
+        global::System.Collections.Generic.IList<Package> AllOwningPackages(global::System.Collections.Generic.IList<Package> result);
         bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns);
         string Separator(string result);
     }

@@ -43,6 +43,6 @@ namespace MetaDslx.Languages.Uml.Model
         int Upper { get; }
     
         bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
-        global::MetaDslx.Modeling.ICollectionSlot<Parameter> ReturnResult(global::MetaDslx.Modeling.ICollectionSlot<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> ReturnResult(global::System.Collections.Generic.IList<Parameter> result);
     }
 }

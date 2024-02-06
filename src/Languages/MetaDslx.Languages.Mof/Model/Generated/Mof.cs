@@ -1493,7 +1493,7 @@ namespace MetaDslx.Languages.Mof.Model
             obj90.Type = typeof(string);
             obj90.Name = "QualifiedName";
             obj90.Parent = obj14;
-            obj91.DefaultValue = ;
+            obj91.DefaultValue = obj94;
             obj91.Type = __MetaType.FromModelObject((__IModelObject)obj16);
             obj91.Name = "Visibility";
             obj91.Parent = obj14;

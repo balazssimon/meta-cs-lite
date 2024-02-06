@@ -33,7 +33,7 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Type> RaisedException { get; }
     
         bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns);
-        global::MetaDslx.Modeling.ICollectionSlot<Parameter> InputParameters(global::MetaDslx.Modeling.ICollectionSlot<Parameter> result);
-        global::MetaDslx.Modeling.ICollectionSlot<Parameter> OutputParameters(global::MetaDslx.Modeling.ICollectionSlot<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> InputParameters(global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> OutputParameters(global::System.Collections.Generic.IList<Parameter> result);
     }
 }

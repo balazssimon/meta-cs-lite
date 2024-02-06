@@ -33,10 +33,10 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> StructuredNodeOutput { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Variable> Variable { get; }
     
-        global::MetaDslx.Modeling.ICollectionSlot<Action> AllActions(global::MetaDslx.Modeling.ICollectionSlot<Action> result);
-        global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> AllOwnedNodes(global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> result);
-        global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> SourceNodes(global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> result);
-        global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> TargetNodes(global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> result);
+        global::System.Collections.Generic.IList<Action> AllActions(global::System.Collections.Generic.IList<Action> result);
+        global::System.Collections.Generic.IList<ActivityNode> AllOwnedNodes(global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<ActivityNode> SourceNodes(global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<ActivityNode> TargetNodes(global::System.Collections.Generic.IList<ActivityNode> result);
         Activity ContainingActivity(Activity result);
     }
 }
