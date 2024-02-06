@@ -7,6 +7,7 @@ using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Languages.MetaModel.Model;
+using MetaDslx.Languages.MetaModel.Compiler;
 
 language Meta : Common;
 

@@ -1191,7 +1191,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
                 this.Begin(__annot1, node.SymbolProperty);
                 try
                 {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(string));
+                    var __annot0 = new MetaDslx.Languages.MetaModel.Compiler.SymbolPropertyBinder();
                     this.Begin(__annot0, node.SymbolProperty);
                     try
                     {
