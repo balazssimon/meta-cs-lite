@@ -12,6 +12,7 @@ using MetaDslx.Languages.MetaCompiler.Model;
 #endif
 using MetaDslx.Languages.MetaGenerator.Syntax;
 using MetaDslx.Languages.MetaModel.Compiler;
+using MetaDslx.Languages.MetaModel.Generators;
 using MetaDslx.Modeling;
 using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis.CSharp;
@@ -34,6 +35,7 @@ namespace MetaDslx.BuildTools
 
     public class Program
     {
+        private const bool GenerateSeparateMetaModelFiles = true;
         private static readonly string[] BootstrapProjects =
         [
 #if MetaDslxBootstrap
@@ -41,10 +43,10 @@ namespace MetaDslx.BuildTools
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
-            @"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
+            //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
 #endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
@@ -239,17 +241,29 @@ namespace MetaDslx.BuildTools
                     if (!mxmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
                         var isMetaMetaModel = modelFilePath?.Contains("MetaDslx.Languages.MetaModel") ?? false;
-                        var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(isMetaMetaModel, model, mxm);
+                        var generator = new MetaModelGenerator(isMetaMetaModel, model, mxm);
                         var genDiagnostics = generator.Diagnostics;
+                        if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                        {
+                            if (GenerateSeparateMetaModelFiles)
+                            {
+                                await GenerateMetaModelFiles(generator, modelFilePath);
+                                genDiagnostics = generator.Diagnostics;
+                            }
+                            else
+                            {
+                                var csharpCode = generator.Generate();
+                                var csharpFilePath = $"{modelFilePath}.cs";
+                                genDiagnostics = generator.Diagnostics;
+                                if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                                {
+                                    await AddGeneratedFile(csharpFilePath, csharpCode);
+                                }
+                            }
+                        }
                         foreach (var diag in genDiagnostics)
                         {
                             await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
-                        }
-                        if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
-                        {
-                            var csharpCode = generator.Generate();
-                            var csharpFilePath = $"{modelFilePath}.cs";
-                            await AddGeneratedFile(csharpFilePath, csharpCode);
                         }
                     }
                 }
@@ -262,6 +276,49 @@ namespace MetaDslx.BuildTools
                 await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(exDiag));
             }
             filePaths.Free();
+        }
+
+        private static async Task GenerateMetaModelFiles(MetaModelGenerator generator, string originalFilePath)
+        {
+            var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
+            Directory.CreateDirectory(outputDir);
+            var dirInfo = new DirectoryInfo(outputDir);
+            foreach (FileInfo file in dirInfo.EnumerateFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+            {
+                dir.Delete(true);
+            }
+            var metaModelCode = generator.GenerateSeparateIntf(generator.GenerateMetaModel());
+            await AddGeneratedFile(Path.Combine(outputDir, $"{generator.MetaModel.Name}.cs"), metaModelCode);
+            var modelFactoryCode = generator.GenerateSeparateIntf(generator.GenerateFactory());
+            await AddGeneratedFile(Path.Combine(outputDir, $"{generator.MetaModel.Name}ModelFactory.cs"), modelFactoryCode);
+            var customIntfCode = generator.GenerateSeparateIntf(generator.GenerateCustomInterface());
+            await AddGeneratedFile(Path.Combine(outputDir, $"ICustom{generator.MetaModel.Name}Implementation.cs"), customIntfCode);
+            var customImplCode = generator.GenerateSeparateIntf(generator.GenerateCustomImplementation());
+            await AddGeneratedFile(Path.Combine(outputDir, $"Custom{generator.MetaModel.Name}ImplementationBase.cs"), customImplCode);
+            foreach (var enm in generator.Enums)
+            {
+                var enumCode = generator.GenerateSeparateIntf(generator.GenerateEnum(enm));
+                await AddGeneratedFile(Path.Combine(outputDir, $"{enm.Name}.cs"), enumCode);
+            }
+            foreach (var cls in generator.Classes)
+            {
+                var clsCode = generator.GenerateSeparateIntf(generator.GenerateInterface(cls));
+                await AddGeneratedFile(Path.Combine(outputDir, $"{cls.Name}.cs"), clsCode);
+            }
+            foreach (var enm in generator.Enums)
+            {
+                var enumCode = generator.GenerateSeparateImpl(generator.GenerateEnumInfo(enm));
+                await AddGeneratedFile(Path.Combine(outputDir, $"{enm.Name}.Impl.cs"), enumCode);
+            }
+            foreach (var cls in generator.Classes)
+            {
+                var clsCode = generator.GenerateSeparateImpl(generator.GenerateClass(cls));
+                await AddGeneratedFile(Path.Combine(outputDir, $"{cls.Name}.Impl.cs"), clsCode);
+            }
         }
 
         private static async Task CompileMetaLanguages(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxlFiles)
@@ -344,7 +401,7 @@ namespace MetaDslx.BuildTools
                         }
                         if (!ppDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
                         {
-                            await GenerateCompilerFiles(modelFilePath, language);
+                            await GenerateCompilerFiles(language, modelFilePath);
                         }
                     }
                 }
@@ -359,7 +416,7 @@ namespace MetaDslx.BuildTools
             filePaths.Free();
         }
 
-        private static async Task GenerateCompilerFiles(string originalFilePath, MetaCompiler.Model.Language language)
+        private static async Task GenerateCompilerFiles(MetaCompiler.Model.Language language, string originalFilePath)
         {
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             var langFileName = Path.GetFileNameWithoutExtension(originalFilePath);
@@ -382,6 +439,15 @@ namespace MetaDslx.BuildTools
             }
             else
             {
+                var dirInfo = new DirectoryInfo(outputDir);
+                foreach (FileInfo file in dirInfo.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
                 foreach (var antlrCode in antlrCodes)
                 {
                     await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.{antlrCode.FileName}"), antlrCode.Content);

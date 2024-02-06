@@ -261,14 +261,14 @@ class ObjectInstance : Instance
 
 class ElementInstance : Instance
 {
-	contains StructureSlot[] Slot redefines Element.OwnedElement, InstanceSpecification.Slot // TODO: opposite StructureSlot.OwningInstance
+	contains StructureSlot[] Slot redefines Element.OwnedElement, InstanceSpecification.Slot opposite StructureSlot.OwningInstance
 }
 
 class AssociationInstance : ObjectInstance
 {
 	Association Classifier redefines Instance.Classifier
-	contains LinkSlot FirstSlot subsets InstanceSpecification.Slot // TODO:  opposite LinkSlot.OwningInstance
-	contains LinkSlot SecondSlot subsets InstanceSpecification.Slot // TODO:  opposite LinkSlot.OwningInstance
+	contains LinkSlot FirstSlot subsets InstanceSpecification.Slot opposite LinkSlot.OwningInstance
+	contains LinkSlot SecondSlot subsets InstanceSpecification.Slot opposite LinkSlot.OwningInstance
 }
 
 class ClassInstance : ObjectInstance, ElementInstance
@@ -284,12 +284,12 @@ class Slot
 
 class LinkSlot : Slot
 {
-	AssociationInstance OwningInstance redefines Slot.OwningInstance // TODO:  opposite AssociationInstance.FirstSlot, AssociationInstance.SecondSlot
+	AssociationInstance OwningInstance redefines Slot.OwningInstance opposite AssociationInstance.FirstSlot, AssociationInstance.SecondSlot
 }
 
 class StructureSlot : Slot
 {
-	ElementInstance OwningInstance redefines Slot.OwningInstance // TODO:  opposite ElementInstance.Slot
+	ElementInstance OwningInstance redefines Slot.OwningInstance opposite ElementInstance.Slot
 }
 
 class Extent

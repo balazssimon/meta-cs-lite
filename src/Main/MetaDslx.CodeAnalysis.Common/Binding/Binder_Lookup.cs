@@ -202,10 +202,10 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 var qualifierIsType = context.Qualifier is TypeSymbol;
                 if (!qualifierIsType) context.AccessThroughType = null;
-                AddLookupCandidateSymbolsFromImports(context, result);
                 AddLookupCandidateSymbolsInScope(context, result);
+                if (result.IsClear) AddLookupCandidateSymbolsFromImports(context, result);
                 // TODO:MetaDslx: Submissions
-                if (qualifierIsType) AddLookupCandidateSymbolsInBaseTypes(context, result);
+                if (qualifierIsType && result.IsClear) AddLookupCandidateSymbolsInBaseTypes(context, result);
             }
             finally
             {
