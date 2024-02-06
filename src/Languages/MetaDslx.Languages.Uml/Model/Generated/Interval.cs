@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An Interval defines the range between two ValueSpecifications.
+    /// </summary>
     public interface Interval : global::MetaDslx.Languages.Uml.Model.ValueSpecification
     {
+        /// <summary>
+        /// Refers to the ValueSpecification denoting the maximum value of the range.
+        /// </summary>
         ValueSpecification Max { get; set; }
+        /// <summary>
+        /// Refers to the ValueSpecification denoting the minimum value of the range.
+        /// </summary>
         ValueSpecification Min { get; set; }
     
     }

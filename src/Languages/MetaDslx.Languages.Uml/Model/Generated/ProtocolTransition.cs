@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ProtocolTransition specifies a legal Transition for an Operation. Transitions of ProtocolStateMachines have the following information: a pre-condition (guard), a Trigger, and a post-condition. Every ProtocolTransition is associated with at most one BehavioralFeature belonging to the context Classifier of the ProtocolStateMachine.
+    /// </summary>
     public interface ProtocolTransition : global::MetaDslx.Languages.Uml.Model.Transition
     {
+        /// <summary>
+        /// Specifies the post condition of the Transition which is the Condition that should be obtained once the Transition is triggered. This post condition is part of the post condition of the Operation connected to the Transition.
+        /// </summary>
         Constraint PostCondition { get; set; }
+        /// <summary>
+        /// Specifies the precondition of the Transition. It specifies the Condition that should be verified before triggering the Transition. This guard condition added to the source State will be evaluated as part of the precondition of the Operation referred by the Transition if any.
+        /// </summary>
         Constraint PreCondition { get; set; }
+        /// <summary>
+        /// This association refers to the associated Operation. It is derived from the Operation of the CallEvent Trigger when applicable.
+        /// </summary>
         global::System.Collections.Generic.IList<Operation> Referred { get; }
     
     }

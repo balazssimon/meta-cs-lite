@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// InteractionFragment is an abstract notion of the most general interaction unit. An InteractionFragment is a piece of an Interaction. Each InteractionFragment is conceptually like an Interaction by itself.
+    /// </summary>
     public interface InteractionFragment : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// References the Lifelines that the InteractionFragment involves.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Lifeline> Covered { get; }
+        /// <summary>
+        /// The Interaction enclosing this InteractionFragment.
+        /// </summary>
         Interaction EnclosingInteraction { get; set; }
+        /// <summary>
+        /// The operand enclosing this InteractionFragment (they may nest recursively).
+        /// </summary>
         InteractionOperand EnclosingOperand { get; set; }
+        /// <summary>
+        /// The general ordering relationships contained in this fragment.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<GeneralOrdering> GeneralOrdering { get; }
     
     }

@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A trigger for an AnyReceiveEvent is triggered by the receipt of any message that is not explicitly handled by any related trigger.
+    /// </summary>
     public interface AnyReceiveEvent : global::MetaDslx.Languages.Uml.Model.MessageEvent
     {
     

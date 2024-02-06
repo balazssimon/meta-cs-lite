@@ -23,9 +23,21 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ExecutionSpecification is a specification of the execution of a unit of Behavior or Action within the Lifeline. The duration of an ExecutionSpecification is represented by two OccurrenceSpecifications, the start OccurrenceSpecification and the finish OccurrenceSpecification.
+    /// </summary>
     public interface ExecutionSpecification : global::MetaDslx.Languages.Uml.Model.InteractionFragment
     {
+        /// <summary>
+        /// References the OccurrenceSpecification that designates the finish of the Action or Behavior.
+        /// </summary>
         OccurrenceSpecification Finish { get; set; }
+        /// <summary>
+        /// The event shows the time point at which the action completes execution.
+        /// </summary>
+        /// <summary>
+        /// References the OccurrenceSpecification that designates the start of the Action or Behavior.
+        /// </summary>
         OccurrenceSpecification Start { get; set; }
     
     }

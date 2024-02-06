@@ -23,18 +23,54 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// ActivityNode is an abstract class for points in the flow of an Activity connected by ActivityEdges.
+    /// </summary>
     public interface ActivityNode : global::MetaDslx.Languages.Uml.Model.RedefinableElement
     {
+        /// <summary>
+        /// The Activity containing the ActivityNode, if it is directly owned by an Activity.
+        /// </summary>
         Activity Activity { get; set; }
+        /// <summary>
+        /// ActivityEdges that have the ActivityNode as their target.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityEdge> Incoming { get; }
+        /// <summary>
+        /// ActivityGroups containing the ActivityNode.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityGroup> InGroup { get; }
+        /// <summary>
+        /// InterruptibleActivityRegions containing the ActivityNode.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InterruptibleActivityRegion> InInterruptibleRegion { get; }
+        /// <summary>
+        /// ActivityPartitions containing the ActivityNode.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityPartition> InPartition { get; }
+        /// <summary>
+        /// The StructuredActivityNode containing the ActvityNode, if it is directly owned by a StructuredActivityNode.
+        /// </summary>
         StructuredActivityNode InStructuredNode { get; set; }
+        /// <summary>
+        /// ActivityEdges that have the ActivityNode as their source.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityEdge> Outgoing { get; }
+        /// <summary>
+        /// ActivityNodes from a generalization of the Activity containining this ActivityNode that are redefined by this ActivityNode.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> RedefinedNode { get; }
     
+        /// <summary>
+        /// The Activity that directly or indirectly contains this ActivityNode.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         Activity ContainingActivity();
+        /// <param name="redefiningElement">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

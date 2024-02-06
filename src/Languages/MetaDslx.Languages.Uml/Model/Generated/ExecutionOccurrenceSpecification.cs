@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ExecutionOccurrenceSpecification represents moments in time at which Actions or Behaviors start or finish.
+    /// </summary>
     public interface ExecutionOccurrenceSpecification : global::MetaDslx.Languages.Uml.Model.OccurrenceSpecification
     {
+        /// <summary>
+        /// References the execution specification describing the execution that is started or finished at this execution event.
+        /// </summary>
         ExecutionSpecification Execution { get; set; }
     
     }

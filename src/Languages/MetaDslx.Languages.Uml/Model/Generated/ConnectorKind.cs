@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// ConnectorKind is an enumeration that defines whether a Connector is an assembly or a delegation.
+    /// </summary>
     public enum ConnectorKind
     {
+        /// <summary>
+        /// Indicates that the Connector is an assembly Connector.
+        /// </summary>
         Assembly,
+        /// <summary>
+        /// Indicates that the Connector is a delegation Connector.
+        /// </summary>
         Delegation,
     }
 }

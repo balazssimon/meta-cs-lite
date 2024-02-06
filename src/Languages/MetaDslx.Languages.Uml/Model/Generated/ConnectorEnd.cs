@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ConnectorEnd is an endpoint of a Connector, which attaches the Connector to a ConnectableElement.
+    /// </summary>
     public interface ConnectorEnd : global::MetaDslx.Languages.Uml.Model.MultiplicityElement
     {
+        /// <summary>
+        /// A derived property referencing the corresponding end on the Association which types the Connector owing this ConnectorEnd, if any. It is derived by selecting the end at the same place in the ordering of Association ends as this ConnectorEnd.
+        /// </summary>
         Property DefiningEnd { get; }
+        /// <summary>
+        /// Indicates the role of the internal structure of a Classifier with the Port to which the ConnectorEnd is attached.
+        /// </summary>
         Property PartWithPort { get; set; }
+        /// <summary>
+        /// The ConnectableElement attached at this ConnectorEnd. When an instance of the containing Classifier is created, a link may (depending on the multiplicities) be created to an instance of the Classifier that types this ConnectableElement.
+        /// </summary>
         ConnectableElement Role { get; set; }
     
     }

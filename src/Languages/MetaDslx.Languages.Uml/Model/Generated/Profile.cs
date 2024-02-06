@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain.
+    /// </summary>
     public interface Profile : global::MetaDslx.Languages.Uml.Model.Package
     {
+        /// <summary>
+        /// References a metaclass that may be extended.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ElementImport> MetaclassReference { get; }
+        /// <summary>
+        /// References a package containing (directly or indirectly) metaclasses that may be extended.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<PackageImport> MetamodelReference { get; }
     
     }

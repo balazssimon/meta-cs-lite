@@ -23,10 +23,23 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Type constrains the values represented by a TypedElement.
+    /// </summary>
     public interface Type : global::MetaDslx.Languages.Uml.Model.PackageableElement
     {
+        /// <summary>
+        /// Specifies the owning Package of this Type, if any.
+        /// </summary>
         Package Package { get; set; }
     
+        /// <summary>
+        /// The query conformsTo() gives true for a Type that conforms to another. By default, two Types do not conform to each other. This query is intended to be redefined for specific conformance situations.
+        /// </summary>
+        /// <param name="other">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool ConformsTo(Type other);
     }
 }

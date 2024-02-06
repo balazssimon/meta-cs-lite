@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A DataType is a type whose instances are identified only by their value.
+    /// </summary>
     public interface DataType : global::MetaDslx.Languages.Uml.Model.Classifier
     {
+        /// <summary>
+        /// The attributes owned by the DataType.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> OwnedAttribute { get; }
+        /// <summary>
+        /// The Operations owned by the DataType.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Operation> OwnedOperation { get; }
     
     }

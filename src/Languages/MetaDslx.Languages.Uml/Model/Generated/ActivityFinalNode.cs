@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ActivityFinalNode is a FinalNode that terminates the execution of its owning Activity or StructuredActivityNode.
+    /// </summary>
     public interface ActivityFinalNode : global::MetaDslx.Languages.Uml.Model.FinalNode
     {
     

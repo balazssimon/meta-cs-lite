@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An Actor specifies a role played by a user or any other system that interacts with the subject.
+    /// </summary>
     public interface Actor : global::MetaDslx.Languages.Uml.Model.BehavioredClassifier
     {
     

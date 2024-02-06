@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Comment is a textual annotation that can be attached to a set of Elements.
+    /// </summary>
     public interface Comment : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// References the Element(s) being commented.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Element> AnnotatedElement { get; }
+        /// <summary>
+        /// Specifies a string that is the comment.
+        /// </summary>
         string Body { get; set; }
     
     }

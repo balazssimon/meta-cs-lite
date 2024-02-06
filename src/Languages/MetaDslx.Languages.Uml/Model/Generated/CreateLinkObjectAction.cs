@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CreateLinkObjectAction is a CreateLinkAction for creating link objects (AssociationClasse instances).
+    /// </summary>
     public interface CreateLinkObjectAction : global::MetaDslx.Languages.Uml.Model.CreateLinkAction
     {
+        /// <summary>
+        /// The output pin on which the newly created link object is placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

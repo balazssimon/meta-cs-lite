@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Security;
 using MetaDslx.CodeAnalysis.Symbols.Model;
+using MetaDslx.CodeGeneration;
+using System.Xml.Linq;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 namespace MetaDslx.Languages.MetaModel.Generators
 {
@@ -324,6 +327,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 if (type is null) type = camt.Original;
             }
             return type;
+        }
+
+        public string? GetDocumentationComment(IModelObject mobj)
+        {
+            var node = mobj.MSyntax.AsNode();
+            if (node is null) return null;
+            var firstToken = node.GetFirstToken(includeDocumentationComments: true).Node as InternalSyntaxToken;
+            var trivia = firstToken?.GetLeadingTrivia()?.ToFullString()?.Trim();
+            if (trivia is null) return null;
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            var reader = new LineReader(trivia);
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                if (line == null) continue;
+                var lineStr = line.ToString().Trim();
+                if (lineStr.StartsWith("///")) sb.AppendLine(lineStr);
+            }
+            return builder.ToStringAndFree();
         }
     }
 }

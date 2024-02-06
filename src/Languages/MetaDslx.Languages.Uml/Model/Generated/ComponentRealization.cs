@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// Realization is specialized to (optionally) define the Classifiers that realize the contract offered by a Component in terms of its provided and required Interfaces. The Component forms an abstraction from these various Classifiers.
+    /// </summary>
     public interface ComponentRealization : global::MetaDslx.Languages.Uml.Model.Realization
     {
+        /// <summary>
+        /// The Component that owns this ComponentRealization and which is implemented by its realizing Classifiers.
+        /// </summary>
         Component Abstraction { get; set; }
+        /// <summary>
+        /// The Classifiers that are involved in the implementation of the Component that owns this Realization.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Classifier> RealizingClassifier { get; }
     
     }

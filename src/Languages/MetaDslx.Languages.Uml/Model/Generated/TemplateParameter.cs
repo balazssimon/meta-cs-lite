@@ -23,12 +23,30 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A TemplateParameter exposes a ParameterableElement as a formal parameter of a template.
+    /// </summary>
     public interface TemplateParameter : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// The ParameterableElement that is the default for this formal TemplateParameter.
+        /// </summary>
         ParameterableElement Default { get; set; }
+        /// <summary>
+        /// The ParameterableElement that is owned by this TemplateParameter for the purpose of providing a default.
+        /// </summary>
         ParameterableElement OwnedDefault { get; set; }
+        /// <summary>
+        /// The ParameterableElement that is owned by this TemplateParameter for the purpose of exposing it as the parameteredElement.
+        /// </summary>
         ParameterableElement OwnedParameteredElement { get; set; }
+        /// <summary>
+        /// The ParameterableElement exposed by this TemplateParameter.
+        /// </summary>
         ParameterableElement ParameteredElement { get; set; }
+        /// <summary>
+        /// The TemplateSignature that owns this TemplateParameter.
+        /// </summary>
         TemplateSignature Signature { get; set; }
     
     }

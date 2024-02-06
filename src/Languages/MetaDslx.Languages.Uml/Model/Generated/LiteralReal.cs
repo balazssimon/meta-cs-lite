@@ -23,11 +23,27 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A LiteralReal is a specification of a Real value.
+    /// </summary>
     public interface LiteralReal : global::MetaDslx.Languages.Uml.Model.LiteralSpecification
     {
+        /// <summary>
+        /// The specified Real value.
+        /// </summary>
         double Value { get; set; }
     
+        /// <summary>
+        /// The query isComputable() is redefined to be true.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsComputable();
+        /// <summary>
+        /// The query realValue() gives the value.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         double RealValue();
     }
 }

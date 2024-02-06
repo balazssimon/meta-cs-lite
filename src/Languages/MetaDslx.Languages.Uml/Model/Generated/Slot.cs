@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Slot designates that an entity modeled by an InstanceSpecification has a value or values for a specific StructuralFeature.
+    /// </summary>
     public interface Slot : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// The StructuralFeature that specifies the values that may be held by the Slot.
+        /// </summary>
         StructuralFeature DefiningFeature { get; set; }
+        /// <summary>
+        /// The InstanceSpecification that owns this Slot.
+        /// </summary>
         InstanceSpecification OwningInstance { get; set; }
+        /// <summary>
+        /// The value or values held by the Slot.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ValueSpecification> Value { get; }
     
     }

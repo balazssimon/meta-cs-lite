@@ -23,10 +23,23 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A LiteralNull specifies the lack of a value.
+    /// </summary>
     public interface LiteralNull : global::MetaDslx.Languages.Uml.Model.LiteralSpecification
     {
     
+        /// <summary>
+        /// The query isComputable() is redefined to be true.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsComputable();
+        /// <summary>
+        /// The query isNull() returns true.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsNull();
     }
 }

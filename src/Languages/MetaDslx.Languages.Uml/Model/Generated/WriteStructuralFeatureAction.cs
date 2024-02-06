@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// WriteStructuralFeatureAction is an abstract class for StructuralFeatureActions that change StructuralFeature values.
+    /// </summary>
     public interface WriteStructuralFeatureAction : global::MetaDslx.Languages.Uml.Model.StructuralFeatureAction
     {
+        /// <summary>
+        /// The OutputPin on which is put the input object as modified by the WriteStructuralFeatureAction.
+        /// </summary>
         OutputPin Result { get; set; }
+        /// <summary>
+        /// The InputPin that provides the value to be added or removed from the StructuralFeature.
+        /// </summary>
         InputPin Value { get; set; }
     
     }

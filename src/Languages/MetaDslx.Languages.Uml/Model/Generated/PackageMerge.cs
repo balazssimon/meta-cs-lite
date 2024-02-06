@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A package merge defines how the contents of one package are extended by the contents of another package.
+    /// </summary>
     public interface PackageMerge : global::MetaDslx.Languages.Uml.Model.DirectedRelationship
     {
+        /// <summary>
+        /// References the Package that is to be merged with the receiving package of the PackageMerge.
+        /// </summary>
         Package MergedPackage { get; set; }
+        /// <summary>
+        /// References the Package that is being extended with the contents of the merged package of the PackageMerge.
+        /// </summary>
         Package ReceivingPackage { get; set; }
     
     }

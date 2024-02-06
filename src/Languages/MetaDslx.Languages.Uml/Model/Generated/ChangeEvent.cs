@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ChangeEvent models a change in the system configuration that makes a condition true.
+    /// </summary>
     public interface ChangeEvent : global::MetaDslx.Languages.Uml.Model.Event
     {
+        /// <summary>
+        /// A Boolean-valued ValueSpecification that will result in a ChangeEvent whenever its value changes from false to true.
+        /// </summary>
         ValueSpecification ChangeExpression { get; set; }
     
     }

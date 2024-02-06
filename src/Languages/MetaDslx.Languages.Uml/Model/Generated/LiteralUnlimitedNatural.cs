@@ -23,11 +23,27 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A LiteralUnlimitedNatural is a specification of an UnlimitedNatural number.
+    /// </summary>
     public interface LiteralUnlimitedNatural : global::MetaDslx.Languages.Uml.Model.LiteralSpecification
     {
+        /// <summary>
+        /// The specified UnlimitedNatural value.
+        /// </summary>
         int Value { get; set; }
     
+        /// <summary>
+        /// The query isComputable() is redefined to be true.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsComputable();
+        /// <summary>
+        /// The query unlimitedValue() gives the value.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         int UnlimitedValue();
     }
 }

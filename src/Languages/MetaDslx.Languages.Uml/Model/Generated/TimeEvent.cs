@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A TimeEvent is an Event that occurs at a specific point in time.
+    /// </summary>
     public interface TimeEvent : global::MetaDslx.Languages.Uml.Model.Event
     {
+        /// <summary>
+        /// Specifies whether the TimeEvent is specified as an absolute or relative time.
+        /// </summary>
         bool IsRelative { get; set; }
+        /// <summary>
+        /// Specifies the time of the TimeEvent.
+        /// </summary>
         TimeExpression When { get; set; }
     
     }

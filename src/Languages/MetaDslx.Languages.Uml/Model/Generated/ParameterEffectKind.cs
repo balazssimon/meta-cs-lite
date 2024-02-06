@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// ParameterEffectKind is an Enumeration that indicates the effect of a Behavior on values passed in or out of its parameters.
+    /// </summary>
     public enum ParameterEffectKind
     {
+        /// <summary>
+        /// Indicates that the behavior creates values.
+        /// </summary>
         Create,
+        /// <summary>
+        /// Indicates objects that are values of the parameter have values of their properties, or links in which they participate, or their classifiers retrieved during executions of the behavior.
+        /// </summary>
         Read,
+        /// <summary>
+        /// Indicates objects that are values of the parameter have values of their properties, or links in which they participate, or their classification changed during executions of the behavior.
+        /// </summary>
         Update,
+        /// <summary>
+        /// Indicates objects that are values of the parameter do not exist after executions of the behavior are finished.
+        /// </summary>
         Delete,
     }
 }

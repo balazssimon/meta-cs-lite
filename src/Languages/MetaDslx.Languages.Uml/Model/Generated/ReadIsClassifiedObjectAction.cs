@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadIsClassifiedObjectAction is an Action that determines whether an object is classified by a given Classifier.
+    /// </summary>
     public interface ReadIsClassifiedObjectAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The Classifier against which the classification of the input object is tested.
+        /// </summary>
         Classifier Classifier { get; set; }
+        /// <summary>
+        /// Indicates whether the input object must be directly classified by the given Classifier or whether it may also be an instance of a specialization of the given Classifier.
+        /// </summary>
         bool IsDirect { get; set; }
+        /// <summary>
+        /// The InputPin that holds the object whose classification is to be tested.
+        /// </summary>
         InputPin Object { get; set; }
+        /// <summary>
+        /// The OutputPin that holds the Boolean result of the test.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

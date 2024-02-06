@@ -23,13 +23,42 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// MessageEnd is an abstract specialization of NamedElement that represents what can occur at the end of a Message.
+    /// </summary>
     public interface MessageEnd : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// References a Message.
+        /// </summary>
         Message Message { get; set; }
     
+        /// <summary>
+        /// This query returns a set including the MessageEnd (if exists) at the opposite end of the Message for this MessageEnd.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<MessageEnd> OppositeEnd();
+        /// <summary>
+        /// This query returns value true if this MessageEnd is a sendEvent.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsSend();
+        /// <summary>
+        /// This query returns value true if this MessageEnd is a receiveEvent.
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        /// <para>
+        /// &lt;p&gt;message-&amp;gt;notEmpty()&lt;/p&gt;
+        /// </para>
         bool IsReceive();
+        /// <summary>
+        /// This query returns a set including the enclosing InteractionFragment this MessageEnd is enclosed within.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<InteractionFragment> EnclosingFragment();
     }
 }

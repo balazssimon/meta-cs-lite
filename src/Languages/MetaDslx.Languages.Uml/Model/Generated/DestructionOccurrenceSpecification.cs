@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A DestructionOccurenceSpecification models the destruction of an object.
+    /// </summary>
     public interface DestructionOccurrenceSpecification : global::MetaDslx.Languages.Uml.Model.MessageOccurrenceSpecification
     {
     

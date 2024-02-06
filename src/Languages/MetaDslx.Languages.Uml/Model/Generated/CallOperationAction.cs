@@ -23,12 +23,31 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CallOperationAction is a CallAction that transmits an Operation call request to the target object, where it may cause the invocation of associated Behavior. The argument values of the CallOperationAction are passed on the input Parameters of the Operation. If call is synchronous, the execution of the CallOperationAction waits until the execution of the invoked Operation completes and the values of output Parameters of the Operation are placed on the result OutputPins. If the call is asynchronous, the CallOperationAction completes immediately and no results values can be provided.
+    /// </summary>
     public interface CallOperationAction : global::MetaDslx.Languages.Uml.Model.CallAction
     {
+        /// <summary>
+        /// The Operation being invoked.
+        /// </summary>
         Operation Operation { get; set; }
+        /// <summary>
+        /// The InputPin that provides the target object to which the Operation call request is sent.
+        /// </summary>
         InputPin Target { get; set; }
     
+        /// <summary>
+        /// Return the inout, out and return ownedParameters of the Operation being called.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Parameter> OutputParameters();
+        /// <summary>
+        /// Return the in and inout ownedParameters of the Operation being called.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Parameter> InputParameters();
     }
 }

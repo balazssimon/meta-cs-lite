@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically.
+    /// </summary>
     public interface PrimitiveType : global::MetaDslx.Languages.Uml.Model.DataType
     {
     

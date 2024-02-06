@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals.
+    /// </summary>
     public interface Enumeration : global::MetaDslx.Languages.Uml.Model.DataType
     {
+        /// <summary>
+        /// The ordered set of literals owned by this Enumeration.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<EnumerationLiteral> OwnedLiteral { get; }
     
     }

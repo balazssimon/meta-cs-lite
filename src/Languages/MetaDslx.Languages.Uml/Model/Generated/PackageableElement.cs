@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A PackageableElement is a NamedElement that may be owned directly by a Package. A PackageableElement is also able to serve as the parameteredElement of a TemplateParameter.
+    /// </summary>
     public interface PackageableElement : global::MetaDslx.Languages.Uml.Model.ParameterableElement, global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// A PackageableElement must have a visibility specified if it is owned by a Namespace. The default visibility is public.
+        /// </summary>
         new global::MetaDslx.Languages.Uml.Model.VisibilityKind Visibility { get; set; }
     
     }

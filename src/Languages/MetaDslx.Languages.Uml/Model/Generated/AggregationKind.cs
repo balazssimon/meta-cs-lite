@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// AggregationKind is an Enumeration for specifying the kind of aggregation of a Property.
+    /// </summary>
     public enum AggregationKind
     {
+        /// <summary>
+        /// Indicates that the Property has no aggregation.
+        /// </summary>
         None,
+        /// <summary>
+        /// Indicates that the Property has shared aggregation.
+        /// </summary>
         Shared,
+        /// <summary>
+        /// Indicates that the Property is aggregated compositely, i.e., the composite object has responsibility for the existence and storage of the composed objects (parts).
+        /// </summary>
         Composite,
     }
 }

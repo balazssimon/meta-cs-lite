@@ -23,12 +23,30 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InteractionUse refers to an Interaction. The InteractionUse is a shorthand for copying the contents of the referenced Interaction where the InteractionUse is. To be accurate the copying must take into account substituting parameters with arguments and connect the formal Gates with the actual ones.
+    /// </summary>
     public interface InteractionUse : global::MetaDslx.Languages.Uml.Model.InteractionFragment
     {
+        /// <summary>
+        /// The actual gates of the InteractionUse.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Gate> ActualGate { get; }
+        /// <summary>
+        /// The actual arguments of the Interaction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ValueSpecification> Argument { get; }
+        /// <summary>
+        /// Refers to the Interaction that defines its meaning.
+        /// </summary>
         Interaction RefersTo { get; set; }
+        /// <summary>
+        /// The value of the executed Interaction.
+        /// </summary>
         ValueSpecification ReturnValue { get; set; }
+        /// <summary>
+        /// The recipient of the return value.
+        /// </summary>
         Property ReturnValueRecipient { get; set; }
     
     }

@@ -23,12 +23,31 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// CallAction is an abstract class for Actions that invoke a Behavior with given argument values and (if the invocation is synchronous) receive reply values.
+    /// </summary>
     public interface CallAction : global::MetaDslx.Languages.Uml.Model.InvocationAction
     {
+        /// <summary>
+        /// If true, the call is synchronous and the caller waits for completion of the invoked Behavior. If false, the call is asynchronous and the caller proceeds immediately and cannot receive return values.
+        /// </summary>
         bool IsSynchronous { get; set; }
+        /// <summary>
+        /// The OutputPins on which the reply values from the invocation are placed (if the call is synchronous).
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> Result { get; }
     
+        /// <summary>
+        /// Return the in and inout ownedParameters of the Behavior or Operation being called. (This operation is abstract and should be overridden by subclasses of CallAction.)
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Parameter> InputParameters();
+        /// <summary>
+        /// Return the inout, out and return ownedParameters of the Behavior or Operation being called. (This operation is abstract and should be overridden by subclasses of CallAction.)
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Parameter> OutputParameters();
     }
 }

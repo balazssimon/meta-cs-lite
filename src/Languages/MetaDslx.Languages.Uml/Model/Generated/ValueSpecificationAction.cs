@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ValueSpecificationAction is an Action that evaluates a ValueSpecification and provides a result.
+    /// </summary>
     public interface ValueSpecificationAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The OutputPin on which the result value is placed.
+        /// </summary>
         OutputPin Result { get; set; }
+        /// <summary>
+        /// The ValueSpecification to be evaluated.
+        /// </summary>
         ValueSpecification Value { get; set; }
     
     }

@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A JoinNode is a ControlNode that synchronizes multiple flows.
+    /// </summary>
     public interface JoinNode : global::MetaDslx.Languages.Uml.Model.ControlNode
     {
+        /// <summary>
+        /// Indicates whether incoming tokens having objects with the same identity are combined into one by the JoinNode.
+        /// </summary>
         bool IsCombineDuplicate { get; set; }
+        /// <summary>
+        /// A ValueSpecification giving the condition under which the JoinNode will offer a token on its outgoing ActivityEdge. If no joinSpec is specified, then the JoinNode will offer an outgoing token if tokens are offered on all of its incoming ActivityEdges (an &quot;and&quot; condition).
+        /// </summary>
         ValueSpecification JoinSpec { get; set; }
     
     }

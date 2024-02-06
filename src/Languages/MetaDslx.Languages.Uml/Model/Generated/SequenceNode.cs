@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A SequenceNode is a StructuredActivityNode that executes a sequence of ExecutableNodes in order.
+    /// </summary>
     public interface SequenceNode : global::MetaDslx.Languages.Uml.Model.StructuredActivityNode
     {
+        /// <summary>
+        /// The ordered set of ExecutableNodes to be sequenced.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ExecutableNode> ExecutableNode { get; }
     
     }

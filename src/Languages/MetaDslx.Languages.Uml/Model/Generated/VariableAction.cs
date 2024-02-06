@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// VariableAction is an abstract class for Actions that operate on a specified Variable.
+    /// </summary>
     public interface VariableAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The Variable to be read or written.
+        /// </summary>
         Variable Variable { get; set; }
     
     }

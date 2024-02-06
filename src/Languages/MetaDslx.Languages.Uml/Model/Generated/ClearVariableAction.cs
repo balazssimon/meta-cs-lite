@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ClearVariableAction is a VariableAction that removes all values of a Variable.
+    /// </summary>
     public interface ClearVariableAction : global::MetaDslx.Languages.Uml.Model.VariableAction
     {
     

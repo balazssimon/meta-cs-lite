@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadLinkObjectEndQualifierAction is an Action that retrieves a qualifier end value from a link object.
+    /// </summary>
     public interface ReadLinkObjectEndQualifierAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The InputPin from which the link object is obtained.
+        /// </summary>
         InputPin Object { get; set; }
+        /// <summary>
+        /// The qualifier Property to be read.
+        /// </summary>
         Property Qualifier { get; set; }
+        /// <summary>
+        /// The OutputPin where the result value is placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

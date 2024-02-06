@@ -23,14 +23,37 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// ActivityGroup is an abstract class for defining sets of ActivityNodes and ActivityEdges in an Activity.
+    /// </summary>
     public interface ActivityGroup : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// ActivityEdges immediately contained in the ActivityGroup.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityEdge> ContainedEdge { get; }
+        /// <summary>
+        /// ActivityNodes immediately contained in the ActivityGroup.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> ContainedNode { get; }
+        /// <summary>
+        /// The Activity containing the ActivityGroup, if it is directly owned by an Activity.
+        /// </summary>
         Activity InActivity { get; set; }
+        /// <summary>
+        /// Other ActivityGroups immediately contained in this ActivityGroup.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityGroup> Subgroup { get; }
+        /// <summary>
+        /// The ActivityGroup immediately containing this ActivityGroup, if it is directly owned by another ActivityGroup.
+        /// </summary>
         ActivityGroup SuperGroup { get; set; }
     
+        /// <summary>
+        /// The Activity that directly or indirectly contains this ActivityGroup.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         Activity ContainingActivity();
     }
 }

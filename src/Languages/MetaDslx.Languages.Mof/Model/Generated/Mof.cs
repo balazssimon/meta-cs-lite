@@ -2056,10 +2056,16 @@ namespace MetaDslx.Languages.Mof.Model
         PrimitiveType IMof.String => _string;
         PrimitiveType IMof.UnlimitedNatural => _unlimitedNatural;
     
+        // Boolean is used for logical expressions, consisting of the predefined values true and false.
         public static PrimitiveType Boolean => ((IMof)MInstance).Boolean;
+        // Integer is a primitive type representing integer values.
         public static PrimitiveType Integer => ((IMof)MInstance).Integer;
+        // Real is a primitive type representing the mathematical concept of real.
         public static PrimitiveType Real => ((IMof)MInstance).Real;
+        // String is a sequence of characters in some suitable character set used to display information
+        // about the model. Character sets may include non-Roman alphabets and characters.
         public static PrimitiveType String => ((IMof)MInstance).String;
+        // UnlimitedNatural is a primitive type representing unlimited natural values.
         public static PrimitiveType UnlimitedNatural => ((IMof)MInstance).UnlimitedNatural;
     
         public static __ModelEnumInfo AggregationKindInfo => __Impl.__AggregationKind_Info.Instance;

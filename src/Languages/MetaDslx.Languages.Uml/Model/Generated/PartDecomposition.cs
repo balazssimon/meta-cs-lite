@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A PartDecomposition is a description of the internal Interactions of one Lifeline relative to an Interaction.
+    /// </summary>
     public interface PartDecomposition : global::MetaDslx.Languages.Uml.Model.InteractionUse
     {
     

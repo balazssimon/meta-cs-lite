@@ -23,11 +23,25 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// LinkEndDestructionData is LinkEndData used to provide values for one end of a link to be destroyed by a DestroyLinkAction.
+    /// </summary>
     public interface LinkEndDestructionData : global::MetaDslx.Languages.Uml.Model.LinkEndData
     {
+        /// <summary>
+        /// The InputPin that provides the position of an existing link to be destroyed in an ordered, nonunique Association end. The type of the destroyAt InputPin is UnlimitedNatural, but the value cannot be zero or unlimited.
+        /// </summary>
         InputPin DestroyAt { get; set; }
+        /// <summary>
+        /// Specifies whether to destroy duplicates of the value in nonunique Association ends.
+        /// </summary>
         bool IsDestroyDuplicates { get; set; }
     
+        /// <summary>
+        /// Adds the destroyAt InputPin (if any) to the set of all Pins.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<InputPin> AllPins();
     }
 }

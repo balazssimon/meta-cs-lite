@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ForkNode is a ControlNode that splits a flow into multiple concurrent flows.
+    /// </summary>
     public interface ForkNode : global::MetaDslx.Languages.Uml.Model.ControlNode
     {
     

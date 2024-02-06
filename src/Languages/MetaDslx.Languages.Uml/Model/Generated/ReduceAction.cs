@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReduceAction is an Action that reduces a collection to a single value by repeatedly combining the elements of the collection using a reducer Behavior.
+    /// </summary>
     public interface ReduceAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The InputPin that provides the collection to be reduced.
+        /// </summary>
         InputPin Collection { get; set; }
+        /// <summary>
+        /// Indicates whether the order of the input collection should determine the order in which the reducer Behavior is applied to its elements.
+        /// </summary>
         bool IsOrdered { get; set; }
+        /// <summary>
+        /// A Behavior that is repreatedly applied to two elements of the input collection to produce a value that is of the same type as elements of the collection.
+        /// </summary>
         Behavior Reducer { get; set; }
+        /// <summary>
+        /// The output pin on which the result value is placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

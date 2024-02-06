@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// This is an enumerated type that identifies the type of Message.
+    /// </summary>
     public enum MessageKind
     {
+        /// <summary>
+        /// sendEvent and receiveEvent are present
+        /// </summary>
         Complete,
+        /// <summary>
+        /// sendEvent present and receiveEvent absent
+        /// </summary>
         Lost,
+        /// <summary>
+        /// sendEvent absent and receiveEvent present
+        /// </summary>
         Found,
+        /// <summary>
+        /// sendEvent and receiveEvent absent (should not appear)
+        /// </summary>
         Unknown,
     }
 }

@@ -23,11 +23,27 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A LiteralString is a specification of a String value.
+    /// </summary>
     public interface LiteralString : global::MetaDslx.Languages.Uml.Model.LiteralSpecification
     {
+        /// <summary>
+        /// The specified String value.
+        /// </summary>
         string Value { get; set; }
     
+        /// <summary>
+        /// The query isComputable() is redefined to be true.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsComputable();
+        /// <summary>
+        /// The query stringValue() gives the value.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         string StringValue();
     }
 }

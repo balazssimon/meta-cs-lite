@@ -23,13 +23,34 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// Interfaces declare coherent services that are implemented by BehavioredClassifiers that implement the Interfaces via InterfaceRealizations.
+    /// </summary>
     public interface Interface : global::MetaDslx.Languages.Uml.Model.Classifier
     {
+        /// <summary>
+        /// References all the Classifiers that are defined (nested) within the Interface.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Classifier> NestedClassifier { get; }
+        /// <summary>
+        /// The attributes (i.e., the Properties) owned by the Interface.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> OwnedAttribute { get; }
+        /// <summary>
+        /// The Operations owned by the Interface.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Operation> OwnedOperation { get; }
+        /// <summary>
+        /// Receptions that objects providing this Interface are willing to accept.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Reception> OwnedReception { get; }
+        /// <summary>
+        /// References a ProtocolStateMachine specifying the legal sequences of the invocation of the BehavioralFeatures described in the Interface.
+        /// </summary>
         ProtocolStateMachine Protocol { get; set; }
+        /// <summary>
+        /// References all the Interfaces redefined by this Interface.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Interface> RedefinedInterface { get; }
     
     }

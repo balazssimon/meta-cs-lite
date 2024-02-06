@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Template Signature bundles the set of formal TemplateParameters for a template.
+    /// </summary>
     public interface TemplateSignature : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// The formal parameters that are owned by this TemplateSignature.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<TemplateParameter> OwnedParameter { get; }
+        /// <summary>
+        /// The ordered set of all formal TemplateParameters for this TemplateSignature.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<TemplateParameter> Parameter { get; }
+        /// <summary>
+        /// The TemplateableElement that owns this TemplateSignature.
+        /// </summary>
         TemplateableElement Template { get; set; }
     
     }

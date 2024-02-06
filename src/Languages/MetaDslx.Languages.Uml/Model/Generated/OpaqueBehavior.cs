@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An OpaqueBehavior is a Behavior whose specification is given in a textual language other than UML.
+    /// </summary>
     public interface OpaqueBehavior : global::MetaDslx.Languages.Uml.Model.Behavior
     {
+        /// <summary>
+        /// Specifies the behavior in one or more languages.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<string> Body { get; }
+        /// <summary>
+        /// Languages the body strings use in the same order as the body strings.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<string> Language { get; }
     
     }

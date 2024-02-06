@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InteractionOperand is contained in a CombinedFragment. An InteractionOperand represents one operand of the expression given by the enclosing CombinedFragment.
+    /// </summary>
     public interface InteractionOperand : global::MetaDslx.Languages.Uml.Model.InteractionFragment, global::MetaDslx.Languages.Uml.Model.Namespace
     {
+        /// <summary>
+        /// The fragments of the operand.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InteractionFragment> Fragment { get; }
+        /// <summary>
+        /// Constraint of the operand.
+        /// </summary>
         InteractionConstraint Guard { get; set; }
     
     }

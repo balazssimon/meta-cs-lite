@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A StructuralFeature is a typed feature of a Classifier that specifies the structure of instances of the Classifier.
+    /// </summary>
     public interface StructuralFeature : global::MetaDslx.Languages.Uml.Model.MultiplicityElement, global::MetaDslx.Languages.Uml.Model.TypedElement, global::MetaDslx.Languages.Uml.Model.Feature
     {
+        /// <summary>
+        /// If isReadOnly is true, the StructuralFeature may not be written to after initialization.
+        /// </summary>
         bool IsReadOnly { get; set; }
     
     }

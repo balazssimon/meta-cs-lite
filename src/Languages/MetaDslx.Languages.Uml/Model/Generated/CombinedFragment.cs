@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CombinedFragment defines an expression of InteractionFragments. A CombinedFragment is defined by an interaction operator and corresponding InteractionOperands. Through the use of CombinedFragments the user will be able to describe a number of traces in a compact and concise manner.
+    /// </summary>
     public interface CombinedFragment : global::MetaDslx.Languages.Uml.Model.InteractionFragment
     {
+        /// <summary>
+        /// Specifies the gates that form the interface between this CombinedFragment and its surroundings
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Gate> CfragmentGate { get; }
+        /// <summary>
+        /// Specifies the operation which defines the semantics of this combination of InteractionFragments.
+        /// </summary>
         global::MetaDslx.Languages.Uml.Model.InteractionOperatorKind InteractionOperator { get; set; }
+        /// <summary>
+        /// The set of operands of the combined fragment.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InteractionOperand> Operand { get; }
     
     }

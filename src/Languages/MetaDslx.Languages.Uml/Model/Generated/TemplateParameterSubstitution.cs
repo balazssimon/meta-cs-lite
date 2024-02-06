@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding.
+    /// </summary>
     public interface TemplateParameterSubstitution : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution.
+        /// </summary>
         ParameterableElement Actual { get; set; }
+        /// <summary>
+        /// The formal TemplateParameter that is associated with this TemplateParameterSubstitution.
+        /// </summary>
         TemplateParameter Formal { get; set; }
+        /// <summary>
+        /// The ParameterableElement that is owned by this TemplateParameterSubstitution as its actual parameter.
+        /// </summary>
         ParameterableElement OwnedActual { get; set; }
+        /// <summary>
+        /// The TemplateBinding that owns this TemplateParameterSubstitution.
+        /// </summary>
         TemplateBinding TemplateBinding { get; set; }
     
     }

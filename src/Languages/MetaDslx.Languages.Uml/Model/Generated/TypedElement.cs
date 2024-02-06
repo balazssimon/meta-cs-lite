@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A TypedElement is a NamedElement that may have a Type specified for it.
+    /// </summary>
     public interface TypedElement : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// The type of the TypedElement.
+        /// </summary>
         Type Type { get; set; }
     
     }

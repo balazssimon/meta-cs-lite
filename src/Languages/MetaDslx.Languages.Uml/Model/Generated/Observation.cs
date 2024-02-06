@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// Observation specifies a value determined by observing an event or events that occur relative to other model Elements.
+    /// </summary>
     public interface Observation : global::MetaDslx.Languages.Uml.Model.PackageableElement
     {
     

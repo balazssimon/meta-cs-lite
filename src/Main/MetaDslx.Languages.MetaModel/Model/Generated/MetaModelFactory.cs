@@ -37,67 +37,67 @@ namespace MetaDslx.Languages.MetaModel.Model
     
         public MetaDeclaration MetaDeclaration(string? id = null)
         {
-            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(Model, id)!;
+            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(base.Model, id)!;
         }
     
         public MetaConstant MetaConstant(string? id = null)
         {
-            return (MetaConstant)Meta.MetaConstantInfo.Create(Model, id)!;
+            return (MetaConstant)Meta.MetaConstantInfo.Create(base.Model, id)!;
         }
     
         public MetaModel MetaModel(string? id = null)
         {
-            return (MetaModel)Meta.MetaModelInfo.Create(Model, id)!;
+            return (MetaModel)Meta.MetaModelInfo.Create(base.Model, id)!;
         }
     
         public MetaNamespace MetaNamespace(string? id = null)
         {
-            return (MetaNamespace)Meta.MetaNamespaceInfo.Create(Model, id)!;
+            return (MetaNamespace)Meta.MetaNamespaceInfo.Create(base.Model, id)!;
         }
     
         public MetaArrayType MetaArrayType(string? id = null)
         {
-            return (MetaArrayType)Meta.MetaArrayTypeInfo.Create(Model, id)!;
+            return (MetaArrayType)Meta.MetaArrayTypeInfo.Create(base.Model, id)!;
         }
     
         public MetaClass MetaClass(string? id = null)
         {
-            return (MetaClass)Meta.MetaClassInfo.Create(Model, id)!;
+            return (MetaClass)Meta.MetaClassInfo.Create(base.Model, id)!;
         }
     
         public MetaEnum MetaEnum(string? id = null)
         {
-            return (MetaEnum)Meta.MetaEnumInfo.Create(Model, id)!;
+            return (MetaEnum)Meta.MetaEnumInfo.Create(base.Model, id)!;
         }
     
         public MetaEnumLiteral MetaEnumLiteral(string? id = null)
         {
-            return (MetaEnumLiteral)Meta.MetaEnumLiteralInfo.Create(Model, id)!;
+            return (MetaEnumLiteral)Meta.MetaEnumLiteralInfo.Create(base.Model, id)!;
         }
     
         public MetaNullableType MetaNullableType(string? id = null)
         {
-            return (MetaNullableType)Meta.MetaNullableTypeInfo.Create(Model, id)!;
+            return (MetaNullableType)Meta.MetaNullableTypeInfo.Create(base.Model, id)!;
         }
     
         public MetaOperation MetaOperation(string? id = null)
         {
-            return (MetaOperation)Meta.MetaOperationInfo.Create(Model, id)!;
+            return (MetaOperation)Meta.MetaOperationInfo.Create(base.Model, id)!;
         }
     
         public MetaParameter MetaParameter(string? id = null)
         {
-            return (MetaParameter)Meta.MetaParameterInfo.Create(Model, id)!;
+            return (MetaParameter)Meta.MetaParameterInfo.Create(base.Model, id)!;
         }
     
         public MetaPrimitiveType MetaPrimitiveType(string? id = null)
         {
-            return (MetaPrimitiveType)Meta.MetaPrimitiveTypeInfo.Create(Model, id)!;
+            return (MetaPrimitiveType)Meta.MetaPrimitiveTypeInfo.Create(base.Model, id)!;
         }
     
         public MetaProperty MetaProperty(string? id = null)
         {
-            return (MetaProperty)Meta.MetaPropertyInfo.Create(Model, id)!;
+            return (MetaProperty)Meta.MetaPropertyInfo.Create(base.Model, id)!;
         }
     
     }

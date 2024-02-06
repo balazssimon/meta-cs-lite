@@ -30,85 +30,37 @@ namespace MetaDslx.Languages.MetaModel.Model
         /// </summary>
         void Meta(IMeta _this);
     
-        /// <summary>
-        /// Constructor for the class MetaDeclaration
-        /// </summary>
         void MetaDeclaration(MetaDeclaration _this);
     
-        /// <summary>
-        /// Constructor for the class MetaConstant
-        /// </summary>
         void MetaConstant(MetaConstant _this);
     
-        /// <summary>
-        /// Constructor for the class MetaModel
-        /// </summary>
         void MetaModel(MetaModel _this);
     
-        /// <summary>
-        /// Constructor for the class MetaNamespace
-        /// </summary>
         void MetaNamespace(MetaNamespace _this);
     
-        /// <summary>
-        /// Constructor for the class MetaType
-        /// </summary>
         void MetaType(MetaType _this);
     
-        /// <summary>
-        /// Constructor for the class MetaArrayType
-        /// </summary>
         void MetaArrayType(MetaArrayType _this);
     
-        /// <summary>
-        /// Constructor for the class MetaClass
-        /// </summary>
         void MetaClass(MetaClass _this);
     
-        /// <summary>
-        /// Constructor for the class MetaEnum
-        /// </summary>
         void MetaEnum(MetaEnum _this);
     
-        /// <summary>
-        /// Constructor for the class MetaEnumLiteral
-        /// </summary>
         void MetaEnumLiteral(MetaEnumLiteral _this);
     
-        /// <summary>
-        /// Constructor for the class MetaNullableType
-        /// </summary>
         void MetaNullableType(MetaNullableType _this);
     
-        /// <summary>
-        /// Constructor for the class MetaOperation
-        /// </summary>
         void MetaOperation(MetaOperation _this);
     
-        /// <summary>
-        /// Constructor for the class MetaParameter
-        /// </summary>
         void MetaParameter(MetaParameter _this);
     
-        /// <summary>
-        /// Constructor for the class MetaPrimitiveType
-        /// </summary>
         void MetaPrimitiveType(MetaPrimitiveType _this);
     
-        /// <summary>
-        /// Constructor for the class MetaProperty
-        /// </summary>
         void MetaProperty(MetaProperty _this);
     
     
-        /// <summary>
-        /// Computation of the derived property MetaDeclaration.FullName
-        /// </summary>
         string? MetaDeclaration_FullName(MetaDeclaration _this);
     
-        /// <summary>
-        /// Computation of the derived property MetaModel.NamespaceName
-        /// </summary>
         string MetaModel_NamespaceName(MetaModel _this);
     
     

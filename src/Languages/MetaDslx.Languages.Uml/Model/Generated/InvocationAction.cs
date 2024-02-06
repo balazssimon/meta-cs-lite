@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// InvocationAction is an abstract class for the various actions that request Behavior invocation.
+    /// </summary>
     public interface InvocationAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The InputPins that provide the argument values passed in the invocation request.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InputPin> Argument { get; }
+        /// <summary>
+        /// For CallOperationActions, SendSignalActions, and SendObjectActions, an optional Port of the target object through which the invocation request is sent.
+        /// </summary>
         Port OnPort { get; set; }
     
     }

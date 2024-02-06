@@ -23,12 +23,31 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A RedefinableTemplateSignature supports the addition of formal template parameters in a specialization of a template classifier.
+    /// </summary>
     public interface RedefinableTemplateSignature : global::MetaDslx.Languages.Uml.Model.RedefinableElement, global::MetaDslx.Languages.Uml.Model.TemplateSignature
     {
+        /// <summary>
+        /// The Classifier that owns this RedefinableTemplateSignature.
+        /// </summary>
         Classifier Classifier { get; set; }
+        /// <summary>
+        /// The signatures extended by this RedefinableTemplateSignature.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<RedefinableTemplateSignature> ExtendedSignature { get; }
+        /// <summary>
+        /// The formal template parameters of the extended signatures.
+        /// </summary>
         global::System.Collections.Generic.IList<TemplateParameter> InheritedParameter { get; }
     
+        /// <summary>
+        /// The query isConsistentWith() specifies, for any two RedefinableTemplateSignatures in a context in which redefinition is possible, whether redefinition would be logically consistent. A redefining template signature is always consistent with a redefined template signature, as redefinition only adds new formal parameters.
+        /// </summary>
+        /// <param name="redefiningElement">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

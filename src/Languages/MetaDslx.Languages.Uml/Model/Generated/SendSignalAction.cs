@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A SendSignalAction is an InvocationAction that creates a Signal instance and transmits it to the target object. Values from the argument InputPins are used to provide values for the attributes of the Signal. The requestor continues execution immediately after the Signal instance is sent out and cannot receive reply values.
+    /// </summary>
     public interface SendSignalAction : global::MetaDslx.Languages.Uml.Model.InvocationAction
     {
+        /// <summary>
+        /// The Signal whose instance is transmitted to the target.
+        /// </summary>
         Signal Signal { get; set; }
+        /// <summary>
+        /// The InputPin that provides the target object to which the Signal instance is sent.
+        /// </summary>
         InputPin Target { get; set; }
     
     }

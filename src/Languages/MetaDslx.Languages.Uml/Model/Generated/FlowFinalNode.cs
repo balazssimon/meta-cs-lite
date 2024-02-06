@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A FlowFinalNode is a FinalNode that terminates a flow by consuming the tokens offered to it.
+    /// </summary>
     public interface FlowFinalNode : global::MetaDslx.Languages.Uml.Model.FinalNode
     {
     

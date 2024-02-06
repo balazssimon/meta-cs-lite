@@ -463,8 +463,8 @@ namespace MetaDslx.Languages.Mof.Generator
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (72,6)-(72,70) 24 "MofModelToMetaModelGenerator.mxg"
-            __cb.Write(prop.Aggregation == AggregationKind.Composite ? "contains " : "");
+            #line (72,6)-(72,113) 24 "MofModelToMetaModelGenerator.mxg"
+            __cb.Write(prop.Aggregation == AggregationKind.Composite && !prop.IsDerived && !prop.IsDerivedUnion ? "contains " : "");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -1510,8 +1510,8 @@ namespace MetaDslx.Languages.Mof.Generator
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
-                    #line (201,14)-(201,47) 21 "MofModelToMetaModelGenerator.mxg"
-                    lines = CommentLines(expr, false);
+                    #line (201,14)-(201,52) 21 "MofModelToMetaModelGenerator.mxg"
+                    lines = CommentLines(expr.Body, false);
                     #line hidden
                     
                     var __first38 = true;

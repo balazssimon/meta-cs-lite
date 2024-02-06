@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadStructuralFeatureAction is a StructuralFeatureAction that retrieves the values of a StructuralFeature.
+    /// </summary>
     public interface ReadStructuralFeatureAction : global::MetaDslx.Languages.Uml.Model.StructuralFeatureAction
     {
+        /// <summary>
+        /// The OutputPin on which the result values are placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

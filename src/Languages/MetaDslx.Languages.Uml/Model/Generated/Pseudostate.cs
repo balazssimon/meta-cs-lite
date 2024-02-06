@@ -23,12 +23,31 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Pseudostate is an abstraction that encompasses different types of transient Vertices in the StateMachine graph. A StateMachine instance never comes to rest in a Pseudostate, instead, it will exit and enter the Pseudostate within a single run-to-completion step.
+    /// </summary>
     public interface Pseudostate : global::MetaDslx.Languages.Uml.Model.Vertex
     {
+        /// <summary>
+        /// Determines the precise type of the Pseudostate and can be one of: entryPoint, exitPoint, initial, deepHistory, shallowHistory, join, fork, junction, terminate or choice.
+        /// </summary>
         global::MetaDslx.Languages.Uml.Model.PseudostateKind Kind { get; set; }
+        /// <summary>
+        /// The State that owns this Pseudostate and in which it appears.
+        /// </summary>
         State State { get; set; }
+        /// <summary>
+        /// The StateMachine in which this Pseudostate is defined. This only applies to Pseudostates of the kind entryPoint or exitPoint.
+        /// </summary>
         StateMachine StateMachine { get; set; }
     
+        /// <summary>
+        /// The query isConsistentWith() specifies a Pseudostate can only be redefined by a Pseudostate of the same kind.
+        /// </summary>
+        /// <param name="redefiningElement">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

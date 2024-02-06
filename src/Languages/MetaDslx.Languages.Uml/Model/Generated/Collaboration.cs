@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Collaboration describes a structure of collaborating elements (roles), each performing a specialized function, which collectively accomplish some desired functionality.
+    /// </summary>
     public interface Collaboration : global::MetaDslx.Languages.Uml.Model.StructuredClassifier, global::MetaDslx.Languages.Uml.Model.BehavioredClassifier
     {
+        /// <summary>
+        /// Represents the participants in the Collaboration.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ConnectableElement> CollaborationRole { get; }
     
     }

@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// WriteVariableAction is an abstract class for VariableActions that change Variable values.
+    /// </summary>
     public interface WriteVariableAction : global::MetaDslx.Languages.Uml.Model.VariableAction
     {
+        /// <summary>
+        /// The InputPin that gives the value to be added or removed from the Variable.
+        /// </summary>
         InputPin Value { get; set; }
     
     }

@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A BroadcastSignalAction is an InvocationAction that transmits a Signal instance to all the potential target objects in the system. Values from the argument InputPins are used to provide values for the attributes of the Signal. The requestor continues execution immediately after the Signal instances are sent out and cannot receive reply values.
+    /// </summary>
     public interface BroadcastSignalAction : global::MetaDslx.Languages.Uml.Model.InvocationAction
     {
+        /// <summary>
+        /// The Signal whose instances are to be sent.
+        /// </summary>
         Signal Signal { get; set; }
     
     }

@@ -23,12 +23,33 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ParameterableElement is an Element that can be exposed as a formal TemplateParameter for a template, or specified as an actual parameter in a binding of a template.
+    /// </summary>
     public interface ParameterableElement : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// The formal TemplateParameter that owns this ParameterableElement.
+        /// </summary>
         TemplateParameter OwningTemplateParameter { get; set; }
+        /// <summary>
+        /// The TemplateParameter that exposes this ParameterableElement as a formal parameter.
+        /// </summary>
         TemplateParameter TemplateParameter { get; set; }
     
+        /// <summary>
+        /// The query isCompatibleWith() determines if this ParameterableElement is compatible with the specified ParameterableElement. By default, this ParameterableElement is compatible with another ParameterableElement p if the kind of this ParameterableElement is the same as or a subtype of the kind of p. Subclasses of ParameterableElement should override this operation to specify different compatibility constraints.
+        /// </summary>
+        /// <param name="p">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsCompatibleWith(ParameterableElement p);
+        /// <summary>
+        /// The query isTemplateParameter() determines if this ParameterableElement is exposed as a formal TemplateParameter.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsTemplateParameter();
     }
 }

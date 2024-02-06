@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ClearAssociationAction is an Action that destroys all links of an Association in which a particular object participates.
+    /// </summary>
     public interface ClearAssociationAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The Association to be cleared.
+        /// </summary>
         Association Association { get; set; }
+        /// <summary>
+        /// The InputPin that gives the object whose participation in the Association is to be cleared.
+        /// </summary>
         InputPin Object { get; set; }
     
     }

@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InstanceSpecification is a model element that represents an instance in a modeled system. An InstanceSpecification can act as a DeploymentTarget in a Deployment relationship, in the case that it represents an instance of a Node. It can also act as a DeployedArtifact, if it represents an instance of an Artifact.
+    /// </summary>
     public interface InstanceSpecification : global::MetaDslx.Languages.Uml.Model.DeploymentTarget, global::MetaDslx.Languages.Uml.Model.PackageableElement, global::MetaDslx.Languages.Uml.Model.DeployedArtifact
     {
+        /// <summary>
+        /// The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Classifier> Classifier { get; }
+        /// <summary>
+        /// A Slot giving the value or values of a StructuralFeature of the instance. An InstanceSpecification can have one Slot per StructuralFeature of its Classifiers, including inherited features. It is not necessary to model a Slot for every StructuralFeature, in which case the InstanceSpecification is a partial description.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Slot> Slot { get; }
+        /// <summary>
+        /// A specification of how to compute, derive, or construct the instance.
+        /// </summary>
         ValueSpecification Specification { get; set; }
     
     }

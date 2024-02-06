@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InteractionConstraint is a Boolean expression that guards an operand in a CombinedFragment.
+    /// </summary>
     public interface InteractionConstraint : global::MetaDslx.Languages.Uml.Model.Constraint
     {
+        /// <summary>
+        /// The maximum number of iterations of a loop
+        /// </summary>
         ValueSpecification Maxint { get; set; }
+        /// <summary>
+        /// The minimum number of iterations of a loop
+        /// </summary>
         ValueSpecification Minint { get; set; }
     
     }

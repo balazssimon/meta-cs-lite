@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Reception is a declaration stating that a Classifier is prepared to react to the receipt of a Signal.
+    /// </summary>
     public interface Reception : global::MetaDslx.Languages.Uml.Model.BehavioralFeature
     {
+        /// <summary>
+        /// The Signal that this Reception handles.
+        /// </summary>
         Signal Signal { get; set; }
     
     }

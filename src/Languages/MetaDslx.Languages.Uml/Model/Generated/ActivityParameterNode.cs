@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ActivityParameterNode is an ObjectNode for accepting values from the input Parameters or providing values to the output Parameters of an Activity.
+    /// </summary>
     public interface ActivityParameterNode : global::MetaDslx.Languages.Uml.Model.ObjectNode
     {
+        /// <summary>
+        /// The Parameter for which the ActivityParameterNode will be accepting or providing values.
+        /// </summary>
         Parameter Parameter { get; set; }
     
     }

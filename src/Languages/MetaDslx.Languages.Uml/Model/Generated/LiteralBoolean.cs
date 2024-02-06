@@ -23,11 +23,27 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A LiteralBoolean is a specification of a Boolean value.
+    /// </summary>
     public interface LiteralBoolean : global::MetaDslx.Languages.Uml.Model.LiteralSpecification
     {
+        /// <summary>
+        /// The specified Boolean value.
+        /// </summary>
         bool Value { get; set; }
     
+        /// <summary>
+        /// The query booleanValue() gives the value.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool BooleanValue();
+        /// <summary>
+        /// The query isComputable() is redefined to be true.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsComputable();
     }
 }

@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ValuePin is an InputPin that provides a value by evaluating a ValueSpecification.
+    /// </summary>
     public interface ValuePin : global::MetaDslx.Languages.Uml.Model.InputPin
     {
+        /// <summary>
+        /// The ValueSpecification that is evaluated to obtain the value that the ValuePin will provide.
+        /// </summary>
         ValueSpecification Value { get; set; }
     
     }

@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ExtensionPoint identifies a point in the behavior of a UseCase where that behavior can be extended by the behavior of some other (extending) UseCase, as specified by an Extend relationship.
+    /// </summary>
     public interface ExtensionPoint : global::MetaDslx.Languages.Uml.Model.RedefinableElement
     {
+        /// <summary>
+        /// The UseCase that owns this ExtensionPoint.
+        /// </summary>
         UseCase UseCase { get; set; }
     
     }

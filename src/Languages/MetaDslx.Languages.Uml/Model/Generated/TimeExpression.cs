@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A TimeExpression is a ValueSpecification that represents a time value.
+    /// </summary>
     public interface TimeExpression : global::MetaDslx.Languages.Uml.Model.ValueSpecification
     {
+        /// <summary>
+        /// A ValueSpecification that evaluates to the value of the TimeExpression.
+        /// </summary>
         ValueSpecification Expr { get; set; }
+        /// <summary>
+        /// Refers to the Observations that are involved in the computation of the TimeExpression value.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Observation> Observation { get; }
     
     }

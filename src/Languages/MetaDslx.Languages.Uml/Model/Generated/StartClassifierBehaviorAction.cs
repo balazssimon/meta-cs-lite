@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A StartClassifierBehaviorAction is an Action that starts the classifierBehavior of the input object.
+    /// </summary>
     public interface StartClassifierBehaviorAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The InputPin that holds the object whose classifierBehavior is to be started.
+        /// </summary>
         InputPin Object { get; set; }
     
     }

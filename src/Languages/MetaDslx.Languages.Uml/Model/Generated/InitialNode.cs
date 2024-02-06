@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InitialNode is a ControlNode that offers a single control token when initially enabled.
+    /// </summary>
     public interface InitialNode : global::MetaDslx.Languages.Uml.Model.ControlNode
     {
     

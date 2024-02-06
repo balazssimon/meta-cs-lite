@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Feature declares a behavioral or structural characteristic of Classifiers.
+    /// </summary>
     public interface Feature : global::MetaDslx.Languages.Uml.Model.RedefinableElement
     {
+        /// <summary>
+        /// The Classifiers that have this Feature as a feature.
+        /// </summary>
         Classifier FeaturingClassifier { get; set; }
+        /// <summary>
+        /// Specifies whether this Feature characterizes individual instances classified by the Classifier (false) or the Classifier itself (true).
+        /// </summary>
         bool IsStatic { get; set; }
     
     }

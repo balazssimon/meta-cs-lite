@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// Relationship is an abstract concept that specifies some kind of relationship between Elements.
+    /// </summary>
     public interface Relationship : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// Specifies the elements related by the Relationship.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Element> RelatedElement { get; }
     
     }

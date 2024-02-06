@@ -23,13 +23,33 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ConditionalNode is a StructuredActivityNode that chooses one among some number of alternative collections of ExecutableNodes to execute.
+    /// </summary>
     public interface ConditionalNode : global::MetaDslx.Languages.Uml.Model.StructuredActivityNode
     {
+        /// <summary>
+        /// The set of Clauses composing the ConditionalNode.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Clause> Clause { get; }
+        /// <summary>
+        /// If true, the modeler asserts that the test for at least one Clause of the ConditionalNode will succeed.
+        /// </summary>
         bool IsAssured { get; set; }
+        /// <summary>
+        /// If true, the modeler asserts that the test for at most one Clause of the ConditionalNode will succeed.
+        /// </summary>
         bool IsDeterminate { get; set; }
+        /// <summary>
+        /// The OutputPins that onto which are moved values from the bodyOutputs of the Clause selected for execution.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> Result { get; }
     
+        /// <summary>
+        /// Return only this ConditionalNode. This prevents Actions within the ConditionalNode from having their OutputPins used as bodyOutputs or decider Pins in containing LoopNodes or ConditionalNodes.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Action> AllActions();
     }
 }

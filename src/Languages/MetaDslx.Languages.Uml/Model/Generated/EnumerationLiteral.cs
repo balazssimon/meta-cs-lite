@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An EnumerationLiteral is a user-defined data value for an Enumeration.
+    /// </summary>
     public interface EnumerationLiteral : global::MetaDslx.Languages.Uml.Model.InstanceSpecification
     {
+        /// <summary>
+        /// The classifier of this EnumerationLiteral derived to be equal to its Enumeration.
+        /// </summary>
         new Enumeration Classifier { get; }
+        /// <summary>
+        /// The Enumeration that this EnumerationLiteral is a member of.
+        /// </summary>
         Enumeration Enumeration { get; set; }
     
     }

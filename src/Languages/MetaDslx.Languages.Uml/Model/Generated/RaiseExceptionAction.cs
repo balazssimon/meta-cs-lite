@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A RaiseExceptionAction is an Action that causes an exception to occur. The input value becomes the exception object.
+    /// </summary>
     public interface RaiseExceptionAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// An InputPin whose value becomes the exception object.
+        /// </summary>
         InputPin Exception { get; set; }
     
     }

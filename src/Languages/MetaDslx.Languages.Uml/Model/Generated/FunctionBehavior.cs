@@ -23,9 +23,19 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A FunctionBehavior is an OpaqueBehavior that does not access or modify any objects or other external data.
+    /// </summary>
     public interface FunctionBehavior : global::MetaDslx.Languages.Uml.Model.OpaqueBehavior
     {
     
+        /// <summary>
+        /// The hasAllDataTypeAttributes query tests whether the types of the attributes of the given DataType are all DataTypes, and similarly for all those DataTypes.
+        /// </summary>
+        /// <param name="d">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool HasAllDataTypeAttributes(DataType d);
     }
 }

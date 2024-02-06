@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ControlNode is an abstract ActivityNode that coordinates flows in an Activity.
+    /// </summary>
     public interface ControlNode : global::MetaDslx.Languages.Uml.Model.ActivityNode
     {
     

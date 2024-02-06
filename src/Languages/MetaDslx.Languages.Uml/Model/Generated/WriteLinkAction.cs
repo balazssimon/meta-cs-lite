@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// WriteLinkAction is an abstract class for LinkActions that create and destroy links.
+    /// </summary>
     public interface WriteLinkAction : global::MetaDslx.Languages.Uml.Model.LinkAction
     {
     

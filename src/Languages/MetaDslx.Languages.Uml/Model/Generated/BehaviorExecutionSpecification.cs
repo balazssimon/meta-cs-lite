@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A BehaviorExecutionSpecification is a kind of ExecutionSpecification representing the execution of a Behavior.
+    /// </summary>
     public interface BehaviorExecutionSpecification : global::MetaDslx.Languages.Uml.Model.ExecutionSpecification
     {
+        /// <summary>
+        /// Behavior whose execution is occurring.
+        /// </summary>
         Behavior Behavior { get; set; }
     
     }

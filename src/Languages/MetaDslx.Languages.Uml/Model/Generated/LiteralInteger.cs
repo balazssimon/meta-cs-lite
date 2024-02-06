@@ -23,11 +23,27 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A LiteralInteger is a specification of an Integer value.
+    /// </summary>
     public interface LiteralInteger : global::MetaDslx.Languages.Uml.Model.LiteralSpecification
     {
+        /// <summary>
+        /// The specified Integer value.
+        /// </summary>
         int Value { get; set; }
     
+        /// <summary>
+        /// The query integerValue() gives the value.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         int IntegerValue();
+        /// <summary>
+        /// The query isComputable() is redefined to be true.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsComputable();
     }
 }

@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Dependency is a Relationship that signifies that a single model Element or a set of model Elements requires other model Elements for their specification or implementation. This means that the complete semantics of the client Element(s) are either semantically or structurally dependent on the definition of the supplier Element(s).
+    /// </summary>
     public interface Dependency : global::MetaDslx.Languages.Uml.Model.DirectedRelationship, global::MetaDslx.Languages.Uml.Model.PackageableElement
     {
+        /// <summary>
+        /// The Element(s) dependent on the supplier Element(s). In some cases (such as a trace Abstraction) the assignment of direction (that is, the designation of the client Element) is at the discretion of the modeler and is a stipulation.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<NamedElement> Client { get; }
+        /// <summary>
+        /// The Element(s) on which the client Element(s) depend in some respect. The modeler may stipulate a sense of Dependency direction suitable for their domain.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<NamedElement> Supplier { get; }
     
     }

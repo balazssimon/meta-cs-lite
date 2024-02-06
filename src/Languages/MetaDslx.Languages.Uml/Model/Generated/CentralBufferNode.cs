@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CentralBufferNode is an ObjectNode for managing flows from multiple sources and targets.
+    /// </summary>
     public interface CentralBufferNode : global::MetaDslx.Languages.Uml.Model.ObjectNode
     {
     

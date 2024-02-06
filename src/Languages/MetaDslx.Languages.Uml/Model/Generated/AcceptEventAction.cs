@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An AcceptEventAction is an Action that waits for the occurrence of one or more specific Events.
+    /// </summary>
     public interface AcceptEventAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// Indicates whether there is a single OutputPin for a SignalEvent occurrence, or multiple OutputPins for attribute values of the instance of the Signal associated with a SignalEvent occurrence.
+        /// </summary>
         bool IsUnmarshall { get; set; }
+        /// <summary>
+        /// OutputPins holding the values received from an Event occurrence.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> Result { get; }
+        /// <summary>
+        /// The Triggers specifying the Events of which the AcceptEventAction waits for occurrences.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Trigger> Trigger { get; }
     
     }

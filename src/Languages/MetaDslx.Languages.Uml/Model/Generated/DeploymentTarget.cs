@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A deployment target is the location for a deployed artifact.
+    /// </summary>
     public interface DeploymentTarget : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// The set of elements that are manifested in an Artifact that is involved in Deployment to a DeploymentTarget.
+        /// </summary>
         global::System.Collections.Generic.IList<PackageableElement> DeployedElement { get; }
+        /// <summary>
+        /// The set of Deployments for a DeploymentTarget.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Deployment> Deployment { get; }
     
     }

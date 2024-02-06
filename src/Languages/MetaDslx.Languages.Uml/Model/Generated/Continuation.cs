@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Continuation is a syntactic way to define continuations of different branches of an alternative CombinedFragment. Continuations are intuitively similar to labels representing intermediate points in a flow of control.
+    /// </summary>
     public interface Continuation : global::MetaDslx.Languages.Uml.Model.InteractionFragment
     {
+        /// <summary>
+        /// True: when the Continuation is at the end of the enclosing InteractionFragment and False when it is in the beginning.
+        /// </summary>
         bool Setting { get; set; }
     
     }

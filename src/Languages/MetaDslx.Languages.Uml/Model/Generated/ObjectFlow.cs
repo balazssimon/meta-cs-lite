@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ObjectFlow is an ActivityEdge that is traversed by object tokens that may hold values. Object flows also support multicast/receive, token selection from object nodes, and transformation of tokens.
+    /// </summary>
     public interface ObjectFlow : global::MetaDslx.Languages.Uml.Model.ActivityEdge
     {
+        /// <summary>
+        /// Indicates whether the objects in the ObjectFlow are passed by multicasting.
+        /// </summary>
         bool IsMulticast { get; set; }
+        /// <summary>
+        /// Indicates whether the objects in the ObjectFlow are gathered from respondents to multicasting.
+        /// </summary>
         bool IsMultireceive { get; set; }
+        /// <summary>
+        /// A Behavior used to select tokens from a source ObjectNode.
+        /// </summary>
         Behavior Selection { get; set; }
+        /// <summary>
+        /// A Behavior used to change or replace object tokens flowing along the ObjectFlow.
+        /// </summary>
         Behavior Transformation { get; set; }
     
     }

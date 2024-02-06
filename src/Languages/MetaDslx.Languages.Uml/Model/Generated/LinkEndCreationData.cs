@@ -23,11 +23,25 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// LinkEndCreationData is LinkEndData used to provide values for one end of a link to be created by a CreateLinkAction.
+    /// </summary>
     public interface LinkEndCreationData : global::MetaDslx.Languages.Uml.Model.LinkEndData
     {
+        /// <summary>
+        /// For ordered Association ends, the InputPin that provides the position where the new link should be inserted or where an existing link should be moved to. The type of the insertAt InputPin is UnlimitedNatural, but the input cannot be zero. It is omitted for Association ends that are not ordered.
+        /// </summary>
         InputPin InsertAt { get; set; }
+        /// <summary>
+        /// Specifies whether the existing links emanating from the object on this end should be destroyed before creating a new link.
+        /// </summary>
         bool IsReplaceAll { get; set; }
     
+        /// <summary>
+        /// Adds the insertAt InputPin (if any) to the set of all Pins.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<InputPin> AllPins();
     }
 }

@@ -818,7 +818,7 @@ namespace MetaDslx.Languages.Uml.Model
         static Uml()
         {
             _Element_OwnedComment = new __ModelProperty(typeof(Element), "OwnedComment", typeof(Comment), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _Element_OwnedElement = new __ModelProperty(typeof(Element), "OwnedElement", typeof(Element), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _Element_OwnedElement = new __ModelProperty(typeof(Element), "OwnedElement", typeof(Element), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
             _Element_Owner = new __ModelProperty(typeof(Element), "Owner", typeof(Element), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Element_AllOwnedElements = new __ModelOperation(typeof(Element), "AllOwnedElements", "AllOwnedElements(0)");
             _Element_MustBeOwned = new __ModelOperation(typeof(Element), "MustBeOwned", "MustBeOwned(0)");
@@ -834,11 +834,11 @@ namespace MetaDslx.Languages.Uml.Model
             _NamedElement_Separator = new __ModelOperation(typeof(NamedElement), "Separator", "Separator(0)");
             _Abstraction_Mapping = new __ModelProperty(typeof(Abstraction), "Mapping", typeof(OpaqueExpression), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
             _Action_Context = new __ModelProperty(typeof(Action), "Context", typeof(Classifier), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Action_Input = new __ModelProperty(typeof(Action), "Input", typeof(InputPin), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _Action_Input = new __ModelProperty(typeof(Action), "Input", typeof(InputPin), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
             _Action_IsLocallyReentrant = new __ModelProperty(typeof(Action), "IsLocallyReentrant", typeof(bool), false, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _Action_LocalPostcondition = new __ModelProperty(typeof(Action), "LocalPostcondition", typeof(Constraint), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Action_LocalPrecondition = new __ModelProperty(typeof(Action), "LocalPrecondition", typeof(Constraint), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _Action_Output = new __ModelProperty(typeof(Action), "Output", typeof(OutputPin), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _Action_Output = new __ModelProperty(typeof(Action), "Output", typeof(OutputPin), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
             _Action_AllActions = new __ModelOperation(typeof(Action), "AllActions", "AllActions(0)");
             _Action_AllOwnedNodes = new __ModelOperation(typeof(Action), "AllOwnedNodes", "AllOwnedNodes(0)");
             _Action_ContainingBehavior = new __ModelOperation(typeof(Action), "ContainingBehavior", "ContainingBehavior(0)");
@@ -934,7 +934,7 @@ namespace MetaDslx.Languages.Uml.Model
             _ActivityGroup_ContainedEdge = new __ModelProperty(typeof(ActivityGroup), "ContainedEdge", typeof(ActivityEdge), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
             _ActivityGroup_ContainedNode = new __ModelProperty(typeof(ActivityGroup), "ContainedNode", typeof(ActivityNode), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
             _ActivityGroup_InActivity = new __ModelProperty(typeof(ActivityGroup), "InActivity", typeof(Activity), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _ActivityGroup_Subgroup = new __ModelProperty(typeof(ActivityGroup), "Subgroup", typeof(ActivityGroup), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _ActivityGroup_Subgroup = new __ModelProperty(typeof(ActivityGroup), "Subgroup", typeof(ActivityGroup), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
             _ActivityGroup_SuperGroup = new __ModelProperty(typeof(ActivityGroup), "SuperGroup", typeof(ActivityGroup), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _ActivityGroup_ContainingActivity = new __ModelOperation(typeof(ActivityGroup), "ContainingActivity", "ContainingActivity(0)");
             _ActivityParameterNode_Parameter = new __ModelProperty(typeof(ActivityParameterNode), "Parameter", typeof(Parameter), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
@@ -1120,7 +1120,7 @@ namespace MetaDslx.Languages.Uml.Model
             _DurationInterval_Min = new __ModelProperty(typeof(DurationInterval), "Min", typeof(Duration), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _DurationObservation_Event = new __ModelProperty(typeof(DurationObservation), "Event", typeof(NamedElement), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
             _DurationObservation_FirstEvent = new __ModelProperty(typeof(DurationObservation), "FirstEvent", typeof(bool), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, null);
-            _EncapsulatedClassifier_OwnedPort = new __ModelProperty(typeof(EncapsulatedClassifier), "OwnedPort", typeof(Port), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _EncapsulatedClassifier_OwnedPort = new __ModelProperty(typeof(EncapsulatedClassifier), "OwnedPort", typeof(Port), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.Derived, null);
             _Enumeration_OwnedLiteral = new __ModelProperty(typeof(Enumeration), "OwnedLiteral", typeof(EnumerationLiteral), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _EnumerationLiteral_Classifier = new __ModelProperty(typeof(EnumerationLiteral), "Classifier", typeof(Enumeration), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _EnumerationLiteral_Enumeration = new __ModelProperty(typeof(EnumerationLiteral), "Enumeration", typeof(Enumeration), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
@@ -1233,7 +1233,7 @@ namespace MetaDslx.Languages.Uml.Model
             _Message_Argument = new __ModelProperty(typeof(Message), "Argument", typeof(ValueSpecification), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Message_Connector = new __ModelProperty(typeof(Message), "Connector", typeof(Connector), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Message_Interaction = new __ModelProperty(typeof(Message), "Interaction", typeof(Interaction), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _Message_MessageKind = new __ModelProperty(typeof(Message), "MessageKind", typeof(global::MetaDslx.Languages.Uml.Model.MessageKind), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
+            _Message_MessageKind = new __ModelProperty(typeof(Message), "MessageKind", typeof(global::MetaDslx.Languages.Uml.Model.MessageKind), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Message_MessageSort = new __ModelProperty(typeof(Message), "MessageSort", typeof(global::MetaDslx.Languages.Uml.Model.MessageSort), MetaDslx.Languages.Uml.Model.MessageSort.SynchCall, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
             _Message_ReceiveEvent = new __ModelProperty(typeof(Message), "ReceiveEvent", typeof(MessageEnd), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Message_SendEvent = new __ModelProperty(typeof(Message), "SendEvent", typeof(MessageEnd), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
@@ -1260,7 +1260,7 @@ namespace MetaDslx.Languages.Uml.Model
             _Namespace_ElementImport = new __ModelProperty(typeof(Namespace), "ElementImport", typeof(ElementImport), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Namespace_ImportedMember = new __ModelProperty(typeof(Namespace), "ImportedMember", typeof(PackageableElement), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.Derived, null);
             _Namespace_Member = new __ModelProperty(typeof(Namespace), "Member", typeof(NamedElement), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
-            _Namespace_OwnedMember = new __ModelProperty(typeof(Namespace), "OwnedMember", typeof(NamedElement), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _Namespace_OwnedMember = new __ModelProperty(typeof(Namespace), "OwnedMember", typeof(NamedElement), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.DerivedUnion, null);
             _Namespace_OwnedRule = new __ModelProperty(typeof(Namespace), "OwnedRule", typeof(Constraint), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Namespace_PackageImport = new __ModelProperty(typeof(Namespace), "PackageImport", typeof(PackageImport), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Namespace_ExcludeCollisions = new __ModelOperation(typeof(Namespace), "ExcludeCollisions", "ExcludeCollisions(1)");
@@ -1289,10 +1289,10 @@ namespace MetaDslx.Languages.Uml.Model
             _OpaqueExpression_IsPositive = new __ModelOperation(typeof(OpaqueExpression), "IsPositive", "IsPositive(0)");
             _OpaqueExpression_Value = new __ModelOperation(typeof(OpaqueExpression), "Value", "Value(0)");
             _OperationTemplateParameter_ParameteredElement = new __ModelProperty(typeof(OperationTemplateParameter), "ParameteredElement", typeof(Operation), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _Package_NestedPackage = new __ModelProperty(typeof(Package), "NestedPackage", typeof(Package), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _Package_NestedPackage = new __ModelProperty(typeof(Package), "NestedPackage", typeof(Package), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.Derived, null);
             _Package_NestingPackage = new __ModelProperty(typeof(Package), "NestingPackage", typeof(Package), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _Package_OwnedStereotype = new __ModelProperty(typeof(Package), "OwnedStereotype", typeof(Stereotype), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _Package_OwnedType = new __ModelProperty(typeof(Package), "OwnedType", typeof(Type), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _Package_OwnedStereotype = new __ModelProperty(typeof(Package), "OwnedStereotype", typeof(Stereotype), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.Derived, null);
+            _Package_OwnedType = new __ModelProperty(typeof(Package), "OwnedType", typeof(Type), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection | __ModelPropertyFlags.Derived, null);
             _Package_PackagedElement = new __ModelProperty(typeof(Package), "PackagedElement", typeof(PackageableElement), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Package_PackageMerge = new __ModelProperty(typeof(Package), "PackageMerge", typeof(PackageMerge), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Package_ProfileApplication = new __ModelProperty(typeof(Package), "ProfileApplication", typeof(ProfileApplication), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
@@ -7765,7 +7765,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj350.Name = "SuperClass";
             obj350.Parent = obj72;
             obj351.MChildren.Add(obj735);
-            obj351.IsContainment = true;
+            obj351.IsDerived = true;
             obj351.SubsettedProperties.Add(obj352);
             obj351.Type = __MetaType.FromModelObject((__IModelObject)obj735);
             obj351.Name = "OwnedPort";
@@ -8045,7 +8045,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj404.Name = "OwnedComment";
             obj404.Parent = obj152;
             obj405.MChildren.Add(obj1075);
-            obj405.IsContainment = true;
+            obj405.IsUnion = true;
             obj405.OppositeProperties.Add(obj406);
             obj405.Type = __MetaType.FromModelObject((__IModelObject)obj1075);
             obj405.Name = "OwnedElement";
@@ -8134,7 +8134,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj422.Name = "Member";
             obj422.Parent = obj156;
             obj423.MChildren.Add(obj1094);
-            obj423.IsContainment = true;
+            obj423.IsUnion = true;
             obj423.OppositeProperties.Add(obj397);
             obj423.SubsettedProperties.Add(obj405);
             obj423.SubsettedProperties.Add(obj422);
@@ -8272,7 +8272,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj447.Name = "InActivity";
             obj447.Parent = obj22;
             obj448.MChildren.Add(obj495);
-            obj448.IsContainment = true;
+            obj448.IsUnion = true;
             obj448.OppositeProperties.Add(obj449);
             obj448.SubsettedProperties.Add(obj405);
             obj448.Type = __MetaType.FromModelObject((__IModelObject)obj495);
@@ -10060,7 +10060,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj907.Name = "URI";
             obj907.Parent = obj108;
             obj908.MChildren.Add(obj920);
-            obj908.IsContainment = true;
+            obj908.IsDerived = true;
             obj908.OppositeProperties.Add(obj909);
             obj908.SubsettedProperties.Add(obj913);
             obj908.Type = __MetaType.FromModelObject((__IModelObject)obj920);
@@ -10071,13 +10071,13 @@ namespace MetaDslx.Languages.Uml.Model
             obj909.Name = "NestingPackage";
             obj909.Parent = obj108;
             obj910.MChildren.Add(obj921);
-            obj910.IsContainment = true;
+            obj910.IsDerived = true;
             obj910.SubsettedProperties.Add(obj913);
             obj910.Type = __MetaType.FromModelObject((__IModelObject)obj921);
             obj910.Name = "OwnedStereotype";
             obj910.Parent = obj108;
             obj911.MChildren.Add(obj922);
-            obj911.IsContainment = true;
+            obj911.IsDerived = true;
             obj911.OppositeProperties.Add(obj413);
             obj911.SubsettedProperties.Add(obj913);
             obj911.Type = __MetaType.FromModelObject((__IModelObject)obj922);
@@ -10403,6 +10403,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj997.Type = __MetaType.FromModelObject((__IModelObject)obj123);
             obj997.Name = "Interaction";
             obj997.Parent = obj129;
+            obj998.IsDerived = true;
             obj998.Type = __MetaType.FromModelObject((__IModelObject)obj11);
             obj998.Name = "MessageKind";
             obj998.Parent = obj129;
@@ -11090,7 +11091,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj1248.Name = "Context";
             obj1248.Parent = obj206;
             obj1249.MChildren.Add(obj1269);
-            obj1249.IsContainment = true;
+            obj1249.IsUnion = true;
             obj1249.SubsettedProperties.Add(obj405);
             obj1249.Type = __MetaType.FromModelObject((__IModelObject)obj1269);
             obj1249.Name = "Input";
@@ -11112,7 +11113,7 @@ namespace MetaDslx.Languages.Uml.Model
             obj1252.Name = "LocalPrecondition";
             obj1252.Parent = obj206;
             obj1253.MChildren.Add(obj1272);
-            obj1253.IsContainment = true;
+            obj1253.IsUnion = true;
             obj1253.SubsettedProperties.Add(obj405);
             obj1253.Type = __MetaType.FromModelObject((__IModelObject)obj1272);
             obj1253.Name = "Output";

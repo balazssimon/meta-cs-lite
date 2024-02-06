@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ExecutableNode is an abstract class for ActivityNodes whose execution may be controlled using ControlFlows and to which ExceptionHandlers may be attached.
+    /// </summary>
     public interface ExecutableNode : global::MetaDslx.Languages.Uml.Model.ActivityNode
     {
+        /// <summary>
+        /// A set of ExceptionHandlers that are examined if an exception propagates out of the ExceptionNode.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ExceptionHandler> Handler { get; }
     
     }

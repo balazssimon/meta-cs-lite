@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CreateObjectAction is an Action that creates an instance of the specified Classifier.
+    /// </summary>
     public interface CreateObjectAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The Classifier to be instantiated.
+        /// </summary>
         Classifier Classifier { get; set; }
+        /// <summary>
+        /// The OutputPin on which the newly created object is placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A substitution is a relationship between two classifiers signifying that the substituting classifier complies with the contract specified by the contract classifier. This implies that instances of the substituting classifier are runtime substitutable where instances of the contract classifier are expected.
+    /// </summary>
     public interface Substitution : global::MetaDslx.Languages.Uml.Model.Realization
     {
+        /// <summary>
+        /// The contract with which the substituting classifier complies.
+        /// </summary>
         Classifier Contract { get; set; }
+        /// <summary>
+        /// Instances of the substituting classifier are runtime substitutable where instances of the contract classifier are expected.
+        /// </summary>
         Classifier SubstitutingClassifier { get; set; }
     
     }

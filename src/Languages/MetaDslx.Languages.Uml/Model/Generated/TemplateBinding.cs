@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template.
+    /// </summary>
     public interface TemplateBinding : global::MetaDslx.Languages.Uml.Model.DirectedRelationship
     {
+        /// <summary>
+        /// The TemplateableElement that is bound by this TemplateBinding.
+        /// </summary>
         TemplateableElement BoundElement { get; set; }
+        /// <summary>
+        /// The TemplateParameterSubstitutions owned by this TemplateBinding.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<TemplateParameterSubstitution> ParameterSubstitution { get; }
+        /// <summary>
+        /// The TemplateSignature for the template that is the target of this TemplateBinding.
+        /// </summary>
         TemplateSignature Signature { get; set; }
     
     }

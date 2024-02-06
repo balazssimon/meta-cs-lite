@@ -23,12 +23,30 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.
+    /// </summary>
     public interface Association : global::MetaDslx.Languages.Uml.Model.Relationship, global::MetaDslx.Languages.Uml.Model.Classifier
     {
+        /// <summary>
+        /// The Classifiers that are used as types of the ends of the Association.
+        /// </summary>
         global::System.Collections.Generic.IList<Type> EndType { get; }
+        /// <summary>
+        /// Specifies whether the Association is derived from other model elements such as other Associations.
+        /// </summary>
         bool IsDerived { get; set; }
+        /// <summary>
+        /// Each end represents participation of instances of the Classifier connected to the end in links of the Association.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> MemberEnd { get; }
+        /// <summary>
+        /// The navigable ends that are owned by the Association itself.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> NavigableOwnedEnd { get; }
+        /// <summary>
+        /// The ends that are owned by the Association itself.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> OwnedEnd { get; }
     
     }

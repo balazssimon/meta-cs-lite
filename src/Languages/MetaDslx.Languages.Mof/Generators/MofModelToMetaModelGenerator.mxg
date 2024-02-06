@@ -69,7 +69,7 @@ template GenerateProperty(Property prop, bool comment)
 end template
 
 template GenerateContainment(Property prop)
-    [prop.Aggregation == AggregationKind.Composite ? "contains " : ""]
+    [prop.Aggregation == AggregationKind.Composite && !prop.IsDerived && !prop.IsDerivedUnion ? "contains " : ""]
 end template
 
 template GenerateModifiers(Property prop)
@@ -198,7 +198,7 @@ template GenerateSpecification(Namespace ns)
                 /// </para>
             [end if]
             // [rule.Name]:
-            [lines = CommentLines(expr, false)]
+            [lines = CommentLines(expr.Body, false)]
             [foreach (var line in lines)]
                 // [line]
             [end foreach]

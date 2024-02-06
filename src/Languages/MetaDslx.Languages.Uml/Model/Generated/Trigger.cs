@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.
+    /// </summary>
     public interface Trigger : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// The Event that detected by the Trigger.
+        /// </summary>
         Event Event { get; set; }
+        /// <summary>
+        /// A optional Port of through which the given effect is detected.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Port> Port { get; }
     
     }

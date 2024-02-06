@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ProtocolStateMachine can be redefined into a more specific ProtocolStateMachine or into behavioral StateMachine. ProtocolConformance declares that the specific ProtocolStateMachine specifies a protocol that conforms to the general ProtocolStateMachine or that the specific behavioral StateMachine abides by the protocol of the general ProtocolStateMachine.
+    /// </summary>
     public interface ProtocolConformance : global::MetaDslx.Languages.Uml.Model.DirectedRelationship
     {
+        /// <summary>
+        /// Specifies the ProtocolStateMachine to which the specific ProtocolStateMachine conforms.
+        /// </summary>
         ProtocolStateMachine GeneralMachine { get; set; }
+        /// <summary>
+        /// Specifies the ProtocolStateMachine which conforms to the general ProtocolStateMachine.
+        /// </summary>
         ProtocolStateMachine SpecificMachine { get; set; }
     
     }

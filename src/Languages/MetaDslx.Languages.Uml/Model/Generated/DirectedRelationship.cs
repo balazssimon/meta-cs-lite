@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A DirectedRelationship represents a relationship between a collection of source model Elements and a collection of target model Elements.
+    /// </summary>
     public interface DirectedRelationship : global::MetaDslx.Languages.Uml.Model.Relationship
     {
+        /// <summary>
+        /// Specifies the source Element(s) of the DirectedRelationship.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Element> Source { get; }
+        /// <summary>
+        /// Specifies the target Element(s) of the DirectedRelationship.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Element> Target { get; }
     
     }

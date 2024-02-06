@@ -23,12 +23,33 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A StartObjectBehaviorAction is an InvocationAction that starts the execution either of a directly instantiated Behavior or of the classifierBehavior of an object. Argument values may be supplied for the input Parameters of the Behavior. If the Behavior is invoked synchronously, then output values may be obtained for output Parameters.
+    /// </summary>
     public interface StartObjectBehaviorAction : global::MetaDslx.Languages.Uml.Model.CallAction
     {
+        /// <summary>
+        /// An InputPin that holds the object that is either a Behavior to be started or has a classifierBehavior to be started.
+        /// </summary>
         InputPin Object { get; set; }
     
+        /// <summary>
+        /// Return the inout, out and return ownedParameters of the Behavior being called.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Parameter> OutputParameters();
+        /// <summary>
+        /// Return the in and inout ownedParameters of the Behavior being called.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Parameter> InputParameters();
+        /// <summary>
+        /// If the type of the object InputPin is a Behavior, then that Behavior. Otherwise, if the type of the object InputPin is a BehavioredClassifier, then the classifierBehavior of that BehavioredClassifier.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         Behavior Behavior();
     }
 }

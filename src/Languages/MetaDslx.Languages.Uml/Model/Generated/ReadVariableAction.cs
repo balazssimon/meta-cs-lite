@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadVariableAction is a VariableAction that retrieves the values of a Variable.
+    /// </summary>
     public interface ReadVariableAction : global::MetaDslx.Languages.Uml.Model.VariableAction
     {
+        /// <summary>
+        /// The OutputPin on which the result values are placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

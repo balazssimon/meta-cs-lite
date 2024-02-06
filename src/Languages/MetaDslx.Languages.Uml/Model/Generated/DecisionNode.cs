@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A DecisionNode is a ControlNode that chooses between outgoing ActivityEdges for the routing of tokens.
+    /// </summary>
     public interface DecisionNode : global::MetaDslx.Languages.Uml.Model.ControlNode
     {
+        /// <summary>
+        /// A Behavior that is executed to provide an input to guard ValueSpecifications on ActivityEdges outgoing from the DecisionNode.
+        /// </summary>
         Behavior DecisionInput { get; set; }
+        /// <summary>
+        /// An additional ActivityEdge incoming to the DecisionNode that provides a decision input value for the guards ValueSpecifications on ActivityEdges outgoing from the DecisionNode.
+        /// </summary>
         ObjectFlow DecisionInputFlow { get; set; }
     
     }

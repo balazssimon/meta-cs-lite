@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An IntervalConstraint is a Constraint that is specified by an Interval.
+    /// </summary>
     public interface IntervalConstraint : global::MetaDslx.Languages.Uml.Model.Constraint
     {
+        /// <summary>
+        /// The Interval that specifies the condition of the IntervalConstraint.
+        /// </summary>
         new Interval Specification { get; set; }
     
     }

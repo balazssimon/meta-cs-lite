@@ -277,7 +277,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (member->select(oclIsKindOf(Feature))->collect(oclAsType(Feature))->asSet())
         public override IList<Feature> Classifier_AllFeatures(Classifier _this)
         {
-            return _this.Member.OfType<Feature>().ToSet();
+            return _this.Member.OfType<Feature>().ToSet().ToList();
         }
 
         // The query allParents() gives all of the direct and indirect ancestors of a generalized Classifier.
@@ -466,7 +466,7 @@ namespace MetaDslx.Languages.Uml.Model
                     result.Add(ext);
                 }
             }
-            return result;
+            return result.ToList();
         }
 
         // The superclasses of a Class, derived from its Generalizations.
@@ -500,7 +500,7 @@ namespace MetaDslx.Languages.Uml.Model
             var result = ris.ToSet();
             result.UnionWith(realizingClassifierInterfaces);
             result.UnionWith(providedByPorts);
-            return result;
+            return result.ToList();
         }
 
         // The Interfaces that the Component requires from other Components in its environment in order to be able to offer its full set of provided functionality. These Interfaces may be used by the Component or any of its realizingClassifiers, or they may be the Interfaces that are required by its public Ports.

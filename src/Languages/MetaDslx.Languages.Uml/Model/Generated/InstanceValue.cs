@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InstanceValue is a ValueSpecification that identifies an instance.
+    /// </summary>
     public interface InstanceValue : global::MetaDslx.Languages.Uml.Model.ValueSpecification
     {
+        /// <summary>
+        /// The InstanceSpecification that represents the specified value.
+        /// </summary>
         InstanceSpecification Instance { get; set; }
     
     }

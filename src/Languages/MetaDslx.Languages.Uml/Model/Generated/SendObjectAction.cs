@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A SendObjectAction is an InvocationAction that transmits an input object to the target object, which is handled as a request message by the target object. The requestor continues execution immediately after the object is sent out and cannot receive reply values.
+    /// </summary>
     public interface SendObjectAction : global::MetaDslx.Languages.Uml.Model.InvocationAction
     {
+        /// <summary>
+        /// The request object, which is transmitted to the target object. The object may be copied in transmission, so identity might not be preserved.
+        /// </summary>
         InputPin Request { get; set; }
+        /// <summary>
+        /// The target object to which the object is sent.
+        /// </summary>
         InputPin Target { get; set; }
     
     }

@@ -449,6 +449,7 @@ abstract class ActivityEdge : RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefiningElement.oclIsKindOf(ActivityEdge))
     bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
@@ -487,7 +488,7 @@ abstract class ActivityGroup : NamedElement
     /// <summary>
     /// Other ActivityGroups immediately contained in this ActivityGroup.
     /// </summary>
-    contains ActivityGroup[] Subgroup
+    union ActivityGroup[] Subgroup
         subsets Element.OwnedElement
         opposite ActivityGroup.SuperGroup
 
@@ -504,6 +505,9 @@ abstract class ActivityGroup : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if superGroup<>null then superGroup.containingActivity()
+    // else inActivity
+    // endif)
     Activity ContainingActivity()
 }
 
@@ -573,6 +577,9 @@ abstract class ActivityNode : RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if inStructuredNode<>null then inStructuredNode.containingActivity()
+    // else activity
+    // endif)
     Activity ContainingActivity()
 
     /// <param name="redefiningElement">
@@ -580,6 +587,7 @@ abstract class ActivityNode : RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefiningElement.oclIsKindOf(ActivityNode))
     bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
@@ -800,7 +808,7 @@ class JoinNode : ControlNode
     bool IsCombineDuplicate = true
 
     /// <summary>
-    /// A ValueSpecification giving the condition under which the JoinNode will offer a token on its outgoing ActivityEdge. If no joinSpec is specified, then the JoinNode will offer an outgoing token if tokens are offered on all of its incoming ActivityEdges (an "and" condition).
+    /// A ValueSpecification giving the condition under which the JoinNode will offer a token on its outgoing ActivityEdge. If no joinSpec is specified, then the JoinNode will offer an outgoing token if tokens are offered on all of its incoming ActivityEdges (an &quot;and&quot; condition).
     /// </summary>
     contains ValueSpecification JoinSpec
         subsets Element.OwnedElement
@@ -907,6 +915,9 @@ class Variable : ConnectableElement, MultiplicityElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if scope<>null then scope.allOwnedNodes()->includes(a)
+    // else a.containingActivity()=activityScope
+    // endif)
     bool IsAccessibleBy(Action a)
 }
 
@@ -1057,6 +1068,7 @@ class LiteralBoolean : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (value)
     bool BooleanValue()
 
     /// <summary>
@@ -1065,6 +1077,7 @@ class LiteralBoolean : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsComputable()
 }
 
@@ -1085,6 +1098,7 @@ class LiteralInteger : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (value)
     int IntegerValue()
 
     /// <summary>
@@ -1093,6 +1107,7 @@ class LiteralInteger : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsComputable()
 }
 
@@ -1108,6 +1123,7 @@ class LiteralNull : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsComputable()
 
     /// <summary>
@@ -1116,6 +1132,7 @@ class LiteralNull : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsNull()
 }
 
@@ -1136,6 +1153,7 @@ class LiteralReal : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsComputable()
 
     /// <summary>
@@ -1144,6 +1162,7 @@ class LiteralReal : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (value)
     double RealValue()
 }
 
@@ -1171,6 +1190,7 @@ class LiteralString : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsComputable()
 
     /// <summary>
@@ -1179,6 +1199,7 @@ class LiteralString : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (value)
     string StringValue()
 }
 
@@ -1199,6 +1220,7 @@ class LiteralUnlimitedNatural : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsComputable()
 
     /// <summary>
@@ -1207,6 +1229,7 @@ class LiteralUnlimitedNatural : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (value)
     int UnlimitedValue()
 }
 
@@ -1243,6 +1266,11 @@ class OpaqueExpression : ValueSpecification
     /// If an OpaqueExpression is specified using a UML Behavior, then this refers to the single required return Parameter of that Behavior. When the Behavior completes execution, the values on this Parameter give the result of evaluating the OpaqueExpression.
     /// </summary>
     // spec:
+    // result = (if behavior = null then
+    // 	null
+    // else
+    // 	behavior.ownedParameter->first()
+    // endif)
     derived Parameter Result
         // opposite Parameter.OpaqueExpression
 
@@ -1252,6 +1280,7 @@ class OpaqueExpression : ValueSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (false)
     bool IsIntegral()
 
     /// <summary>
@@ -1260,7 +1289,9 @@ class OpaqueExpression : ValueSpecification
     /// <returns>
     /// </returns>
     // pre:
+    // self.isIntegral()
     // spec:
+    // result = (false)
     bool IsNonNegative()
 
     /// <summary>
@@ -1269,7 +1300,9 @@ class OpaqueExpression : ValueSpecification
     /// <returns>
     /// </returns>
     // spec:
+    // result = (false)
     // pre:
+    // self.isIntegral()
     bool IsPositive()
 
 
@@ -1279,7 +1312,9 @@ class OpaqueExpression : ValueSpecification
     /// <returns>
     /// </returns>
     // pre:
+    // self.isIntegral()
     // spec:
+    // result = (0)
     int Value()
 }
 
@@ -1309,6 +1344,10 @@ class StringExpression : TemplateableElement, Expression
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if subExpression->notEmpty()
+    // then subExpression->iterate(se; stringValue: String = '' | stringValue.concat(se.stringValue()))
+    // else operand->iterate(op; stringValue: String = '' | stringValue.concat(op.stringValue()))
+    // endif)
     string StringValue()
 }
 
@@ -1402,6 +1441,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (null)
     bool BooleanValue()
 
     /// <summary>
@@ -1410,6 +1450,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (null)
     int IntegerValue()
 
     /// <summary>
@@ -1420,6 +1461,8 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.oclIsKindOf(p.oclType()) and (p.oclIsKindOf(TypedElement) implies 
+    // self.type.conformsTo(p.oclAsType(TypedElement).type)))
     bool IsCompatibleWith(ParameterableElement p)
 
     /// <summary>
@@ -1428,6 +1471,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (false)
     bool IsComputable()
 
     /// <summary>
@@ -1436,6 +1480,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (false)
     bool IsNull()
 
     /// <summary>
@@ -1444,6 +1489,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (null)
     double RealValue()
 
     /// <summary>
@@ -1452,6 +1498,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (null)
     string StringValue()
 
     /// <summary>
@@ -1460,6 +1507,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (null)
     int UnlimitedValue()
 }
 
@@ -1582,6 +1630,7 @@ class UseCase : BehavioredClassifier
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.include.addition->union(self.include.addition->collect(uc | uc.allIncludedUseCases()))->asSet())
     UseCase[] AllIncludedUseCases()
 }
 
@@ -1595,6 +1644,7 @@ class Association : Relationship, Classifier
     /// The Classifiers that are used as types of the ends of the Association.
     /// </summary>
     // spec:
+    // result = (memberEnd->collect(type)->asSet())
     derived Type[] EndType
         subsets Relationship.RelatedElement
         // opposite Type.Association
@@ -1647,6 +1697,9 @@ class Class : BehavioredClassifier, EncapsulatedClassifier
     /// This property is used when the Class is acting as a metaclass. It references the Extensions that specify additional properties of the metaclass. The property is derived from the Extensions whose memberEnds are typed by the Class.
     /// </summary>
     // spec:
+    // result = (Extension.allInstances()->select(ext | 
+    //   let endTypes : Sequence(Classifier) = ext.memberEnd->collect(type.oclAsType(Classifier)) in
+    //   endTypes->includes(self) or endTypes.allParents()->includes(self) ))
     derived Extension[] Extension
         opposite Extension.Metaclass
 
@@ -1699,6 +1752,7 @@ class Class : BehavioredClassifier, EncapsulatedClassifier
     /// The superclasses of a Class, derived from its Generalizations.
     /// </summary>
     // spec:
+    // result = (self.general()->select(oclIsKindOf(Class))->collect(oclAsType(Class))->asSet())
     derived Class[] SuperClass
         redefines Classifier.General
         // opposite Class.Class
@@ -1762,6 +1816,13 @@ class Component : Class
     /// The Interfaces that the Component exposes to its environment. These Interfaces may be Realized by the Component or any of its realizingClassifiers, or they may be the Interfaces that are provided by its public Ports.
     /// </summary>
     // spec:
+    // result = (let 	ris : Set(Interface) = allRealizedInterfaces(),
+    //         realizingClassifiers : Set(Classifier) =  self.realization.realizingClassifier->union(self.allParents()->collect(realization.realizingClassifier))->asSet(),
+    //         allRealizingClassifiers : Set(Classifier) = realizingClassifiers->union(realizingClassifiers.allParents())->asSet(),
+    //         realizingClassifierInterfaces : Set(Interface) = allRealizingClassifiers->iterate(c; rci : Set(Interface) = Set{} | rci->union(c.allRealizedInterfaces())),
+    //         ports : Set(Port) = self.ownedPort->union(allParents()->collect(ownedPort))->asSet(),
+    //         providedByPorts : Set(Interface) = ports.provided->asSet()
+    // in     ris->union(realizingClassifierInterfaces) ->union(providedByPorts)->asSet())
     derived Interface[] Provided
         // opposite Interface.Component
 
@@ -1777,6 +1838,14 @@ class Component : Class
     /// The Interfaces that the Component requires from other Components in its environment in order to be able to offer its full set of provided functionality. These Interfaces may be used by the Component or any of its realizingClassifiers, or they may be the Interfaces that are required by its public Ports.
     /// </summary>
     // spec:
+    // result = (let 	uis : Set(Interface) = allUsedInterfaces(),
+    //         realizingClassifiers : Set(Classifier) = self.realization.realizingClassifier->union(self.allParents()->collect(realization.realizingClassifier))->asSet(),
+    //         allRealizingClassifiers : Set(Classifier) = realizingClassifiers->union(realizingClassifiers.allParents())->asSet(),
+    //         realizingClassifierInterfaces : Set(Interface) = allRealizingClassifiers->iterate(c; rci : Set(Interface) = Set{} | rci->union(c.allUsedInterfaces())),
+    //         ports : Set(Port) = self.ownedPort->union(allParents()->collect(ownedPort))->asSet(),
+    //         usedByPorts : Set(Interface) = ports.required->asSet()
+    // in	    uis->union(realizingClassifierInterfaces)->union(usedByPorts)->asSet()
+    // )
     derived Interface[] Required
         // opposite Interface.Component
 
@@ -1815,6 +1884,7 @@ abstract class ConnectableElement : TypedElement, ParameterableElement
     /// A set of ConnectorEnds that attach to this ConnectableElement.
     /// </summary>
     // spec:
+    // result = (ConnectorEnd.allInstances()->select(role = self))
     derived ConnectorEnd[] End
         opposite ConnectorEnd.Role
 
@@ -1864,6 +1934,13 @@ class Connector : Feature
     /// Indicates the kind of Connector. This is derived: a Connector with one or more ends connected to a Port which is not on a Part and which is not a behavior port is a delegation; otherwise it is an assembly.
     /// </summary>
     // spec:
+    // result = (if end->exists(
+    // 		role.oclIsKindOf(Port) 
+    // 		and partWithPort->isEmpty()
+    // 		and not role.oclAsType(Port).isBehavior)
+    // then ConnectorKind::delegation 
+    // else ConnectorKind::assembly 
+    // endif)
     derived ConnectorKind Kind
 
     /// <summary>
@@ -1891,6 +1968,13 @@ class ConnectorEnd : MultiplicityElement
     /// A derived property referencing the corresponding end on the Association which types the Connector owing this ConnectorEnd, if any. It is derived by selecting the end at the same place in the ordering of Association ends as this ConnectorEnd.
     /// </summary>
     // spec:
+    // result = (if connector.type = null 
+    // then
+    //   null 
+    // else
+    //   let index : Integer = connector.end->indexOf(self) in
+    //     connector.type.memberEnd->at(index)
+    // endif)
     derived Property DefiningEnd
         // opposite Property.ConnectorEnd
 
@@ -1918,7 +2002,8 @@ abstract class EncapsulatedClassifier : StructuredClassifier
     /// The Ports owned by the EncapsulatedClassifier.
     /// </summary>
     // spec:
-    contains Port[] OwnedPort
+    // result = (ownedAttribute->select(oclIsKindOf(Port))->collect(oclAsType(Port))->asOrderedSet())
+    derived Port[] OwnedPort
         subsets StructuredClassifier.OwnedAttribute
         // opposite Port.EncapsulatedClassifier
 
@@ -1955,6 +2040,7 @@ class Port : Property
     /// The Interfaces specifying the set of Operations and Receptions that the EncapsulatedCclassifier offers to its environment via this Port, and which it will handle either directly or by forwarding it to a part of its internal structure. This association is derived according to the value of isConjugated. If isConjugated is false, provided is derived as the union of the sets of Interfaces realized by the type of the port and its supertypes, or directly from the type of the Port if the Port is typed by an Interface. If isConjugated is true, it is derived as the union of the sets of Interfaces used by the type of the Port and its supertypes.
     /// </summary>
     // spec:
+    // result = (if isConjugated then basicRequired() else basicProvided() endif)
     derived Interface[] Provided
         // opposite Interface.Port
 
@@ -1969,6 +2055,7 @@ class Port : Property
     /// The Interfaces specifying the set of Operations and Receptions that the EncapsulatedCassifier expects its environment to handle via this port. This association is derived according to the value of isConjugated. If isConjugated is false, required is derived as the union of the sets of Interfaces used by the type of the Port and its supertypes. If isConjugated is true, it is derived as the union of the sets of Interfaces realized by the type of the Port and its supertypes, or directly from the type of the Port if the Port is typed by an Interface.
     /// </summary>
     // spec:
+    // result = (if isConjugated then basicProvided() else basicRequired() endif)
     derived Interface[] Required
         // opposite Interface.Port
 
@@ -1980,6 +2067,10 @@ class Port : Property
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if type.oclIsKindOf(Interface) 
+    // then type.oclAsType(Interface)->asSet() 
+    // else type.oclAsType(Classifier).allRealizedInterfaces() 
+    // endif)
     Interface[] BasicProvided()
 
     /// <summary>
@@ -1988,6 +2079,7 @@ class Port : Property
     /// <returns>
     /// </returns>
     // spec:
+    // result = ( type.oclAsType(Classifier).allUsedInterfaces() )
     Interface[] BasicRequired()
 }
 
@@ -2019,6 +2111,7 @@ abstract class StructuredClassifier : Classifier
     /// The Properties specifying instances that the StructuredClassifier owns by composition. This collection is derived, selecting those owned Properties where isComposite is true.
     /// </summary>
     // spec:
+    // result = (ownedAttribute->select(isComposite))
     derived Property[] Part
         // opposite Property.StructuredClassifier
 
@@ -2036,6 +2129,7 @@ abstract class StructuredClassifier : Classifier
     /// <returns>
     /// </returns>
     // spec:
+    // result = (allFeatures()->select(oclIsKindOf(ConnectableElement))->collect(oclAsType(ConnectableElement))->asSet())
     ConnectableElement[] AllRoles()
 }
 
@@ -2072,7 +2166,9 @@ class ConnectionPointReference : Vertex
     /// <returns>
     /// </returns>
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     // spec:
+    // result = redefiningElement.oclIsKindOf(ConnectionPointReference)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
@@ -2090,7 +2186,9 @@ class FinalState : State
     /// <returns>
     /// </returns>
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     // spec:
+    // result = redefiningElement.oclIsKindOf(FinalState)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
@@ -2117,7 +2215,7 @@ class ProtocolConformance : DirectedRelationship
 }
 
 /// <summary>
-/// A ProtocolStateMachine is always defined in the context of a Classifier. It specifies which BehavioralFeatures of the Classifier can be called in which State and under which conditions, thus specifying the allowed invocation sequences on the Classifier's BehavioralFeatures. A ProtocolStateMachine specifies the possible and permitted Transitions on the instances of its context Classifier, together with the BehavioralFeatures that carry the Transitions. In this manner, an instance lifecycle can be specified for a Classifier, by defining the order in which the BehavioralFeatures can be activated and the States through which an instance progresses during its existence.
+/// A ProtocolStateMachine is always defined in the context of a Classifier. It specifies which BehavioralFeatures of the Classifier can be called in which State and under which conditions, thus specifying the allowed invocation sequences on the Classifier&apos;s BehavioralFeatures. A ProtocolStateMachine specifies the possible and permitted Transitions on the instances of its context Classifier, together with the BehavioralFeatures that carry the Transitions. In this manner, an instance lifecycle can be specified for a Classifier, by defining the order in which the BehavioralFeatures can be activated and the States through which an instance progresses during its existence.
 /// </summary>
 class ProtocolStateMachine : StateMachine
 {
@@ -2155,6 +2253,7 @@ class ProtocolTransition : Transition
     /// This association refers to the associated Operation. It is derived from the Operation of the CallEvent Trigger when applicable.
     /// </summary>
     // spec:
+    // result = (trigger->collect(event)->select(oclIsKindOf(CallEvent))->collect(oclAsType(CallEvent).operation)->asSet())
     derived Operation[] Referred
         // opposite Operation.ProtocolTransition
 
@@ -2193,7 +2292,10 @@ class Pseudostate : Vertex
     /// <returns>
     /// </returns>
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     // spec:
+    // result = (redefiningElement.oclIsKindOf(Pseudostate) and
+    // redefiningElement.oclAsType(Pseudostate).kind = kind)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
@@ -2214,6 +2316,7 @@ class Region : Namespace, RedefinableElement
     /// References the Classifier in which context this element may be redefined.
     /// </summary>
     // spec:
+    // result = containingStateMachine()
     derived Classifier RedefinitionContext
         redefines RedefinableElement.RedefinitionContext
         // opposite Classifier.Region
@@ -2252,6 +2355,12 @@ class Region : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if  stateMachine <> null 
+    // then
+    //   stateMachine.oclIsKindOf(ProtocolStateMachine)
+    // else 
+    //   state <> null  implies  state.container.belongsToPSM()
+    // endif )
     bool BelongsToPSM()
 
     /// <summary>
@@ -2260,6 +2369,12 @@ class Region : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if stateMachine = null 
+    // then
+    //   state.containingStateMachine()
+    // else
+    //   stateMachine
+    // endif)
     StateMachine ContainingStateMachine()
 
     /// <summary>
@@ -2270,7 +2385,9 @@ class Region : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = true
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
@@ -2281,6 +2398,19 @@ class Region : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if redefinedElement.oclIsKindOf(Region) then
+    //   let redefinedRegion : Region = redefinedElement.oclAsType(Region) in
+    //     if stateMachine->isEmpty() then
+    //     -- the Region is owned by a State
+    //       (state.redefinedState->notEmpty() and state.redefinedState.region->includes(redefinedRegion))
+    //     else -- the region is owned by a StateMachine
+    //       (stateMachine.extendedStateMachine->notEmpty() and
+    //         stateMachine.extendedStateMachine->exists(sm : StateMachine |
+    //           sm.region->includes(redefinedRegion)))
+    //     endif
+    // else
+    //   false
+    // endif)
     bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
 
 }
@@ -2337,24 +2467,28 @@ class State : Namespace, Vertex
     /// A state with isComposite=true is said to be a composite State. A composite State is a State that contains at least one Region.
     /// </summary>
     // spec:
+    // result = (region->notEmpty())
     derived bool IsComposite
 
     /// <summary>
     /// A State with isOrthogonal=true is said to be an orthogonal composite State An orthogonal composite State contains two or more Regions.
     /// </summary>
     // spec:
+    // result = (region->size () > 1)
     derived bool IsOrthogonal
 
     /// <summary>
     /// A State with isSimple=true is said to be a simple State A simple State does not have any Regions and it does not refer to any submachine StateMachine.
     /// </summary>
     // spec:
+    // result = ((region->isEmpty()) and not isSubmachineState())
     derived bool IsSimple
 
     /// <summary>
     /// A State with isSubmachineState=true is said to be a submachine State Such a State refers to another StateMachine(submachine).
     /// </summary>
     // spec:
+    // result = (submachine <> null)
     derived bool IsSubmachineState
 
     /// <summary>
@@ -2383,6 +2517,7 @@ class State : Namespace, Vertex
     /// <returns>
     /// </returns>
     // spec:
+    // result = (container.containingStateMachine())
     StateMachine ContainingStateMachine()
 
 
@@ -2394,7 +2529,12 @@ class State : Namespace, Vertex
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefiningElement.oclIsTypeOf(State) and 
+    //   let redefiningState : State = redefiningElement.oclAsType(State) in
+    //     submachine <> null implies (redefiningState.submachine <> null and
+    //       redefiningState.submachine.extendedStateMachine->includes(submachine)))
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 
 
@@ -2444,6 +2584,15 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if ancestor(s1, s2) then 
+    //     s2.container
+    // else
+    // 	if ancestor(s2, s1) then
+    // 	    s1.container 
+    // 	else 
+    // 	    LCA(s1.container.state, s2.container.state)
+    // 	endif
+    // endif)
     Region LCA(Vertex s1, Vertex s2)
 
     /// <summary>
@@ -2456,6 +2605,19 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if (s2 = s1) then 
+    // 	true 
+    // else 
+    // 	if s1.container.stateMachine->notEmpty() then 
+    // 	    true
+    // 	else 
+    // 	    if s2.container.stateMachine->notEmpty() then 
+    // 	        false
+    // 	    else
+    // 	        ancestor(s1, s2.container.state)
+    // 	     endif
+    // 	 endif
+    // endif  )
     bool Ancestor(Vertex s1, Vertex s2)
 
     /// <summary>
@@ -2466,6 +2628,7 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
+    // result = true
     bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
@@ -2476,6 +2639,14 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefinedElement.oclIsKindOf(StateMachine) and
+    //   let parentContext : BehavioredClassifier =
+    //     redefinedElement.oclAsType(StateMachine).context in
+    //   if context = null then
+    //     parentContext = null and self.allParents()→includes(redefinedElement)
+    //   else
+    //     parentContext <> null and context.allParents()->includes(parentContext)
+    //   endif)
     bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
 
     /// <summary>
@@ -2488,6 +2659,14 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if v2.oclIsTypeOf(State) and ancestor(v1, v2) then
+    // 	v2.oclAsType(State)
+    // else if v1.oclIsTypeOf(State) and ancestor(v2, v1) then
+    // 	v1.oclAsType(State)
+    // else if (v1.container.state->isEmpty() or v2.container.state->isEmpty()) then 
+    // 	null.oclAsType(State)
+    // else LCAState(v1.container.state, v2.container.state)
+    // endif endif endif)
     State LCAState(Vertex v1, Vertex v2)
 }
 
@@ -2534,6 +2713,7 @@ class Transition : Namespace, RedefinableElement
     /// References the Classifier in which context this element may be redefined.
     /// </summary>
     // spec:
+    // result = containingStateMachine()
     derived Classifier RedefinitionContext
         redefines RedefinableElement.RedefinitionContext
         // opposite Classifier.Transition
@@ -2563,6 +2743,7 @@ class Transition : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (container.containingStateMachine())
     StateMachine ContainingStateMachine()
 
     /// <summary>
@@ -2573,7 +2754,10 @@ class Transition : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefiningElement.oclIsKindOf(Transition) and
+    //   redefiningElement.oclAsType(Transition).source.redefinedTransition = source)
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 
 }
@@ -2595,6 +2779,7 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// Specifies the Transitions entering this Vertex.
     /// </summary>
     // spec:
+    // result = (Transition.allInstances()->select(target=self))
     derived Transition[] Incoming
         opposite Transition.Target
 
@@ -2602,6 +2787,7 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// Specifies the Transitions departing from this Vertex.
     /// </summary>
     // spec:
+    // result = (Transition.allInstances()->select(source=self))
     derived Transition[] Outgoing
         opposite Transition.Source
 
@@ -2609,6 +2795,7 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// References the Classifier in which context this element may be redefined.
     /// </summary>
     // spec:
+    // result = containingStateMachine()
     derived Classifier RedefinitionContext
         redefines RedefinableElement.RedefinitionContext
         // opposite Classifier.Vertex
@@ -2626,6 +2813,23 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if container <> null
+    // then
+    // -- the container is a region
+    //    container.containingStateMachine()
+    // else 
+    //    if (self.oclIsKindOf(Pseudostate)) and ((self.oclAsType(Pseudostate).kind = PseudostateKind::entryPoint) or (self.oclAsType(Pseudostate).kind = PseudostateKind::exitPoint)) then
+    //       self.oclAsType(Pseudostate).stateMachine
+    //    else 
+    //       if (self.oclIsKindOf(ConnectionPointReference)) then
+    //           self.oclAsType(ConnectionPointReference).state.containingStateMachine() -- no other valid cases possible
+    //       else 
+    //           null
+    //       endif
+    //    endif
+    // endif
+    // 
+    // )
     StateMachine ContainingStateMachine()
 
 
@@ -2638,6 +2842,15 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if not s.isComposite() or container->isEmpty() then
+    // 	false
+    // else
+    // 	if container.state = s then 
+    // 		true
+    // 	else
+    // 		container.state.isContainedInState(s)
+    // 	endif
+    // endif)
     bool IsContainedInState(State s)
 
     /// <summary>
@@ -2648,6 +2861,15 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if (container = r) then
+    // 	true
+    // else
+    // 	if (r.state->isEmpty()) then
+    // 		false
+    // 	else
+    // 		container.state.isContainedInRegion(r)
+    // 	endif
+    // endif)
     bool IsContainedInRegion(Region r)
 
 
@@ -2659,7 +2881,10 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// <returns>
     /// </returns>
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     // spec:
+    // result = (redefinedElement.oclIsKindOf(Vertex) and
+    //   owner.oclAsType(RedefinableElement).redefinedElement->includes(redefinedElement.owner))
     bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
@@ -2740,6 +2965,7 @@ class EnumerationLiteral : InstanceSpecification
     /// The classifier of this EnumerationLiteral derived to be equal to its Enumeration.
     /// </summary>
     // spec:
+    // result = (enumeration)
     derived Enumeration Classifier
         redefines InstanceSpecification.Classifier
         // opposite Enumeration.EnumerationLiteral
@@ -2874,12 +3100,14 @@ class Extension : Association
     /// Indicates whether an instance of the extending stereotype must be created when an instance of the extended class is created. The attribute value is derived from the value of the lower property of the ExtensionEnd referenced by Extension::ownedEnd; a lower value of 1 means that isRequired is true, but otherwise it is false. Since the default value of ExtensionEnd::lower is 0, the default value of isRequired is false.
     /// </summary>
     // spec:
+    // result = (ownedEnd.lowerBound() = 1)
     derived bool IsRequired
 
     /// <summary>
     /// References the Class that is extended through an Extension. The property is derived from the type of the memberEnd that is not the ownedEnd.
     /// </summary>
     // spec:
+    // result = (metaclassEnd().type.oclAsType(Class))
     derived Class Metaclass
         opposite Class.Extension
 
@@ -2898,6 +3126,7 @@ class Extension : Association
     /// <returns>
     /// </returns>
     // spec:
+    // result = (memberEnd->reject(p | ownedEnd->includes(p.oclAsType(ExtensionEnd)))->any(true))
     Property MetaclassEnd()
 }
 
@@ -2927,6 +3156,7 @@ class ExtensionEnd : Property
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if lowerValue=null then 0 else lowerValue.integerValue() endif)
     int LowerBound()
 }
 
@@ -2937,12 +3167,12 @@ class Image : Element
 {
 
     /// <summary>
-    /// This contains the serialization of the image according to the format. The value could represent a bitmap, image such as a GIF file, or drawing 'instructions' using a standard such as Scalable Vector Graphic (SVG) (which is XML based).
+    /// This contains the serialization of the image according to the format. The value could represent a bitmap, image such as a GIF file, or drawing &apos;instructions&apos; using a standard such as Scalable Vector Graphic (SVG) (which is XML based).
     /// </summary>
     string Content
 
     /// <summary>
-    /// This indicates the format of the content, which is how the string content should be interpreted. The following values are reserved: SVG, GIF, PNG, JPG, WMF, EMF, BMP. In addition the prefix 'MIME: ' is also reserved. This option can be used as an alternative to express the reserved values above, for example "SVG" could instead be expressed as "MIME: image/svg+xml".
+    /// This indicates the format of the content, which is how the string content should be interpreted. The following values are reserved: SVG, GIF, PNG, JPG, WMF, EMF, BMP. In addition the prefix &apos;MIME: &apos; is also reserved. This option can be used as an alternative to express the reserved values above, for example &quot;SVG&quot; could instead be expressed as &quot;MIME: image/svg+xml&quot;.
     /// </summary>
     string Format
 
@@ -2981,7 +3211,8 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// References the packaged elements that are Packages.
     /// </summary>
     // spec:
-    contains Package[] NestedPackage
+    // result = (packagedElement->select(oclIsKindOf(Package))->collect(oclAsType(Package))->asSet())
+    derived Package[] NestedPackage
         subsets Package.PackagedElement
         opposite Package.NestingPackage
 
@@ -2996,7 +3227,8 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// References the Stereotypes that are owned by the Package.
     /// </summary>
     // spec:
-    contains Stereotype[] OwnedStereotype
+    // result = (packagedElement->select(oclIsKindOf(Stereotype))->collect(oclAsType(Stereotype))->asSet())
+    derived Stereotype[] OwnedStereotype
         subsets Package.PackagedElement
         // opposite Stereotype.OwningPackage
 
@@ -3004,7 +3236,8 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// References the packaged elements that are Types.
     /// </summary>
     // spec:
-    contains Type[] OwnedType
+    // result = (packagedElement->select(oclIsKindOf(Type))->collect(oclAsType(Type))->asSet())
+    derived Type[] OwnedType
         subsets Package.PackagedElement
         opposite Type.Package
 
@@ -3037,6 +3270,9 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
+    // result = (let ownedPackages : Bag(Package) = ownedMember->select(oclIsKindOf(Package))->collect(oclAsType(Package)) in
+    //  ownedStereotype->union(ownedPackages.allApplicableStereotypes())->flatten()->asSet()
+    // )
     Stereotype[] AllApplicableStereotypes()
 
     /// <summary>
@@ -3045,6 +3281,11 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if self.oclIsKindOf(Profile) then 
+    // 	self.oclAsType(Profile)
+    // else
+    // 	self.namespace.oclAsType(Package).containingProfile()
+    // endif)
     Profile ContainingProfile()
 
     /// <summary>
@@ -3055,7 +3296,11 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // pre:
+    // member->includes(el)
     // spec:
+    // result = (ownedMember->includes(el) or
+    // (elementImport->select(ei|ei.importedElement = VisibilityKind::public)->collect(importedElement.oclAsType(NamedElement))->includes(el)) or
+    // (packageImport->select(visibility = VisibilityKind::public)->collect(importedPackage.member->includes(el))->notEmpty()))
     bool MakesVisible(NamedElement el)
 
     /// <summary>
@@ -3064,6 +3309,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
+    // result = (false)
     bool MustBeOwned()
 
 
@@ -3075,6 +3321,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
+    // result = (member->select( m | m.oclIsKindOf(PackageableElement) and self.makesVisible(m))->collect(oclAsType(PackageableElement))->asSet())
     PackageableElement[] VisibleMembers()
 }
 
@@ -3165,6 +3412,7 @@ class Stereotype : Class
     /// The profile that directly or indirectly contains this stereotype.
     /// </summary>
     // spec:
+    // result = (self.containingProfile())
     derived Profile Profile
         // opposite Profile.Stereotype
 
@@ -3174,6 +3422,7 @@ class Stereotype : Class
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.namespace.oclAsType(Package).containingProfile())
     Profile ContainingProfile()
 
 }
@@ -3312,6 +3561,20 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.oppositeEnd()-> notEmpty() and combinedFragment->notEmpty() implies
+    // let oppEnd : MessageEnd = self.oppositeEnd()->asOrderedSet()->first() in
+    // if oppEnd.oclIsKindOf(MessageOccurrenceSpecification) 
+    // then let oppMOS : MessageOccurrenceSpecification = oppEnd.oclAsType(MessageOccurrenceSpecification)
+    // in  self.combinedFragment.enclosingInteraction.oclAsType(InteractionFragment)->asSet()->
+    //      union(self.combinedFragment.enclosingOperand.oclAsType(InteractionFragment)->asSet()) =
+    //      oppMOS.enclosingInteraction.oclAsType(InteractionFragment)->asSet()->
+    //      union(oppMOS.enclosingOperand.oclAsType(InteractionFragment)->asSet())
+    // else let oppGate : Gate = oppEnd.oclAsType(Gate) 
+    // in self.combinedFragment.enclosingInteraction.oclAsType(InteractionFragment)->asSet()->
+    //      union(self.combinedFragment.enclosingOperand.oclAsType(InteractionFragment)->asSet()) =
+    //      oppGate.combinedFragment.enclosingInteraction.oclAsType(InteractionFragment)->asSet()->
+    //      union(oppGate.combinedFragment.enclosingOperand.oclAsType(InteractionFragment)->asSet())
+    // endif)
     bool IsOutsideCF()
 
     /// <summary>
@@ -3320,6 +3583,15 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.oppositeEnd()-> notEmpty() and combinedFragment->notEmpty() implies
+    // let oppEnd : MessageEnd = self.oppositeEnd()->asOrderedSet()->first() in
+    // if oppEnd.oclIsKindOf(MessageOccurrenceSpecification)
+    // then let oppMOS : MessageOccurrenceSpecification
+    // = oppEnd.oclAsType(MessageOccurrenceSpecification)
+    // in combinedFragment = oppMOS.enclosingOperand.combinedFragment
+    // else let oppGate : Gate = oppEnd.oclAsType(Gate)
+    // in combinedFragment = oppGate.combinedFragment.enclosingOperand.combinedFragment
+    // endif)
     bool IsInsideCF()
 
     /// <summary>
@@ -3328,6 +3600,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
+    // result = (interactionUse->notEmpty())
     bool IsActual()
 
     /// <summary>
@@ -3336,17 +3609,30 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     /// <para>
-    /// <p>interaction-&gt;notEmpty()</p>
+    /// &lt;p&gt;interaction-&amp;gt;notEmpty()&lt;/p&gt;
     /// </para>
     // spec:
+    // result = (interaction->notEmpty())
     bool IsFormal()
 
     /// <summary>
-    /// This query returns the name of the gate, either the explicit name (.name) or the constructed name ('out_" or 'in_' concatenated in front of .message.name) if the explicit name is not present.
+    /// This query returns the name of the gate, either the explicit name (.name) or the constructed name (&apos;out_&quot; or &apos;in_&apos; concatenated in front of .message.name) if the explicit name is not present.
     /// </summary>
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if name->notEmpty() then name->asOrderedSet()->first()
+    // else  if isActual() or isOutsideCF() 
+    //   then if isSend() 
+    //     then 'out_'.concat(self.message.name->asOrderedSet()->first())
+    //     else 'in_'.concat(self.message.name->asOrderedSet()->first())
+    //     endif
+    //   else if isSend()
+    //     then 'in_'.concat(self.message.name->asOrderedSet()->first())
+    //     else 'out_'.concat(self.message.name->asOrderedSet()->first())
+    //     endif
+    //   endif
+    // endif)
     string GetName()
 
     /// <summary>
@@ -3357,6 +3643,12 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.getName() = gateToMatch.getName() and 
+    // self.message.messageSort = gateToMatch.message.messageSort and
+    // self.message.name = gateToMatch.message.name and
+    // self.message.sendEvent->includes(self) implies gateToMatch.message.receiveEvent->includes(gateToMatch)  and
+    // self.message.receiveEvent->includes(self) implies gateToMatch.message.sendEvent->includes(gateToMatch) and
+    // self.message.signature = gateToMatch.message.signature)
     bool Matches(Gate gateToMatch)
 
     /// <summary>
@@ -3370,6 +3662,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 
     /// <summary>
@@ -3378,6 +3671,16 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if isInsideCF() then
+    //   let oppEnd : MessageEnd = self.oppositeEnd()->asOrderedSet()->first() in
+    //     if oppEnd.oclIsKindOf(MessageOccurrenceSpecification)
+    //     then let oppMOS : MessageOccurrenceSpecification = oppEnd.oclAsType(MessageOccurrenceSpecification)
+    //         in oppMOS.enclosingOperand->asOrderedSet()->first()
+    //     else let oppGate : Gate = oppEnd.oclAsType(Gate)
+    //         in oppGate.combinedFragment.enclosingOperand->asOrderedSet()->first()
+    //     endif
+    //   else null
+    // endif)
     InteractionOperand GetOperand()
 }
 
@@ -3636,7 +3939,8 @@ class Message : NamedElement
     /// The derived kind of the Message (complete, lost, found, or unknown).
     /// </summary>
     // spec:
-    MessageKind MessageKind
+    // result = (messageKind)
+    derived MessageKind MessageKind
 
     /// <summary>
     /// The sort of communication reflected by the Message.
@@ -3674,6 +3978,7 @@ class Message : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 }
 
@@ -3695,7 +4000,9 @@ abstract class MessageEnd : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (message->asSet().messageEnd->asSet()->excluding(self))
     // pre:
+    // message->notEmpty()
     MessageEnd[] OppositeEnd()
 
     /// <summary>
@@ -3704,7 +4011,9 @@ abstract class MessageEnd : NamedElement
     /// <returns>
     /// </returns>
     // pre:
+    // message->notEmpty()
     // spec:
+    // result = (message.sendEvent->asSet()->includes(self))
     bool IsSend()
 
     /// <summary>
@@ -3713,10 +4022,12 @@ abstract class MessageEnd : NamedElement
     /// <returns>
     /// </returns>
     /// <para>
-    /// <p>message-&gt;notEmpty()</p>
+    /// &lt;p&gt;message-&amp;gt;notEmpty()&lt;/p&gt;
     /// </para>
     // pre:
+    // message->notEmpty()
     // spec:
+    // result = (message.receiveEvent->asSet()->includes(self))
     bool IsReceive()
 
     /// <summary>
@@ -3725,6 +4036,35 @@ abstract class MessageEnd : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if self->select(oclIsKindOf(Gate))->notEmpty() 
+    // then -- it is a Gate
+    // let endGate : Gate = 
+    //   self->select(oclIsKindOf(Gate)).oclAsType(Gate)->asOrderedSet()->first()
+    //   in
+    //   if endGate.isOutsideCF() 
+    //   then endGate.combinedFragment.enclosingInteraction.oclAsType(InteractionFragment)->asSet()->
+    //      union(endGate.combinedFragment.enclosingOperand.oclAsType(InteractionFragment)->asSet())
+    //   else if endGate.isInsideCF() 
+    //     then endGate.combinedFragment.oclAsType(InteractionFragment)->asSet()
+    //     else if endGate.isFormal() 
+    //       then endGate.interaction.oclAsType(InteractionFragment)->asSet()
+    //       else if endGate.isActual() 
+    //         then endGate.interactionUse.enclosingInteraction.oclAsType(InteractionFragment)->asSet()->
+    //      union(endGate.interactionUse.enclosingOperand.oclAsType(InteractionFragment)->asSet())
+    //         else null
+    //         endif
+    //       endif
+    //     endif
+    //   endif
+    // else -- it is a MessageOccurrenceSpecification
+    // let endMOS : MessageOccurrenceSpecification  = 
+    //   self->select(oclIsKindOf(MessageOccurrenceSpecification)).oclAsType(MessageOccurrenceSpecification)->asOrderedSet()->first() 
+    //   in
+    //   if endMOS.enclosingInteraction->notEmpty() 
+    //   then endMOS.enclosingInteraction.oclAsType(InteractionFragment)->asSet()
+    //   else endMOS.enclosingOperand.oclAsType(InteractionFragment)->asSet()
+    //   endif
+    // endif)
     InteractionFragment[] EnclosingFragment()
 }
 
@@ -3956,7 +4296,7 @@ class DeploymentSpecification : Artifact
         opposite Deployment.Configuration
 
     /// <summary>
-    /// The location where an Artifact is deployed onto a Node. This is typically a 'directory' or 'memory address.'
+    /// The location where an Artifact is deployed onto a Node. This is typically a &apos;directory&apos; or &apos;memory address.&apos;
     /// </summary>
     string DeploymentLocation
 
@@ -3976,6 +4316,7 @@ abstract class DeploymentTarget : NamedElement
     /// The set of elements that are manifested in an Artifact that is involved in Deployment to a DeploymentTarget.
     /// </summary>
     // spec:
+    // result = (deployment.deployedArtifact->select(oclIsKindOf(Artifact))->collect(oclAsType(Artifact).manifestation)->collect(utilizedElement)->asSet())
     derived PackageableElement[] DeployedElement
         // opposite PackageableElement.DeploymentTarget
 
@@ -4147,7 +4488,7 @@ abstract class Element{
     /// <summary>
     /// The Elements owned by this Element.
     /// </summary>
-    contains Element[] OwnedElement
+    union Element[] OwnedElement
         opposite Element.Owner
 
     /// <summary>
@@ -4162,6 +4503,7 @@ abstract class Element{
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedElement->union(ownedElement->collect(e | e.allOwnedElements()))->asSet())
     Element[] AllOwnedElements()
 
     /// <summary>
@@ -4170,6 +4512,7 @@ abstract class Element{
     /// <returns>
     /// </returns>
     // spec:
+    // result = (true)
     bool MustBeOwned()
 }
 
@@ -4210,6 +4553,11 @@ class ElementImport : DirectedRelationship
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if alias->notEmpty() then
+    //   alias
+    // else
+    //   importedElement.name
+    // endif)
     string GetName()
 }
 
@@ -4233,6 +4581,7 @@ abstract class MultiplicityElement : Element
     /// The lower bound of the multiplicity interval.
     /// </summary>
     // spec:
+    // result = (lowerBound())
     derived int Lower
 
     /// <summary>
@@ -4246,6 +4595,7 @@ abstract class MultiplicityElement : Element
     /// The upper bound of the multiplicity interval.
     /// </summary>
     // spec:
+    // result = (upperBound())
     derived int Upper
 
     /// <summary>
@@ -4263,6 +4613,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = ((other.lowerBound() <= self.lowerBound()) and ((other.upperBound() = *) or (self.upperBound() <= other.upperBound())))
     bool CompatibleWith(MultiplicityElement other)
 
     /// <summary>
@@ -4273,7 +4624,9 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // pre:
+    // self.upperBound()->notEmpty() and self.lowerBound()->notEmpty() and M.upperBound()->notEmpty() and M.lowerBound()->notEmpty()
     // spec:
+    // result = ((self.lowerBound() <= M.lowerBound()) and (self.upperBound() >= M.upperBound()))
     bool IncludesMultiplicity(MultiplicityElement M)
 
     /// <summary>
@@ -4286,6 +4639,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (lowerbound = self.lowerBound() and upperbound = self.upperBound())
     bool Is(int lowerbound, int upperbound)
 
     /// <summary>
@@ -4294,7 +4648,9 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // pre:
+    // upperBound()->notEmpty()
     // spec:
+    // result = (upperBound() > 1)
     bool IsMultivalued()
 
 
@@ -4304,6 +4660,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if (lowerValue=null or lowerValue.integerValue()=null) then 1 else lowerValue.integerValue() endif)
     int LowerBound()
 
 
@@ -4313,6 +4670,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if (upperValue=null or upperValue.unlimitedValue()=null) then 1 else upperValue.unlimitedValue() endif)
     int UpperBound()
 }
 
@@ -4326,6 +4684,7 @@ abstract class NamedElement : Element
     /// Indicates the Dependencies that reference this NamedElement as a client.
     /// </summary>
     // spec:
+    // result = (Dependency.allInstances()->select(d | d.client->includes(self)))
     derived Dependency[] ClientDependency
         // subsetted property 'A_source_directedRelationship-directedRelationship' is null
         opposite Dependency.Client
@@ -4354,6 +4713,12 @@ abstract class NamedElement : Element
     /// A name that allows the NamedElement to be identified within a hierarchy of nested Namespaces. It is constructed from the names of the containing Namespaces starting at the root of the hierarchy and ending with the name of the NamedElement itself.
     /// </summary>
     // spec:
+    // result = (if self.name <> null and self.allNamespaces()->select( ns | ns.name=null )->isEmpty()
+    // then 
+    //     self.allNamespaces()->iterate( ns : Namespace; agg: String = self.name | ns.name.concat(self.separator()).concat(agg))
+    // else
+    //    null
+    // endif)
     derived string QualifiedName
 
     /// <summary>
@@ -4367,6 +4732,18 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if owner.oclIsKindOf(TemplateParameter) and
+    //   owner.oclAsType(TemplateParameter).signature.template.oclIsKindOf(Namespace) then
+    //     let enclosingNamespace : Namespace =
+    //       owner.oclAsType(TemplateParameter).signature.template.oclAsType(Namespace) in
+    //         enclosingNamespace.allNamespaces()->prepend(enclosingNamespace)
+    // else
+    //   if namespace->isEmpty()
+    //     then OrderedSet{}
+    //   else
+    //     namespace.allNamespaces()->prepend(namespace)
+    //   endif
+    // endif)
     Namespace[] AllNamespaces()
 
     /// <summary>
@@ -4375,6 +4752,13 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if namespace.oclIsKindOf(Package)
+    // then
+    //   let owningPackage : Package = namespace.oclAsType(Package) in
+    //     owningPackage->union(owningPackage.allOwningPackages())
+    // else
+    //   null
+    // endif)
     Package[] AllOwningPackages()
 
     /// <summary>
@@ -4387,6 +4771,9 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = ((self.oclIsKindOf(n.oclType()) or n.oclIsKindOf(self.oclType())) implies
+    //     ns.getNamesOfMember(self)->intersection(ns.getNamesOfMember(n))->isEmpty()
+    // )
     bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 
 
@@ -4396,6 +4783,7 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = ('::')
     string Separator()
 
 }
@@ -4418,6 +4806,7 @@ abstract class Namespace : NamedElement
     /// References the PackageableElements that are members of this Namespace as a result of either PackageImports or ElementImports.
     /// </summary>
     // spec:
+    // result = (self.importMembers(elementImport.importedElement->asSet()->union(packageImport.importedPackage->collect(p | p.visibleMembers()))->asSet()))
     derived PackageableElement[] ImportedMember
         subsets Namespace.Member
         // opposite PackageableElement.Namespace
@@ -4431,7 +4820,7 @@ abstract class Namespace : NamedElement
     /// <summary>
     /// A collection of NamedElements owned by the Namespace.
     /// </summary>
-    contains NamedElement[] OwnedMember
+    union NamedElement[] OwnedMember
         subsets Element.OwnedElement
         subsets Namespace.Member
         opposite NamedElement.Namespace
@@ -4459,6 +4848,7 @@ abstract class Namespace : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (imps->reject(imp1  | imps->exists(imp2 | not imp1.isDistinguishableFrom(imp2, self))))
     PackageableElement[] ExcludeCollisions(PackageableElement[] imps)
 
     /// <summary>
@@ -4469,6 +4859,16 @@ abstract class Namespace : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if self.ownedMember ->includes(element)
+    // then Set{element.name}
+    // else let elementImports : Set(ElementImport) = self.elementImport->select(ei | ei.importedElement = element) in
+    //   if elementImports->notEmpty()
+    //   then
+    //      elementImports->collect(el | el.getName())->asSet()
+    //   else 
+    //      self.packageImport->select(pi | pi.importedPackage.visibleMembers().oclAsType(NamedElement)->includes(element))-> collect(pi | pi.importedPackage.getNamesOfMember(element))->asSet()
+    //   endif
+    // endif)
     string[] GetNamesOfMember(NamedElement element)
 
     /// <summary>
@@ -4479,15 +4879,19 @@ abstract class Namespace : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.excludeCollisions(imps)->select(imp | self.ownedMember->forAll(mem | imp.isDistinguishableFrom(mem, self))))
     PackageableElement[] ImportMembers(PackageableElement[] imps)
 
 
     /// <summary>
-    /// The Boolean query membersAreDistinguishable() determines whether all of the Namespace's members are distinguishable within it.
+    /// The Boolean query membersAreDistinguishable() determines whether all of the Namespace&apos;s members are distinguishable within it.
     /// </summary>
     /// <returns>
     /// </returns>
     // spec:
+    // result = (member->forAll( memb |
+    //    member->excluding(memb)->forAll(other |
+    //        memb.isDistinguishableFrom(other, self))))
     bool MembersAreDistinguishable()
 }
 
@@ -4559,6 +4963,7 @@ abstract class ParameterableElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.oclIsKindOf(p.oclType()))
     bool IsCompatibleWith(ParameterableElement p)
 
     /// <summary>
@@ -4567,6 +4972,7 @@ abstract class ParameterableElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (templateParameter->notEmpty())
     bool IsTemplateParameter()
 }
 
@@ -4617,6 +5023,7 @@ abstract class TemplateableElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedTemplateSignature <> null)
     bool IsTemplate()
 
     /// <summary>
@@ -4625,6 +5032,7 @@ abstract class TemplateableElement : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.allOwnedElements()->select(oclIsKindOf(ParameterableElement)).oclAsType(ParameterableElement)->asSet())
     ParameterableElement[] ParameterableElements()
 }
 
@@ -4783,6 +5191,7 @@ abstract class Type : PackageableElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (false)
     bool ConformsTo(Type other)
 }
 
@@ -4823,6 +5232,17 @@ abstract class Behavior : Class
     /// The BehavioredClassifier that is the context for the execution of the Behavior. A Behavior that is directly owned as a nestedClassifier does not have a context. Otherwise, to determine the context of a Behavior, find the first BehavioredClassifier reached by following the chain of owner relationships from the Behavior, if any. If there is such a BehavioredClassifier, then it is the context, unless it is itself a Behavior with a non-empty context, in which case that is also the context for the original Behavior. For example, following this algorithm, the context of an entry Behavior in a StateMachine is the BehavioredClassifier that owns the StateMachine. The features of the context BehavioredClassifier as well as the Elements visible to the context Classifier are visible to the Behavior.
     /// </summary>
     // spec:
+    // result = (if nestingClass <> null then
+    //     null
+    // else
+    //     let b:BehavioredClassifier = self.behavioredClassifier(self.owner) in
+    //     if b.oclIsKindOf(Behavior) and b.oclAsType(Behavior)._'context' <> null then 
+    //         b.oclAsType(Behavior)._'context'
+    //     else 
+    //         b 
+    //     endif
+    // endif
+    //         )
     derived BehavioredClassifier Context
         subsets RedefinableElement.RedefinitionContext
         // opposite BehavioredClassifier.Behavior
@@ -4882,6 +5302,15 @@ abstract class Behavior : Class
     /// <returns>
     /// </returns>
     // spec:
+    // if from.oclIsKindOf(BehavioredClassifier) then
+    //     from.oclAsType(BehavioredClassifier)
+    // else if from.owner = null then
+    //     null
+    // else
+    //     self.behavioredClassifier(from.owner)
+    // endif
+    // endif
+    //     
     BehavioredClassifier BehavioredClassifier(Element from)
 
     /// <summary>
@@ -4890,6 +5319,7 @@ abstract class Behavior : Class
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedParameter->select(direction=ParameterDirectionKind::_'in' or direction=ParameterDirectionKind::inout))
     Parameter[] InputParameters()
 
     /// <summary>
@@ -4898,6 +5328,7 @@ abstract class Behavior : Class
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedParameter->select(direction=ParameterDirectionKind::out or direction=ParameterDirectionKind::inout or direction=ParameterDirectionKind::return))
     Parameter[] OutputParameters()
 }
 
@@ -4949,6 +5380,9 @@ class FunctionBehavior : OpaqueBehavior
     /// <returns>
     /// </returns>
     // spec:
+    // result = (d.ownedAttribute->forAll(a |
+    //     a.type.oclIsKindOf(DataType) and
+    //       hasAllDataTypeAttributes(a.type.oclAsType(DataType))))
     bool HasAllDataTypeAttributes(DataType d)
 }
 
@@ -5101,6 +5535,11 @@ abstract class BehavioralFeature : Feature, Namespace
     /// <returns>
     /// </returns>
     // spec:
+    // result = ((n.oclIsKindOf(BehavioralFeature) and ns.getNamesOfMember(self)->intersection(ns.getNamesOfMember(n))->notEmpty()) implies
+    //   Set{self}->including(n.oclAsType(BehavioralFeature))->isUnique(ownedParameter->collect(p|
+    //   Tuple { name=p.name, type=p.type,effect=p.effect,direction=p.direction,isException=p.isException,
+    //               isStream=p.isStream,isOrdered=p.isOrdered,isUnique=p.isUnique,lower=p.lower, upper=p.upper }))
+    //   )
     bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 
     /// <summary>
@@ -5109,6 +5548,7 @@ abstract class BehavioralFeature : Feature, Namespace
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedParameter->select(direction=ParameterDirectionKind::_'in' or direction=ParameterDirectionKind::inout))
     Parameter[] InputParameters()
 
     /// <summary>
@@ -5117,6 +5557,7 @@ abstract class BehavioralFeature : Feature, Namespace
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedParameter->select(direction=ParameterDirectionKind::out or direction=ParameterDirectionKind::inout or direction=ParameterDirectionKind::return))
     Parameter[] OutputParameters()
 }
 
@@ -5152,6 +5593,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// The generalizing Classifiers for this Classifier.
     /// </summary>
     // spec:
+    // result = (parents())
     derived Classifier[] General
         // opposite Classifier.Classifier
 
@@ -5167,6 +5609,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// All elements inherited by this Classifier from its general Classifiers.
     /// </summary>
     // spec:
+    // result = (inherit(parents()->collect(inheritableMembers(self))->asSet()))
     derived NamedElement[] InheritedMember
         subsets Namespace.Member
         // opposite NamedElement.InheritingClassifier
@@ -5243,6 +5686,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (member->select(oclIsKindOf(Feature))->collect(oclAsType(Feature))->asSet())
     Feature[] AllFeatures()
 
     /// <summary>
@@ -5251,6 +5695,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (parents()->union(parents()->collect(allParents())->asSet()))
     Classifier[] AllParents()
 
     /// <summary>
@@ -5261,6 +5706,12 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if other.oclIsKindOf(Classifier) then
+    //   let otherClassifier : Classifier = other.oclAsType(Classifier) in
+    //     self = otherClassifier or allParents()->includes(otherClassifier)
+    // else
+    //   false
+    // endif)
     bool ConformsTo(Type other)
 
 
@@ -5272,7 +5723,9 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // pre:
+    // allParents()->including(self)->collect(member)->includes(n)
     // spec:
+    // result = (n.visibility <> VisibilityKind::private)
     bool HasVisibilityOf(NamedElement n)
 
     /// <summary>
@@ -5283,6 +5736,11 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (inhs->reject(inh |
+    //   inh.oclIsKindOf(RedefinableElement) and
+    //   ownedMember->select(oclIsKindOf(RedefinableElement))->
+    //     select(redefinedElement->includes(inh.oclAsType(RedefinableElement)))
+    //        ->notEmpty()))
     NamedElement[] Inherit(NamedElement[] inhs)
 
     /// <summary>
@@ -5293,7 +5751,9 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // pre:
+    // c.allParents()->includes(self)
     // spec:
+    // result = (member->select(m | c.hasVisibilityOf(m)))
     NamedElement[] InheritableMembers(Classifier c)
 
 
@@ -5303,6 +5763,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedTemplateSignature <> null or general->exists(g | g.isTemplate()))
     bool IsTemplate()
 
     /// <summary>
@@ -5313,6 +5774,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.oclIsKindOf(c.oclType()))
     bool MaySpecializeType(Classifier c)
 
     /// <summary>
@@ -5321,6 +5783,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (generalization.general->asSet())
     Classifier[] Parents()
 
     /// <summary>
@@ -5329,6 +5792,9 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = ((clientDependency->
+    //   select(oclIsKindOf(Realization) and supplier->forAll(oclIsKindOf(Interface))))->
+    //       collect(supplier.oclAsType(Interface))->asSet())
     Interface[] DirectlyRealizedInterfaces()
 
     /// <summary>
@@ -5337,6 +5803,9 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = ((supplierDependency->
+    //   select(oclIsKindOf(Usage) and client->forAll(oclIsKindOf(Interface))))->
+    //     collect(client.oclAsType(Interface))->asSet())
     Interface[] DirectlyUsedInterfaces()
 
     /// <summary>
@@ -5345,6 +5814,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (directlyRealizedInterfaces()->union(self.allParents()->collect(directlyRealizedInterfaces()))->asSet())
     Interface[] AllRealizedInterfaces()
 
     /// <summary>
@@ -5353,6 +5823,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (directlyUsedInterfaces()->union(self.allParents()->collect(directlyUsedInterfaces()))->asSet())
     Interface[] AllUsedInterfaces()
 
     /// <param name="contract">
@@ -5360,6 +5831,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (substitution.contract->includes(contract))
     bool IsSubstitutableFor(Classifier contract)
 
     /// <summary>
@@ -5368,6 +5840,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (attribute->asSequence()->union(parents()->asSequence().allAttributes())->select(p | member->includes(p))->asOrderedSet())
     Property[] AllAttributes()
 
     /// <summary>
@@ -5376,6 +5849,10 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
+    // result = (member->select(oclIsKindOf(StructuralFeature))->
+    //   collect(oclAsType(StructuralFeature))->
+    //    union(self.inherit(self.allParents()->collect(p | p.attribute)->asSet())->
+    //      collect(oclAsType(StructuralFeature)))->asSet())
     StructuralFeature[] AllSlottableFeatures()
 }
 
@@ -5569,6 +6046,7 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// Specifies whether the return parameter is ordered or not, if present.  This information is derived from the return result for this Operation.
     /// </summary>
     // spec:
+    // result = (if returnResult()->notEmpty() then returnResult()-> exists(isOrdered) else false endif)
     derived bool IsOrdered
 
     /// <summary>
@@ -5580,12 +6058,14 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// Specifies whether the return parameter is unique or not, if present. This information is derived from the return result for this Operation.
     /// </summary>
     // spec:
+    // result = (if returnResult()->notEmpty() then returnResult()->exists(isUnique) else true endif)
     derived bool IsUnique
 
     /// <summary>
     /// Specifies the lower multiplicity of the return parameter, if present. This information is derived from the return result for this Operation.
     /// </summary>
     // spec:
+    // result = (if returnResult()->notEmpty() then returnResult()->any(true).lower else null endif)
     derived int Lower
 
     /// <summary>
@@ -5634,6 +6114,7 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// The return type of the operation, if present. This information is derived from the return result for this Operation.
     /// </summary>
     // spec:
+    // result = (if returnResult()->notEmpty() then returnResult()->any(true).type else null endif)
     derived Type Type
         // opposite Type.Operation
 
@@ -5641,6 +6122,7 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// The upper multiplicity of the return parameter, if present. This information is derived from the return result for this Operation.
     /// </summary>
     // spec:
+    // result = (if returnResult()->notEmpty() then returnResult()->any(true).upper else null endif)
     derived int Upper
 
     /// <summary>
@@ -5656,7 +6138,29 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefiningElement.oclIsKindOf(Operation) and
+    // let op : Operation = redefiningElement.oclAsType(Operation) in
+    // 	self.ownedParameter->size() = op.ownedParameter->size() and
+    // 	Sequence{1..self.ownedParameter->size()}->
+    // 		forAll(i |  
+    // 		  let redefiningParam : Parameter = op.ownedParameter->at(i),
+    //                redefinedParam : Parameter = self.ownedParameter->at(i) in
+    //                  (redefiningParam.isUnique = redefinedParam.isUnique) and
+    //                  (redefiningParam.isOrdered = redefinedParam. isOrdered) and
+    //                  (redefiningParam.direction = redefinedParam.direction) and
+    //                  (redefiningParam.type.conformsTo(redefinedParam.type) or
+    //                      redefinedParam.type.conformsTo(redefiningParam.type)) and
+    //                  (redefiningParam.direction = ParameterDirectionKind::inout implies
+    //                          (redefinedParam.compatibleWith(redefiningParam) and
+    //                          redefiningParam.compatibleWith(redefinedParam))) and
+    //                  (redefiningParam.direction = ParameterDirectionKind::_'in' implies
+    //                          redefinedParam.compatibleWith(redefiningParam)) and
+    //                  ((redefiningParam.direction = ParameterDirectionKind::out or
+    //                       redefiningParam.direction = ParameterDirectionKind::return) implies
+    //                          redefiningParam.compatibleWith(redefinedParam))
+    // 		))
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 
 
@@ -5668,6 +6172,7 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// <returns>
     /// </returns>
     // spec:
+    // result = (ownedParameter->select (direction = ParameterDirectionKind::return))
     Parameter[] ReturnResult()
 
 
@@ -5697,6 +6202,7 @@ class Parameter : MultiplicityElement, ConnectableElement
     /// A String that represents a value to be used when no argument is supplied for the Parameter.
     /// </summary>
     // spec:
+    // result = (if self.type = String then defaultValue.stringValue() else null endif)
     derived string Default
 
     /// <summary>
@@ -5822,6 +6328,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// If isComposite is true, the object containing the attribute is a container for the object or value contained in the attribute. This is a derived value, indicating whether the aggregation of the Property is composite or not.
     /// </summary>
     // spec:
+    // result = (aggregation = AggregationKind::composite)
     derived bool IsComposite
 
     /// <summary>
@@ -5843,6 +6350,12 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// In the case where the Property is one end of a binary association this gives the other end.
     /// </summary>
     // spec:
+    // result = (if association <> null and association.memberEnd->size() = 2
+    // then
+    //     association.memberEnd->any(e | e <> self)
+    // else
+    //     null
+    // endif)
     derived Property Opposite
         // opposite Property.Property
 
@@ -5882,6 +6395,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
+    // result = (not classifier->isEmpty())
     bool IsAttribute()
 
     /// <summary>
@@ -5892,6 +6406,8 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.oclIsKindOf(p.oclType()) and (p.oclIsKindOf(TypeElement) implies
+    // self.type.conformsTo(p.oclAsType(TypedElement).type)))
     bool IsCompatibleWith(ParameterableElement p)
 
 
@@ -5903,7 +6419,14 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     // spec:
+    // result = (redefiningElement.oclIsKindOf(Property) and 
+    //   let prop : Property = redefiningElement.oclAsType(Property) in 
+    //   (prop.type.conformsTo(self.type) and 
+    //   ((prop.lowerBound()->notEmpty() and self.lowerBound()->notEmpty()) implies prop.lowerBound() >= self.lowerBound()) and 
+    //   ((prop.upperBound()->notEmpty() and self.upperBound()->notEmpty()) implies prop.lowerBound() <= self.lowerBound()) and 
+    //   (self.isComposite implies prop.isComposite)))
     bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
@@ -5912,6 +6435,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
+    // result = (not classifier->isEmpty() or association.navigableOwnedEnd->includes(self))
     bool IsNavigable()
 
 
@@ -5921,6 +6445,14 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if association <> null
+    // then association.memberEnd->excluding(self)->collect(type)->asSet()
+    // else 
+    //   if classifier<>null
+    //   then classifier->asSet()
+    //   else Set{} 
+    //   endif
+    // endif)
     Type[] SubsettingContext()
 }
 
@@ -5955,7 +6487,9 @@ abstract class RedefinableElement : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (false)
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
@@ -5966,6 +6500,7 @@ abstract class RedefinableElement : NamedElement
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefinitionContext->exists(c | c.allParents()->includesAll(redefinedElement.redefinitionContext)))
     bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
 }
 
@@ -5994,6 +6529,7 @@ class RedefinableTemplateSignature : RedefinableElement, TemplateSignature
     /// The formal template parameters of the extended signatures.
     /// </summary>
     // spec:
+    // result = (if extendedSignature->isEmpty() then Set{} else extendedSignature.parameter->asSet() endif)
     derived TemplateParameter[] InheritedParameter
         subsets TemplateSignature.Parameter
         // opposite TemplateParameter.RedefinableTemplateSignature
@@ -6007,7 +6543,9 @@ class RedefinableTemplateSignature : RedefinableElement, TemplateSignature
     /// <returns>
     /// </returns>
     // spec:
+    // result = (redefiningElement.oclIsKindOf(RedefinableTemplateSignature))
     // pre:
+    // redefiningElement.isRedefinitionContextValid(self)
     bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
@@ -6176,13 +6714,19 @@ abstract class Action : ExecutableNode
     /// The context Classifier of the Behavior that contains this Action, or the Behavior itself if it has no context.
     /// </summary>
     // spec:
+    // result = (let behavior: Behavior = self.containingBehavior() in
+    // if behavior=null then null
+    // else if behavior._'context' = null then behavior
+    // else behavior._'context'
+    // endif
+    // endif)
     derived Classifier Context
         // opposite Classifier.Action
 
     /// <summary>
     /// The ordered set of InputPins representing the inputs to the Action.
     /// </summary>
-    contains InputPin[] Input
+    union InputPin[] Input
         subsets Element.OwnedElement
         // opposite InputPin.Action
 
@@ -6208,7 +6752,7 @@ abstract class Action : ExecutableNode
     /// <summary>
     /// The ordered set of OutputPins representing outputs from the Action.
     /// </summary>
-    contains OutputPin[] Output
+    union OutputPin[] Output
         subsets Element.OwnedElement
         // opposite OutputPin.Action
 
@@ -6219,6 +6763,7 @@ abstract class Action : ExecutableNode
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self->asSet())
     Action[] AllActions()
 
     /// <summary>
@@ -6227,11 +6772,18 @@ abstract class Action : ExecutableNode
     /// <returns>
     /// </returns>
     // spec:
+    // result = (input.oclAsType(Pin)->asSet()->union(output->asSet()))
     ActivityNode[] AllOwnedNodes()
 
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if inStructuredNode<>null then inStructuredNode.containingBehavior() 
+    // else if activity<>null then activity
+    // else interaction 
+    // endif
+    // endif
+    // )
     Behavior ContainingBehavior()
 }
 
@@ -6351,6 +6903,7 @@ class CallBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (behavior.outputParameters())
     Parameter[] OutputParameters()
 
     /// <summary>
@@ -6359,6 +6912,7 @@ class CallBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (behavior.inputParameters())
     Parameter[] InputParameters()
 }
 
@@ -6387,6 +6941,7 @@ class CallOperationAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (operation.outputParameters())
     Parameter[] OutputParameters()
 
     /// <summary>
@@ -6395,6 +6950,7 @@ class CallOperationAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (operation.inputParameters())
     Parameter[] InputParameters()
 }
 
@@ -6518,6 +7074,7 @@ class ConditionalNode : StructuredActivityNode
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self->asSet())
     Action[] AllActions()
 }
 
@@ -6703,6 +7260,7 @@ abstract class LinkAction : Action
     /// <returns>
     /// </returns>
     // spec:
+    // result = (endData->asSequence()->first().end.association)
     Association Association()
 }
 
@@ -6729,6 +7287,7 @@ class LinkEndCreationData : LinkEndData
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.LinkEndData::allPins()->including(insertAt))
     InputPin[] AllPins()
 }
 
@@ -6752,7 +7311,7 @@ class LinkEndData : Element
         // opposite QualifierValue.LinkEndData
 
     /// <summary>
-    /// The InputPin that provides the specified value for the given end. This InputPin is omitted if the LinkEndData specifies the "open" end for a ReadLinkAction.
+    /// The InputPin that provides the specified value for the given end. This InputPin is omitted if the LinkEndData specifies the &quot;open&quot; end for a ReadLinkAction.
     /// </summary>
     InputPin Value
         // opposite InputPin.LinkEndData
@@ -6763,6 +7322,7 @@ class LinkEndData : Element
     /// <returns>
     /// </returns>
     // spec:
+    // result = (value->asBag()->union(qualifier.value))
     InputPin[] AllPins()
 }
 
@@ -6789,6 +7349,7 @@ class LinkEndDestructionData : LinkEndData
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.LinkEndData::allPins()->including(destroyAt))
     InputPin[] AllPins()
 }
 
@@ -6860,6 +7421,7 @@ class LoopNode : StructuredActivityNode
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self->asSet())
     Action[] AllActions()
 
     /// <summary>
@@ -6868,6 +7430,7 @@ class LoopNode : StructuredActivityNode
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.StructuredActivityNode::sourceNodes()->union(loopVariable))
     ActivityNode[] SourceNodes()
 }
 
@@ -7013,7 +7576,7 @@ class ReadLinkAction : LinkAction
 {
 
     /// <summary>
-    /// The OutputPin on which the objects retrieved from the "open" end of those links whose values on other ends are given by the endData.
+    /// The OutputPin on which the objects retrieved from the &quot;open&quot; end of those links whose values on other ends are given by the endData.
     /// </summary>
     contains OutputPin Result
         subsets Action.Output
@@ -7025,6 +7588,7 @@ class ReadLinkAction : LinkAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (endData->select(value=null).end->asOrderedSet())
     Property[] OpenEnd()
 }
 
@@ -7340,6 +7904,7 @@ class StartObjectBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.behavior().outputParameters())
     Parameter[] OutputParameters()
 
     /// <summary>
@@ -7348,6 +7913,7 @@ class StartObjectBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.behavior().inputParameters())
     Parameter[] InputParameters()
 
     /// <summary>
@@ -7356,6 +7922,14 @@ class StartObjectBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
+    // result = (if object.type.oclIsKindOf(Behavior) then
+    //   object.type.oclAsType(Behavior)
+    // else if object.type.oclIsKindOf(BehavioredClassifier) then
+    //   object.type.oclAsType(BehavioredClassifier).classifierBehavior
+    // else
+    //   null
+    // endif
+    // endif)
     Behavior Behavior()
 }
 
@@ -7441,6 +8015,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
+    // result = (node->select(oclIsKindOf(Action)).oclAsType(Action).allActions()->including(self)->asSet())
     Action[] AllActions()
 
     /// <summary>
@@ -7449,6 +8024,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.Action::allOwnedNodes()->union(node)->union(node->select(oclIsKindOf(Action)).oclAsType(Action).allOwnedNodes())->asSet())
     ActivityNode[] AllOwnedNodes()
 
     /// <summary>
@@ -7457,6 +8033,8 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
+    // result = (node->union(input.oclAsType(ActivityNode)->asSet())->
+    //   union(node->select(oclIsKindOf(Action)).oclAsType(Action).output)->asSet())
     ActivityNode[] SourceNodes()
 
     /// <summary>
@@ -7465,6 +8043,8 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
+    // result = (node->union(output.oclAsType(ActivityNode)->asSet())->
+    //   union(node->select(oclIsKindOf(Action)).oclAsType(Action).input)->asSet())
     ActivityNode[] TargetNodes()
 
     /// <summary>
@@ -7473,6 +8053,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
+    // result = (self.Action::containingActivity())
     Activity ContainingActivity()
 }
 

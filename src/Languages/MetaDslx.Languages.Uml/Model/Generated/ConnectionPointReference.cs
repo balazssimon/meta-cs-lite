@@ -23,12 +23,31 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State.
+    /// </summary>
     public interface ConnectionPointReference : global::MetaDslx.Languages.Uml.Model.Vertex
     {
+        /// <summary>
+        /// The entryPoint Pseudostates corresponding to this connection point.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Pseudostate> Entry { get; }
+        /// <summary>
+        /// The exitPoints kind Pseudostates corresponding to this connection point.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Pseudostate> Exit { get; }
+        /// <summary>
+        /// The State in which the ConnectionPointReference is defined.
+        /// </summary>
         State State { get; set; }
     
+        /// <summary>
+        /// The query isConsistentWith() specifies a ConnectionPointReference can only be redefined by a ConnectionPointReference.
+        /// </summary>
+        /// <param name="redefiningElement">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

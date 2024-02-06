@@ -23,13 +23,33 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.
+    /// </summary>
     public interface StructuredClassifier : global::MetaDslx.Languages.Uml.Model.Classifier
     {
+        /// <summary>
+        /// The Properties owned by the StructuredClassifier.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> OwnedAttribute { get; }
+        /// <summary>
+        /// The connectors owned by the StructuredClassifier.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Connector> OwnedConnector { get; }
+        /// <summary>
+        /// The Properties specifying instances that the StructuredClassifier owns by composition. This collection is derived, selecting those owned Properties where isComposite is true.
+        /// </summary>
         global::System.Collections.Generic.IList<Property> Part { get; }
+        /// <summary>
+        /// The roles that instances may play in this StructuredClassifier.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ConnectableElement> Role { get; }
     
+        /// <summary>
+        /// All features of type ConnectableElement, equivalent to all direct and inherited roles.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<ConnectableElement> AllRoles();
     }
 }

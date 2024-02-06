@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// ConnectableElement is an abstract metaclass representing a set of instances that play roles of a StructuredClassifier. ConnectableElements may be joined by attached Connectors and specify configurations of linked instances to be created within an instance of the containing StructuredClassifier.
+    /// </summary>
     public interface ConnectableElement : global::MetaDslx.Languages.Uml.Model.TypedElement, global::MetaDslx.Languages.Uml.Model.ParameterableElement
     {
+        /// <summary>
+        /// A set of ConnectorEnds that attach to this ConnectableElement.
+        /// </summary>
         global::System.Collections.Generic.IList<ConnectorEnd> End { get; }
+        /// <summary>
+        /// The ConnectableElementTemplateParameter for this ConnectableElement parameter.
+        /// </summary>
         new ConnectableElementTemplateParameter TemplateParameter { get; set; }
     
     }

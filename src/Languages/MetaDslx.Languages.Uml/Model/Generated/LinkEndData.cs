@@ -23,12 +23,29 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// LinkEndData is an Element that identifies on end of a link to be read or written by a LinkAction. As a link (that is not a link object) cannot be passed as a runtime value to or from an Action, it is instead identified by its end objects and qualifier values, if any. A LinkEndData instance provides these values for a single Association end.
+    /// </summary>
     public interface LinkEndData : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// The Association end for which this LinkEndData specifies values.
+        /// </summary>
         Property End { get; set; }
+        /// <summary>
+        /// A set of QualifierValues used to provide values for the qualifiers of the end.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<QualifierValue> Qualifier { get; }
+        /// <summary>
+        /// The InputPin that provides the specified value for the given end. This InputPin is omitted if the LinkEndData specifies the &quot;open&quot; end for a ReadLinkAction.
+        /// </summary>
         InputPin Value { get; set; }
     
+        /// <summary>
+        /// Returns all the InputPins referenced by this LinkEndData. By default this includes the value and qualifier InputPins, but subclasses may override the operation to add other InputPins.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<InputPin> AllPins();
     }
 }

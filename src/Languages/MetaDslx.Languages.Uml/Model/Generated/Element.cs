@@ -23,13 +23,35 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An Element is a constituent of a model. As such, it has the capability of owning other Elements.
+    /// </summary>
     public interface Element : __IModelObject
     {
+        /// <summary>
+        /// The Comments owned by this Element.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Comment> OwnedComment { get; }
+        /// <summary>
+        /// The Elements owned by this Element.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Element> OwnedElement { get; }
+        /// <summary>
+        /// The Element that owns this Element.
+        /// </summary>
         Element Owner { get; set; }
     
+        /// <summary>
+        /// The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Element> AllOwnedElements();
+        /// <summary>
+        /// The query mustBeOwned() indicates whether Elements of this type must have an owner. Subclasses of Element that do not require an owner must override this operation.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool MustBeOwned();
     }
 }

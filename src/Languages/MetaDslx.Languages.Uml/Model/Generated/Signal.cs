@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Signal is a specification of a kind of communication between objects in which a reaction is asynchronously triggered in the receiver without a reply.
+    /// </summary>
     public interface Signal : global::MetaDslx.Languages.Uml.Model.Classifier
     {
+        /// <summary>
+        /// The attributes owned by the Signal.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> OwnedAttribute { get; }
     
     }

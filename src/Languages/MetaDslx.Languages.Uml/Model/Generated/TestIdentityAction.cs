@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A TestIdentityAction is an Action that tests if two values are identical objects.
+    /// </summary>
     public interface TestIdentityAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The InputPin on which the first input object is placed.
+        /// </summary>
         InputPin First { get; set; }
+        /// <summary>
+        /// The OutputPin whose Boolean value indicates whether the two input objects are identical.
+        /// </summary>
         OutputPin Result { get; set; }
+        /// <summary>
+        /// The OutputPin on which the second input object is placed.
+        /// </summary>
         InputPin Second { get; set; }
     
     }

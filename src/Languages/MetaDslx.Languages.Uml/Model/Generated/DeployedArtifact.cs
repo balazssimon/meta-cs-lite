@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A deployed artifact is an artifact or artifact instance that has been deployed to a deployment target.
+    /// </summary>
     public interface DeployedArtifact : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
     

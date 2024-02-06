@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ActionExecutionSpecification is a kind of ExecutionSpecification representing the execution of an Action.
+    /// </summary>
     public interface ActionExecutionSpecification : global::MetaDslx.Languages.Uml.Model.ExecutionSpecification
     {
+        /// <summary>
+        /// Action whose execution is occurring.
+        /// </summary>
         Action Action { get; set; }
     
     }

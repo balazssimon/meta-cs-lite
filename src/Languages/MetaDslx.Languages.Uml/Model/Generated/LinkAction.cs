@@ -23,11 +23,25 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// LinkAction is an abstract class for all Actions that identify the links to be acted on using LinkEndData.
+    /// </summary>
     public interface LinkAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The LinkEndData identifying the values on the ends of the links acting on by this LinkAction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<LinkEndData> EndData { get; }
+        /// <summary>
+        /// InputPins used by the LinkEndData of the LinkAction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InputPin> InputValue { get; }
     
+        /// <summary>
+        /// Returns the Association acted on by this LinkAction.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         Association Association();
     }
 }

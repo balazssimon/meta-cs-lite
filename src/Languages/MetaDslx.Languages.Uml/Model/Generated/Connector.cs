@@ -23,12 +23,30 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Connector specifies links that enables communication between two or more instances. In contrast to Associations, which specify links between any instance of the associated Classifiers, Connectors specify links between instances playing the connected parts only.
+    /// </summary>
     public interface Connector : global::MetaDslx.Languages.Uml.Model.Feature
     {
+        /// <summary>
+        /// The set of Behaviors that specify the valid interaction patterns across the Connector.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Behavior> Contract { get; }
+        /// <summary>
+        /// A Connector has at least two ConnectorEnds, each representing the participation of instances of the Classifiers typing the ConnectableElements attached to the end. The set of ConnectorEnds is ordered.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ConnectorEnd> End { get; }
+        /// <summary>
+        /// Indicates the kind of Connector. This is derived: a Connector with one or more ends connected to a Port which is not on a Part and which is not a behavior port is a delegation; otherwise it is an assembly.
+        /// </summary>
         global::MetaDslx.Languages.Uml.Model.ConnectorKind Kind { get; }
+        /// <summary>
+        /// A Connector may be redefined when its containing Classifier is specialized. The redefining Connector may have a type that specializes the type of the redefined Connector. The types of the ConnectorEnds of the redefining Connector may specialize the types of the ConnectorEnds of the redefined Connector. The properties of the ConnectorEnds of the redefining Connector may be replaced.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Connector> RedefinedConnector { get; }
+        /// <summary>
+        /// An optional Association that classifies links corresponding to this Connector.
+        /// </summary>
         Association Type { get; set; }
     
     }

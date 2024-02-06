@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadLinkObjectEndAction is an Action that retrieves an end object from a link object.
+    /// </summary>
     public interface ReadLinkObjectEndAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The Association end to be read.
+        /// </summary>
         Property End { get; set; }
+        /// <summary>
+        /// The input pin from which the link object is obtained.
+        /// </summary>
         InputPin Object { get; set; }
+        /// <summary>
+        /// The OutputPin where the result value is placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

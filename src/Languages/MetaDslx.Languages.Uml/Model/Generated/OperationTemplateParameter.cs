@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An OperationTemplateParameter exposes an Operation as a formal parameter for a template.
+    /// </summary>
     public interface OperationTemplateParameter : global::MetaDslx.Languages.Uml.Model.TemplateParameter
     {
+        /// <summary>
+        /// The Operation exposed by this OperationTemplateParameter.
+        /// </summary>
         new Operation ParameteredElement { get; set; }
     
     }

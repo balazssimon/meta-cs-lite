@@ -23,9 +23,15 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An EncapsulatedClassifier may own Ports to specify typed interaction points.
+    /// </summary>
     public interface EncapsulatedClassifier : global::MetaDslx.Languages.Uml.Model.StructuredClassifier
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Port> OwnedPort { get; }
+        /// <summary>
+        /// The Ports owned by the EncapsulatedClassifier.
+        /// </summary>
+        global::System.Collections.Generic.IList<Port> OwnedPort { get; }
     
     }
 }

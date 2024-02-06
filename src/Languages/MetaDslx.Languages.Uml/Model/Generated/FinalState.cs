@@ -23,9 +23,19 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A special kind of State, which, when entered, signifies that the enclosing Region has completed. If the enclosing Region is directly contained in a StateMachine and all other Regions in that StateMachine also are completed, then it means that the entire StateMachine behavior is completed.
+    /// </summary>
     public interface FinalState : global::MetaDslx.Languages.Uml.Model.State
     {
     
+        /// <summary>
+        /// The query isConsistentWith() specifies a FinalState can only be redefined by a FinalState.
+        /// </summary>
+        /// <param name="redefiningElement">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

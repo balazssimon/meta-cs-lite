@@ -23,13 +23,33 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ElementImport identifies a NamedElement in a Namespace other than the one that owns that NamedElement and allows the NamedElement to be referenced using an unqualified name in the Namespace owning the ElementImport.
+    /// </summary>
     public interface ElementImport : global::MetaDslx.Languages.Uml.Model.DirectedRelationship
     {
+        /// <summary>
+        /// Specifies the name that should be added to the importing Namespace in lieu of the name of the imported PackagableElement. The alias must not clash with any other member in the importing Namespace. By default, no alias is used.
+        /// </summary>
         string Alias { get; set; }
+        /// <summary>
+        /// Specifies the PackageableElement whose name is to be added to a Namespace.
+        /// </summary>
         PackageableElement ImportedElement { get; set; }
+        /// <summary>
+        /// Specifies the Namespace that imports a PackageableElement from another Namespace.
+        /// </summary>
         Namespace ImportingNamespace { get; set; }
+        /// <summary>
+        /// Specifies the visibility of the imported PackageableElement within the importingNamespace, i.e., whether the  importedElement will in turn be visible to other Namespaces. If the ElementImport is public, the importedElement will be visible outside the importingNamespace while, if the ElementImport is private, it will not.
+        /// </summary>
         global::MetaDslx.Languages.Uml.Model.VisibilityKind Visibility { get; set; }
     
+        /// <summary>
+        /// The query getName() returns the name under which the imported PackageableElement will be known in the importing namespace.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         string GetName();
     }
 }

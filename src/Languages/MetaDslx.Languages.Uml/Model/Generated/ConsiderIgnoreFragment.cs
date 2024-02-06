@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ConsiderIgnoreFragment is a kind of CombinedFragment that is used for the consider and ignore cases, which require lists of pertinent Messages to be specified.
+    /// </summary>
     public interface ConsiderIgnoreFragment : global::MetaDslx.Languages.Uml.Model.CombinedFragment
     {
+        /// <summary>
+        /// The set of messages that apply to this fragment.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<NamedElement> Message { get; }
     
     }

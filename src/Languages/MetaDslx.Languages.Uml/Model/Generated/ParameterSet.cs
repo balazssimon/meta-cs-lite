@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ParameterSet designates alternative sets of inputs or outputs that a Behavior may use.
+    /// </summary>
     public interface ParameterSet : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// A constraint that should be satisfied for the owner of the Parameters in an input ParameterSet to start execution using the values provided for those Parameters, or the owner of the Parameters in an output ParameterSet to end execution providing the values for those Parameters, if all preconditions and conditions on input ParameterSets were satisfied.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Constraint> Condition { get; }
+        /// <summary>
+        /// Parameters in the ParameterSet.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Parameter> Parameter { get; }
     
     }

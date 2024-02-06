@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An Event is the specification of some occurrence that may potentially trigger effects by an object.
+    /// </summary>
     public interface Event : global::MetaDslx.Languages.Uml.Model.PackageableElement
     {
     

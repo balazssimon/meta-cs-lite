@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CreateLinkAction is a WriteLinkAction for creating links.
+    /// </summary>
     public interface CreateLinkAction : global::MetaDslx.Languages.Uml.Model.WriteLinkAction
     {
+        /// <summary>
+        /// The LinkEndData that specifies the values to be placed on the Association ends for the new link.
+        /// </summary>
         new global::MetaDslx.Modeling.ICollectionSlot<LinkEndCreationData> EndData { get; }
     
     }

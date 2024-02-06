@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReplyAction is an Action that accepts a set of reply values and a value containing return information produced by a previous AcceptCallAction. The ReplyAction returns the values to the caller of the previous call, completing execution of the call.
+    /// </summary>
     public interface ReplyAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The Trigger specifying the Operation whose call is being replied to.
+        /// </summary>
         Trigger ReplyToCall { get; set; }
+        /// <summary>
+        /// A list of InputPins providing the values for the output (inout, out, and return) Parameters of the Operation. These values are returned to the caller.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InputPin> ReplyValue { get; }
+        /// <summary>
+        /// An InputPin that holds the return information value produced by an earlier AcceptCallAction.
+        /// </summary>
         InputPin ReturnInformation { get; set; }
     
     }

@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// StructuralFeatureAction is an abstract class for all Actions that operate on StructuralFeatures.
+    /// </summary>
     public interface StructuralFeatureAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The InputPin from which the object whose StructuralFeature is to be read or written is obtained.
+        /// </summary>
         InputPin Object { get; set; }
+        /// <summary>
+        /// The StructuralFeature to be read or written.
+        /// </summary>
         StructuralFeature StructuralFeature { get; set; }
     
     }

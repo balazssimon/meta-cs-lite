@@ -23,11 +23,25 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A StringExpression is an Expression that specifies a String value that is derived by concatenating a sequence of operands with String values or a sequence of subExpressions, some of which might be template parameters.
+    /// </summary>
     public interface StringExpression : global::MetaDslx.Languages.Uml.Model.TemplateableElement, global::MetaDslx.Languages.Uml.Model.Expression
     {
+        /// <summary>
+        /// The StringExpression of which this StringExpression is a subExpression.
+        /// </summary>
         StringExpression OwningExpression { get; set; }
+        /// <summary>
+        /// The StringExpressions that constitute this StringExpression.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<StringExpression> SubExpression { get; }
     
+        /// <summary>
+        /// The query stringValue() returns the String resulting from concatenating, in order, all the component String values of all the operands or subExpressions that are part of the StringExpression.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         string StringValue();
     }
 }

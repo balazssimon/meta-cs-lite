@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A RemoveStructuralFeatureValueAction is a WriteStructuralFeatureAction that removes values from a StructuralFeature.
+    /// </summary>
     public interface RemoveStructuralFeatureValueAction : global::MetaDslx.Languages.Uml.Model.WriteStructuralFeatureAction
     {
+        /// <summary>
+        /// Specifies whether to remove duplicates of the value in nonunique StructuralFeatures.
+        /// </summary>
         bool IsRemoveDuplicates { get; set; }
+        /// <summary>
+        /// An InputPin that provides the position of an existing value to remove in ordered, nonunique structural features. The type of the removeAt InputPin is UnlimitedNatural, but the value cannot be zero or unlimited.
+        /// </summary>
         InputPin RemoveAt { get; set; }
     
     }

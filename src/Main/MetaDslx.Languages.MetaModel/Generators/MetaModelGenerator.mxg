@@ -280,6 +280,7 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
     [end foreach]
 
     [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+        [GetDocumentationComment(c)]
         public static [ToCSharp(c.Type)] [c.Name] => ((I[MetaModel.Name])MInstance).[c.Name];
     [end foreach]
 
@@ -312,6 +313,7 @@ public class [MetaModel.Name]ModelFactory : __ModelFactory
     }
 
     [foreach (var cls in Classes.Where(c => !c.IsAbstract))]
+        [GetDocumentationComment(cls)]
         public [ToCSharp(cls)] [cls.Name](string? id = null)
         {
             return ([ToCSharp(cls)])[MetaModel.Name].[cls.Name]Info.Create(base.Model, id)!;
@@ -328,6 +330,7 @@ public class [MetaModel.Name]ModelMultiFactory : __MultiModelFactory
     }
 
     [foreach (var cls in Classes.Where(c => !c.IsAbstract))]
+        [GetDocumentationComment(cls)]
         public [ToCSharp(cls)] [cls.Name](__Model model, string? id = null)
         {
             return ([ToCSharp(cls)])[MetaModel.Name].[cls.Name]Info.Create(model, id)!;
@@ -339,9 +342,11 @@ public class [MetaModel.Name]ModelMultiFactory : __MultiModelFactory
 end template
 
 template GenerateEnum(MetaEnum enm)
+[GetDocumentationComment(enm)]
 public enum [enm.Name]
 {
     [foreach (var lit in enm.Literals)]
+        [GetDocumentationComment(lit)]
         [lit.Name],
     [end foreach]
 }
@@ -374,14 +379,17 @@ end template
 
 template GenerateInterface(MetaClass cls)
 [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
+[GetDocumentationComment(cls)]
 public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][else] : __IModelObject[end if]
 {
     [foreach (var prop in metaCls.DeclaredProperties)]
         [var info = metaCls.ModelPropertyInfos[prop]]
+        [GetDocumentationComment(prop.UnderlyingProperty)]
         [if (info.HiddenProperties.Length > 0)]new [end if][prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name] { get; [if (HasSetter(prop))]set; [end if]}
     [end foreach]
 
     [foreach (var op in cls.Operations)]
+        [GetDocumentationComment(op)]
         [ToCSharpOpType(op.ReturnType)] [op.Name]([foreach (var param in op.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name][end foreach]);
     [end foreach]
 }
@@ -528,18 +536,12 @@ internal interface ICustom[MetaModel.Name]Implementation
     void [MetaModel.Name](I[MetaModel.Name] _this);
 
     [foreach (var cls in Classes)]
-        /// <summary>
-        /// Constructor for the class [cls.Name]
-        /// </summary>
         void [cls.Name]([cls.Name] _this);
 
     [end foreach]
 
     [foreach (var cls in Classes)]
         [foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
-            /// <summary>
-            /// Computation of the derived property [cls.Name].[prop.Name]
-            /// </summary>
             [ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
 
         [end foreach]
@@ -547,9 +549,6 @@ internal interface ICustom[MetaModel.Name]Implementation
 
     [foreach (var cls in Classes)]
         [foreach (var op in cls.Operations)]
-            /// <summary>
-            /// Implementation of the operation [cls.Name].[op.Name]
-            /// </summary>
             [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name][end foreach]);
 
         [end foreach]
@@ -568,9 +567,7 @@ internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaM
     }
 
     [foreach (var cls in Classes)]
-        /// <summary>
-        /// Constructor for the class [cls.Name]
-        /// </summary>
+        [GetDocumentationComment(cls)]
         public virtual void [cls.Name]([cls.Name] _this)
         {
         }
@@ -579,9 +576,7 @@ internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaM
 
     [foreach (var cls in Classes)]
         [foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
-            /// <summary>
-            /// Computation of the derived property [cls.Name].[prop.Name]
-            /// </summary>
+            [GetDocumentationComment(prop)]
             public abstract [ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
 
         [end foreach]
@@ -589,9 +584,7 @@ internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaM
 
     [foreach (var cls in Classes)]
         [foreach (var op in cls.Operations)]
-            /// <summary>
-            /// Implementation of the operation [cls.Name].[op.Name]
-            /// </summary>
+            [GetDocumentationComment(op)]
             public abstract [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name][end foreach]);
 
         [end foreach]

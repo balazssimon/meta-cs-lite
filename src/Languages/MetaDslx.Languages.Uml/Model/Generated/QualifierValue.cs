@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A QualifierValue is an Element that is used as part of LinkEndData to provide the value for a single qualifier of the end given by the LinkEndData.
+    /// </summary>
     public interface QualifierValue : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// The qualifier Property for which the value is to be specified.
+        /// </summary>
         Property Qualifier { get; set; }
+        /// <summary>
+        /// The InputPin from which the specified value for the qualifier is taken.
+        /// </summary>
         InputPin Value { get; set; }
     
     }

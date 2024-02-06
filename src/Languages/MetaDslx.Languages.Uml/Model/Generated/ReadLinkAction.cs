@@ -23,10 +23,21 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadLinkAction is a LinkAction that navigates across an Association to retrieve the objects on one end.
+    /// </summary>
     public interface ReadLinkAction : global::MetaDslx.Languages.Uml.Model.LinkAction
     {
+        /// <summary>
+        /// The OutputPin on which the objects retrieved from the &quot;open&quot; end of those links whose values on other ends are given by the endData.
+        /// </summary>
         OutputPin Result { get; set; }
     
+        /// <summary>
+        /// Returns the ends corresponding to endData with no value InputPin. (A well-formed ReadLinkAction is constrained to have only one of these.)
+        /// </summary>
+        /// <returns>
+        /// </returns>
         global::System.Collections.Generic.IList<Property> OpenEnd();
     }
 }

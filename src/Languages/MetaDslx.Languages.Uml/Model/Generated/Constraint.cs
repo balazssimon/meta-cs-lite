@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Constraint is a condition or restriction expressed in natural language text or in a machine readable language for the purpose of declaring some of the semantics of an Element or set of Elements.
+    /// </summary>
     public interface Constraint : global::MetaDslx.Languages.Uml.Model.PackageableElement
     {
+        /// <summary>
+        /// The ordered set of Elements referenced by this Constraint.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Element> ConstrainedElement { get; }
+        /// <summary>
+        /// Specifies the Namespace that owns the Constraint.
+        /// </summary>
         Namespace Context { get; set; }
+        /// <summary>
+        /// A condition that must be true when evaluated in order for the Constraint to be satisfied.
+        /// </summary>
         ValueSpecification Specification { get; set; }
     
     }

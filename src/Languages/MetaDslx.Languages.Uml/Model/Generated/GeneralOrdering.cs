@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A GeneralOrdering represents a binary relation between two OccurrenceSpecifications, to describe that one OccurrenceSpecification must occur before the other in a valid trace. This mechanism provides the ability to define partial orders of OccurrenceSpecifications that may otherwise not have a specified order.
+    /// </summary>
     public interface GeneralOrdering : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// The OccurrenceSpecification referenced comes after the OccurrenceSpecification referenced by before.
+        /// </summary>
         OccurrenceSpecification After { get; set; }
+        /// <summary>
+        /// The OccurrenceSpecification referenced comes before the OccurrenceSpecification referenced by after.
+        /// </summary>
         OccurrenceSpecification Before { get; set; }
     
     }

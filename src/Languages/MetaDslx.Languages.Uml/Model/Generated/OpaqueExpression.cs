@@ -23,16 +23,51 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An OpaqueExpression is a ValueSpecification that specifies the computation of a collection of values either in terms of a UML Behavior or based on a textual statement in a language other than UML
+    /// </summary>
     public interface OpaqueExpression : global::MetaDslx.Languages.Uml.Model.ValueSpecification
     {
+        /// <summary>
+        /// Specifies the behavior of the OpaqueExpression as a UML Behavior.
+        /// </summary>
         Behavior Behavior { get; set; }
+        /// <summary>
+        /// A textual definition of the behavior of the OpaqueExpression, possibly in multiple languages.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<string> Body { get; }
+        /// <summary>
+        /// Specifies the languages used to express the textual bodies of the OpaqueExpression.  Languages are matched to body Strings by order. The interpretation of the body depends on the languages. If the languages are unspecified, they may be implicit from the expression body or the context.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<string> Language { get; }
+        /// <summary>
+        /// If an OpaqueExpression is specified using a UML Behavior, then this refers to the single required return Parameter of that Behavior. When the Behavior completes execution, the values on this Parameter give the result of evaluating the OpaqueExpression.
+        /// </summary>
         Parameter Result { get; }
     
+        /// <summary>
+        /// The query isIntegral() tells whether an expression is intended to produce an Integer.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsIntegral();
+        /// <summary>
+        /// The query isNonNegative() tells whether an integer expression has a non-negative value.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsNonNegative();
+        /// <summary>
+        /// The query isPositive() tells whether an integer expression has a positive value.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         bool IsPositive();
+        /// <summary>
+        /// The query value() gives an integer value for an expression intended to produce one.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         int Value();
     }
 }

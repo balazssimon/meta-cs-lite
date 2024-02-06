@@ -15,7 +15,7 @@ const PrimitiveType Real
 const PrimitiveType String
 // UnlimitedNatural is a primitive type representing unlimited natural values.
 const PrimitiveType UnlimitedNatural
-	
+
 abstract class Element
 {
 	Element Owner opposite OwnedElement

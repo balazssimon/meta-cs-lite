@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An extension end is used to tie an extension to a stereotype when extending a metaclass.
+    /// The default multiplicity of an extension end is 0..1.
+    /// </summary>
     public interface ExtensionEnd : global::MetaDslx.Languages.Uml.Model.Property
     {
+        /// <summary>
+        /// This redefinition changes the default multiplicity of association ends, since model elements are usually extended by 0 or 1 instance of the extension stereotype.
+        /// </summary>
         new int Lower { get; }
+        /// <summary>
+        /// References the type of the ExtensionEnd. Note that this association restricts the possible types of an ExtensionEnd to only be Stereotypes.
+        /// </summary>
         new Stereotype Type { get; set; }
     
+        /// <summary>
+        /// The query lowerBound() returns the lower bound of the multiplicity as an Integer. This is a redefinition of the default lower bound, which normally, for MultiplicityElements, evaluates to 1 if empty.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         int LowerBound();
     }
 }

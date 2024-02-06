@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InputPin is a Pin that holds input values to be consumed by an Action.
+    /// </summary>
     public interface InputPin : global::MetaDslx.Languages.Uml.Model.Pin
     {
     

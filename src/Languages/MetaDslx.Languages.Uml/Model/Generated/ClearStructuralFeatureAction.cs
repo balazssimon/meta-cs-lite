@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ClearStructuralFeatureAction is a StructuralFeatureAction that removes all values of a StructuralFeature.
+    /// </summary>
     public interface ClearStructuralFeatureAction : global::MetaDslx.Languages.Uml.Model.StructuralFeatureAction
     {
+        /// <summary>
+        /// The OutputPin on which is put the input object as modified by the ClearStructuralFeatureAction.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

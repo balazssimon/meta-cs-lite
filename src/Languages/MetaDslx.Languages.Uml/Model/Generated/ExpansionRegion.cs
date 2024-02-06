@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ExpansionRegion is a StructuredActivityNode that executes its content multiple times corresponding to elements of input collection(s).
+    /// </summary>
     public interface ExpansionRegion : global::MetaDslx.Languages.Uml.Model.StructuredActivityNode
     {
+        /// <summary>
+        /// The ExpansionNodes that hold the input collections for the ExpansionRegion.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ExpansionNode> InputElement { get; }
+        /// <summary>
+        /// The mode in which the ExpansionRegion executes its contents. If parallel, executions are concurrent. If iterative, executions are sequential. If stream, a stream of values flows into a single execution.
+        /// </summary>
         global::MetaDslx.Languages.Uml.Model.ExpansionKind Mode { get; set; }
+        /// <summary>
+        /// The ExpansionNodes that form the output collections of the ExpansionRegion.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ExpansionNode> OutputElement { get; }
     
     }

@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A deployment specification specifies a set of properties that determine execution parameters of a component artifact that is deployed on a node. A deployment specification can be aimed at a specific type of container. An artifact that reifies or implements deployment specification properties is a deployment descriptor.
+    /// </summary>
     public interface DeploymentSpecification : global::MetaDslx.Languages.Uml.Model.Artifact
     {
+        /// <summary>
+        /// The deployment with which the DeploymentSpecification is associated.
+        /// </summary>
         Deployment Deployment { get; set; }
+        /// <summary>
+        /// The location where an Artifact is deployed onto a Node. This is typically a &apos;directory&apos; or &apos;memory address.&apos;
+        /// </summary>
         string DeploymentLocation { get; set; }
+        /// <summary>
+        /// The location where a component Artifact executes. This may be a local or remote location.
+        /// </summary>
         string ExecutionLocation { get; set; }
     
     }

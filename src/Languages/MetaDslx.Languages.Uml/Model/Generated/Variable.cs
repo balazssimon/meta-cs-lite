@@ -23,11 +23,27 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Variable is a ConnectableElement that may store values during the execution of an Activity. Reading and writing the values of a Variable provides an alternative means for passing data than the use of ObjectFlows. A Variable may be owned directly by an Activity, in which case it is accessible from anywhere within that activity, or it may be owned by a StructuredActivityNode, in which case it is only accessible within that node.
+    /// </summary>
     public interface Variable : global::MetaDslx.Languages.Uml.Model.ConnectableElement, global::MetaDslx.Languages.Uml.Model.MultiplicityElement
     {
+        /// <summary>
+        /// An Activity that owns the Variable.
+        /// </summary>
         Activity ActivityScope { get; set; }
+        /// <summary>
+        /// A StructuredActivityNode that owns the Variable.
+        /// </summary>
         StructuredActivityNode Scope { get; set; }
     
+        /// <summary>
+        /// A Variable is accessible by Actions within its scope (the Activity or StructuredActivityNode that owns it).
+        /// </summary>
+        /// <param name="a">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsAccessibleBy(Action a);
     }
 }

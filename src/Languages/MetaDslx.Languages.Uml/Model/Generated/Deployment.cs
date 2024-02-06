@@ -23,10 +23,23 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A deployment is the allocation of an artifact or artifact instance to a deployment target.
+    /// A component deployment is the deployment of one or more artifacts or artifact instances to a deployment target, optionally parameterized by a deployment specification. Examples are executables and configuration files.
+    /// </summary>
     public interface Deployment : global::MetaDslx.Languages.Uml.Model.Dependency
     {
+        /// <summary>
+        /// The specification of properties that parameterize the deployment and execution of one or more Artifacts.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<DeploymentSpecification> Configuration { get; }
+        /// <summary>
+        /// The Artifacts that are deployed onto a Node. This association specializes the supplier association.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<DeployedArtifact> DeployedArtifact { get; }
+        /// <summary>
+        /// The DeployedTarget which is the target of a Deployment.
+        /// </summary>
         DeploymentTarget Location { get; set; }
     
     }

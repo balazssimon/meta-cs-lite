@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An OpaqueAction is an Action whose functionality is not specified within UML.
+    /// </summary>
     public interface OpaqueAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// Provides a textual specification of the functionality of the Action, in one or more languages other than UML.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<string> Body { get; }
+        /// <summary>
+        /// The InputPins providing inputs to the OpaqueAction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InputPin> InputValue { get; }
+        /// <summary>
+        /// If provided, a specification of the language used for each of the body Strings.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<string> Language { get; }
+        /// <summary>
+        /// The OutputPins on which the OpaqueAction provides outputs.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> OutputValue { get; }
     
     }

@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An Include relationship specifies that a UseCase contains the behavior defined in another UseCase.
+    /// </summary>
     public interface Include : global::MetaDslx.Languages.Uml.Model.DirectedRelationship, global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// The UseCase that is to be included.
+        /// </summary>
         UseCase Addition { get; set; }
+        /// <summary>
+        /// The UseCase which includes the addition and owns the Include relationship.
+        /// </summary>
         UseCase IncludingCase { get; set; }
     
     }

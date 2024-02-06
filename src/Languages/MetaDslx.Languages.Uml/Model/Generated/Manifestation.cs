@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A manifestation is the concrete physical rendering of one or more model elements by an artifact.
+    /// </summary>
     public interface Manifestation : global::MetaDslx.Languages.Uml.Model.Abstraction
     {
+        /// <summary>
+        /// The model element that is utilized in the manifestation in an Artifact.
+        /// </summary>
         PackageableElement UtilizedElement { get; set; }
     
     }

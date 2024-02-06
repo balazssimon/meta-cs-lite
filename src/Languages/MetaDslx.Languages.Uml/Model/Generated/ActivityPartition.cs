@@ -23,14 +23,38 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ActivityPartition is a kind of ActivityGroup for identifying ActivityNodes that have some characteristic in common.
+    /// </summary>
     public interface ActivityPartition : global::MetaDslx.Languages.Uml.Model.ActivityGroup
     {
+        /// <summary>
+        /// ActivityEdges immediately contained in the ActivityPartition.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityEdge> Edge { get; }
+        /// <summary>
+        /// Indicates whether the ActivityPartition groups other ActivityPartitions along a dimension.
+        /// </summary>
         bool IsDimension { get; set; }
+        /// <summary>
+        /// Indicates whether the ActivityPartition represents an entity to which the partitioning structure does not apply.
+        /// </summary>
         bool IsExternal { get; set; }
+        /// <summary>
+        /// ActivityNodes immediately contained in the ActivityPartition.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> Node { get; }
+        /// <summary>
+        /// An Element represented by the functionality modeled within the ActivityPartition.
+        /// </summary>
         Element Represents { get; set; }
+        /// <summary>
+        /// Other ActivityPartitions immediately contained in this ActivityPartition (as its subgroups).
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityPartition> Subpartition { get; }
+        /// <summary>
+        /// Other ActivityPartitions immediately containing this ActivityPartition (as its superGroups).
+        /// </summary>
         ActivityPartition SuperPartition { get; set; }
     
     }

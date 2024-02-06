@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A communication path is an association between two deployment targets, through which they are able to exchange signals and messages.
+    /// </summary>
     public interface CommunicationPath : global::MetaDslx.Languages.Uml.Model.Association
     {
     

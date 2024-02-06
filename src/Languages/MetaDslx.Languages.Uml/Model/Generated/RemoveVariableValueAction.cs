@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A RemoveVariableValueAction is a WriteVariableAction that removes values from a Variables.
+    /// </summary>
     public interface RemoveVariableValueAction : global::MetaDslx.Languages.Uml.Model.WriteVariableAction
     {
+        /// <summary>
+        /// Specifies whether to remove duplicates of the value in nonunique Variables.
+        /// </summary>
         bool IsRemoveDuplicates { get; set; }
+        /// <summary>
+        /// An InputPin that provides the position of an existing value to remove in ordered, nonunique Variables. The type of the removeAt InputPin is UnlimitedNatural, but the value cannot be zero or unlimited.
+        /// </summary>
         InputPin RemoveAt { get; set; }
     
     }

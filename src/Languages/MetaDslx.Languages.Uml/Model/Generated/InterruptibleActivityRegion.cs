@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An InterruptibleActivityRegion is an ActivityGroup that supports the termination of tokens flowing in the portions of an activity within it.
+    /// </summary>
     public interface InterruptibleActivityRegion : global::MetaDslx.Languages.Uml.Model.ActivityGroup
     {
+        /// <summary>
+        /// The ActivityEdges leaving the InterruptibleActivityRegion on which a traversing token will result in the termination of other tokens flowing in the InterruptibleActivityRegion.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityEdge> InterruptingEdge { get; }
+        /// <summary>
+        /// ActivityNodes immediately contained in the InterruptibleActivityRegion.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> Node { get; }
     
     }

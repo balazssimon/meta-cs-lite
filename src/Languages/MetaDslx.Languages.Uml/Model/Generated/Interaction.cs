@@ -23,12 +23,30 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An Interaction is a unit of Behavior that focuses on the observable exchange of information between connectable elements.
+    /// </summary>
     public interface Interaction : global::MetaDslx.Languages.Uml.Model.InteractionFragment, global::MetaDslx.Languages.Uml.Model.Behavior
     {
+        /// <summary>
+        /// Actions owned by the Interaction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Action> Action { get; }
+        /// <summary>
+        /// Specifies the gates that form the message interface between this Interaction and any InteractionUses which reference it.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Gate> FormalGate { get; }
+        /// <summary>
+        /// The ordered set of fragments in the Interaction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InteractionFragment> Fragment { get; }
+        /// <summary>
+        /// Specifies the participants in this Interaction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Lifeline> Lifeline { get; }
+        /// <summary>
+        /// The Messages contained in this Interaction.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Message> Message { get; }
     
     }

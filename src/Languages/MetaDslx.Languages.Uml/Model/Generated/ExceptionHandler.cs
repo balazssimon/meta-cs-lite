@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ExceptionHandler is an Element that specifies a handlerBody ExecutableNode to execute in case the specified exception occurs during the execution of the protected ExecutableNode.
+    /// </summary>
     public interface ExceptionHandler : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// An ObjectNode within the handlerBody. When the ExceptionHandler catches an exception, the exception token is placed on this ObjectNode, causing the handlerBody to execute.
+        /// </summary>
         ObjectNode ExceptionInput { get; set; }
+        /// <summary>
+        /// The Classifiers whose instances the ExceptionHandler catches as exceptions. If an exception occurs whose type is any exceptionType, the ExceptionHandler catches the exception and executes the handlerBody.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Classifier> ExceptionType { get; }
+        /// <summary>
+        /// An ExecutableNode that is executed if the ExceptionHandler catches an exception.
+        /// </summary>
         ExecutableNode HandlerBody { get; set; }
+        /// <summary>
+        /// The ExecutableNode protected by the ExceptionHandler. If an exception propagates out of the protectedNode and has a type matching one of the exceptionTypes, then it is caught by this ExceptionHandler.
+        /// </summary>
         ExecutableNode ProtectedNode { get; set; }
     
     }

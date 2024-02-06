@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A MessageEvent specifies the receipt by an object of either an Operation call or a Signal instance.
+    /// </summary>
     public interface MessageEvent : global::MetaDslx.Languages.Uml.Model.Event
     {
     

@@ -23,11 +23,25 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A stereotype defines how an existing metaclass may be extended, and enables the use of platform or domain specific terminology or notation in place of, or in addition to, the ones used for the extended metaclass.
+    /// </summary>
     public interface Stereotype : global::MetaDslx.Languages.Uml.Model.Class
     {
+        /// <summary>
+        /// Stereotype can change the graphical appearance of the extended model element by using attached icons. When this association is not null, it references the location of the icon content to be displayed within diagrams presenting the extended model elements.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Image> Icon { get; }
+        /// <summary>
+        /// The profile that directly or indirectly contains this stereotype.
+        /// </summary>
         Profile Profile { get; }
     
+        /// <summary>
+        /// The query containingProfile returns the closest profile directly or indirectly containing this stereotype.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         Profile ContainingProfile();
     }
 }

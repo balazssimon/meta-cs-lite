@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A DestroyLinkAction is a WriteLinkAction that destroys links (including link objects).
+    /// </summary>
     public interface DestroyLinkAction : global::MetaDslx.Languages.Uml.Model.WriteLinkAction
     {
+        /// <summary>
+        /// The LinkEndData that the values of the Association ends for the links to be destroyed.
+        /// </summary>
         new global::MetaDslx.Modeling.ICollectionSlot<LinkEndDestructionData> EndData { get; }
     
     }

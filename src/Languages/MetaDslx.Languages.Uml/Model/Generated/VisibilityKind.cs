@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// VisibilityKind is an enumeration type that defines literals to determine the visibility of Elements in a model.
+    /// </summary>
     public enum VisibilityKind
     {
+        /// <summary>
+        /// A Named Element with public visibility is visible to all elements that can access the contents of the Namespace that owns it.
+        /// </summary>
         Public,
+        /// <summary>
+        /// A NamedElement with private visibility is only visible inside the Namespace that owns it.
+        /// </summary>
         Private,
+        /// <summary>
+        /// A NamedElement with protected visibility is visible to Elements that have a generalization relationship to the Namespace that owns it.
+        /// </summary>
         Protected,
+        /// <summary>
+        /// A NamedElement with package visibility is visible to all Elements within the nearest enclosing Package (given that other owning Elements have proper visibility). Outside the nearest enclosing Package, a NamedElement marked as having package visibility is not visible.  Only NamedElements that are not owned by Packages can be marked as having package visibility.
+        /// </summary>
         Package,
     }
 }

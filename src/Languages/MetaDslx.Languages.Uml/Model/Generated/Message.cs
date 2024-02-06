@@ -23,17 +23,53 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Message defines a particular communication between Lifelines of an Interaction.
+    /// </summary>
     public interface Message : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// The arguments of the Message.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<ValueSpecification> Argument { get; }
+        /// <summary>
+        /// The Connector on which this Message is sent.
+        /// </summary>
         Connector Connector { get; set; }
+        /// <summary>
+        /// The enclosing Interaction owning the Message.
+        /// </summary>
         Interaction Interaction { get; set; }
-        global::MetaDslx.Languages.Uml.Model.MessageKind MessageKind { get; set; }
+        /// <summary>
+        /// The derived kind of the Message (complete, lost, found, or unknown).
+        /// </summary>
+        global::MetaDslx.Languages.Uml.Model.MessageKind MessageKind { get; }
+        /// <summary>
+        /// The sort of communication reflected by the Message.
+        /// </summary>
         global::MetaDslx.Languages.Uml.Model.MessageSort MessageSort { get; set; }
+        /// <summary>
+        /// References the Receiving of the Message.
+        /// </summary>
         MessageEnd ReceiveEvent { get; set; }
+        /// <summary>
+        /// References the Sending of the Message.
+        /// </summary>
         MessageEnd SendEvent { get; set; }
+        /// <summary>
+        /// The signature of the Message is the specification of its content. It refers either an Operation or a Signal.
+        /// </summary>
         NamedElement Signature { get; set; }
     
+        /// <summary>
+        /// The query isDistinguishableFrom() specifies that any two Messages may coexist in the same Namespace, regardless of their names.
+        /// </summary>
+        /// <param name="n">
+        /// </param>
+        /// <param name="ns">
+        /// </param>
+        /// <returns>
+        /// </returns>
         bool IsDistinguishableFrom(NamedElement n, Namespace ns);
     }
 }

@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An UnmarshallAction is an Action that retrieves the values of the StructuralFeatures of an object and places them on OutputPins.
+    /// </summary>
     public interface UnmarshallAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The InputPin that gives the object to be unmarshalled.
+        /// </summary>
         InputPin Object { get; set; }
+        /// <summary>
+        /// The OutputPins on which are placed the values of the StructuralFeatures of the input object.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> Result { get; }
+        /// <summary>
+        /// The type of the object to be unmarshalled.
+        /// </summary>
         Classifier UnmarshallType { get; set; }
     
     }

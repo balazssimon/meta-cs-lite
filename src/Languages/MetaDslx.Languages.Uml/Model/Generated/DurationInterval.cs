@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A DurationInterval defines the range between two Durations.
+    /// </summary>
     public interface DurationInterval : global::MetaDslx.Languages.Uml.Model.Interval
     {
+        /// <summary>
+        /// Refers to the Duration denoting the maximum value of the range.
+        /// </summary>
         new Duration Max { get; set; }
+        /// <summary>
+        /// Refers to the Duration denoting the minimum value of the range.
+        /// </summary>
         new Duration Min { get; set; }
     
     }

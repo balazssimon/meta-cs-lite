@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A LiteralSpecification identifies a literal constant being modeled.
+    /// </summary>
     public interface LiteralSpecification : global::MetaDslx.Languages.Uml.Model.ValueSpecification
     {
     

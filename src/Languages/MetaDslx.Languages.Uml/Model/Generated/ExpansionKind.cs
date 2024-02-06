@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// ExpansionKind is an enumeration type used to specify how an ExpansionRegion executes its contents.
+    /// </summary>
     public enum ExpansionKind
     {
+        /// <summary>
+        /// The content of the ExpansionRegion is executed concurrently for the elements of the input collections.
+        /// </summary>
         Parallel,
+        /// <summary>
+        /// The content of the ExpansionRegion is executed iteratively for the elements of the input collections, in the order of the input elements, if the collections are ordered.
+        /// </summary>
         Iterative,
+        /// <summary>
+        /// A stream of input collection elements flows into a single execution of the content of the ExpansionRegion, in the order of the collection elements if the input collections are ordered.
+        /// </summary>
         Stream,
     }
 }

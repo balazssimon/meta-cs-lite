@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An OccurrenceSpecification is the basic semantic unit of Interactions. The sequences of occurrences specified by them are the meanings of Interactions.
+    /// </summary>
     public interface OccurrenceSpecification : global::MetaDslx.Languages.Uml.Model.InteractionFragment
     {
+        /// <summary>
+        /// References the Lifeline on which the OccurrenceSpecification appears.
+        /// </summary>
         new Lifeline Covered { get; set; }
+        /// <summary>
+        /// References the GeneralOrderings that specify EventOcurrences that must occur after this OccurrenceSpecification.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<GeneralOrdering> ToAfter { get; }
+        /// <summary>
+        /// References the GeneralOrderings that specify EventOcurrences that must occur before this OccurrenceSpecification.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<GeneralOrdering> ToBefore { get; }
     
     }

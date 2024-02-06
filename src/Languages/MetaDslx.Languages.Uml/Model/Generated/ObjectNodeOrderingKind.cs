@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// ObjectNodeOrderingKind is an enumeration indicating queuing order for offering the tokens held by an ObjectNode.
+    /// </summary>
     public enum ObjectNodeOrderingKind
     {
+        /// <summary>
+        /// Indicates that tokens are unordered.
+        /// </summary>
         Unordered,
+        /// <summary>
+        /// Indicates that tokens are ordered.
+        /// </summary>
         Ordered,
+        /// <summary>
+        /// Indicates that tokens are queued in a last in, first out manner.
+        /// </summary>
         LIFO,
+        /// <summary>
+        /// Indicates that tokens are queued in a first in, first out manner.
+        /// </summary>
         FIFO,
     }
 }

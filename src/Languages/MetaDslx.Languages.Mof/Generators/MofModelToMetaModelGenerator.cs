@@ -73,11 +73,27 @@ namespace MetaDslx.Languages.Mof.Generator
                     {
                         var line = reader.ReadLine();
                         if (line == null) break;
-                        var lineStr = line.ToString().Trim();
+                        var lineStr = line.ToString();
                         if (escapeHtml) lineStr = lineStr.EncodeHtml();
-                        result.Add(line.ToString());
+                        result.Add(lineStr);
                     }
                 }
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public ImmutableArray<string> CommentLines(string body, bool escapeHtml)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return ImmutableArray<string>.Empty;
+            var result = ArrayBuilder<string>.GetInstance();
+            var reader = new LineReader(body);
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                if (line == null) break;
+                var lineStr = line.ToString();
+                if (escapeHtml) lineStr = lineStr.EncodeHtml();
+                result.Add(lineStr);
             }
             return result.ToImmutableAndFree();
         }

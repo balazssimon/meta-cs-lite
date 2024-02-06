@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A SignalEvent represents the receipt of an asynchronous Signal instance.
+    /// </summary>
     public interface SignalEvent : global::MetaDslx.Languages.Uml.Model.MessageEvent
     {
+        /// <summary>
+        /// The specific Signal that is associated with this SignalEvent.
+        /// </summary>
         Signal Signal { get; set; }
     
     }

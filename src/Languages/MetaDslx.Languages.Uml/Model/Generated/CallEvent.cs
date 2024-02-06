@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CallEvent models the receipt by an object of a message invoking a call of an Operation.
+    /// </summary>
     public interface CallEvent : global::MetaDslx.Languages.Uml.Model.MessageEvent
     {
+        /// <summary>
+        /// Designates the Operation whose invocation raised the CalEvent.
+        /// </summary>
         Operation Operation { get; set; }
     
     }

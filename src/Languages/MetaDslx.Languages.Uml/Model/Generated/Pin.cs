@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Pin is an ObjectNode and MultiplicityElement that provides input values to an Action or accepts output values from an Action.
+    /// </summary>
     public interface Pin : global::MetaDslx.Languages.Uml.Model.ObjectNode, global::MetaDslx.Languages.Uml.Model.MultiplicityElement
     {
+        /// <summary>
+        /// Indicates whether the Pin provides data to the Action or just controls how the Action executes.
+        /// </summary>
         bool IsControl { get; set; }
     
     }

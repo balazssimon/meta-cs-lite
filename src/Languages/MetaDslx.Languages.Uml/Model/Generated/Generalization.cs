@@ -23,11 +23,26 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A Generalization is a taxonomic relationship between a more general Classifier and a more specific Classifier. Each instance of the specific Classifier is also an instance of the general Classifier. The specific Classifier inherits the features of the more general Classifier. A Generalization is owned by the specific Classifier.
+    /// </summary>
     public interface Generalization : global::MetaDslx.Languages.Uml.Model.DirectedRelationship
     {
+        /// <summary>
+        /// The general classifier in the Generalization relationship.
+        /// </summary>
         Classifier General { get; set; }
+        /// <summary>
+        /// Represents a set of instances of Generalization.  A Generalization may appear in many GeneralizationSets.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<GeneralizationSet> GeneralizationSet { get; }
+        /// <summary>
+        /// Indicates whether the specific Classifier can be used wherever the general Classifier can be used. If true, the execution traces of the specific Classifier shall be a superset of the execution traces of the general Classifier. If false, there is no such constraint on execution traces. If unset, the modeler has not stated whether there is such a constraint or not.
+        /// </summary>
         bool IsSubstitutable { get; set; }
+        /// <summary>
+        /// The specializing Classifier in the Generalization relationship.
+        /// </summary>
         Classifier Specific { get; set; }
     
     }

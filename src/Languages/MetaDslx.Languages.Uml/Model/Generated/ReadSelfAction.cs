@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadSelfAction is an Action that retrieves the context object of the Behavior execution within which the ReadSelfAction execution is taking place.
+    /// </summary>
     public interface ReadSelfAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The OutputPin on which the context object is placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A CollaborationUse is used to specify the application of a pattern specified by a Collaboration to a specific situation.
+    /// </summary>
     public interface CollaborationUse : global::MetaDslx.Languages.Uml.Model.NamedElement
     {
+        /// <summary>
+        /// A mapping between features of the Collaboration and features of the owning Classifier. This mapping indicates which ConnectableElement of the Classifier plays which role(s) in the Collaboration. A ConnectableElement may be bound to multiple roles in the same CollaborationUse (that is, it may play multiple roles).
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Dependency> RoleBinding { get; }
+        /// <summary>
+        /// The Collaboration which is used in this CollaborationUse. The Collaboration defines the cooperation between its roles which are mapped to ConnectableElements relating to the Classifier owning the CollaborationUse.
+        /// </summary>
         Collaboration Type { get; set; }
     
     }

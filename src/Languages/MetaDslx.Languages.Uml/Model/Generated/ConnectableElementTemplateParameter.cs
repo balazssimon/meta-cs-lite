@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ConnectableElementTemplateParameter exposes a ConnectableElement as a formal parameter for a template.
+    /// </summary>
     public interface ConnectableElementTemplateParameter : global::MetaDslx.Languages.Uml.Model.TemplateParameter
     {
+        /// <summary>
+        /// The ConnectableElement for this ConnectableElementTemplateParameter.
+        /// </summary>
         new ConnectableElement ParameteredElement { get; set; }
     
     }

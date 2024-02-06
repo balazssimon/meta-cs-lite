@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ClassifierTemplateParameter exposes a Classifier as a formal template parameter.
+    /// </summary>
     public interface ClassifierTemplateParameter : global::MetaDslx.Languages.Uml.Model.TemplateParameter
     {
+        /// <summary>
+        /// Constrains the required relationship between an actual parameter and the parameteredElement for this formal parameter.
+        /// </summary>
         bool AllowSubstitutable { get; set; }
+        /// <summary>
+        /// The classifiers that constrain the argument that can be used for the parameter. If the allowSubstitutable attribute is true, then any Classifier that is compatible with this constraining Classifier can be substituted; otherwise, it must be either this Classifier or one of its specializations. If this property is empty, there are no constraints on the Classifier that can be used as an argument.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Classifier> ConstrainingClassifier { get; }
+        /// <summary>
+        /// The Classifier exposed by this ClassifierTemplateParameter.
+        /// </summary>
         new Classifier ParameteredElement { get; set; }
     
     }

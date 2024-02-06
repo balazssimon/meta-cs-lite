@@ -23,12 +23,31 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An artifact is the specification of a physical piece of information that is used or produced by a software development process, or by deployment and operation of a system. Examples of artifacts include model files, source files, scripts, and binary executable files, a table in a database system, a development deliverable, or a word-processing document, a mail message.
+    /// An artifact is the source of a deployment to a node.
+    /// </summary>
     public interface Artifact : global::MetaDslx.Languages.Uml.Model.Classifier, global::MetaDslx.Languages.Uml.Model.DeployedArtifact
     {
+        /// <summary>
+        /// A concrete name that is used to refer to the Artifact in a physical context. Example: file system name, universal resource locator.
+        /// </summary>
         string FileName { get; set; }
+        /// <summary>
+        /// The set of model elements that are manifested in the Artifact. That is, these model elements are utilized in the construction (or generation) of the artifact.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Manifestation> Manifestation { get; }
+        /// <summary>
+        /// The Artifacts that are defined (nested) within the Artifact. The association is a specialization of the ownedMember association from Namespace to NamedElement.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Artifact> NestedArtifact { get; }
+        /// <summary>
+        /// The attributes or association ends defined for the Artifact. The association is a specialization of the ownedMember association.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Property> OwnedAttribute { get; }
+        /// <summary>
+        /// The Operations defined for the Artifact. The association is a specialization of the ownedMember association.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Operation> OwnedOperation { get; }
     
     }

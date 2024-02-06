@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A BehavioredClassifier may have InterfaceRealizations, and owns a set of Behaviors one of which may specify the behavior of the BehavioredClassifier itself.
+    /// </summary>
     public interface BehavioredClassifier : global::MetaDslx.Languages.Uml.Model.Classifier
     {
+        /// <summary>
+        /// A Behavior that specifies the behavior of the BehavioredClassifier itself.
+        /// </summary>
         Behavior ClassifierBehavior { get; set; }
+        /// <summary>
+        /// The set of InterfaceRealizations owned by the BehavioredClassifier. Interface realizations reference the Interfaces of which the BehavioredClassifier is an implementation.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InterfaceRealization> InterfaceRealization { get; }
+        /// <summary>
+        /// Behaviors owned by a BehavioredClassifier.
+        /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<Behavior> OwnedBehavior { get; }
     
     }

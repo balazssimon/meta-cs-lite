@@ -23,8 +23,14 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// An ActionInputPin is a kind of InputPin that executes an Action to determine the values to input to another Action.
+    /// </summary>
     public interface ActionInputPin : global::MetaDslx.Languages.Uml.Model.InputPin
     {
+        /// <summary>
+        /// The Action used to provide the values of the ActionInputPin.
+        /// </summary>
         Action FromAction { get; set; }
     
     }

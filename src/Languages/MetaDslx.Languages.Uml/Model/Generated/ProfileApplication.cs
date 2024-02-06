@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A profile application is used to show which profiles have been applied to a package.
+    /// </summary>
     public interface ProfileApplication : global::MetaDslx.Languages.Uml.Model.DirectedRelationship
     {
+        /// <summary>
+        /// References the Profiles that are applied to a Package through this ProfileApplication.
+        /// </summary>
         Profile AppliedProfile { get; set; }
+        /// <summary>
+        /// The package that owns the profile application.
+        /// </summary>
         Package ApplyingPackage { get; set; }
+        /// <summary>
+        /// Specifies that the Profile filtering rules for the metaclasses of the referenced metamodel shall be strictly applied.
+        /// </summary>
         bool IsStrict { get; set; }
     
     }

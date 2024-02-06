@@ -23,6 +23,9 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A FinalNode is an abstract ControlNode at which a flow in an Activity stops.
+    /// </summary>
     public interface FinalNode : global::MetaDslx.Languages.Uml.Model.ControlNode
     {
     

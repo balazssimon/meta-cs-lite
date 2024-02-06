@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A DestroyObjectAction is an Action that destroys objects.
+    /// </summary>
     public interface DestroyObjectAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// Specifies whether links in which the object participates are destroyed along with the object.
+        /// </summary>
         bool IsDestroyLinks { get; set; }
+        /// <summary>
+        /// Specifies whether objects owned by the object (via composition) are destroyed along with the object.
+        /// </summary>
         bool IsDestroyOwnedObjects { get; set; }
+        /// <summary>
+        /// The InputPin providing the object to be destroyed.
+        /// </summary>
         InputPin Target { get; set; }
     
     }

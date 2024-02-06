@@ -23,9 +23,18 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// A ReadExtentAction is an Action that retrieves the current instances of a Classifier.
+    /// </summary>
     public interface ReadExtentAction : global::MetaDslx.Languages.Uml.Model.Action
     {
+        /// <summary>
+        /// The Classifier whose instances are to be retrieved.
+        /// </summary>
         Classifier Classifier { get; set; }
+        /// <summary>
+        /// The OutputPin on which the Classifier instances are placed.
+        /// </summary>
         OutputPin Result { get; set; }
     
     }

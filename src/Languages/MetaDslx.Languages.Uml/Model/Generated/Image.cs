@@ -23,10 +23,22 @@ namespace MetaDslx.Languages.Uml.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
+    /// <summary>
+    /// Physical definition of a graphical image.
+    /// </summary>
     public interface Image : global::MetaDslx.Languages.Uml.Model.Element
     {
+        /// <summary>
+        /// This contains the serialization of the image according to the format. The value could represent a bitmap, image such as a GIF file, or drawing &apos;instructions&apos; using a standard such as Scalable Vector Graphic (SVG) (which is XML based).
+        /// </summary>
         string Content { get; set; }
+        /// <summary>
+        /// This indicates the format of the content, which is how the string content should be interpreted. The following values are reserved: SVG, GIF, PNG, JPG, WMF, EMF, BMP. In addition the prefix &apos;MIME: &apos; is also reserved. This option can be used as an alternative to express the reserved values above, for example &quot;SVG&quot; could instead be expressed as &quot;MIME: image/svg+xml&quot;.
+        /// </summary>
         string Format { get; set; }
+        /// <summary>
+        /// This contains a location that can be used by a tool to locate the image as an alternative to embedding it in the stereotype.
+        /// </summary>
         string Location { get; set; }
     
     }
