@@ -29,6 +29,10 @@ namespace MetaDslx.Languages.Uml.Model
     public interface InteractionOperand : global::MetaDslx.Languages.Uml.Model.InteractionFragment, global::MetaDslx.Languages.Uml.Model.Namespace
     {
         /// <summary>
+        /// The CombinedFragment that contains the InteractionOperand.
+        /// </summary>
+        CombinedFragment CombinedFragment { get; set; }
+        /// <summary>
         /// The fragments of the operand.
         /// </summary>
         global::MetaDslx.Modeling.ICollectionSlot<InteractionFragment> Fragment { get; }

@@ -1,7 +1,5 @@
 namespace MetaDslx.Languages.Uml.Model
 
-using MetaDslx.CodeAnalysis.Symbols
-
 metamodel Uml = "http://www.omg.org/spec/UML"
 
 /// <summary>
@@ -1269,9 +1267,9 @@ class OpaqueExpression : ValueSpecification
     /// </summary>
     // spec:
     // result = (if behavior = null then
-    //     null
+    // 	null
     // else
-    //     behavior.ownedParameter->first()
+    // 	behavior.ownedParameter->first()
     // endif)
     derived Parameter Result
         // opposite Parameter.OpaqueExpression
@@ -1722,7 +1720,7 @@ class Class : BehavioredClassifier, EncapsulatedClassifier
     contains Classifier[] NestedClassifier
         // subsetted property 'A_redefinitionContext_redefinableElement-redefinableElement' is null
         subsets Namespace.OwnedMember
-        opposite Classifier.NestingClass
+        // opposite Classifier.NestingClass
 
     /// <summary>
     /// The attributes (i.e., the Properties) owned by the Class.
@@ -1818,7 +1816,7 @@ class Component : Class
     /// The Interfaces that the Component exposes to its environment. These Interfaces may be Realized by the Component or any of its realizingClassifiers, or they may be the Interfaces that are provided by its public Ports.
     /// </summary>
     // spec:
-    // result = (let     ris : Set(Interface) = allRealizedInterfaces(),
+    // result = (let 	ris : Set(Interface) = allRealizedInterfaces(),
     //         realizingClassifiers : Set(Classifier) =  self.realization.realizingClassifier->union(self.allParents()->collect(realization.realizingClassifier))->asSet(),
     //         allRealizingClassifiers : Set(Classifier) = realizingClassifiers->union(realizingClassifiers.allParents())->asSet(),
     //         realizingClassifierInterfaces : Set(Interface) = allRealizingClassifiers->iterate(c; rci : Set(Interface) = Set{} | rci->union(c.allRealizedInterfaces())),
@@ -1840,13 +1838,13 @@ class Component : Class
     /// The Interfaces that the Component requires from other Components in its environment in order to be able to offer its full set of provided functionality. These Interfaces may be used by the Component or any of its realizingClassifiers, or they may be the Interfaces that are required by its public Ports.
     /// </summary>
     // spec:
-    // result = (let     uis : Set(Interface) = allUsedInterfaces(),
+    // result = (let 	uis : Set(Interface) = allUsedInterfaces(),
     //         realizingClassifiers : Set(Classifier) = self.realization.realizingClassifier->union(self.allParents()->collect(realization.realizingClassifier))->asSet(),
     //         allRealizingClassifiers : Set(Classifier) = realizingClassifiers->union(realizingClassifiers.allParents())->asSet(),
     //         realizingClassifierInterfaces : Set(Interface) = allRealizingClassifiers->iterate(c; rci : Set(Interface) = Set{} | rci->union(c.allUsedInterfaces())),
     //         ports : Set(Port) = self.ownedPort->union(allParents()->collect(ownedPort))->asSet(),
     //         usedByPorts : Set(Interface) = ports.required->asSet()
-    // in        uis->union(realizingClassifierInterfaces)->union(usedByPorts)->asSet()
+    // in	    uis->union(realizingClassifierInterfaces)->union(usedByPorts)->asSet()
     // )
     derived Interface[] Required
         // opposite Interface.Component
@@ -1930,16 +1928,16 @@ class Connector : Feature
     /// </summary>
     contains ConnectorEnd[] End
         subsets Element.OwnedElement
-        opposite ConnectorEnd.Connector
+        // opposite ConnectorEnd.Connector
 
     /// <summary>
     /// Indicates the kind of Connector. This is derived: a Connector with one or more ends connected to a Port which is not on a Part and which is not a behavior port is a delegation; otherwise it is an assembly.
     /// </summary>
     // spec:
     // result = (if end->exists(
-    //         role.oclIsKindOf(Port) 
-    //         and partWithPort->isEmpty()
-    //         and not role.oclAsType(Port).isBehavior)
+    // 		role.oclIsKindOf(Port) 
+    // 		and partWithPort->isEmpty()
+    // 		and not role.oclAsType(Port).isBehavior)
     // then ConnectorKind::delegation 
     // else ConnectorKind::assembly 
     // endif)
@@ -1965,12 +1963,6 @@ class Connector : Feature
 /// </summary>
 class ConnectorEnd : MultiplicityElement
 {
-    /// <summary>
-    /// The Connector of which the ConnectorEnd is the endpoint.
-    /// </summary>
-    Connector Connector 
-        subsets Element.Owner
-        opposite Connector.End
 
     /// <summary>
     /// A derived property referencing the corresponding end on the Association which types the Connector owing this ConnectorEnd, if any. It is derived by selecting the end at the same place in the ordering of Association ends as this ConnectorEnd.
@@ -2595,11 +2587,11 @@ class StateMachine : Behavior
     // result = (if ancestor(s1, s2) then 
     //     s2.container
     // else
-    //     if ancestor(s2, s1) then
-    //         s1.container 
-    //     else 
-    //         LCA(s1.container.state, s2.container.state)
-    //     endif
+    // 	if ancestor(s2, s1) then
+    // 	    s1.container 
+    // 	else 
+    // 	    LCA(s1.container.state, s2.container.state)
+    // 	endif
     // endif)
     Region LCA(Vertex s1, Vertex s2)
 
@@ -2614,17 +2606,17 @@ class StateMachine : Behavior
     /// </returns>
     // spec:
     // result = (if (s2 = s1) then 
-    //     true 
+    // 	true 
     // else 
-    //     if s1.container.stateMachine->notEmpty() then 
-    //         true
-    //     else 
-    //         if s2.container.stateMachine->notEmpty() then 
-    //             false
-    //         else
-    //             ancestor(s1, s2.container.state)
-    //          endif
-    //      endif
+    // 	if s1.container.stateMachine->notEmpty() then 
+    // 	    true
+    // 	else 
+    // 	    if s2.container.stateMachine->notEmpty() then 
+    // 	        false
+    // 	    else
+    // 	        ancestor(s1, s2.container.state)
+    // 	     endif
+    // 	 endif
     // endif  )
     bool Ancestor(Vertex s1, Vertex s2)
 
@@ -2668,11 +2660,11 @@ class StateMachine : Behavior
     /// </returns>
     // spec:
     // result = (if v2.oclIsTypeOf(State) and ancestor(v1, v2) then
-    //     v2.oclAsType(State)
+    // 	v2.oclAsType(State)
     // else if v1.oclIsTypeOf(State) and ancestor(v2, v1) then
-    //     v1.oclAsType(State)
+    // 	v1.oclAsType(State)
     // else if (v1.container.state->isEmpty() or v2.container.state->isEmpty()) then 
-    //     null.oclAsType(State)
+    // 	null.oclAsType(State)
     // else LCAState(v1.container.state, v2.container.state)
     // endif endif endif)
     State LCAState(Vertex v1, Vertex v2)
@@ -2851,13 +2843,13 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// </returns>
     // spec:
     // result = (if not s.isComposite() or container->isEmpty() then
-    //     false
+    // 	false
     // else
-    //     if container.state = s then 
-    //         true
-    //     else
-    //         container.state.isContainedInState(s)
-    //     endif
+    // 	if container.state = s then 
+    // 		true
+    // 	else
+    // 		container.state.isContainedInState(s)
+    // 	endif
     // endif)
     bool IsContainedInState(State s)
 
@@ -2870,13 +2862,13 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// </returns>
     // spec:
     // result = (if (container = r) then
-    //     true
+    // 	true
     // else
-    //     if (r.state->isEmpty()) then
-    //         false
-    //     else
-    //         container.state.isContainedInRegion(r)
-    //     endif
+    // 	if (r.state->isEmpty()) then
+    // 		false
+    // 	else
+    // 		container.state.isContainedInRegion(r)
+    // 	endif
     // endif)
     bool IsContainedInRegion(Region r)
 
@@ -3290,9 +3282,9 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// </returns>
     // spec:
     // result = (if self.oclIsKindOf(Profile) then 
-    //     self.oclAsType(Profile)
+    // 	self.oclAsType(Profile)
     // else
-    //     self.namespace.oclAsType(Package).containingProfile()
+    // 	self.namespace.oclAsType(Package).containingProfile()
     // endif)
     Profile ContainingProfile()
 
@@ -3472,7 +3464,7 @@ class CombinedFragment : InteractionFragment
     /// </summary>
     contains Gate[] CfragmentGate
         subsets Element.OwnedElement
-        opposite Gate.CombinedFragment
+        // opposite Gate.CombinedFragment
 
     /// <summary>
     /// Specifies the operation which defines the semantics of this combination of InteractionFragments.
@@ -3484,7 +3476,7 @@ class CombinedFragment : InteractionFragment
     /// </summary>
     contains InteractionOperand[] Operand
         subsets Element.OwnedElement
-        opposite InteractionOperand.CombinedFragment
+        // opposite InteractionOperand.CombinedFragment
 }
 
 /// <summary>
@@ -3562,26 +3554,6 @@ abstract class ExecutionSpecification : InteractionFragment
 /// </summary>
 class Gate : MessageEnd
 {
-    /// <summary>
-    /// The CombinedFragment to which the Gate is attached to.
-    /// </summary>
-    CombinedFragment CombinedFragment 
-        subsets Element.Owner
-        opposite CombinedFragment.CfragmentGate
-
-    /// <summary>
-    /// The InteractionUse of which the Gate is an actual gate.
-    /// </summary>
-    InteractionUse InteractionUse 
-        subsets Element.Owner
-        opposite InteractionUse.ActualGate
-
-    /// <summary>
-    /// The Interaction that owns the Gate.
-    /// </summary>
-    Interaction Interaction 
-        subsets NamedElement.Namespace
-        opposite Interaction.FormalGate
 
     /// <summary>
     /// This query returns true if this Gate is attached to the boundary of a CombinedFragment, and its other end (if present)  is outside of the same CombinedFragment.
@@ -3742,14 +3714,14 @@ class Interaction : InteractionFragment, Behavior
     /// </summary>
     contains Action[] Action
         subsets Element.OwnedElement
-        opposite Action.Interaction
+        // opposite Action.Interaction
 
     /// <summary>
     /// Specifies the gates that form the message interface between this Interaction and any InteractionUses which reference it.
     /// </summary>
     contains Gate[] FormalGate
         subsets Namespace.OwnedMember
-        opposite Gate.Interaction
+        // opposite Gate.Interaction
 
     /// <summary>
     /// The ordered set of fragments in the Interaction.
@@ -3836,12 +3808,6 @@ abstract class InteractionFragment : NamedElement
 /// </summary>
 class InteractionOperand : InteractionFragment, Namespace
 {
-	/// <summary>
-    /// The CombinedFragment that contains the InteractionOperand.
-    /// </summary>
-	CombinedFragment CombinedFragment
-        subsets Element.Owner
-        opposite CombinedFragment.Operand
 
     /// <summary>
     /// The fragments of the operand.
@@ -3869,7 +3835,7 @@ class InteractionUse : InteractionFragment
     /// </summary>
     contains Gate[] ActualGate
         subsets Element.OwnedElement
-        opposite Gate.InteractionUse
+        // opposite Gate.InteractionUse
 
     /// <summary>
     /// The actual arguments of the Interaction.
@@ -3972,7 +3938,9 @@ class Message : NamedElement
     /// <summary>
     /// The derived kind of the Message (complete, lost, found, or unknown).
     /// </summary>
-    MessageKind MessageKind
+    // spec:
+    // result = (messageKind)
+    derived MessageKind MessageKind
 
     /// <summary>
     /// The sort of communication reflected by the Message.
@@ -4709,7 +4677,7 @@ abstract class MultiplicityElement : Element
 /// <summary>
 /// A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.
 /// </summary>
-abstract class NamedElement $DeclarationSymbol : Element
+abstract class NamedElement : Element
 {
 
     /// <summary>
@@ -4724,7 +4692,7 @@ abstract class NamedElement $DeclarationSymbol : Element
     /// <summary>
     /// The name of the NamedElement.
     /// </summary>
-    string Name $Name
+    string Name
 
     /// <summary>
     /// The StringExpression used to define the name of this NamedElement.
@@ -4823,7 +4791,7 @@ abstract class NamedElement $DeclarationSymbol : Element
 /// <summary>
 /// A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name.
 /// </summary>
-abstract class Namespace $NamespaceSymbol : NamedElement
+abstract class Namespace : NamedElement
 {
 
     /// <summary>
@@ -5205,7 +5173,7 @@ class TemplateSignature : Element
 /// <summary>
 /// A Type constrains the values represented by a TypedElement.
 /// </summary>
-abstract class Type $TypeSymbol : PackageableElement
+abstract class Type : PackageableElement
 {
 
     /// <summary>
@@ -5596,14 +5564,8 @@ abstract class BehavioralFeature : Feature, Namespace
 /// <summary>
 /// A Classifier represents a classification of instances according to their Features.
 /// </summary>
-abstract class Classifier $TypeSymbol : Namespace, Type, TemplateableElement, RedefinableElement
+abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableElement
 {
-    /// <summary>
-    /// The Class owning the Classifier.
-    /// </summary>
-    Class NestingClass
-        subsets NamedElement.Namespace
-        opposite Class.NestedClassifier
 
     /// <summary>
     /// All of the Properties that are direct (i.e., not inherited or imported) attributes of the Classifier.
@@ -5632,7 +5594,7 @@ abstract class Classifier $TypeSymbol : Namespace, Type, TemplateableElement, Re
     /// </summary>
     // spec:
     // result = (parents())
-    derived Classifier[] General $BaseTypes
+    derived Classifier[] General
         // opposite Classifier.Classifier
 
     /// <summary>
@@ -6178,10 +6140,10 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     // spec:
     // result = (redefiningElement.oclIsKindOf(Operation) and
     // let op : Operation = redefiningElement.oclAsType(Operation) in
-    //     self.ownedParameter->size() = op.ownedParameter->size() and
-    //     Sequence{1..self.ownedParameter->size()}->
-    //         forAll(i |  
-    //           let redefiningParam : Parameter = op.ownedParameter->at(i),
+    // 	self.ownedParameter->size() = op.ownedParameter->size() and
+    // 	Sequence{1..self.ownedParameter->size()}->
+    // 		forAll(i |  
+    // 		  let redefiningParam : Parameter = op.ownedParameter->at(i),
     //                redefinedParam : Parameter = self.ownedParameter->at(i) in
     //                  (redefiningParam.isUnique = redefinedParam.isUnique) and
     //                  (redefiningParam.isOrdered = redefinedParam. isOrdered) and
@@ -6196,7 +6158,7 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     //                  ((redefiningParam.direction = ParameterDirectionKind::out or
     //                       redefiningParam.direction = ParameterDirectionKind::return) implies
     //                          redefiningParam.compatibleWith(redefinedParam))
-    //         ))
+    // 		))
     // pre:
     // redefiningElement.isRedefinitionContextValid(self)
     bool IsConsistentWith(RedefinableElement redefiningElement)
@@ -6747,12 +6709,6 @@ class AcceptEventAction : Action
 /// </summary>
 abstract class Action : ExecutableNode
 {
-    /// <summary>
-    /// The Interaction that owns the Action.
-    /// </summary>
-    Interaction Interaction
-        subsets NamedElement.Namespace
-        opposite Interaction.Action
 
     /// <summary>
     /// The context Classifier of the Behavior that contains this Action, or the Behavior itself if it has no context.

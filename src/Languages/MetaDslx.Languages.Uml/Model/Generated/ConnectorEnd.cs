@@ -29,6 +29,10 @@ namespace MetaDslx.Languages.Uml.Model
     public interface ConnectorEnd : global::MetaDslx.Languages.Uml.Model.MultiplicityElement
     {
         /// <summary>
+        /// The Connector of which the ConnectorEnd is the endpoint.
+        /// </summary>
+        Connector Connector { get; set; }
+        /// <summary>
         /// A derived property referencing the corresponding end on the Association which types the Connector owing this ConnectorEnd, if any. It is derived by selecting the end at the same place in the ordering of Association ends as this ConnectorEnd.
         /// </summary>
         Property DefiningEnd { get; }

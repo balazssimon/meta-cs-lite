@@ -302,7 +302,7 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
             public override __MetaModel MetaModel => Uml.MInstance;
             public override __MetaType MetaType => typeof(BehavioralFeature);
     
-            public override __MetaType SymbolType => default;
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;

@@ -43,7 +43,7 @@ namespace MetaDslx.Languages.Uml.Model
         /// <summary>
         /// The derived kind of the Message (complete, lost, found, or unknown).
         /// </summary>
-        global::MetaDslx.Languages.Uml.Model.MessageKind MessageKind { get; }
+        global::MetaDslx.Languages.Uml.Model.MessageKind MessageKind { get; set; }
         /// <summary>
         /// The sort of communication reflected by the Message.
         /// </summary>

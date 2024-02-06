@@ -561,7 +561,9 @@ namespace MetaDslx.Modeling.Meta
                         var oinfo = ocls.ModelPropertyInfos[oprop];
                         if (!oinfo.OppositeProperties.Contains(prop))
                         {
-                            _diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_NonMutualOpposite, prop.Location, prop, oprop));
+                            var propName = $"{prop.DeclaringType.Name}.{prop.Name}";
+                            var opropName = $"{oprop.DeclaringType.Name}.{oprop.Name}";
+                            _diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_NonMutualOpposite, prop.Location, propName, opropName));
                         }
                     }
                 }

@@ -39,7 +39,7 @@ namespace MetaDslx.Modeling.Meta
 
         public override string ToString()
         {
-            return $"{Name}.{UnderlyingProperty}";
+            return $"{DeclaringType.Name}.{UnderlyingProperty}";
         }
     }
 }

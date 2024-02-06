@@ -261,7 +261,7 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
             public override __MetaModel MetaModel => Uml.MInstance;
             public override __MetaType MetaType => typeof(ControlFlow);
     
-            public override __MetaType SymbolType => default;
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;

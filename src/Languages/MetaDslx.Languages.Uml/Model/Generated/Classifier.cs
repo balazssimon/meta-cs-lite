@@ -61,6 +61,10 @@ namespace MetaDslx.Languages.Uml.Model
         /// </summary>
         bool IsFinalSpecialization { get; set; }
         /// <summary>
+        /// The Class owning the Classifier.
+        /// </summary>
+        Class NestingClass { get; set; }
+        /// <summary>
         /// The optional RedefinableTemplateSignature specifying the formal template parameters.
         /// </summary>
         new RedefinableTemplateSignature OwnedTemplateSignature { get; set; }

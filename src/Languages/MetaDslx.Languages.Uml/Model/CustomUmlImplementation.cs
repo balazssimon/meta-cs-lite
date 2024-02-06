@@ -1,17 +1,20 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace MetaDslx.Languages.Uml.Model
 {
     internal static class IEnumerableExtensions
     {
-        public static HashSet<T> ToSet<T>(this IEnumerable<T> items)
+        internal static UniqueList<T> ToSet<T>(this IEnumerable<T> items)
         {
-            return new HashSet<T>(items);
+            return new UniqueList<T>(items);
         }
     }
 
@@ -22,7 +25,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (self->asSet())
         public override IList<Action> Action_AllActions(Action _this)
         {
-            return new List<Action>() { _this };
+            return ImmutableArray.Create(_this);
         }
 
         // Returns all the ActivityNodes directly or indirectly owned by this Action. This includes at least all the Pins of the Action.
@@ -31,8 +34,8 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<ActivityNode> Action_AllOwnedNodes(Action _this)
         {
             var result = _this.Input.OfType<Pin>().ToSet();
-            result.UnionWith(_this.Output);
-            return result.OfType<ActivityNode>().ToList();
+            result.AddRange(_this.Output);
+            return result.OfType<ActivityNode>().ToSet();
         }
 
         // The context Classifier of the Behavior that contains this Action, or the Behavior itself if it has no context.
@@ -104,7 +107,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (memberEnd->collect(type)->asSet())
         public override IList<Type> Association_EndType(Association _this)
         {
-            return _this.MemberEnd.Select(me => me.Type).ToSet().ToList();
+            return _this.MemberEnd.Select(me => me.Type).ToSet();
         }
 
         // The ownedParameters with direction in and inout.
@@ -214,14 +217,14 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<Parameter> CallAction_InputParameters(CallAction _this)
         {
             Debug.Assert(false, "abstract method");
-            return new List<Parameter>();
+            return ImmutableArray<Parameter>.Empty;
         }
 
         // Return the inout, out and return ownedParameters of the Behavior or Operation being called. (This operation is abstract and should be overridden by subclasses of CallAction.)
         public override IList<Parameter> CallAction_OutputParameters(CallAction _this)
         {
             Debug.Assert(false, "abstract method");
-            return new List<Parameter>();
+            return ImmutableArray<Parameter>.Empty;
         }
 
         // Return the in and inout ownedParameters of the Behavior being called.
@@ -277,7 +280,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (member->select(oclIsKindOf(Feature))->collect(oclAsType(Feature))->asSet())
         public override IList<Feature> Classifier_AllFeatures(Classifier _this)
         {
-            return _this.Member.OfType<Feature>().ToSet().ToList();
+            return _this.Member.OfType<Feature>().ToSet();
         }
 
         // The query allParents() gives all of the direct and indirect ancestors of a generalized Classifier.
@@ -286,12 +289,12 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<Classifier> Classifier_AllParents(Classifier _this)
         {
             var parents = _this.Parents();
-            var result = new HashSet<Classifier>(parents);
+            var result = new UniqueList<Classifier>(parents);
             foreach (var p in parents)
             {
-                result.UnionWith(p.AllParents());
+                result.AddRange(p.AllParents());
             }
-            return result.ToList();
+            return result;
         }
 
         // The Interfaces realized by this Classifier and all of its generalizations
@@ -299,12 +302,12 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (directlyRealizedInterfaces()->union(self.allParents()->collect(directlyRealizedInterfaces()))->asSet())
         public override IList<Interface> Classifier_AllRealizedInterfaces(Classifier _this)
         {
-            var result = new HashSet<Interface>(_this.DirectlyRealizedInterfaces());
+            var result = new UniqueList<Interface>(_this.DirectlyRealizedInterfaces());
             foreach (var p in _this.AllParents())
             {
-                result.UnionWith(p.DirectlyRealizedInterfaces());
+                result.AddRange(p.DirectlyRealizedInterfaces());
             }
-            return result.ToList();
+            return result;
         }
 
         // All StructuralFeatures related to the Classifier that may have Slots, including direct attributes, inherited attributes, private attributes in generalizations, and memberEnds of Associations, but excluding redefined StructuralFeatures.
@@ -315,12 +318,12 @@ namespace MetaDslx.Languages.Uml.Model
         //          collect(oclAsType(StructuralFeature)))->asSet())
         public override IList<StructuralFeature> Classifier_AllSlottableFeatures(Classifier _this)
         {
-            var result = new HashSet<StructuralFeature>(_this.Member.OfType<StructuralFeature>());
+            var result = new UniqueList<StructuralFeature>(_this.Member.OfType<StructuralFeature>());
             foreach (var parent in _this.AllParents())
             {
-                result.UnionWith(parent.Attribute);
+                result.AddRange(parent.Attribute);
             }
-            return result.ToList();
+            return result;
         }
 
         // The Interfaces used by this Classifier and all of its generalizations
@@ -328,12 +331,12 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (directlyUsedInterfaces()->union(self.allParents()->collect(directlyUsedInterfaces()))->asSet())
         public override IList<Interface> Classifier_AllUsedInterfaces(Classifier _this)
         {
-            var result = new HashSet<Interface>(_this.DirectlyUsedInterfaces());
+            var result = new UniqueList<Interface>(_this.DirectlyUsedInterfaces());
             foreach (var p in _this.AllParents())
             {
-                result.UnionWith(p.DirectlyUsedInterfaces());
+                result.AddRange(p.DirectlyUsedInterfaces());
             }
-            return result.ToList();
+            return result;
         }
 
         // The generalizing Classifiers for this Classifier.
@@ -349,7 +352,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (inherit(parents()->collect(inheritableMembers(self))->asSet()))
         public override IList<NamedElement> Classifier_InheritedMember(Classifier _this)
         {
-            return _this.Inherit(_this.Parents().SelectMany(p => p.InheritableMembers(_this)).ToSet().ToList()).ToSet().ToList();
+            return _this.Inherit(_this.Parents().SelectMany(p => p.InheritableMembers(_this)).ToSet()).ToSet();
         }
 
         // The query conformsTo() gives true for a Classifier that defines a type that conforms to another. This is used, for example, in the specification of signature conformance for operations.
@@ -372,7 +375,7 @@ namespace MetaDslx.Languages.Uml.Model
         //           collect(supplier.oclAsType(Interface))->asSet())
         public override IList<Interface> Classifier_DirectlyRealizedInterfaces(Classifier _this)
         {
-            return _this.ClientDependency.Where(dep => dep is Realization && dep.Supplier.All(sup => sup is Interface)).SelectMany(dep => dep.Supplier.OfType<Interface>()).ToSet().ToList();
+            return _this.ClientDependency.Where(dep => dep is Realization && dep.Supplier.All(sup => sup is Interface)).SelectMany(dep => dep.Supplier.OfType<Interface>()).ToSet();
         }
 
         // The Interfaces directly used by this Classifier
@@ -382,7 +385,7 @@ namespace MetaDslx.Languages.Uml.Model
         //         collect(client.oclAsType(Interface))->asSet())
         public override IList<Interface> Classifier_DirectlyUsedInterfaces(Classifier _this)
         {
-            return _this.ClientDependency.Where(dep => dep is Usage && dep.Client.All(sup => sup is Interface)).SelectMany(dep => dep.Client.OfType<Interface>()).ToSet().ToList();
+            return _this.ClientDependency.Where(dep => dep is Usage && dep.Client.All(sup => sup is Interface)).SelectMany(dep => dep.Client.OfType<Interface>()).ToSet();
         }
 
         // The query hasVisibilityOf() determines whether a NamedElement is visible in the classifier. Non-private members are visible. It is only called when the argument is something owned by a parent.
@@ -405,7 +408,7 @@ namespace MetaDslx.Languages.Uml.Model
         //            ->notEmpty()))
         public override IList<NamedElement> Classifier_Inherit(Classifier _this, IList<NamedElement> inhs)
         {
-            return inhs.Where(inh => !(inh is RedefinableElement re && !_this.OwnedMember.OfType<RedefinableElement>().Where(m => m.RedefinedElement.Contains(re)).Any())).ToSet().ToList();
+            return inhs.Where(inh => !(inh is RedefinableElement re && !_this.OwnedMember.OfType<RedefinableElement>().Where(m => m.RedefinedElement.Contains(re)).Any())).ToSet();
         }
 
         // The query inheritableMembers() gives all of the members of a Classifier that may be inherited in one of its descendants, subject to whatever visibility restrictions apply.
@@ -416,7 +419,7 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<NamedElement> Classifier_InheritableMembers(Classifier _this, Classifier c)
         {
             Debug.Assert(c.AllParents().Contains(_this));
-            return _this.Member.Where(m => c.HasVisibilityOf(m)).ToSet().ToList();
+            return _this.Member.Where(m => c.HasVisibilityOf(m)).ToSet();
         }
 
         // spec:
@@ -447,7 +450,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (generalization.general->asSet())
         public override IList<Classifier> Classifier_Parents(Classifier _this)
         {
-            return _this.Generalization.Select(g => g.General).ToSet().ToList();
+            return _this.Generalization.Select(g => g.General).ToSet();
         }
 
         // This property is used when the Class is acting as a metaclass. It references the Extensions that specify additional properties of the metaclass. The property is derived from the Extensions whose memberEnds are typed by the Class.
@@ -457,7 +460,7 @@ namespace MetaDslx.Languages.Uml.Model
         //       endTypes->includes(self) or endTypes.allParents()->includes(self) ))
         public override IList<Extension> Class_Extension(Class _this)
         {
-            var result = new HashSet<Extension>();
+            var result = new UniqueList<Extension>();
             foreach (var ext in _this.MModel.Objects.OfType<Extension>())
             {
                 var endTypes = ext.MemberEnd.Select(me => me.Type as Classifier);
@@ -466,7 +469,7 @@ namespace MetaDslx.Languages.Uml.Model
                     result.Add(ext);
                 }
             }
-            return result.ToList();
+            return result;
         }
 
         // The superclasses of a Class, derived from its Generalizations.
@@ -474,7 +477,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (self.general()->select(oclIsKindOf(Class))->collect(oclAsType(Class))->asSet())
         public override IList<Class> Class_SuperClass(Class _this)
         {
-            return _this.General.Where(cls => cls is Class).Cast<Class>().ToSet().ToList();
+            return _this.General.Where(cls => cls is Class).Cast<Class>().ToSet();
         }
 
         // The Interfaces that the Component exposes to its environment. These Interfaces may be Realized by the Component or any of its realizingClassifiers, or they may be the Interfaces that are provided by its public Ports.
@@ -490,17 +493,17 @@ namespace MetaDslx.Languages.Uml.Model
         {
             var ris = _this.AllRealizedInterfaces();
             var realizingClassifiers = _this.Realization.SelectMany(r => r.RealizingClassifier).ToSet();
-            realizingClassifiers.UnionWith(_this.AllParents().OfType<Component>().SelectMany(p => p.Realization.SelectMany(r => r.RealizingClassifier)));
+            realizingClassifiers.AddRange(_this.AllParents().OfType<Component>().SelectMany(p => p.Realization.SelectMany(r => r.RealizingClassifier)));
             var allRealizingClassifiers = realizingClassifiers;
-            allRealizingClassifiers.UnionWith(realizingClassifiers.SelectMany(rc => rc.AllParents()));
+            allRealizingClassifiers.AddRange(realizingClassifiers.SelectMany(rc => rc.AllParents()));
             var realizingClassifierInterfaces = allRealizingClassifiers.SelectMany(arc => arc.AllRealizedInterfaces());
             var ports = _this.AllParents().OfType<Component>().SelectMany(p => p.OwnedPort).ToSet();
-            ports.UnionWith(_this.OwnedPort);
+            ports.AddRange(_this.OwnedPort);
             var providedByPorts = ports.SelectMany(p => p.Provided);
             var result = ris.ToSet();
-            result.UnionWith(realizingClassifierInterfaces);
-            result.UnionWith(providedByPorts);
-            return result.ToList();
+            result.AddRange(realizingClassifierInterfaces);
+            result.AddRange(providedByPorts);
+            return result;
         }
 
         // The Interfaces that the Component requires from other Components in its environment in order to be able to offer its full set of provided functionality. These Interfaces may be used by the Component or any of its realizingClassifiers, or they may be the Interfaces that are required by its public Ports.
@@ -517,17 +520,17 @@ namespace MetaDslx.Languages.Uml.Model
         {
             var uis = _this.AllUsedInterfaces();
             var realizingClassifiers = _this.Realization.SelectMany(r => r.RealizingClassifier).ToSet();
-            realizingClassifiers.UnionWith(_this.AllParents().OfType<Component>().SelectMany(p => p.Realization.SelectMany(r => r.RealizingClassifier)));
+            realizingClassifiers.AddRange(_this.AllParents().OfType<Component>().SelectMany(p => p.Realization.SelectMany(r => r.RealizingClassifier)));
             var allRealizingClassifiers = realizingClassifiers.ToSet();
-            allRealizingClassifiers.UnionWith(realizingClassifiers.SelectMany(rc => rc.AllParents()));
+            allRealizingClassifiers.AddRange(realizingClassifiers.SelectMany(rc => rc.AllParents()));
             var realizingClassifierInterfaces = allRealizingClassifiers.SelectMany(arc => arc.AllUsedInterfaces()).ToSet();
             var ports = _this.AllParents().OfType<Component>().SelectMany(p => p.OwnedPort).ToSet();
-            ports.UnionWith(_this.OwnedPort);
+            ports.AddRange(_this.OwnedPort);
             var requiredByPorts = ports.SelectMany(p => p.Required);
-            var result = new HashSet<Interface>(uis);
-            result.UnionWith(realizingClassifierInterfaces);
-            result.UnionWith(requiredByPorts);
-            return result.ToList();
+            var result = new UniqueList<Interface>(uis);
+            result.AddRange(realizingClassifierInterfaces);
+            result.AddRange(requiredByPorts);
+            return result;
         }
 
         // Return only this ConditionalNode. This prevents Actions within the ConditionalNode from having their OutputPins used as bodyOutputs or decider Pins in containing LoopNodes or ConditionalNodes.
@@ -535,7 +538,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (self->asSet())
         public override IList<Action> ConditionalNode_AllActions(ConditionalNode _this)
         {
-            return new List<Action>() { _this };
+            return ImmutableArray.Create<Action>(_this);
         }
 
         // A set of ConnectorEnds that attach to this ConnectableElement.
@@ -543,7 +546,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (ConnectorEnd.allInstances()->select(role = self))
         public override IList<ConnectorEnd> ConnectableElement_End(ConnectableElement _this)
         {
-            return _this.MModel.Objects.OfType<ConnectorEnd>().Where(ce => ce.Role == _this).ToSet().ToList();
+            return _this.MModel.Objects.OfType<ConnectorEnd>().Where(ce => ce.Role == _this).ToSet();
         }
 
         // The query isConsistentWith() specifies a ConnectionPointReference can only be redefined by a ConnectionPointReference.
@@ -592,7 +595,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (deployment.deployedArtifact->select(oclIsKindOf(Artifact))->collect(oclAsType(Artifact).manifestation)->collect(utilizedElement)->asSet())
         public override IList<PackageableElement> DeploymentTarget_DeployedElement(DeploymentTarget _this)
         {
-            return _this.Deployment.SelectMany(d => d.DeployedArtifact).OfType<Artifact>().SelectMany(a => a.Manifestation).Select(m => m.UtilizedElement).ToSet().ToList();
+            return _this.Deployment.SelectMany(d => d.DeployedArtifact).OfType<Artifact>().SelectMany(a => a.Manifestation).Select(m => m.UtilizedElement).ToSet();
         }
 
         // The query getName() returns the name under which the imported PackageableElement will be known in the importing namespace.
@@ -612,12 +615,12 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (ownedElement->union(ownedElement->collect(e | e.allOwnedElements()))->asSet())
         public override IList<Element> Element_AllOwnedElements(Element _this)
         {
-            var result = new HashSet<Element>(_this.OwnedElement);
+            var result = new UniqueList<Element>(_this.OwnedElement);
             foreach (var e in _this.OwnedElement)
             {
-                result.UnionWith(e.AllOwnedElements());
+                result.AddRange(e.AllOwnedElements());
             }
-            return result.ToList();
+            return result;
         }
 
         // The query mustBeOwned() indicates whether Elements of this type must have an owner. Subclasses of Element that do not require an owner must override this operation.
@@ -889,7 +892,7 @@ namespace MetaDslx.Languages.Uml.Model
         {
             var result = this.LinkEndData_AllPins(_this).ToSet();
             result.Add(_this.InsertAt);
-            return result.ToList();
+            return result;
         }
 
         // Returns all the InputPins referenced by this LinkEndData. By default this includes the value and qualifier InputPins, but subclasses may override the operation to add other InputPins.
@@ -899,7 +902,7 @@ namespace MetaDslx.Languages.Uml.Model
         {
             var result = _this.Qualifier.Select(q => q.Value).ToSet();
             result.Add(_this.Value);
-            return result.ToList();
+            return result;
         }
 
         // Adds the destroyAt InputPin (if any) to the set of all Pins.
@@ -909,7 +912,7 @@ namespace MetaDslx.Languages.Uml.Model
         {
             var result = this.LinkEndData_AllPins(_this).ToSet();
             result.Add(_this.DestroyAt);
-            return result.ToList();
+            return result;
         }
 
         // The query booleanValue() gives the value.
@@ -1013,7 +1016,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (self->asSet())
         public override IList<Action> LoopNode_AllActions(LoopNode _this)
         {
-            return new List<Action>() { _this };
+            return ImmutableArray.Create<Action>(_this);
         }
 
         // Return the loopVariable OutputPins in addition to other source nodes for the LoopNode as a StructuredActivityNode.
@@ -1022,8 +1025,8 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<ActivityNode> LoopNode_SourceNodes(LoopNode _this)
         {
             var result = this.StructuredActivityNode_SourceNodes(_this).ToSet();
-            result.UnionWith(_this.LoopVariable);
-            return result.ToList();
+            result.AddRange(_this.LoopVariable);
+            return result;
         }
 
         // This query returns a set including the enclosing InteractionFragment this MessageEnd is enclosed within.
@@ -1063,27 +1066,27 @@ namespace MetaDslx.Languages.Uml.Model
             {
                 if (endGate.IsOutsideCF())
                 {
-                    var result = new HashSet<InteractionFragment>();
+                    var result = new UniqueList<InteractionFragment>();
                     result.Add(endGate.CombinedFragment.EnclosingInteraction);
                     result.Add(endGate.CombinedFragment.EnclosingOperand);
-                    return result.ToList();
+                    return result;
                 }
-                else if (endGate.IsInsideCF()) return new List<InteractionFragment>() { endGate.CombinedFragment };
-                else if (endGate.IsFormal()) return new List<InteractionFragment>() { endGate.Interaction };
+                else if (endGate.IsInsideCF()) return ImmutableArray.Create<InteractionFragment>(endGate.CombinedFragment);
+                else if (endGate.IsFormal()) return ImmutableArray.Create<InteractionFragment>(endGate.Interaction);
                 else if (endGate.IsActual())
                 {
-                    var result = new HashSet<InteractionFragment>();
+                    var result = new UniqueList<InteractionFragment>();
                     result.Add(endGate.InteractionUse.EnclosingInteraction);
                     result.Add(endGate.InteractionUse.EnclosingOperand);
-                    return result.ToList();
+                    return result;
                 }
-                else return new List<InteractionFragment>() { };
+                else return ImmutableArray<InteractionFragment>.Empty;
             }
             else
             {
                 var endMOS = _this as MessageOccurrenceSpecification;
-                if (endMOS.EnclosingInteraction != null) return new List<InteractionFragment>() { endMOS.EnclosingInteraction };
-                else return new List<InteractionFragment>() { endMOS.EnclosingOperand };
+                if (endMOS.EnclosingInteraction != null) return ImmutableArray.Create<InteractionFragment>(endMOS.EnclosingInteraction);
+                else return ImmutableArray.Create<InteractionFragment>(endMOS.EnclosingOperand);
             }
         }
 
@@ -1118,10 +1121,10 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<MessageEnd> MessageEnd_OppositeEnd(MessageEnd _this)
         {
             Debug.Assert(_this.Message != null);
-            var result = new HashSet<MessageEnd>();
+            var result = new UniqueList<MessageEnd>();
             if (_this.Message.ReceiveEvent == _this) result.Add(_this.Message.SendEvent);
             else result.Add(_this.Message.ReceiveEvent);
-            return result.ToList();
+            return result;
         }
 
         // The query isDistinguishableFrom() specifies that any two Messages may coexist in the same Namespace, regardless of their names.
@@ -1235,7 +1238,7 @@ namespace MetaDslx.Languages.Uml.Model
             }
             else
             {
-                return new List<Namespace>() { };
+                return ImmutableArray<Namespace>.Empty;
             }
         }
 
@@ -1254,9 +1257,9 @@ namespace MetaDslx.Languages.Uml.Model
             {
                 var result = owningPackage.AllOwningPackages().ToSet();
                 result.Add(owningPackage);
-                return result.ToList();
+                return result;
             }
-            return new List<Package>() { };
+            return ImmutableArray<Package>.Empty;
         }
 
         // Indicates the Dependencies that reference this NamedElement as a client.
@@ -1264,7 +1267,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (Dependency.allInstances()->select(d | d.client->includes(self)))
         public override IList<Dependency> NamedElement_ClientDependency(NamedElement _this)
         {
-            return _this.MModel.Objects.OfType<Dependency>().Where(d => d.Client.Contains(_this)).ToSet().ToList();
+            return _this.MModel.Objects.OfType<Dependency>().Where(d => d.Client.Contains(_this)).ToSet();
         }
 
         // A name that allows the NamedElement to be identified within a hierarchy of nested Namespaces. It is constructed from the names of the containing Namespaces starting at the root of the hierarchy and ending with the name of the NamedElement itself.
@@ -1313,9 +1316,9 @@ namespace MetaDslx.Languages.Uml.Model
             var result = _this.ElementImport.Select(ei => ei.ImportedElement).ToSet();
             foreach (var pi in _this.PackageImport)
             {
-                result.UnionWith(pi.ImportedPackage.VisibleMembers());
+                result.AddRange(pi.ImportedPackage.VisibleMembers());
             }
-            return result.ToList();
+            return result;
         }
 
         // The query excludeCollisions() excludes from a set of PackageableElements any that would not be distinguishable from each other in this Namespace.
@@ -1323,7 +1326,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (imps->reject(imp1  | imps->exists(imp2 | not imp1.isDistinguishableFrom(imp2, self))))
         public override IList<PackageableElement> Namespace_ExcludeCollisions(Namespace _this, IList<PackageableElement> imps)
         {
-            return imps.Where(imp1 => !imps.Any(imp2 => !imp1.IsDistinguishableFrom(imp2, _this))).ToSet().ToList();
+            return imps.Where(imp1 => !imps.Any(imp2 => !imp1.IsDistinguishableFrom(imp2, _this))).ToSet();
         }
 
         // The query getNamesOfMember() gives a set of all of the names that a member would have in a Namespace, taking importing into account. In general a member can have multiple names in a Namespace if it is imported more than once with different aliases.
@@ -1342,13 +1345,13 @@ namespace MetaDslx.Languages.Uml.Model
         {
             if (_this.OwnedMember.Contains(element))
             {
-                return new List<InteractionFragment>() { element.Name };
+                return ImmutableArray.Create(element.Name);
             }
             else
             {
                 var elementImports = _this.ElementImport.Where(ei => ei.ImportedElement == element).Select(ei => ei.ImportedElement);
-                if (elementImports.Any()) return elementImports.Select(el => el.Name).ToSet().ToList();
-                else return _this.PackageImport.Where(pi => pi.ImportedPackage.VisibleMembers().OfType<NamedElement>().Contains(element)).SelectMany(pi => pi.ImportedPackage.GetNamesOfMember(element)).ToSet().ToList();
+                if (elementImports.Any()) return elementImports.Select(el => el.Name).ToSet();
+                else return _this.PackageImport.Where(pi => pi.ImportedPackage.VisibleMembers().OfType<NamedElement>().Contains(element)).SelectMany(pi => pi.ImportedPackage.GetNamesOfMember(element)).ToSet();
             }
         }
 
@@ -1357,7 +1360,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (self.excludeCollisions(imps)->select(imp | self.ownedMember->forAll(mem | imp.isDistinguishableFrom(mem, self))))
         public override IList<PackageableElement> Namespace_ImportMembers(Namespace _this, IList<PackageableElement> imps)
         {
-            return _this.ExcludeCollisions(imps).Where(imp => _this.OwnedMember.All(mem => imp.IsDistinguishableFrom(mem, _this))).ToSet().ToList();
+            return _this.ExcludeCollisions(imps).Where(imp => _this.OwnedMember.All(mem => imp.IsDistinguishableFrom(mem, _this))).ToSet();
         }
 
         // The Boolean query membersAreDistinguishable() determines whether all of the Namespace's members are distinguishable within it.
@@ -1515,7 +1518,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (ownedParameter->select (direction = ParameterDirectionKind::return))
         public override IList<Parameter> Operation_ReturnResult(Operation _this)
         {
-            return _this.OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return).ToSet().ToList();
+            return _this.OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return).ToSet();
         }
 
         // The query allApplicableStereotypes() returns all the directly or indirectly owned stereotypes, including stereotypes contained in sub-profiles.
@@ -1527,8 +1530,8 @@ namespace MetaDslx.Languages.Uml.Model
         {
             var ownedPackages = _this.OwnedMember.OfType<Package>();
             var result = _this.OwnedStereotype.ToSet();
-            result.UnionWith(ownedPackages.SelectMany(p => p.AllApplicableStereotypes()));
-            return result.ToList();
+            result.AddRange(ownedPackages.SelectMany(p => p.AllApplicableStereotypes()));
+            return result;
         }
 
         // References the packaged elements that are Packages.
@@ -1536,7 +1539,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (packagedElement->select(oclIsKindOf(Package))->collect(oclAsType(Package))->asSet())
         public override IList<Package> Package_NestedPackage(Package _this)
         {
-            return _this.PackagedElement.OfType<Package>().ToSet().ToList();
+            return _this.PackagedElement.OfType<Package>().ToSet();
         }
 
         // References the Stereotypes that are owned by the Package.
@@ -1544,7 +1547,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (packagedElement->select(oclIsKindOf(Stereotype))->collect(oclAsType(Stereotype))->asSet())
         public override IList<Stereotype> Package_OwnedStereotype(Package _this)
         {
-            return _this.PackagedElement.OfType<Stereotype>().ToSet().ToList();
+            return _this.PackagedElement.OfType<Stereotype>().ToSet();
         }
 
         // References the packaged elements that are Types.
@@ -1552,7 +1555,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (packagedElement->select(oclIsKindOf(Type))->collect(oclAsType(Type))->asSet())
         public override IList<Type> Package_OwnedType(Package _this)
         {
-            return _this.PackagedElement.OfType<Type>().ToSet().ToList();
+            return _this.PackagedElement.OfType<Type>().ToSet();
         }
 
         // The query containingProfile() returns the closest profile directly or indirectly containing this package (or this package itself, if it is a profile).
@@ -1597,7 +1600,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (member->select( m | m.oclIsKindOf(PackageableElement) and self.makesVisible(m))->collect(oclAsType(PackageableElement))->asSet())
         public override IList<PackageableElement> Package_VisibleMembers(Package _this)
         {
-            return _this.Member.Where(m => m is PackageableElement && _this.MakesVisible(m)).Cast<PackageableElement>().ToSet().ToList();
+            return _this.Member.Where(m => m is PackageableElement && _this.MakesVisible(m)).Cast<PackageableElement>().ToSet();
         }
 
         // The query isCompatibleWith() determines if this ParameterableElement is compatible with the specified ParameterableElement. By default, this ParameterableElement is compatible with another ParameterableElement p if the kind of this ParameterableElement is the same as or a subtype of the kind of p. Subclasses of ParameterableElement should override this operation to specify different compatibility constraints.
@@ -1621,7 +1624,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (if self.type = String then defaultValue.stringValue() else null endif)
         public override string Parameter_Default(Parameter _this)
         {
-            return _this.Type == MetaDslx.Languages.Uml.Model.Uml.String ? _this.DefaultValue?.StringValue() : null;
+            return _this.Type?.Name?.ToLower() == "string" ? _this.DefaultValue?.StringValue() : null;
         }
 
         // The union of the sets of Interfaces realized by the type of the Port and its supertypes, or directly the type of the Port if the Port is typed by an Interface.
@@ -1632,7 +1635,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     endif)
         public override IList<Interface> Port_BasicProvided(Port _this)
         {
-            return _this.Type is Interface intf ? new List<Interface>() { intf } : (_this.Type as Classifier)?.AllRealizedInterfaces() ?? new List<Interface>();
+            return _this.Type is Interface intf ? ImmutableArray.Create(intf) : (_this.Type as Classifier)?.AllRealizedInterfaces() ?? ImmutableArray<Interface>.Empty;
         }
 
         // The union of the sets of Interfaces used by the type of the Port and its supertypes.
@@ -1745,9 +1748,9 @@ namespace MetaDslx.Languages.Uml.Model
         //     endif)
         public override IList<Type> Property_SubsettingContext(Property _this)
         {
-            if (_this.Association != null) return _this.Association.MemberEnd.Where(me => me != _this).Select(me => me.Type).ToSet().ToList();
-            else if (_this.Class != null) return new List<Type>() { _this.Class };
-            else return new List<Type>();
+            if (_this.Association != null) return _this.Association.MemberEnd.Where(me => me != _this).Select(me => me.Type).ToSet();
+            else if (_this.Class != null) return ImmutableArray.Create<Type>(_this.Class);
+            else return ImmutableArray<Type>.Empty;
         }
 
         // This association refers to the associated Operation. It is derived from the Operation of the CallEvent Trigger when applicable.
@@ -1755,7 +1758,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (trigger->collect(event)->select(oclIsKindOf(CallEvent))->collect(oclAsType(CallEvent).operation)->asSet())
         public override IList<Operation> ProtocolTransition_Referred(ProtocolTransition _this)
         {
-            return _this.Trigger.Select(t => t.Event).OfType<CallEvent>().Select(e => e.Operation).ToSet().ToList();
+            return _this.Trigger.Select(t => t.Event).OfType<CallEvent>().Select(e => e.Operation).ToSet();
         }
 
         // The query isConsistentWith() specifies a Pseudostate can only be redefined by a Pseudostate of the same kind.
@@ -1807,7 +1810,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (if extendedSignature->isEmpty() then Set{} else extendedSignature.parameter->asSet() endif)
         public override IList<TemplateParameter> RedefinableTemplateSignature_InheritedParameter(RedefinableTemplateSignature _this)
         {
-            return _this.ExtendedSignature.SelectMany(es => es.Parameter).ToSet().ToList();
+            return _this.ExtendedSignature.SelectMany(es => es.Parameter).ToSet();
         }
 
         // The query isConsistentWith() specifies, for any two RedefinableTemplateSignatures in a context in which redefinition is possible, whether redefinition would be logically consistent. A redefining template signature is always consistent with a redefined template signature, as redefinition only adds new formal parameters.
@@ -2119,7 +2122,7 @@ namespace MetaDslx.Languages.Uml.Model
         {
             var result = _this.Node.OfType<Action>().SelectMany(a => a.AllActions()).ToSet();
             result.Add(_this);
-            return result.ToList();
+            return result;
         }
 
         // Returns all the ActivityNodes contained directly or indirectly within this StructuredActivityNode, in addition to the Pins of the StructuredActivityNode.
@@ -2128,9 +2131,9 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<ActivityNode> StructuredActivityNode_AllOwnedNodes(StructuredActivityNode _this)
         {
             var result = this.Action_AllOwnedNodes(_this).ToSet();
-            result.UnionWith(_this.Node);
-            result.UnionWith(_this.Node.OfType<Action>().SelectMany(a => a.AllOwnedNodes()));
-            return result.ToList();
+            result.AddRange(_this.Node);
+            result.AddRange(_this.Node.OfType<Action>().SelectMany(a => a.AllOwnedNodes()));
+            return result;
         }
 
         // The Activity that directly or indirectly contains this StructuredActivityNode (considered as an Action).
@@ -2148,9 +2151,9 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<ActivityNode> StructuredActivityNode_SourceNodes(StructuredActivityNode _this)
         {
             var result = _this.Node.ToSet();
-            result.UnionWith(_this.Input.OfType<ActivityNode>());
-            result.UnionWith(_this.Node.OfType<Action>().SelectMany(a => a.Output));
-            return result.ToList();
+            result.AddRange(_this.Input.OfType<ActivityNode>());
+            result.AddRange(_this.Node.OfType<Action>().SelectMany(a => a.Output));
+            return result;
         }
 
         // Return those ActivityNodes contained immediately within the StructuredActivityNode that may act as targets of edges owned by the StructuredActivityNode.
@@ -2160,9 +2163,9 @@ namespace MetaDslx.Languages.Uml.Model
         public override IList<ActivityNode> StructuredActivityNode_TargetNodes(StructuredActivityNode _this)
         {
             var result = _this.Node.ToSet();
-            result.UnionWith(_this.Output.OfType<ActivityNode>());
-            result.UnionWith(_this.Node.OfType<Action>().SelectMany(a => a.Input));
-            return result.ToList();
+            result.AddRange(_this.Output.OfType<ActivityNode>());
+            result.AddRange(_this.Node.OfType<Action>().SelectMany(a => a.Input));
+            return result;
         }
 
         // All features of type ConnectableElement, equivalent to all direct and inherited roles.
@@ -2170,7 +2173,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (allFeatures()->select(oclIsKindOf(ConnectableElement))->collect(oclAsType(ConnectableElement))->asSet())
         public override IList<ConnectableElement> StructuredClassifier_AllRoles(StructuredClassifier _this)
         {
-            return _this.AllFeatures().OfType<ConnectableElement>().ToSet().ToList();
+            return _this.AllFeatures().OfType<ConnectableElement>().ToSet();
         }
 
         // The Properties specifying instances that the StructuredClassifier owns by composition. This collection is derived, selecting those owned Properties where isComposite is true.
@@ -2178,7 +2181,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (ownedAttribute->select(isComposite))
         public override IList<Property> StructuredClassifier_Part(StructuredClassifier _this)
         {
-            return _this.OwnedAttribute.Where(attr => attr.IsComposite).ToSet().ToList();
+            return _this.OwnedAttribute.Where(attr => attr.IsComposite).ToSet();
         }
 
         // The query isTemplate() returns whether this TemplateableElement is actually a template.
@@ -2194,7 +2197,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (self.allOwnedElements()->select(oclIsKindOf(ParameterableElement)).oclAsType(ParameterableElement)->asSet())
         public override IList<ParameterableElement> TemplateableElement_ParameterableElements(TemplateableElement _this)
         {
-            return _this.AllOwnedElements().OfType<ParameterableElement>().ToSet().ToList();
+            return _this.AllOwnedElements().OfType<ParameterableElement>().ToSet();
         }
 
         // References the Classifier in which context this element may be redefined.
@@ -2241,9 +2244,9 @@ namespace MetaDslx.Languages.Uml.Model
             var result = additions.ToSet();
             foreach (var uc in additions)
             {
-                result.UnionWith(uc.AllIncludedUseCases());
+                result.AddRange(uc.AllIncludedUseCases());
             }
-            return result.ToList();
+            return result;
         }
 
         // The query booleanValue() gives a single Boolean value when one can be computed.
@@ -2327,7 +2330,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (Transition.allInstances()->select(target=self))
         public override IList<Transition> Vertex_Incoming(Vertex _this)
         {
-            return _this.MModel.Objects.OfType<Transition>().Where(t => t.Target == _this).ToSet().ToList();
+            return _this.MModel.Objects.OfType<Transition>().Where(t => t.Target == _this).ToSet();
         }
 
         // Specifies the Transitions departing from this Vertex.
@@ -2335,7 +2338,7 @@ namespace MetaDslx.Languages.Uml.Model
         //     result = (Transition.allInstances()->select(source=self))
         public override IList<Transition> Vertex_Outgoing(Vertex _this)
         {
-            return _this.MModel.Objects.OfType<Transition>().Where(t => t.Source == _this).ToSet().ToList();
+            return _this.MModel.Objects.OfType<Transition>().Where(t => t.Source == _this).ToSet();
         }
 
         // References the Classifier in which context this element may be redefined.
@@ -2419,5 +2422,6 @@ namespace MetaDslx.Languages.Uml.Model
             else if (_this.Container.State == s) return true;
             else return _this.Container.State.IsContainedInState(s);
         }
+
     }
 }

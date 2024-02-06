@@ -1833,11 +1833,6 @@ namespace MetaDslx.Languages.Uml.Model
         public abstract Class Extension_Metaclass(Extension _this);
     
         /// <summary>
-        /// The derived kind of the Message (complete, lost, found, or unknown).
-        /// </summary>
-        public abstract global::MetaDslx.Languages.Uml.Model.MessageKind Message_MessageKind(Message _this);
-    
-        /// <summary>
         /// The lower bound of the multiplicity interval.
         /// </summary>
         public abstract int MultiplicityElement_Lower(MultiplicityElement _this);

@@ -28,6 +28,18 @@ namespace MetaDslx.Languages.Uml.Model
     /// </summary>
     public interface Gate : global::MetaDslx.Languages.Uml.Model.MessageEnd
     {
+        /// <summary>
+        /// The CombinedFragment to which the Gate is attached to.
+        /// </summary>
+        CombinedFragment CombinedFragment { get; set; }
+        /// <summary>
+        /// The Interaction that owns the Gate.
+        /// </summary>
+        Interaction Interaction { get; set; }
+        /// <summary>
+        /// The InteractionUse of which the Gate is an actual gate.
+        /// </summary>
+        InteractionUse InteractionUse { get; set; }
     
         /// <summary>
         /// This query returns true if this Gate is attached to the boundary of a CombinedFragment, and its other end (if present)  is outside of the same CombinedFragment.

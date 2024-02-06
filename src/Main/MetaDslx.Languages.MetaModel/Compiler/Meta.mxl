@@ -33,7 +33,7 @@ MetaClass:
 	[Scope]('{' (properties+=MetaProperty | operations+=MetaOperation)* '}');
 
 MetaProperty: 
-	(isContainment?='contains' | isDerived?='derived' | isUnion?='union' | isReadOnly?='readonly')? @type=MetaTypeReference [Name](Identifier? '$' symbolProperty=[Value(string)]Identifier | Identifier) ('=' defaultValue=Value)?
+	(isContainment?='contains' | isDerived?='derived' | isUnion?='union' | isReadOnly?='readonly')? @type=MetaTypeReference [Name](Identifier? '$' symbolProperty=[SymbolProperty]Identifier | Identifier) ('=' defaultValue=Value)?
 	(   'opposite' oppositeProperties+=#MetaProperty (',' oppositeProperties+=#MetaProperty)* 
 	|	'subsets' subsettedProperties+=#MetaProperty (',' subsettedProperties+=#MetaProperty)* 
 	|	'redefines' redefinedProperties+=#MetaProperty (',' redefinedProperties+=#MetaProperty)*

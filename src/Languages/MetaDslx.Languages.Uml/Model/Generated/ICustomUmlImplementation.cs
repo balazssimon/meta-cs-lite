@@ -555,8 +555,6 @@ namespace MetaDslx.Languages.Uml.Model
     
         Class Extension_Metaclass(Extension _this);
     
-        global::MetaDslx.Languages.Uml.Model.MessageKind Message_MessageKind(Message _this);
-    
         int MultiplicityElement_Lower(MultiplicityElement _this);
     
         int MultiplicityElement_Upper(MultiplicityElement _this);
