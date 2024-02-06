@@ -162,7 +162,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     }
 
-    
     public sealed class MainSyntax : MetaSyntaxNode, global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax
     {
         private QualifierSyntax _qualifier;
@@ -304,7 +303,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class UsingSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _namespaces;
@@ -395,7 +393,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaModelSyntax : MetaSyntaxNode
     {
         private NameSyntax _name;
@@ -514,7 +511,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class MetaDeclarationAlt1Syntax : MetaDeclarationSyntax
     {
         private MetaConstantSyntax _metaConstant;
@@ -743,7 +739,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaConstantSyntax : MetaSyntaxNode
     {
         private MetaTypeReferenceSyntax _type;
@@ -850,7 +845,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaEnumSyntax : MetaSyntaxNode
     {
         private NameSyntax _name;
@@ -957,7 +951,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaEnumLiteralSyntax : MetaSyntaxNode
     {
         private NameSyntax _name;
@@ -1034,7 +1027,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaClassSyntax : MetaSyntaxNode
     {
         private MetaClassBlock1Syntax _block1;
@@ -1171,7 +1163,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaPropertySyntax : MetaSyntaxNode
     {
         private MetaPropertyBlock1Syntax _block1;
@@ -1317,7 +1308,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaOperationSyntax : MetaSyntaxNode
     {
         private MetaTypeReferenceSyntax _returnType;
@@ -1454,7 +1444,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaParameterSyntax : MetaSyntaxNode
     {
         private MetaTypeReferenceSyntax _type;
@@ -1559,7 +1548,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class SimpleTypeReferenceSyntax : MetaTypeReferenceSyntax
     {
         private TypeReferenceSyntax _typeReference;
@@ -1842,7 +1830,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class TypeReferenceAlt1Syntax : TypeReferenceSyntax
     {
         private PrimitiveTypeSyntax _primitiveType;
@@ -1995,7 +1982,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class PrimitiveTypeSyntax : MetaSyntaxNode
     {
     
@@ -2082,7 +2068,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class ValueAlt1Syntax : ValueSyntax
     {
     
@@ -2531,7 +2516,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class NameSyntax : MetaSyntaxNode
     {
         private IdentifierSyntax _identifier;
@@ -2608,7 +2592,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class QualifierSyntax : MetaSyntaxNode
     {
         private __SyntaxNode _identifier;
@@ -2690,7 +2673,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class IdentifierSyntax : MetaSyntaxNode
     {
     
@@ -2765,7 +2747,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class TBooleanSyntax : MetaSyntaxNode
     {
     
@@ -2840,7 +2821,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MainBlock1Syntax : MetaSyntaxNode
     {
         private MetaModelSyntax _declarations1;
@@ -2938,7 +2918,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaModelBlock1Syntax : MetaSyntaxNode
     {
     
@@ -3027,7 +3006,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaEnumBlock1Syntax : MetaSyntaxNode
     {
         private __SyntaxNode _literals;
@@ -3137,7 +3115,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaEnumBlock1literalsBlockSyntax : MetaSyntaxNode
     {
         private MetaEnumLiteralSyntax _literals;
@@ -3240,7 +3217,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class MetaClassBlock1Alt1Syntax : MetaClassBlock1Syntax
     {
         private IdentifierSyntax _identifier;
@@ -3423,7 +3399,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaClassBlock2Syntax : MetaSyntaxNode
     {
         private __SyntaxNode _baseTypes;
@@ -3519,7 +3494,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaClassBlock2baseTypesBlockSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _baseTypes;
@@ -3610,7 +3584,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaClassBlock3Syntax : MetaSyntaxNode
     {
         private __SyntaxNode _block;
@@ -3732,7 +3705,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class MetaClassBlock3Block1Alt1Syntax : MetaClassBlock3Block1Syntax
     {
         private MetaPropertySyntax _properties;
@@ -3897,7 +3869,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class MetaPropertyBlock1Alt1Syntax : MetaPropertyBlock1Syntax
     {
     
@@ -4206,7 +4177,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class MetaPropertyBlock2Alt1Syntax : MetaPropertyBlock2Syntax
     {
         private IdentifierSyntax _identifier;
@@ -4389,7 +4359,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaPropertyBlock3Syntax : MetaSyntaxNode
     {
         private ValueSyntax _defaultValue;
@@ -4492,7 +4461,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     }
-    
     public sealed class MetaPropertyBlock4Alt1Syntax : MetaPropertyBlock4Syntax
     {
         private __SyntaxNode _oppositeProperties;
@@ -4778,7 +4746,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaPropertyBlock4Alt1oppositePropertiesBlockSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _oppositeProperties;
@@ -4869,7 +4836,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaPropertyBlock4Alt2subsettedPropertiesBlockSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _subsettedProperties;
@@ -4960,7 +4926,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax : MetaSyntaxNode
     {
         private QualifierSyntax _redefinedProperties;
@@ -5051,7 +5016,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaOperationBlock1Syntax : MetaSyntaxNode
     {
         private __SyntaxNode _parameters;
@@ -5133,7 +5097,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class MetaOperationBlock1parametersBlockSyntax : MetaSyntaxNode
     {
         private MetaParameterSyntax _parameters;
@@ -5224,7 +5187,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    
     public sealed class QualifierIdentifierBlockSyntax : MetaSyntaxNode
     {
         private IdentifierSyntax _identifier;

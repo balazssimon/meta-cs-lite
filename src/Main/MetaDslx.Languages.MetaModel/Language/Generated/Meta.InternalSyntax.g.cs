@@ -1027,7 +1027,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         }
     }
 
-    
     internal class MainGreen : GreenSyntaxNode
     {
         internal static new readonly MainGreen __Missing = new MainGreen();
@@ -1165,8 +1164,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class UsingGreen : GreenSyntaxNode
     {
         internal static new readonly UsingGreen __Missing = new UsingGreen();
@@ -1265,8 +1262,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaModelGreen : GreenSyntaxNode
     {
         internal static new readonly MetaModelGreen __Missing = new MetaModelGreen();
@@ -1378,7 +1373,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class MetaDeclarationGreen : GreenSyntaxNode
     {
         internal static readonly MetaDeclarationGreen __Missing = MetaDeclarationAlt1Green.__Missing;
@@ -1388,7 +1382,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class MetaDeclarationAlt1Green : MetaDeclarationGreen
     {
         internal static new readonly MetaDeclarationAlt1Green __Missing = new MetaDeclarationAlt1Green();
@@ -1474,7 +1467,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaDeclarationAlt2Green : MetaDeclarationGreen
     {
         internal static new readonly MetaDeclarationAlt2Green __Missing = new MetaDeclarationAlt2Green();
@@ -1560,7 +1552,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaDeclarationAlt3Green : MetaDeclarationGreen
     {
         internal static new readonly MetaDeclarationAlt3Green __Missing = new MetaDeclarationAlt3Green();
@@ -1646,8 +1637,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaConstantGreen : GreenSyntaxNode
     {
         internal static new readonly MetaConstantGreen __Missing = new MetaConstantGreen();
@@ -1759,8 +1748,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaEnumGreen : GreenSyntaxNode
     {
         internal static new readonly MetaEnumGreen __Missing = new MetaEnumGreen();
@@ -1872,8 +1859,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaEnumLiteralGreen : GreenSyntaxNode
     {
         internal static new readonly MetaEnumLiteralGreen __Missing = new MetaEnumLiteralGreen();
@@ -1959,8 +1944,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaClassGreen : GreenSyntaxNode
     {
         internal static new readonly MetaClassGreen __Missing = new MetaClassGreen();
@@ -2098,8 +2081,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaPropertyGreen : GreenSyntaxNode
     {
         internal static new readonly MetaPropertyGreen __Missing = new MetaPropertyGreen();
@@ -2237,8 +2218,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaOperationGreen : GreenSyntaxNode
     {
         internal static new readonly MetaOperationGreen __Missing = new MetaOperationGreen();
@@ -2376,8 +2355,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaParameterGreen : GreenSyntaxNode
     {
         internal static new readonly MetaParameterGreen __Missing = new MetaParameterGreen();
@@ -2476,7 +2453,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class MetaTypeReferenceGreen : GreenSyntaxNode
     {
         internal static readonly MetaTypeReferenceGreen __Missing = SimpleTypeReferenceGreen.__Missing;
@@ -2486,7 +2462,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class SimpleTypeReferenceGreen : MetaTypeReferenceGreen
     {
         internal static new readonly SimpleTypeReferenceGreen __Missing = new SimpleTypeReferenceGreen();
@@ -2572,7 +2547,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaArrayTypeGreen : MetaTypeReferenceGreen
     {
         internal static new readonly MetaArrayTypeGreen __Missing = new MetaArrayTypeGreen();
@@ -2684,7 +2658,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaNullableTypeGreen : MetaTypeReferenceGreen
     {
         internal static new readonly MetaNullableTypeGreen __Missing = new MetaNullableTypeGreen();
@@ -2783,7 +2756,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class TypeReferenceGreen : GreenSyntaxNode
     {
         internal static readonly TypeReferenceGreen __Missing = TypeReferenceAlt1Green.__Missing;
@@ -2793,7 +2765,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class TypeReferenceAlt1Green : TypeReferenceGreen
     {
         internal static new readonly TypeReferenceAlt1Green __Missing = new TypeReferenceAlt1Green();
@@ -2879,7 +2850,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class TypeReferenceAlt2Green : TypeReferenceGreen
     {
         internal static new readonly TypeReferenceAlt2Green __Missing = new TypeReferenceAlt2Green();
@@ -2965,8 +2935,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class PrimitiveTypeGreen : GreenSyntaxNode
     {
         internal static new readonly PrimitiveTypeGreen __Missing = new PrimitiveTypeGreen();
@@ -3052,7 +3020,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class ValueGreen : GreenSyntaxNode
     {
         internal static readonly ValueGreen __Missing = ValueAlt1Green.__Missing;
@@ -3062,7 +3029,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class ValueAlt1Green : ValueGreen
     {
         internal static new readonly ValueAlt1Green __Missing = new ValueAlt1Green();
@@ -3148,7 +3114,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class ValueAlt2Green : ValueGreen
     {
         internal static new readonly ValueAlt2Green __Missing = new ValueAlt2Green();
@@ -3234,7 +3199,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class ValueAlt3Green : ValueGreen
     {
         internal static new readonly ValueAlt3Green __Missing = new ValueAlt3Green();
@@ -3320,7 +3284,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class ValueAlt4Green : ValueGreen
     {
         internal static new readonly ValueAlt4Green __Missing = new ValueAlt4Green();
@@ -3406,7 +3369,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class ValueAlt5Green : ValueGreen
     {
         internal static new readonly ValueAlt5Green __Missing = new ValueAlt5Green();
@@ -3492,7 +3454,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class ValueAlt6Green : ValueGreen
     {
         internal static new readonly ValueAlt6Green __Missing = new ValueAlt6Green();
@@ -3578,8 +3539,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class NameGreen : GreenSyntaxNode
     {
         internal static new readonly NameGreen __Missing = new NameGreen();
@@ -3665,8 +3624,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class QualifierGreen : GreenSyntaxNode
     {
         internal static new readonly QualifierGreen __Missing = new QualifierGreen();
@@ -3752,8 +3709,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class IdentifierGreen : GreenSyntaxNode
     {
         internal static new readonly IdentifierGreen __Missing = new IdentifierGreen();
@@ -3839,8 +3794,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class TBooleanGreen : GreenSyntaxNode
     {
         internal static new readonly TBooleanGreen __Missing = new TBooleanGreen();
@@ -3926,8 +3879,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MainBlock1Green : GreenSyntaxNode
     {
         internal static new readonly MainBlock1Green __Missing = new MainBlock1Green();
@@ -4026,8 +3977,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaModelBlock1Green : GreenSyntaxNode
     {
         internal static new readonly MetaModelBlock1Green __Missing = new MetaModelBlock1Green();
@@ -4126,8 +4075,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaEnumBlock1Green : GreenSyntaxNode
     {
         internal static new readonly MetaEnumBlock1Green __Missing = new MetaEnumBlock1Green();
@@ -4239,8 +4186,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaEnumBlock1literalsBlockGreen : GreenSyntaxNode
     {
         internal static new readonly MetaEnumBlock1literalsBlockGreen __Missing = new MetaEnumBlock1literalsBlockGreen();
@@ -4339,7 +4284,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class MetaClassBlock1Green : GreenSyntaxNode
     {
         internal static readonly MetaClassBlock1Green __Missing = MetaClassBlock1Alt1Green.__Missing;
@@ -4349,7 +4293,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class MetaClassBlock1Alt1Green : MetaClassBlock1Green
     {
         internal static new readonly MetaClassBlock1Alt1Green __Missing = new MetaClassBlock1Alt1Green();
@@ -4461,7 +4404,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaClassBlock1Alt2Green : MetaClassBlock1Green
     {
         internal static new readonly MetaClassBlock1Alt2Green __Missing = new MetaClassBlock1Alt2Green();
@@ -4547,8 +4489,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaClassBlock2Green : GreenSyntaxNode
     {
         internal static new readonly MetaClassBlock2Green __Missing = new MetaClassBlock2Green();
@@ -4647,8 +4587,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaClassBlock2baseTypesBlockGreen : GreenSyntaxNode
     {
         internal static new readonly MetaClassBlock2baseTypesBlockGreen __Missing = new MetaClassBlock2baseTypesBlockGreen();
@@ -4747,8 +4685,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaClassBlock3Green : GreenSyntaxNode
     {
         internal static new readonly MetaClassBlock3Green __Missing = new MetaClassBlock3Green();
@@ -4860,7 +4796,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class MetaClassBlock3Block1Green : GreenSyntaxNode
     {
         internal static readonly MetaClassBlock3Block1Green __Missing = MetaClassBlock3Block1Alt1Green.__Missing;
@@ -4870,7 +4805,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class MetaClassBlock3Block1Alt1Green : MetaClassBlock3Block1Green
     {
         internal static new readonly MetaClassBlock3Block1Alt1Green __Missing = new MetaClassBlock3Block1Alt1Green();
@@ -4956,7 +4890,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaClassBlock3Block1Alt2Green : MetaClassBlock3Block1Green
     {
         internal static new readonly MetaClassBlock3Block1Alt2Green __Missing = new MetaClassBlock3Block1Alt2Green();
@@ -5042,7 +4975,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class MetaPropertyBlock1Green : GreenSyntaxNode
     {
         internal static readonly MetaPropertyBlock1Green __Missing = MetaPropertyBlock1Alt1Green.__Missing;
@@ -5052,7 +4984,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class MetaPropertyBlock1Alt1Green : MetaPropertyBlock1Green
     {
         internal static new readonly MetaPropertyBlock1Alt1Green __Missing = new MetaPropertyBlock1Alt1Green();
@@ -5138,7 +5069,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaPropertyBlock1Alt2Green : MetaPropertyBlock1Green
     {
         internal static new readonly MetaPropertyBlock1Alt2Green __Missing = new MetaPropertyBlock1Alt2Green();
@@ -5224,7 +5154,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaPropertyBlock1Alt3Green : MetaPropertyBlock1Green
     {
         internal static new readonly MetaPropertyBlock1Alt3Green __Missing = new MetaPropertyBlock1Alt3Green();
@@ -5310,7 +5239,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaPropertyBlock1Alt4Green : MetaPropertyBlock1Green
     {
         internal static new readonly MetaPropertyBlock1Alt4Green __Missing = new MetaPropertyBlock1Alt4Green();
@@ -5396,7 +5324,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class MetaPropertyBlock2Green : GreenSyntaxNode
     {
         internal static readonly MetaPropertyBlock2Green __Missing = MetaPropertyBlock2Alt1Green.__Missing;
@@ -5406,7 +5333,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class MetaPropertyBlock2Alt1Green : MetaPropertyBlock2Green
     {
         internal static new readonly MetaPropertyBlock2Alt1Green __Missing = new MetaPropertyBlock2Alt1Green();
@@ -5518,7 +5444,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaPropertyBlock2Alt2Green : MetaPropertyBlock2Green
     {
         internal static new readonly MetaPropertyBlock2Alt2Green __Missing = new MetaPropertyBlock2Alt2Green();
@@ -5604,8 +5529,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaPropertyBlock3Green : GreenSyntaxNode
     {
         internal static new readonly MetaPropertyBlock3Green __Missing = new MetaPropertyBlock3Green();
@@ -5704,7 +5627,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal abstract class MetaPropertyBlock4Green : GreenSyntaxNode
     {
         internal static readonly MetaPropertyBlock4Green __Missing = MetaPropertyBlock4Alt1Green.__Missing;
@@ -5714,7 +5636,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         {
         }
     }
-    
     internal class MetaPropertyBlock4Alt1Green : MetaPropertyBlock4Green
     {
         internal static new readonly MetaPropertyBlock4Alt1Green __Missing = new MetaPropertyBlock4Alt1Green();
@@ -5813,7 +5734,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaPropertyBlock4Alt2Green : MetaPropertyBlock4Green
     {
         internal static new readonly MetaPropertyBlock4Alt2Green __Missing = new MetaPropertyBlock4Alt2Green();
@@ -5912,7 +5832,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
     internal class MetaPropertyBlock4Alt3Green : MetaPropertyBlock4Green
     {
         internal static new readonly MetaPropertyBlock4Alt3Green __Missing = new MetaPropertyBlock4Alt3Green();
@@ -6011,8 +5930,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaPropertyBlock4Alt1oppositePropertiesBlockGreen : GreenSyntaxNode
     {
         internal static new readonly MetaPropertyBlock4Alt1oppositePropertiesBlockGreen __Missing = new MetaPropertyBlock4Alt1oppositePropertiesBlockGreen();
@@ -6111,8 +6028,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen : GreenSyntaxNode
     {
         internal static new readonly MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen __Missing = new MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen();
@@ -6211,8 +6126,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen : GreenSyntaxNode
     {
         internal static new readonly MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen __Missing = new MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen();
@@ -6311,8 +6224,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaOperationBlock1Green : GreenSyntaxNode
     {
         internal static new readonly MetaOperationBlock1Green __Missing = new MetaOperationBlock1Green();
@@ -6398,8 +6309,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class MetaOperationBlock1parametersBlockGreen : GreenSyntaxNode
     {
         internal static new readonly MetaOperationBlock1parametersBlockGreen __Missing = new MetaOperationBlock1parametersBlockGreen();
@@ -6498,8 +6407,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
-    
     internal class QualifierIdentifierBlockGreen : GreenSyntaxNode
     {
         internal static new readonly QualifierIdentifierBlockGreen __Missing = new QualifierIdentifierBlockGreen();
@@ -6598,5 +6505,4 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    
 }

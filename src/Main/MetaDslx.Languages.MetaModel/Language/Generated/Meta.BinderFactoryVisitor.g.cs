@@ -637,7 +637,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -651,7 +650,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -665,7 +663,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -684,7 +681,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -758,7 +754,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {

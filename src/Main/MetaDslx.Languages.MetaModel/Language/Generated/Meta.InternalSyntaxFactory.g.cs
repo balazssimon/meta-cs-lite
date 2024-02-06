@@ -264,7 +264,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             #endif
             return new MainGreen(MetaSyntaxKind.Main, kNamespace, qualifier, usingList.Node, block, endOfFileToken);
         }
-        
         internal UsingGreen Using(__InternalSyntaxToken kUsing, QualifierGreen namespaces)
         {
             #if DEBUG
@@ -284,7 +283,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaModelGreen MetaModel(__InternalSyntaxToken kMetamodel, NameGreen name, MetaModelBlock1Green block)
         {
             #if DEBUG
@@ -304,7 +302,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaDeclarationAlt1Green MetaDeclarationAlt1(MetaConstantGreen metaConstant)
         {
             #if DEBUG
@@ -322,7 +319,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaDeclarationAlt2Green MetaDeclarationAlt2(MetaEnumGreen metaEnum)
         {
             #if DEBUG
@@ -340,7 +336,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaDeclarationAlt3Green MetaDeclarationAlt3(MetaClassGreen metaClass)
         {
             #if DEBUG
@@ -358,7 +353,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaConstantGreen MetaConstant(__InternalSyntaxToken kConst, MetaTypeReferenceGreen type, NameGreen name)
         {
             #if DEBUG
@@ -379,7 +373,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaEnumGreen MetaEnum(__InternalSyntaxToken kEnum, NameGreen name, MetaEnumBlock1Green block)
         {
             #if DEBUG
@@ -400,7 +393,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaEnumLiteralGreen MetaEnumLiteral(NameGreen name)
         {
             #if DEBUG
@@ -418,7 +410,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassGreen MetaClass(__InternalSyntaxToken isAbstract, __InternalSyntaxToken kClass, MetaClassBlock1Green block1, MetaClassBlock2Green block2, MetaClassBlock3Green block3)
         {
             #if DEBUG
@@ -430,7 +421,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             #endif
             return new MetaClassGreen(MetaSyntaxKind.MetaClass, isAbstract, kClass, block1, block2, block3);
         }
-        
         internal MetaPropertyGreen MetaProperty(MetaPropertyBlock1Green block1, MetaTypeReferenceGreen type, MetaPropertyBlock2Green block2, MetaPropertyBlock3Green block3, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock4Green> block4)
         {
             #if DEBUG
@@ -439,7 +429,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             #endif
             return new MetaPropertyGreen(MetaSyntaxKind.MetaProperty, block1, type, block2, block3, block4.Node);
         }
-        
         internal MetaOperationGreen MetaOperation(MetaTypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, MetaOperationBlock1Green block, __InternalSyntaxToken tRParen)
         {
             #if DEBUG
@@ -452,7 +441,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             #endif
             return new MetaOperationGreen(MetaSyntaxKind.MetaOperation, returnType, name, tLParen, block, tRParen);
         }
-        
         internal MetaParameterGreen MetaParameter(MetaTypeReferenceGreen type, NameGreen name)
         {
             #if DEBUG
@@ -471,7 +459,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal SimpleTypeReferenceGreen SimpleTypeReference(TypeReferenceGreen typeReference)
         {
             #if DEBUG
@@ -489,7 +476,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaArrayTypeGreen MetaArrayType(MetaTypeReferenceGreen itemType, __InternalSyntaxToken tLBracket, __InternalSyntaxToken tRBracket)
         {
             #if DEBUG
@@ -511,7 +497,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaNullableTypeGreen MetaNullableType(MetaTypeReferenceGreen innerType, __InternalSyntaxToken tQuestion)
         {
             #if DEBUG
@@ -531,7 +516,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal TypeReferenceAlt1Green TypeReferenceAlt1(PrimitiveTypeGreen primitiveType)
         {
             #if DEBUG
@@ -549,7 +533,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal TypeReferenceAlt2Green TypeReferenceAlt2(QualifierGreen qualifier)
         {
             #if DEBUG
@@ -567,7 +550,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal PrimitiveTypeGreen PrimitiveType(__InternalSyntaxToken token)
         {
             #if DEBUG
@@ -586,7 +568,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal ValueAlt1Green ValueAlt1(__InternalSyntaxToken tString)
         {
             #if DEBUG
@@ -605,7 +586,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal ValueAlt2Green ValueAlt2(__InternalSyntaxToken tInteger)
         {
             #if DEBUG
@@ -624,7 +604,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal ValueAlt3Green ValueAlt3(__InternalSyntaxToken tDecimal)
         {
             #if DEBUG
@@ -643,7 +622,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal ValueAlt4Green ValueAlt4(TBooleanGreen tBoolean)
         {
             #if DEBUG
@@ -661,7 +639,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal ValueAlt5Green ValueAlt5(__InternalSyntaxToken kNull)
         {
             #if DEBUG
@@ -680,7 +657,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal ValueAlt6Green ValueAlt6(QualifierGreen qualifier)
         {
             #if DEBUG
@@ -698,7 +674,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal NameGreen Name(IdentifierGreen identifier)
         {
             #if DEBUG
@@ -716,7 +691,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal QualifierGreen Qualifier(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> identifier)
         {
             #if DEBUG
@@ -733,7 +707,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal IdentifierGreen Identifier(__InternalSyntaxToken token)
         {
             #if DEBUG
@@ -752,7 +725,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal TBooleanGreen TBoolean(__InternalSyntaxToken token)
         {
             #if DEBUG
@@ -771,7 +743,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MainBlock1Green MainBlock1(MetaModelGreen declarations1, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaDeclarationGreen> declarations2)
         {
             #if DEBUG
@@ -789,7 +760,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaModelBlock1Green MetaModelBlock1(__InternalSyntaxToken tEq, __InternalSyntaxToken uri)
         {
             #if DEBUG
@@ -810,7 +780,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaEnumBlock1Green MetaEnumBlock1(__InternalSyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen> literals, __InternalSyntaxToken tRBrace)
         {
             #if DEBUG
@@ -831,7 +800,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaEnumBlock1literalsBlockGreen MetaEnumBlock1literalsBlock(__InternalSyntaxToken tComma, MetaEnumLiteralGreen literals)
         {
             #if DEBUG
@@ -851,7 +819,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassBlock1Alt1Green MetaClassBlock1Alt1(IdentifierGreen identifier, __InternalSyntaxToken tDollar, IdentifierGreen symbolType)
         {
             #if DEBUG
@@ -871,7 +838,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassBlock1Alt2Green MetaClassBlock1Alt2(IdentifierGreen identifier)
         {
             #if DEBUG
@@ -889,7 +855,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassBlock2Green MetaClassBlock2(__InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> baseTypes)
         {
             #if DEBUG
@@ -908,7 +873,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassBlock2baseTypesBlockGreen MetaClassBlock2baseTypesBlock(__InternalSyntaxToken tComma, QualifierGreen baseTypes)
         {
             #if DEBUG
@@ -928,7 +892,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassBlock3Green MetaClassBlock3(__InternalSyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaClassBlock3Block1Green> block, __InternalSyntaxToken tRBrace)
         {
             #if DEBUG
@@ -949,7 +912,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassBlock3Block1Alt1Green MetaClassBlock3Block1Alt1(MetaPropertyGreen properties)
         {
             #if DEBUG
@@ -967,7 +929,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaClassBlock3Block1Alt2Green MetaClassBlock3Block1Alt2(MetaOperationGreen operations)
         {
             #if DEBUG
@@ -985,7 +946,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock1Alt1Green MetaPropertyBlock1Alt1(__InternalSyntaxToken isContainment)
         {
             #if DEBUG
@@ -1004,7 +964,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock1Alt2Green MetaPropertyBlock1Alt2(__InternalSyntaxToken isDerived)
         {
             #if DEBUG
@@ -1023,7 +982,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock1Alt3Green MetaPropertyBlock1Alt3(__InternalSyntaxToken isUnion)
         {
             #if DEBUG
@@ -1042,7 +1000,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock1Alt4Green MetaPropertyBlock1Alt4(__InternalSyntaxToken isReadOnly)
         {
             #if DEBUG
@@ -1061,7 +1018,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock2Alt1Green MetaPropertyBlock2Alt1(IdentifierGreen identifier, __InternalSyntaxToken tDollar, IdentifierGreen symbolProperty)
         {
             #if DEBUG
@@ -1081,7 +1037,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock2Alt2Green MetaPropertyBlock2Alt2(IdentifierGreen identifier)
         {
             #if DEBUG
@@ -1099,7 +1054,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock3Green MetaPropertyBlock3(__InternalSyntaxToken tEq, ValueGreen defaultValue)
         {
             #if DEBUG
@@ -1119,7 +1073,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock4Alt1Green MetaPropertyBlock4Alt1(__InternalSyntaxToken kOpposite, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> oppositeProperties)
         {
             #if DEBUG
@@ -1138,7 +1091,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock4Alt2Green MetaPropertyBlock4Alt2(__InternalSyntaxToken kSubsets, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> subsettedProperties)
         {
             #if DEBUG
@@ -1157,7 +1109,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock4Alt3Green MetaPropertyBlock4Alt3(__InternalSyntaxToken kRedefines, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> redefinedProperties)
         {
             #if DEBUG
@@ -1176,7 +1127,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock4Alt1oppositePropertiesBlockGreen MetaPropertyBlock4Alt1oppositePropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen oppositeProperties)
         {
             #if DEBUG
@@ -1196,7 +1146,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock4Alt2subsettedPropertiesBlockGreen MetaPropertyBlock4Alt2subsettedPropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen subsettedProperties)
         {
             #if DEBUG
@@ -1216,7 +1165,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen MetaPropertyBlock4Alt3redefinedPropertiesBlock(__InternalSyntaxToken tComma, QualifierGreen redefinedProperties)
         {
             #if DEBUG
@@ -1236,7 +1184,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaOperationBlock1Green MetaOperationBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaParameterGreen> parameters)
         {
             #if DEBUG
@@ -1253,7 +1200,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal MetaOperationBlock1parametersBlockGreen MetaOperationBlock1parametersBlock(__InternalSyntaxToken tComma, MetaParameterGreen parameters)
         {
             #if DEBUG
@@ -1273,7 +1219,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
         internal QualifierIdentifierBlockGreen QualifierIdentifierBlock(__InternalSyntaxToken tDot, IdentifierGreen identifier)
         {
             #if DEBUG
@@ -1293,6 +1238,5 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        
     }
 }
