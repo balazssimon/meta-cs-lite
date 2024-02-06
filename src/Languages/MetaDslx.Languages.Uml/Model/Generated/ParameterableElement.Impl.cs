@@ -61,10 +61,10 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        bool ParameterableElement.IsCompatibleWith(bool result, ParameterableElement p) => Uml.__CustomImpl.ParameterableElement_IsCompatibleWith(this, result, p);
-        bool ParameterableElement.IsTemplateParameter(bool result) => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        bool ParameterableElement.IsCompatibleWith(ParameterableElement p) => Uml.__CustomImpl.ParameterableElement_IsCompatibleWith(this, p);
+        bool ParameterableElement.IsTemplateParameter() => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

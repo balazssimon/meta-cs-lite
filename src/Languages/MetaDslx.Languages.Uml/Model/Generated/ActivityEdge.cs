@@ -36,6 +36,6 @@ namespace MetaDslx.Languages.Uml.Model
         ActivityNode Target { get; set; }
         ValueSpecification Weight { get; set; }
     
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

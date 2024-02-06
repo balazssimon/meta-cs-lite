@@ -28,6 +28,6 @@ namespace MetaDslx.Languages.Uml.Model
         StringExpression OwningExpression { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<StringExpression> SubExpression { get; }
     
-        string StringValue(string result);
+        string StringValue();
     }
 }

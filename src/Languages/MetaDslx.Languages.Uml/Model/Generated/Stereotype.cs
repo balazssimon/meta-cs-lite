@@ -28,6 +28,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Image> Icon { get; }
         Profile Profile { get; }
     
-        Profile ContainingProfile(Profile result);
+        Profile ContainingProfile();
     }
 }

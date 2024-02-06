@@ -147,7 +147,7 @@ end template
 
 template GenerateParams(Operation op)
     [-]
-    [foreach (var param in op.OwnedParameter) separator ", "]
+    [foreach (var param in op.OwnedParameter.Where(p => p.Direction != ParameterDirectionKind.Return)) separator ", "]
         [GenerateType(param, param.Type)] [param.Name]
     [end foreach]
 end template

@@ -1337,11 +1337,6 @@ namespace MetaDslx.Languages.Uml.Model
         Class Extension_Metaclass(Extension _this);
     
         /// <summary>
-        /// Computation of the derived property Message.MessageKind
-        /// </summary>
-        global::MetaDslx.Languages.Uml.Model.MessageKind Message_MessageKind(Message _this);
-    
-        /// <summary>
         /// Computation of the derived property MultiplicityElement.Lower
         /// </summary>
         int MultiplicityElement_Lower(MultiplicityElement _this);
@@ -1480,777 +1475,777 @@ namespace MetaDslx.Languages.Uml.Model
         /// <summary>
         /// Implementation of the operation Element.AllOwnedElements
         /// </summary>
-        global::System.Collections.Generic.IList<Element> Element_AllOwnedElements(Element _this, global::System.Collections.Generic.IList<Element> result);
+        global::System.Collections.Generic.IList<Element> Element_AllOwnedElements(Element _this);
     
         /// <summary>
         /// Implementation of the operation Element.MustBeOwned
         /// </summary>
-        bool Element_MustBeOwned(Element _this, bool result);
+        bool Element_MustBeOwned(Element _this);
     
         /// <summary>
         /// Implementation of the operation NamedElement.AllNamespaces
         /// </summary>
-        global::System.Collections.Generic.IList<Namespace> NamedElement_AllNamespaces(NamedElement _this, global::System.Collections.Generic.IList<Namespace> result);
+        global::System.Collections.Generic.IList<Namespace> NamedElement_AllNamespaces(NamedElement _this);
     
         /// <summary>
         /// Implementation of the operation NamedElement.AllOwningPackages
         /// </summary>
-        global::System.Collections.Generic.IList<Package> NamedElement_AllOwningPackages(NamedElement _this, global::System.Collections.Generic.IList<Package> result);
+        global::System.Collections.Generic.IList<Package> NamedElement_AllOwningPackages(NamedElement _this);
     
         /// <summary>
         /// Implementation of the operation NamedElement.IsDistinguishableFrom
         /// </summary>
-        bool NamedElement_IsDistinguishableFrom(NamedElement _this, bool result, NamedElement n, Namespace ns);
+        bool NamedElement_IsDistinguishableFrom(NamedElement _this, NamedElement n, Namespace ns);
     
         /// <summary>
         /// Implementation of the operation NamedElement.Separator
         /// </summary>
-        string NamedElement_Separator(NamedElement _this, string result);
+        string NamedElement_Separator(NamedElement _this);
     
         /// <summary>
         /// Implementation of the operation Action.AllActions
         /// </summary>
-        global::System.Collections.Generic.IList<Action> Action_AllActions(Action _this, global::System.Collections.Generic.IList<Action> result);
+        global::System.Collections.Generic.IList<Action> Action_AllActions(Action _this);
     
         /// <summary>
         /// Implementation of the operation Action.AllOwnedNodes
         /// </summary>
-        global::System.Collections.Generic.IList<ActivityNode> Action_AllOwnedNodes(Action _this, global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<ActivityNode> Action_AllOwnedNodes(Action _this);
     
         /// <summary>
         /// Implementation of the operation Action.ContainingBehavior
         /// </summary>
-        Behavior Action_ContainingBehavior(Action _this, Behavior result);
+        Behavior Action_ContainingBehavior(Action _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.AllFeatures
         /// </summary>
-        global::System.Collections.Generic.IList<Feature> Classifier_AllFeatures(Classifier _this, global::System.Collections.Generic.IList<Feature> result);
+        global::System.Collections.Generic.IList<Feature> Classifier_AllFeatures(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.AllParents
         /// </summary>
-        global::System.Collections.Generic.IList<Classifier> Classifier_AllParents(Classifier _this, global::System.Collections.Generic.IList<Classifier> result);
+        global::System.Collections.Generic.IList<Classifier> Classifier_AllParents(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.ConformsTo
         /// </summary>
-        bool Classifier_ConformsTo(Classifier _this, bool result, Type other);
+        bool Classifier_ConformsTo(Classifier _this, Type other);
     
         /// <summary>
         /// Implementation of the operation Classifier.HasVisibilityOf
         /// </summary>
-        bool Classifier_HasVisibilityOf(Classifier _this, bool result, NamedElement n);
+        bool Classifier_HasVisibilityOf(Classifier _this, NamedElement n);
     
         /// <summary>
         /// Implementation of the operation Classifier.Inherit
         /// </summary>
-        global::System.Collections.Generic.IList<NamedElement> Classifier_Inherit(Classifier _this, global::System.Collections.Generic.IList<NamedElement> result, global::System.Collections.Generic.IList<NamedElement> inhs);
+        global::System.Collections.Generic.IList<NamedElement> Classifier_Inherit(Classifier _this, global::System.Collections.Generic.IList<NamedElement> inhs);
     
         /// <summary>
         /// Implementation of the operation Classifier.InheritableMembers
         /// </summary>
-        global::System.Collections.Generic.IList<NamedElement> Classifier_InheritableMembers(Classifier _this, global::System.Collections.Generic.IList<NamedElement> result, Classifier c);
+        global::System.Collections.Generic.IList<NamedElement> Classifier_InheritableMembers(Classifier _this, Classifier c);
     
         /// <summary>
         /// Implementation of the operation Classifier.IsTemplate
         /// </summary>
-        bool Classifier_IsTemplate(Classifier _this, bool result);
+        bool Classifier_IsTemplate(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.MaySpecializeType
         /// </summary>
-        bool Classifier_MaySpecializeType(Classifier _this, bool result, Classifier c);
+        bool Classifier_MaySpecializeType(Classifier _this, Classifier c);
     
         /// <summary>
         /// Implementation of the operation Classifier.Parents
         /// </summary>
-        global::System.Collections.Generic.IList<Classifier> Classifier_Parents(Classifier _this, global::System.Collections.Generic.IList<Classifier> result);
+        global::System.Collections.Generic.IList<Classifier> Classifier_Parents(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.DirectlyRealizedInterfaces
         /// </summary>
-        global::System.Collections.Generic.IList<Interface> Classifier_DirectlyRealizedInterfaces(Classifier _this, global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> Classifier_DirectlyRealizedInterfaces(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.DirectlyUsedInterfaces
         /// </summary>
-        global::System.Collections.Generic.IList<Interface> Classifier_DirectlyUsedInterfaces(Classifier _this, global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> Classifier_DirectlyUsedInterfaces(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.AllRealizedInterfaces
         /// </summary>
-        global::System.Collections.Generic.IList<Interface> Classifier_AllRealizedInterfaces(Classifier _this, global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> Classifier_AllRealizedInterfaces(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.AllUsedInterfaces
         /// </summary>
-        global::System.Collections.Generic.IList<Interface> Classifier_AllUsedInterfaces(Classifier _this, global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> Classifier_AllUsedInterfaces(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.IsSubstitutableFor
         /// </summary>
-        bool Classifier_IsSubstitutableFor(Classifier _this, Classifier contract, bool result);
+        bool Classifier_IsSubstitutableFor(Classifier _this, Classifier contract);
     
         /// <summary>
         /// Implementation of the operation Classifier.AllAttributes
         /// </summary>
-        global::System.Collections.Generic.IList<Property> Classifier_AllAttributes(Classifier _this, global::System.Collections.Generic.IList<Property> result);
+        global::System.Collections.Generic.IList<Property> Classifier_AllAttributes(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Classifier.AllSlottableFeatures
         /// </summary>
-        global::System.Collections.Generic.IList<StructuralFeature> Classifier_AllSlottableFeatures(Classifier _this, global::System.Collections.Generic.IList<StructuralFeature> result);
+        global::System.Collections.Generic.IList<StructuralFeature> Classifier_AllSlottableFeatures(Classifier _this);
     
         /// <summary>
         /// Implementation of the operation Behavior.BehavioredClassifier
         /// </summary>
-        BehavioredClassifier Behavior_BehavioredClassifier(Behavior _this, Element from, BehavioredClassifier result);
+        BehavioredClassifier Behavior_BehavioredClassifier(Behavior _this, Element from);
     
         /// <summary>
         /// Implementation of the operation Behavior.InputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> Behavior_InputParameters(Behavior _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> Behavior_InputParameters(Behavior _this);
     
         /// <summary>
         /// Implementation of the operation Behavior.OutputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> Behavior_OutputParameters(Behavior _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> Behavior_OutputParameters(Behavior _this);
     
         /// <summary>
         /// Implementation of the operation ActivityEdge.IsConsistentWith
         /// </summary>
-        bool ActivityEdge_IsConsistentWith(ActivityEdge _this, bool result, RedefinableElement redefiningElement);
+        bool ActivityEdge_IsConsistentWith(ActivityEdge _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation ActivityNode.ContainingActivity
         /// </summary>
-        Activity ActivityNode_ContainingActivity(ActivityNode _this, Activity result);
+        Activity ActivityNode_ContainingActivity(ActivityNode _this);
     
         /// <summary>
         /// Implementation of the operation ActivityNode.IsConsistentWith
         /// </summary>
-        bool ActivityNode_IsConsistentWith(ActivityNode _this, bool result, RedefinableElement redefiningElement);
+        bool ActivityNode_IsConsistentWith(ActivityNode _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation ActivityGroup.ContainingActivity
         /// </summary>
-        Activity ActivityGroup_ContainingActivity(ActivityGroup _this, Activity result);
+        Activity ActivityGroup_ContainingActivity(ActivityGroup _this);
     
         /// <summary>
         /// Implementation of the operation BehavioralFeature.IsDistinguishableFrom
         /// </summary>
-        bool BehavioralFeature_IsDistinguishableFrom(BehavioralFeature _this, bool result, NamedElement n, Namespace ns);
+        bool BehavioralFeature_IsDistinguishableFrom(BehavioralFeature _this, NamedElement n, Namespace ns);
     
         /// <summary>
         /// Implementation of the operation BehavioralFeature.InputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> BehavioralFeature_InputParameters(BehavioralFeature _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> BehavioralFeature_InputParameters(BehavioralFeature _this);
     
         /// <summary>
         /// Implementation of the operation BehavioralFeature.OutputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> BehavioralFeature_OutputParameters(BehavioralFeature _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> BehavioralFeature_OutputParameters(BehavioralFeature _this);
     
         /// <summary>
         /// Implementation of the operation CallAction.InputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> CallAction_InputParameters(CallAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> CallAction_InputParameters(CallAction _this);
     
         /// <summary>
         /// Implementation of the operation CallAction.OutputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> CallAction_OutputParameters(CallAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> CallAction_OutputParameters(CallAction _this);
     
         /// <summary>
         /// Implementation of the operation CallBehaviorAction.OutputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> CallBehaviorAction_OutputParameters(CallBehaviorAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> CallBehaviorAction_OutputParameters(CallBehaviorAction _this);
     
         /// <summary>
         /// Implementation of the operation CallBehaviorAction.InputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> CallBehaviorAction_InputParameters(CallBehaviorAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> CallBehaviorAction_InputParameters(CallBehaviorAction _this);
     
         /// <summary>
         /// Implementation of the operation CallOperationAction.OutputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> CallOperationAction_OutputParameters(CallOperationAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> CallOperationAction_OutputParameters(CallOperationAction _this);
     
         /// <summary>
         /// Implementation of the operation CallOperationAction.InputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> CallOperationAction_InputParameters(CallOperationAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> CallOperationAction_InputParameters(CallOperationAction _this);
     
         /// <summary>
         /// Implementation of the operation ConditionalNode.AllActions
         /// </summary>
-        global::System.Collections.Generic.IList<Action> ConditionalNode_AllActions(ConditionalNode _this, global::System.Collections.Generic.IList<Action> result);
+        global::System.Collections.Generic.IList<Action> ConditionalNode_AllActions(ConditionalNode _this);
     
         /// <summary>
         /// Implementation of the operation ConnectionPointReference.IsConsistentWith
         /// </summary>
-        bool ConnectionPointReference_IsConsistentWith(ConnectionPointReference _this, RedefinableElement redefiningElement, bool result);
+        bool ConnectionPointReference_IsConsistentWith(ConnectionPointReference _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation ElementImport.GetName
         /// </summary>
-        string ElementImport_GetName(ElementImport _this, string result);
+        string ElementImport_GetName(ElementImport _this);
     
         /// <summary>
         /// Implementation of the operation ExtensionEnd.LowerBound
         /// </summary>
-        int ExtensionEnd_LowerBound(ExtensionEnd _this, int result);
+        int ExtensionEnd_LowerBound(ExtensionEnd _this);
     
         /// <summary>
         /// Implementation of the operation FinalState.IsConsistentWith
         /// </summary>
-        bool FinalState_IsConsistentWith(FinalState _this, RedefinableElement redefiningElement, bool result);
+        bool FinalState_IsConsistentWith(FinalState _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation Gate.IsOutsideCF
         /// </summary>
-        bool Gate_IsOutsideCF(Gate _this, bool result);
+        bool Gate_IsOutsideCF(Gate _this);
     
         /// <summary>
         /// Implementation of the operation Gate.IsInsideCF
         /// </summary>
-        bool Gate_IsInsideCF(Gate _this, bool result);
+        bool Gate_IsInsideCF(Gate _this);
     
         /// <summary>
         /// Implementation of the operation Gate.IsActual
         /// </summary>
-        bool Gate_IsActual(Gate _this, bool result);
+        bool Gate_IsActual(Gate _this);
     
         /// <summary>
         /// Implementation of the operation Gate.IsFormal
         /// </summary>
-        bool Gate_IsFormal(Gate _this, bool result);
+        bool Gate_IsFormal(Gate _this);
     
         /// <summary>
         /// Implementation of the operation Gate.GetName
         /// </summary>
-        string Gate_GetName(Gate _this, string result);
+        string Gate_GetName(Gate _this);
     
         /// <summary>
         /// Implementation of the operation Gate.Matches
         /// </summary>
-        bool Gate_Matches(Gate _this, bool result, Gate gateToMatch);
+        bool Gate_Matches(Gate _this, Gate gateToMatch);
     
         /// <summary>
         /// Implementation of the operation Gate.IsDistinguishableFrom
         /// </summary>
-        bool Gate_IsDistinguishableFrom(Gate _this, bool result, NamedElement n, Namespace ns);
+        bool Gate_IsDistinguishableFrom(Gate _this, NamedElement n, Namespace ns);
     
         /// <summary>
         /// Implementation of the operation Gate.GetOperand
         /// </summary>
-        InteractionOperand Gate_GetOperand(Gate _this, InteractionOperand result);
+        InteractionOperand Gate_GetOperand(Gate _this);
     
         /// <summary>
         /// Implementation of the operation ParameterableElement.IsCompatibleWith
         /// </summary>
-        bool ParameterableElement_IsCompatibleWith(ParameterableElement _this, bool result, ParameterableElement p);
+        bool ParameterableElement_IsCompatibleWith(ParameterableElement _this, ParameterableElement p);
     
         /// <summary>
         /// Implementation of the operation ParameterableElement.IsTemplateParameter
         /// </summary>
-        bool ParameterableElement_IsTemplateParameter(ParameterableElement _this, bool result);
+        bool ParameterableElement_IsTemplateParameter(ParameterableElement _this);
     
         /// <summary>
         /// Implementation of the operation Extension.MetaclassEnd
         /// </summary>
-        Property Extension_MetaclassEnd(Extension _this, Property result);
+        Property Extension_MetaclassEnd(Extension _this);
     
         /// <summary>
         /// Implementation of the operation FunctionBehavior.HasAllDataTypeAttributes
         /// </summary>
-        bool FunctionBehavior_HasAllDataTypeAttributes(FunctionBehavior _this, bool result, DataType d);
+        bool FunctionBehavior_HasAllDataTypeAttributes(FunctionBehavior _this, DataType d);
     
         /// <summary>
         /// Implementation of the operation LinkAction.Association
         /// </summary>
-        Association LinkAction_Association(LinkAction _this, Association result);
+        Association LinkAction_Association(LinkAction _this);
     
         /// <summary>
         /// Implementation of the operation LinkEndData.AllPins
         /// </summary>
-        global::System.Collections.Generic.IList<InputPin> LinkEndData_AllPins(LinkEndData _this, global::System.Collections.Generic.IList<InputPin> result);
+        global::System.Collections.Generic.IList<InputPin> LinkEndData_AllPins(LinkEndData _this);
     
         /// <summary>
         /// Implementation of the operation LinkEndCreationData.AllPins
         /// </summary>
-        global::System.Collections.Generic.IList<InputPin> LinkEndCreationData_AllPins(LinkEndCreationData _this, global::System.Collections.Generic.IList<InputPin> result);
+        global::System.Collections.Generic.IList<InputPin> LinkEndCreationData_AllPins(LinkEndCreationData _this);
     
         /// <summary>
         /// Implementation of the operation LinkEndDestructionData.AllPins
         /// </summary>
-        global::System.Collections.Generic.IList<InputPin> LinkEndDestructionData_AllPins(LinkEndDestructionData _this, global::System.Collections.Generic.IList<InputPin> result);
+        global::System.Collections.Generic.IList<InputPin> LinkEndDestructionData_AllPins(LinkEndDestructionData _this);
     
         /// <summary>
         /// Implementation of the operation LiteralBoolean.BooleanValue
         /// </summary>
-        bool LiteralBoolean_BooleanValue(LiteralBoolean _this, bool result);
+        bool LiteralBoolean_BooleanValue(LiteralBoolean _this);
     
         /// <summary>
         /// Implementation of the operation LiteralBoolean.IsComputable
         /// </summary>
-        bool LiteralBoolean_IsComputable(LiteralBoolean _this, bool result);
+        bool LiteralBoolean_IsComputable(LiteralBoolean _this);
     
         /// <summary>
         /// Implementation of the operation LiteralInteger.IntegerValue
         /// </summary>
-        int LiteralInteger_IntegerValue(LiteralInteger _this, int result);
+        int LiteralInteger_IntegerValue(LiteralInteger _this);
     
         /// <summary>
         /// Implementation of the operation LiteralInteger.IsComputable
         /// </summary>
-        bool LiteralInteger_IsComputable(LiteralInteger _this, bool result);
+        bool LiteralInteger_IsComputable(LiteralInteger _this);
     
         /// <summary>
         /// Implementation of the operation LiteralNull.IsComputable
         /// </summary>
-        bool LiteralNull_IsComputable(LiteralNull _this, bool result);
+        bool LiteralNull_IsComputable(LiteralNull _this);
     
         /// <summary>
         /// Implementation of the operation LiteralNull.IsNull
         /// </summary>
-        bool LiteralNull_IsNull(LiteralNull _this, bool result);
+        bool LiteralNull_IsNull(LiteralNull _this);
     
         /// <summary>
         /// Implementation of the operation LiteralReal.IsComputable
         /// </summary>
-        bool LiteralReal_IsComputable(LiteralReal _this, bool result);
+        bool LiteralReal_IsComputable(LiteralReal _this);
     
         /// <summary>
         /// Implementation of the operation LiteralReal.RealValue
         /// </summary>
-        double LiteralReal_RealValue(LiteralReal _this, double result);
+        double LiteralReal_RealValue(LiteralReal _this);
     
         /// <summary>
         /// Implementation of the operation LiteralString.IsComputable
         /// </summary>
-        bool LiteralString_IsComputable(LiteralString _this, bool result);
+        bool LiteralString_IsComputable(LiteralString _this);
     
         /// <summary>
         /// Implementation of the operation LiteralString.StringValue
         /// </summary>
-        string LiteralString_StringValue(LiteralString _this, string result);
+        string LiteralString_StringValue(LiteralString _this);
     
         /// <summary>
         /// Implementation of the operation LiteralUnlimitedNatural.IsComputable
         /// </summary>
-        bool LiteralUnlimitedNatural_IsComputable(LiteralUnlimitedNatural _this, bool result);
+        bool LiteralUnlimitedNatural_IsComputable(LiteralUnlimitedNatural _this);
     
         /// <summary>
         /// Implementation of the operation LiteralUnlimitedNatural.UnlimitedValue
         /// </summary>
-        int LiteralUnlimitedNatural_UnlimitedValue(LiteralUnlimitedNatural _this, int result);
+        int LiteralUnlimitedNatural_UnlimitedValue(LiteralUnlimitedNatural _this);
     
         /// <summary>
         /// Implementation of the operation LoopNode.AllActions
         /// </summary>
-        global::System.Collections.Generic.IList<Action> LoopNode_AllActions(LoopNode _this, global::System.Collections.Generic.IList<Action> result);
+        global::System.Collections.Generic.IList<Action> LoopNode_AllActions(LoopNode _this);
     
         /// <summary>
         /// Implementation of the operation LoopNode.SourceNodes
         /// </summary>
-        global::System.Collections.Generic.IList<ActivityNode> LoopNode_SourceNodes(LoopNode _this, global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<ActivityNode> LoopNode_SourceNodes(LoopNode _this);
     
         /// <summary>
         /// Implementation of the operation Message.IsDistinguishableFrom
         /// </summary>
-        bool Message_IsDistinguishableFrom(Message _this, bool result, NamedElement n, Namespace ns);
+        bool Message_IsDistinguishableFrom(Message _this, NamedElement n, Namespace ns);
     
         /// <summary>
         /// Implementation of the operation MessageEnd.OppositeEnd
         /// </summary>
-        global::System.Collections.Generic.IList<MessageEnd> MessageEnd_OppositeEnd(MessageEnd _this, global::System.Collections.Generic.IList<MessageEnd> result);
+        global::System.Collections.Generic.IList<MessageEnd> MessageEnd_OppositeEnd(MessageEnd _this);
     
         /// <summary>
         /// Implementation of the operation MessageEnd.IsSend
         /// </summary>
-        bool MessageEnd_IsSend(MessageEnd _this, bool result);
+        bool MessageEnd_IsSend(MessageEnd _this);
     
         /// <summary>
         /// Implementation of the operation MessageEnd.IsReceive
         /// </summary>
-        bool MessageEnd_IsReceive(MessageEnd _this, bool result);
+        bool MessageEnd_IsReceive(MessageEnd _this);
     
         /// <summary>
         /// Implementation of the operation MessageEnd.EnclosingFragment
         /// </summary>
-        global::System.Collections.Generic.IList<InteractionFragment> MessageEnd_EnclosingFragment(MessageEnd _this, global::System.Collections.Generic.IList<InteractionFragment> result);
+        global::System.Collections.Generic.IList<InteractionFragment> MessageEnd_EnclosingFragment(MessageEnd _this);
     
         /// <summary>
         /// Implementation of the operation MultiplicityElement.CompatibleWith
         /// </summary>
-        bool MultiplicityElement_CompatibleWith(MultiplicityElement _this, bool result, MultiplicityElement other);
+        bool MultiplicityElement_CompatibleWith(MultiplicityElement _this, MultiplicityElement other);
     
         /// <summary>
         /// Implementation of the operation MultiplicityElement.IncludesMultiplicity
         /// </summary>
-        bool MultiplicityElement_IncludesMultiplicity(MultiplicityElement _this, bool result, MultiplicityElement M);
+        bool MultiplicityElement_IncludesMultiplicity(MultiplicityElement _this, MultiplicityElement M);
     
         /// <summary>
         /// Implementation of the operation MultiplicityElement.Is
         /// </summary>
-        bool MultiplicityElement_Is(MultiplicityElement _this, bool result, int lowerbound, int upperbound);
+        bool MultiplicityElement_Is(MultiplicityElement _this, int lowerbound, int upperbound);
     
         /// <summary>
         /// Implementation of the operation MultiplicityElement.IsMultivalued
         /// </summary>
-        bool MultiplicityElement_IsMultivalued(MultiplicityElement _this, bool result);
+        bool MultiplicityElement_IsMultivalued(MultiplicityElement _this);
     
         /// <summary>
         /// Implementation of the operation MultiplicityElement.LowerBound
         /// </summary>
-        int MultiplicityElement_LowerBound(MultiplicityElement _this, int result);
+        int MultiplicityElement_LowerBound(MultiplicityElement _this);
     
         /// <summary>
         /// Implementation of the operation MultiplicityElement.UpperBound
         /// </summary>
-        int MultiplicityElement_UpperBound(MultiplicityElement _this, int result);
+        int MultiplicityElement_UpperBound(MultiplicityElement _this);
     
         /// <summary>
         /// Implementation of the operation Namespace.ExcludeCollisions
         /// </summary>
-        global::System.Collections.Generic.IList<PackageableElement> Namespace_ExcludeCollisions(Namespace _this, global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace_ExcludeCollisions(Namespace _this, global::System.Collections.Generic.IList<PackageableElement> imps);
     
         /// <summary>
         /// Implementation of the operation Namespace.GetNamesOfMember
         /// </summary>
-        global::System.Collections.Generic.IList<string> Namespace_GetNamesOfMember(Namespace _this, global::System.Collections.Generic.IList<string> result, NamedElement element);
+        global::System.Collections.Generic.IList<string> Namespace_GetNamesOfMember(Namespace _this, NamedElement element);
     
         /// <summary>
         /// Implementation of the operation Namespace.ImportMembers
         /// </summary>
-        global::System.Collections.Generic.IList<PackageableElement> Namespace_ImportMembers(Namespace _this, global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace_ImportMembers(Namespace _this, global::System.Collections.Generic.IList<PackageableElement> imps);
     
         /// <summary>
         /// Implementation of the operation Namespace.MembersAreDistinguishable
         /// </summary>
-        bool Namespace_MembersAreDistinguishable(Namespace _this, bool result);
+        bool Namespace_MembersAreDistinguishable(Namespace _this);
     
         /// <summary>
         /// Implementation of the operation OpaqueExpression.IsIntegral
         /// </summary>
-        bool OpaqueExpression_IsIntegral(OpaqueExpression _this, bool result);
+        bool OpaqueExpression_IsIntegral(OpaqueExpression _this);
     
         /// <summary>
         /// Implementation of the operation OpaqueExpression.IsNonNegative
         /// </summary>
-        bool OpaqueExpression_IsNonNegative(OpaqueExpression _this, bool result);
+        bool OpaqueExpression_IsNonNegative(OpaqueExpression _this);
     
         /// <summary>
         /// Implementation of the operation OpaqueExpression.IsPositive
         /// </summary>
-        bool OpaqueExpression_IsPositive(OpaqueExpression _this, bool result);
+        bool OpaqueExpression_IsPositive(OpaqueExpression _this);
     
         /// <summary>
         /// Implementation of the operation OpaqueExpression.Value
         /// </summary>
-        int OpaqueExpression_Value(OpaqueExpression _this, int result);
+        int OpaqueExpression_Value(OpaqueExpression _this);
     
         /// <summary>
         /// Implementation of the operation Package.AllApplicableStereotypes
         /// </summary>
-        global::System.Collections.Generic.IList<Stereotype> Package_AllApplicableStereotypes(Package _this, global::System.Collections.Generic.IList<Stereotype> result);
+        global::System.Collections.Generic.IList<Stereotype> Package_AllApplicableStereotypes(Package _this);
     
         /// <summary>
         /// Implementation of the operation Package.ContainingProfile
         /// </summary>
-        Profile Package_ContainingProfile(Package _this, Profile result);
+        Profile Package_ContainingProfile(Package _this);
     
         /// <summary>
         /// Implementation of the operation Package.MakesVisible
         /// </summary>
-        bool Package_MakesVisible(Package _this, bool result, NamedElement el);
+        bool Package_MakesVisible(Package _this, NamedElement el);
     
         /// <summary>
         /// Implementation of the operation Package.MustBeOwned
         /// </summary>
-        bool Package_MustBeOwned(Package _this, bool result);
+        bool Package_MustBeOwned(Package _this);
     
         /// <summary>
         /// Implementation of the operation Package.VisibleMembers
         /// </summary>
-        global::System.Collections.Generic.IList<PackageableElement> Package_VisibleMembers(Package _this, global::System.Collections.Generic.IList<PackageableElement> result);
+        global::System.Collections.Generic.IList<PackageableElement> Package_VisibleMembers(Package _this);
     
         /// <summary>
         /// Implementation of the operation RedefinableElement.IsConsistentWith
         /// </summary>
-        bool RedefinableElement_IsConsistentWith(RedefinableElement _this, bool result, RedefinableElement redefiningElement);
+        bool RedefinableElement_IsConsistentWith(RedefinableElement _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation RedefinableElement.IsRedefinitionContextValid
         /// </summary>
-        bool RedefinableElement_IsRedefinitionContextValid(RedefinableElement _this, bool result, RedefinableElement redefinedElement);
+        bool RedefinableElement_IsRedefinitionContextValid(RedefinableElement _this, RedefinableElement redefinedElement);
     
         /// <summary>
         /// Implementation of the operation Operation.IsConsistentWith
         /// </summary>
-        bool Operation_IsConsistentWith(Operation _this, bool result, RedefinableElement redefiningElement);
+        bool Operation_IsConsistentWith(Operation _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation Operation.ReturnResult
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> Operation_ReturnResult(Operation _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> Operation_ReturnResult(Operation _this);
     
         /// <summary>
         /// Implementation of the operation Property.IsAttribute
         /// </summary>
-        bool Property_IsAttribute(Property _this, bool result);
+        bool Property_IsAttribute(Property _this);
     
         /// <summary>
         /// Implementation of the operation Property.IsCompatibleWith
         /// </summary>
-        bool Property_IsCompatibleWith(Property _this, bool result, ParameterableElement p);
+        bool Property_IsCompatibleWith(Property _this, ParameterableElement p);
     
         /// <summary>
         /// Implementation of the operation Property.IsConsistentWith
         /// </summary>
-        bool Property_IsConsistentWith(Property _this, bool result, RedefinableElement redefiningElement);
+        bool Property_IsConsistentWith(Property _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation Property.IsNavigable
         /// </summary>
-        bool Property_IsNavigable(Property _this, bool result);
+        bool Property_IsNavigable(Property _this);
     
         /// <summary>
         /// Implementation of the operation Property.SubsettingContext
         /// </summary>
-        global::System.Collections.Generic.IList<Type> Property_SubsettingContext(Property _this, global::System.Collections.Generic.IList<Type> result);
+        global::System.Collections.Generic.IList<Type> Property_SubsettingContext(Property _this);
     
         /// <summary>
         /// Implementation of the operation Port.BasicProvided
         /// </summary>
-        global::System.Collections.Generic.IList<Interface> Port_BasicProvided(Port _this, global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> Port_BasicProvided(Port _this);
     
         /// <summary>
         /// Implementation of the operation Port.BasicRequired
         /// </summary>
-        global::System.Collections.Generic.IList<Interface> Port_BasicRequired(Port _this, global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> Port_BasicRequired(Port _this);
     
         /// <summary>
         /// Implementation of the operation Pseudostate.IsConsistentWith
         /// </summary>
-        bool Pseudostate_IsConsistentWith(Pseudostate _this, RedefinableElement redefiningElement, bool result);
+        bool Pseudostate_IsConsistentWith(Pseudostate _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation ReadLinkAction.OpenEnd
         /// </summary>
-        global::System.Collections.Generic.IList<Property> ReadLinkAction_OpenEnd(ReadLinkAction _this, global::System.Collections.Generic.IList<Property> result);
+        global::System.Collections.Generic.IList<Property> ReadLinkAction_OpenEnd(ReadLinkAction _this);
     
         /// <summary>
         /// Implementation of the operation RedefinableTemplateSignature.IsConsistentWith
         /// </summary>
-        bool RedefinableTemplateSignature_IsConsistentWith(RedefinableTemplateSignature _this, bool result, RedefinableElement redefiningElement);
+        bool RedefinableTemplateSignature_IsConsistentWith(RedefinableTemplateSignature _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation Region.BelongsToPSM
         /// </summary>
-        bool Region_BelongsToPSM(Region _this, bool result);
+        bool Region_BelongsToPSM(Region _this);
     
         /// <summary>
         /// Implementation of the operation Region.ContainingStateMachine
         /// </summary>
-        StateMachine Region_ContainingStateMachine(Region _this, StateMachine result);
+        StateMachine Region_ContainingStateMachine(Region _this);
     
         /// <summary>
         /// Implementation of the operation Region.IsConsistentWith
         /// </summary>
-        bool Region_IsConsistentWith(Region _this, bool result, RedefinableElement redefiningElement);
+        bool Region_IsConsistentWith(Region _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation Region.IsRedefinitionContextValid
         /// </summary>
-        bool Region_IsRedefinitionContextValid(Region _this, bool result, RedefinableElement redefinedElement);
+        bool Region_IsRedefinitionContextValid(Region _this, RedefinableElement redefinedElement);
     
         /// <summary>
         /// Implementation of the operation StartObjectBehaviorAction.OutputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> StartObjectBehaviorAction_OutputParameters(StartObjectBehaviorAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> StartObjectBehaviorAction_OutputParameters(StartObjectBehaviorAction _this);
     
         /// <summary>
         /// Implementation of the operation StartObjectBehaviorAction.InputParameters
         /// </summary>
-        global::System.Collections.Generic.IList<Parameter> StartObjectBehaviorAction_InputParameters(StartObjectBehaviorAction _this, global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> StartObjectBehaviorAction_InputParameters(StartObjectBehaviorAction _this);
     
         /// <summary>
         /// Implementation of the operation StartObjectBehaviorAction.Behavior
         /// </summary>
-        Behavior StartObjectBehaviorAction_Behavior(StartObjectBehaviorAction _this, Behavior result);
+        Behavior StartObjectBehaviorAction_Behavior(StartObjectBehaviorAction _this);
     
         /// <summary>
         /// Implementation of the operation TemplateableElement.IsTemplate
         /// </summary>
-        bool TemplateableElement_IsTemplate(TemplateableElement _this, bool result);
+        bool TemplateableElement_IsTemplate(TemplateableElement _this);
     
         /// <summary>
         /// Implementation of the operation TemplateableElement.ParameterableElements
         /// </summary>
-        global::System.Collections.Generic.IList<ParameterableElement> TemplateableElement_ParameterableElements(TemplateableElement _this, global::System.Collections.Generic.IList<ParameterableElement> result);
+        global::System.Collections.Generic.IList<ParameterableElement> TemplateableElement_ParameterableElements(TemplateableElement _this);
     
         /// <summary>
         /// Implementation of the operation State.ContainingStateMachine
         /// </summary>
-        StateMachine State_ContainingStateMachine(State _this, StateMachine result);
+        StateMachine State_ContainingStateMachine(State _this);
     
         /// <summary>
         /// Implementation of the operation State.IsConsistentWith
         /// </summary>
-        bool State_IsConsistentWith(State _this, bool result, RedefinableElement redefiningElement);
+        bool State_IsConsistentWith(State _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation StructuredClassifier.AllRoles
         /// </summary>
-        global::System.Collections.Generic.IList<ConnectableElement> StructuredClassifier_AllRoles(StructuredClassifier _this, global::System.Collections.Generic.IList<ConnectableElement> result);
+        global::System.Collections.Generic.IList<ConnectableElement> StructuredClassifier_AllRoles(StructuredClassifier _this);
     
         /// <summary>
         /// Implementation of the operation StateMachine.LCA
         /// </summary>
-        Region StateMachine_LCA(StateMachine _this, Region result, Vertex s1, Vertex s2);
+        Region StateMachine_LCA(StateMachine _this, Vertex s1, Vertex s2);
     
         /// <summary>
         /// Implementation of the operation StateMachine.Ancestor
         /// </summary>
-        bool StateMachine_Ancestor(StateMachine _this, bool result, Vertex s1, Vertex s2);
+        bool StateMachine_Ancestor(StateMachine _this, Vertex s1, Vertex s2);
     
         /// <summary>
         /// Implementation of the operation StateMachine.IsConsistentWith
         /// </summary>
-        bool StateMachine_IsConsistentWith(StateMachine _this, bool result, RedefinableElement redefiningElement);
+        bool StateMachine_IsConsistentWith(StateMachine _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation StateMachine.IsRedefinitionContextValid
         /// </summary>
-        bool StateMachine_IsRedefinitionContextValid(StateMachine _this, bool result, RedefinableElement redefinedElement);
+        bool StateMachine_IsRedefinitionContextValid(StateMachine _this, RedefinableElement redefinedElement);
     
         /// <summary>
         /// Implementation of the operation StateMachine.LCAState
         /// </summary>
-        State StateMachine_LCAState(StateMachine _this, State result, Vertex v1, Vertex v2);
+        State StateMachine_LCAState(StateMachine _this, Vertex v1, Vertex v2);
     
         /// <summary>
         /// Implementation of the operation Stereotype.ContainingProfile
         /// </summary>
-        Profile Stereotype_ContainingProfile(Stereotype _this, Profile result);
+        Profile Stereotype_ContainingProfile(Stereotype _this);
     
         /// <summary>
         /// Implementation of the operation StringExpression.StringValue
         /// </summary>
-        string StringExpression_StringValue(StringExpression _this, string result);
+        string StringExpression_StringValue(StringExpression _this);
     
         /// <summary>
         /// Implementation of the operation StructuredActivityNode.AllActions
         /// </summary>
-        global::System.Collections.Generic.IList<Action> StructuredActivityNode_AllActions(StructuredActivityNode _this, global::System.Collections.Generic.IList<Action> result);
+        global::System.Collections.Generic.IList<Action> StructuredActivityNode_AllActions(StructuredActivityNode _this);
     
         /// <summary>
         /// Implementation of the operation StructuredActivityNode.AllOwnedNodes
         /// </summary>
-        global::System.Collections.Generic.IList<ActivityNode> StructuredActivityNode_AllOwnedNodes(StructuredActivityNode _this, global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<ActivityNode> StructuredActivityNode_AllOwnedNodes(StructuredActivityNode _this);
     
         /// <summary>
         /// Implementation of the operation StructuredActivityNode.SourceNodes
         /// </summary>
-        global::System.Collections.Generic.IList<ActivityNode> StructuredActivityNode_SourceNodes(StructuredActivityNode _this, global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<ActivityNode> StructuredActivityNode_SourceNodes(StructuredActivityNode _this);
     
         /// <summary>
         /// Implementation of the operation StructuredActivityNode.TargetNodes
         /// </summary>
-        global::System.Collections.Generic.IList<ActivityNode> StructuredActivityNode_TargetNodes(StructuredActivityNode _this, global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<ActivityNode> StructuredActivityNode_TargetNodes(StructuredActivityNode _this);
     
         /// <summary>
         /// Implementation of the operation StructuredActivityNode.ContainingActivity
         /// </summary>
-        Activity StructuredActivityNode_ContainingActivity(StructuredActivityNode _this, Activity result);
+        Activity StructuredActivityNode_ContainingActivity(StructuredActivityNode _this);
     
         /// <summary>
         /// Implementation of the operation Transition.ContainingStateMachine
         /// </summary>
-        StateMachine Transition_ContainingStateMachine(Transition _this, StateMachine result);
+        StateMachine Transition_ContainingStateMachine(Transition _this);
     
         /// <summary>
         /// Implementation of the operation Transition.IsConsistentWith
         /// </summary>
-        bool Transition_IsConsistentWith(Transition _this, bool result, RedefinableElement redefiningElement);
+        bool Transition_IsConsistentWith(Transition _this, RedefinableElement redefiningElement);
     
         /// <summary>
         /// Implementation of the operation Type.ConformsTo
         /// </summary>
-        bool Type_ConformsTo(Type _this, bool result, Type other);
+        bool Type_ConformsTo(Type _this, Type other);
     
         /// <summary>
         /// Implementation of the operation UseCase.AllIncludedUseCases
         /// </summary>
-        global::System.Collections.Generic.IList<UseCase> UseCase_AllIncludedUseCases(UseCase _this, global::System.Collections.Generic.IList<UseCase> result);
+        global::System.Collections.Generic.IList<UseCase> UseCase_AllIncludedUseCases(UseCase _this);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.BooleanValue
         /// </summary>
-        bool ValueSpecification_BooleanValue(ValueSpecification _this, bool result);
+        bool ValueSpecification_BooleanValue(ValueSpecification _this);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.IntegerValue
         /// </summary>
-        int ValueSpecification_IntegerValue(ValueSpecification _this, int result);
+        int ValueSpecification_IntegerValue(ValueSpecification _this);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.IsCompatibleWith
         /// </summary>
-        bool ValueSpecification_IsCompatibleWith(ValueSpecification _this, bool result, ParameterableElement p);
+        bool ValueSpecification_IsCompatibleWith(ValueSpecification _this, ParameterableElement p);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.IsComputable
         /// </summary>
-        bool ValueSpecification_IsComputable(ValueSpecification _this, bool result);
+        bool ValueSpecification_IsComputable(ValueSpecification _this);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.IsNull
         /// </summary>
-        bool ValueSpecification_IsNull(ValueSpecification _this, bool result);
+        bool ValueSpecification_IsNull(ValueSpecification _this);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.RealValue
         /// </summary>
-        double ValueSpecification_RealValue(ValueSpecification _this, double result);
+        double ValueSpecification_RealValue(ValueSpecification _this);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.StringValue
         /// </summary>
-        string ValueSpecification_StringValue(ValueSpecification _this, string result);
+        string ValueSpecification_StringValue(ValueSpecification _this);
     
         /// <summary>
         /// Implementation of the operation ValueSpecification.UnlimitedValue
         /// </summary>
-        int ValueSpecification_UnlimitedValue(ValueSpecification _this, int result);
+        int ValueSpecification_UnlimitedValue(ValueSpecification _this);
     
         /// <summary>
         /// Implementation of the operation Variable.IsAccessibleBy
         /// </summary>
-        bool Variable_IsAccessibleBy(Variable _this, bool result, Action a);
+        bool Variable_IsAccessibleBy(Variable _this, Action a);
     
         /// <summary>
         /// Implementation of the operation Vertex.ContainingStateMachine
         /// </summary>
-        StateMachine Vertex_ContainingStateMachine(Vertex _this, StateMachine result);
+        StateMachine Vertex_ContainingStateMachine(Vertex _this);
     
         /// <summary>
         /// Implementation of the operation Vertex.IsContainedInState
         /// </summary>
-        bool Vertex_IsContainedInState(Vertex _this, bool result, State s);
+        bool Vertex_IsContainedInState(Vertex _this, State s);
     
         /// <summary>
         /// Implementation of the operation Vertex.IsContainedInRegion
         /// </summary>
-        bool Vertex_IsContainedInRegion(Vertex _this, bool result, Region r);
+        bool Vertex_IsContainedInRegion(Vertex _this, Region r);
     
         /// <summary>
         /// Implementation of the operation Vertex.IsConsistentWith
         /// </summary>
-        bool Vertex_IsConsistentWith(Vertex _this, bool result, RedefinableElement redefiningElement);
+        bool Vertex_IsConsistentWith(Vertex _this, RedefinableElement redefiningElement);
     
     }
 }

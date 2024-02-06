@@ -80,10 +80,10 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        global::System.Collections.Generic.IList<InputPin> LinkEndCreationData.AllPins(global::System.Collections.Generic.IList<InputPin> result) => Uml.__CustomImpl.LinkEndCreationData_AllPins(this, result);
-        global::System.Collections.Generic.IList<InputPin> LinkEndData.AllPins(global::System.Collections.Generic.IList<InputPin> result) => Uml.__CustomImpl.LinkEndCreationData_AllPins(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        global::System.Collections.Generic.IList<InputPin> LinkEndCreationData.AllPins() => Uml.__CustomImpl.LinkEndCreationData_AllPins(this);
+        global::System.Collections.Generic.IList<InputPin> LinkEndData.AllPins() => Uml.__CustomImpl.LinkEndCreationData_AllPins(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

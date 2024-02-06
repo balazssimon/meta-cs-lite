@@ -297,27 +297,27 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        bool Operation.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.Operation_IsConsistentWith(this, result, redefiningElement);
-        global::System.Collections.Generic.IList<Parameter> Operation.ReturnResult(global::System.Collections.Generic.IList<Parameter> result) => Uml.__CustomImpl.Operation_ReturnResult(this, result);
-        global::System.Collections.Generic.IList<Parameter> BehavioralFeature.InputParameters(global::System.Collections.Generic.IList<Parameter> result) => Uml.__CustomImpl.BehavioralFeature_InputParameters(this, result);
-        bool BehavioralFeature.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.BehavioralFeature_IsDistinguishableFrom(this, result, n, ns);
-        global::System.Collections.Generic.IList<Parameter> BehavioralFeature.OutputParameters(global::System.Collections.Generic.IList<Parameter> result) => Uml.__CustomImpl.BehavioralFeature_OutputParameters(this, result);
-        global::System.Collections.Generic.IList<PackageableElement> Namespace.ExcludeCollisions(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ExcludeCollisions(this, result, imps);
-        global::System.Collections.Generic.IList<string> Namespace.GetNamesOfMember(global::System.Collections.Generic.IList<string> result, NamedElement element) => Uml.__CustomImpl.Namespace_GetNamesOfMember(this, result, element);
-        global::System.Collections.Generic.IList<PackageableElement> Namespace.ImportMembers(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ImportMembers(this, result, imps);
-        bool Namespace.MembersAreDistinguishable(bool result) => Uml.__CustomImpl.Namespace_MembersAreDistinguishable(this, result);
-        bool ParameterableElement.IsCompatibleWith(bool result, ParameterableElement p) => Uml.__CustomImpl.ParameterableElement_IsCompatibleWith(this, result, p);
-        bool ParameterableElement.IsTemplateParameter(bool result) => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this, result);
-        bool RedefinableElement.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.Operation_IsConsistentWith(this, result, redefiningElement);
-        bool RedefinableElement.IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, result, redefinedElement);
-        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces(global::System.Collections.Generic.IList<Namespace> result) => Uml.__CustomImpl.NamedElement_AllNamespaces(this, result);
-        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages(global::System.Collections.Generic.IList<Package> result) => Uml.__CustomImpl.NamedElement_AllOwningPackages(this, result);
-        bool NamedElement.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.BehavioralFeature_IsDistinguishableFrom(this, result, n, ns);
-        string NamedElement.Separator(string result) => Uml.__CustomImpl.NamedElement_Separator(this, result);
-        bool TemplateableElement.IsTemplate(bool result) => Uml.__CustomImpl.TemplateableElement_IsTemplate(this, result);
-        global::System.Collections.Generic.IList<ParameterableElement> TemplateableElement.ParameterableElements(global::System.Collections.Generic.IList<ParameterableElement> result) => Uml.__CustomImpl.TemplateableElement_ParameterableElements(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        bool Operation.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.Operation_IsConsistentWith(this, redefiningElement);
+        global::System.Collections.Generic.IList<Parameter> Operation.ReturnResult() => Uml.__CustomImpl.Operation_ReturnResult(this);
+        global::System.Collections.Generic.IList<Parameter> BehavioralFeature.InputParameters() => Uml.__CustomImpl.BehavioralFeature_InputParameters(this);
+        bool BehavioralFeature.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.BehavioralFeature_IsDistinguishableFrom(this, n, ns);
+        global::System.Collections.Generic.IList<Parameter> BehavioralFeature.OutputParameters() => Uml.__CustomImpl.BehavioralFeature_OutputParameters(this);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace.ExcludeCollisions(global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ExcludeCollisions(this, imps);
+        global::System.Collections.Generic.IList<string> Namespace.GetNamesOfMember(NamedElement element) => Uml.__CustomImpl.Namespace_GetNamesOfMember(this, element);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace.ImportMembers(global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ImportMembers(this, imps);
+        bool Namespace.MembersAreDistinguishable() => Uml.__CustomImpl.Namespace_MembersAreDistinguishable(this);
+        bool ParameterableElement.IsCompatibleWith(ParameterableElement p) => Uml.__CustomImpl.ParameterableElement_IsCompatibleWith(this, p);
+        bool ParameterableElement.IsTemplateParameter() => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this);
+        bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.Operation_IsConsistentWith(this, redefiningElement);
+        bool RedefinableElement.IsRedefinitionContextValid(RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, redefinedElement);
+        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces() => Uml.__CustomImpl.NamedElement_AllNamespaces(this);
+        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages() => Uml.__CustomImpl.NamedElement_AllOwningPackages(this);
+        bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.BehavioralFeature_IsDistinguishableFrom(this, n, ns);
+        string NamedElement.Separator() => Uml.__CustomImpl.NamedElement_Separator(this);
+        bool TemplateableElement.IsTemplate() => Uml.__CustomImpl.TemplateableElement_IsTemplate(this);
+        global::System.Collections.Generic.IList<ParameterableElement> TemplateableElement.ParameterableElements() => Uml.__CustomImpl.TemplateableElement_ParameterableElements(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

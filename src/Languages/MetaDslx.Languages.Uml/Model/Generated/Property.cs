@@ -42,10 +42,10 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Property> RedefinedProperty { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Property> SubsettedProperty { get; }
     
-        bool IsAttribute(bool result);
-        bool IsCompatibleWith(bool result, ParameterableElement p);
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
-        bool IsNavigable(bool result);
-        global::System.Collections.Generic.IList<Type> SubsettingContext(global::System.Collections.Generic.IList<Type> result);
+        bool IsAttribute();
+        bool IsCompatibleWith(ParameterableElement p);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
+        bool IsNavigable();
+        global::System.Collections.Generic.IList<Type> SubsettingContext();
     }
 }

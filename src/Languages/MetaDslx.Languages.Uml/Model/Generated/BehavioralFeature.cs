@@ -32,8 +32,8 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<ParameterSet> OwnedParameterSet { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Type> RaisedException { get; }
     
-        bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns);
-        global::System.Collections.Generic.IList<Parameter> InputParameters(global::System.Collections.Generic.IList<Parameter> result);
-        global::System.Collections.Generic.IList<Parameter> OutputParameters(global::System.Collections.Generic.IList<Parameter> result);
+        bool IsDistinguishableFrom(NamedElement n, Namespace ns);
+        global::System.Collections.Generic.IList<Parameter> InputParameters();
+        global::System.Collections.Generic.IList<Parameter> OutputParameters();
     }
 }

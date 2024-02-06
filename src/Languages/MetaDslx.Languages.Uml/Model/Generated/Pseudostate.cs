@@ -29,6 +29,6 @@ namespace MetaDslx.Languages.Uml.Model
         State State { get; set; }
         StateMachine StateMachine { get; set; }
     
-        bool IsConsistentWith(RedefinableElement redefiningElement, bool result);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

@@ -34,10 +34,10 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<ProfileApplication> ProfileApplication { get; }
         string URI { get; set; }
     
-        global::System.Collections.Generic.IList<Stereotype> AllApplicableStereotypes(global::System.Collections.Generic.IList<Stereotype> result);
-        Profile ContainingProfile(Profile result);
-        bool MakesVisible(bool result, NamedElement el);
-        bool MustBeOwned(bool result);
-        global::System.Collections.Generic.IList<PackageableElement> VisibleMembers(global::System.Collections.Generic.IList<PackageableElement> result);
+        global::System.Collections.Generic.IList<Stereotype> AllApplicableStereotypes();
+        Profile ContainingProfile();
+        bool MakesVisible(NamedElement el);
+        bool MustBeOwned();
+        global::System.Collections.Generic.IList<PackageableElement> VisibleMembers();
     }
 }

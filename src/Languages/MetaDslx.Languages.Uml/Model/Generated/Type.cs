@@ -27,6 +27,6 @@ namespace MetaDslx.Languages.Uml.Model
     {
         Package Package { get; set; }
     
-        bool ConformsTo(bool result, Type other);
+        bool ConformsTo(Type other);
     }
 }

@@ -32,9 +32,9 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Vertex> Subvertex { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Transition> Transition { get; }
     
-        bool BelongsToPSM(bool result);
-        StateMachine ContainingStateMachine(StateMachine result);
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
-        bool IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement);
+        bool BelongsToPSM();
+        StateMachine ContainingStateMachine();
+        bool IsConsistentWith(RedefinableElement redefiningElement);
+        bool IsRedefinitionContextValid(RedefinableElement redefinedElement);
     }
 }

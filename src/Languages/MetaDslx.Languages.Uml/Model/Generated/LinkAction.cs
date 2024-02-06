@@ -28,6 +28,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<LinkEndData> EndData { get; }
         global::MetaDslx.Modeling.ICollectionSlot<InputPin> InputValue { get; }
     
-        Association Association(Association result);
+        Association Association();
     }
 }

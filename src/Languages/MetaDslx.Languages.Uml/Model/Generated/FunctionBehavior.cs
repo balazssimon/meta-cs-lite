@@ -26,6 +26,6 @@ namespace MetaDslx.Languages.Uml.Model
     public interface FunctionBehavior : global::MetaDslx.Languages.Uml.Model.OpaqueBehavior
     {
     
-        bool HasAllDataTypeAttributes(bool result, DataType d);
+        bool HasAllDataTypeAttributes(DataType d);
     }
 }

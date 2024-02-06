@@ -26,13 +26,13 @@ namespace MetaDslx.Languages.Uml.Model
     public interface Gate : global::MetaDslx.Languages.Uml.Model.MessageEnd
     {
     
-        bool IsOutsideCF(bool result);
-        bool IsInsideCF(bool result);
-        bool IsActual(bool result);
-        bool IsFormal(bool result);
-        string GetName(string result);
-        bool Matches(bool result, Gate gateToMatch);
-        bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns);
-        InteractionOperand GetOperand(InteractionOperand result);
+        bool IsOutsideCF();
+        bool IsInsideCF();
+        bool IsActual();
+        bool IsFormal();
+        string GetName();
+        bool Matches(Gate gateToMatch);
+        bool IsDistinguishableFrom(NamedElement n, Namespace ns);
+        InteractionOperand GetOperand();
     }
 }

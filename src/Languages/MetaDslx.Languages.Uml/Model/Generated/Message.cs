@@ -28,12 +28,12 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<ValueSpecification> Argument { get; }
         Connector Connector { get; set; }
         Interaction Interaction { get; set; }
-        global::MetaDslx.Languages.Uml.Model.MessageKind MessageKind { get; }
+        global::MetaDslx.Languages.Uml.Model.MessageKind MessageKind { get; set; }
         global::MetaDslx.Languages.Uml.Model.MessageSort MessageSort { get; set; }
         MessageEnd ReceiveEvent { get; set; }
         MessageEnd SendEvent { get; set; }
         NamedElement Signature { get; set; }
     
-        bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns);
+        bool IsDistinguishableFrom(NamedElement n, Namespace ns);
     }
 }

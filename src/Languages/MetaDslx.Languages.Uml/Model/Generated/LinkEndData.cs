@@ -29,6 +29,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<QualifierValue> Qualifier { get; }
         InputPin Value { get; set; }
     
-        global::System.Collections.Generic.IList<InputPin> AllPins(global::System.Collections.Generic.IList<InputPin> result);
+        global::System.Collections.Generic.IList<InputPin> AllPins();
     }
 }

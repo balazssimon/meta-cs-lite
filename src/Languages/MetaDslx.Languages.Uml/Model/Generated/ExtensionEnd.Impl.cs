@@ -314,28 +314,28 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        int ExtensionEnd.LowerBound(int result) => Uml.__CustomImpl.ExtensionEnd_LowerBound(this, result);
-        bool Property.IsAttribute(bool result) => Uml.__CustomImpl.Property_IsAttribute(this, result);
-        bool Property.IsCompatibleWith(bool result, ParameterableElement p) => Uml.__CustomImpl.Property_IsCompatibleWith(this, result, p);
-        bool Property.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.Property_IsConsistentWith(this, result, redefiningElement);
-        bool Property.IsNavigable(bool result) => Uml.__CustomImpl.Property_IsNavigable(this, result);
-        global::System.Collections.Generic.IList<Type> Property.SubsettingContext(global::System.Collections.Generic.IList<Type> result) => Uml.__CustomImpl.Property_SubsettingContext(this, result);
-        bool ParameterableElement.IsCompatibleWith(bool result, ParameterableElement p) => Uml.__CustomImpl.Property_IsCompatibleWith(this, result, p);
-        bool ParameterableElement.IsTemplateParameter(bool result) => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this, result);
-        bool MultiplicityElement.CompatibleWith(bool result, MultiplicityElement other) => Uml.__CustomImpl.MultiplicityElement_CompatibleWith(this, result, other);
-        bool MultiplicityElement.IncludesMultiplicity(bool result, MultiplicityElement M) => Uml.__CustomImpl.MultiplicityElement_IncludesMultiplicity(this, result, M);
-        bool MultiplicityElement.Is(bool result, int lowerbound, int upperbound) => Uml.__CustomImpl.MultiplicityElement_Is(this, result, lowerbound, upperbound);
-        bool MultiplicityElement.IsMultivalued(bool result) => Uml.__CustomImpl.MultiplicityElement_IsMultivalued(this, result);
-        int MultiplicityElement.LowerBound(int result) => Uml.__CustomImpl.ExtensionEnd_LowerBound(this, result);
-        int MultiplicityElement.UpperBound(int result) => Uml.__CustomImpl.MultiplicityElement_UpperBound(this, result);
-        bool RedefinableElement.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.Property_IsConsistentWith(this, result, redefiningElement);
-        bool RedefinableElement.IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, result, redefinedElement);
-        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces(global::System.Collections.Generic.IList<Namespace> result) => Uml.__CustomImpl.NamedElement_AllNamespaces(this, result);
-        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages(global::System.Collections.Generic.IList<Package> result) => Uml.__CustomImpl.NamedElement_AllOwningPackages(this, result);
-        bool NamedElement.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, result, n, ns);
-        string NamedElement.Separator(string result) => Uml.__CustomImpl.NamedElement_Separator(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        int ExtensionEnd.LowerBound() => Uml.__CustomImpl.ExtensionEnd_LowerBound(this);
+        bool Property.IsAttribute() => Uml.__CustomImpl.Property_IsAttribute(this);
+        bool Property.IsCompatibleWith(ParameterableElement p) => Uml.__CustomImpl.Property_IsCompatibleWith(this, p);
+        bool Property.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.Property_IsConsistentWith(this, redefiningElement);
+        bool Property.IsNavigable() => Uml.__CustomImpl.Property_IsNavigable(this);
+        global::System.Collections.Generic.IList<Type> Property.SubsettingContext() => Uml.__CustomImpl.Property_SubsettingContext(this);
+        bool ParameterableElement.IsCompatibleWith(ParameterableElement p) => Uml.__CustomImpl.Property_IsCompatibleWith(this, p);
+        bool ParameterableElement.IsTemplateParameter() => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this);
+        bool MultiplicityElement.CompatibleWith(MultiplicityElement other) => Uml.__CustomImpl.MultiplicityElement_CompatibleWith(this, other);
+        bool MultiplicityElement.IncludesMultiplicity(MultiplicityElement M) => Uml.__CustomImpl.MultiplicityElement_IncludesMultiplicity(this, M);
+        bool MultiplicityElement.Is(int lowerbound, int upperbound) => Uml.__CustomImpl.MultiplicityElement_Is(this, lowerbound, upperbound);
+        bool MultiplicityElement.IsMultivalued() => Uml.__CustomImpl.MultiplicityElement_IsMultivalued(this);
+        int MultiplicityElement.LowerBound() => Uml.__CustomImpl.ExtensionEnd_LowerBound(this);
+        int MultiplicityElement.UpperBound() => Uml.__CustomImpl.MultiplicityElement_UpperBound(this);
+        bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.Property_IsConsistentWith(this, redefiningElement);
+        bool RedefinableElement.IsRedefinitionContextValid(RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, redefinedElement);
+        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces() => Uml.__CustomImpl.NamedElement_AllNamespaces(this);
+        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages() => Uml.__CustomImpl.NamedElement_AllOwningPackages(this);
+        bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, n, ns);
+        string NamedElement.Separator() => Uml.__CustomImpl.NamedElement_Separator(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

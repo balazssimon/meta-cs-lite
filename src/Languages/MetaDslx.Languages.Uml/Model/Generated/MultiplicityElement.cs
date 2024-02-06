@@ -32,11 +32,11 @@ namespace MetaDslx.Languages.Uml.Model
         int Upper { get; }
         ValueSpecification UpperValue { get; set; }
     
-        bool CompatibleWith(bool result, MultiplicityElement other);
-        bool IncludesMultiplicity(bool result, MultiplicityElement M);
-        bool Is(bool result, int lowerbound, int upperbound);
-        bool IsMultivalued(bool result);
-        int LowerBound(int result);
-        int UpperBound(int result);
+        bool CompatibleWith(MultiplicityElement other);
+        bool IncludesMultiplicity(MultiplicityElement M);
+        bool Is(int lowerbound, int upperbound);
+        bool IsMultivalued();
+        int LowerBound();
+        int UpperBound();
     }
 }

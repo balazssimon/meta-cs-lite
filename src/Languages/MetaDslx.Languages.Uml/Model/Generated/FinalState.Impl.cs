@@ -233,25 +233,25 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        bool FinalState.IsConsistentWith(RedefinableElement redefiningElement, bool result) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement, result);
-        StateMachine State.ContainingStateMachine(StateMachine result) => Uml.__CustomImpl.State_ContainingStateMachine(this, result);
-        bool State.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement, result);
-        global::System.Collections.Generic.IList<PackageableElement> Namespace.ExcludeCollisions(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ExcludeCollisions(this, result, imps);
-        global::System.Collections.Generic.IList<string> Namespace.GetNamesOfMember(global::System.Collections.Generic.IList<string> result, NamedElement element) => Uml.__CustomImpl.Namespace_GetNamesOfMember(this, result, element);
-        global::System.Collections.Generic.IList<PackageableElement> Namespace.ImportMembers(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ImportMembers(this, result, imps);
-        bool Namespace.MembersAreDistinguishable(bool result) => Uml.__CustomImpl.Namespace_MembersAreDistinguishable(this, result);
-        StateMachine Vertex.ContainingStateMachine(StateMachine result) => Uml.__CustomImpl.State_ContainingStateMachine(this, result);
-        bool Vertex.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement, result);
-        bool Vertex.IsContainedInRegion(bool result, Region r) => Uml.__CustomImpl.Vertex_IsContainedInRegion(this, result, r);
-        bool Vertex.IsContainedInState(bool result, State s) => Uml.__CustomImpl.Vertex_IsContainedInState(this, result, s);
-        bool RedefinableElement.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement, result);
-        bool RedefinableElement.IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, result, redefinedElement);
-        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces(global::System.Collections.Generic.IList<Namespace> result) => Uml.__CustomImpl.NamedElement_AllNamespaces(this, result);
-        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages(global::System.Collections.Generic.IList<Package> result) => Uml.__CustomImpl.NamedElement_AllOwningPackages(this, result);
-        bool NamedElement.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, result, n, ns);
-        string NamedElement.Separator(string result) => Uml.__CustomImpl.NamedElement_Separator(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        bool FinalState.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement);
+        StateMachine State.ContainingStateMachine() => Uml.__CustomImpl.State_ContainingStateMachine(this);
+        bool State.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace.ExcludeCollisions(global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ExcludeCollisions(this, imps);
+        global::System.Collections.Generic.IList<string> Namespace.GetNamesOfMember(NamedElement element) => Uml.__CustomImpl.Namespace_GetNamesOfMember(this, element);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace.ImportMembers(global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ImportMembers(this, imps);
+        bool Namespace.MembersAreDistinguishable() => Uml.__CustomImpl.Namespace_MembersAreDistinguishable(this);
+        StateMachine Vertex.ContainingStateMachine() => Uml.__CustomImpl.State_ContainingStateMachine(this);
+        bool Vertex.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement);
+        bool Vertex.IsContainedInRegion(Region r) => Uml.__CustomImpl.Vertex_IsContainedInRegion(this, r);
+        bool Vertex.IsContainedInState(State s) => Uml.__CustomImpl.Vertex_IsContainedInState(this, s);
+        bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.FinalState_IsConsistentWith(this, redefiningElement);
+        bool RedefinableElement.IsRedefinitionContextValid(RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, redefinedElement);
+        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces() => Uml.__CustomImpl.NamedElement_AllNamespaces(this);
+        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages() => Uml.__CustomImpl.NamedElement_AllOwningPackages(this);
+        bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, n, ns);
+        string NamedElement.Separator() => Uml.__CustomImpl.NamedElement_Separator(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

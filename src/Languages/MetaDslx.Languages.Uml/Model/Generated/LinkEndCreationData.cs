@@ -28,6 +28,6 @@ namespace MetaDslx.Languages.Uml.Model
         InputPin InsertAt { get; set; }
         bool IsReplaceAll { get; set; }
     
-        global::System.Collections.Generic.IList<InputPin> AllPins(global::System.Collections.Generic.IList<InputPin> result);
+        global::System.Collections.Generic.IList<InputPin> AllPins();
     }
 }

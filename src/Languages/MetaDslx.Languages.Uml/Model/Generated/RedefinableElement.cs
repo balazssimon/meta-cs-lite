@@ -29,7 +29,7 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<RedefinableElement> RedefinedElement { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Classifier> RedefinitionContext { get; }
     
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
-        bool IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
+        bool IsRedefinitionContextValid(RedefinableElement redefinedElement);
     }
 }

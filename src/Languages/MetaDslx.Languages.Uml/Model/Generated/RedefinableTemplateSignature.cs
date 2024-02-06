@@ -29,6 +29,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<RedefinableTemplateSignature> ExtendedSignature { get; }
         global::System.Collections.Generic.IList<TemplateParameter> InheritedParameter { get; }
     
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

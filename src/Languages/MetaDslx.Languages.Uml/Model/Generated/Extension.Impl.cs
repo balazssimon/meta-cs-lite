@@ -315,40 +315,40 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        Property Extension.MetaclassEnd(Property result) => Uml.__CustomImpl.Extension_MetaclassEnd(this, result);
-        global::System.Collections.Generic.IList<Property> Classifier.AllAttributes(global::System.Collections.Generic.IList<Property> result) => Uml.__CustomImpl.Classifier_AllAttributes(this, result);
-        global::System.Collections.Generic.IList<Feature> Classifier.AllFeatures(global::System.Collections.Generic.IList<Feature> result) => Uml.__CustomImpl.Classifier_AllFeatures(this, result);
-        global::System.Collections.Generic.IList<Classifier> Classifier.AllParents(global::System.Collections.Generic.IList<Classifier> result) => Uml.__CustomImpl.Classifier_AllParents(this, result);
-        global::System.Collections.Generic.IList<Interface> Classifier.AllRealizedInterfaces(global::System.Collections.Generic.IList<Interface> result) => Uml.__CustomImpl.Classifier_AllRealizedInterfaces(this, result);
-        global::System.Collections.Generic.IList<StructuralFeature> Classifier.AllSlottableFeatures(global::System.Collections.Generic.IList<StructuralFeature> result) => Uml.__CustomImpl.Classifier_AllSlottableFeatures(this, result);
-        global::System.Collections.Generic.IList<Interface> Classifier.AllUsedInterfaces(global::System.Collections.Generic.IList<Interface> result) => Uml.__CustomImpl.Classifier_AllUsedInterfaces(this, result);
-        bool Classifier.ConformsTo(bool result, Type other) => Uml.__CustomImpl.Classifier_ConformsTo(this, result, other);
-        global::System.Collections.Generic.IList<Interface> Classifier.DirectlyRealizedInterfaces(global::System.Collections.Generic.IList<Interface> result) => Uml.__CustomImpl.Classifier_DirectlyRealizedInterfaces(this, result);
-        global::System.Collections.Generic.IList<Interface> Classifier.DirectlyUsedInterfaces(global::System.Collections.Generic.IList<Interface> result) => Uml.__CustomImpl.Classifier_DirectlyUsedInterfaces(this, result);
-        bool Classifier.HasVisibilityOf(bool result, NamedElement n) => Uml.__CustomImpl.Classifier_HasVisibilityOf(this, result, n);
-        global::System.Collections.Generic.IList<NamedElement> Classifier.Inherit(global::System.Collections.Generic.IList<NamedElement> result, global::System.Collections.Generic.IList<NamedElement> inhs) => Uml.__CustomImpl.Classifier_Inherit(this, result, inhs);
-        global::System.Collections.Generic.IList<NamedElement> Classifier.InheritableMembers(global::System.Collections.Generic.IList<NamedElement> result, Classifier c) => Uml.__CustomImpl.Classifier_InheritableMembers(this, result, c);
-        bool Classifier.IsSubstitutableFor(Classifier contract, bool result) => Uml.__CustomImpl.Classifier_IsSubstitutableFor(this, contract, result);
-        bool Classifier.IsTemplate(bool result) => Uml.__CustomImpl.Classifier_IsTemplate(this, result);
-        bool Classifier.MaySpecializeType(bool result, Classifier c) => Uml.__CustomImpl.Classifier_MaySpecializeType(this, result, c);
-        global::System.Collections.Generic.IList<Classifier> Classifier.Parents(global::System.Collections.Generic.IList<Classifier> result) => Uml.__CustomImpl.Classifier_Parents(this, result);
-        global::System.Collections.Generic.IList<PackageableElement> Namespace.ExcludeCollisions(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ExcludeCollisions(this, result, imps);
-        global::System.Collections.Generic.IList<string> Namespace.GetNamesOfMember(global::System.Collections.Generic.IList<string> result, NamedElement element) => Uml.__CustomImpl.Namespace_GetNamesOfMember(this, result, element);
-        global::System.Collections.Generic.IList<PackageableElement> Namespace.ImportMembers(global::System.Collections.Generic.IList<PackageableElement> result, global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ImportMembers(this, result, imps);
-        bool Namespace.MembersAreDistinguishable(bool result) => Uml.__CustomImpl.Namespace_MembersAreDistinguishable(this, result);
-        bool RedefinableElement.IsConsistentWith(bool result, RedefinableElement redefiningElement) => Uml.__CustomImpl.RedefinableElement_IsConsistentWith(this, result, redefiningElement);
-        bool RedefinableElement.IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, result, redefinedElement);
-        bool TemplateableElement.IsTemplate(bool result) => Uml.__CustomImpl.Classifier_IsTemplate(this, result);
-        global::System.Collections.Generic.IList<ParameterableElement> TemplateableElement.ParameterableElements(global::System.Collections.Generic.IList<ParameterableElement> result) => Uml.__CustomImpl.TemplateableElement_ParameterableElements(this, result);
-        bool Type.ConformsTo(bool result, Type other) => Uml.__CustomImpl.Classifier_ConformsTo(this, result, other);
-        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces(global::System.Collections.Generic.IList<Namespace> result) => Uml.__CustomImpl.NamedElement_AllNamespaces(this, result);
-        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages(global::System.Collections.Generic.IList<Package> result) => Uml.__CustomImpl.NamedElement_AllOwningPackages(this, result);
-        bool NamedElement.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, result, n, ns);
-        string NamedElement.Separator(string result) => Uml.__CustomImpl.NamedElement_Separator(this, result);
-        bool ParameterableElement.IsCompatibleWith(bool result, ParameterableElement p) => Uml.__CustomImpl.ParameterableElement_IsCompatibleWith(this, result, p);
-        bool ParameterableElement.IsTemplateParameter(bool result) => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        Property Extension.MetaclassEnd() => Uml.__CustomImpl.Extension_MetaclassEnd(this);
+        global::System.Collections.Generic.IList<Property> Classifier.AllAttributes() => Uml.__CustomImpl.Classifier_AllAttributes(this);
+        global::System.Collections.Generic.IList<Feature> Classifier.AllFeatures() => Uml.__CustomImpl.Classifier_AllFeatures(this);
+        global::System.Collections.Generic.IList<Classifier> Classifier.AllParents() => Uml.__CustomImpl.Classifier_AllParents(this);
+        global::System.Collections.Generic.IList<Interface> Classifier.AllRealizedInterfaces() => Uml.__CustomImpl.Classifier_AllRealizedInterfaces(this);
+        global::System.Collections.Generic.IList<StructuralFeature> Classifier.AllSlottableFeatures() => Uml.__CustomImpl.Classifier_AllSlottableFeatures(this);
+        global::System.Collections.Generic.IList<Interface> Classifier.AllUsedInterfaces() => Uml.__CustomImpl.Classifier_AllUsedInterfaces(this);
+        bool Classifier.ConformsTo(Type other) => Uml.__CustomImpl.Classifier_ConformsTo(this, other);
+        global::System.Collections.Generic.IList<Interface> Classifier.DirectlyRealizedInterfaces() => Uml.__CustomImpl.Classifier_DirectlyRealizedInterfaces(this);
+        global::System.Collections.Generic.IList<Interface> Classifier.DirectlyUsedInterfaces() => Uml.__CustomImpl.Classifier_DirectlyUsedInterfaces(this);
+        bool Classifier.HasVisibilityOf(NamedElement n) => Uml.__CustomImpl.Classifier_HasVisibilityOf(this, n);
+        global::System.Collections.Generic.IList<NamedElement> Classifier.Inherit(global::System.Collections.Generic.IList<NamedElement> inhs) => Uml.__CustomImpl.Classifier_Inherit(this, inhs);
+        global::System.Collections.Generic.IList<NamedElement> Classifier.InheritableMembers(Classifier c) => Uml.__CustomImpl.Classifier_InheritableMembers(this, c);
+        bool Classifier.IsSubstitutableFor(Classifier contract) => Uml.__CustomImpl.Classifier_IsSubstitutableFor(this, contract);
+        bool Classifier.IsTemplate() => Uml.__CustomImpl.Classifier_IsTemplate(this);
+        bool Classifier.MaySpecializeType(Classifier c) => Uml.__CustomImpl.Classifier_MaySpecializeType(this, c);
+        global::System.Collections.Generic.IList<Classifier> Classifier.Parents() => Uml.__CustomImpl.Classifier_Parents(this);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace.ExcludeCollisions(global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ExcludeCollisions(this, imps);
+        global::System.Collections.Generic.IList<string> Namespace.GetNamesOfMember(NamedElement element) => Uml.__CustomImpl.Namespace_GetNamesOfMember(this, element);
+        global::System.Collections.Generic.IList<PackageableElement> Namespace.ImportMembers(global::System.Collections.Generic.IList<PackageableElement> imps) => Uml.__CustomImpl.Namespace_ImportMembers(this, imps);
+        bool Namespace.MembersAreDistinguishable() => Uml.__CustomImpl.Namespace_MembersAreDistinguishable(this);
+        bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement) => Uml.__CustomImpl.RedefinableElement_IsConsistentWith(this, redefiningElement);
+        bool RedefinableElement.IsRedefinitionContextValid(RedefinableElement redefinedElement) => Uml.__CustomImpl.RedefinableElement_IsRedefinitionContextValid(this, redefinedElement);
+        bool TemplateableElement.IsTemplate() => Uml.__CustomImpl.Classifier_IsTemplate(this);
+        global::System.Collections.Generic.IList<ParameterableElement> TemplateableElement.ParameterableElements() => Uml.__CustomImpl.TemplateableElement_ParameterableElements(this);
+        bool Type.ConformsTo(Type other) => Uml.__CustomImpl.Classifier_ConformsTo(this, other);
+        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces() => Uml.__CustomImpl.NamedElement_AllNamespaces(this);
+        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages() => Uml.__CustomImpl.NamedElement_AllOwningPackages(this);
+        bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, n, ns);
+        string NamedElement.Separator() => Uml.__CustomImpl.NamedElement_Separator(this);
+        bool ParameterableElement.IsCompatibleWith(ParameterableElement p) => Uml.__CustomImpl.ParameterableElement_IsCompatibleWith(this, p);
+        bool ParameterableElement.IsTemplateParameter() => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

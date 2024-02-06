@@ -29,6 +29,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Pseudostate> Exit { get; }
         State State { get; set; }
     
-        bool IsConsistentWith(RedefinableElement redefiningElement, bool result);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

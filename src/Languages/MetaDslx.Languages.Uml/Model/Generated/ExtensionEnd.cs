@@ -28,6 +28,6 @@ namespace MetaDslx.Languages.Uml.Model
         new int Lower { get; }
         new Stereotype Type { get; set; }
     
-        int LowerBound(int result);
+        int LowerBound();
     }
 }

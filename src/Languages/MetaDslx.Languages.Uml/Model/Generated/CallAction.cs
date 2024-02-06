@@ -28,7 +28,7 @@ namespace MetaDslx.Languages.Uml.Model
         bool IsSynchronous { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<OutputPin> Result { get; }
     
-        global::System.Collections.Generic.IList<Parameter> InputParameters(global::System.Collections.Generic.IList<Parameter> result);
-        global::System.Collections.Generic.IList<Parameter> OutputParameters(global::System.Collections.Generic.IList<Parameter> result);
+        global::System.Collections.Generic.IList<Parameter> InputParameters();
+        global::System.Collections.Generic.IList<Parameter> OutputParameters();
     }
 }

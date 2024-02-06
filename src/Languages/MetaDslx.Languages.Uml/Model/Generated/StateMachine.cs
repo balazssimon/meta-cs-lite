@@ -30,10 +30,10 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Region> Region { get; }
         global::MetaDslx.Modeling.ICollectionSlot<State> SubmachineState { get; }
     
-        Region LCA(Region result, Vertex s1, Vertex s2);
-        bool Ancestor(bool result, Vertex s1, Vertex s2);
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
-        bool IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement);
-        State LCAState(State result, Vertex v1, Vertex v2);
+        Region LCA(Vertex s1, Vertex s2);
+        bool Ancestor(Vertex s1, Vertex s2);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
+        bool IsRedefinitionContextValid(RedefinableElement redefinedElement);
+        State LCAState(Vertex v1, Vertex v2);
     }
 }

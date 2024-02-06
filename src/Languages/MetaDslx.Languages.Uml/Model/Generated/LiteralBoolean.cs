@@ -27,7 +27,7 @@ namespace MetaDslx.Languages.Uml.Model
     {
         bool Value { get; set; }
     
-        bool BooleanValue(bool result);
-        bool IsComputable(bool result);
+        bool BooleanValue();
+        bool IsComputable();
     }
 }

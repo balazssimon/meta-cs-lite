@@ -103,14 +103,14 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        bool MultiplicityElement.CompatibleWith(bool result, MultiplicityElement other) => Uml.__CustomImpl.MultiplicityElement_CompatibleWith(this, result, other);
-        bool MultiplicityElement.IncludesMultiplicity(bool result, MultiplicityElement M) => Uml.__CustomImpl.MultiplicityElement_IncludesMultiplicity(this, result, M);
-        bool MultiplicityElement.Is(bool result, int lowerbound, int upperbound) => Uml.__CustomImpl.MultiplicityElement_Is(this, result, lowerbound, upperbound);
-        bool MultiplicityElement.IsMultivalued(bool result) => Uml.__CustomImpl.MultiplicityElement_IsMultivalued(this, result);
-        int MultiplicityElement.LowerBound(int result) => Uml.__CustomImpl.MultiplicityElement_LowerBound(this, result);
-        int MultiplicityElement.UpperBound(int result) => Uml.__CustomImpl.MultiplicityElement_UpperBound(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        bool MultiplicityElement.CompatibleWith(MultiplicityElement other) => Uml.__CustomImpl.MultiplicityElement_CompatibleWith(this, other);
+        bool MultiplicityElement.IncludesMultiplicity(MultiplicityElement M) => Uml.__CustomImpl.MultiplicityElement_IncludesMultiplicity(this, M);
+        bool MultiplicityElement.Is(int lowerbound, int upperbound) => Uml.__CustomImpl.MultiplicityElement_Is(this, lowerbound, upperbound);
+        bool MultiplicityElement.IsMultivalued() => Uml.__CustomImpl.MultiplicityElement_IsMultivalued(this);
+        int MultiplicityElement.LowerBound() => Uml.__CustomImpl.MultiplicityElement_LowerBound(this);
+        int MultiplicityElement.UpperBound() => Uml.__CustomImpl.MultiplicityElement_UpperBound(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

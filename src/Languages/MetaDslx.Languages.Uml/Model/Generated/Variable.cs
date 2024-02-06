@@ -28,6 +28,6 @@ namespace MetaDslx.Languages.Uml.Model
         Activity ActivityScope { get; set; }
         StructuredActivityNode Scope { get; set; }
     
-        bool IsAccessibleBy(bool result, Action a);
+        bool IsAccessibleBy(Action a);
     }
 }

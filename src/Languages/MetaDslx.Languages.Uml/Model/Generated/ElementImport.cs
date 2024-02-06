@@ -30,6 +30,6 @@ namespace MetaDslx.Languages.Uml.Model
         Namespace ImportingNamespace { get; set; }
         global::MetaDslx.Languages.Uml.Model.VisibilityKind Visibility { get; set; }
     
-        string GetName(string result);
+        string GetName();
     }
 }

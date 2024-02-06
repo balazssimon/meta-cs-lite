@@ -35,7 +35,7 @@ namespace MetaDslx.Languages.Uml.Model
         Vertex Target { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Trigger> Trigger { get; }
     
-        StateMachine ContainingStateMachine(StateMachine result);
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
+        StateMachine ContainingStateMachine();
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

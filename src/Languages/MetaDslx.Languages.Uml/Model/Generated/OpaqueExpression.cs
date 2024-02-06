@@ -30,9 +30,9 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<string> Language { get; }
         Parameter Result { get; }
     
-        bool IsIntegral(bool result);
-        bool IsNonNegative(bool result);
-        bool IsPositive(bool result);
-        int Value(int result);
+        bool IsIntegral();
+        bool IsNonNegative();
+        bool IsPositive();
+        int Value();
     }
 }

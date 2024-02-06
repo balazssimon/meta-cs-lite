@@ -28,7 +28,7 @@ namespace MetaDslx.Languages.Uml.Model
         TemplateParameter OwningTemplateParameter { get; set; }
         TemplateParameter TemplateParameter { get; set; }
     
-        bool IsCompatibleWith(bool result, ParameterableElement p);
-        bool IsTemplateParameter(bool result);
+        bool IsCompatibleWith(ParameterableElement p);
+        bool IsTemplateParameter();
     }
 }

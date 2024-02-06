@@ -27,8 +27,8 @@ namespace MetaDslx.Languages.Uml.Model
     {
         InputPin Object { get; set; }
     
-        global::System.Collections.Generic.IList<Parameter> OutputParameters(global::System.Collections.Generic.IList<Parameter> result);
-        global::System.Collections.Generic.IList<Parameter> InputParameters(global::System.Collections.Generic.IList<Parameter> result);
-        Behavior Behavior(Behavior result);
+        global::System.Collections.Generic.IList<Parameter> OutputParameters();
+        global::System.Collections.Generic.IList<Parameter> InputParameters();
+        Behavior Behavior();
     }
 }

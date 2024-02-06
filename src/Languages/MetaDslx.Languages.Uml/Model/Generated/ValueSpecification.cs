@@ -26,13 +26,13 @@ namespace MetaDslx.Languages.Uml.Model
     public interface ValueSpecification : global::MetaDslx.Languages.Uml.Model.TypedElement, global::MetaDslx.Languages.Uml.Model.PackageableElement
     {
     
-        bool BooleanValue(bool result);
-        int IntegerValue(int result);
-        bool IsCompatibleWith(bool result, ParameterableElement p);
-        bool IsComputable(bool result);
-        bool IsNull(bool result);
-        double RealValue(double result);
-        string StringValue(string result);
-        int UnlimitedValue(int result);
+        bool BooleanValue();
+        int IntegerValue();
+        bool IsCompatibleWith(ParameterableElement p);
+        bool IsComputable();
+        bool IsNull();
+        double RealValue();
+        string StringValue();
+        int UnlimitedValue();
     }
 }

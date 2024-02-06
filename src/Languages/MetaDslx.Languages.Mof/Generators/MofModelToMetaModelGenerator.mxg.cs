@@ -1108,8 +1108,8 @@ namespace MetaDslx.Languages.Mof.Generator
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.SingleLineMode = true;
             var __first24 = true;
-            #line (150,6)-(150,47) 13 "MofModelToMetaModelGenerator.mxg"
-            foreach (var param in op.OwnedParameter) 
+            #line (150,6)-(150,104) 13 "MofModelToMetaModelGenerator.mxg"
+            foreach (var param in op.OwnedParameter.Where(p => p.Direction != ParameterDirectionKind.Return)) 
             #line hidden
             
             {
@@ -1121,7 +1121,7 @@ namespace MetaDslx.Languages.Mof.Generator
                 {
                     __cb.Push("");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (150,57)-(150,61) 32 "MofModelToMetaModelGenerator.mxg"
+                    #line (150,114)-(150,118) 32 "MofModelToMetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;

@@ -34,8 +34,8 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Behavior> RedefinedBehavior { get; }
         BehavioralFeature Specification { get; set; }
     
-        BehavioredClassifier BehavioredClassifier(Element from, BehavioredClassifier result);
-        global::System.Collections.Generic.IList<Parameter> InputParameters(global::System.Collections.Generic.IList<Parameter> result);
-        global::System.Collections.Generic.IList<Parameter> OutputParameters(global::System.Collections.Generic.IList<Parameter> result);
+        BehavioredClassifier BehavioredClassifier(Element from);
+        global::System.Collections.Generic.IList<Parameter> InputParameters();
+        global::System.Collections.Generic.IList<Parameter> OutputParameters();
     }
 }

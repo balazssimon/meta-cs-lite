@@ -33,7 +33,7 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Port> RedefinedPort { get; }
         global::System.Collections.Generic.IList<Interface> Required { get; }
     
-        global::System.Collections.Generic.IList<Interface> BasicProvided(global::System.Collections.Generic.IList<Interface> result);
-        global::System.Collections.Generic.IList<Interface> BasicRequired(global::System.Collections.Generic.IList<Interface> result);
+        global::System.Collections.Generic.IList<Interface> BasicProvided();
+        global::System.Collections.Generic.IList<Interface> BasicRequired();
     }
 }

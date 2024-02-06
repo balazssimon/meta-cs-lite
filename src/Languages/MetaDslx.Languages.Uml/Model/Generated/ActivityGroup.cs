@@ -31,6 +31,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<ActivityGroup> Subgroup { get; }
         ActivityGroup SuperGroup { get; set; }
     
-        Activity ContainingActivity(Activity result);
+        Activity ContainingActivity();
     }
 }

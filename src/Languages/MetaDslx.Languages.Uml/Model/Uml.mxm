@@ -449,7 +449,7 @@ abstract class ActivityEdge : RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
 /// <summary>
@@ -504,7 +504,7 @@ abstract class ActivityGroup : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    Activity ContainingActivity(Activity result)
+    Activity ContainingActivity()
 }
 
 /// <summary>
@@ -573,14 +573,14 @@ abstract class ActivityNode : RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    Activity ContainingActivity(Activity result)
+    Activity ContainingActivity()
 
     /// <param name="redefiningElement">
     /// </param>
     /// <returns>
     /// </returns>
     // spec:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
 /// <summary>
@@ -907,7 +907,7 @@ class Variable : ConnectableElement, MultiplicityElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsAccessibleBy(bool result, Action a)
+    bool IsAccessibleBy(Action a)
 }
 
 /// <summary>
@@ -1057,7 +1057,7 @@ class LiteralBoolean : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool BooleanValue(bool result)
+    bool BooleanValue()
 
     /// <summary>
     /// The query isComputable() is redefined to be true.
@@ -1065,7 +1065,7 @@ class LiteralBoolean : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsComputable(bool result)
+    bool IsComputable()
 }
 
 /// <summary>
@@ -1085,7 +1085,7 @@ class LiteralInteger : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    int IntegerValue(int result)
+    int IntegerValue()
 
     /// <summary>
     /// The query isComputable() is redefined to be true.
@@ -1093,7 +1093,7 @@ class LiteralInteger : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsComputable(bool result)
+    bool IsComputable()
 }
 
 /// <summary>
@@ -1108,7 +1108,7 @@ class LiteralNull : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsComputable(bool result)
+    bool IsComputable()
 
     /// <summary>
     /// The query isNull() returns true.
@@ -1116,7 +1116,7 @@ class LiteralNull : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsNull(bool result)
+    bool IsNull()
 }
 
 /// <summary>
@@ -1136,7 +1136,7 @@ class LiteralReal : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsComputable(bool result)
+    bool IsComputable()
 
     /// <summary>
     /// The query realValue() gives the value.
@@ -1144,7 +1144,7 @@ class LiteralReal : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    double RealValue(double result)
+    double RealValue()
 }
 
 /// <summary>
@@ -1171,7 +1171,7 @@ class LiteralString : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsComputable(bool result)
+    bool IsComputable()
 
     /// <summary>
     /// The query stringValue() gives the value.
@@ -1179,7 +1179,7 @@ class LiteralString : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    string StringValue(string result)
+    string StringValue()
 }
 
 /// <summary>
@@ -1199,7 +1199,7 @@ class LiteralUnlimitedNatural : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsComputable(bool result)
+    bool IsComputable()
 
     /// <summary>
     /// The query unlimitedValue() gives the value.
@@ -1207,7 +1207,7 @@ class LiteralUnlimitedNatural : LiteralSpecification
     /// <returns>
     /// </returns>
     // spec:
-    int UnlimitedValue(int result)
+    int UnlimitedValue()
 }
 
 /// <summary>
@@ -1252,7 +1252,7 @@ class OpaqueExpression : ValueSpecification
     /// <returns>
     /// </returns>
     // spec:
-    bool IsIntegral(bool result)
+    bool IsIntegral()
 
     /// <summary>
     /// The query isNonNegative() tells whether an integer expression has a non-negative value.
@@ -1261,7 +1261,7 @@ class OpaqueExpression : ValueSpecification
     /// </returns>
     // pre:
     // spec:
-    bool IsNonNegative(bool result)
+    bool IsNonNegative()
 
     /// <summary>
     /// The query isPositive() tells whether an integer expression has a positive value.
@@ -1270,7 +1270,7 @@ class OpaqueExpression : ValueSpecification
     /// </returns>
     // spec:
     // pre:
-    bool IsPositive(bool result)
+    bool IsPositive()
 
 
     /// <summary>
@@ -1280,7 +1280,7 @@ class OpaqueExpression : ValueSpecification
     /// </returns>
     // pre:
     // spec:
-    int Value(int result)
+    int Value()
 }
 
 /// <summary>
@@ -1309,7 +1309,7 @@ class StringExpression : TemplateableElement, Expression
     /// <returns>
     /// </returns>
     // spec:
-    string StringValue(string result)
+    string StringValue()
 }
 
 /// <summary>
@@ -1402,7 +1402,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool BooleanValue(bool result)
+    bool BooleanValue()
 
     /// <summary>
     /// The query integerValue() gives a single Integer value when one can be computed.
@@ -1410,7 +1410,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    int IntegerValue(int result)
+    int IntegerValue()
 
     /// <summary>
     /// The query isCompatibleWith() determines if this ValueSpecification is compatible with the specified ParameterableElement. This ValueSpecification is compatible with ParameterableElement p if the kind of this ValueSpecification is the same as or a subtype of the kind of p. Further, if p is a TypedElement, then the type of this ValueSpecification must be conformant with the type of p.
@@ -1420,7 +1420,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsCompatibleWith(bool result, ParameterableElement p)
+    bool IsCompatibleWith(ParameterableElement p)
 
     /// <summary>
     /// The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.
@@ -1428,7 +1428,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsComputable(bool result)
+    bool IsComputable()
 
     /// <summary>
     /// The query isNull() returns true when it can be computed that the value is null.
@@ -1436,7 +1436,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsNull(bool result)
+    bool IsNull()
 
     /// <summary>
     /// The query realValue() gives a single Real value when one can be computed.
@@ -1444,7 +1444,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    double RealValue(double result)
+    double RealValue()
 
     /// <summary>
     /// The query stringValue() gives a single String value when one can be computed.
@@ -1452,7 +1452,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    string StringValue(string result)
+    string StringValue()
 
     /// <summary>
     /// The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.
@@ -1460,7 +1460,7 @@ abstract class ValueSpecification : TypedElement, PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    int UnlimitedValue(int result)
+    int UnlimitedValue()
 }
 
 /// <summary>
@@ -1582,7 +1582,7 @@ class UseCase : BehavioredClassifier
     /// <returns>
     /// </returns>
     // spec:
-    UseCase[] AllIncludedUseCases(UseCase[] result)
+    UseCase[] AllIncludedUseCases()
 }
 
 /// <summary>
@@ -1980,7 +1980,7 @@ class Port : Property
     /// <returns>
     /// </returns>
     // spec:
-    Interface[] BasicProvided(Interface[] result)
+    Interface[] BasicProvided()
 
     /// <summary>
     /// The union of the sets of Interfaces used by the type of the Port and its supertypes.
@@ -1988,7 +1988,7 @@ class Port : Property
     /// <returns>
     /// </returns>
     // spec:
-    Interface[] BasicRequired(Interface[] result)
+    Interface[] BasicRequired()
 }
 
 /// <summary>
@@ -2036,7 +2036,7 @@ abstract class StructuredClassifier : Classifier
     /// <returns>
     /// </returns>
     // spec:
-    ConnectableElement[] AllRoles(ConnectableElement[] result)
+    ConnectableElement[] AllRoles()
 }
 
 /// <summary>
@@ -2073,7 +2073,7 @@ class ConnectionPointReference : Vertex
     /// </returns>
     // pre:
     // spec:
-    bool IsConsistentWith(RedefinableElement redefiningElement, bool result)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
 /// <summary>
@@ -2091,7 +2091,7 @@ class FinalState : State
     /// </returns>
     // pre:
     // spec:
-    bool IsConsistentWith(RedefinableElement redefiningElement, bool result)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
 /// <summary>
@@ -2194,7 +2194,7 @@ class Pseudostate : Vertex
     /// </returns>
     // pre:
     // spec:
-    bool IsConsistentWith(RedefinableElement redefiningElement, bool result)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
 /// <summary>
@@ -2252,7 +2252,7 @@ class Region : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool BelongsToPSM(bool result)
+    bool BelongsToPSM()
 
     /// <summary>
     /// The operation containingStateMachine() returns the StateMachine in which this Region is defined.
@@ -2260,7 +2260,7 @@ class Region : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    StateMachine ContainingStateMachine(StateMachine result)
+    StateMachine ContainingStateMachine()
 
     /// <summary>
     /// The query isConsistentWith specifies that a Region can be redefined by any Region for which the redefinition context is valid (see the isRedefinitionContextValid operation). Note that consistency requirements for the redefinition of Vertices and Transitions within a redefining Region are specified by the isConsistentWith and isRedefinitionContextValid operations for Vertex (and its subclasses) and Transition.
@@ -2271,7 +2271,7 @@ class Region : Namespace, RedefinableElement
     /// </returns>
     // spec:
     // pre:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
     /// The query isRedefinitionContextValid() specifies whether the redefinition contexts of a Region are properly related to the redefinition contexts of the specified Region to allow this element to redefine the other. The containing StateMachine or State of a redefining Region must Redefine the containing StateMachine or State of the redefined Region.
@@ -2281,7 +2281,7 @@ class Region : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement)
+    bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
 
 }
 
@@ -2383,7 +2383,7 @@ class State : Namespace, Vertex
     /// <returns>
     /// </returns>
     // spec:
-    StateMachine ContainingStateMachine(StateMachine result)
+    StateMachine ContainingStateMachine()
 
 
     /// <summary>
@@ -2395,7 +2395,7 @@ class State : Namespace, Vertex
     /// </returns>
     // spec:
     // pre:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 
 
 
@@ -2444,7 +2444,7 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
-    Region LCA(Region result, Vertex s1, Vertex s2)
+    Region LCA(Vertex s1, Vertex s2)
 
     /// <summary>
     /// The query ancestor(s1, s2) checks whether Vertex s2 is an ancestor of Vertex s1.
@@ -2456,7 +2456,7 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
-    bool Ancestor(bool result, Vertex s1, Vertex s2)
+    bool Ancestor(Vertex s1, Vertex s2)
 
     /// <summary>
     /// The query isConsistentWith specifies that a StateMachine can be redefined by any other StateMachine for which the redefinition context is valid (see the isRedefinitionContextValid operation). Note that consistency requirements for the redefinition of Regions and connectionPoint Pseudostates owned by a StateMachine are specified by the isConsistentWith and isRedefinitionContextValid operations for Region and Vertex (and its subclass Pseudostate).
@@ -2466,7 +2466,7 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
     /// The query isRedefinitionContextValid specifies whether the redefinition context of a StateMachine is properly related to the redefinition contexts of a StateMachine it redefines. The requirement is that the context BehavioredClassifier of a redefining StateMachine must specialize the context Classifier of the redefined StateMachine. If the redefining StateMachine does not have a context BehavioredClassifier, then then the redefining StateMachine also must not have a context BehavioredClassifier but must, instead, specialize the redefining StateMachine.
@@ -2476,7 +2476,7 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
-    bool IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement)
+    bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
 
     /// <summary>
     /// This utility funciton is like the LCA, except that it returns the nearest composite State that contains both input Vertices.
@@ -2488,7 +2488,7 @@ class StateMachine : Behavior
     /// <returns>
     /// </returns>
     // spec:
-    State LCAState(State result, Vertex v1, Vertex v2)
+    State LCAState(Vertex v1, Vertex v2)
 }
 
 /// <summary>
@@ -2563,7 +2563,7 @@ class Transition : Namespace, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    StateMachine ContainingStateMachine(StateMachine result)
+    StateMachine ContainingStateMachine()
 
     /// <summary>
     /// The query isConsistentWith specifies that a redefining Transition is consistent with a redefined Transition provided that the source Vertex of the redefining Transition redefines the source Vertex of the redefined Transition.
@@ -2574,7 +2574,7 @@ class Transition : Namespace, RedefinableElement
     /// </returns>
     // spec:
     // pre:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 
 }
 
@@ -2626,7 +2626,7 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    StateMachine ContainingStateMachine(StateMachine result)
+    StateMachine ContainingStateMachine()
 
 
 
@@ -2638,7 +2638,7 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsContainedInState(bool result, State s)
+    bool IsContainedInState(State s)
 
     /// <summary>
     /// This utility query returns true if the Vertex is contained in the Region r (input argument).
@@ -2648,7 +2648,7 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsContainedInRegion(bool result, Region r)
+    bool IsContainedInRegion(Region r)
 
 
     /// <summary>
@@ -2660,7 +2660,7 @@ abstract class Vertex : NamedElement, RedefinableElement
     /// </returns>
     // pre:
     // spec:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
 /// <summary>
@@ -2898,7 +2898,7 @@ class Extension : Association
     /// <returns>
     /// </returns>
     // spec:
-    Property MetaclassEnd(Property result)
+    Property MetaclassEnd()
 }
 
 /// <summary>
@@ -2927,7 +2927,7 @@ class ExtensionEnd : Property
     /// <returns>
     /// </returns>
     // spec:
-    int LowerBound(int result)
+    int LowerBound()
 }
 
 /// <summary>
@@ -3037,7 +3037,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
-    Stereotype[] AllApplicableStereotypes(Stereotype[] result)
+    Stereotype[] AllApplicableStereotypes()
 
     /// <summary>
     /// The query containingProfile() returns the closest profile directly or indirectly containing this package (or this package itself, if it is a profile).
@@ -3045,7 +3045,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
-    Profile ContainingProfile(Profile result)
+    Profile ContainingProfile()
 
     /// <summary>
     /// The query makesVisible() defines whether a Package makes an element visible outside itself. Elements with no visibility and elements with public visibility are made visible.
@@ -3056,7 +3056,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// </returns>
     // pre:
     // spec:
-    bool MakesVisible(bool result, NamedElement el)
+    bool MakesVisible(NamedElement el)
 
     /// <summary>
     /// The query mustBeOwned() indicates whether elements of this type must have an owner.
@@ -3064,7 +3064,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
-    bool MustBeOwned(bool result)
+    bool MustBeOwned()
 
 
 
@@ -3075,7 +3075,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// <returns>
     /// </returns>
     // spec:
-    PackageableElement[] VisibleMembers(PackageableElement[] result)
+    PackageableElement[] VisibleMembers()
 }
 
 /// <summary>
@@ -3174,7 +3174,7 @@ class Stereotype : Class
     /// <returns>
     /// </returns>
     // spec:
-    Profile ContainingProfile(Profile result)
+    Profile ContainingProfile()
 
 }
 
@@ -3312,7 +3312,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
-    bool IsOutsideCF(bool result)
+    bool IsOutsideCF()
 
     /// <summary>
     /// This query returns true if this Gate is attached to the boundary of a CombinedFragment, and its other end (if present) is inside of an InteractionOperator of the same CombinedFragment.
@@ -3320,7 +3320,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
-    bool IsInsideCF(bool result)
+    bool IsInsideCF()
 
     /// <summary>
     /// This query returns true value if this Gate is an actualGate of an InteractionUse.
@@ -3328,7 +3328,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
-    bool IsActual(bool result)
+    bool IsActual()
 
     /// <summary>
     /// This query returns true if this Gate is a formalGate of an Interaction.
@@ -3339,7 +3339,7 @@ class Gate : MessageEnd
     /// <p>interaction-&gt;notEmpty()</p>
     /// </para>
     // spec:
-    bool IsFormal(bool result)
+    bool IsFormal()
 
     /// <summary>
     /// This query returns the name of the gate, either the explicit name (.name) or the constructed name ('out_" or 'in_' concatenated in front of .message.name) if the explicit name is not present.
@@ -3347,7 +3347,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
-    string GetName(string result)
+    string GetName()
 
     /// <summary>
     /// This query returns true if the name of this Gate matches the name of the in parameter Gate, and the messages for the two Gates correspond. The Message for one Gate (say A) corresponds to the Message for another Gate (say B) if (A and B have the same name value) and (if A is a sendEvent then B is a receiveEvent) and (if A is a receiveEvent then B is a sendEvent) and (A and B have the same messageSort value) and (A and B have the same signature value).
@@ -3357,7 +3357,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
-    bool Matches(bool result, Gate gateToMatch)
+    bool Matches(Gate gateToMatch)
 
     /// <summary>
     /// The query isDistinguishableFrom() specifies that two Gates may coexist in the same Namespace, without an explicit name property. The association end formalGate subsets ownedElement, and since the Gate name attribute
@@ -3370,7 +3370,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
-    bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns)
+    bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 
     /// <summary>
     /// If the Gate is an inside Combined Fragment Gate, this operation returns the InteractionOperand that the opposite end of this Gate is included within.
@@ -3378,7 +3378,7 @@ class Gate : MessageEnd
     /// <returns>
     /// </returns>
     // spec:
-    InteractionOperand GetOperand(InteractionOperand result)
+    InteractionOperand GetOperand()
 }
 
 /// <summary>
@@ -3636,7 +3636,7 @@ class Message : NamedElement
     /// The derived kind of the Message (complete, lost, found, or unknown).
     /// </summary>
     // spec:
-    derived MessageKind MessageKind
+    MessageKind MessageKind
 
     /// <summary>
     /// The sort of communication reflected by the Message.
@@ -3674,7 +3674,7 @@ class Message : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns)
+    bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 }
 
 /// <summary>
@@ -3696,7 +3696,7 @@ abstract class MessageEnd : NamedElement
     /// </returns>
     // spec:
     // pre:
-    MessageEnd[] OppositeEnd(MessageEnd[] result)
+    MessageEnd[] OppositeEnd()
 
     /// <summary>
     /// This query returns value true if this MessageEnd is a sendEvent.
@@ -3705,7 +3705,7 @@ abstract class MessageEnd : NamedElement
     /// </returns>
     // pre:
     // spec:
-    bool IsSend(bool result)
+    bool IsSend()
 
     /// <summary>
     /// This query returns value true if this MessageEnd is a receiveEvent.
@@ -3717,7 +3717,7 @@ abstract class MessageEnd : NamedElement
     /// </para>
     // pre:
     // spec:
-    bool IsReceive(bool result)
+    bool IsReceive()
 
     /// <summary>
     /// This query returns a set including the enclosing InteractionFragment this MessageEnd is enclosed within.
@@ -3725,7 +3725,7 @@ abstract class MessageEnd : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    InteractionFragment[] EnclosingFragment(InteractionFragment[] result)
+    InteractionFragment[] EnclosingFragment()
 }
 
 /// <summary>
@@ -4162,7 +4162,7 @@ abstract class Element{
     /// <returns>
     /// </returns>
     // spec:
-    Element[] AllOwnedElements(Element[] result)
+    Element[] AllOwnedElements()
 
     /// <summary>
     /// The query mustBeOwned() indicates whether Elements of this type must have an owner. Subclasses of Element that do not require an owner must override this operation.
@@ -4170,7 +4170,7 @@ abstract class Element{
     /// <returns>
     /// </returns>
     // spec:
-    bool MustBeOwned(bool result)
+    bool MustBeOwned()
 }
 
 /// <summary>
@@ -4210,7 +4210,7 @@ class ElementImport : DirectedRelationship
     /// <returns>
     /// </returns>
     // spec:
-    string GetName(string result)
+    string GetName()
 }
 
 /// <summary>
@@ -4263,7 +4263,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    bool CompatibleWith(bool result, MultiplicityElement other)
+    bool CompatibleWith(MultiplicityElement other)
 
     /// <summary>
     /// The query includesMultiplicity() checks whether this multiplicity includes all the cardinalities allowed by the specified multiplicity.
@@ -4274,7 +4274,7 @@ abstract class MultiplicityElement : Element
     /// </returns>
     // pre:
     // spec:
-    bool IncludesMultiplicity(bool result, MultiplicityElement M)
+    bool IncludesMultiplicity(MultiplicityElement M)
 
     /// <summary>
     /// The operation is determines if the upper and lower bound of the ranges are the ones given.
@@ -4286,7 +4286,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    bool Is(bool result, int lowerbound, int upperbound)
+    bool Is(int lowerbound, int upperbound)
 
     /// <summary>
     /// The query isMultivalued() checks whether this multiplicity has an upper bound greater than one.
@@ -4295,7 +4295,7 @@ abstract class MultiplicityElement : Element
     /// </returns>
     // pre:
     // spec:
-    bool IsMultivalued(bool result)
+    bool IsMultivalued()
 
 
     /// <summary>
@@ -4304,7 +4304,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    int LowerBound(int result)
+    int LowerBound()
 
 
     /// <summary>
@@ -4313,7 +4313,7 @@ abstract class MultiplicityElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    int UpperBound(int result)
+    int UpperBound()
 }
 
 /// <summary>
@@ -4367,7 +4367,7 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    Namespace[] AllNamespaces(Namespace[] result)
+    Namespace[] AllNamespaces()
 
     /// <summary>
     /// The query allOwningPackages() returns the set of all the enclosing Namespaces of this NamedElement, working outwards, that are Packages, up to but not including the first such Namespace that is not a Package.
@@ -4375,7 +4375,7 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    Package[] AllOwningPackages(Package[] result)
+    Package[] AllOwningPackages()
 
     /// <summary>
     /// The query isDistinguishableFrom() determines whether two NamedElements may logically co-exist within a Namespace. By default, two named elements are distinguishable if (a) they have types neither of which is a kind of the other or (b) they have different names.
@@ -4387,7 +4387,7 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns)
+    bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 
 
     /// <summary>
@@ -4396,7 +4396,7 @@ abstract class NamedElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    string Separator(string result)
+    string Separator()
 
 }
 
@@ -4459,7 +4459,7 @@ abstract class Namespace : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    PackageableElement[] ExcludeCollisions(PackageableElement[] result, PackageableElement[] imps)
+    PackageableElement[] ExcludeCollisions(PackageableElement[] imps)
 
     /// <summary>
     /// The query getNamesOfMember() gives a set of all of the names that a member would have in a Namespace, taking importing into account. In general a member can have multiple names in a Namespace if it is imported more than once with different aliases.
@@ -4469,7 +4469,7 @@ abstract class Namespace : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    string[] GetNamesOfMember(string[] result, NamedElement element)
+    string[] GetNamesOfMember(NamedElement element)
 
     /// <summary>
     /// The query importMembers() defines which of a set of PackageableElements are actually imported into the Namespace. This excludes hidden ones, i.e., those which have names that conflict with names of ownedMembers, and it also excludes PackageableElements that would have the indistinguishable names when imported.
@@ -4479,7 +4479,7 @@ abstract class Namespace : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    PackageableElement[] ImportMembers(PackageableElement[] result, PackageableElement[] imps)
+    PackageableElement[] ImportMembers(PackageableElement[] imps)
 
 
     /// <summary>
@@ -4488,7 +4488,7 @@ abstract class Namespace : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    bool MembersAreDistinguishable(bool result)
+    bool MembersAreDistinguishable()
 }
 
 /// <summary>
@@ -4559,7 +4559,7 @@ abstract class ParameterableElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    bool IsCompatibleWith(bool result, ParameterableElement p)
+    bool IsCompatibleWith(ParameterableElement p)
 
     /// <summary>
     /// The query isTemplateParameter() determines if this ParameterableElement is exposed as a formal TemplateParameter.
@@ -4567,7 +4567,7 @@ abstract class ParameterableElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    bool IsTemplateParameter(bool result)
+    bool IsTemplateParameter()
 }
 
 /// <summary>
@@ -4617,7 +4617,7 @@ abstract class TemplateableElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    bool IsTemplate(bool result)
+    bool IsTemplate()
 
     /// <summary>
     /// The query parameterableElements() returns the set of ParameterableElements that may be used as the parameteredElements for a TemplateParameter of this TemplateableElement. By default, this set includes all the ownedElements. Subclasses may override this operation if they choose to restrict the set of ParameterableElements.
@@ -4625,7 +4625,7 @@ abstract class TemplateableElement : Element
     /// <returns>
     /// </returns>
     // spec:
-    ParameterableElement[] ParameterableElements(ParameterableElement[] result)
+    ParameterableElement[] ParameterableElements()
 }
 
 /// <summary>
@@ -4783,7 +4783,7 @@ abstract class Type : PackageableElement
     /// <returns>
     /// </returns>
     // spec:
-    bool ConformsTo(bool result, Type other)
+    bool ConformsTo(Type other)
 }
 
 /// <summary>
@@ -4882,7 +4882,7 @@ abstract class Behavior : Class
     /// <returns>
     /// </returns>
     // spec:
-    BehavioredClassifier BehavioredClassifier(Element from, BehavioredClassifier result)
+    BehavioredClassifier BehavioredClassifier(Element from)
 
     /// <summary>
     /// The in and inout ownedParameters of the Behavior.
@@ -4890,7 +4890,7 @@ abstract class Behavior : Class
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] InputParameters(Parameter[] result)
+    Parameter[] InputParameters()
 
     /// <summary>
     /// The out, inout and return ownedParameters.
@@ -4898,7 +4898,7 @@ abstract class Behavior : Class
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] OutputParameters(Parameter[] result)
+    Parameter[] OutputParameters()
 }
 
 /// <summary>
@@ -4949,7 +4949,7 @@ class FunctionBehavior : OpaqueBehavior
     /// <returns>
     /// </returns>
     // spec:
-    bool HasAllDataTypeAttributes(bool result, DataType d)
+    bool HasAllDataTypeAttributes(DataType d)
 }
 
 /// <summary>
@@ -5101,7 +5101,7 @@ abstract class BehavioralFeature : Feature, Namespace
     /// <returns>
     /// </returns>
     // spec:
-    bool IsDistinguishableFrom(bool result, NamedElement n, Namespace ns)
+    bool IsDistinguishableFrom(NamedElement n, Namespace ns)
 
     /// <summary>
     /// The ownedParameters with direction in and inout.
@@ -5109,7 +5109,7 @@ abstract class BehavioralFeature : Feature, Namespace
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] InputParameters(Parameter[] result)
+    Parameter[] InputParameters()
 
     /// <summary>
     /// The ownedParameters with direction out, inout, or return.
@@ -5117,7 +5117,7 @@ abstract class BehavioralFeature : Feature, Namespace
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] OutputParameters(Parameter[] result)
+    Parameter[] OutputParameters()
 }
 
 /// <summary>
@@ -5243,7 +5243,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Feature[] AllFeatures(Feature[] result)
+    Feature[] AllFeatures()
 
     /// <summary>
     /// The query allParents() gives all of the direct and indirect ancestors of a generalized Classifier.
@@ -5251,7 +5251,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Classifier[] AllParents(Classifier[] result)
+    Classifier[] AllParents()
 
     /// <summary>
     /// The query conformsTo() gives true for a Classifier that defines a type that conforms to another. This is used, for example, in the specification of signature conformance for operations.
@@ -5261,7 +5261,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    bool ConformsTo(bool result, Type other)
+    bool ConformsTo(Type other)
 
 
     /// <summary>
@@ -5273,7 +5273,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// </returns>
     // pre:
     // spec:
-    bool HasVisibilityOf(bool result, NamedElement n)
+    bool HasVisibilityOf(NamedElement n)
 
     /// <summary>
     /// The query inherit() defines how to inherit a set of elements passed as its argument.  It excludes redefined elements from the result.
@@ -5283,7 +5283,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    NamedElement[] Inherit(NamedElement[] result, NamedElement[] inhs)
+    NamedElement[] Inherit(NamedElement[] inhs)
 
     /// <summary>
     /// The query inheritableMembers() gives all of the members of a Classifier that may be inherited in one of its descendants, subject to whatever visibility restrictions apply.
@@ -5294,7 +5294,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// </returns>
     // pre:
     // spec:
-    NamedElement[] InheritableMembers(NamedElement[] result, Classifier c)
+    NamedElement[] InheritableMembers(Classifier c)
 
 
     /// <summary>
@@ -5303,7 +5303,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    bool IsTemplate(bool result)
+    bool IsTemplate()
 
     /// <summary>
     /// The query maySpecializeType() determines whether this classifier may have a generalization relationship to classifiers of the specified type. By default a classifier may specialize classifiers of the same or a more general type. It is intended to be redefined by classifiers that have different specialization constraints.
@@ -5313,7 +5313,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    bool MaySpecializeType(bool result, Classifier c)
+    bool MaySpecializeType(Classifier c)
 
     /// <summary>
     /// The query parents() gives all of the immediate ancestors of a generalized Classifier.
@@ -5321,7 +5321,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Classifier[] Parents(Classifier[] result)
+    Classifier[] Parents()
 
     /// <summary>
     /// The Interfaces directly realized by this Classifier
@@ -5329,7 +5329,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Interface[] DirectlyRealizedInterfaces(Interface[] result)
+    Interface[] DirectlyRealizedInterfaces()
 
     /// <summary>
     /// The Interfaces directly used by this Classifier
@@ -5337,7 +5337,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Interface[] DirectlyUsedInterfaces(Interface[] result)
+    Interface[] DirectlyUsedInterfaces()
 
     /// <summary>
     /// The Interfaces realized by this Classifier and all of its generalizations
@@ -5345,7 +5345,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Interface[] AllRealizedInterfaces(Interface[] result)
+    Interface[] AllRealizedInterfaces()
 
     /// <summary>
     /// The Interfaces used by this Classifier and all of its generalizations
@@ -5353,14 +5353,14 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Interface[] AllUsedInterfaces(Interface[] result)
+    Interface[] AllUsedInterfaces()
 
     /// <param name="contract">
     /// </param>
     /// <returns>
     /// </returns>
     // spec:
-    bool IsSubstitutableFor(Classifier contract, bool result)
+    bool IsSubstitutableFor(Classifier contract)
 
     /// <summary>
     /// The query allAttributes gives an ordered set of all owned and inherited attributes of the Classifier. All owned attributes appear before any inherited attributes, and the attributes inherited from any more specific parent Classifier appear before those of any more general parent Classifier. However, if the Classifier has multiple immediate parents, then the relative ordering of the sets of attributes from those parents is not defined.
@@ -5368,7 +5368,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    Property[] AllAttributes(Property[] result)
+    Property[] AllAttributes()
 
     /// <summary>
     /// All StructuralFeatures related to the Classifier that may have Slots, including direct attributes, inherited attributes, private attributes in generalizations, and memberEnds of Associations, but excluding redefined StructuralFeatures.
@@ -5376,7 +5376,7 @@ abstract class Classifier : Namespace, Type, TemplateableElement, RedefinableEle
     /// <returns>
     /// </returns>
     // spec:
-    StructuralFeature[] AllSlottableFeatures(StructuralFeature[] result)
+    StructuralFeature[] AllSlottableFeatures()
 }
 
 /// <summary>
@@ -5657,7 +5657,7 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// </returns>
     // spec:
     // pre:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 
 
 
@@ -5668,7 +5668,7 @@ class Operation : TemplateableElement, ParameterableElement, BehavioralFeature
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] ReturnResult(Parameter[] result)
+    Parameter[] ReturnResult()
 
 
 }
@@ -5882,7 +5882,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
-    bool IsAttribute(bool result)
+    bool IsAttribute()
 
     /// <summary>
     /// The query isCompatibleWith() determines if this Property is compatible with the specified ParameterableElement. This Property is compatible with ParameterableElement p if the kind of this Property is thesame as or a subtype of the kind of p. Further, if p is a TypedElement, then the type of this Property must be conformant with the type of p.
@@ -5892,7 +5892,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
-    bool IsCompatibleWith(bool result, ParameterableElement p)
+    bool IsCompatibleWith(ParameterableElement p)
 
 
     /// <summary>
@@ -5904,7 +5904,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// </returns>
     // pre:
     // spec:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
     /// The query isNavigable() indicates whether it is possible to navigate across the property.
@@ -5912,7 +5912,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
-    bool IsNavigable(bool result)
+    bool IsNavigable()
 
 
     /// <summary>
@@ -5921,7 +5921,7 @@ class Property : ConnectableElement, DeploymentTarget, StructuralFeature
     /// <returns>
     /// </returns>
     // spec:
-    Type[] SubsettingContext(Type[] result)
+    Type[] SubsettingContext()
 }
 
 /// <summary>
@@ -5956,7 +5956,7 @@ abstract class RedefinableElement : NamedElement
     /// </returns>
     // spec:
     // pre:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 
     /// <summary>
     /// The query isRedefinitionContextValid() specifies whether the redefinition contexts of this RedefinableElement are properly related to the redefinition contexts of the specified RedefinableElement to allow this element to redefine the other. By default at least one of the redefinition contexts of this element must be a specialization of at least one of the redefinition contexts of the specified element.
@@ -5966,7 +5966,7 @@ abstract class RedefinableElement : NamedElement
     /// <returns>
     /// </returns>
     // spec:
-    bool IsRedefinitionContextValid(bool result, RedefinableElement redefinedElement)
+    bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
 }
 
 /// <summary>
@@ -6008,7 +6008,7 @@ class RedefinableTemplateSignature : RedefinableElement, TemplateSignature
     /// </returns>
     // spec:
     // pre:
-    bool IsConsistentWith(bool result, RedefinableElement redefiningElement)
+    bool IsConsistentWith(RedefinableElement redefiningElement)
 }
 
 /// <summary>
@@ -6219,7 +6219,7 @@ abstract class Action : ExecutableNode
     /// <returns>
     /// </returns>
     // spec:
-    Action[] AllActions(Action[] result)
+    Action[] AllActions()
 
     /// <summary>
     /// Returns all the ActivityNodes directly or indirectly owned by this Action. This includes at least all the Pins of the Action.
@@ -6227,12 +6227,12 @@ abstract class Action : ExecutableNode
     /// <returns>
     /// </returns>
     // spec:
-    ActivityNode[] AllOwnedNodes(ActivityNode[] result)
+    ActivityNode[] AllOwnedNodes()
 
     /// <returns>
     /// </returns>
     // spec:
-    Behavior ContainingBehavior(Behavior result)
+    Behavior ContainingBehavior()
 }
 
 /// <summary>
@@ -6323,14 +6323,14 @@ abstract class CallAction : InvocationAction
     /// </summary>
     /// <returns>
     /// </returns>
-    Parameter[] InputParameters(Parameter[] result)
+    Parameter[] InputParameters()
 
     /// <summary>
     /// Return the inout, out and return ownedParameters of the Behavior or Operation being called. (This operation is abstract and should be overridden by subclasses of CallAction.)
     /// </summary>
     /// <returns>
     /// </returns>
-    Parameter[] OutputParameters(Parameter[] result)
+    Parameter[] OutputParameters()
 }
 
 /// <summary>
@@ -6351,7 +6351,7 @@ class CallBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] OutputParameters(Parameter[] result)
+    Parameter[] OutputParameters()
 
     /// <summary>
     /// Return the in and inout ownedParameters of the Behavior being called.
@@ -6359,7 +6359,7 @@ class CallBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] InputParameters(Parameter[] result)
+    Parameter[] InputParameters()
 }
 
 /// <summary>
@@ -6387,7 +6387,7 @@ class CallOperationAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] OutputParameters(Parameter[] result)
+    Parameter[] OutputParameters()
 
     /// <summary>
     /// Return the in and inout ownedParameters of the Operation being called.
@@ -6395,7 +6395,7 @@ class CallOperationAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] InputParameters(Parameter[] result)
+    Parameter[] InputParameters()
 }
 
 /// <summary>
@@ -6518,7 +6518,7 @@ class ConditionalNode : StructuredActivityNode
     /// <returns>
     /// </returns>
     // spec:
-    Action[] AllActions(Action[] result)
+    Action[] AllActions()
 }
 
 /// <summary>
@@ -6703,7 +6703,7 @@ abstract class LinkAction : Action
     /// <returns>
     /// </returns>
     // spec:
-    Association Association(Association result)
+    Association Association()
 }
 
 /// <summary>
@@ -6729,7 +6729,7 @@ class LinkEndCreationData : LinkEndData
     /// <returns>
     /// </returns>
     // spec:
-    InputPin[] AllPins(InputPin[] result)
+    InputPin[] AllPins()
 }
 
 /// <summary>
@@ -6763,7 +6763,7 @@ class LinkEndData : Element
     /// <returns>
     /// </returns>
     // spec:
-    InputPin[] AllPins(InputPin[] result)
+    InputPin[] AllPins()
 }
 
 /// <summary>
@@ -6789,7 +6789,7 @@ class LinkEndDestructionData : LinkEndData
     /// <returns>
     /// </returns>
     // spec:
-    InputPin[] AllPins(InputPin[] result)
+    InputPin[] AllPins()
 }
 
 /// <summary>
@@ -6860,7 +6860,7 @@ class LoopNode : StructuredActivityNode
     /// <returns>
     /// </returns>
     // spec:
-    Action[] AllActions(Action[] result)
+    Action[] AllActions()
 
     /// <summary>
     /// Return the loopVariable OutputPins in addition to other source nodes for the LoopNode as a StructuredActivityNode.
@@ -6868,7 +6868,7 @@ class LoopNode : StructuredActivityNode
     /// <returns>
     /// </returns>
     // spec:
-    ActivityNode[] SourceNodes(ActivityNode[] result)
+    ActivityNode[] SourceNodes()
 }
 
 /// <summary>
@@ -7025,7 +7025,7 @@ class ReadLinkAction : LinkAction
     /// <returns>
     /// </returns>
     // spec:
-    Property[] OpenEnd(Property[] result)
+    Property[] OpenEnd()
 }
 
 /// <summary>
@@ -7340,7 +7340,7 @@ class StartObjectBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] OutputParameters(Parameter[] result)
+    Parameter[] OutputParameters()
 
     /// <summary>
     /// Return the in and inout ownedParameters of the Behavior being called.
@@ -7348,7 +7348,7 @@ class StartObjectBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
-    Parameter[] InputParameters(Parameter[] result)
+    Parameter[] InputParameters()
 
     /// <summary>
     /// If the type of the object InputPin is a Behavior, then that Behavior. Otherwise, if the type of the object InputPin is a BehavioredClassifier, then the classifierBehavior of that BehavioredClassifier.
@@ -7356,7 +7356,7 @@ class StartObjectBehaviorAction : CallAction
     /// <returns>
     /// </returns>
     // spec:
-    Behavior Behavior(Behavior result)
+    Behavior Behavior()
 }
 
 /// <summary>
@@ -7441,7 +7441,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
-    Action[] AllActions(Action[] result)
+    Action[] AllActions()
 
     /// <summary>
     /// Returns all the ActivityNodes contained directly or indirectly within this StructuredActivityNode, in addition to the Pins of the StructuredActivityNode.
@@ -7449,7 +7449,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
-    ActivityNode[] AllOwnedNodes(ActivityNode[] result)
+    ActivityNode[] AllOwnedNodes()
 
     /// <summary>
     /// Return those ActivityNodes contained immediately within the StructuredActivityNode that may act as sources of edges owned by the StructuredActivityNode.
@@ -7457,7 +7457,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
-    ActivityNode[] SourceNodes(ActivityNode[] result)
+    ActivityNode[] SourceNodes()
 
     /// <summary>
     /// Return those ActivityNodes contained immediately within the StructuredActivityNode that may act as targets of edges owned by the StructuredActivityNode.
@@ -7465,7 +7465,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
-    ActivityNode[] TargetNodes(ActivityNode[] result)
+    ActivityNode[] TargetNodes()
 
     /// <summary>
     /// The Activity that directly or indirectly contains this StructuredActivityNode (considered as an Action).
@@ -7473,7 +7473,7 @@ class StructuredActivityNode : Namespace, ActivityGroup, Action
     /// <returns>
     /// </returns>
     // spec:
-    Activity ContainingActivity(Activity result)
+    Activity ContainingActivity()
 }
 
 /// <summary>

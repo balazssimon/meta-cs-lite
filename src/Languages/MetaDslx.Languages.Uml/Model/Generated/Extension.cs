@@ -29,6 +29,6 @@ namespace MetaDslx.Languages.Uml.Model
         Class Metaclass { get; }
         new ExtensionEnd OwnedEnd { get; set; }
     
-        Property MetaclassEnd(Property result);
+        Property MetaclassEnd();
     }
 }

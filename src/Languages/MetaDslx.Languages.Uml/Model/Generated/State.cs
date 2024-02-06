@@ -39,7 +39,7 @@ namespace MetaDslx.Languages.Uml.Model
         Constraint StateInvariant { get; set; }
         StateMachine Submachine { get; set; }
     
-        StateMachine ContainingStateMachine(StateMachine result);
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
+        StateMachine ContainingStateMachine();
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

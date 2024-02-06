@@ -28,7 +28,7 @@ namespace MetaDslx.Languages.Uml.Model
         TemplateSignature OwnedTemplateSignature { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<TemplateBinding> TemplateBinding { get; }
     
-        bool IsTemplate(bool result);
-        global::System.Collections.Generic.IList<ParameterableElement> ParameterableElements(global::System.Collections.Generic.IList<ParameterableElement> result);
+        bool IsTemplate();
+        global::System.Collections.Generic.IList<ParameterableElement> ParameterableElements();
     }
 }

@@ -31,9 +31,9 @@ namespace MetaDslx.Languages.Uml.Model
         Vertex RedefinedVertex { get; set; }
         new Classifier RedefinitionContext { get; }
     
-        StateMachine ContainingStateMachine(StateMachine result);
-        bool IsContainedInState(bool result, State s);
-        bool IsContainedInRegion(bool result, Region r);
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
+        StateMachine ContainingStateMachine();
+        bool IsContainedInState(State s);
+        bool IsContainedInRegion(Region r);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

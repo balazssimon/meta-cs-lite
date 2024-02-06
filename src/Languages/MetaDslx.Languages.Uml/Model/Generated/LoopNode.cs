@@ -35,7 +35,7 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<ExecutableNode> SetupPart { get; }
         global::MetaDslx.Modeling.ICollectionSlot<ExecutableNode> Test { get; }
     
-        global::System.Collections.Generic.IList<Action> AllActions(global::System.Collections.Generic.IList<Action> result);
-        global::System.Collections.Generic.IList<ActivityNode> SourceNodes(global::System.Collections.Generic.IList<ActivityNode> result);
+        global::System.Collections.Generic.IList<Action> AllActions();
+        global::System.Collections.Generic.IList<ActivityNode> SourceNodes();
     }
 }

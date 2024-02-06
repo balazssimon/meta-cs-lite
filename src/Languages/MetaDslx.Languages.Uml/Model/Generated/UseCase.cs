@@ -30,6 +30,6 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<Include> Include { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Classifier> Subject { get; }
     
-        global::System.Collections.Generic.IList<UseCase> AllIncludedUseCases(global::System.Collections.Generic.IList<UseCase> result);
+        global::System.Collections.Generic.IList<UseCase> AllIncludedUseCases();
     }
 }

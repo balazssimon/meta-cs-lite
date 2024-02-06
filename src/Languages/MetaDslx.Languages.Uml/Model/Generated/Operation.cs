@@ -42,7 +42,7 @@ namespace MetaDslx.Languages.Uml.Model
         Type Type { get; }
         int Upper { get; }
     
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
-        global::System.Collections.Generic.IList<Parameter> ReturnResult(global::System.Collections.Generic.IList<Parameter> result);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
+        global::System.Collections.Generic.IList<Parameter> ReturnResult();
     }
 }

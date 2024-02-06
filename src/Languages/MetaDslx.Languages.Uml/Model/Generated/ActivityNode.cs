@@ -34,7 +34,7 @@ namespace MetaDslx.Languages.Uml.Model
         global::MetaDslx.Modeling.ICollectionSlot<ActivityEdge> Outgoing { get; }
         global::MetaDslx.Modeling.ICollectionSlot<ActivityNode> RedefinedNode { get; }
     
-        Activity ContainingActivity(Activity result);
-        bool IsConsistentWith(bool result, RedefinableElement redefiningElement);
+        Activity ContainingActivity();
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

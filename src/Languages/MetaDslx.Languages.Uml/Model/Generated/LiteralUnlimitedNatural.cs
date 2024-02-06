@@ -27,7 +27,7 @@ namespace MetaDslx.Languages.Uml.Model
     {
         int Value { get; set; }
     
-        bool IsComputable(bool result);
-        int UnlimitedValue(int result);
+        bool IsComputable();
+        int UnlimitedValue();
     }
 }

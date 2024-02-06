@@ -120,22 +120,22 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        bool ValueSpecification.BooleanValue(bool result) => Uml.__CustomImpl.ValueSpecification_BooleanValue(this, result);
-        int ValueSpecification.IntegerValue(int result) => Uml.__CustomImpl.ValueSpecification_IntegerValue(this, result);
-        bool ValueSpecification.IsCompatibleWith(bool result, ParameterableElement p) => Uml.__CustomImpl.ValueSpecification_IsCompatibleWith(this, result, p);
-        bool ValueSpecification.IsComputable(bool result) => Uml.__CustomImpl.ValueSpecification_IsComputable(this, result);
-        bool ValueSpecification.IsNull(bool result) => Uml.__CustomImpl.ValueSpecification_IsNull(this, result);
-        double ValueSpecification.RealValue(double result) => Uml.__CustomImpl.ValueSpecification_RealValue(this, result);
-        string ValueSpecification.StringValue(string result) => Uml.__CustomImpl.ValueSpecification_StringValue(this, result);
-        int ValueSpecification.UnlimitedValue(int result) => Uml.__CustomImpl.ValueSpecification_UnlimitedValue(this, result);
-        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces(global::System.Collections.Generic.IList<Namespace> result) => Uml.__CustomImpl.NamedElement_AllNamespaces(this, result);
-        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages(global::System.Collections.Generic.IList<Package> result) => Uml.__CustomImpl.NamedElement_AllOwningPackages(this, result);
-        bool NamedElement.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, result, n, ns);
-        string NamedElement.Separator(string result) => Uml.__CustomImpl.NamedElement_Separator(this, result);
-        bool ParameterableElement.IsCompatibleWith(bool result, ParameterableElement p) => Uml.__CustomImpl.ValueSpecification_IsCompatibleWith(this, result, p);
-        bool ParameterableElement.IsTemplateParameter(bool result) => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        bool ValueSpecification.BooleanValue() => Uml.__CustomImpl.ValueSpecification_BooleanValue(this);
+        int ValueSpecification.IntegerValue() => Uml.__CustomImpl.ValueSpecification_IntegerValue(this);
+        bool ValueSpecification.IsCompatibleWith(ParameterableElement p) => Uml.__CustomImpl.ValueSpecification_IsCompatibleWith(this, p);
+        bool ValueSpecification.IsComputable() => Uml.__CustomImpl.ValueSpecification_IsComputable(this);
+        bool ValueSpecification.IsNull() => Uml.__CustomImpl.ValueSpecification_IsNull(this);
+        double ValueSpecification.RealValue() => Uml.__CustomImpl.ValueSpecification_RealValue(this);
+        string ValueSpecification.StringValue() => Uml.__CustomImpl.ValueSpecification_StringValue(this);
+        int ValueSpecification.UnlimitedValue() => Uml.__CustomImpl.ValueSpecification_UnlimitedValue(this);
+        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces() => Uml.__CustomImpl.NamedElement_AllNamespaces(this);
+        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages() => Uml.__CustomImpl.NamedElement_AllOwningPackages(this);
+        bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, n, ns);
+        string NamedElement.Separator() => Uml.__CustomImpl.NamedElement_Separator(this);
+        bool ParameterableElement.IsCompatibleWith(ParameterableElement p) => Uml.__CustomImpl.ValueSpecification_IsCompatibleWith(this, p);
+        bool ParameterableElement.IsTemplateParameter() => Uml.__CustomImpl.ParameterableElement_IsTemplateParameter(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

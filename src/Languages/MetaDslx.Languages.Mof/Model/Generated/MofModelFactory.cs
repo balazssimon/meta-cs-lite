@@ -37,197 +37,197 @@ namespace MetaDslx.Languages.Mof.Model
     
         public Comment Comment(string? id = null)
         {
-            return (Comment)Mof.CommentInfo.Create(Model, id)!;
+            return (Comment)Mof.CommentInfo.Create(base.Model, id)!;
         }
     
         public Association Association(string? id = null)
         {
-            return (Association)Mof.AssociationInfo.Create(Model, id)!;
+            return (Association)Mof.AssociationInfo.Create(base.Model, id)!;
         }
     
         public AssociationInstance AssociationInstance(string? id = null)
         {
-            return (AssociationInstance)Mof.AssociationInstanceInfo.Create(Model, id)!;
+            return (AssociationInstance)Mof.AssociationInstanceInfo.Create(base.Model, id)!;
         }
     
         public Class Class(string? id = null)
         {
-            return (Class)Mof.ClassInfo.Create(Model, id)!;
+            return (Class)Mof.ClassInfo.Create(base.Model, id)!;
         }
     
         public ClassInstance ClassInstance(string? id = null)
         {
-            return (ClassInstance)Mof.ClassInstanceInfo.Create(Model, id)!;
+            return (ClassInstance)Mof.ClassInstanceInfo.Create(base.Model, id)!;
         }
     
         public Constraint Constraint(string? id = null)
         {
-            return (Constraint)Mof.ConstraintInfo.Create(Model, id)!;
+            return (Constraint)Mof.ConstraintInfo.Create(base.Model, id)!;
         }
     
         public DataType DataType(string? id = null)
         {
-            return (DataType)Mof.DataTypeInfo.Create(Model, id)!;
+            return (DataType)Mof.DataTypeInfo.Create(base.Model, id)!;
         }
     
         public Extent Extent(string? id = null)
         {
-            return (Extent)Mof.ExtentInfo.Create(Model, id)!;
+            return (Extent)Mof.ExtentInfo.Create(base.Model, id)!;
         }
     
         public ExtentImplementation ExtentImplementation(string? id = null)
         {
-            return (ExtentImplementation)Mof.ExtentImplementationInfo.Create(Model, id)!;
+            return (ExtentImplementation)Mof.ExtentImplementationInfo.Create(base.Model, id)!;
         }
     
         public Generalization Generalization(string? id = null)
         {
-            return (Generalization)Mof.GeneralizationInfo.Create(Model, id)!;
+            return (Generalization)Mof.GeneralizationInfo.Create(base.Model, id)!;
         }
     
         public IdentifierEntry IdentifierEntry(string? id = null)
         {
-            return (IdentifierEntry)Mof.IdentifierEntryInfo.Create(Model, id)!;
+            return (IdentifierEntry)Mof.IdentifierEntryInfo.Create(base.Model, id)!;
         }
     
         public LinkSlot LinkSlot(string? id = null)
         {
-            return (LinkSlot)Mof.LinkSlotInfo.Create(Model, id)!;
+            return (LinkSlot)Mof.LinkSlotInfo.Create(base.Model, id)!;
         }
     
         public Operation Operation(string? id = null)
         {
-            return (Operation)Mof.OperationInfo.Create(Model, id)!;
+            return (Operation)Mof.OperationInfo.Create(base.Model, id)!;
         }
     
         public Enumeration Enumeration(string? id = null)
         {
-            return (Enumeration)Mof.EnumerationInfo.Create(Model, id)!;
+            return (Enumeration)Mof.EnumerationInfo.Create(base.Model, id)!;
         }
     
         public InstanceSpecification InstanceSpecification(string? id = null)
         {
-            return (InstanceSpecification)Mof.InstanceSpecificationInfo.Create(Model, id)!;
+            return (InstanceSpecification)Mof.InstanceSpecificationInfo.Create(base.Model, id)!;
         }
     
         public EnumerationLiteral EnumerationLiteral(string? id = null)
         {
-            return (EnumerationLiteral)Mof.EnumerationLiteralInfo.Create(Model, id)!;
+            return (EnumerationLiteral)Mof.EnumerationLiteralInfo.Create(base.Model, id)!;
         }
     
         public Instance Instance(string? id = null)
         {
-            return (Instance)Mof.InstanceInfo.Create(Model, id)!;
+            return (Instance)Mof.InstanceInfo.Create(base.Model, id)!;
         }
     
         public ElementInstance ElementInstance(string? id = null)
         {
-            return (ElementInstance)Mof.ElementInstanceInfo.Create(Model, id)!;
+            return (ElementInstance)Mof.ElementInstanceInfo.Create(base.Model, id)!;
         }
     
         public ObjectInstance ObjectInstance(string? id = null)
         {
-            return (ObjectInstance)Mof.ObjectInstanceInfo.Create(Model, id)!;
+            return (ObjectInstance)Mof.ObjectInstanceInfo.Create(base.Model, id)!;
         }
     
         public Package Package(string? id = null)
         {
-            return (Package)Mof.PackageInfo.Create(Model, id)!;
+            return (Package)Mof.PackageInfo.Create(base.Model, id)!;
         }
     
         public PackageImport PackageImport(string? id = null)
         {
-            return (PackageImport)Mof.PackageImportInfo.Create(Model, id)!;
+            return (PackageImport)Mof.PackageImportInfo.Create(base.Model, id)!;
         }
     
         public PackageMerge PackageMerge(string? id = null)
         {
-            return (PackageMerge)Mof.PackageMergeInfo.Create(Model, id)!;
+            return (PackageMerge)Mof.PackageMergeInfo.Create(base.Model, id)!;
         }
     
         public Parameter Parameter(string? id = null)
         {
-            return (Parameter)Mof.ParameterInfo.Create(Model, id)!;
+            return (Parameter)Mof.ParameterInfo.Create(base.Model, id)!;
         }
     
         public Property Property(string? id = null)
         {
-            return (Property)Mof.PropertyInfo.Create(Model, id)!;
+            return (Property)Mof.PropertyInfo.Create(base.Model, id)!;
         }
     
         public Slot Slot(string? id = null)
         {
-            return (Slot)Mof.SlotInfo.Create(Model, id)!;
+            return (Slot)Mof.SlotInfo.Create(base.Model, id)!;
         }
     
         public StructureSlot StructureSlot(string? id = null)
         {
-            return (StructureSlot)Mof.StructureSlotInfo.Create(Model, id)!;
+            return (StructureSlot)Mof.StructureSlotInfo.Create(base.Model, id)!;
         }
     
         public Tag Tag(string? id = null)
         {
-            return (Tag)Mof.TagInfo.Create(Model, id)!;
+            return (Tag)Mof.TagInfo.Create(base.Model, id)!;
         }
     
         public PrimitiveType PrimitiveType(string? id = null)
         {
-            return (PrimitiveType)Mof.PrimitiveTypeInfo.Create(Model, id)!;
+            return (PrimitiveType)Mof.PrimitiveTypeInfo.Create(base.Model, id)!;
         }
     
         public DataValue DataValue(string? id = null)
         {
-            return (DataValue)Mof.DataValueInfo.Create(Model, id)!;
+            return (DataValue)Mof.DataValueInfo.Create(base.Model, id)!;
         }
     
         public InstanceValue InstanceValue(string? id = null)
         {
-            return (InstanceValue)Mof.InstanceValueInfo.Create(Model, id)!;
+            return (InstanceValue)Mof.InstanceValueInfo.Create(base.Model, id)!;
         }
     
         public LiteralSpecification LiteralSpecification(string? id = null)
         {
-            return (LiteralSpecification)Mof.LiteralSpecificationInfo.Create(Model, id)!;
+            return (LiteralSpecification)Mof.LiteralSpecificationInfo.Create(base.Model, id)!;
         }
     
         public LiteralBoolean LiteralBoolean(string? id = null)
         {
-            return (LiteralBoolean)Mof.LiteralBooleanInfo.Create(Model, id)!;
+            return (LiteralBoolean)Mof.LiteralBooleanInfo.Create(base.Model, id)!;
         }
     
         public LiteralInteger LiteralInteger(string? id = null)
         {
-            return (LiteralInteger)Mof.LiteralIntegerInfo.Create(Model, id)!;
+            return (LiteralInteger)Mof.LiteralIntegerInfo.Create(base.Model, id)!;
         }
     
         public LiteralNull LiteralNull(string? id = null)
         {
-            return (LiteralNull)Mof.LiteralNullInfo.Create(Model, id)!;
+            return (LiteralNull)Mof.LiteralNullInfo.Create(base.Model, id)!;
         }
     
         public LiteralReal LiteralReal(string? id = null)
         {
-            return (LiteralReal)Mof.LiteralRealInfo.Create(Model, id)!;
+            return (LiteralReal)Mof.LiteralRealInfo.Create(base.Model, id)!;
         }
     
         public LiteralString LiteralString(string? id = null)
         {
-            return (LiteralString)Mof.LiteralStringInfo.Create(Model, id)!;
+            return (LiteralString)Mof.LiteralStringInfo.Create(base.Model, id)!;
         }
     
         public LiteralUnlimitedNatural LiteralUnlimitedNatural(string? id = null)
         {
-            return (LiteralUnlimitedNatural)Mof.LiteralUnlimitedNaturalInfo.Create(Model, id)!;
+            return (LiteralUnlimitedNatural)Mof.LiteralUnlimitedNaturalInfo.Create(base.Model, id)!;
         }
     
         public OpaqueExpression OpaqueExpression(string? id = null)
         {
-            return (OpaqueExpression)Mof.OpaqueExpressionInfo.Create(Model, id)!;
+            return (OpaqueExpression)Mof.OpaqueExpressionInfo.Create(base.Model, id)!;
         }
     
         public PrimitiveDataValue PrimitiveDataValue(string? id = null)
         {
-            return (PrimitiveDataValue)Mof.PrimitiveDataValueInfo.Create(Model, id)!;
+            return (PrimitiveDataValue)Mof.PrimitiveDataValueInfo.Create(base.Model, id)!;
         }
     
     }

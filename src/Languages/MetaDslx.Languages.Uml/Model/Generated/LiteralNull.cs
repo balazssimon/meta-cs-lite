@@ -26,7 +26,7 @@ namespace MetaDslx.Languages.Uml.Model
     public interface LiteralNull : global::MetaDslx.Languages.Uml.Model.LiteralSpecification
     {
     
-        bool IsComputable(bool result);
-        bool IsNull(bool result);
+        bool IsComputable();
+        bool IsNull();
     }
 }

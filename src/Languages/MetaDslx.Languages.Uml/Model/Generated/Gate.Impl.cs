@@ -91,24 +91,24 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        string Gate.GetName(string result) => Uml.__CustomImpl.Gate_GetName(this, result);
-        InteractionOperand Gate.GetOperand(InteractionOperand result) => Uml.__CustomImpl.Gate_GetOperand(this, result);
-        bool Gate.IsActual(bool result) => Uml.__CustomImpl.Gate_IsActual(this, result);
-        bool Gate.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.Gate_IsDistinguishableFrom(this, result, n, ns);
-        bool Gate.IsFormal(bool result) => Uml.__CustomImpl.Gate_IsFormal(this, result);
-        bool Gate.IsInsideCF(bool result) => Uml.__CustomImpl.Gate_IsInsideCF(this, result);
-        bool Gate.IsOutsideCF(bool result) => Uml.__CustomImpl.Gate_IsOutsideCF(this, result);
-        bool Gate.Matches(bool result, Gate gateToMatch) => Uml.__CustomImpl.Gate_Matches(this, result, gateToMatch);
-        global::System.Collections.Generic.IList<InteractionFragment> MessageEnd.EnclosingFragment(global::System.Collections.Generic.IList<InteractionFragment> result) => Uml.__CustomImpl.MessageEnd_EnclosingFragment(this, result);
-        bool MessageEnd.IsReceive(bool result) => Uml.__CustomImpl.MessageEnd_IsReceive(this, result);
-        bool MessageEnd.IsSend(bool result) => Uml.__CustomImpl.MessageEnd_IsSend(this, result);
-        global::System.Collections.Generic.IList<MessageEnd> MessageEnd.OppositeEnd(global::System.Collections.Generic.IList<MessageEnd> result) => Uml.__CustomImpl.MessageEnd_OppositeEnd(this, result);
-        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces(global::System.Collections.Generic.IList<Namespace> result) => Uml.__CustomImpl.NamedElement_AllNamespaces(this, result);
-        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages(global::System.Collections.Generic.IList<Package> result) => Uml.__CustomImpl.NamedElement_AllOwningPackages(this, result);
-        bool NamedElement.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.Gate_IsDistinguishableFrom(this, result, n, ns);
-        string NamedElement.Separator(string result) => Uml.__CustomImpl.NamedElement_Separator(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        string Gate.GetName() => Uml.__CustomImpl.Gate_GetName(this);
+        InteractionOperand Gate.GetOperand() => Uml.__CustomImpl.Gate_GetOperand(this);
+        bool Gate.IsActual() => Uml.__CustomImpl.Gate_IsActual(this);
+        bool Gate.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.Gate_IsDistinguishableFrom(this, n, ns);
+        bool Gate.IsFormal() => Uml.__CustomImpl.Gate_IsFormal(this);
+        bool Gate.IsInsideCF() => Uml.__CustomImpl.Gate_IsInsideCF(this);
+        bool Gate.IsOutsideCF() => Uml.__CustomImpl.Gate_IsOutsideCF(this);
+        bool Gate.Matches(Gate gateToMatch) => Uml.__CustomImpl.Gate_Matches(this, gateToMatch);
+        global::System.Collections.Generic.IList<InteractionFragment> MessageEnd.EnclosingFragment() => Uml.__CustomImpl.MessageEnd_EnclosingFragment(this);
+        bool MessageEnd.IsReceive() => Uml.__CustomImpl.MessageEnd_IsReceive(this);
+        bool MessageEnd.IsSend() => Uml.__CustomImpl.MessageEnd_IsSend(this);
+        global::System.Collections.Generic.IList<MessageEnd> MessageEnd.OppositeEnd() => Uml.__CustomImpl.MessageEnd_OppositeEnd(this);
+        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces() => Uml.__CustomImpl.NamedElement_AllNamespaces(this);
+        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages() => Uml.__CustomImpl.NamedElement_AllOwningPackages(this);
+        bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.Gate_IsDistinguishableFrom(this, n, ns);
+        string NamedElement.Separator() => Uml.__CustomImpl.NamedElement_Separator(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

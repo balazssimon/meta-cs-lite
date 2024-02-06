@@ -133,16 +133,16 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        global::System.Collections.Generic.IList<InteractionFragment> MessageEnd.EnclosingFragment(global::System.Collections.Generic.IList<InteractionFragment> result) => Uml.__CustomImpl.MessageEnd_EnclosingFragment(this, result);
-        bool MessageEnd.IsReceive(bool result) => Uml.__CustomImpl.MessageEnd_IsReceive(this, result);
-        bool MessageEnd.IsSend(bool result) => Uml.__CustomImpl.MessageEnd_IsSend(this, result);
-        global::System.Collections.Generic.IList<MessageEnd> MessageEnd.OppositeEnd(global::System.Collections.Generic.IList<MessageEnd> result) => Uml.__CustomImpl.MessageEnd_OppositeEnd(this, result);
-        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces(global::System.Collections.Generic.IList<Namespace> result) => Uml.__CustomImpl.NamedElement_AllNamespaces(this, result);
-        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages(global::System.Collections.Generic.IList<Package> result) => Uml.__CustomImpl.NamedElement_AllOwningPackages(this, result);
-        bool NamedElement.IsDistinguishableFrom(bool result, NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, result, n, ns);
-        string NamedElement.Separator(string result) => Uml.__CustomImpl.NamedElement_Separator(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        global::System.Collections.Generic.IList<InteractionFragment> MessageEnd.EnclosingFragment() => Uml.__CustomImpl.MessageEnd_EnclosingFragment(this);
+        bool MessageEnd.IsReceive() => Uml.__CustomImpl.MessageEnd_IsReceive(this);
+        bool MessageEnd.IsSend() => Uml.__CustomImpl.MessageEnd_IsSend(this);
+        global::System.Collections.Generic.IList<MessageEnd> MessageEnd.OppositeEnd() => Uml.__CustomImpl.MessageEnd_OppositeEnd(this);
+        global::System.Collections.Generic.IList<Namespace> NamedElement.AllNamespaces() => Uml.__CustomImpl.NamedElement_AllNamespaces(this);
+        global::System.Collections.Generic.IList<Package> NamedElement.AllOwningPackages() => Uml.__CustomImpl.NamedElement_AllOwningPackages(this);
+        bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns) => Uml.__CustomImpl.NamedElement_IsDistinguishableFrom(this, n, ns);
+        string NamedElement.Separator() => Uml.__CustomImpl.NamedElement_Separator(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

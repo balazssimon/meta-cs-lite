@@ -26,6 +26,6 @@ namespace MetaDslx.Languages.Uml.Model
     public interface FinalState : global::MetaDslx.Languages.Uml.Model.State
     {
     
-        bool IsConsistentWith(RedefinableElement redefiningElement, bool result);
+        bool IsConsistentWith(RedefinableElement redefiningElement);
     }
 }

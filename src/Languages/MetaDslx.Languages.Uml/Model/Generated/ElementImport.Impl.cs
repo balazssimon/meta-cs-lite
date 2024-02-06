@@ -91,9 +91,9 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
         }
     
     
-        string ElementImport.GetName(string result) => Uml.__CustomImpl.ElementImport_GetName(this, result);
-        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements(global::System.Collections.Generic.IList<Element> result) => Uml.__CustomImpl.Element_AllOwnedElements(this, result);
-        bool Element.MustBeOwned(bool result) => Uml.__CustomImpl.Element_MustBeOwned(this, result);
+        string ElementImport.GetName() => Uml.__CustomImpl.ElementImport_GetName(this);
+        global::System.Collections.Generic.IList<Element> Element.AllOwnedElements() => Uml.__CustomImpl.Element_AllOwnedElements(this);
+        bool Element.MustBeOwned() => Uml.__CustomImpl.Element_MustBeOwned(this);
     
         internal class __Info : __ModelClassInfo
         {

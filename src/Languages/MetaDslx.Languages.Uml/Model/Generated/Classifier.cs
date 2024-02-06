@@ -42,21 +42,21 @@ namespace MetaDslx.Languages.Uml.Model
         new ClassifierTemplateParameter TemplateParameter { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<UseCase> UseCase { get; }
     
-        global::System.Collections.Generic.IList<Feature> AllFeatures(global::System.Collections.Generic.IList<Feature> result);
-        global::System.Collections.Generic.IList<Classifier> AllParents(global::System.Collections.Generic.IList<Classifier> result);
-        bool ConformsTo(bool result, Type other);
-        bool HasVisibilityOf(bool result, NamedElement n);
-        global::System.Collections.Generic.IList<NamedElement> Inherit(global::System.Collections.Generic.IList<NamedElement> result, global::System.Collections.Generic.IList<NamedElement> inhs);
-        global::System.Collections.Generic.IList<NamedElement> InheritableMembers(global::System.Collections.Generic.IList<NamedElement> result, Classifier c);
-        bool IsTemplate(bool result);
-        bool MaySpecializeType(bool result, Classifier c);
-        global::System.Collections.Generic.IList<Classifier> Parents(global::System.Collections.Generic.IList<Classifier> result);
-        global::System.Collections.Generic.IList<Interface> DirectlyRealizedInterfaces(global::System.Collections.Generic.IList<Interface> result);
-        global::System.Collections.Generic.IList<Interface> DirectlyUsedInterfaces(global::System.Collections.Generic.IList<Interface> result);
-        global::System.Collections.Generic.IList<Interface> AllRealizedInterfaces(global::System.Collections.Generic.IList<Interface> result);
-        global::System.Collections.Generic.IList<Interface> AllUsedInterfaces(global::System.Collections.Generic.IList<Interface> result);
-        bool IsSubstitutableFor(Classifier contract, bool result);
-        global::System.Collections.Generic.IList<Property> AllAttributes(global::System.Collections.Generic.IList<Property> result);
-        global::System.Collections.Generic.IList<StructuralFeature> AllSlottableFeatures(global::System.Collections.Generic.IList<StructuralFeature> result);
+        global::System.Collections.Generic.IList<Feature> AllFeatures();
+        global::System.Collections.Generic.IList<Classifier> AllParents();
+        bool ConformsTo(Type other);
+        bool HasVisibilityOf(NamedElement n);
+        global::System.Collections.Generic.IList<NamedElement> Inherit(global::System.Collections.Generic.IList<NamedElement> inhs);
+        global::System.Collections.Generic.IList<NamedElement> InheritableMembers(Classifier c);
+        bool IsTemplate();
+        bool MaySpecializeType(Classifier c);
+        global::System.Collections.Generic.IList<Classifier> Parents();
+        global::System.Collections.Generic.IList<Interface> DirectlyRealizedInterfaces();
+        global::System.Collections.Generic.IList<Interface> DirectlyUsedInterfaces();
+        global::System.Collections.Generic.IList<Interface> AllRealizedInterfaces();
+        global::System.Collections.Generic.IList<Interface> AllUsedInterfaces();
+        bool IsSubstitutableFor(Classifier contract);
+        global::System.Collections.Generic.IList<Property> AllAttributes();
+        global::System.Collections.Generic.IList<StructuralFeature> AllSlottableFeatures();
     }
 }
