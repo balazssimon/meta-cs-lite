@@ -1,57 +1,57 @@
-﻿namespace MetaDslx.Languages.Mof.Model;
+﻿namespace MetaDslx.Languages.Mof.Model
 
-using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols
 
-metamodel Mof = "http://www.omg.org/spec/MOF";
+metamodel Mof = "http://www.omg.org/spec/MOF"
 
 // Boolean is used for logical expressions, consisting of the predefined values true and false.
-const PrimitiveType Boolean;
+const PrimitiveType Boolean
 // Integer is a primitive type representing integer values.
-const PrimitiveType Integer;
+const PrimitiveType Integer
 // Real is a primitive type representing the mathematical concept of real.
-const PrimitiveType Real;
+const PrimitiveType Real
 // String is a sequence of characters in some suitable character set used to display information 
 // about the model. Character sets may include non-Roman alphabets and characters.
-const PrimitiveType String;
+const PrimitiveType String
 // UnlimitedNatural is a primitive type representing unlimited natural values.
-const PrimitiveType UnlimitedNatural;
+const PrimitiveType UnlimitedNatural
 	
 abstract class Element
 {
-	Element Owner opposite OwnedElement;
-	contains Element[] OwnedElement opposite Owner;
-	Tag[] Tag opposite Tag.Element;
-	contains Comment[] OwnedComment opposite Comment.OwningElement;
-	Comment[] Comment opposite Comment.AnnotatedElement;
-	Relationship[] Relationship opposite Relationship.RelatedElement;
+	Element Owner opposite OwnedElement
+	contains Element[] OwnedElement opposite Owner
+	Tag[] Tag opposite Tag.Element
+	contains Comment[] OwnedComment opposite Comment.OwningElement
+	Comment[] Comment opposite Comment.AnnotatedElement
+	Relationship[] Relationship opposite Relationship.RelatedElement
 }
 
 class Comment
 {
-	Element OwningElement redefines Element.Owner opposite Element.OwnedComment;
-	Element[] AnnotatedElement opposite Element.Comment;
-	string[] Body;
+	Element OwningElement redefines Element.Owner opposite Element.OwnedComment
+	Element[] AnnotatedElement opposite Element.Comment
+	string[] Body
 }
 
 class Tag $Symbol
 {
-	string $Name;
-	string? Value;
-	Element[] Element opposite Element.Tag;
+	string $Name
+	string? Value
+	Element[] Element opposite Element.Tag
 }
 
 abstract class NamedElement $Declaration : Element
 {
-	string $Name;
-	derived string QualifiedName;
-	VisibilityKind Visibility;
-	Namespace Namespace opposite Namespace.OwnedMember;
-	derived Namespace MemberNamespace opposite Namespace.Member;
+	string $Name
+	derived string QualifiedName
+	VisibilityKind Visibility
+	Namespace Namespace opposite Namespace.OwnedMember
+	derived Namespace MemberNamespace opposite Namespace.Member
 }
 
 abstract class PackageableElement : NamedElement
 {
-	Package OwningPackage opposite Package.PackagedElement;
+	Package OwningPackage opposite Package.PackagedElement
 }
 
 enum VisibilityKind
@@ -61,37 +61,37 @@ enum VisibilityKind
 	
 abstract class $Type : PackageableElement
 {
-	Package Package redefines PackageableElement.OwningPackage opposite Package.OwnedType;
-	TypedElement[] TypedElement opposite TypedElement.Type;
+	Package Package redefines PackageableElement.OwningPackage opposite Package.OwnedType
+	TypedElement[] TypedElement opposite TypedElement.Type
 }
 
 abstract class TypedElement : NamedElement
 {
-	Type Type opposite Type.TypedElement;
+	Type Type opposite Type.TypedElement
 }
 
 abstract class $Namespace : NamedElement
 {
-	contains Constraint[] OwnedRule opposite Constraint.Context;
-	contains NamedElement[] OwnedMember opposite NamedElement.Namespace;
-	derived NamedElement[] Member opposite NamedElement.MemberNamespace;
-	contains PackageImport[] PackageImport opposite PackageImport.ImportingNamespace;
+	contains Constraint[] OwnedRule opposite Constraint.Context
+	contains NamedElement[] OwnedMember opposite NamedElement.Namespace
+	derived NamedElement[] Member opposite NamedElement.MemberNamespace
+	contains PackageImport[] PackageImport opposite PackageImport.ImportingNamespace
 }
 
 abstract class Classifier $Type : Type, Namespace
 {
-	bool IsAbstract;
-	contains Generalization[] Generalization opposite Generalization.Specific;
+	bool IsAbstract
+	contains Generalization[] Generalization opposite Generalization.Specific
 }
 
 class Package $Namespace : Namespace, PackageableElement
 {
-	string URI;
-	Package NestingPackage redefines PackageableElement.OwningPackage opposite Package.NestedPackage;
-	contains PackageableElement[] PackagedElement subsets Namespace.OwnedMember opposite PackageableElement.OwningPackage;
-	contains Type[] OwnedType subsets PackagedElement opposite Type.Package;
-	contains Package[] NestedPackage subsets PackagedElement opposite Package.NestingPackage;
-	contains PackageMerge[] PackageMerge opposite PackageMerge.ReceivingPackage;
+	string URI
+	Package NestingPackage redefines PackageableElement.OwningPackage opposite Package.NestedPackage
+	contains PackageableElement[] PackagedElement subsets Namespace.OwnedMember opposite PackageableElement.OwningPackage
+	contains Type[] OwnedType subsets PackagedElement opposite Type.Package
+	contains Package[] NestedPackage subsets PackagedElement opposite Package.NestingPackage
+	contains PackageMerge[] PackageMerge opposite PackageMerge.ReceivingPackage
 }
 
 class DataType : Classifier
@@ -104,19 +104,19 @@ class PrimitiveType : DataType
 
 class Enumeration : DataType
 {
-	contains EnumerationLiteral[] OwnedLiteral opposite EnumerationLiteral.Enumeration;
+	contains EnumerationLiteral[] OwnedLiteral opposite EnumerationLiteral.Enumeration
 }
 
 class EnumerationLiteral : InstanceSpecification
 {
-	Enumeration Enumeration opposite Enumeration.OwnedLiteral;
+	Enumeration Enumeration opposite Enumeration.OwnedLiteral
 }
 
 class Class : Classifier
 {
-	derived Class[] SuperClass;
-	contains Property[] OwnedAttribute subsets Element.OwnedElement opposite Property.Class;
-	contains Operation[] OwnedOperation subsets Element.OwnedElement opposite Operation.Class;
+	derived Class[] SuperClass
+	contains Property[] OwnedAttribute subsets Element.OwnedElement opposite Property.Class
+	contains Operation[] OwnedOperation subsets Element.OwnedElement opposite Operation.Class
 }
 
 abstract class Feature
@@ -125,34 +125,34 @@ abstract class Feature
 
 abstract class MultiplicityElement : Element
 {
-	bool IsOrdered;
-	bool IsUnique = true;
-	ValueSpecification LowerValue subsets Element.OwnedElement opposite ValueSpecification.OwningLower;
-	ValueSpecification UpperValue subsets Element.OwnedElement opposite ValueSpecification.OwningUpper;
-	derived long Lower;
-	derived long Upper;
+	bool IsOrdered
+	bool IsUnique = true
+	ValueSpecification LowerValue subsets Element.OwnedElement opposite ValueSpecification.OwningLower
+	ValueSpecification UpperValue subsets Element.OwnedElement opposite ValueSpecification.OwningUpper
+	derived long Lower
+	derived long Upper
 }
 
 abstract class StructuralFeature $Declaration : Feature, TypedElement, MultiplicityElement
 {
-	bool IsReadOnly;
+	bool IsReadOnly
 }
 
 class Property : StructuralFeature
 {
-	Class Class subsets Element.Owner opposite Class.OwnedAttribute;
-	ValueSpecification DefaultValue subsets Element.OwnedElement opposite ValueSpecification.OwningProperty;
-	bool IsID;
-	bool IsDerived;
-	bool IsDerivedUnion;
-	AggregationKind Aggregation;
-	Association[] Association opposite Association.MemberEnd;
-	Association[] OwningAssociation subsets Association opposite Association.OwnedEnd;
-	Property[] RedefinedProperty;
-	Property[] SubsettedProperty;
-	derived Property Opposite;
-	derived string Default;
-	derived bool IsComposite;
+	Class Class subsets Element.Owner opposite Class.OwnedAttribute
+	ValueSpecification DefaultValue subsets Element.OwnedElement opposite ValueSpecification.OwningProperty
+	bool IsID
+	bool IsDerived
+	bool IsDerivedUnion
+	AggregationKind Aggregation
+	Association[] Association opposite Association.MemberEnd
+	Association[] OwningAssociation subsets Association opposite Association.OwnedEnd
+	Property[] RedefinedProperty
+	Property[] SubsettedProperty
+	derived Property Opposite
+	derived string Default
+	derived bool IsComposite
 }
 
 enum AggregationKind
@@ -164,50 +164,50 @@ enum AggregationKind
 
 abstract class Relationship : Element
 {
-	derived Element[] RelatedElement opposite Element.Relationship;
+	derived Element[] RelatedElement opposite Element.Relationship
 }
 
 abstract class DirectedRelationship : Relationship
 {
-	Element[] Source subsets Relationship.RelatedElement;
-	Element[] Target subsets Relationship.RelatedElement;
+	Element[] Source subsets Relationship.RelatedElement
+	Element[] Target subsets Relationship.RelatedElement
 }
 
 class Association : Classifier, Relationship
 {
-	bool IsDerived;
-	contains Property[] OwnedEnd subsets MemberEnd, Namespace.OwnedMember opposite Property.OwningAssociation;
-	Property[] MemberEnd opposite Property.Association;
-	Property[] NavigableOwnedEnd subsets OwnedEnd;
+	bool IsDerived
+	contains Property[] OwnedEnd subsets MemberEnd, Namespace.OwnedMember opposite Property.OwningAssociation
+	Property[] MemberEnd opposite Property.Association
+	Property[] NavigableOwnedEnd subsets OwnedEnd
 }
 
 abstract class BehavioralFeature $Declaration : Feature, Namespace
 {
-	bool IsReadOnly;
+	bool IsReadOnly
 }
 
 class Operation : BehavioralFeature
 {
-	Class Class subsets Element.Owner opposite Class.OwnedOperation;
-	bool IsAbstract;
-	bool IsQuery;
-	derived bool IsOrdered;
-	derived bool IsUnique;
-	derived long Lower;
-	derived long Upper;
-	contains Parameter[] OwnedParameter opposite Parameter.Operation;
-	Type[] RaisedException;
-	Operation[] RedefinedOperation;
-	contains Constraint[] Precondition opposite Constraint.PreContext;
-	contains Constraint[] Postcondition opposite Constraint.PostContext;
-	contains Constraint[] BodyCondition opposite Constraint.BodyContext;
+	Class Class subsets Element.Owner opposite Class.OwnedOperation
+	bool IsAbstract
+	bool IsQuery
+	derived bool IsOrdered
+	derived bool IsUnique
+	derived long Lower
+	derived long Upper
+	contains Parameter[] OwnedParameter opposite Parameter.Operation
+	Type[] RaisedException
+	Operation[] RedefinedOperation
+	contains Constraint[] Precondition opposite Constraint.PreContext
+	contains Constraint[] Postcondition opposite Constraint.PostContext
+	contains Constraint[] BodyCondition opposite Constraint.BodyContext
 }
 
 class Parameter : TypedElement, MultiplicityElement
 {
-	bool IsStream;
-	Operation Operation opposite Operation.OwnedParameter;
-	ParameterDirectionKind Direction;
+	bool IsStream
+	Operation Operation opposite Operation.OwnedParameter
+	ParameterDirectionKind Direction
 }
 
 enum ParameterDirectionKind
@@ -218,41 +218,41 @@ enum ParameterDirectionKind
 
 class Generalization : DirectedRelationship
 {
-	Classifier General subsets DirectedRelationship.Target;
-	Classifier Specific subsets DirectedRelationship.Source, Element.Owner opposite Classifier.Generalization;
+	Classifier General subsets DirectedRelationship.Target
+	Classifier Specific subsets DirectedRelationship.Source, Element.Owner opposite Classifier.Generalization
 }
 
 abstract class ValueSpecification : TypedElement, PackageableElement
 {
-	Constraint OwningConstraint subsets Element.Owner opposite Constraint.Specification;
-	MultiplicityElement OwningLower subsets Element.Owner opposite MultiplicityElement.LowerValue;
-	MultiplicityElement OwningUpper subsets Element.Owner opposite MultiplicityElement.UpperValue;
-	Property OwningProperty subsets Element.Owner opposite Property.DefaultValue;
+	Constraint OwningConstraint subsets Element.Owner opposite Constraint.Specification
+	MultiplicityElement OwningLower subsets Element.Owner opposite MultiplicityElement.LowerValue
+	MultiplicityElement OwningUpper subsets Element.Owner opposite MultiplicityElement.UpperValue
+	Property OwningProperty subsets Element.Owner opposite Property.DefaultValue
 }
 
 class InstanceValue : ValueSpecification
 {
-	InstanceSpecification Instance;
+	InstanceSpecification Instance
 }
 
 class DataValue : ValueSpecification, ElementInstance
 {
-	DataType Classifier redefines Instance.Classifier;
+	DataType Classifier redefines Instance.Classifier
 }
 
 class PrimitiveDataValue : DataValue
 {
-	PrimitiveType Classifier redefines Instance.Classifier;
+	PrimitiveType Classifier redefines Instance.Classifier
 }
 
 class InstanceSpecification : PackageableElement
 {
-	contains Slot[] Slot subsets Element.OwnedElement;
+	contains Slot[] Slot subsets Element.OwnedElement
 }
 
 class Instance : InstanceSpecification
 {
-	Classifier Classifier; // missing from standard?
+	Classifier Classifier // missing from standard?
 }
 
 class ObjectInstance : Instance
@@ -261,35 +261,35 @@ class ObjectInstance : Instance
 
 class ElementInstance : Instance
 {
-	contains StructureSlot[] Slot redefines Element.OwnedElement, InstanceSpecification.Slot; // TODO: opposite StructureSlot.OwningInstance;
+	contains StructureSlot[] Slot redefines Element.OwnedElement, InstanceSpecification.Slot // TODO: opposite StructureSlot.OwningInstance
 }
 
 class AssociationInstance : ObjectInstance
 {
-	Association Classifier redefines Instance.Classifier;
-	contains LinkSlot FirstSlot subsets InstanceSpecification.Slot; // TODO:  opposite LinkSlot.OwningInstance;
-	contains LinkSlot SecondSlot subsets InstanceSpecification.Slot; // TODO:  opposite LinkSlot.OwningInstance;
+	Association Classifier redefines Instance.Classifier
+	contains LinkSlot FirstSlot subsets InstanceSpecification.Slot // TODO:  opposite LinkSlot.OwningInstance
+	contains LinkSlot SecondSlot subsets InstanceSpecification.Slot // TODO:  opposite LinkSlot.OwningInstance
 }
 
 class ClassInstance : ObjectInstance, ElementInstance
 {
-	Class Classifier redefines Instance.Classifier;
+	Class Classifier redefines Instance.Classifier
 }
 
 class Slot
 {
-	InstanceSpecification OwningInstance;
-	contains ValueSpecification[] Value subsets Element.OwnedElement;
+	InstanceSpecification OwningInstance
+	contains ValueSpecification[] Value subsets Element.OwnedElement
 }
 
 class LinkSlot : Slot
 {
-	AssociationInstance OwningInstance redefines Slot.OwningInstance; // TODO:  opposite AssociationInstance.FirstSlot, AssociationInstance.SecondSlot;
+	AssociationInstance OwningInstance redefines Slot.OwningInstance // TODO:  opposite AssociationInstance.FirstSlot, AssociationInstance.SecondSlot
 }
 
 class StructureSlot : Slot
 {
-	ElementInstance OwningInstance redefines Slot.OwningInstance; // TODO:  opposite ElementInstance.Slot;
+	ElementInstance OwningInstance redefines Slot.OwningInstance // TODO:  opposite ElementInstance.Slot
 }
 
 class Extent
@@ -298,25 +298,25 @@ class Extent
 
 class ExtentImplementation // ExtentImpl
 {
-	contains IdentifierEntry[] Entry;
+	contains IdentifierEntry[] Entry
 }
 
 class IdentifierEntry
 {
-	string Identifier;
-	ObjectInstance Object;
+	string Identifier
+	ObjectInstance Object
 }
 
 class PackageMerge : DirectedRelationship
 {
-	Package MergedPackage subsets DirectedRelationship.Target;
-	Package ReceivingPackage subsets DirectedRelationship.Source, Element.Owner opposite Package.PackageMerge;
+	Package MergedPackage subsets DirectedRelationship.Target
+	Package ReceivingPackage subsets DirectedRelationship.Source, Element.Owner opposite Package.PackageMerge
 }
 
 class PackageImport : DirectedRelationship
 {
-	Package ImportedPackage subsets DirectedRelationship.Target;
-	Namespace ImportingNamespace subsets DirectedRelationship.Source, Element.Owner opposite Namespace.PackageImport;
+	Package ImportedPackage subsets DirectedRelationship.Target
+	Namespace ImportingNamespace subsets DirectedRelationship.Source, Element.Owner opposite Namespace.PackageImport
 }
 
 class LiteralSpecification : ValueSpecification
@@ -329,41 +329,41 @@ class LiteralNull : LiteralSpecification
 
 class LiteralBoolean : LiteralSpecification
 {
-	bool Value;
+	bool Value
 }
 
 class LiteralString : LiteralSpecification
 {
-	string Value;
+	string Value
 }
 
 class LiteralInteger : LiteralSpecification
 {
-	int Value;
+	int Value
 }
 
 class LiteralReal : LiteralSpecification
 {
-	double Value;
+	double Value
 }
 
 class LiteralUnlimitedNatural : LiteralSpecification
 {
-	long Value;
+	long Value
 }
 
 class Constraint : PackageableElement
 {
-	Namespace Context opposite Namespace.OwnedRule;
-	Element[] ConstrainedElement;
-	contains ValueSpecification Specification opposite ValueSpecification.OwningConstraint;
-	Operation PreContext subsets Context opposite Operation.Precondition;
-	Operation PostContext subsets Context opposite Operation.Postcondition;
-	Operation BodyContext subsets Context opposite Operation.BodyCondition;
+	Namespace Context opposite Namespace.OwnedRule
+	Element[] ConstrainedElement
+	contains ValueSpecification Specification opposite ValueSpecification.OwningConstraint
+	Operation PreContext subsets Context opposite Operation.Precondition
+	Operation PostContext subsets Context opposite Operation.Postcondition
+	Operation BodyContext subsets Context opposite Operation.BodyCondition
 }
 	
 class OpaqueExpression : ValueSpecification
 {
-	string Body;
-	string Language;
+	string Body
+	string Language
 }

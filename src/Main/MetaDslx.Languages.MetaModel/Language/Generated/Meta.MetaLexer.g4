@@ -6,7 +6,6 @@ LR_KFalse: 'false';
 LR_TComma: ',';
 LR_TUtf8Bom: '\u00ef' '\u00bb' '\u00bf' -> channel(HIDDEN);
 LR_KNamespace: 'namespace';
-LR_TSemicolon: ';';
 LR_KUsing: 'using';
 LR_KMetamodel: 'metamodel';
 LR_KConst: 'const';

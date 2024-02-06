@@ -2647,7 +2647,6 @@ namespace MetaDslx.Languages.Mof.Model
         }
     
     }
-    
 
     public enum AggregationKind
     {

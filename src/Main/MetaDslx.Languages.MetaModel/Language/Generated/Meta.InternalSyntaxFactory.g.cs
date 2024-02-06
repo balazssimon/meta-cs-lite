@@ -252,35 +252,31 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return Token(null, MetaSyntaxKind.TInvalidToken, text, value, null);
         }
 
-        internal MainGreen Main(__InternalSyntaxToken kNamespace, QualifierGreen qualifier, __InternalSyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
+        internal MainGreen Main(__InternalSyntaxToken kNamespace, QualifierGreen qualifier, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
         {
             #if DEBUG
                 if (kNamespace is null) throw new __ArgumentNullException(nameof(kNamespace));
                 if (kNamespace.RawKind != (int)MetaSyntaxKind.KNamespace) throw new __ArgumentException(nameof(kNamespace));
                 if (qualifier is null) throw new __ArgumentNullException(nameof(qualifier));
-                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
-                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
                 if (block is null) throw new __ArgumentNullException(nameof(block));
                 if (endOfFileToken is null) throw new __ArgumentNullException(nameof(endOfFileToken));
                 if (endOfFileToken.RawKind != (int)__InternalSyntaxKind.Eof) throw new __ArgumentException(nameof(endOfFileToken));
             #endif
-            return new MainGreen(MetaSyntaxKind.Main, kNamespace, qualifier, tSemicolon, usingList.Node, block, endOfFileToken);
+            return new MainGreen(MetaSyntaxKind.Main, kNamespace, qualifier, usingList.Node, block, endOfFileToken);
         }
         
-        internal UsingGreen Using(__InternalSyntaxToken kUsing, QualifierGreen namespaces, __InternalSyntaxToken tSemicolon)
+        internal UsingGreen Using(__InternalSyntaxToken kUsing, QualifierGreen namespaces)
         {
             #if DEBUG
                 if (kUsing is null) throw new __ArgumentNullException(nameof(kUsing));
                 if (kUsing.RawKind != (int)MetaSyntaxKind.KUsing) throw new __ArgumentException(nameof(kUsing));
                 if (namespaces is null) throw new __ArgumentNullException(nameof(namespaces));
-                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
-                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.Using, kUsing, namespaces, tSemicolon, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.Using, kUsing, namespaces, out hash);
             if (cached != null) return (UsingGreen)cached;
         
-            var result = new UsingGreen(MetaSyntaxKind.Using, kUsing, namespaces, tSemicolon);
+            var result = new UsingGreen(MetaSyntaxKind.Using, kUsing, namespaces);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -289,16 +285,24 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaModelGreen MetaModel(__InternalSyntaxToken kMetamodel, NameGreen name, MetaModelBlock1Green block, __InternalSyntaxToken tSemicolon)
+        internal MetaModelGreen MetaModel(__InternalSyntaxToken kMetamodel, NameGreen name, MetaModelBlock1Green block)
         {
             #if DEBUG
                 if (kMetamodel is null) throw new __ArgumentNullException(nameof(kMetamodel));
                 if (kMetamodel.RawKind != (int)MetaSyntaxKind.KMetamodel) throw new __ArgumentException(nameof(kMetamodel));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
-                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
-                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new MetaModelGreen(MetaSyntaxKind.MetaModel, kMetamodel, name, block, tSemicolon);
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaModel, kMetamodel, name, block, out hash);
+            if (cached != null) return (MetaModelGreen)cached;
+        
+            var result = new MetaModelGreen(MetaSyntaxKind.MetaModel, kMetamodel, name, block);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
         }
         
         internal MetaDeclarationAlt1Green MetaDeclarationAlt1(MetaConstantGreen metaConstant)
@@ -355,17 +359,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaConstantGreen MetaConstant(__InternalSyntaxToken kConst, MetaTypeReferenceGreen type, NameGreen name, __InternalSyntaxToken tSemicolon)
+        internal MetaConstantGreen MetaConstant(__InternalSyntaxToken kConst, MetaTypeReferenceGreen type, NameGreen name)
         {
             #if DEBUG
                 if (kConst is null) throw new __ArgumentNullException(nameof(kConst));
                 if (kConst.RawKind != (int)MetaSyntaxKind.KConst) throw new __ArgumentException(nameof(kConst));
                 if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
-                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
-                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new MetaConstantGreen(MetaSyntaxKind.MetaConstant, kConst, type, name, tSemicolon);
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaConstant, kConst, type, name, out hash);
+            if (cached != null) return (MetaConstantGreen)cached;
+        
+            var result = new MetaConstantGreen(MetaSyntaxKind.MetaConstant, kConst, type, name);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
         }
         
         internal MetaEnumGreen MetaEnum(__InternalSyntaxToken kEnum, NameGreen name, MetaEnumBlock1Green block)
@@ -419,18 +431,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return new MetaClassGreen(MetaSyntaxKind.MetaClass, isAbstract, kClass, block1, block2, block3);
         }
         
-        internal MetaPropertyGreen MetaProperty(MetaPropertyBlock1Green block1, MetaTypeReferenceGreen type, MetaPropertyBlock2Green block2, MetaPropertyBlock3Green block3, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock4Green> block4, __InternalSyntaxToken tSemicolon)
+        internal MetaPropertyGreen MetaProperty(MetaPropertyBlock1Green block1, MetaTypeReferenceGreen type, MetaPropertyBlock2Green block2, MetaPropertyBlock3Green block3, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock4Green> block4)
         {
             #if DEBUG
                 if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (block2 is null) throw new __ArgumentNullException(nameof(block2));
-                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
-                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new MetaPropertyGreen(MetaSyntaxKind.MetaProperty, block1, type, block2, block3, block4.Node, tSemicolon);
+            return new MetaPropertyGreen(MetaSyntaxKind.MetaProperty, block1, type, block2, block3, block4.Node);
         }
         
-        internal MetaOperationGreen MetaOperation(MetaTypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, MetaOperationBlock1Green block, __InternalSyntaxToken tRParen, __InternalSyntaxToken tSemicolon)
+        internal MetaOperationGreen MetaOperation(MetaTypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, MetaOperationBlock1Green block, __InternalSyntaxToken tRParen)
         {
             #if DEBUG
                 if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
@@ -439,10 +449,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (tLParen.RawKind != (int)MetaSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
                 if (tRParen is null) throw new __ArgumentNullException(nameof(tRParen));
                 if (tRParen.RawKind != (int)MetaSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
-                if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new MetaOperationGreen(MetaSyntaxKind.MetaOperation, returnType, name, tLParen, block, tRParen, tSemicolon);
+            return new MetaOperationGreen(MetaSyntaxKind.MetaOperation, returnType, name, tLParen, block, tRParen);
         }
         
         internal MetaParameterGreen MetaParameter(MetaTypeReferenceGreen type, NameGreen name)
@@ -665,6 +673,24 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             if (cached != null) return (ValueAlt5Green)cached;
         
             var result = new ValueAlt5Green(MetaSyntaxKind.ValueAlt5, kNull);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal ValueAlt6Green ValueAlt6(QualifierGreen qualifier)
+        {
+            #if DEBUG
+                if (qualifier is null) throw new __ArgumentNullException(nameof(qualifier));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ValueAlt6, qualifier, out hash);
+            if (cached != null) return (ValueAlt6Green)cached;
+        
+            var result = new ValueAlt6Green(MetaSyntaxKind.ValueAlt6, qualifier);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

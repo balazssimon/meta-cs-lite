@@ -113,7 +113,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TComma:
                 case MetaSyntaxKind.TUtf8Bom:
                 case MetaSyntaxKind.KNamespace:
-                case MetaSyntaxKind.TSemicolon:
                 case MetaSyntaxKind.KUsing:
                 case MetaSyntaxKind.KMetamodel:
                 case MetaSyntaxKind.KConst:
@@ -187,7 +186,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TComma:
                 case MetaSyntaxKind.TUtf8Bom:
                 case MetaSyntaxKind.KNamespace:
-                case MetaSyntaxKind.TSemicolon:
                 case MetaSyntaxKind.KUsing:
                 case MetaSyntaxKind.KMetamodel:
                 case MetaSyntaxKind.KConst:
@@ -257,8 +255,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.TUtf8Bom;
                 case "namespace": 
                     return MetaSyntaxKind.KNamespace;
-                case ";": 
-                    return MetaSyntaxKind.TSemicolon;
                 case "using": 
                     return MetaSyntaxKind.KUsing;
                 case "metamodel": 
@@ -394,8 +390,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "TUtf8Bom";
                 case MetaSyntaxKind.KNamespace: 
                     return "KNamespace";
-                case MetaSyntaxKind.TSemicolon: 
-                    return "TSemicolon";
                 case MetaSyntaxKind.KUsing: 
                     return "KUsing";
                 case MetaSyntaxKind.KMetamodel: 
@@ -548,6 +542,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "ValueAlt4";
                 case MetaSyntaxKind.ValueAlt5: 
                     return "ValueAlt5";
+                case MetaSyntaxKind.ValueAlt6: 
+                    return "ValueAlt6";
                 case MetaSyntaxKind.Name: 
                     return "Name";
                 case MetaSyntaxKind.Qualifier: 
@@ -636,8 +632,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "\u00ef\u00bb\u00bf";
                 case MetaSyntaxKind.KNamespace: 
                     return "namespace";
-                case MetaSyntaxKind.TSemicolon: 
-                    return ";";
                 case MetaSyntaxKind.KUsing: 
                     return "using";
                 case MetaSyntaxKind.KMetamodel: 

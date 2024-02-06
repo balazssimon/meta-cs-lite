@@ -692,6 +692,20 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             }
         }
 
+        public virtual void VisitValueAlt6(ValueAlt6Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Languages.MetaModel.Model.MetaEnumLiteral)));
+            this.Begin(__annot0, node.Qualifier);
+            try
+            {
+                this.Visit(node.Qualifier);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+        }
+
         public virtual void VisitName(NameSyntax node)
         {
             var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder();

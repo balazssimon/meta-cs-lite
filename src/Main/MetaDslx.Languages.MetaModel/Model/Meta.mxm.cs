@@ -742,7 +742,6 @@ namespace MetaDslx.Languages.MetaModel.Model
         }
     
     }
-    
 
 
     public interface MetaDeclaration : __IModelObject

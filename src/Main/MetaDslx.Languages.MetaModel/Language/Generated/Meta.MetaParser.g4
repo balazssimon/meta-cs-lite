@@ -6,13 +6,13 @@ options
 } 
 
 pr_Main
-    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  E_UsingList+=pr_Using*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
+    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_UsingList+=pr_Using*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
     ;
 pr_Using
-    :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier  E_TSemicolon=LR_TSemicolon
+    :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier
     ;
 pr_MetaModel
-    :  E_KMetamodel=LR_KMetamodel  E_Name=pr_Name  E_Block=pr_MetaModelBlock1?  E_TSemicolon=LR_TSemicolon
+    :  E_KMetamodel=LR_KMetamodel  E_Name=pr_Name  E_Block=pr_MetaModelBlock1?
     ;
 pr_MetaDeclaration
     :  E_MetaConstant=pr_MetaConstant #pr_MetaDeclarationAlt1
@@ -20,7 +20,7 @@ pr_MetaDeclaration
     |  E_MetaClass=pr_MetaClass #pr_MetaDeclarationAlt3
     ;
 pr_MetaConstant
-    :  E_KConst=LR_KConst  E_type=pr_MetaTypeReference  E_Name=pr_Name  E_TSemicolon=LR_TSemicolon
+    :  E_KConst=LR_KConst  E_type=pr_MetaTypeReference  E_Name=pr_Name
     ;
 pr_MetaEnum
     :  E_KEnum=LR_KEnum  E_Name=pr_Name  E_Block=pr_MetaEnumBlock1
@@ -32,10 +32,10 @@ pr_MetaClass
     :  E_isAbstract=LR_KAbstract?  E_KClass=LR_KClass  E_Block=pr_MetaClassBlock1  E_Block1=pr_MetaClassBlock2?  E_Block2=pr_MetaClassBlock3
     ;
 pr_MetaProperty
-    :  E_Block=pr_MetaPropertyBlock1?  E_type=pr_MetaTypeReference  E_Block1=pr_MetaPropertyBlock2  E_Block2=pr_MetaPropertyBlock3?  E_Block3+=pr_MetaPropertyBlock4*  E_TSemicolon=LR_TSemicolon
+    :  E_Block=pr_MetaPropertyBlock1?  E_type=pr_MetaTypeReference  E_Block1=pr_MetaPropertyBlock2  E_Block2=pr_MetaPropertyBlock3?  E_Block3+=pr_MetaPropertyBlock4*
     ;
 pr_MetaOperation
-    :  E_returnType=pr_MetaTypeReference  E_Name=pr_Name  E_TLParen=LR_TLParen  E_Block=pr_MetaOperationBlock1?  E_TRParen=LR_TRParen  E_TSemicolon=LR_TSemicolon
+    :  E_returnType=pr_MetaTypeReference  E_Name=pr_Name  E_TLParen=LR_TLParen  E_Block=pr_MetaOperationBlock1?  E_TRParen=LR_TRParen
     ;
 pr_MetaParameter
     :  E_type=pr_MetaTypeReference  E_Name=pr_Name
@@ -58,6 +58,7 @@ pr_Value
     |  E_TDecimal=LR_TDecimal #pr_ValueAlt3
     |  E_TBoolean=pr_TBoolean #pr_ValueAlt4
     |  E_KNull=LR_KNull #pr_ValueAlt5
+    |  E_Qualifier=pr_Qualifier #pr_ValueAlt6
     ;
 pr_Name
     :  E_Identifier=pr_Identifier

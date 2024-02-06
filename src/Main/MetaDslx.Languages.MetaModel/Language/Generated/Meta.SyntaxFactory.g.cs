@@ -249,52 +249,46 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return new __SyntaxToken(MetaLanguage.Instance.InternalSyntaxFactory.TInvalidToken(text, value));
         }
 
-        public MainSyntax Main(__SyntaxToken kNamespace, QualifierSyntax qualifier, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
+        public MainSyntax Main(__SyntaxToken kNamespace, QualifierSyntax qualifier, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
         {
             if (kNamespace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kNamespace));
             if (kNamespace.RawKind != (int)MetaSyntaxKind.KNamespace) throw new __ArgumentException(nameof(kNamespace));
             if (qualifier is null) throw new __ArgumentNullException(nameof(qualifier));
-            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
-            if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             if (block is null) throw new __ArgumentNullException(nameof(block));
             if (endOfFileToken.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(endOfFileToken));
             if (endOfFileToken.RawKind != (int)__InternalSyntaxKind.Eof) throw new __ArgumentException(nameof(endOfFileToken));
-            return (MainSyntax)MetaLanguage.Instance.InternalSyntaxFactory.Main((__InternalSyntaxToken)kNamespace.Node, (InternalSyntax.QualifierGreen)qualifier.Green, (__InternalSyntaxToken)tSemicolon.Node, __GreenNodeExtensions.ToGreenList<InternalSyntax.UsingGreen>(usingList.Node), (InternalSyntax.MainBlock1Green)block.Green, (__InternalSyntaxToken)endOfFileToken.Node).CreateRed();
+            return (MainSyntax)MetaLanguage.Instance.InternalSyntaxFactory.Main((__InternalSyntaxToken)kNamespace.Node, (InternalSyntax.QualifierGreen)qualifier.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.UsingGreen>(usingList.Node), (InternalSyntax.MainBlock1Green)block.Green, (__InternalSyntaxToken)endOfFileToken.Node).CreateRed();
         }
         
         public MainSyntax Main(QualifierSyntax qualifier, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
         {
-            return this.Main(this.Token(MetaSyntaxKind.KNamespace), qualifier, this.Token(MetaSyntaxKind.TSemicolon), usingList, block, this.Token(MetaSyntaxKind.Eof));
+            return this.Main(this.Token(MetaSyntaxKind.KNamespace), qualifier, usingList, block, this.Token(MetaSyntaxKind.Eof));
         }
 
-        public UsingSyntax Using(__SyntaxToken kUsing, QualifierSyntax namespaces, __SyntaxToken tSemicolon)
+        public UsingSyntax Using(__SyntaxToken kUsing, QualifierSyntax namespaces)
         {
             if (kUsing.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kUsing));
             if (kUsing.RawKind != (int)MetaSyntaxKind.KUsing) throw new __ArgumentException(nameof(kUsing));
             if (namespaces is null) throw new __ArgumentNullException(nameof(namespaces));
-            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
-            if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
-            return (UsingSyntax)MetaLanguage.Instance.InternalSyntaxFactory.Using((__InternalSyntaxToken)kUsing.Node, (InternalSyntax.QualifierGreen)namespaces.Green, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (UsingSyntax)MetaLanguage.Instance.InternalSyntaxFactory.Using((__InternalSyntaxToken)kUsing.Node, (InternalSyntax.QualifierGreen)namespaces.Green).CreateRed();
         }
         
         public UsingSyntax Using(QualifierSyntax namespaces)
         {
-            return this.Using(this.Token(MetaSyntaxKind.KUsing), namespaces, this.Token(MetaSyntaxKind.TSemicolon));
+            return this.Using(this.Token(MetaSyntaxKind.KUsing), namespaces);
         }
 
-        public MetaModelSyntax MetaModel(__SyntaxToken kMetamodel, NameSyntax name, MetaModelBlock1Syntax block, __SyntaxToken tSemicolon)
+        public MetaModelSyntax MetaModel(__SyntaxToken kMetamodel, NameSyntax name, MetaModelBlock1Syntax block)
         {
             if (kMetamodel.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kMetamodel));
             if (kMetamodel.RawKind != (int)MetaSyntaxKind.KMetamodel) throw new __ArgumentException(nameof(kMetamodel));
             if (name is null) throw new __ArgumentNullException(nameof(name));
-            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
-            if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
-            return (MetaModelSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaModel((__InternalSyntaxToken)kMetamodel.Node, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.MetaModelBlock1Green)block.Green, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (MetaModelSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaModel((__InternalSyntaxToken)kMetamodel.Node, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.MetaModelBlock1Green)block.Green).CreateRed();
         }
         
         public MetaModelSyntax MetaModel(NameSyntax name)
         {
-            return this.MetaModel(this.Token(MetaSyntaxKind.KMetamodel), name, default, this.Token(MetaSyntaxKind.TSemicolon));
+            return this.MetaModel(this.Token(MetaSyntaxKind.KMetamodel), name, default);
         }
 
         public MetaDeclarationAlt1Syntax MetaDeclarationAlt1(MetaConstantSyntax metaConstant)
@@ -315,20 +309,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return (MetaDeclarationAlt3Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaDeclarationAlt3((InternalSyntax.MetaClassGreen)metaClass.Green).CreateRed();
         }
 
-        public MetaConstantSyntax MetaConstant(__SyntaxToken kConst, MetaTypeReferenceSyntax type, NameSyntax name, __SyntaxToken tSemicolon)
+        public MetaConstantSyntax MetaConstant(__SyntaxToken kConst, MetaTypeReferenceSyntax type, NameSyntax name)
         {
             if (kConst.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kConst));
             if (kConst.RawKind != (int)MetaSyntaxKind.KConst) throw new __ArgumentException(nameof(kConst));
             if (type is null) throw new __ArgumentNullException(nameof(type));
             if (name is null) throw new __ArgumentNullException(nameof(name));
-            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
-            if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
-            return (MetaConstantSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaConstant((__InternalSyntaxToken)kConst.Node, (InternalSyntax.MetaTypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (MetaConstantSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaConstant((__InternalSyntaxToken)kConst.Node, (InternalSyntax.MetaTypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green).CreateRed();
         }
         
         public MetaConstantSyntax MetaConstant(MetaTypeReferenceSyntax type, NameSyntax name)
         {
-            return this.MetaConstant(this.Token(MetaSyntaxKind.KConst), type, name, this.Token(MetaSyntaxKind.TSemicolon));
+            return this.MetaConstant(this.Token(MetaSyntaxKind.KConst), type, name);
         }
 
         public MetaEnumSyntax MetaEnum(__SyntaxToken kEnum, NameSyntax name, MetaEnumBlock1Syntax block)
@@ -366,21 +358,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.MetaClass(default, this.Token(MetaSyntaxKind.KClass), block1, default, block3);
         }
 
-        public MetaPropertySyntax MetaProperty(MetaPropertyBlock1Syntax block1, MetaTypeReferenceSyntax type, MetaPropertyBlock2Syntax block2, MetaPropertyBlock3Syntax block3, global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4, __SyntaxToken tSemicolon)
+        public MetaPropertySyntax MetaProperty(MetaPropertyBlock1Syntax block1, MetaTypeReferenceSyntax type, MetaPropertyBlock2Syntax block2, MetaPropertyBlock3Syntax block3, global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4)
         {
             if (type is null) throw new __ArgumentNullException(nameof(type));
             if (block2 is null) throw new __ArgumentNullException(nameof(block2));
-            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
-            if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
-            return (MetaPropertySyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntax.MetaPropertyBlock1Green)block1.Green, (InternalSyntax.MetaTypeReferenceGreen)type.Green, (InternalSyntax.MetaPropertyBlock2Green)block2.Green, (InternalSyntax.MetaPropertyBlock3Green)block3.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.MetaPropertyBlock4Green>(block4.Node), (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (MetaPropertySyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntax.MetaPropertyBlock1Green)block1.Green, (InternalSyntax.MetaTypeReferenceGreen)type.Green, (InternalSyntax.MetaPropertyBlock2Green)block2.Green, (InternalSyntax.MetaPropertyBlock3Green)block3.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.MetaPropertyBlock4Green>(block4.Node)).CreateRed();
         }
         
         public MetaPropertySyntax MetaProperty(MetaTypeReferenceSyntax type, MetaPropertyBlock2Syntax block2, global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4)
         {
-            return this.MetaProperty(default, type, block2, default, block4, this.Token(MetaSyntaxKind.TSemicolon));
+            return this.MetaProperty(default, type, block2, default, block4);
         }
 
-        public MetaOperationSyntax MetaOperation(MetaTypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, MetaOperationBlock1Syntax block, __SyntaxToken tRParen, __SyntaxToken tSemicolon)
+        public MetaOperationSyntax MetaOperation(MetaTypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, MetaOperationBlock1Syntax block, __SyntaxToken tRParen)
         {
             if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
             if (name is null) throw new __ArgumentNullException(nameof(name));
@@ -388,14 +378,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             if (tLParen.RawKind != (int)MetaSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
             if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
             if (tRParen.RawKind != (int)MetaSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
-            if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
-            return (MetaOperationSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaOperation((InternalSyntax.MetaTypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.MetaOperationBlock1Green)block.Green, (__InternalSyntaxToken)tRParen.Node, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (MetaOperationSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaOperation((InternalSyntax.MetaTypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.MetaOperationBlock1Green)block.Green, (__InternalSyntaxToken)tRParen.Node).CreateRed();
         }
         
         public MetaOperationSyntax MetaOperation(MetaTypeReferenceSyntax returnType, NameSyntax name)
         {
-            return this.MetaOperation(returnType, name, this.Token(MetaSyntaxKind.TLParen), default, this.Token(MetaSyntaxKind.TRParen), this.Token(MetaSyntaxKind.TSemicolon));
+            return this.MetaOperation(returnType, name, this.Token(MetaSyntaxKind.TLParen), default, this.Token(MetaSyntaxKind.TRParen));
         }
 
         public MetaParameterSyntax MetaParameter(MetaTypeReferenceSyntax type, NameSyntax name)
@@ -495,6 +483,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public ValueAlt5Syntax ValueAlt5()
         {
             return this.ValueAlt5(this.Token(MetaSyntaxKind.KNull));
+        }
+
+        public ValueAlt6Syntax ValueAlt6(QualifierSyntax qualifier)
+        {
+            if (qualifier is null) throw new __ArgumentNullException(nameof(qualifier));
+            return (ValueAlt6Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ValueAlt6((InternalSyntax.QualifierGreen)qualifier.Green).CreateRed();
         }
 
         public NameSyntax Name(IdentifierSyntax identifier)
@@ -852,6 +846,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 typeof(ValueAlt3Syntax),
                 typeof(ValueAlt4Syntax),
                 typeof(ValueAlt5Syntax),
+                typeof(ValueAlt6Syntax),
                 typeof(NameSyntax),
                 typeof(QualifierSyntax),
                 typeof(IdentifierSyntax),

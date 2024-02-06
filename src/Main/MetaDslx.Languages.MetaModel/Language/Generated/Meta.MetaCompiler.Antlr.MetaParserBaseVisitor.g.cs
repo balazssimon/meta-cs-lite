@@ -289,6 +289,17 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_ValueAlt5([NotNull] MetaParser.Pr_ValueAlt5Context context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt6</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_ValueAlt6([NotNull] MetaParser.Pr_ValueAlt6Context context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_Name"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>

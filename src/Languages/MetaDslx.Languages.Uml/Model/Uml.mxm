@@ -487,7 +487,7 @@ abstract class ActivityGroup : NamedElement
     /// <summary>
     /// Other ActivityGroups immediately contained in this ActivityGroup.
     /// </summary>
-    contains union ActivityGroup[] Subgroup
+    contains ActivityGroup[] Subgroup
         subsets Element.OwnedElement
         opposite ActivityGroup.SuperGroup
 
@@ -1918,7 +1918,7 @@ abstract class EncapsulatedClassifier : StructuredClassifier
     /// The Ports owned by the EncapsulatedClassifier.
     /// </summary>
     // spec:
-    contains derived Port[] OwnedPort
+    contains Port[] OwnedPort
         subsets StructuredClassifier.OwnedAttribute
         // opposite Port.EncapsulatedClassifier
 
@@ -2981,7 +2981,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// References the packaged elements that are Packages.
     /// </summary>
     // spec:
-    contains derived Package[] NestedPackage
+    contains Package[] NestedPackage
         subsets Package.PackagedElement
         opposite Package.NestingPackage
 
@@ -2996,7 +2996,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// References the Stereotypes that are owned by the Package.
     /// </summary>
     // spec:
-    contains derived Stereotype[] OwnedStereotype
+    contains Stereotype[] OwnedStereotype
         subsets Package.PackagedElement
         // opposite Stereotype.OwningPackage
 
@@ -3004,7 +3004,7 @@ class Package : PackageableElement, TemplateableElement, Namespace
     /// References the packaged elements that are Types.
     /// </summary>
     // spec:
-    contains derived Type[] OwnedType
+    contains Type[] OwnedType
         subsets Package.PackagedElement
         opposite Type.Package
 
@@ -4147,7 +4147,7 @@ abstract class Element{
     /// <summary>
     /// The Elements owned by this Element.
     /// </summary>
-    contains union Element[] OwnedElement
+    contains Element[] OwnedElement
         opposite Element.Owner
 
     /// <summary>
@@ -4431,7 +4431,7 @@ abstract class Namespace : NamedElement
     /// <summary>
     /// A collection of NamedElements owned by the Namespace.
     /// </summary>
-    contains union NamedElement[] OwnedMember
+    contains NamedElement[] OwnedMember
         subsets Element.OwnedElement
         subsets Namespace.Member
         opposite NamedElement.Namespace
@@ -6182,7 +6182,7 @@ abstract class Action : ExecutableNode
     /// <summary>
     /// The ordered set of InputPins representing the inputs to the Action.
     /// </summary>
-    contains union InputPin[] Input
+    contains InputPin[] Input
         subsets Element.OwnedElement
         // opposite InputPin.Action
 
@@ -6208,7 +6208,7 @@ abstract class Action : ExecutableNode
     /// <summary>
     /// The ordered set of OutputPins representing outputs from the Action.
     /// </summary>
-    contains union OutputPin[] Output
+    contains OutputPin[] Output
         subsets Element.OwnedElement
         // opposite OutputPin.Action
 

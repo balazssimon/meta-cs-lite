@@ -43,7 +43,8 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
-            @"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
+            //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
+            @"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
 #endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
@@ -145,7 +146,7 @@ namespace MetaDslx.BuildTools
                 {
                     await CompileMetaGenerator(mxgFile);
                 }
-                /*/
+                //*/
                 var compilation = await project.GetCompilationAsync() as CSharpCompilation;
                 if (compilation is not null)
                 {

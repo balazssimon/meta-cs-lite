@@ -28,6 +28,20 @@ namespace MetaDslx.Languages.Mof.Generator
         public IEnumerable<Class> Classes => _model.Objects.OfType<Class>();
         public IEnumerable<Association> Associations => _model.Objects.OfType<Association>();
 
+        public ImmutableArray<Property> GetAssociationProperties(Class cls)
+        {
+            return ImmutableArray<Property>.Empty;
+            /*var result = ArrayBuilder<Property>.GetInstance();
+            foreach (var assoc in Associations.Where(a => a.MemberEnd.Any(e => e.Type == cls)))
+            {
+                foreach (var prop in assoc.MemberEnd.Where(e => e.Type != cls))
+                {
+                    if (!result.Contains(prop)) result.Add(prop);
+                }
+            }
+            return result.ToImmutableAndFree();*/
+        }
+
         public string GenerateDefaultValue(Property property)
         {
             if (property.IsDerived || property.IsDerivedUnion) return string.Empty;

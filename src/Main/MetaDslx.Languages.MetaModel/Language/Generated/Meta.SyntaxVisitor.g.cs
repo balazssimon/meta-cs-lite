@@ -41,6 +41,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         void VisitValueAlt3(ValueAlt3Syntax node);
         void VisitValueAlt4(ValueAlt4Syntax node);
         void VisitValueAlt5(ValueAlt5Syntax node);
+        void VisitValueAlt6(ValueAlt6Syntax node);
         void VisitName(NameSyntax node);
         void VisitQualifier(QualifierSyntax node);
         void VisitIdentifier(IdentifierSyntax node);
@@ -197,6 +198,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual void VisitValueAlt5(ValueAlt5Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitValueAlt6(ValueAlt6Syntax node)
         {
             this.DefaultVisit(node);
         }
@@ -385,6 +391,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitValueAlt3(ValueAlt3Syntax node);
         TResult VisitValueAlt4(ValueAlt4Syntax node);
         TResult VisitValueAlt5(ValueAlt5Syntax node);
+        TResult VisitValueAlt6(ValueAlt6Syntax node);
         TResult VisitName(NameSyntax node);
         TResult VisitQualifier(QualifierSyntax node);
         TResult VisitIdentifier(IdentifierSyntax node);
@@ -541,6 +548,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual TResult VisitValueAlt5(ValueAlt5Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitValueAlt6(ValueAlt6Syntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -729,6 +741,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitValueAlt3(ValueAlt3Syntax node, TArg argument);
         TResult VisitValueAlt4(ValueAlt4Syntax node, TArg argument);
         TResult VisitValueAlt5(ValueAlt5Syntax node, TArg argument);
+        TResult VisitValueAlt6(ValueAlt6Syntax node, TArg argument);
         TResult VisitName(NameSyntax node, TArg argument);
         TResult VisitQualifier(QualifierSyntax node, TArg argument);
         TResult VisitIdentifier(IdentifierSyntax node, TArg argument);
@@ -885,6 +898,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual TResult VisitValueAlt5(ValueAlt5Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitValueAlt6(ValueAlt6Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -1063,19 +1081,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             var kNamespace = this.VisitToken(node.KNamespace);
             var qualifier = (QualifierSyntax)this.Visit(node.Qualifier);
-            var tSemicolon = this.VisitToken(node.TSemicolon);
             var usingList = this.VisitList(node.UsingList);
             var block = (MainBlock1Syntax)this.Visit(node.Block);
             var endOfFileToken = this.VisitToken(node.EndOfFileToken);
-            return node.Update(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
+            return node.Update(kNamespace, qualifier, usingList, block, endOfFileToken);
         }
 
         public virtual SyntaxNode VisitUsing(UsingSyntax node)
         {
             var kUsing = this.VisitToken(node.KUsing);
             var namespaces = (QualifierSyntax)this.Visit(node.Namespaces);
-            var tSemicolon = this.VisitToken(node.TSemicolon);
-            return node.Update(kUsing, namespaces, tSemicolon);
+            return node.Update(kUsing, namespaces);
         }
 
         public virtual SyntaxNode VisitMetaModel(MetaModelSyntax node)
@@ -1083,8 +1099,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var kMetamodel = this.VisitToken(node.KMetamodel);
             var name = (NameSyntax)this.Visit(node.Name);
             var block = (MetaModelBlock1Syntax)this.Visit(node.Block);
-            var tSemicolon = this.VisitToken(node.TSemicolon);
-            return node.Update(kMetamodel, name, block, tSemicolon);
+            return node.Update(kMetamodel, name, block);
         }
 
         public virtual SyntaxNode VisitMetaDeclarationAlt1(MetaDeclarationAlt1Syntax node)
@@ -1110,8 +1125,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var kConst = this.VisitToken(node.KConst);
             var type = (MetaTypeReferenceSyntax)this.Visit(node.Type);
             var name = (NameSyntax)this.Visit(node.Name);
-            var tSemicolon = this.VisitToken(node.TSemicolon);
-            return node.Update(kConst, type, name, tSemicolon);
+            return node.Update(kConst, type, name);
         }
 
         public virtual SyntaxNode VisitMetaEnum(MetaEnumSyntax node)
@@ -1145,8 +1159,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var block2 = (MetaPropertyBlock2Syntax)this.Visit(node.Block2);
             var block3 = (MetaPropertyBlock3Syntax)this.Visit(node.Block3);
             var block4 = this.VisitList(node.Block4);
-            var tSemicolon = this.VisitToken(node.TSemicolon);
-            return node.Update(block1, type, block2, block3, block4, tSemicolon);
+            return node.Update(block1, type, block2, block3, block4);
         }
 
         public virtual SyntaxNode VisitMetaOperation(MetaOperationSyntax node)
@@ -1156,8 +1169,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var tLParen = this.VisitToken(node.TLParen);
             var block = (MetaOperationBlock1Syntax)this.Visit(node.Block);
             var tRParen = this.VisitToken(node.TRParen);
-            var tSemicolon = this.VisitToken(node.TSemicolon);
-            return node.Update(returnType, name, tLParen, block, tRParen, tSemicolon);
+            return node.Update(returnType, name, tLParen, block, tRParen);
         }
 
         public virtual SyntaxNode VisitMetaParameter(MetaParameterSyntax node)
@@ -1234,6 +1246,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             var kNull = this.VisitToken(node.KNull);
             return node.Update(kNull);
+        }
+
+        public virtual SyntaxNode VisitValueAlt6(ValueAlt6Syntax node)
+        {
+            var qualifier = (QualifierSyntax)this.Visit(node.Qualifier);
+            return node.Update(qualifier);
         }
 
         public virtual SyntaxNode VisitName(NameSyntax node)

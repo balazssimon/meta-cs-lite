@@ -190,6 +190,13 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_ValueAlt5([NotNull] MetaParser.Pr_ValueAlt5Context context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ValueAlt6</c>
+	/// labeled alternative in <see cref="MetaParser.pr_Value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ValueAlt6([NotNull] MetaParser.Pr_ValueAlt6Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_Name"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

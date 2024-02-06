@@ -47,7 +47,11 @@ template GenerateClass(Class cls)
     {
         [foreach (var prop in cls.OwnedAttribute)]
 
-            [GenerateProperty(prop)]
+            [GenerateProperty(prop, false)]
+        [end foreach]
+        [foreach (var prop in GetAssociationProperties(cls))]
+
+            [GenerateProperty(prop, true)]
         [end foreach]
         [foreach (var op in cls.OwnedOperation)]
 
@@ -56,12 +60,12 @@ template GenerateClass(Class cls)
     }
 end template
 
-template GenerateProperty(Property prop)
+template GenerateProperty(Property prop, bool comment)
     [GenerateComment(prop)]
-    [GenerateContainment(prop)][GenerateModifiers(prop)][GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()][GenerateDefaultValue(prop)]
-        [GenerateRedefines(prop)]
-        [GenerateSubsets(prop)]
-        [GenerateOpposite(prop)]
+    [comment ? "// " : ""][GenerateContainment(prop)][GenerateModifiers(prop)][GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()][GenerateDefaultValue(prop)]
+        [comment ? "// " : ""][GenerateRedefines(prop)]
+        [comment ? "// " : ""][GenerateSubsets(prop)]
+        [comment ? "// " : ""][GenerateOpposite(prop)]
 end template
 
 template GenerateContainment(Property prop)
@@ -82,8 +86,8 @@ end template
 
 template GenerateRedefines(Property prop)
     [foreach (var rprop in prop.RedefinedProperty)]
-        [if (rprop?.Class is not null)]
-            redefines [rprop.Class.Name].[rprop.Name.ToPascalCase()]
+        [if (rprop?.Owner is NamedElement owner)]
+            redefines [owner.Name].[rprop.Name.ToPascalCase()]
         [else]
             // redefined property '[rprop.MId]' is null
         [end if]
@@ -92,8 +96,8 @@ end template
 
 template GenerateSubsets(Property prop)
     [foreach (var sprop in prop.SubsettedProperty)]
-        [if (sprop?.Class is not null)]
-            redefines [sprop.Class.Name].[sprop.Name.ToPascalCase()]
+        [if (sprop?.Owner is NamedElement owner)]
+            subsets [owner.Name].[sprop.Name.ToPascalCase()]
         [else]
             // subsetted property '[sprop.MId]' is null
         [end if]
@@ -102,19 +106,21 @@ end template
 
 template GenerateOpposite(Property prop)
     [foreach (var assoc in prop.Association)]
-        [if (assoc.MemberEnd.Count == 2 && assoc.OwnedEnd.Count == 0)]
+        [if (assoc.MemberEnd.Count == 2)]
             [GenerateComment(assoc)]
             [var first = assoc.MemberEnd[0]]
             [var second = assoc.MemberEnd[1]]
             [if (first == prop)]
-                [if (first?.Class is not null)]
-                    [if (assoc.OwnedEnd.Count > 0)]// [end if]opposite [first.Class.Name].[second.Name.ToPascalCase()]
+                [var owner = first?.Type]
+                [if (owner is not null)]
+                    [if (assoc.OwnedEnd.Count > 0)]// [end if]opposite [owner.Name].[second.Name.ToPascalCase()]
                 [else]
                     // opposite is null in '[assoc.MId]'
                 [end if]
             [else if (second == prop)]
-                [if (second?.Class is not null)]
-                    [if (assoc.OwnedEnd.Count > 0)]// [end if]opposite [second.Class.Name].[first.Name.ToPascalCase()]
+                [var owner = second?.Type]
+                [if (owner is not null)]
+                    [if (assoc.OwnedEnd.Count > 0)]// [end if]opposite [owner.Name].[first.Name.ToPascalCase()]
                 [else]
                     // opposite is null in '[assoc.MId]'
                 [end if]
