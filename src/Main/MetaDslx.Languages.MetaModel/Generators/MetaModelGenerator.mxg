@@ -176,7 +176,7 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
         [foreach (var cls in Classes)]
             [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
             [foreach (var prop in metaCls.DeclaredProperties)]
-                _[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), [ToCSharpValue(prop.Type, prop.DefaultValue)], [ToCSharp(prop.Flags)], [if(prop.SymbolProperty is null)]null[else]"[prop.SymbolProperty]"[end if]);
+                _[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), [ToDefaultValue(prop.Type, prop.DefaultValue)], [ToCSharp(prop.Flags)], [if(prop.SymbolProperty is null)]null[else]"[prop.SymbolProperty]"[end if]);
             [end foreach]
             [foreach (var op in metaCls.DeclaredOperations)]
                 _[cls.Name]_[op.Name] = new __ModelOperation(typeof([cls.Name]), "[op.Name]", "[op.Name]([op.UnderlyingOperation.Parameters.Count])");
@@ -395,9 +395,9 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
         : base(id)
     {
         [foreach (var slot in metaCls.Slots)]
-            [var defaultValue = ToCSharpValue(slot.SlotProperty.Type, slot.SlotProperty.DefaultValue)]
+            [var defaultValue = ToDefaultValue(slot.SlotProperty.Type, slot.SlotProperty.DefaultValue)]
             [if (!string.IsNullOrEmpty(defaultValue) && defaultValue != "default")]
-                ((__IModelObject)this).MGetSlot([ToCSharp(slot.SlotProperty)])?.Add(([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
+                ((__IModelObject)this).MGetSlot([ToCSharp(slot.SlotProperty)])?.Add(([ToCSharp(slot.SlotProperty.Type)])[defaultValue]);
             [end if]
         [end foreach]
         [foreach (var baseType in metaCls.AllBaseTypes.Reverse())]
@@ -470,7 +470,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
             [foreach (var prop in metaCls.AllDeclaredProperties)]
                 [var info = metaCls.ModelPropertyInfos[prop]]
                 [var slot = info.Slot]
-                modelPropertyInfos.Add([ToCSharp(prop)], new __ModelPropertyInfo(new __ModelPropertySlot([ToCSharp(slot.SlotProperty)], [ToCSharp(slot.SlotProperties)], [ToCSharpValue(prop.Type, prop.DefaultValue)], [ToCSharp(slot.Flags)]), [ToCSharp(info.OppositeProperties)], [ToCSharp(info.SubsettedProperties)], [ToCSharp(info.SubsettingProperties)], [ToCSharp(info.RedefinedProperties)], [ToCSharp(info.RedefiningProperties)], [ToCSharp(info.HiddenProperties)], [ToCSharp(info.HidingProperties)]));
+                modelPropertyInfos.Add([ToCSharp(prop)], new __ModelPropertyInfo(new __ModelPropertySlot([ToCSharp(slot.SlotProperty)], [ToCSharp(slot.SlotProperties)], [ToDefaultValue(prop.Type, prop.DefaultValue)], [ToCSharp(slot.Flags)]), [ToCSharp(info.OppositeProperties)], [ToCSharp(info.SubsettedProperties)], [ToCSharp(info.SubsettingProperties)], [ToCSharp(info.RedefinedProperties)], [ToCSharp(info.RedefiningProperties)], [ToCSharp(info.HiddenProperties)], [ToCSharp(info.HidingProperties)]));
             [end foreach]
             _modelPropertyInfos = modelPropertyInfos.ToImmutable();
 

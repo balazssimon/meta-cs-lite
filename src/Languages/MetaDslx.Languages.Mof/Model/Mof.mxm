@@ -44,7 +44,7 @@ abstract class NamedElement $Declaration : Element
 {
 	string $Name
 	derived string QualifiedName
-	VisibilityKind Visibility
+	VisibilityKind Visibility = VisibilityKind.Public
 	Namespace Namespace opposite Namespace.OwnedMember
 	derived Namespace MemberNamespace opposite Namespace.Member
 }

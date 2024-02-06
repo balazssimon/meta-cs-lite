@@ -232,6 +232,11 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 var symbolValue = value.ToString();
                 if (value.GetType() == typeof(bool)) symbolValue = symbolValue.ToLower();
                 if (value.GetType() == typeof(string)) symbolValue = symbolValue.EncodeString();
+                if (value is MetaEnumLiteral lit2) symbolValue = $"{lit2.MParent?.MName}.{lit2.MName}";
+                if (value is Symbol)
+                {
+                    return GetName(value);
+                }
                 return $"__MetaSymbol.FromValue({symbolValue})";
             }
             var type = value.GetType();
@@ -239,6 +244,34 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type == typeof(string)) return value.ToString().EncodeString();
             if (type.IsPrimitive) return value.ToString();
             return GetName(value);
+        }
+
+        public string ToDefaultValue(MetaDslx.CodeAnalysis.MetaType propertyType, object? value)
+        {
+            if (propertyType == typeof(MetaDslx.CodeAnalysis.MetaSymbol))
+            {
+                string? symbolValue = null;
+                if (value is MetaEnumLiteral lit2)
+                {
+                    symbolValue = $"{lit2.MParent?.MName}.{lit2.MName}";
+                }
+                if (value is DeclarationSymbol sym2)
+                {
+                    var fullName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(sym2);
+                    return fullName;
+                }
+                if (symbolValue is not null)
+                {
+                    return $"__MetaSymbol.FromValue({symbolValue})";
+                }
+            }
+            if (value is MetaEnumLiteral lit) return $"{lit.MParent?.MName}.{lit.MName}";
+            if (value is DeclarationSymbol sym)
+            {
+                var fullName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(sym);
+                return fullName;
+            }
+            return ToCSharpValue(propertyType, value);
         }
 
         private string PrimitiveTypeToString(string type)

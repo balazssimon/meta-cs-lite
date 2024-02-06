@@ -42,10 +42,10 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
-            //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
+            @"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
 #endif
         ];
