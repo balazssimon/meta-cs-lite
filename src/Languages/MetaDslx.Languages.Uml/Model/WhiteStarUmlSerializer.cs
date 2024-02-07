@@ -10,6 +10,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using MetaDslx.CodeAnalysis.Text;
+using Roslyn.Utilities;
 
 namespace MetaDslx.Languages.Uml.Model
 {
@@ -110,22 +111,22 @@ namespace MetaDslx.Languages.Uml.Model
 
         internal void AddError(XObject location, string message)
         {
-            _diagnostics.Add(ModelErrorCode.ERR_ImportError.ToDiagnostic(GetLocation(location), message));
+            _diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_ImportError, GetLocation(location), message));
         }
 
         internal void AddError(XObject location, ModelException mex)
         {
-            _diagnostics.Add(ModelErrorCode.ERR_ImportError.ToDiagnostic(GetLocation(location), mex.Diagnostic.GetMessage()));
+            _diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_ImportError, GetLocation(location), mex.ToString().ToSingleLine()));
         }
 
         internal void AddWarning(XObject location, string message)
         {
-            _diagnostics.Add(ModelErrorCode.WRN_ImportWarning.ToDiagnostic(GetLocation(location), message));
+            _diagnostics.Add(Diagnostic.Create(ModelErrorCode.WRN_ImportWarning, GetLocation(location), message));
         }
 
         internal void AddWarning(XObject location, ModelException mex)
         {
-            _diagnostics.Add(ModelErrorCode.WRN_ImportWarning.ToDiagnostic(GetLocation(location), mex.Diagnostic.GetMessage()));
+            _diagnostics.Add(Diagnostic.Create(ModelErrorCode.WRN_ImportWarning, GetLocation(location), mex.ToString().ToSingleLine()));
         }
 
         public void ReadModel()

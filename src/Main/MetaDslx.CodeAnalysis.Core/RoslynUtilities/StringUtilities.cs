@@ -247,5 +247,11 @@ namespace Roslyn.Utilities
             if (text is null) return null;
             else return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("'", "&apos;").Replace("\"", "&quot;");
         }
+
+        public static string? ToSingleLine(this string? text)
+        {
+            if (text is null) return null;
+            else return text.Replace("\r", " ").Replace("\n", " ");
+        }
     }
 }

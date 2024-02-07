@@ -739,9 +739,13 @@ namespace MetaDslx.Languages.Uml.Generator
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            #line (108,6)-(108,34) 13 "UmlModelToMetaModelGenerator.mxg"
+            var assoc = prop.Association;
+            #line hidden
+            
             var __first15 = true;
-            #line (108,6)-(108,45) 13 "UmlModelToMetaModelGenerator.mxg"
-            foreach (var assoc in prop.Association)
+            #line (109,6)-(109,37) 13 "UmlModelToMetaModelGenerator.mxg"
+            if (assoc.MemberEnd.Count == 2)
             #line hidden
             
             {
@@ -749,9 +753,23 @@ namespace MetaDslx.Languages.Uml.Generator
                 {
                     __first15 = false;
                 }
+                __cb.Push("");
+                #line (110,10)-(110,32) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(GenerateComment(assoc));
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                #line (111,10)-(111,40) 17 "UmlModelToMetaModelGenerator.mxg"
+                var first = assoc.MemberEnd[0];
+                #line hidden
+                
+                #line (112,10)-(112,41) 17 "UmlModelToMetaModelGenerator.mxg"
+                var second = assoc.MemberEnd[1];
+                #line hidden
+                
                 var __first16 = true;
-                #line (109,10)-(109,41) 17 "UmlModelToMetaModelGenerator.mxg"
-                if (assoc.MemberEnd.Count == 2)
+                #line (113,10)-(113,28) 17 "UmlModelToMetaModelGenerator.mxg"
+                if (first == prop)
                 #line hidden
                 
                 {
@@ -759,23 +777,13 @@ namespace MetaDslx.Languages.Uml.Generator
                     {
                         __first16 = false;
                     }
-                    __cb.Push("");
-                    #line (110,14)-(110,36) 32 "UmlModelToMetaModelGenerator.mxg"
-                    __cb.Write(GenerateComment(assoc));
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    #line (111,14)-(111,44) 21 "UmlModelToMetaModelGenerator.mxg"
-                    var first = assoc.MemberEnd[0];
-                    #line hidden
-                    
-                    #line (112,14)-(112,45) 21 "UmlModelToMetaModelGenerator.mxg"
-                    var second = assoc.MemberEnd[1];
+                    #line (114,14)-(114,37) 21 "UmlModelToMetaModelGenerator.mxg"
+                    var owner = first?.Type;
                     #line hidden
                     
                     var __first17 = true;
-                    #line (113,14)-(113,32) 21 "UmlModelToMetaModelGenerator.mxg"
-                    if (first == prop)
+                    #line (115,14)-(115,36) 21 "UmlModelToMetaModelGenerator.mxg"
+                    if (owner is not null)
                     #line hidden
                     
                     {
@@ -783,13 +791,10 @@ namespace MetaDslx.Languages.Uml.Generator
                         {
                             __first17 = false;
                         }
-                        #line (114,18)-(114,41) 25 "UmlModelToMetaModelGenerator.mxg"
-                        var owner = first?.Type;
-                        #line hidden
-                        
+                        __cb.Push("");
                         var __first18 = true;
-                        #line (115,18)-(115,40) 25 "UmlModelToMetaModelGenerator.mxg"
-                        if (owner is not null)
+                        #line (116,18)-(116,47) 25 "UmlModelToMetaModelGenerator.mxg"
+                        if (assoc.OwnedEnd.Count > 0)
                         #line hidden
                         
                         {
@@ -797,98 +802,33 @@ namespace MetaDslx.Languages.Uml.Generator
                             {
                                 __first18 = false;
                             }
-                            __cb.Push("");
-                            var __first19 = true;
-                            #line (116,22)-(116,51) 29 "UmlModelToMetaModelGenerator.mxg"
-                            if (assoc.OwnedEnd.Count > 0)
-                            #line hidden
-                            
-                            {
-                                if (__first19)
-                                {
-                                    __first19 = false;
-                                }
-                                #line (116,52)-(116,54) 45 "UmlModelToMetaModelGenerator.mxg"
-                                __cb.Write("//");
-                                #line hidden
-                                #line (116,54)-(116,55) 45 "UmlModelToMetaModelGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                            }
-                            #line (116,63)-(116,71) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("opposite");
-                            #line hidden
-                            #line (116,71)-(116,72) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (116,73)-(116,83) 40 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(owner.Name);
-                            #line hidden
-                            #line (116,84)-(116,85) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(".");
-                            #line hidden
-                            #line (116,86)-(116,112) 40 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(second.Name.ToPascalCase());
-                            #line hidden
-                            __cb.AppendLine();
-                            __cb.Pop();
-                        }
-                        #line (117,18)-(117,22) 25 "UmlModelToMetaModelGenerator.mxg"
-                        else
-                        #line hidden
-                        
-                        {
-                            if (__first18)
-                            {
-                                __first18 = false;
-                            }
-                            __cb.Push("");
-                            #line (118,21)-(118,23) 41 "UmlModelToMetaModelGenerator.mxg"
+                            #line (116,48)-(116,50) 41 "UmlModelToMetaModelGenerator.mxg"
                             __cb.Write("//");
                             #line hidden
-                            #line (118,23)-(118,24) 41 "UmlModelToMetaModelGenerator.mxg"
+                            #line (116,50)-(116,51) 41 "UmlModelToMetaModelGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (118,24)-(118,32) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("opposite");
-                            #line hidden
-                            #line (118,32)-(118,33) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (118,33)-(118,35) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("is");
-                            #line hidden
-                            #line (118,35)-(118,36) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (118,36)-(118,40) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("null");
-                            #line hidden
-                            #line (118,40)-(118,41) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (118,41)-(118,43) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("in");
-                            #line hidden
-                            #line (118,43)-(118,44) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (118,44)-(118,45) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("'");
-                            #line hidden
-                            #line (118,46)-(118,55) 40 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(assoc.MId);
-                            #line hidden
-                            #line (118,56)-(118,57) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("'");
-                            #line hidden
-                            __cb.AppendLine();
-                            __cb.Pop();
                         }
-                        if (!__first18) __cb.AppendLine();
+                        #line (116,59)-(116,67) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("opposite");
+                        #line hidden
+                        #line (116,67)-(116,68) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (116,69)-(116,79) 36 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(owner.Name);
+                        #line hidden
+                        #line (116,80)-(116,81) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(".");
+                        #line hidden
+                        #line (116,82)-(116,108) 36 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(second.Name.ToPascalCase());
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
                     }
-                    #line (120,14)-(120,38) 21 "UmlModelToMetaModelGenerator.mxg"
-                    else if (second == prop)
+                    #line (117,14)-(117,18) 21 "UmlModelToMetaModelGenerator.mxg"
+                    else
                     #line hidden
                     
                     {
@@ -896,111 +836,163 @@ namespace MetaDslx.Languages.Uml.Generator
                         {
                             __first17 = false;
                         }
-                        #line (121,18)-(121,42) 25 "UmlModelToMetaModelGenerator.mxg"
-                        var owner = second?.Type;
+                        __cb.Push("");
+                        #line (118,17)-(118,19) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("//");
                         #line hidden
-                        
-                        var __first20 = true;
-                        #line (122,18)-(122,40) 25 "UmlModelToMetaModelGenerator.mxg"
-                        if (owner is not null)
+                        #line (118,19)-(118,20) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
                         #line hidden
-                        
-                        {
-                            if (__first20)
-                            {
-                                __first20 = false;
-                            }
-                            __cb.Push("");
-                            var __first21 = true;
-                            #line (123,22)-(123,51) 29 "UmlModelToMetaModelGenerator.mxg"
-                            if (assoc.OwnedEnd.Count > 0)
-                            #line hidden
-                            
-                            {
-                                if (__first21)
-                                {
-                                    __first21 = false;
-                                }
-                                #line (123,52)-(123,54) 45 "UmlModelToMetaModelGenerator.mxg"
-                                __cb.Write("//");
-                                #line hidden
-                                #line (123,54)-(123,55) 45 "UmlModelToMetaModelGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                            }
-                            #line (123,63)-(123,71) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("opposite");
-                            #line hidden
-                            #line (123,71)-(123,72) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (123,73)-(123,83) 40 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(owner.Name);
-                            #line hidden
-                            #line (123,84)-(123,85) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(".");
-                            #line hidden
-                            #line (123,86)-(123,111) 40 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(first.Name.ToPascalCase());
-                            #line hidden
-                            __cb.AppendLine();
-                            __cb.Pop();
-                        }
-                        #line (124,18)-(124,22) 25 "UmlModelToMetaModelGenerator.mxg"
-                        else
+                        #line (118,20)-(118,28) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("opposite");
                         #line hidden
-                        
-                        {
-                            if (__first20)
-                            {
-                                __first20 = false;
-                            }
-                            __cb.Push("");
-                            #line (125,21)-(125,23) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("//");
-                            #line hidden
-                            #line (125,23)-(125,24) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (125,24)-(125,32) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("opposite");
-                            #line hidden
-                            #line (125,32)-(125,33) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (125,33)-(125,35) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("is");
-                            #line hidden
-                            #line (125,35)-(125,36) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (125,36)-(125,40) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("null");
-                            #line hidden
-                            #line (125,40)-(125,41) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (125,41)-(125,43) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("in");
-                            #line hidden
-                            #line (125,43)-(125,44) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (125,44)-(125,45) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("'");
-                            #line hidden
-                            #line (125,46)-(125,55) 40 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write(assoc.MId);
-                            #line hidden
-                            #line (125,56)-(125,57) 41 "UmlModelToMetaModelGenerator.mxg"
-                            __cb.Write("'");
-                            #line hidden
-                            __cb.AppendLine();
-                            __cb.Pop();
-                        }
-                        if (!__first20) __cb.AppendLine();
+                        #line (118,28)-(118,29) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (118,29)-(118,31) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("is");
+                        #line hidden
+                        #line (118,31)-(118,32) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (118,32)-(118,36) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("null");
+                        #line hidden
+                        #line (118,36)-(118,37) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (118,37)-(118,39) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("in");
+                        #line hidden
+                        #line (118,39)-(118,40) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (118,40)-(118,41) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("'");
+                        #line hidden
+                        #line (118,42)-(118,51) 36 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(assoc.MId);
+                        #line hidden
+                        #line (118,52)-(118,53) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("'");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
                     }
                     if (!__first17) __cb.AppendLine();
+                }
+                #line (120,10)-(120,34) 17 "UmlModelToMetaModelGenerator.mxg"
+                else if (second == prop)
+                #line hidden
+                
+                {
+                    if (__first16)
+                    {
+                        __first16 = false;
+                    }
+                    #line (121,14)-(121,38) 21 "UmlModelToMetaModelGenerator.mxg"
+                    var owner = second?.Type;
+                    #line hidden
+                    
+                    var __first19 = true;
+                    #line (122,14)-(122,36) 21 "UmlModelToMetaModelGenerator.mxg"
+                    if (owner is not null)
+                    #line hidden
+                    
+                    {
+                        if (__first19)
+                        {
+                            __first19 = false;
+                        }
+                        __cb.Push("");
+                        var __first20 = true;
+                        #line (123,18)-(123,47) 25 "UmlModelToMetaModelGenerator.mxg"
+                        if (assoc.OwnedEnd.Count > 0)
+                        #line hidden
+                        
+                        {
+                            if (__first20)
+                            {
+                                __first20 = false;
+                            }
+                            #line (123,48)-(123,50) 41 "UmlModelToMetaModelGenerator.mxg"
+                            __cb.Write("//");
+                            #line hidden
+                            #line (123,50)-(123,51) 41 "UmlModelToMetaModelGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                        }
+                        #line (123,59)-(123,67) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("opposite");
+                        #line hidden
+                        #line (123,67)-(123,68) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (123,69)-(123,79) 36 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(owner.Name);
+                        #line hidden
+                        #line (123,80)-(123,81) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(".");
+                        #line hidden
+                        #line (123,82)-(123,107) 36 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(first.Name.ToPascalCase());
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    #line (124,14)-(124,18) 21 "UmlModelToMetaModelGenerator.mxg"
+                    else
+                    #line hidden
+                    
+                    {
+                        if (__first19)
+                        {
+                            __first19 = false;
+                        }
+                        __cb.Push("");
+                        #line (125,17)-(125,19) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("//");
+                        #line hidden
+                        #line (125,19)-(125,20) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (125,20)-(125,28) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("opposite");
+                        #line hidden
+                        #line (125,28)-(125,29) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (125,29)-(125,31) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("is");
+                        #line hidden
+                        #line (125,31)-(125,32) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (125,32)-(125,36) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("null");
+                        #line hidden
+                        #line (125,36)-(125,37) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (125,37)-(125,39) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("in");
+                        #line hidden
+                        #line (125,39)-(125,40) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (125,40)-(125,41) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("'");
+                        #line hidden
+                        #line (125,42)-(125,51) 36 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write(assoc.MId);
+                        #line hidden
+                        #line (125,52)-(125,53) 37 "UmlModelToMetaModelGenerator.mxg"
+                        __cb.Write("'");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    if (!__first19) __cb.AppendLine();
                 }
                 if (!__first16) __cb.AppendLine();
             }
@@ -1008,14 +1000,65 @@ namespace MetaDslx.Languages.Uml.Generator
             return __cb.ToStringAndFree();
         }
         
-        #line (132,9)-(132,41) 22 "UmlModelToMetaModelGenerator.mxg"
+        #line (131,9)-(131,41) 22 "UmlModelToMetaModelGenerator.mxg"
         public string GenerateOperation(Operation op)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first22 = true;
-            #line (133,6)-(133,40) 13 "UmlModelToMetaModelGenerator.mxg"
+            var __first21 = true;
+            #line (132,6)-(132,40) 13 "UmlModelToMetaModelGenerator.mxg"
             if (!IsPropertyImplementation(op))
+            #line hidden
+            
+            {
+                if (__first21)
+                {
+                    __first21 = false;
+                }
+                __cb.Push("");
+                #line (133,10)-(133,29) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(GenerateComment(op));
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                __cb.Push("");
+                #line (134,10)-(134,32) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(GenerateReturnType(op));
+                #line hidden
+                #line (134,33)-(134,34) 29 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (134,35)-(134,57) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(op.Name.ToPascalCase());
+                #line hidden
+                #line (134,58)-(134,59) 29 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write("(");
+                #line hidden
+                #line (134,60)-(134,78) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(GenerateParams(op));
+                #line hidden
+                #line (134,79)-(134,80) 29 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(")");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+            }
+            if (!__first21) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (138,9)-(138,42) 22 "UmlModelToMetaModelGenerator.mxg"
+        public string GenerateReturnType(Operation op)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            #line (139,6)-(139,115) 13 "UmlModelToMetaModelGenerator.mxg"
+            var returnParam = op.OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return).FirstOrDefault();
+            #line hidden
+            
+            var __first22 = true;
+            #line (140,6)-(140,34) 13 "UmlModelToMetaModelGenerator.mxg"
+            if (returnParam is not null)
             #line hidden
             
             {
@@ -1024,29 +1067,24 @@ namespace MetaDslx.Languages.Uml.Generator
                     __first22 = false;
                 }
                 __cb.Push("");
-                #line (134,10)-(134,29) 28 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(GenerateComment(op));
+                #line (141,10)-(141,53) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(GenerateType(returnParam, returnParam.Type));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
+            }
+            #line (142,6)-(142,10) 13 "UmlModelToMetaModelGenerator.mxg"
+            else
+            #line hidden
+            
+            {
+                if (__first22)
+                {
+                    __first22 = false;
+                }
                 __cb.Push("");
-                #line (135,10)-(135,32) 28 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(GenerateReturnType(op));
-                #line hidden
-                #line (135,33)-(135,34) 29 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (135,35)-(135,57) 28 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(op.Name.ToPascalCase());
-                #line hidden
-                #line (135,58)-(135,59) 29 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write("(");
-                #line hidden
-                #line (135,60)-(135,78) 28 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(GenerateParams(op));
-                #line hidden
-                #line (135,79)-(135,80) 29 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(")");
+                #line (143,9)-(143,13) 29 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write("void");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
@@ -1055,18 +1093,15 @@ namespace MetaDslx.Languages.Uml.Generator
             return __cb.ToStringAndFree();
         }
         
-        #line (139,9)-(139,42) 22 "UmlModelToMetaModelGenerator.mxg"
-        public string GenerateReturnType(Operation op)
+        #line (147,9)-(147,38) 22 "UmlModelToMetaModelGenerator.mxg"
+        public string GenerateParams(Operation op)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (140,6)-(140,115) 13 "UmlModelToMetaModelGenerator.mxg"
-            var returnParam = op.OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return).FirstOrDefault();
-            #line hidden
-            
+            __cb.SingleLineMode = true;
             var __first23 = true;
-            #line (141,6)-(141,34) 13 "UmlModelToMetaModelGenerator.mxg"
-            if (returnParam is not null)
+            #line (149,6)-(149,104) 13 "UmlModelToMetaModelGenerator.mxg"
+            foreach (var param in op.OwnedParameter.Where(p => p.Direction != ParameterDirectionKind.Return)) 
             #line hidden
             
             {
@@ -1074,25 +1109,25 @@ namespace MetaDslx.Languages.Uml.Generator
                 {
                     __first23 = false;
                 }
+                else
+                {
+                    __cb.Push("");
+                    __cb.DontIgnoreLastLineEnd = true;
+                    #line (149,114)-(149,118) 32 "UmlModelToMetaModelGenerator.mxg"
+                    __cb.Write(", ");
+                    #line hidden
+                    __cb.DontIgnoreLastLineEnd = false;
+                    __cb.Pop();
+                }
                 __cb.Push("");
-                #line (142,10)-(142,53) 28 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(GenerateType(returnParam, returnParam.Type));
+                #line (150,10)-(150,41) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(GenerateType(param, param.Type));
                 #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-            }
-            #line (143,6)-(143,10) 13 "UmlModelToMetaModelGenerator.mxg"
-            else
-            #line hidden
-            
-            {
-                if (__first23)
-                {
-                    __first23 = false;
-                }
-                __cb.Push("");
-                #line (144,9)-(144,13) 29 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write("void");
+                #line (150,42)-(150,43) 29 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (150,44)-(150,54) 28 "UmlModelToMetaModelGenerator.mxg"
+                __cb.Write(param.Name);
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
@@ -1101,15 +1136,18 @@ namespace MetaDslx.Languages.Uml.Generator
             return __cb.ToStringAndFree();
         }
         
-        #line (148,9)-(148,38) 22 "UmlModelToMetaModelGenerator.mxg"
-        public string GenerateParams(Operation op)
+        #line (154,9)-(154,39) 22 "UmlModelToMetaModelGenerator.mxg"
+        public string GenerateComment(Element elem)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.SingleLineMode = true;
+            #line (155,6)-(155,42) 13 "UmlModelToMetaModelGenerator.mxg"
+            var lines = CommentLines(elem, true);
+            #line hidden
+            
             var __first24 = true;
-            #line (150,6)-(150,104) 13 "UmlModelToMetaModelGenerator.mxg"
-            foreach (var param in op.OwnedParameter.Where(p => p.Direction != ParameterDirectionKind.Return)) 
+            #line (156,6)-(156,27) 13 "UmlModelToMetaModelGenerator.mxg"
+            if (lines.Length > 0)
             #line hidden
             
             {
@@ -1117,431 +1155,397 @@ namespace MetaDslx.Languages.Uml.Generator
                 {
                     __first24 = false;
                 }
-                else
-                {
-                    __cb.Push("");
-                    __cb.DontIgnoreLastLineEnd = true;
-                    #line (150,114)-(150,118) 32 "UmlModelToMetaModelGenerator.mxg"
-                    __cb.Write(", ");
-                    #line hidden
-                    __cb.DontIgnoreLastLineEnd = false;
-                    __cb.Pop();
-                }
                 __cb.Push("");
-                #line (151,10)-(151,41) 28 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(GenerateType(param, param.Type));
-                #line hidden
-                #line (151,42)-(151,43) 29 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (151,44)-(151,54) 28 "UmlModelToMetaModelGenerator.mxg"
-                __cb.Write(param.Name);
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-            }
-            if (!__first24) __cb.AppendLine();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (155,9)-(155,39) 22 "UmlModelToMetaModelGenerator.mxg"
-        public string GenerateComment(Element elem)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (156,6)-(156,42) 13 "UmlModelToMetaModelGenerator.mxg"
-            var lines = CommentLines(elem, true);
-            #line hidden
-            
-            var __first25 = true;
-            #line (157,6)-(157,27) 13 "UmlModelToMetaModelGenerator.mxg"
-            if (lines.Length > 0)
-            #line hidden
-            
-            {
-                if (__first25)
-                {
-                    __first25 = false;
-                }
-                __cb.Push("");
-                #line (158,9)-(158,12) 29 "UmlModelToMetaModelGenerator.mxg"
+                #line (157,9)-(157,12) 29 "UmlModelToMetaModelGenerator.mxg"
                 __cb.Write("///");
                 #line hidden
-                #line (158,12)-(158,13) 29 "UmlModelToMetaModelGenerator.mxg"
+                #line (157,12)-(157,13) 29 "UmlModelToMetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (158,13)-(158,22) 29 "UmlModelToMetaModelGenerator.mxg"
+                #line (157,13)-(157,22) 29 "UmlModelToMetaModelGenerator.mxg"
                 __cb.Write("<summary>");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
-                var __first26 = true;
-                #line (159,10)-(159,37) 17 "UmlModelToMetaModelGenerator.mxg"
+                var __first25 = true;
+                #line (158,10)-(158,37) 17 "UmlModelToMetaModelGenerator.mxg"
                 foreach (var line in lines)
                 #line hidden
                 
                 {
-                    if (__first26)
+                    if (__first25)
                     {
-                        __first26 = false;
+                        __first25 = false;
                     }
                     __cb.Push("");
-                    #line (160,13)-(160,16) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (159,13)-(159,16) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("///");
                     #line hidden
-                    #line (160,16)-(160,17) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (159,16)-(159,17) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (160,18)-(160,22) 32 "UmlModelToMetaModelGenerator.mxg"
+                    #line (159,18)-(159,22) 32 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(line);
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first26) __cb.AppendLine();
+                if (!__first25) __cb.AppendLine();
                 __cb.Push("");
-                #line (162,9)-(162,12) 29 "UmlModelToMetaModelGenerator.mxg"
+                #line (161,9)-(161,12) 29 "UmlModelToMetaModelGenerator.mxg"
                 __cb.Write("///");
                 #line hidden
-                #line (162,12)-(162,13) 29 "UmlModelToMetaModelGenerator.mxg"
+                #line (161,12)-(161,13) 29 "UmlModelToMetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (162,13)-(162,23) 29 "UmlModelToMetaModelGenerator.mxg"
+                #line (161,13)-(161,23) 29 "UmlModelToMetaModelGenerator.mxg"
                 __cb.Write("</summary>");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first25) __cb.AppendLine();
-            var __first27 = true;
-            #line (164,6)-(164,31) 13 "UmlModelToMetaModelGenerator.mxg"
+            if (!__first24) __cb.AppendLine();
+            var __first26 = true;
+            #line (163,6)-(163,31) 13 "UmlModelToMetaModelGenerator.mxg"
             if (elem is Operation op)
             #line hidden
             
             {
-                if (__first27)
+                if (__first26)
                 {
-                    __first27 = false;
+                    __first26 = false;
                 }
-                var __first28 = true;
-                #line (165,10)-(165,107) 17 "UmlModelToMetaModelGenerator.mxg"
+                var __first27 = true;
+                #line (164,10)-(164,107) 17 "UmlModelToMetaModelGenerator.mxg"
                 foreach (var param in op.OwnedParameter.Where(p => p.Direction != ParameterDirectionKind.Return))
                 #line hidden
                 
                 {
-                    if (__first28)
+                    if (__first27)
                     {
-                        __first28 = false;
+                        __first27 = false;
                     }
                     __cb.Push("");
-                    #line (166,13)-(166,16) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (165,13)-(165,16) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("///");
                     #line hidden
-                    #line (166,16)-(166,17) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (165,16)-(165,17) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (166,17)-(166,23) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (165,17)-(165,23) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("<param");
                     #line hidden
-                    #line (166,23)-(166,24) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (165,23)-(165,24) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (166,24)-(166,30) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (165,24)-(165,30) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("name=\"");
                     #line hidden
-                    #line (166,31)-(166,41) 32 "UmlModelToMetaModelGenerator.mxg"
+                    #line (165,31)-(165,41) 32 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(param.Name);
                     #line hidden
-                    #line (166,42)-(166,44) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (165,42)-(165,44) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("\">");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
-                    var __first29 = true;
-                    #line (167,14)-(167,61) 21 "UmlModelToMetaModelGenerator.mxg"
+                    var __first28 = true;
+                    #line (166,14)-(166,61) 21 "UmlModelToMetaModelGenerator.mxg"
                     foreach (var line in CommentLines(param, true))
                     #line hidden
                     
                     {
-                        if (__first29)
+                        if (__first28)
                         {
-                            __first29 = false;
+                            __first28 = false;
                         }
                         __cb.Push("");
-                        #line (168,17)-(168,20) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (167,17)-(167,20) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write("///");
                         #line hidden
-                        #line (168,20)-(168,21) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (167,20)-(167,21) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (168,22)-(168,26) 36 "UmlModelToMetaModelGenerator.mxg"
+                        #line (167,22)-(167,26) 36 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write(line);
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first29) __cb.AppendLine();
+                    if (!__first28) __cb.AppendLine();
                     __cb.Push("");
-                    #line (170,13)-(170,16) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (169,13)-(169,16) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("///");
                     #line hidden
-                    #line (170,16)-(170,17) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (169,16)-(169,17) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (170,17)-(170,25) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (169,17)-(169,25) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("</param>");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first28) __cb.AppendLine();
-                var __first30 = true;
-                #line (172,10)-(172,107) 17 "UmlModelToMetaModelGenerator.mxg"
+                if (!__first27) __cb.AppendLine();
+                var __first29 = true;
+                #line (171,10)-(171,107) 17 "UmlModelToMetaModelGenerator.mxg"
                 foreach (var param in op.OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return))
                 #line hidden
                 
                 {
-                    if (__first30)
+                    if (__first29)
                     {
-                        __first30 = false;
+                        __first29 = false;
                     }
                     __cb.Push("");
-                    #line (173,13)-(173,16) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (172,13)-(172,16) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("///");
                     #line hidden
-                    #line (173,16)-(173,17) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (172,16)-(172,17) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (173,17)-(173,26) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (172,17)-(172,26) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("<returns>");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
-                    var __first31 = true;
-                    #line (174,14)-(174,61) 21 "UmlModelToMetaModelGenerator.mxg"
+                    var __first30 = true;
+                    #line (173,14)-(173,61) 21 "UmlModelToMetaModelGenerator.mxg"
                     foreach (var line in CommentLines(param, true))
                     #line hidden
                     
                     {
-                        if (__first31)
+                        if (__first30)
                         {
-                            __first31 = false;
+                            __first30 = false;
                         }
                         __cb.Push("");
-                        #line (175,17)-(175,20) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (174,17)-(174,20) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write("///");
                         #line hidden
-                        #line (175,20)-(175,21) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (174,20)-(174,21) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (175,22)-(175,26) 36 "UmlModelToMetaModelGenerator.mxg"
+                        #line (174,22)-(174,26) 36 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write(line);
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first31) __cb.AppendLine();
+                    if (!__first30) __cb.AppendLine();
                     __cb.Push("");
-                    #line (177,13)-(177,16) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (176,13)-(176,16) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("///");
                     #line hidden
-                    #line (177,16)-(177,17) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (176,16)-(176,17) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (177,17)-(177,27) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (176,17)-(176,27) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("</returns>");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first30) __cb.AppendLine();
+                if (!__first29) __cb.AppendLine();
                 __cb.Push("");
-                #line (179,10)-(179,48) 28 "UmlModelToMetaModelGenerator.mxg"
+                #line (178,10)-(178,48) 28 "UmlModelToMetaModelGenerator.mxg"
                 __cb.Write(GenerateSpecification((Operation)elem));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            #line (180,6)-(180,37) 13 "UmlModelToMetaModelGenerator.mxg"
+            #line (179,6)-(179,37) 13 "UmlModelToMetaModelGenerator.mxg"
             else if (elem is Property prop)
             #line hidden
             
             {
-                if (__first27)
+                if (__first26)
                 {
-                    __first27 = false;
+                    __first26 = false;
                 }
-                var __first32 = true;
-                #line (181,10)-(181,53) 17 "UmlModelToMetaModelGenerator.mxg"
+                var __first31 = true;
+                #line (180,10)-(180,53) 17 "UmlModelToMetaModelGenerator.mxg"
                 if (prop.IsDerived && !prop.IsDerivedUnion)
                 #line hidden
                 
                 {
-                    if (__first32)
+                    if (__first31)
                     {
-                        __first32 = false;
+                        __first31 = false;
                     }
-                    var __first33 = true;
-                    #line (182,14)-(182,93) 21 "UmlModelToMetaModelGenerator.mxg"
+                    var __first32 = true;
+                    #line (181,14)-(181,93) 21 "UmlModelToMetaModelGenerator.mxg"
                     foreach (var impl in prop.Class.OwnedOperation.Where(o => o.Name == prop.Name))
                     #line hidden
                     
                     {
-                        if (__first33)
+                        if (__first32)
                         {
-                            __first33 = false;
+                            __first32 = false;
                         }
                         __cb.Push("");
-                        #line (183,14)-(183,41) 36 "UmlModelToMetaModelGenerator.mxg"
+                        #line (182,14)-(182,41) 36 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write(GenerateSpecification(impl));
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first33) __cb.AppendLine();
+                    if (!__first32) __cb.AppendLine();
                 }
-                if (!__first32) __cb.AppendLine();
+                if (!__first31) __cb.AppendLine();
             }
-            if (!__first27) __cb.AppendLine();
+            if (!__first26) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
-        #line (189,9)-(189,45) 22 "UmlModelToMetaModelGenerator.mxg"
+        #line (188,9)-(188,45) 22 "UmlModelToMetaModelGenerator.mxg"
         public string GenerateSpecification(Namespace ns)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first34 = true;
-            #line (190,6)-(190,40) 13 "UmlModelToMetaModelGenerator.mxg"
+            var __first33 = true;
+            #line (189,6)-(189,40) 13 "UmlModelToMetaModelGenerator.mxg"
             foreach (var rule in ns.OwnedRule)
             #line hidden
             
             {
-                if (__first34)
+                if (__first33)
                 {
-                    __first34 = false;
+                    __first33 = false;
                 }
-                var __first35 = true;
-                #line (191,10)-(191,58) 17 "UmlModelToMetaModelGenerator.mxg"
+                var __first34 = true;
+                #line (190,10)-(190,58) 17 "UmlModelToMetaModelGenerator.mxg"
                 if (rule.Specification is OpaqueExpression expr)
                 #line hidden
                 
                 {
-                    if (__first35)
+                    if (__first34)
                     {
-                        __first35 = false;
+                        __first34 = false;
                     }
-                    #line (192,14)-(192,50) 21 "UmlModelToMetaModelGenerator.mxg"
+                    #line (191,14)-(191,50) 21 "UmlModelToMetaModelGenerator.mxg"
                     var lines = CommentLines(rule, true);
                     #line hidden
                     
-                    var __first36 = true;
-                    #line (193,14)-(193,35) 21 "UmlModelToMetaModelGenerator.mxg"
+                    var __first35 = true;
+                    #line (192,14)-(192,35) 21 "UmlModelToMetaModelGenerator.mxg"
                     if (lines.Length > 0)
                     #line hidden
                     
                     {
-                        if (__first36)
+                        if (__first35)
                         {
-                            __first36 = false;
+                            __first35 = false;
                         }
                         __cb.Push("");
-                        #line (194,17)-(194,20) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (193,17)-(193,20) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write("///");
                         #line hidden
-                        #line (194,20)-(194,21) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (193,20)-(193,21) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (194,21)-(194,27) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (193,21)-(193,27) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write("<para>");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
-                        var __first37 = true;
-                        #line (195,18)-(195,45) 25 "UmlModelToMetaModelGenerator.mxg"
+                        var __first36 = true;
+                        #line (194,18)-(194,45) 25 "UmlModelToMetaModelGenerator.mxg"
                         foreach (var line in lines)
                         #line hidden
                         
                         {
-                            if (__first37)
+                            if (__first36)
                             {
-                                __first37 = false;
+                                __first36 = false;
                             }
                             __cb.Push("");
-                            #line (196,21)-(196,24) 41 "UmlModelToMetaModelGenerator.mxg"
+                            #line (195,21)-(195,24) 41 "UmlModelToMetaModelGenerator.mxg"
                             __cb.Write("///");
                             #line hidden
-                            #line (196,24)-(196,25) 41 "UmlModelToMetaModelGenerator.mxg"
+                            #line (195,24)-(195,25) 41 "UmlModelToMetaModelGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (196,26)-(196,30) 40 "UmlModelToMetaModelGenerator.mxg"
+                            #line (195,26)-(195,30) 40 "UmlModelToMetaModelGenerator.mxg"
                             __cb.Write(line);
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                         }
-                        if (!__first37) __cb.AppendLine();
+                        if (!__first36) __cb.AppendLine();
                         __cb.Push("");
-                        #line (198,17)-(198,20) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (197,17)-(197,20) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write("///");
                         #line hidden
-                        #line (198,20)-(198,21) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (197,20)-(197,21) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (198,21)-(198,28) 37 "UmlModelToMetaModelGenerator.mxg"
+                        #line (197,21)-(197,28) 37 "UmlModelToMetaModelGenerator.mxg"
                         __cb.Write("</para>");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first36) __cb.AppendLine();
+                    if (!__first35) __cb.AppendLine();
                     __cb.Push("");
-                    #line (200,13)-(200,15) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (199,13)-(199,15) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write("//");
                     #line hidden
-                    #line (200,15)-(200,16) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (199,15)-(199,16) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (200,17)-(200,26) 32 "UmlModelToMetaModelGenerator.mxg"
+                    #line (199,17)-(199,26) 32 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(rule.Name);
                     #line hidden
-                    #line (200,27)-(200,28) 33 "UmlModelToMetaModelGenerator.mxg"
+                    #line (199,27)-(199,28) 33 "UmlModelToMetaModelGenerator.mxg"
                     __cb.Write(":");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
-                    #line (201,14)-(201,52) 21 "UmlModelToMetaModelGenerator.mxg"
-                    lines = CommentLines(expr.Body, false);
-                    #line hidden
-                    
-                    var __first38 = true;
-                    #line (202,14)-(202,41) 21 "UmlModelToMetaModelGenerator.mxg"
-                    foreach (var line in lines)
+                    var __first37 = true;
+                    #line (200,14)-(200,45) 21 "UmlModelToMetaModelGenerator.mxg"
+                    foreach (var body in expr.Body)
                     #line hidden
                     
                     {
-                        if (__first38)
+                        if (__first37)
                         {
-                            __first38 = false;
+                            __first37 = false;
                         }
-                        __cb.Push("");
-                        #line (203,17)-(203,19) 37 "UmlModelToMetaModelGenerator.mxg"
-                        __cb.Write("//");
+                        #line (201,18)-(201,51) 25 "UmlModelToMetaModelGenerator.mxg"
+                        lines = CommentLines(body, false);
                         #line hidden
-                        #line (203,19)-(203,20) 37 "UmlModelToMetaModelGenerator.mxg"
-                        __cb.Write(" ");
+                        
+                        var __first38 = true;
+                        #line (202,18)-(202,45) 25 "UmlModelToMetaModelGenerator.mxg"
+                        foreach (var line in lines)
                         #line hidden
-                        #line (203,21)-(203,25) 36 "UmlModelToMetaModelGenerator.mxg"
-                        __cb.Write(line);
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
+                        
+                        {
+                            if (__first38)
+                            {
+                                __first38 = false;
+                            }
+                            __cb.Push("");
+                            #line (203,21)-(203,23) 41 "UmlModelToMetaModelGenerator.mxg"
+                            __cb.Write("//");
+                            #line hidden
+                            #line (203,23)-(203,24) 41 "UmlModelToMetaModelGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                            #line (203,25)-(203,29) 40 "UmlModelToMetaModelGenerator.mxg"
+                            __cb.Write(line);
+                            #line hidden
+                            __cb.AppendLine();
+                            __cb.Pop();
+                        }
+                        if (!__first38) __cb.AppendLine();
                     }
-                    if (!__first38) __cb.AppendLine();
+                    if (!__first37) __cb.AppendLine();
                 }
-                if (!__first35) __cb.AppendLine();
+                if (!__first34) __cb.AppendLine();
             }
-            if (!__first34) __cb.AppendLine();
+            if (!__first33) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
