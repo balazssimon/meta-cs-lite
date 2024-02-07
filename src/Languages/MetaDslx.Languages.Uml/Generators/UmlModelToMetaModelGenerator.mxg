@@ -1,0 +1,207 @@
+﻿namespace MetaDslx.Languages.Uml.Generator;
+
+using MetaDslx.Modeling;
+using MetaDslx.Languages.Uml.Model;
+using System.Collections.Immutable;
+using Roslyn.Utilities;
+
+generator UmlModelToMetaModelGenerator;
+
+template Generate(string namespaceName, string metaModelName, string uri)
+namespace [namespaceName]
+
+metamodel [metaModelName] = "[uri]"
+[foreach (var pt in PrimitiveTypes)]
+
+    [GeneratePrimitiveType(pt)]
+[end foreach]
+[foreach (var enm in Enums)]
+
+    [GenerateEnum(enm)]
+[end foreach]
+[foreach (var cls in Classes)]
+
+    [GenerateClass(cls)]
+[end foreach]
+end template
+
+template GeneratePrimitiveType(PrimitiveType pt)
+    [GenerateComment(pt)]
+    const PrimitiveType [pt.Name]
+end template
+
+template GenerateEnum(Enumeration enm)
+    [GenerateComment(enm)]
+    enum [enm.Name]
+    {
+        [foreach (var lit in enm.OwnedLiteral) separator ",\n" after "\n"]
+            [GenerateComment(lit)]
+            [lit.Name.ToPascalCase()][\]
+        [end foreach]
+    }
+end template
+
+template GenerateClass(Class cls)
+    [GenerateComment(cls)]
+    [cls.IsAbstract ? "abstract " : ""]class [cls.Name][from g in cls.Generalization select g.General.Name before " : " separator ", "]
+    {
+        [foreach (var prop in cls.OwnedAttribute)]
+
+            [GenerateProperty(prop, false)]
+        [end foreach]
+        [foreach (var prop in GetAssociationProperties(cls))]
+
+            [GenerateProperty(prop, true)]
+        [end foreach]
+        [foreach (var op in cls.OwnedOperation)]
+
+            [GenerateOperation(op)]
+        [end foreach]
+    }
+end template
+
+template GenerateProperty(Property prop, bool comment)
+    [GenerateComment(prop)]
+    [comment ? "// " : ""][GenerateContainment(prop)][GenerateModifiers(prop)][GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()][GenerateDefaultValue(prop)]
+        [comment ? "// " : ""][GenerateRedefines(prop)]
+        [comment ? "// " : ""][GenerateSubsets(prop)]
+        [comment ? "// " : ""][GenerateOpposite(prop)]
+end template
+
+template GenerateContainment(Property prop)
+    [prop.Aggregation == AggregationKind.Composite && !prop.IsDerived && !prop.IsDerivedUnion ? "contains " : ""]
+end template
+
+template GenerateModifiers(Property prop)
+    [if (prop.Upper > 1 || prop.Upper < 0)]
+        [prop.IsDerivedUnion ? "union " : (prop.IsDerived ? "derived " : "")]
+    [else if (!prop.IsDerivedUnion)]
+        [prop.IsDerived ? "derived " : ""]
+    [end if]
+end template
+
+template GenerateType(MultiplicityElement me, MetaDslx.Languages.Uml.Model.Type t)
+    [GeneratePrimitiveType(t)][(me.Upper > 1 || me.Upper < 0) ? "[]" : ""]
+end template
+
+template GenerateRedefines(Property prop)
+    [foreach (var rprop in prop.RedefinedProperty)]
+        [if (rprop?.Owner is NamedElement owner)]
+            redefines [owner.Name].[rprop.Name.ToPascalCase()]
+        [else]
+            // redefined property '[rprop.MId]' is null
+        [end if]
+    [end foreach]
+end template
+
+template GenerateSubsets(Property prop)
+    [foreach (var sprop in prop.SubsettedProperty)]
+        [if (sprop?.Owner is NamedElement owner)]
+            subsets [owner.Name].[sprop.Name.ToPascalCase()]
+        [else]
+            // subsetted property '[sprop.MId]' is null
+        [end if]
+    [end foreach]
+end template
+
+template GenerateOpposite(Property prop)
+    [foreach (var assoc in prop.Association)]
+        [if (assoc.MemberEnd.Count == 2)]
+            [GenerateComment(assoc)]
+            [var first = assoc.MemberEnd[0]]
+            [var second = assoc.MemberEnd[1]]
+            [if (first == prop)]
+                [var owner = first?.Type]
+                [if (owner is not null)]
+                    [if (assoc.OwnedEnd.Count > 0)]// [end if]opposite [owner.Name].[second.Name.ToPascalCase()]
+                [else]
+                    // opposite is null in '[assoc.MId]'
+                [end if]
+            [else if (second == prop)]
+                [var owner = second?.Type]
+                [if (owner is not null)]
+                    [if (assoc.OwnedEnd.Count > 0)]// [end if]opposite [owner.Name].[first.Name.ToPascalCase()]
+                [else]
+                    // opposite is null in '[assoc.MId]'
+                [end if]
+            [end if]
+        [end if]
+    [end foreach]
+end template
+
+template GenerateOperation(Operation op)
+    [if (!IsPropertyImplementation(op))]
+        [GenerateComment(op)]
+        [GenerateReturnType(op)] [op.Name.ToPascalCase()]([GenerateParams(op)])
+    [end if]
+end template
+
+template GenerateReturnType(Operation op)
+    [var returnParam = op.OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return).FirstOrDefault()]
+    [if (returnParam is not null)]
+        [GenerateType(returnParam, returnParam.Type)]
+    [else]
+        void
+    [end if]
+end template
+
+template GenerateParams(Operation op)
+    [-]
+    [foreach (var param in op.OwnedParameter.Where(p => p.Direction != ParameterDirectionKind.Return)) separator ", "]
+        [GenerateType(param, param.Type)] [param.Name]
+    [end foreach]
+end template
+
+template GenerateComment(Element elem)
+    [var lines = CommentLines(elem, true)]
+    [if (lines.Length > 0)]
+        /// <summary>
+        [foreach (var line in lines)]
+            /// [line]
+        [end foreach]
+        /// </summary>
+    [end if]
+    [if (elem is Operation op)]
+        [foreach (var param in op.OwnedParameter.Where(p => p.Direction != ParameterDirectionKind.Return))]
+            /// <param name="[param.Name]">
+            [foreach (var line in CommentLines(param, true))]
+                /// [line]
+            [end foreach]
+            /// </param>
+        [end foreach]
+        [foreach (var param in op.OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return))]
+            /// <returns>
+            [foreach (var line in CommentLines(param, true))]
+                /// [line]
+            [end foreach]
+            /// </returns>
+        [end foreach]
+        [GenerateSpecification((Operation)elem)]
+    [else if (elem is Property prop)]
+        [if (prop.IsDerived && !prop.IsDerivedUnion)]
+            [foreach (var impl in prop.Class.OwnedOperation.Where(o => o.Name == prop.Name))]
+            [GenerateSpecification(impl)]
+            [end foreach]
+        [end if]
+    [end if]
+end template
+
+template GenerateSpecification(Namespace ns)
+    [foreach (var rule in ns.OwnedRule)]
+        [if (rule.Specification is OpaqueExpression expr)]
+            [var lines = CommentLines(rule, true)]
+            [if (lines.Length > 0)]
+                /// <para>
+                [foreach (var line in lines)]
+                    /// [line]
+                [end foreach]
+                /// </para>
+            [end if]
+            // [rule.Name]:
+            [lines = CommentLines(expr.Body, false)]
+            [foreach (var line in lines)]
+                // [line]
+            [end foreach]
+        [end if]
+    [end foreach]
+end template

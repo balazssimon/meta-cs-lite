@@ -40,6 +40,8 @@ namespace MetaDslx.Modeling
         public bool IsNonUnique => _flags.HasFlag(ModelPropertyFlags.NonUnique);
         public bool IsUntracked => _flags.HasFlag(ModelPropertyFlags.Untracked);
         public bool IsModelObjectType => _flags.HasFlag(ModelPropertyFlags.ModelObjectType);
+        public bool IsName => _flags.HasFlag(ModelPropertyFlags.Name);
+        public bool IsType => _flags.HasFlag(ModelPropertyFlags.Type);
 
         internal void ThrowModelException(Func<ModelProperty, bool> condition, Func<ModelProperty, string> message)
         {
