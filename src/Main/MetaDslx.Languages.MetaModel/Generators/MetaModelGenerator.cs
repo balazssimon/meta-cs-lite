@@ -17,6 +17,7 @@ using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeGeneration;
 using System.Xml.Linq;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
 
 namespace MetaDslx.Languages.MetaModel.Generators
 {
@@ -237,6 +238,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 if (value.GetType() == typeof(bool)) symbolValue = symbolValue.ToLower();
                 if (value.GetType() == typeof(string)) symbolValue = symbolValue.EncodeString();
                 if (value is MetaEnumLiteral lit2) symbolValue = $"{lit2.MParent?.MName}.{lit2.MName}";
+                if (value is ICSharpSymbol) symbolValue = ((Symbol)value).Name.EncodeString();
                 if (value is IModelSymbol msym2)
                 {
                     return GetName(msym2.ModelObject);
@@ -247,6 +249,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type == typeof(bool)) return value.ToString().ToLower();
             if (type == typeof(string)) return value.ToString().EncodeString();
             if (type.IsPrimitive) return value.ToString();
+            if (value is ICSharpSymbol) return ((Symbol)value).Name.EncodeString();
             if (value is IModelSymbol msym)
             {
                 return GetName(msym.ModelObject);

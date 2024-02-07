@@ -54,7 +54,7 @@ class MetaEnumLiteral : MetaDeclaration
 {
 }
 
-class MetaClass : MetaType
+class MetaClass $Type : MetaType
 {
 	type? SymbolType;
 	bool IsAbstract;

@@ -282,7 +282,7 @@ namespace MetaDslx.BuildTools
         {
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             Directory.CreateDirectory(outputDir);
-            var dirInfo = new DirectoryInfo(outputDir);
+            /*var dirInfo = new DirectoryInfo(outputDir);
             foreach (FileInfo file in dirInfo.EnumerateFiles())
             {
                 file.Delete();
@@ -290,7 +290,7 @@ namespace MetaDslx.BuildTools
             foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
             {
                 dir.Delete(true);
-            }
+            }*/
             var metaModelCode = generator.GenerateSeparateIntf(generator.GenerateMetaModel());
             await AddGeneratedFile(Path.Combine(outputDir, $"{generator.MetaModel.Name}.cs"), metaModelCode);
             var modelFactoryCode = generator.GenerateSeparateIntf(generator.GenerateFactory());
@@ -439,7 +439,7 @@ namespace MetaDslx.BuildTools
             }
             else
             {
-                var dirInfo = new DirectoryInfo(outputDir);
+                /*var dirInfo = new DirectoryInfo(outputDir);
                 foreach (FileInfo file in dirInfo.EnumerateFiles())
                 {
                     file.Delete();
@@ -447,7 +447,7 @@ namespace MetaDslx.BuildTools
                 foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
                 {
                     dir.Delete(true);
-                }
+                }*/
                 foreach (var antlrCode in antlrCodes)
                 {
                     await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.{antlrCode.FileName}"), antlrCode.Content);
