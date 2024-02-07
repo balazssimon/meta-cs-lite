@@ -36,17 +36,18 @@ namespace MetaDslx.BuildTools
     public class Program
     {
         private const bool GenerateSeparateMetaModelFiles = true;
+        private const bool EraseOutputDirectory = true;
         private static readonly string[] BootstrapProjects =
         [
 #if MetaDslxBootstrap
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
-            //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
+            @"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
 #endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
@@ -282,15 +283,18 @@ namespace MetaDslx.BuildTools
         {
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             Directory.CreateDirectory(outputDir);
-            /*var dirInfo = new DirectoryInfo(outputDir);
-            foreach (FileInfo file in dirInfo.EnumerateFiles())
+            if (EraseOutputDirectory)
             {
-                file.Delete();
+                var dirInfo = new DirectoryInfo(outputDir);
+                foreach (FileInfo file in dirInfo.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
             }
-            foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
-            {
-                dir.Delete(true);
-            }*/
             var metaModelCode = generator.GenerateSeparateIntf(generator.GenerateMetaModel());
             await AddGeneratedFile(Path.Combine(outputDir, $"{generator.MetaModel.Name}.cs"), metaModelCode);
             var modelFactoryCode = generator.GenerateSeparateIntf(generator.GenerateFactory());
@@ -439,15 +443,18 @@ namespace MetaDslx.BuildTools
             }
             else
             {
-                /*var dirInfo = new DirectoryInfo(outputDir);
-                foreach (FileInfo file in dirInfo.EnumerateFiles())
+                if (EraseOutputDirectory)
                 {
-                    file.Delete();
+                    var dirInfo = new DirectoryInfo(outputDir);
+                    foreach (FileInfo file in dirInfo.EnumerateFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+                    {
+                        dir.Delete(true);
+                    }
                 }
-                foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }*/
                 foreach (var antlrCode in antlrCodes)
                 {
                     await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.{antlrCode.FileName}"), antlrCode.Content);

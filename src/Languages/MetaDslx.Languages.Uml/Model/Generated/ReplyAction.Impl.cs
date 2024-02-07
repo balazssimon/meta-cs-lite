@@ -335,7 +335,7 @@ namespace MetaDslx.Languages.Uml.Model.__Impl
             public override __MetaType MetaType => typeof(ReplyAction);
     
             public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
-            public override __ModelProperty? NameProperty => null;
+            public override __ModelProperty? NameProperty => Uml.NamedElement_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;

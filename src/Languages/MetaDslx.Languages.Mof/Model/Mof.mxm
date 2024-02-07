@@ -112,9 +112,9 @@ class EnumerationLiteral : InstanceSpecification
 	Enumeration Enumeration opposite Enumeration.OwnedLiteral
 }
 
-class Class : Classifier
+class Class $Type : Classifier
 {
-	derived Class[] SuperClass
+	derived Class[] SuperClass $BaseTypes
 	contains Property[] OwnedAttribute subsets Element.OwnedElement opposite Property.Class
 	contains Operation[] OwnedOperation subsets Element.OwnedElement opposite Operation.Class
 }
