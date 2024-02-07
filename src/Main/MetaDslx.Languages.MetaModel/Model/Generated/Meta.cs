@@ -94,7 +94,7 @@ namespace MetaDslx.Languages.MetaModel.Model
             _MetaProperty_OppositeProperties = new __ModelProperty(typeof(MetaProperty), "OppositeProperties", typeof(MetaProperty), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
             _MetaProperty_RedefinedProperties = new __ModelProperty(typeof(MetaProperty), "RedefinedProperties", typeof(MetaProperty), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
             _MetaProperty_SubsettedProperties = new __ModelProperty(typeof(MetaProperty), "SubsettedProperties", typeof(MetaProperty), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
-            _MetaProperty_SymbolProperty = new __ModelProperty(typeof(MetaProperty), "SymbolProperty", typeof(string), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _MetaProperty_SymbolProperty = new __ModelProperty(typeof(MetaProperty), "SymbolProperty", typeof(__MetaSymbol), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _MetaProperty_Type = new __ModelProperty(typeof(MetaProperty), "Type", typeof(__MetaType), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _instance = new Meta();
         }
@@ -396,7 +396,7 @@ namespace MetaDslx.Languages.MetaModel.Model
             obj19.Name = "MetaParameter";
             obj19.Parent = obj4;
             obj20.MChildren.Add(obj24);
-            obj20.SymbolProperty = "Name";
+            obj20.SymbolProperty = __MetaSymbol.FromValue("Name");
             obj20.Type = __MetaType.FromModelObject((__IModelObject)obj24);
             obj20.Name = "Name";
             obj20.Parent = obj6;
@@ -451,7 +451,7 @@ namespace MetaDslx.Languages.MetaModel.Model
             obj36.Name = "IsAbstract";
             obj36.Parent = obj16;
             obj37.MChildren.Add(obj41);
-            obj37.SymbolProperty = "BaseTypes";
+            obj37.SymbolProperty = __MetaSymbol.FromValue("BaseTypes");
             obj37.Type = __MetaType.FromModelObject((__IModelObject)obj41);
             obj37.Name = "BaseTypes";
             obj37.Parent = obj16;

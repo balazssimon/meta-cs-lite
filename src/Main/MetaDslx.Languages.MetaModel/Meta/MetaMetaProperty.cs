@@ -23,8 +23,8 @@ namespace MetaDslx.Languages.MetaModel.Meta
             if (underlyingProperty.IsDerived) flags |= ModelPropertyFlags.Derived;
             if (underlyingProperty.IsReadOnly) flags |= ModelPropertyFlags.ReadOnly;
             if (underlyingProperty.IsUnion) flags |= ModelPropertyFlags.DerivedUnion;
-            if (underlyingProperty.SymbolProperty == "Name") flags |= ModelPropertyFlags.Name;
-            if (underlyingProperty.SymbolProperty == "Type") flags |= ModelPropertyFlags.Type;
+            if (underlyingProperty.SymbolProperty.Name == "Name") flags |= ModelPropertyFlags.Name;
+            if (underlyingProperty.SymbolProperty.Name == "Type") flags |= ModelPropertyFlags.Type;
             _originalFlags = flags;
         }
 
@@ -36,7 +36,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public override object? DefaultValue => UnderlyingProperty.DefaultValue;
 
-        public override string? SymbolProperty => UnderlyingProperty.SymbolProperty;
+        public override string? SymbolProperty => UnderlyingProperty.SymbolProperty.Name;
 
         public override MetaDslx.CodeAnalysis.MetaType OriginalType => UnderlyingProperty.Type;
 

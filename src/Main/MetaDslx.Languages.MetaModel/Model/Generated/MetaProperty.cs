@@ -33,7 +33,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> OppositeProperties { get; }
         global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> RedefinedProperties { get; }
         global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> SubsettedProperties { get; }
-        string? SymbolProperty { get; set; }
+        __MetaSymbol SymbolProperty { get; set; }
         __MetaType Type { get; set; }
     
     }

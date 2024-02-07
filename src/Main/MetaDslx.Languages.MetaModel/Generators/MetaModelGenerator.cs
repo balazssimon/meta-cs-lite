@@ -221,7 +221,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 else if (value is string svalue) return $"typeof({PrimitiveTypeToString(svalue)})";
                 else if (value is Type t) return $"typeof(global::{t.FullName})";
                 else if (value is TypeSymbol ts) return $"typeof({SymbolDisplayFormat.FullyQualifiedFormat.ToString(ts)})";
-                return $"__MetaType.FromModelObject((__IModelObject){GetName(value)})";
+                return $"__MetaType.FromModelObject({GetName(value)})";
             }
             if (propertyType == typeof(bool))
             {

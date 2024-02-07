@@ -77,10 +77,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
             get => MGetCollection<MetaProperty>(Meta.MetaProperty_SubsettedProperties);
         }
     
-        public string? SymbolProperty
+        public __MetaSymbol SymbolProperty
         {
-            get => MGet<string?>(Meta.MetaProperty_SymbolProperty);
-            set => MSet<string?>(Meta.MetaProperty_SymbolProperty, value);
+            get => MGet<__MetaSymbol>(Meta.MetaProperty_SymbolProperty);
+            set => MSet<__MetaSymbol>(Meta.MetaProperty_SymbolProperty, value);
         }
     
         public __MetaType Type
