@@ -37,162 +37,162 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         public Annotation Annotation(string? id = null)
         {
-            return (Annotation)Compiler.AnnotationInfo.Create(Model, id)!;
+            return (Annotation)Compiler.AnnotationInfo.Create(base.Model, id)!;
         }
     
         public AnnotationArgument AnnotationArgument(string? id = null)
         {
-            return (AnnotationArgument)Compiler.AnnotationArgumentInfo.Create(Model, id)!;
+            return (AnnotationArgument)Compiler.AnnotationArgumentInfo.Create(base.Model, id)!;
         }
     
         public ArrayExpression ArrayExpression(string? id = null)
         {
-            return (ArrayExpression)Compiler.ArrayExpressionInfo.Create(Model, id)!;
+            return (ArrayExpression)Compiler.ArrayExpressionInfo.Create(base.Model, id)!;
         }
     
         public Binder Binder(string? id = null)
         {
-            return (Binder)Compiler.BinderInfo.Create(Model, id)!;
+            return (Binder)Compiler.BinderInfo.Create(base.Model, id)!;
         }
     
         public BinderArgument BinderArgument(string? id = null)
         {
-            return (BinderArgument)Compiler.BinderArgumentInfo.Create(Model, id)!;
+            return (BinderArgument)Compiler.BinderArgumentInfo.Create(base.Model, id)!;
         }
     
         public CSharpElement CSharpElement(string? id = null)
         {
-            return (CSharpElement)Compiler.CSharpElementInfo.Create(Model, id)!;
+            return (CSharpElement)Compiler.CSharpElementInfo.Create(base.Model, id)!;
         }
     
         public Alternative Alternative(string? id = null)
         {
-            return (Alternative)Compiler.AlternativeInfo.Create(Model, id)!;
+            return (Alternative)Compiler.AlternativeInfo.Create(base.Model, id)!;
         }
     
         public Block Block(string? id = null)
         {
-            return (Block)Compiler.BlockInfo.Create(Model, id)!;
+            return (Block)Compiler.BlockInfo.Create(base.Model, id)!;
         }
     
         public Element Element(string? id = null)
         {
-            return (Element)Compiler.ElementInfo.Create(Model, id)!;
+            return (Element)Compiler.ElementInfo.Create(base.Model, id)!;
         }
     
         public Eof Eof(string? id = null)
         {
-            return (Eof)Compiler.EofInfo.Create(Model, id)!;
+            return (Eof)Compiler.EofInfo.Create(base.Model, id)!;
         }
     
         public Expression Expression(string? id = null)
         {
-            return (Expression)Compiler.ExpressionInfo.Create(Model, id)!;
+            return (Expression)Compiler.ExpressionInfo.Create(base.Model, id)!;
         }
     
         public Fixed Fixed(string? id = null)
         {
-            return (Fixed)Compiler.FixedInfo.Create(Model, id)!;
+            return (Fixed)Compiler.FixedInfo.Create(base.Model, id)!;
         }
     
         public Language Language(string? id = null)
         {
-            return (Language)Compiler.LanguageInfo.Create(Model, id)!;
+            return (Language)Compiler.LanguageInfo.Create(base.Model, id)!;
         }
     
         public Fragment Fragment(string? id = null)
         {
-            return (Fragment)Compiler.FragmentInfo.Create(Model, id)!;
+            return (Fragment)Compiler.FragmentInfo.Create(base.Model, id)!;
         }
     
         public Grammar Grammar(string? id = null)
         {
-            return (Grammar)Compiler.GrammarInfo.Create(Model, id)!;
+            return (Grammar)Compiler.GrammarInfo.Create(base.Model, id)!;
         }
     
         public LAlternative LAlternative(string? id = null)
         {
-            return (LAlternative)Compiler.LAlternativeInfo.Create(Model, id)!;
+            return (LAlternative)Compiler.LAlternativeInfo.Create(base.Model, id)!;
         }
     
         public LElement LElement(string? id = null)
         {
-            return (LElement)Compiler.LElementInfo.Create(Model, id)!;
+            return (LElement)Compiler.LElementInfo.Create(base.Model, id)!;
         }
     
         public LBlock LBlock(string? id = null)
         {
-            return (LBlock)Compiler.LBlockInfo.Create(Model, id)!;
+            return (LBlock)Compiler.LBlockInfo.Create(base.Model, id)!;
         }
     
         public LFixed LFixed(string? id = null)
         {
-            return (LFixed)Compiler.LFixedInfo.Create(Model, id)!;
+            return (LFixed)Compiler.LFixedInfo.Create(base.Model, id)!;
         }
     
         public LRange LRange(string? id = null)
         {
-            return (LRange)Compiler.LRangeInfo.Create(Model, id)!;
+            return (LRange)Compiler.LRangeInfo.Create(base.Model, id)!;
         }
     
         public LReference LReference(string? id = null)
         {
-            return (LReference)Compiler.LReferenceInfo.Create(Model, id)!;
+            return (LReference)Compiler.LReferenceInfo.Create(base.Model, id)!;
         }
     
         public LSet LSet(string? id = null)
         {
-            return (LSet)Compiler.LSetInfo.Create(Model, id)!;
+            return (LSet)Compiler.LSetInfo.Create(base.Model, id)!;
         }
     
         public LSetChar LSetChar(string? id = null)
         {
-            return (LSetChar)Compiler.LSetCharInfo.Create(Model, id)!;
+            return (LSetChar)Compiler.LSetCharInfo.Create(base.Model, id)!;
         }
     
         public LSetRange LSetRange(string? id = null)
         {
-            return (LSetRange)Compiler.LSetRangeInfo.Create(Model, id)!;
+            return (LSetRange)Compiler.LSetRangeInfo.Create(base.Model, id)!;
         }
     
         public LWildCard LWildCard(string? id = null)
         {
-            return (LWildCard)Compiler.LWildCardInfo.Create(Model, id)!;
+            return (LWildCard)Compiler.LWildCardInfo.Create(base.Model, id)!;
         }
     
         public Namespace Namespace(string? id = null)
         {
-            return (Namespace)Compiler.NamespaceInfo.Create(Model, id)!;
+            return (Namespace)Compiler.NamespaceInfo.Create(base.Model, id)!;
         }
     
         public Rule Rule(string? id = null)
         {
-            return (Rule)Compiler.RuleInfo.Create(Model, id)!;
+            return (Rule)Compiler.RuleInfo.Create(base.Model, id)!;
         }
     
         public RuleRef RuleRef(string? id = null)
         {
-            return (RuleRef)Compiler.RuleRefInfo.Create(Model, id)!;
+            return (RuleRef)Compiler.RuleRefInfo.Create(base.Model, id)!;
         }
     
         public SeparatedList SeparatedList(string? id = null)
         {
-            return (SeparatedList)Compiler.SeparatedListInfo.Create(Model, id)!;
+            return (SeparatedList)Compiler.SeparatedListInfo.Create(base.Model, id)!;
         }
     
         public Token Token(string? id = null)
         {
-            return (Token)Compiler.TokenInfo.Create(Model, id)!;
+            return (Token)Compiler.TokenInfo.Create(base.Model, id)!;
         }
     
         public TokenAlts TokenAlts(string? id = null)
         {
-            return (TokenAlts)Compiler.TokenAltsInfo.Create(Model, id)!;
+            return (TokenAlts)Compiler.TokenAltsInfo.Create(base.Model, id)!;
         }
     
         public TokenKind TokenKind(string? id = null)
         {
-            return (TokenKind)Compiler.TokenKindInfo.Create(Model, id)!;
+            return (TokenKind)Compiler.TokenKindInfo.Create(base.Model, id)!;
         }
     
     }
