@@ -118,6 +118,19 @@ namespace MetaDslx.Modeling.Meta
                 }
                 declaredOperations.Sort(CompareOperationsByName);
                 cls.DeclaredOperations = declaredOperations.ToImmutable();
+                foreach (var dop in declaredOperations)
+                {
+                    var overloads = declaredOperations.Where(op => op.Name == dop.Name).ToList();
+                    if (overloads.Count >= 2)
+                    {
+                        var index = overloads.IndexOf(dop) + 1;
+                        dop.UniqueName = $"{dop.Name}{index}";
+                    }
+                    else
+                    {
+                        dop.UniqueName = dop.Name;
+                    }
+                }
             }
             declaredOperations.Free();
         }

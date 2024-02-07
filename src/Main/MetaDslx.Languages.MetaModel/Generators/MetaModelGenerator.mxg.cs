@@ -2680,8 +2680,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first6 = false;
                 }
+                #line (166,10)-(166,127) 17 "MetaModelGenerator.mxg"
+                var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls));
+                #line hidden
+                
                 var __first7 = true;
-                #line (166,10)-(166,46) 17 "MetaModelGenerator.mxg"
+                #line (167,10)-(167,46) 17 "MetaModelGenerator.mxg"
                 foreach (var prop in cls.Properties)
                 #line hidden
                 
@@ -2691,43 +2695,43 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first7 = false;
                     }
                     __cb.Push("    ");
-                    #line (167,13)-(167,20) 33 "MetaModelGenerator.mxg"
+                    #line (168,13)-(168,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write("private");
                     #line hidden
-                    #line (167,20)-(167,21) 33 "MetaModelGenerator.mxg"
+                    #line (168,20)-(168,21) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (167,21)-(167,27) 33 "MetaModelGenerator.mxg"
+                    #line (168,21)-(168,27) 33 "MetaModelGenerator.mxg"
                     __cb.Write("static");
                     #line hidden
-                    #line (167,27)-(167,28) 33 "MetaModelGenerator.mxg"
+                    #line (168,27)-(168,28) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (167,28)-(167,36) 33 "MetaModelGenerator.mxg"
+                    #line (168,28)-(168,36) 33 "MetaModelGenerator.mxg"
                     __cb.Write("readonly");
                     #line hidden
-                    #line (167,36)-(167,37) 33 "MetaModelGenerator.mxg"
+                    #line (168,36)-(168,37) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (167,37)-(167,52) 33 "MetaModelGenerator.mxg"
+                    #line (168,37)-(168,52) 33 "MetaModelGenerator.mxg"
                     __cb.Write("__ModelProperty");
                     #line hidden
-                    #line (167,52)-(167,53) 33 "MetaModelGenerator.mxg"
+                    #line (168,52)-(168,53) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (167,53)-(167,54) 33 "MetaModelGenerator.mxg"
+                    #line (168,53)-(168,54) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (167,55)-(167,63) 32 "MetaModelGenerator.mxg"
+                    #line (168,55)-(168,63) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (167,64)-(167,65) 33 "MetaModelGenerator.mxg"
+                    #line (168,64)-(168,65) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (167,66)-(167,75) 32 "MetaModelGenerator.mxg"
+                    #line (168,66)-(168,75) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
-                    #line (167,76)-(167,77) 33 "MetaModelGenerator.mxg"
+                    #line (168,76)-(168,77) 33 "MetaModelGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
@@ -2735,8 +2739,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 }
                 if (!__first7) __cb.AppendLine();
                 var __first8 = true;
-                #line (169,10)-(169,44) 17 "MetaModelGenerator.mxg"
-                foreach (var op in cls.Operations)
+                #line (170,10)-(170,56) 17 "MetaModelGenerator.mxg"
+                foreach (var op in metaCls.DeclaredOperations)
                 #line hidden
                 
                 {
@@ -2745,43 +2749,43 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first8 = false;
                     }
                     __cb.Push("    ");
-                    #line (170,13)-(170,20) 33 "MetaModelGenerator.mxg"
+                    #line (171,13)-(171,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write("private");
                     #line hidden
-                    #line (170,20)-(170,21) 33 "MetaModelGenerator.mxg"
+                    #line (171,20)-(171,21) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (170,21)-(170,27) 33 "MetaModelGenerator.mxg"
+                    #line (171,21)-(171,27) 33 "MetaModelGenerator.mxg"
                     __cb.Write("static");
                     #line hidden
-                    #line (170,27)-(170,28) 33 "MetaModelGenerator.mxg"
+                    #line (171,27)-(171,28) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (170,28)-(170,36) 33 "MetaModelGenerator.mxg"
+                    #line (171,28)-(171,36) 33 "MetaModelGenerator.mxg"
                     __cb.Write("readonly");
                     #line hidden
-                    #line (170,36)-(170,37) 33 "MetaModelGenerator.mxg"
+                    #line (171,36)-(171,37) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (170,37)-(170,53) 33 "MetaModelGenerator.mxg"
+                    #line (171,37)-(171,53) 33 "MetaModelGenerator.mxg"
                     __cb.Write("__ModelOperation");
                     #line hidden
-                    #line (170,53)-(170,54) 33 "MetaModelGenerator.mxg"
+                    #line (171,53)-(171,54) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (170,54)-(170,55) 33 "MetaModelGenerator.mxg"
+                    #line (171,54)-(171,55) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (170,56)-(170,64) 32 "MetaModelGenerator.mxg"
+                    #line (171,56)-(171,64) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (170,65)-(170,66) 33 "MetaModelGenerator.mxg"
+                    #line (171,65)-(171,66) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (170,67)-(170,74) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(op.Name);
+                    #line (171,67)-(171,80) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(op.UniqueName);
                     #line hidden
-                    #line (170,75)-(170,76) 33 "MetaModelGenerator.mxg"
+                    #line (171,81)-(171,82) 33 "MetaModelGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
@@ -2793,28 +2797,28 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (174,5)-(174,11) 25 "MetaModelGenerator.mxg"
+            #line (175,5)-(175,11) 25 "MetaModelGenerator.mxg"
             __cb.Write("static");
             #line hidden
-            #line (174,11)-(174,12) 25 "MetaModelGenerator.mxg"
+            #line (175,11)-(175,12) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (174,13)-(174,27) 24 "MetaModelGenerator.mxg"
+            #line (175,13)-(175,27) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (174,28)-(174,30) 25 "MetaModelGenerator.mxg"
+            #line (175,28)-(175,30) 25 "MetaModelGenerator.mxg"
             __cb.Write("()");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (175,5)-(175,6) 25 "MetaModelGenerator.mxg"
+            #line (176,5)-(176,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first9 = true;
-            #line (176,10)-(176,38) 13 "MetaModelGenerator.mxg"
+            #line (177,10)-(177,38) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -2823,12 +2827,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first9 = false;
                 }
-                #line (177,14)-(177,131) 17 "MetaModelGenerator.mxg"
+                #line (178,14)-(178,131) 17 "MetaModelGenerator.mxg"
                 var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls));
                 #line hidden
                 
                 var __first10 = true;
-                #line (178,14)-(178,62) 17 "MetaModelGenerator.mxg"
+                #line (179,14)-(179,62) 17 "MetaModelGenerator.mxg"
                 foreach (var prop in metaCls.DeclaredProperties)
                 #line hidden
                 
@@ -2838,89 +2842,89 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first10 = false;
                     }
                     __cb.Push("        ");
-                    #line (179,17)-(179,18) 33 "MetaModelGenerator.mxg"
+                    #line (180,17)-(180,18) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (179,19)-(179,27) 32 "MetaModelGenerator.mxg"
+                    #line (180,19)-(180,27) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (179,28)-(179,29) 33 "MetaModelGenerator.mxg"
+                    #line (180,28)-(180,29) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (179,30)-(179,39) 32 "MetaModelGenerator.mxg"
+                    #line (180,30)-(180,39) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
-                    #line (179,40)-(179,41) 33 "MetaModelGenerator.mxg"
+                    #line (180,40)-(180,41) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (179,41)-(179,42) 33 "MetaModelGenerator.mxg"
+                    #line (180,41)-(180,42) 33 "MetaModelGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (179,42)-(179,43) 33 "MetaModelGenerator.mxg"
+                    #line (180,42)-(180,43) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (179,43)-(179,46) 33 "MetaModelGenerator.mxg"
+                    #line (180,43)-(180,46) 33 "MetaModelGenerator.mxg"
                     __cb.Write("new");
                     #line hidden
-                    #line (179,46)-(179,47) 33 "MetaModelGenerator.mxg"
+                    #line (180,46)-(180,47) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (179,47)-(179,70) 33 "MetaModelGenerator.mxg"
+                    #line (180,47)-(180,70) 33 "MetaModelGenerator.mxg"
                     __cb.Write("__ModelProperty(typeof(");
                     #line hidden
-                    #line (179,71)-(179,79) 32 "MetaModelGenerator.mxg"
+                    #line (180,71)-(180,79) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (179,80)-(179,82) 33 "MetaModelGenerator.mxg"
+                    #line (180,80)-(180,82) 33 "MetaModelGenerator.mxg"
                     __cb.Write("),");
                     #line hidden
-                    #line (179,82)-(179,83) 33 "MetaModelGenerator.mxg"
+                    #line (180,82)-(180,83) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (179,83)-(179,84) 33 "MetaModelGenerator.mxg"
+                    #line (180,83)-(180,84) 33 "MetaModelGenerator.mxg"
                     __cb.Write("\"");
                     #line hidden
-                    #line (179,85)-(179,94) 32 "MetaModelGenerator.mxg"
+                    #line (180,85)-(180,94) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
-                    #line (179,95)-(179,97) 33 "MetaModelGenerator.mxg"
+                    #line (180,95)-(180,97) 33 "MetaModelGenerator.mxg"
                     __cb.Write("\",");
                     #line hidden
-                    #line (179,97)-(179,98) 33 "MetaModelGenerator.mxg"
+                    #line (180,97)-(180,98) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (179,98)-(179,105) 33 "MetaModelGenerator.mxg"
+                    #line (180,98)-(180,105) 33 "MetaModelGenerator.mxg"
                     __cb.Write("typeof(");
                     #line hidden
-                    #line (179,106)-(179,125) 32 "MetaModelGenerator.mxg"
+                    #line (180,106)-(180,125) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharp(prop.Type));
                     #line hidden
-                    #line (179,126)-(179,128) 33 "MetaModelGenerator.mxg"
+                    #line (180,126)-(180,128) 33 "MetaModelGenerator.mxg"
                     __cb.Write("),");
                     #line hidden
-                    #line (179,128)-(179,129) 33 "MetaModelGenerator.mxg"
+                    #line (180,128)-(180,129) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (179,130)-(179,174) 32 "MetaModelGenerator.mxg"
+                    #line (180,130)-(180,174) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToDefaultValue(prop.Type, prop.DefaultValue));
                     #line hidden
-                    #line (179,175)-(179,176) 33 "MetaModelGenerator.mxg"
+                    #line (180,175)-(180,176) 33 "MetaModelGenerator.mxg"
                     __cb.Write(",");
                     #line hidden
-                    #line (179,176)-(179,177) 33 "MetaModelGenerator.mxg"
+                    #line (180,176)-(180,177) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (179,178)-(179,198) 32 "MetaModelGenerator.mxg"
+                    #line (180,178)-(180,198) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharp(prop.Flags));
                     #line hidden
-                    #line (179,199)-(179,200) 33 "MetaModelGenerator.mxg"
+                    #line (180,199)-(180,200) 33 "MetaModelGenerator.mxg"
                     __cb.Write(",");
                     #line hidden
-                    #line (179,200)-(179,201) 33 "MetaModelGenerator.mxg"
+                    #line (180,200)-(180,201) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
                     var __first11 = true;
-                    #line (179,202)-(179,233) 21 "MetaModelGenerator.mxg"
+                    #line (180,202)-(180,233) 21 "MetaModelGenerator.mxg"
                     if(prop.SymbolProperty is null)
                     #line hidden
                     
@@ -2929,11 +2933,11 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         {
                             __first11 = false;
                         }
-                        #line (179,234)-(179,238) 37 "MetaModelGenerator.mxg"
+                        #line (180,234)-(180,238) 37 "MetaModelGenerator.mxg"
                         __cb.Write("null");
                         #line hidden
                     }
-                    #line (179,239)-(179,243) 21 "MetaModelGenerator.mxg"
+                    #line (180,239)-(180,243) 21 "MetaModelGenerator.mxg"
                     else
                     #line hidden
                     
@@ -2942,17 +2946,17 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         {
                             __first11 = false;
                         }
-                        #line (179,244)-(179,245) 37 "MetaModelGenerator.mxg"
+                        #line (180,244)-(180,245) 37 "MetaModelGenerator.mxg"
                         __cb.Write("\"");
                         #line hidden
-                        #line (179,246)-(179,265) 36 "MetaModelGenerator.mxg"
+                        #line (180,246)-(180,265) 36 "MetaModelGenerator.mxg"
                         __cb.Write(prop.SymbolProperty);
                         #line hidden
-                        #line (179,266)-(179,267) 37 "MetaModelGenerator.mxg"
+                        #line (180,266)-(180,267) 37 "MetaModelGenerator.mxg"
                         __cb.Write("\"");
                         #line hidden
                     }
-                    #line (179,275)-(179,277) 33 "MetaModelGenerator.mxg"
+                    #line (180,275)-(180,277) 33 "MetaModelGenerator.mxg"
                     __cb.Write(");");
                     #line hidden
                     __cb.AppendLine();
@@ -2960,7 +2964,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 }
                 if (!__first10) __cb.AppendLine();
                 var __first12 = true;
-                #line (181,14)-(181,60) 17 "MetaModelGenerator.mxg"
+                #line (182,14)-(182,60) 17 "MetaModelGenerator.mxg"
                 foreach (var op in metaCls.DeclaredOperations)
                 #line hidden
                 
@@ -2970,71 +2974,65 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first12 = false;
                     }
                     __cb.Push("        ");
-                    #line (182,17)-(182,18) 33 "MetaModelGenerator.mxg"
+                    #line (183,17)-(183,18) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (182,19)-(182,27) 32 "MetaModelGenerator.mxg"
+                    #line (183,19)-(183,27) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (182,28)-(182,29) 33 "MetaModelGenerator.mxg"
+                    #line (183,28)-(183,29) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (182,30)-(182,37) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(op.Name);
+                    #line (183,30)-(183,43) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(op.UniqueName);
                     #line hidden
-                    #line (182,38)-(182,39) 33 "MetaModelGenerator.mxg"
+                    #line (183,44)-(183,45) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (182,39)-(182,40) 33 "MetaModelGenerator.mxg"
+                    #line (183,45)-(183,46) 33 "MetaModelGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (182,40)-(182,41) 33 "MetaModelGenerator.mxg"
+                    #line (183,46)-(183,47) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (182,41)-(182,44) 33 "MetaModelGenerator.mxg"
+                    #line (183,47)-(183,50) 33 "MetaModelGenerator.mxg"
                     __cb.Write("new");
                     #line hidden
-                    #line (182,44)-(182,45) 33 "MetaModelGenerator.mxg"
+                    #line (183,50)-(183,51) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (182,45)-(182,69) 33 "MetaModelGenerator.mxg"
+                    #line (183,51)-(183,75) 33 "MetaModelGenerator.mxg"
                     __cb.Write("__ModelOperation(typeof(");
                     #line hidden
-                    #line (182,70)-(182,78) 32 "MetaModelGenerator.mxg"
+                    #line (183,76)-(183,84) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (182,79)-(182,81) 33 "MetaModelGenerator.mxg"
+                    #line (183,85)-(183,87) 33 "MetaModelGenerator.mxg"
                     __cb.Write("),");
                     #line hidden
-                    #line (182,81)-(182,82) 33 "MetaModelGenerator.mxg"
+                    #line (183,87)-(183,88) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (182,82)-(182,83) 33 "MetaModelGenerator.mxg"
+                    #line (183,88)-(183,89) 33 "MetaModelGenerator.mxg"
                     __cb.Write("\"");
                     #line hidden
-                    #line (182,84)-(182,91) 32 "MetaModelGenerator.mxg"
+                    #line (183,90)-(183,97) 32 "MetaModelGenerator.mxg"
                     __cb.Write(op.Name);
                     #line hidden
-                    #line (182,92)-(182,94) 33 "MetaModelGenerator.mxg"
+                    #line (183,98)-(183,100) 33 "MetaModelGenerator.mxg"
                     __cb.Write("\",");
                     #line hidden
-                    #line (182,94)-(182,95) 33 "MetaModelGenerator.mxg"
+                    #line (183,100)-(183,101) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (182,95)-(182,96) 33 "MetaModelGenerator.mxg"
+                    #line (183,101)-(183,102) 33 "MetaModelGenerator.mxg"
                     __cb.Write("\"");
                     #line hidden
-                    #line (182,97)-(182,104) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(op.Name);
+                    #line (183,103)-(183,115) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(op.Signature);
                     #line hidden
-                    #line (182,105)-(182,106) 33 "MetaModelGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    #line (182,107)-(182,146) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(op.UnderlyingOperation.Parameters.Count);
-                    #line hidden
-                    #line (182,147)-(182,151) 33 "MetaModelGenerator.mxg"
-                    __cb.Write(")\");");
+                    #line (183,116)-(183,119) 33 "MetaModelGenerator.mxg"
+                    __cb.Write("\");");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
@@ -3043,34 +3041,34 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first9) __cb.AppendLine();
             __cb.Push("        ");
-            #line (185,9)-(185,18) 25 "MetaModelGenerator.mxg"
+            #line (186,9)-(186,18) 25 "MetaModelGenerator.mxg"
             __cb.Write("_instance");
             #line hidden
-            #line (185,18)-(185,19) 25 "MetaModelGenerator.mxg"
+            #line (186,18)-(186,19) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (185,19)-(185,20) 25 "MetaModelGenerator.mxg"
+            #line (186,19)-(186,20) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (185,20)-(185,21) 25 "MetaModelGenerator.mxg"
+            #line (186,20)-(186,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (185,21)-(185,24) 25 "MetaModelGenerator.mxg"
+            #line (186,21)-(186,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (185,24)-(185,25) 25 "MetaModelGenerator.mxg"
+            #line (186,24)-(186,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (185,26)-(185,40) 24 "MetaModelGenerator.mxg"
+            #line (186,26)-(186,40) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (185,41)-(185,44) 25 "MetaModelGenerator.mxg"
+            #line (186,41)-(186,44) 25 "MetaModelGenerator.mxg"
             __cb.Write("();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (186,5)-(186,6) 25 "MetaModelGenerator.mxg"
+            #line (187,5)-(187,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -3078,54 +3076,30 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (188,5)-(188,12) 25 "MetaModelGenerator.mxg"
+            #line (189,5)-(189,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (188,12)-(188,13) 25 "MetaModelGenerator.mxg"
+            #line (189,12)-(189,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (188,13)-(188,21) 25 "MetaModelGenerator.mxg"
+            #line (189,13)-(189,21) 25 "MetaModelGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (188,21)-(188,22) 25 "MetaModelGenerator.mxg"
+            #line (189,21)-(189,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (188,22)-(188,29) 25 "MetaModelGenerator.mxg"
+            #line (189,22)-(189,29) 25 "MetaModelGenerator.mxg"
             __cb.Write("__Model");
             #line hidden
-            #line (188,29)-(188,30) 25 "MetaModelGenerator.mxg"
+            #line (189,29)-(189,30) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (188,30)-(188,37) 25 "MetaModelGenerator.mxg"
+            #line (189,30)-(189,37) 25 "MetaModelGenerator.mxg"
             __cb.Write("_model;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (190,5)-(190,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write("private");
-            #line hidden
-            #line (190,12)-(190,13) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (190,13)-(190,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write("readonly");
-            #line hidden
-            #line (190,21)-(190,22) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (190,22)-(190,85) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
-            #line hidden
-            #line (190,85)-(190,86) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (190,86)-(190,97) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_enumTypes;");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (191,5)-(191,12) 25 "MetaModelGenerator.mxg"
@@ -3140,14 +3114,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (191,21)-(191,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (191,22)-(191,90) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo>");
+            #line (191,22)-(191,85) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
             #line hidden
-            #line (191,90)-(191,91) 25 "MetaModelGenerator.mxg"
+            #line (191,85)-(191,86) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (191,91)-(191,102) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_enumInfos;");
+            #line (191,86)-(191,97) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_enumTypes;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -3165,19 +3139,13 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.Write(" ");
             #line hidden
             #line (192,22)-(192,90) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo>");
             #line hidden
             #line (192,90)-(192,91) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (192,91)-(192,107) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelEnumInfo>");
-            #line hidden
-            #line (192,107)-(192,108) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (192,108)-(192,125) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_enumInfosByType;");
+            #line (192,91)-(192,102) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_enumInfos;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -3194,48 +3162,54 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (193,21)-(193,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (193,22)-(193,86) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line (193,22)-(193,90) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
             #line hidden
-            #line (193,86)-(193,87) 25 "MetaModelGenerator.mxg"
+            #line (193,90)-(193,91) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (193,87)-(193,103) 25 "MetaModelGenerator.mxg"
+            #line (193,91)-(193,107) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelEnumInfo>");
             #line hidden
-            #line (193,103)-(193,104) 25 "MetaModelGenerator.mxg"
+            #line (193,107)-(193,108) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (193,104)-(193,121) 25 "MetaModelGenerator.mxg"
+            #line (193,108)-(193,125) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_enumInfosByType;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (194,5)-(194,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write("private");
+            #line hidden
+            #line (194,12)-(194,13) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (194,13)-(194,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write("readonly");
+            #line hidden
+            #line (194,21)-(194,22) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (194,22)-(194,86) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line hidden
+            #line (194,86)-(194,87) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (194,87)-(194,103) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelEnumInfo>");
+            #line hidden
+            #line (194,103)-(194,104) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (194,104)-(194,121) 25 "MetaModelGenerator.mxg"
             __cb.Write("_enumInfosByName;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (195,5)-(195,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write("private");
-            #line hidden
-            #line (195,12)-(195,13) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (195,13)-(195,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write("readonly");
-            #line hidden
-            #line (195,21)-(195,22) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (195,22)-(195,85) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
-            #line hidden
-            #line (195,85)-(195,86) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (195,86)-(195,98) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_classTypes;");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (196,5)-(196,12) 25 "MetaModelGenerator.mxg"
@@ -3250,14 +3224,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (196,21)-(196,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (196,22)-(196,91) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
+            #line (196,22)-(196,85) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
             #line hidden
-            #line (196,91)-(196,92) 25 "MetaModelGenerator.mxg"
+            #line (196,85)-(196,86) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (196,92)-(196,104) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_classInfos;");
+            #line (196,86)-(196,98) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_classTypes;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -3274,20 +3248,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (197,21)-(197,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (197,22)-(197,90) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
+            #line (197,22)-(197,91) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
             #line hidden
-            #line (197,90)-(197,91) 25 "MetaModelGenerator.mxg"
+            #line (197,91)-(197,92) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (197,91)-(197,108) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelClassInfo>");
-            #line hidden
-            #line (197,108)-(197,109) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (197,109)-(197,127) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_classInfosByType;");
+            #line (197,92)-(197,104) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_classInfos;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -3304,19 +3272,49 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (198,21)-(198,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (198,22)-(198,86) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line (198,22)-(198,90) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
             #line hidden
-            #line (198,86)-(198,87) 25 "MetaModelGenerator.mxg"
+            #line (198,90)-(198,91) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (198,87)-(198,104) 25 "MetaModelGenerator.mxg"
+            #line (198,91)-(198,108) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelClassInfo>");
             #line hidden
-            #line (198,104)-(198,105) 25 "MetaModelGenerator.mxg"
+            #line (198,108)-(198,109) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (198,105)-(198,123) 25 "MetaModelGenerator.mxg"
+            #line (198,109)-(198,127) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_classInfosByType;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (199,5)-(199,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write("private");
+            #line hidden
+            #line (199,12)-(199,13) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (199,13)-(199,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write("readonly");
+            #line hidden
+            #line (199,21)-(199,22) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (199,22)-(199,86) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line hidden
+            #line (199,86)-(199,87) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (199,87)-(199,104) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelClassInfo>");
+            #line hidden
+            #line (199,104)-(199,105) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (199,105)-(199,123) 25 "MetaModelGenerator.mxg"
             __cb.Write("_classInfosByName;");
             #line hidden
             __cb.AppendLine();
@@ -3324,7 +3322,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first13 = true;
-            #line (200,6)-(200,77) 13 "MetaModelGenerator.mxg"
+            #line (201,6)-(201,77) 13 "MetaModelGenerator.mxg"
             foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
             #line hidden
             
@@ -3334,31 +3332,31 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first13 = false;
                 }
                 __cb.Push("    ");
-                #line (201,9)-(201,16) 29 "MetaModelGenerator.mxg"
+                #line (202,9)-(202,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write("private");
                 #line hidden
-                #line (201,16)-(201,17) 29 "MetaModelGenerator.mxg"
+                #line (202,16)-(202,17) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (201,17)-(201,25) 29 "MetaModelGenerator.mxg"
+                #line (202,17)-(202,25) 29 "MetaModelGenerator.mxg"
                 __cb.Write("readonly");
                 #line hidden
-                #line (201,25)-(201,26) 29 "MetaModelGenerator.mxg"
+                #line (202,25)-(202,26) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (201,27)-(201,43) 28 "MetaModelGenerator.mxg"
+                #line (202,27)-(202,43) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(c.Type));
                 #line hidden
-                #line (201,44)-(201,45) 29 "MetaModelGenerator.mxg"
+                #line (202,44)-(202,45) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (201,45)-(201,46) 29 "MetaModelGenerator.mxg"
+                #line (202,45)-(202,46) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_");
                 #line hidden
-                #line (201,47)-(201,67) 28 "MetaModelGenerator.mxg"
+                #line (202,47)-(202,67) 28 "MetaModelGenerator.mxg"
                 __cb.Write(c.Name.ToCamelCase());
                 #line hidden
-                #line (201,68)-(201,69) 29 "MetaModelGenerator.mxg"
+                #line (202,68)-(202,69) 29 "MetaModelGenerator.mxg"
                 __cb.Write(";");
                 #line hidden
                 __cb.AppendLine();
@@ -3368,44 +3366,44 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (204,5)-(204,12) 25 "MetaModelGenerator.mxg"
+            #line (205,5)-(205,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (204,12)-(204,13) 25 "MetaModelGenerator.mxg"
+            #line (205,12)-(205,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (204,14)-(204,28) 24 "MetaModelGenerator.mxg"
+            #line (205,14)-(205,28) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (204,29)-(204,31) 25 "MetaModelGenerator.mxg"
+            #line (205,29)-(205,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("()");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (205,5)-(205,6) 25 "MetaModelGenerator.mxg"
+            #line (206,5)-(206,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (206,9)-(206,19) 25 "MetaModelGenerator.mxg"
+            #line (207,9)-(207,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("_enumTypes");
             #line hidden
-            #line (206,19)-(206,20) 25 "MetaModelGenerator.mxg"
+            #line (207,19)-(207,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (206,20)-(206,21) 25 "MetaModelGenerator.mxg"
+            #line (207,20)-(207,21) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (206,21)-(206,22) 25 "MetaModelGenerator.mxg"
+            #line (207,21)-(207,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (206,22)-(206,58) 25 "MetaModelGenerator.mxg"
+            #line (207,22)-(207,58) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__MetaType>(");
             #line hidden
             var __first14 = true;
-            #line (206,59)-(206,86) 13 "MetaModelGenerator.mxg"
+            #line (207,59)-(207,86) 13 "MetaModelGenerator.mxg"
             foreach (var enm in Enums) 
             #line hidden
             
@@ -3418,45 +3416,45 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("        ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (206,96)-(206,100) 32 "MetaModelGenerator.mxg"
+                    #line (207,96)-(207,100) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (206,101)-(206,108) 29 "MetaModelGenerator.mxg"
+                #line (207,101)-(207,108) 29 "MetaModelGenerator.mxg"
                 __cb.Write("typeof(");
                 #line hidden
-                #line (206,109)-(206,117) 28 "MetaModelGenerator.mxg"
+                #line (207,109)-(207,117) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (206,118)-(206,119) 29 "MetaModelGenerator.mxg"
+                #line (207,118)-(207,119) 29 "MetaModelGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
             }
-            #line (206,132)-(206,134) 25 "MetaModelGenerator.mxg"
+            #line (207,132)-(207,134) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (207,9)-(207,19) 25 "MetaModelGenerator.mxg"
+            #line (208,9)-(208,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("_enumInfos");
             #line hidden
-            #line (207,19)-(207,20) 25 "MetaModelGenerator.mxg"
+            #line (208,19)-(208,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (207,20)-(207,21) 25 "MetaModelGenerator.mxg"
+            #line (208,20)-(208,21) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (207,21)-(207,22) 25 "MetaModelGenerator.mxg"
+            #line (208,21)-(208,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (207,22)-(207,63) 25 "MetaModelGenerator.mxg"
+            #line (208,22)-(208,63) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelEnumInfo>(");
             #line hidden
             var __first15 = true;
-            #line (207,64)-(207,91) 13 "MetaModelGenerator.mxg"
+            #line (208,64)-(208,91) 13 "MetaModelGenerator.mxg"
             foreach (var enm in Enums) 
             #line hidden
             
@@ -3469,56 +3467,56 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("        ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (207,101)-(207,105) 32 "MetaModelGenerator.mxg"
+                    #line (208,101)-(208,105) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (207,107)-(207,115) 28 "MetaModelGenerator.mxg"
+                #line (208,107)-(208,115) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (207,116)-(207,120) 29 "MetaModelGenerator.mxg"
+                #line (208,116)-(208,120) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info");
                 #line hidden
             }
-            #line (207,133)-(207,135) 25 "MetaModelGenerator.mxg"
+            #line (208,133)-(208,135) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (208,9)-(208,12) 25 "MetaModelGenerator.mxg"
+            #line (209,9)-(209,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (208,12)-(208,13) 25 "MetaModelGenerator.mxg"
+            #line (209,12)-(209,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (208,13)-(208,28) 25 "MetaModelGenerator.mxg"
+            #line (209,13)-(209,28) 25 "MetaModelGenerator.mxg"
             __cb.Write("enumInfosByType");
             #line hidden
-            #line (208,28)-(208,29) 25 "MetaModelGenerator.mxg"
+            #line (209,28)-(209,29) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (208,29)-(208,30) 25 "MetaModelGenerator.mxg"
+            #line (209,29)-(209,30) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (208,30)-(208,31) 25 "MetaModelGenerator.mxg"
+            #line (209,30)-(209,31) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (208,31)-(208,78) 25 "MetaModelGenerator.mxg"
+            #line (209,31)-(209,78) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<__MetaType,");
             #line hidden
-            #line (208,78)-(208,79) 25 "MetaModelGenerator.mxg"
+            #line (209,78)-(209,79) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (208,79)-(208,98) 25 "MetaModelGenerator.mxg"
+            #line (209,79)-(209,98) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelEnumInfo>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first16 = true;
-            #line (209,10)-(209,36) 13 "MetaModelGenerator.mxg"
+            #line (210,10)-(210,36) 13 "MetaModelGenerator.mxg"
             foreach (var enm in Enums)
             #line hidden
             
@@ -3528,22 +3526,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first16 = false;
                 }
                 __cb.Push("        ");
-                #line (210,13)-(210,40) 29 "MetaModelGenerator.mxg"
+                #line (211,13)-(211,40) 29 "MetaModelGenerator.mxg"
                 __cb.Write("enumInfosByType.Add(typeof(");
                 #line hidden
-                #line (210,41)-(210,49) 28 "MetaModelGenerator.mxg"
+                #line (211,41)-(211,49) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (210,50)-(210,52) 29 "MetaModelGenerator.mxg"
+                #line (211,50)-(211,52) 29 "MetaModelGenerator.mxg"
                 __cb.Write("),");
                 #line hidden
-                #line (210,52)-(210,53) 29 "MetaModelGenerator.mxg"
+                #line (211,52)-(211,53) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (210,54)-(210,62) 28 "MetaModelGenerator.mxg"
+                #line (211,54)-(211,62) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (210,63)-(210,69) 29 "MetaModelGenerator.mxg"
+                #line (211,63)-(211,69) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info);");
                 #line hidden
                 __cb.AppendLine();
@@ -3551,55 +3549,55 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first16) __cb.AppendLine();
             __cb.Push("        ");
-            #line (212,9)-(212,25) 25 "MetaModelGenerator.mxg"
+            #line (213,9)-(213,25) 25 "MetaModelGenerator.mxg"
             __cb.Write("_enumInfosByType");
             #line hidden
-            #line (212,25)-(212,26) 25 "MetaModelGenerator.mxg"
+            #line (213,25)-(213,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (212,26)-(212,27) 25 "MetaModelGenerator.mxg"
+            #line (213,26)-(213,27) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (212,27)-(212,28) 25 "MetaModelGenerator.mxg"
+            #line (213,27)-(213,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (212,28)-(212,58) 25 "MetaModelGenerator.mxg"
+            #line (213,28)-(213,58) 25 "MetaModelGenerator.mxg"
             __cb.Write("enumInfosByType.ToImmutable();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (213,9)-(213,12) 25 "MetaModelGenerator.mxg"
+            #line (214,9)-(214,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (213,12)-(213,13) 25 "MetaModelGenerator.mxg"
+            #line (214,12)-(214,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (213,13)-(213,28) 25 "MetaModelGenerator.mxg"
+            #line (214,13)-(214,28) 25 "MetaModelGenerator.mxg"
             __cb.Write("enumInfosByName");
             #line hidden
-            #line (213,28)-(213,29) 25 "MetaModelGenerator.mxg"
+            #line (214,28)-(214,29) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (213,29)-(213,30) 25 "MetaModelGenerator.mxg"
+            #line (214,29)-(214,30) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (213,30)-(213,31) 25 "MetaModelGenerator.mxg"
+            #line (214,30)-(214,31) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (213,31)-(213,74) 25 "MetaModelGenerator.mxg"
+            #line (214,31)-(214,74) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<string,");
             #line hidden
-            #line (213,74)-(213,75) 25 "MetaModelGenerator.mxg"
+            #line (214,74)-(214,75) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (213,75)-(213,94) 25 "MetaModelGenerator.mxg"
+            #line (214,75)-(214,94) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelEnumInfo>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first17 = true;
-            #line (214,10)-(214,36) 13 "MetaModelGenerator.mxg"
+            #line (215,10)-(215,36) 13 "MetaModelGenerator.mxg"
             foreach (var enm in Enums)
             #line hidden
             
@@ -3609,22 +3607,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first17 = false;
                 }
                 __cb.Push("        ");
-                #line (215,13)-(215,34) 29 "MetaModelGenerator.mxg"
+                #line (216,13)-(216,34) 29 "MetaModelGenerator.mxg"
                 __cb.Write("enumInfosByName.Add(\"");
                 #line hidden
-                #line (215,35)-(215,43) 28 "MetaModelGenerator.mxg"
+                #line (216,35)-(216,43) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (215,44)-(215,46) 29 "MetaModelGenerator.mxg"
+                #line (216,44)-(216,46) 29 "MetaModelGenerator.mxg"
                 __cb.Write("\",");
                 #line hidden
-                #line (215,46)-(215,47) 29 "MetaModelGenerator.mxg"
+                #line (216,46)-(216,47) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (215,48)-(215,56) 28 "MetaModelGenerator.mxg"
+                #line (216,48)-(216,56) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (215,57)-(215,63) 29 "MetaModelGenerator.mxg"
+                #line (216,57)-(216,63) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info);");
                 #line hidden
                 __cb.AppendLine();
@@ -3632,19 +3630,19 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first17) __cb.AppendLine();
             __cb.Push("        ");
-            #line (217,9)-(217,25) 25 "MetaModelGenerator.mxg"
+            #line (218,9)-(218,25) 25 "MetaModelGenerator.mxg"
             __cb.Write("_enumInfosByName");
             #line hidden
-            #line (217,25)-(217,26) 25 "MetaModelGenerator.mxg"
+            #line (218,25)-(218,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (217,26)-(217,27) 25 "MetaModelGenerator.mxg"
+            #line (218,26)-(218,27) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (217,27)-(217,28) 25 "MetaModelGenerator.mxg"
+            #line (218,27)-(218,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (217,28)-(217,58) 25 "MetaModelGenerator.mxg"
+            #line (218,28)-(218,58) 25 "MetaModelGenerator.mxg"
             __cb.Write("enumInfosByName.ToImmutable();");
             #line hidden
             __cb.AppendLine();
@@ -3652,23 +3650,23 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (219,9)-(219,20) 25 "MetaModelGenerator.mxg"
+            #line (220,9)-(220,20) 25 "MetaModelGenerator.mxg"
             __cb.Write("_classTypes");
             #line hidden
-            #line (219,20)-(219,21) 25 "MetaModelGenerator.mxg"
+            #line (220,20)-(220,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (219,21)-(219,22) 25 "MetaModelGenerator.mxg"
+            #line (220,21)-(220,22) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (219,22)-(219,23) 25 "MetaModelGenerator.mxg"
+            #line (220,22)-(220,23) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (219,23)-(219,59) 25 "MetaModelGenerator.mxg"
+            #line (220,23)-(220,59) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__MetaType>(");
             #line hidden
             var __first18 = true;
-            #line (219,60)-(219,89) 13 "MetaModelGenerator.mxg"
+            #line (220,60)-(220,89) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes) 
             #line hidden
             
@@ -3681,45 +3679,45 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("        ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (219,99)-(219,103) 32 "MetaModelGenerator.mxg"
+                    #line (220,99)-(220,103) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (219,104)-(219,111) 29 "MetaModelGenerator.mxg"
+                #line (220,104)-(220,111) 29 "MetaModelGenerator.mxg"
                 __cb.Write("typeof(");
                 #line hidden
-                #line (219,112)-(219,120) 28 "MetaModelGenerator.mxg"
+                #line (220,112)-(220,120) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (219,121)-(219,122) 29 "MetaModelGenerator.mxg"
+                #line (220,121)-(220,122) 29 "MetaModelGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
             }
-            #line (219,135)-(219,137) 25 "MetaModelGenerator.mxg"
+            #line (220,135)-(220,137) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (220,9)-(220,20) 25 "MetaModelGenerator.mxg"
+            #line (221,9)-(221,20) 25 "MetaModelGenerator.mxg"
             __cb.Write("_classInfos");
             #line hidden
-            #line (220,20)-(220,21) 25 "MetaModelGenerator.mxg"
+            #line (221,20)-(221,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,21)-(220,22) 25 "MetaModelGenerator.mxg"
+            #line (221,21)-(221,22) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (220,22)-(220,23) 25 "MetaModelGenerator.mxg"
+            #line (221,22)-(221,23) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,23)-(220,65) 25 "MetaModelGenerator.mxg"
+            #line (221,23)-(221,65) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelClassInfo>(");
             #line hidden
             var __first19 = true;
-            #line (220,66)-(220,95) 13 "MetaModelGenerator.mxg"
+            #line (221,66)-(221,95) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes) 
             #line hidden
             
@@ -3732,56 +3730,56 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("        ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (220,105)-(220,109) 32 "MetaModelGenerator.mxg"
+                    #line (221,105)-(221,109) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (220,111)-(220,119) 28 "MetaModelGenerator.mxg"
+                #line (221,111)-(221,119) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (220,120)-(220,124) 29 "MetaModelGenerator.mxg"
+                #line (221,120)-(221,124) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info");
                 #line hidden
             }
-            #line (220,137)-(220,139) 25 "MetaModelGenerator.mxg"
+            #line (221,137)-(221,139) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (221,9)-(221,12) 25 "MetaModelGenerator.mxg"
+            #line (222,9)-(222,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (221,12)-(221,13) 25 "MetaModelGenerator.mxg"
+            #line (222,12)-(222,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (221,13)-(221,29) 25 "MetaModelGenerator.mxg"
+            #line (222,13)-(222,29) 25 "MetaModelGenerator.mxg"
             __cb.Write("classInfosByType");
             #line hidden
-            #line (221,29)-(221,30) 25 "MetaModelGenerator.mxg"
+            #line (222,29)-(222,30) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (221,30)-(221,31) 25 "MetaModelGenerator.mxg"
+            #line (222,30)-(222,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (221,31)-(221,32) 25 "MetaModelGenerator.mxg"
+            #line (222,31)-(222,32) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (221,32)-(221,79) 25 "MetaModelGenerator.mxg"
+            #line (222,32)-(222,79) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<__MetaType,");
             #line hidden
-            #line (221,79)-(221,80) 25 "MetaModelGenerator.mxg"
+            #line (222,79)-(222,80) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (221,80)-(221,100) 25 "MetaModelGenerator.mxg"
+            #line (222,80)-(222,100) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelClassInfo>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first20 = true;
-            #line (222,10)-(222,38) 13 "MetaModelGenerator.mxg"
+            #line (223,10)-(223,38) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -3791,22 +3789,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first20 = false;
                 }
                 __cb.Push("        ");
-                #line (223,13)-(223,41) 29 "MetaModelGenerator.mxg"
+                #line (224,13)-(224,41) 29 "MetaModelGenerator.mxg"
                 __cb.Write("classInfosByType.Add(typeof(");
                 #line hidden
-                #line (223,42)-(223,50) 28 "MetaModelGenerator.mxg"
+                #line (224,42)-(224,50) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (223,51)-(223,53) 29 "MetaModelGenerator.mxg"
+                #line (224,51)-(224,53) 29 "MetaModelGenerator.mxg"
                 __cb.Write("),");
                 #line hidden
-                #line (223,53)-(223,54) 29 "MetaModelGenerator.mxg"
+                #line (224,53)-(224,54) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (223,55)-(223,63) 28 "MetaModelGenerator.mxg"
+                #line (224,55)-(224,63) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (223,64)-(223,70) 29 "MetaModelGenerator.mxg"
+                #line (224,64)-(224,70) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info);");
                 #line hidden
                 __cb.AppendLine();
@@ -3814,55 +3812,55 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first20) __cb.AppendLine();
             __cb.Push("        ");
-            #line (225,9)-(225,26) 25 "MetaModelGenerator.mxg"
+            #line (226,9)-(226,26) 25 "MetaModelGenerator.mxg"
             __cb.Write("_classInfosByType");
             #line hidden
-            #line (225,26)-(225,27) 25 "MetaModelGenerator.mxg"
+            #line (226,26)-(226,27) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (225,27)-(225,28) 25 "MetaModelGenerator.mxg"
+            #line (226,27)-(226,28) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (225,28)-(225,29) 25 "MetaModelGenerator.mxg"
+            #line (226,28)-(226,29) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (225,29)-(225,60) 25 "MetaModelGenerator.mxg"
+            #line (226,29)-(226,60) 25 "MetaModelGenerator.mxg"
             __cb.Write("classInfosByType.ToImmutable();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (226,9)-(226,12) 25 "MetaModelGenerator.mxg"
+            #line (227,9)-(227,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (226,12)-(226,13) 25 "MetaModelGenerator.mxg"
+            #line (227,12)-(227,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (226,13)-(226,29) 25 "MetaModelGenerator.mxg"
+            #line (227,13)-(227,29) 25 "MetaModelGenerator.mxg"
             __cb.Write("classInfosByName");
             #line hidden
-            #line (226,29)-(226,30) 25 "MetaModelGenerator.mxg"
+            #line (227,29)-(227,30) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (226,30)-(226,31) 25 "MetaModelGenerator.mxg"
+            #line (227,30)-(227,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (226,31)-(226,32) 25 "MetaModelGenerator.mxg"
+            #line (227,31)-(227,32) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (226,32)-(226,75) 25 "MetaModelGenerator.mxg"
+            #line (227,32)-(227,75) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<string,");
             #line hidden
-            #line (226,75)-(226,76) 25 "MetaModelGenerator.mxg"
+            #line (227,75)-(227,76) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (226,76)-(226,96) 25 "MetaModelGenerator.mxg"
+            #line (227,76)-(227,96) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelClassInfo>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first21 = true;
-            #line (227,10)-(227,38) 13 "MetaModelGenerator.mxg"
+            #line (228,10)-(228,38) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -3872,22 +3870,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first21 = false;
                 }
                 __cb.Push("        ");
-                #line (228,13)-(228,35) 29 "MetaModelGenerator.mxg"
+                #line (229,13)-(229,35) 29 "MetaModelGenerator.mxg"
                 __cb.Write("classInfosByName.Add(\"");
                 #line hidden
-                #line (228,36)-(228,44) 28 "MetaModelGenerator.mxg"
+                #line (229,36)-(229,44) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (228,45)-(228,47) 29 "MetaModelGenerator.mxg"
+                #line (229,45)-(229,47) 29 "MetaModelGenerator.mxg"
                 __cb.Write("\",");
                 #line hidden
-                #line (228,47)-(228,48) 29 "MetaModelGenerator.mxg"
+                #line (229,47)-(229,48) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (228,49)-(228,57) 28 "MetaModelGenerator.mxg"
+                #line (229,49)-(229,57) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (228,58)-(228,64) 29 "MetaModelGenerator.mxg"
+                #line (229,58)-(229,64) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info);");
                 #line hidden
                 __cb.AppendLine();
@@ -3895,56 +3893,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first21) __cb.AppendLine();
             __cb.Push("        ");
-            #line (230,9)-(230,26) 25 "MetaModelGenerator.mxg"
+            #line (231,9)-(231,26) 25 "MetaModelGenerator.mxg"
             __cb.Write("_classInfosByName");
             #line hidden
-            #line (230,26)-(230,27) 25 "MetaModelGenerator.mxg"
+            #line (231,26)-(231,27) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (230,27)-(230,28) 25 "MetaModelGenerator.mxg"
+            #line (231,27)-(231,28) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (230,28)-(230,29) 25 "MetaModelGenerator.mxg"
+            #line (231,28)-(231,29) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (230,29)-(230,60) 25 "MetaModelGenerator.mxg"
+            #line (231,29)-(231,60) 25 "MetaModelGenerator.mxg"
             __cb.Write("classInfosByName.ToImmutable();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (231,9)-(231,15) 25 "MetaModelGenerator.mxg"
+            #line (232,9)-(232,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("_model");
-            #line hidden
-            #line (231,15)-(231,16) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (231,16)-(231,17) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (231,17)-(231,18) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (231,18)-(231,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write("new");
-            #line hidden
-            #line (231,21)-(231,22) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (231,22)-(231,32) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__Model();");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (232,9)-(232,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (232,12)-(232,13) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (232,13)-(232,15) 25 "MetaModelGenerator.mxg"
-            __cb.Write("cf");
             #line hidden
             #line (232,15)-(232,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
@@ -3961,22 +3929,52 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (232,21)-(232,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (232,23)-(232,37) 24 "MetaModelGenerator.mxg"
-            __cb.Write(MetaModel.Name);
+            #line (232,22)-(232,32) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__Model();");
             #line hidden
-            #line (232,38)-(232,58) 25 "MetaModelGenerator.mxg"
-            __cb.Write("ModelFactory(_model,");
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (233,9)-(233,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write("var");
             #line hidden
-            #line (232,58)-(232,59) 25 "MetaModelGenerator.mxg"
+            #line (233,12)-(233,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (232,59)-(232,65) 25 "MetaModelGenerator.mxg"
+            #line (233,13)-(233,15) 25 "MetaModelGenerator.mxg"
+            __cb.Write("cf");
+            #line hidden
+            #line (233,15)-(233,16) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (233,16)-(233,17) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (233,17)-(233,18) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (233,18)-(233,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (233,21)-(233,22) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (233,23)-(233,37) 24 "MetaModelGenerator.mxg"
+            __cb.Write(MetaModel.Name);
+            #line hidden
+            #line (233,38)-(233,58) 25 "MetaModelGenerator.mxg"
+            __cb.Write("ModelFactory(_model,");
+            #line hidden
+            #line (233,58)-(233,59) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (233,59)-(233,65) 25 "MetaModelGenerator.mxg"
             __cb.Write("this);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first22 = true;
-            #line (233,10)-(233,81) 13 "MetaModelGenerator.mxg"
+            #line (234,10)-(234,81) 13 "MetaModelGenerator.mxg"
             foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
             #line hidden
             
@@ -3986,28 +3984,28 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first22 = false;
                 }
                 __cb.Push("        ");
-                #line (234,13)-(234,14) 29 "MetaModelGenerator.mxg"
+                #line (235,13)-(235,14) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_");
                 #line hidden
-                #line (234,15)-(234,35) 28 "MetaModelGenerator.mxg"
+                #line (235,15)-(235,35) 28 "MetaModelGenerator.mxg"
                 __cb.Write(c.Name.ToCamelCase());
                 #line hidden
-                #line (234,36)-(234,37) 29 "MetaModelGenerator.mxg"
+                #line (235,36)-(235,37) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (234,37)-(234,38) 29 "MetaModelGenerator.mxg"
+                #line (235,37)-(235,38) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=");
                 #line hidden
-                #line (234,38)-(234,39) 29 "MetaModelGenerator.mxg"
+                #line (235,38)-(235,39) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (234,39)-(234,42) 29 "MetaModelGenerator.mxg"
+                #line (235,39)-(235,42) 29 "MetaModelGenerator.mxg"
                 __cb.Write("cf.");
                 #line hidden
-                #line (234,43)-(234,54) 28 "MetaModelGenerator.mxg"
+                #line (235,43)-(235,54) 28 "MetaModelGenerator.mxg"
                 __cb.Write(c.Type.Name);
                 #line hidden
-                #line (234,55)-(234,58) 29 "MetaModelGenerator.mxg"
+                #line (235,55)-(235,58) 29 "MetaModelGenerator.mxg"
                 __cb.Write("();");
                 #line hidden
                 __cb.AppendLine();
@@ -4015,26 +4013,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first22) __cb.AppendLine();
             __cb.Push("        ");
-            #line (236,9)-(236,12) 25 "MetaModelGenerator.mxg"
+            #line (237,9)-(237,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (236,12)-(236,13) 25 "MetaModelGenerator.mxg"
+            #line (237,12)-(237,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (236,13)-(236,14) 25 "MetaModelGenerator.mxg"
+            #line (237,13)-(237,14) 25 "MetaModelGenerator.mxg"
             __cb.Write("f");
             #line hidden
-            #line (236,14)-(236,15) 25 "MetaModelGenerator.mxg"
+            #line (237,14)-(237,15) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (236,15)-(236,16) 25 "MetaModelGenerator.mxg"
+            #line (237,15)-(237,16) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (236,16)-(236,17) 25 "MetaModelGenerator.mxg"
+            #line (237,16)-(237,17) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             var __first23 = true;
-            #line (236,18)-(236,38) 13 "MetaModelGenerator.mxg"
+            #line (237,18)-(237,38) 13 "MetaModelGenerator.mxg"
             if (IsMetaMetaModel)
             #line hidden
             
@@ -4043,23 +4041,23 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first23 = false;
                 }
-                #line (236,39)-(236,42) 29 "MetaModelGenerator.mxg"
+                #line (237,39)-(237,42) 29 "MetaModelGenerator.mxg"
                 __cb.Write("new");
                 #line hidden
-                #line (236,42)-(236,43) 29 "MetaModelGenerator.mxg"
+                #line (237,42)-(237,43) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (236,43)-(236,69) 29 "MetaModelGenerator.mxg"
+                #line (237,43)-(237,69) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__MetaModelFactory(_model,");
                 #line hidden
-                #line (236,69)-(236,70) 29 "MetaModelGenerator.mxg"
+                #line (237,69)-(237,70) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (236,70)-(236,75) 29 "MetaModelGenerator.mxg"
+                #line (237,70)-(237,75) 29 "MetaModelGenerator.mxg"
                 __cb.Write("this)");
                 #line hidden
             }
-            #line (236,76)-(236,80) 13 "MetaModelGenerator.mxg"
+            #line (237,76)-(237,80) 13 "MetaModelGenerator.mxg"
             else
             #line hidden
             
@@ -4068,23 +4066,23 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first23 = false;
                 }
-                #line (236,81)-(236,84) 29 "MetaModelGenerator.mxg"
+                #line (237,81)-(237,84) 29 "MetaModelGenerator.mxg"
                 __cb.Write("new");
                 #line hidden
-                #line (236,84)-(236,85) 29 "MetaModelGenerator.mxg"
+                #line (237,84)-(237,85) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (236,85)-(236,111) 29 "MetaModelGenerator.mxg"
+                #line (237,85)-(237,111) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__MetaModelFactory(_model)");
                 #line hidden
             }
-            #line (236,119)-(236,120) 25 "MetaModelGenerator.mxg"
+            #line (237,119)-(237,120) 25 "MetaModelGenerator.mxg"
             __cb.Write(";");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first24 = true;
-            #line (237,10)-(237,38) 13 "MetaModelGenerator.mxg"
+            #line (238,10)-(238,38) 13 "MetaModelGenerator.mxg"
             foreach (var obj in Objects)
             #line hidden
             
@@ -4094,31 +4092,31 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first24 = false;
                 }
                 __cb.Push("        ");
-                #line (238,13)-(238,16) 29 "MetaModelGenerator.mxg"
+                #line (239,13)-(239,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write("var");
                 #line hidden
-                #line (238,16)-(238,17) 29 "MetaModelGenerator.mxg"
+                #line (239,16)-(239,17) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (238,18)-(238,30) 28 "MetaModelGenerator.mxg"
+                #line (239,18)-(239,30) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetName(obj));
                 #line hidden
-                #line (238,31)-(238,32) 29 "MetaModelGenerator.mxg"
+                #line (239,31)-(239,32) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (238,32)-(238,33) 29 "MetaModelGenerator.mxg"
+                #line (239,32)-(239,33) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=");
                 #line hidden
-                #line (238,33)-(238,34) 29 "MetaModelGenerator.mxg"
+                #line (239,33)-(239,34) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (238,34)-(238,36) 29 "MetaModelGenerator.mxg"
+                #line (239,34)-(239,36) 29 "MetaModelGenerator.mxg"
                 __cb.Write("f.");
                 #line hidden
-                #line (238,37)-(238,60) 28 "MetaModelGenerator.mxg"
+                #line (239,37)-(239,60) 28 "MetaModelGenerator.mxg"
                 __cb.Write(obj.MInfo.MetaType.Name);
                 #line hidden
-                #line (238,61)-(238,64) 29 "MetaModelGenerator.mxg"
+                #line (239,61)-(239,64) 29 "MetaModelGenerator.mxg"
                 __cb.Write("();");
                 #line hidden
                 __cb.AppendLine();
@@ -4126,19 +4124,19 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first24) __cb.AppendLine();
             __cb.Push("        ");
-            #line (240,9)-(240,22) 25 "MetaModelGenerator.mxg"
+            #line (241,9)-(241,22) 25 "MetaModelGenerator.mxg"
             __cb.Write("__CustomImpl.");
             #line hidden
-            #line (240,23)-(240,37) 24 "MetaModelGenerator.mxg"
+            #line (241,23)-(241,37) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (240,38)-(240,45) 25 "MetaModelGenerator.mxg"
+            #line (241,38)-(241,45) 25 "MetaModelGenerator.mxg"
             __cb.Write("(this);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first25 = true;
-            #line (241,10)-(241,38) 13 "MetaModelGenerator.mxg"
+            #line (242,10)-(242,38) 13 "MetaModelGenerator.mxg"
             foreach (var obj in Objects)
             #line hidden
             
@@ -4148,7 +4146,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first25 = false;
                 }
                 var __first26 = true;
-                #line (242,14)-(242,50) 17 "MetaModelGenerator.mxg"
+                #line (243,14)-(243,50) 17 "MetaModelGenerator.mxg"
                 foreach (var child in obj.MChildren)
                 #line hidden
                 
@@ -4158,16 +4156,16 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first26 = false;
                     }
                     __cb.Push("        ");
-                    #line (243,18)-(243,30) 32 "MetaModelGenerator.mxg"
+                    #line (244,18)-(244,30) 32 "MetaModelGenerator.mxg"
                     __cb.Write(GetName(obj));
                     #line hidden
-                    #line (243,31)-(243,46) 33 "MetaModelGenerator.mxg"
+                    #line (244,31)-(244,46) 33 "MetaModelGenerator.mxg"
                     __cb.Write(".MChildren.Add(");
                     #line hidden
-                    #line (243,47)-(243,61) 32 "MetaModelGenerator.mxg"
+                    #line (244,47)-(244,61) 32 "MetaModelGenerator.mxg"
                     __cb.Write(GetName(child));
                     #line hidden
-                    #line (243,62)-(243,64) 33 "MetaModelGenerator.mxg"
+                    #line (244,62)-(244,64) 33 "MetaModelGenerator.mxg"
                     __cb.Write(");");
                     #line hidden
                     __cb.AppendLine();
@@ -4175,7 +4173,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 }
                 if (!__first26) __cb.AppendLine();
                 var __first27 = true;
-                #line (245,14)-(245,62) 17 "MetaModelGenerator.mxg"
+                #line (246,14)-(246,62) 17 "MetaModelGenerator.mxg"
                 foreach (var prop in obj.MInfo.PublicProperties)
                 #line hidden
                 
@@ -4184,12 +4182,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __first27 = false;
                     }
-                    #line (246,18)-(246,47) 21 "MetaModelGenerator.mxg"
+                    #line (247,18)-(247,47) 21 "MetaModelGenerator.mxg"
                     var slot = obj.MGetSlot(prop);
                     #line hidden
                     
                     var __first28 = true;
-                    #line (247,18)-(247,54) 21 "MetaModelGenerator.mxg"
+                    #line (248,18)-(248,54) 21 "MetaModelGenerator.mxg"
                     if (slot != null && !slot.IsDefault)
                     #line hidden
                     
@@ -4199,7 +4197,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                             __first28 = false;
                         }
                         var __first29 = true;
-                        #line (248,22)-(248,44) 25 "MetaModelGenerator.mxg"
+                        #line (249,22)-(249,44) 25 "MetaModelGenerator.mxg"
                         if (prop.IsCollection)
                         #line hidden
                         
@@ -4209,7 +4207,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                                 __first29 = false;
                             }
                             var __first30 = true;
-                            #line (249,26)-(249,60) 29 "MetaModelGenerator.mxg"
+                            #line (250,26)-(250,60) 29 "MetaModelGenerator.mxg"
                             foreach (var value in slot.Values)
                             #line hidden
                             
@@ -4219,22 +4217,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
                                     __first30 = false;
                                 }
                                 __cb.Push("        ");
-                                #line (250,30)-(250,42) 44 "MetaModelGenerator.mxg"
+                                #line (251,30)-(251,42) 44 "MetaModelGenerator.mxg"
                                 __cb.Write(GetName(obj));
                                 #line hidden
-                                #line (250,43)-(250,44) 45 "MetaModelGenerator.mxg"
+                                #line (251,43)-(251,44) 45 "MetaModelGenerator.mxg"
                                 __cb.Write(".");
                                 #line hidden
-                                #line (250,45)-(250,54) 44 "MetaModelGenerator.mxg"
+                                #line (251,45)-(251,54) 44 "MetaModelGenerator.mxg"
                                 __cb.Write(prop.Name);
                                 #line hidden
-                                #line (250,55)-(250,60) 45 "MetaModelGenerator.mxg"
+                                #line (251,55)-(251,60) 45 "MetaModelGenerator.mxg"
                                 __cb.Write(".Add(");
                                 #line hidden
-                                #line (250,61)-(250,92) 44 "MetaModelGenerator.mxg"
+                                #line (251,61)-(251,92) 44 "MetaModelGenerator.mxg"
                                 __cb.Write(ToCSharpValue(prop.Type, value));
                                 #line hidden
-                                #line (250,93)-(250,95) 45 "MetaModelGenerator.mxg"
+                                #line (251,93)-(251,95) 45 "MetaModelGenerator.mxg"
                                 __cb.Write(");");
                                 #line hidden
                                 __cb.AppendLine();
@@ -4242,7 +4240,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                             }
                             if (!__first30) __cb.AppendLine();
                         }
-                        #line (252,22)-(252,48) 25 "MetaModelGenerator.mxg"
+                        #line (253,22)-(253,48) 25 "MetaModelGenerator.mxg"
                         else if (!prop.IsReadOnly)
                         #line hidden
                         
@@ -4252,28 +4250,28 @@ namespace MetaDslx.Languages.MetaModel.Generators
                                 __first29 = false;
                             }
                             __cb.Push("        ");
-                            #line (253,26)-(253,38) 40 "MetaModelGenerator.mxg"
+                            #line (254,26)-(254,38) 40 "MetaModelGenerator.mxg"
                             __cb.Write(GetName(obj));
                             #line hidden
-                            #line (253,39)-(253,40) 41 "MetaModelGenerator.mxg"
+                            #line (254,39)-(254,40) 41 "MetaModelGenerator.mxg"
                             __cb.Write(".");
                             #line hidden
-                            #line (253,41)-(253,50) 40 "MetaModelGenerator.mxg"
+                            #line (254,41)-(254,50) 40 "MetaModelGenerator.mxg"
                             __cb.Write(prop.Name);
                             #line hidden
-                            #line (253,51)-(253,52) 41 "MetaModelGenerator.mxg"
+                            #line (254,51)-(254,52) 41 "MetaModelGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (253,52)-(253,53) 41 "MetaModelGenerator.mxg"
+                            #line (254,52)-(254,53) 41 "MetaModelGenerator.mxg"
                             __cb.Write("=");
                             #line hidden
-                            #line (253,53)-(253,54) 41 "MetaModelGenerator.mxg"
+                            #line (254,53)-(254,54) 41 "MetaModelGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (253,55)-(253,103) 40 "MetaModelGenerator.mxg"
+                            #line (254,55)-(254,103) 40 "MetaModelGenerator.mxg"
                             __cb.Write(ToCSharpValue(prop.Type, slot.AsSingle()?.Value));
                             #line hidden
-                            #line (253,104)-(253,105) 41 "MetaModelGenerator.mxg"
+                            #line (254,104)-(254,105) 41 "MetaModelGenerator.mxg"
                             __cb.Write(";");
                             #line hidden
                             __cb.AppendLine();
@@ -4287,72 +4285,30 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first25) __cb.AppendLine();
             __cb.Push("        ");
-            #line (258,9)-(258,24) 25 "MetaModelGenerator.mxg"
+            #line (259,9)-(259,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("_model.IsSealed");
             #line hidden
-            #line (258,24)-(258,25) 25 "MetaModelGenerator.mxg"
+            #line (259,24)-(259,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (258,25)-(258,26) 25 "MetaModelGenerator.mxg"
+            #line (259,25)-(259,26) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (258,26)-(258,27) 25 "MetaModelGenerator.mxg"
+            #line (259,26)-(259,27) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (258,27)-(258,32) 25 "MetaModelGenerator.mxg"
+            #line (259,27)-(259,32) 25 "MetaModelGenerator.mxg"
             __cb.Write("true;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (259,5)-(259,6) 25 "MetaModelGenerator.mxg"
+            #line (260,5)-(260,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (261,5)-(261,11) 25 "MetaModelGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (261,11)-(261,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (261,12)-(261,20) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (261,20)-(261,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (261,21)-(261,27) 25 "MetaModelGenerator.mxg"
-            __cb.Write("string");
-            #line hidden
-            #line (261,27)-(261,28) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (261,28)-(261,33) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MName");
-            #line hidden
-            #line (261,33)-(261,34) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (261,34)-(261,36) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (261,36)-(261,37) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (261,37)-(261,44) 25 "MetaModelGenerator.mxg"
-            __cb.Write("nameof(");
-            #line hidden
-            #line (261,45)-(261,59) 24 "MetaModelGenerator.mxg"
-            __cb.Write(MetaModel.Name);
-            #line hidden
-            #line (261,60)-(261,62) 25 "MetaModelGenerator.mxg"
-            __cb.Write(");");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (262,5)-(262,11) 25 "MetaModelGenerator.mxg"
@@ -4373,26 +4329,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (262,27)-(262,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (262,28)-(262,38) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MNamespace");
+            #line (262,28)-(262,33) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MName");
             #line hidden
-            #line (262,38)-(262,39) 25 "MetaModelGenerator.mxg"
+            #line (262,33)-(262,34) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (262,39)-(262,41) 25 "MetaModelGenerator.mxg"
+            #line (262,34)-(262,36) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (262,41)-(262,42) 25 "MetaModelGenerator.mxg"
+            #line (262,36)-(262,37) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (262,42)-(262,43) 25 "MetaModelGenerator.mxg"
-            __cb.Write("\"");
+            #line (262,37)-(262,44) 25 "MetaModelGenerator.mxg"
+            __cb.Write("nameof(");
             #line hidden
-            #line (262,44)-(262,53) 24 "MetaModelGenerator.mxg"
-            __cb.Write(Namespace);
+            #line (262,45)-(262,59) 24 "MetaModelGenerator.mxg"
+            __cb.Write(MetaModel.Name);
             #line hidden
-            #line (262,54)-(262,56) 25 "MetaModelGenerator.mxg"
-            __cb.Write("\";");
+            #line (262,60)-(262,62) 25 "MetaModelGenerator.mxg"
+            __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -4409,26 +4365,32 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (263,20)-(263,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (263,21)-(263,35) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelVersion");
+            #line (263,21)-(263,27) 25 "MetaModelGenerator.mxg"
+            __cb.Write("string");
             #line hidden
-            #line (263,35)-(263,36) 25 "MetaModelGenerator.mxg"
+            #line (263,27)-(263,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (263,36)-(263,44) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MVersion");
+            #line (263,28)-(263,38) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MNamespace");
             #line hidden
-            #line (263,44)-(263,45) 25 "MetaModelGenerator.mxg"
+            #line (263,38)-(263,39) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (263,45)-(263,47) 25 "MetaModelGenerator.mxg"
+            #line (263,39)-(263,41) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (263,47)-(263,48) 25 "MetaModelGenerator.mxg"
+            #line (263,41)-(263,42) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (263,48)-(263,56) 25 "MetaModelGenerator.mxg"
-            __cb.Write("default;");
+            #line (263,42)-(263,43) 25 "MetaModelGenerator.mxg"
+            __cb.Write("\"");
+            #line hidden
+            #line (263,44)-(263,53) 24 "MetaModelGenerator.mxg"
+            __cb.Write(Namespace);
+            #line hidden
+            #line (263,54)-(263,56) 25 "MetaModelGenerator.mxg"
+            __cb.Write("\";");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -4445,32 +4407,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (264,20)-(264,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (264,21)-(264,27) 25 "MetaModelGenerator.mxg"
-            __cb.Write("string");
-            #line hidden
-            #line (264,27)-(264,28) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (264,28)-(264,32) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MUri");
-            #line hidden
-            #line (264,32)-(264,33) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (264,33)-(264,35) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
+            #line (264,21)-(264,35) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelVersion");
             #line hidden
             #line (264,35)-(264,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (264,36)-(264,37) 25 "MetaModelGenerator.mxg"
-            __cb.Write("\"");
+            #line (264,36)-(264,44) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MVersion");
             #line hidden
-            #line (264,38)-(264,73) 24 "MetaModelGenerator.mxg"
-            __cb.Write(MetaModel.Uri ?? MetaModel.FullName);
+            #line (264,44)-(264,45) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
             #line hidden
-            #line (264,74)-(264,76) 25 "MetaModelGenerator.mxg"
-            __cb.Write("\";");
+            #line (264,45)-(264,47) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (264,47)-(264,48) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (264,48)-(264,56) 25 "MetaModelGenerator.mxg"
+            __cb.Write("default;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -4493,25 +4449,25 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (265,27)-(265,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,28)-(265,35) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MPrefix");
+            #line (265,28)-(265,32) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MUri");
+            #line hidden
+            #line (265,32)-(265,33) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (265,33)-(265,35) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
             #line hidden
             #line (265,35)-(265,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,36)-(265,38) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (265,38)-(265,39) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (265,39)-(265,40) 25 "MetaModelGenerator.mxg"
+            #line (265,36)-(265,37) 25 "MetaModelGenerator.mxg"
             __cb.Write("\"");
             #line hidden
-            #line (265,41)-(265,127) 24 "MetaModelGenerator.mxg"
-            __cb.Write(string.Concat(MetaModel.Name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c))));
+            #line (265,38)-(265,73) 24 "MetaModelGenerator.mxg"
+            __cb.Write(MetaModel.Uri ?? MetaModel.FullName);
             #line hidden
-            #line (265,128)-(265,130) 25 "MetaModelGenerator.mxg"
+            #line (265,74)-(265,76) 25 "MetaModelGenerator.mxg"
             __cb.Write("\";");
             #line hidden
             __cb.AppendLine();
@@ -4529,14 +4485,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (266,20)-(266,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (266,21)-(266,28) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__Model");
+            #line (266,21)-(266,27) 25 "MetaModelGenerator.mxg"
+            __cb.Write("string");
             #line hidden
-            #line (266,28)-(266,29) 25 "MetaModelGenerator.mxg"
+            #line (266,27)-(266,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (266,29)-(266,35) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MModel");
+            #line (266,28)-(266,35) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MPrefix");
             #line hidden
             #line (266,35)-(266,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
@@ -4547,54 +4503,54 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (266,38)-(266,39) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (266,39)-(266,46) 25 "MetaModelGenerator.mxg"
+            #line (266,39)-(266,40) 25 "MetaModelGenerator.mxg"
+            __cb.Write("\"");
+            #line hidden
+            #line (266,41)-(266,127) 24 "MetaModelGenerator.mxg"
+            __cb.Write(string.Concat(MetaModel.Name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c))));
+            #line hidden
+            #line (266,128)-(266,130) 25 "MetaModelGenerator.mxg"
+            __cb.Write("\";");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (267,5)-(267,11) 25 "MetaModelGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (267,11)-(267,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (267,12)-(267,20) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (267,20)-(267,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (267,21)-(267,28) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__Model");
+            #line hidden
+            #line (267,28)-(267,29) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (267,29)-(267,35) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MModel");
+            #line hidden
+            #line (267,35)-(267,36) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (267,36)-(267,38) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (267,38)-(267,39) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (267,39)-(267,46) 25 "MetaModelGenerator.mxg"
             __cb.Write("_model;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (268,5)-(268,11) 25 "MetaModelGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (268,11)-(268,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (268,12)-(268,20) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (268,20)-(268,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (268,21)-(268,89) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
-            #line hidden
-            #line (268,89)-(268,90) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (268,90)-(268,106) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelEnumInfo>");
-            #line hidden
-            #line (268,106)-(268,107) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (268,107)-(268,123) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MEnumInfosByType");
-            #line hidden
-            #line (268,123)-(268,124) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (268,124)-(268,126) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (268,126)-(268,127) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (268,127)-(268,144) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_enumInfosByType;");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (269,5)-(269,11) 25 "MetaModelGenerator.mxg"
@@ -4609,32 +4565,32 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (269,20)-(269,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (269,21)-(269,85) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line (269,21)-(269,89) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
             #line hidden
-            #line (269,85)-(269,86) 25 "MetaModelGenerator.mxg"
+            #line (269,89)-(269,90) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (269,86)-(269,102) 25 "MetaModelGenerator.mxg"
+            #line (269,90)-(269,106) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelEnumInfo>");
             #line hidden
-            #line (269,102)-(269,103) 25 "MetaModelGenerator.mxg"
+            #line (269,106)-(269,107) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (269,103)-(269,119) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MEnumInfosByName");
+            #line (269,107)-(269,123) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MEnumInfosByType");
             #line hidden
-            #line (269,119)-(269,120) 25 "MetaModelGenerator.mxg"
+            #line (269,123)-(269,124) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (269,120)-(269,122) 25 "MetaModelGenerator.mxg"
+            #line (269,124)-(269,126) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (269,122)-(269,123) 25 "MetaModelGenerator.mxg"
+            #line (269,126)-(269,127) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (269,123)-(269,140) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_enumInfosByName;");
+            #line (269,127)-(269,144) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_enumInfosByType;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -4651,32 +4607,32 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (270,20)-(270,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (270,21)-(270,89) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
+            #line (270,21)-(270,85) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
             #line hidden
-            #line (270,89)-(270,90) 25 "MetaModelGenerator.mxg"
+            #line (270,85)-(270,86) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (270,90)-(270,107) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelClassInfo>");
+            #line (270,86)-(270,102) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelEnumInfo>");
             #line hidden
-            #line (270,107)-(270,108) 25 "MetaModelGenerator.mxg"
+            #line (270,102)-(270,103) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (270,108)-(270,125) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MClassInfosByType");
+            #line (270,103)-(270,119) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MEnumInfosByName");
             #line hidden
-            #line (270,125)-(270,126) 25 "MetaModelGenerator.mxg"
+            #line (270,119)-(270,120) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (270,126)-(270,128) 25 "MetaModelGenerator.mxg"
+            #line (270,120)-(270,122) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (270,128)-(270,129) 25 "MetaModelGenerator.mxg"
+            #line (270,122)-(270,123) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (270,129)-(270,147) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_classInfosByType;");
+            #line (270,123)-(270,140) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_enumInfosByName;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -4693,72 +4649,78 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (271,20)-(271,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (271,21)-(271,85) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line (271,21)-(271,89) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__MetaType,");
             #line hidden
-            #line (271,85)-(271,86) 25 "MetaModelGenerator.mxg"
+            #line (271,89)-(271,90) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (271,86)-(271,103) 25 "MetaModelGenerator.mxg"
+            #line (271,90)-(271,107) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelClassInfo>");
             #line hidden
-            #line (271,103)-(271,104) 25 "MetaModelGenerator.mxg"
+            #line (271,107)-(271,108) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (271,104)-(271,121) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MClassInfosByName");
+            #line (271,108)-(271,125) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MClassInfosByType");
             #line hidden
-            #line (271,121)-(271,122) 25 "MetaModelGenerator.mxg"
+            #line (271,125)-(271,126) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (271,122)-(271,124) 25 "MetaModelGenerator.mxg"
+            #line (271,126)-(271,128) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (271,124)-(271,125) 25 "MetaModelGenerator.mxg"
+            #line (271,128)-(271,129) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (271,125)-(271,143) 25 "MetaModelGenerator.mxg"
+            #line (271,129)-(271,147) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_classInfosByType;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (272,5)-(272,11) 25 "MetaModelGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (272,11)-(272,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (272,12)-(272,20) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (272,20)-(272,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (272,21)-(272,85) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line hidden
+            #line (272,85)-(272,86) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (272,86)-(272,103) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelClassInfo>");
+            #line hidden
+            #line (272,103)-(272,104) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (272,104)-(272,121) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MClassInfosByName");
+            #line hidden
+            #line (272,121)-(272,122) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (272,122)-(272,124) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (272,124)-(272,125) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (272,125)-(272,143) 25 "MetaModelGenerator.mxg"
             __cb.Write("_classInfosByName;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (273,5)-(273,11) 25 "MetaModelGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (273,11)-(273,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (273,12)-(273,20) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (273,20)-(273,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (273,21)-(273,84) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
-            #line hidden
-            #line (273,84)-(273,85) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (273,85)-(273,95) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MEnumTypes");
-            #line hidden
-            #line (273,95)-(273,96) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (273,96)-(273,98) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (273,98)-(273,99) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (273,99)-(273,110) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_enumTypes;");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (274,5)-(274,11) 25 "MetaModelGenerator.mxg"
@@ -4773,26 +4735,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (274,20)-(274,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (274,21)-(274,89) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo>");
+            #line (274,21)-(274,84) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
             #line hidden
-            #line (274,89)-(274,90) 25 "MetaModelGenerator.mxg"
+            #line (274,84)-(274,85) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (274,90)-(274,100) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MEnumInfos");
+            #line (274,85)-(274,95) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MEnumTypes");
             #line hidden
-            #line (274,100)-(274,101) 25 "MetaModelGenerator.mxg"
+            #line (274,95)-(274,96) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (274,101)-(274,103) 25 "MetaModelGenerator.mxg"
+            #line (274,96)-(274,98) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (274,103)-(274,104) 25 "MetaModelGenerator.mxg"
+            #line (274,98)-(274,99) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (274,104)-(274,115) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_enumInfos;");
+            #line (274,99)-(274,110) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_enumTypes;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -4809,26 +4771,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (275,20)-(275,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (275,21)-(275,84) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
+            #line (275,21)-(275,89) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo>");
             #line hidden
-            #line (275,84)-(275,85) 25 "MetaModelGenerator.mxg"
+            #line (275,89)-(275,90) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (275,85)-(275,96) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MClassTypes");
+            #line (275,90)-(275,100) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MEnumInfos");
             #line hidden
-            #line (275,96)-(275,97) 25 "MetaModelGenerator.mxg"
+            #line (275,100)-(275,101) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (275,97)-(275,99) 25 "MetaModelGenerator.mxg"
+            #line (275,101)-(275,103) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (275,99)-(275,100) 25 "MetaModelGenerator.mxg"
+            #line (275,103)-(275,104) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (275,100)-(275,112) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_classTypes;");
+            #line (275,104)-(275,115) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_enumInfos;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -4845,25 +4807,61 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (276,20)-(276,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (276,21)-(276,90) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
+            #line (276,21)-(276,84) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__MetaType>");
             #line hidden
-            #line (276,90)-(276,91) 25 "MetaModelGenerator.mxg"
+            #line (276,84)-(276,85) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (276,91)-(276,102) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MClassInfos");
+            #line (276,85)-(276,96) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MClassTypes");
             #line hidden
-            #line (276,102)-(276,103) 25 "MetaModelGenerator.mxg"
+            #line (276,96)-(276,97) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (276,103)-(276,105) 25 "MetaModelGenerator.mxg"
+            #line (276,97)-(276,99) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (276,105)-(276,106) 25 "MetaModelGenerator.mxg"
+            #line (276,99)-(276,100) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (276,106)-(276,118) 25 "MetaModelGenerator.mxg"
+            #line (276,100)-(276,112) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_classTypes;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (277,5)-(277,11) 25 "MetaModelGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (277,11)-(277,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (277,12)-(277,20) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (277,20)-(277,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (277,21)-(277,90) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
+            #line hidden
+            #line (277,90)-(277,91) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (277,91)-(277,102) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MClassInfos");
+            #line hidden
+            #line (277,102)-(277,103) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (277,103)-(277,105) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (277,105)-(277,106) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (277,106)-(277,118) 25 "MetaModelGenerator.mxg"
             __cb.Write("_classInfos;");
             #line hidden
             __cb.AppendLine();
@@ -4871,7 +4869,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first31 = true;
-            #line (278,6)-(278,77) 13 "MetaModelGenerator.mxg"
+            #line (279,6)-(279,77) 13 "MetaModelGenerator.mxg"
             foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
             #line hidden
             
@@ -4881,40 +4879,40 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first31 = false;
                 }
                 __cb.Push("    ");
-                #line (279,10)-(279,26) 28 "MetaModelGenerator.mxg"
+                #line (280,10)-(280,26) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(c.Type));
                 #line hidden
-                #line (279,27)-(279,28) 29 "MetaModelGenerator.mxg"
+                #line (280,27)-(280,28) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (279,28)-(279,29) 29 "MetaModelGenerator.mxg"
+                #line (280,28)-(280,29) 29 "MetaModelGenerator.mxg"
                 __cb.Write("I");
                 #line hidden
-                #line (279,30)-(279,44) 28 "MetaModelGenerator.mxg"
+                #line (280,30)-(280,44) 28 "MetaModelGenerator.mxg"
                 __cb.Write(MetaModel.Name);
                 #line hidden
-                #line (279,45)-(279,46) 29 "MetaModelGenerator.mxg"
+                #line (280,45)-(280,46) 29 "MetaModelGenerator.mxg"
                 __cb.Write(".");
                 #line hidden
-                #line (279,47)-(279,53) 28 "MetaModelGenerator.mxg"
+                #line (280,47)-(280,53) 28 "MetaModelGenerator.mxg"
                 __cb.Write(c.Name);
                 #line hidden
-                #line (279,54)-(279,55) 29 "MetaModelGenerator.mxg"
+                #line (280,54)-(280,55) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (279,55)-(279,57) 29 "MetaModelGenerator.mxg"
+                #line (280,55)-(280,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=>");
                 #line hidden
-                #line (279,57)-(279,58) 29 "MetaModelGenerator.mxg"
+                #line (280,57)-(280,58) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (279,58)-(279,59) 29 "MetaModelGenerator.mxg"
+                #line (280,58)-(280,59) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_");
                 #line hidden
-                #line (279,60)-(279,80) 28 "MetaModelGenerator.mxg"
+                #line (280,60)-(280,80) 28 "MetaModelGenerator.mxg"
                 __cb.Write(c.Name.ToCamelCase());
                 #line hidden
-                #line (279,81)-(279,82) 29 "MetaModelGenerator.mxg"
+                #line (280,81)-(280,82) 29 "MetaModelGenerator.mxg"
                 __cb.Write(";");
                 #line hidden
                 __cb.AppendLine();
@@ -4924,7 +4922,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first32 = true;
-            #line (282,6)-(282,77) 13 "MetaModelGenerator.mxg"
+            #line (283,6)-(283,77) 13 "MetaModelGenerator.mxg"
             foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
             #line hidden
             
@@ -4934,55 +4932,55 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first32 = false;
                 }
                 __cb.Push("    ");
-                #line (283,10)-(283,36) 28 "MetaModelGenerator.mxg"
+                #line (284,10)-(284,36) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetDocumentationComment(c));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (284,9)-(284,15) 29 "MetaModelGenerator.mxg"
+                #line (285,9)-(285,15) 29 "MetaModelGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (284,15)-(284,16) 29 "MetaModelGenerator.mxg"
+                #line (285,15)-(285,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (284,16)-(284,22) 29 "MetaModelGenerator.mxg"
+                #line (285,16)-(285,22) 29 "MetaModelGenerator.mxg"
                 __cb.Write("static");
                 #line hidden
-                #line (284,22)-(284,23) 29 "MetaModelGenerator.mxg"
+                #line (285,22)-(285,23) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (284,24)-(284,40) 28 "MetaModelGenerator.mxg"
+                #line (285,24)-(285,40) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(c.Type));
                 #line hidden
-                #line (284,41)-(284,42) 29 "MetaModelGenerator.mxg"
+                #line (285,41)-(285,42) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (284,43)-(284,49) 28 "MetaModelGenerator.mxg"
+                #line (285,43)-(285,49) 28 "MetaModelGenerator.mxg"
                 __cb.Write(c.Name);
                 #line hidden
-                #line (284,50)-(284,51) 29 "MetaModelGenerator.mxg"
+                #line (285,50)-(285,51) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (284,51)-(284,53) 29 "MetaModelGenerator.mxg"
+                #line (285,51)-(285,53) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=>");
                 #line hidden
-                #line (284,53)-(284,54) 29 "MetaModelGenerator.mxg"
+                #line (285,53)-(285,54) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (284,54)-(284,57) 29 "MetaModelGenerator.mxg"
+                #line (285,54)-(285,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write("((I");
                 #line hidden
-                #line (284,58)-(284,72) 28 "MetaModelGenerator.mxg"
+                #line (285,58)-(285,72) 28 "MetaModelGenerator.mxg"
                 __cb.Write(MetaModel.Name);
                 #line hidden
-                #line (284,73)-(284,85) 29 "MetaModelGenerator.mxg"
+                #line (285,73)-(285,85) 29 "MetaModelGenerator.mxg"
                 __cb.Write(")MInstance).");
                 #line hidden
-                #line (284,86)-(284,92) 28 "MetaModelGenerator.mxg"
+                #line (285,86)-(285,92) 28 "MetaModelGenerator.mxg"
                 __cb.Write(c.Name);
                 #line hidden
-                #line (284,93)-(284,94) 29 "MetaModelGenerator.mxg"
+                #line (285,93)-(285,94) 29 "MetaModelGenerator.mxg"
                 __cb.Write(";");
                 #line hidden
                 __cb.AppendLine();
@@ -4992,7 +4990,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first33 = true;
-            #line (287,6)-(287,32) 13 "MetaModelGenerator.mxg"
+            #line (288,6)-(288,32) 13 "MetaModelGenerator.mxg"
             foreach (var enm in Enums)
             #line hidden
             
@@ -5002,46 +5000,46 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first33 = false;
                 }
                 __cb.Push("    ");
-                #line (288,9)-(288,15) 29 "MetaModelGenerator.mxg"
+                #line (289,9)-(289,15) 29 "MetaModelGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (288,15)-(288,16) 29 "MetaModelGenerator.mxg"
+                #line (289,15)-(289,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (288,16)-(288,22) 29 "MetaModelGenerator.mxg"
+                #line (289,16)-(289,22) 29 "MetaModelGenerator.mxg"
                 __cb.Write("static");
                 #line hidden
-                #line (288,22)-(288,23) 29 "MetaModelGenerator.mxg"
+                #line (289,22)-(289,23) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (288,23)-(288,38) 29 "MetaModelGenerator.mxg"
+                #line (289,23)-(289,38) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__ModelEnumInfo");
                 #line hidden
-                #line (288,38)-(288,39) 29 "MetaModelGenerator.mxg"
+                #line (289,38)-(289,39) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (288,40)-(288,48) 28 "MetaModelGenerator.mxg"
+                #line (289,40)-(289,48) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (288,49)-(288,53) 29 "MetaModelGenerator.mxg"
+                #line (289,49)-(289,53) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info");
                 #line hidden
-                #line (288,53)-(288,54) 29 "MetaModelGenerator.mxg"
+                #line (289,53)-(289,54) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (288,54)-(288,56) 29 "MetaModelGenerator.mxg"
+                #line (289,54)-(289,56) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=>");
                 #line hidden
-                #line (288,56)-(288,57) 29 "MetaModelGenerator.mxg"
+                #line (289,56)-(289,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (288,57)-(288,66) 29 "MetaModelGenerator.mxg"
+                #line (289,57)-(289,66) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__Impl.__");
                 #line hidden
-                #line (288,67)-(288,75) 28 "MetaModelGenerator.mxg"
+                #line (289,67)-(289,75) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (288,76)-(288,91) 29 "MetaModelGenerator.mxg"
+                #line (289,76)-(289,91) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_Info.Instance;");
                 #line hidden
                 __cb.AppendLine();
@@ -5049,7 +5047,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first33) __cb.AppendLine();
             var __first34 = true;
-            #line (290,6)-(290,34) 13 "MetaModelGenerator.mxg"
+            #line (291,6)-(291,34) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -5059,52 +5057,56 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first34 = false;
                 }
                 __cb.Push("    ");
-                #line (291,9)-(291,15) 29 "MetaModelGenerator.mxg"
+                #line (292,9)-(292,15) 29 "MetaModelGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (291,15)-(291,16) 29 "MetaModelGenerator.mxg"
+                #line (292,15)-(292,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (291,16)-(291,22) 29 "MetaModelGenerator.mxg"
+                #line (292,16)-(292,22) 29 "MetaModelGenerator.mxg"
                 __cb.Write("static");
                 #line hidden
-                #line (291,22)-(291,23) 29 "MetaModelGenerator.mxg"
+                #line (292,22)-(292,23) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (291,23)-(291,39) 29 "MetaModelGenerator.mxg"
+                #line (292,23)-(292,39) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__ModelClassInfo");
                 #line hidden
-                #line (291,39)-(291,40) 29 "MetaModelGenerator.mxg"
+                #line (292,39)-(292,40) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (291,41)-(291,49) 28 "MetaModelGenerator.mxg"
+                #line (292,41)-(292,49) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (291,50)-(291,54) 29 "MetaModelGenerator.mxg"
+                #line (292,50)-(292,54) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info");
                 #line hidden
-                #line (291,54)-(291,55) 29 "MetaModelGenerator.mxg"
+                #line (292,54)-(292,55) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (291,55)-(291,57) 29 "MetaModelGenerator.mxg"
+                #line (292,55)-(292,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=>");
                 #line hidden
-                #line (291,57)-(291,58) 29 "MetaModelGenerator.mxg"
+                #line (292,57)-(292,58) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (291,58)-(291,65) 29 "MetaModelGenerator.mxg"
+                #line (292,58)-(292,65) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__Impl.");
                 #line hidden
-                #line (291,66)-(291,74) 28 "MetaModelGenerator.mxg"
+                #line (292,66)-(292,74) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (291,75)-(291,97) 29 "MetaModelGenerator.mxg"
+                #line (292,75)-(292,97) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_Impl.__Info.Instance;");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
+                #line (293,10)-(293,127) 17 "MetaModelGenerator.mxg"
+                var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls));
+                #line hidden
+                
                 var __first35 = true;
-                #line (292,6)-(292,42) 17 "MetaModelGenerator.mxg"
+                #line (294,10)-(294,46) 17 "MetaModelGenerator.mxg"
                 foreach (var prop in cls.Properties)
                 #line hidden
                 
@@ -5114,55 +5116,55 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first35 = false;
                     }
                     __cb.Push("    ");
-                    #line (293,9)-(293,15) 33 "MetaModelGenerator.mxg"
+                    #line (295,13)-(295,19) 33 "MetaModelGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
-                    #line (293,15)-(293,16) 33 "MetaModelGenerator.mxg"
+                    #line (295,19)-(295,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (293,16)-(293,22) 33 "MetaModelGenerator.mxg"
+                    #line (295,20)-(295,26) 33 "MetaModelGenerator.mxg"
                     __cb.Write("static");
                     #line hidden
-                    #line (293,22)-(293,23) 33 "MetaModelGenerator.mxg"
+                    #line (295,26)-(295,27) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (293,23)-(293,38) 33 "MetaModelGenerator.mxg"
+                    #line (295,27)-(295,42) 33 "MetaModelGenerator.mxg"
                     __cb.Write("__ModelProperty");
                     #line hidden
-                    #line (293,38)-(293,39) 33 "MetaModelGenerator.mxg"
+                    #line (295,42)-(295,43) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (293,40)-(293,48) 32 "MetaModelGenerator.mxg"
+                    #line (295,44)-(295,52) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (293,49)-(293,50) 33 "MetaModelGenerator.mxg"
+                    #line (295,53)-(295,54) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (293,51)-(293,60) 32 "MetaModelGenerator.mxg"
+                    #line (295,55)-(295,64) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
-                    #line (293,61)-(293,62) 33 "MetaModelGenerator.mxg"
+                    #line (295,65)-(295,66) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (293,62)-(293,64) 33 "MetaModelGenerator.mxg"
+                    #line (295,66)-(295,68) 33 "MetaModelGenerator.mxg"
                     __cb.Write("=>");
                     #line hidden
-                    #line (293,64)-(293,65) 33 "MetaModelGenerator.mxg"
+                    #line (295,68)-(295,69) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (293,65)-(293,66) 33 "MetaModelGenerator.mxg"
+                    #line (295,69)-(295,70) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (293,67)-(293,75) 32 "MetaModelGenerator.mxg"
+                    #line (295,71)-(295,79) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (293,76)-(293,77) 33 "MetaModelGenerator.mxg"
+                    #line (295,80)-(295,81) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (293,78)-(293,87) 32 "MetaModelGenerator.mxg"
+                    #line (295,82)-(295,91) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
-                    #line (293,88)-(293,89) 33 "MetaModelGenerator.mxg"
+                    #line (295,92)-(295,93) 33 "MetaModelGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
@@ -5170,8 +5172,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 }
                 if (!__first35) __cb.AppendLine();
                 var __first36 = true;
-                #line (295,6)-(295,40) 17 "MetaModelGenerator.mxg"
-                foreach (var op in cls.Operations)
+                #line (297,10)-(297,56) 17 "MetaModelGenerator.mxg"
+                foreach (var op in metaCls.DeclaredOperations)
                 #line hidden
                 
                 {
@@ -5180,55 +5182,55 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first36 = false;
                     }
                     __cb.Push("    ");
-                    #line (296,9)-(296,15) 33 "MetaModelGenerator.mxg"
+                    #line (298,13)-(298,19) 33 "MetaModelGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
-                    #line (296,15)-(296,16) 33 "MetaModelGenerator.mxg"
+                    #line (298,19)-(298,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (296,16)-(296,22) 33 "MetaModelGenerator.mxg"
+                    #line (298,20)-(298,26) 33 "MetaModelGenerator.mxg"
                     __cb.Write("static");
                     #line hidden
-                    #line (296,22)-(296,23) 33 "MetaModelGenerator.mxg"
+                    #line (298,26)-(298,27) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (296,23)-(296,39) 33 "MetaModelGenerator.mxg"
+                    #line (298,27)-(298,43) 33 "MetaModelGenerator.mxg"
                     __cb.Write("__ModelOperation");
                     #line hidden
-                    #line (296,39)-(296,40) 33 "MetaModelGenerator.mxg"
+                    #line (298,43)-(298,44) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (296,41)-(296,49) 32 "MetaModelGenerator.mxg"
+                    #line (298,45)-(298,53) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (296,50)-(296,51) 33 "MetaModelGenerator.mxg"
+                    #line (298,54)-(298,55) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (296,52)-(296,59) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(op.Name);
+                    #line (298,56)-(298,69) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(op.UniqueName);
                     #line hidden
-                    #line (296,60)-(296,61) 33 "MetaModelGenerator.mxg"
+                    #line (298,70)-(298,71) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (296,61)-(296,63) 33 "MetaModelGenerator.mxg"
+                    #line (298,71)-(298,73) 33 "MetaModelGenerator.mxg"
                     __cb.Write("=>");
                     #line hidden
-                    #line (296,63)-(296,64) 33 "MetaModelGenerator.mxg"
+                    #line (298,73)-(298,74) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (296,64)-(296,65) 33 "MetaModelGenerator.mxg"
+                    #line (298,74)-(298,75) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (296,66)-(296,74) 32 "MetaModelGenerator.mxg"
+                    #line (298,76)-(298,84) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (296,75)-(296,76) 33 "MetaModelGenerator.mxg"
+                    #line (298,85)-(298,86) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (296,77)-(296,84) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(op.Name);
+                    #line (298,87)-(298,100) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(op.UniqueName);
                     #line hidden
-                    #line (296,85)-(296,86) 33 "MetaModelGenerator.mxg"
+                    #line (298,101)-(298,102) 33 "MetaModelGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
@@ -5238,7 +5240,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first34) __cb.AppendLine();
             __cb.Push("");
-            #line (299,1)-(299,2) 25 "MetaModelGenerator.mxg"
+            #line (301,1)-(301,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5246,100 +5248,100 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (302,9)-(302,27) 22 "MetaModelGenerator.mxg"
+        #line (304,9)-(304,27) 22 "MetaModelGenerator.mxg"
         public string GenerateFactory()
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (303,1)-(303,7) 25 "MetaModelGenerator.mxg"
+            #line (305,1)-(305,7) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (303,7)-(303,8) 25 "MetaModelGenerator.mxg"
+            #line (305,7)-(305,8) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (303,8)-(303,13) 25 "MetaModelGenerator.mxg"
+            #line (305,8)-(305,13) 25 "MetaModelGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (303,13)-(303,14) 25 "MetaModelGenerator.mxg"
+            #line (305,13)-(305,14) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (303,15)-(303,29) 24 "MetaModelGenerator.mxg"
+            #line (305,15)-(305,29) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (303,30)-(303,42) 25 "MetaModelGenerator.mxg"
+            #line (305,30)-(305,42) 25 "MetaModelGenerator.mxg"
             __cb.Write("ModelFactory");
             #line hidden
-            #line (303,42)-(303,43) 25 "MetaModelGenerator.mxg"
+            #line (305,42)-(305,43) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (303,43)-(303,44) 25 "MetaModelGenerator.mxg"
+            #line (305,43)-(305,44) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (303,44)-(303,45) 25 "MetaModelGenerator.mxg"
+            #line (305,44)-(305,45) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (303,45)-(303,59) 25 "MetaModelGenerator.mxg"
+            #line (305,45)-(305,59) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelFactory");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (304,1)-(304,2) 25 "MetaModelGenerator.mxg"
+            #line (306,1)-(306,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (305,5)-(305,11) 25 "MetaModelGenerator.mxg"
+            #line (307,5)-(307,11) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (305,11)-(305,12) 25 "MetaModelGenerator.mxg"
+            #line (307,11)-(307,12) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (305,13)-(305,27) 24 "MetaModelGenerator.mxg"
+            #line (307,13)-(307,27) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (305,28)-(305,48) 25 "MetaModelGenerator.mxg"
+            #line (307,28)-(307,48) 25 "MetaModelGenerator.mxg"
             __cb.Write("ModelFactory(__Model");
             #line hidden
-            #line (305,48)-(305,49) 25 "MetaModelGenerator.mxg"
+            #line (307,48)-(307,49) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (305,49)-(305,55) 25 "MetaModelGenerator.mxg"
+            #line (307,49)-(307,55) 25 "MetaModelGenerator.mxg"
             __cb.Write("model)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (306,9)-(306,10) 25 "MetaModelGenerator.mxg"
+            #line (308,9)-(308,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (306,10)-(306,11) 25 "MetaModelGenerator.mxg"
+            #line (308,10)-(308,11) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (306,11)-(306,22) 25 "MetaModelGenerator.mxg"
+            #line (308,11)-(308,22) 25 "MetaModelGenerator.mxg"
             __cb.Write("base(model,");
             #line hidden
-            #line (306,22)-(306,23) 25 "MetaModelGenerator.mxg"
+            #line (308,22)-(308,23) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (306,24)-(306,38) 24 "MetaModelGenerator.mxg"
+            #line (308,24)-(308,38) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (306,39)-(306,50) 25 "MetaModelGenerator.mxg"
+            #line (308,39)-(308,50) 25 "MetaModelGenerator.mxg"
             __cb.Write(".MInstance)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (307,5)-(307,6) 25 "MetaModelGenerator.mxg"
+            #line (309,5)-(309,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (308,5)-(308,6) 25 "MetaModelGenerator.mxg"
+            #line (310,5)-(310,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5347,64 +5349,64 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (310,5)-(310,13) 25 "MetaModelGenerator.mxg"
+            #line (312,5)-(312,13) 25 "MetaModelGenerator.mxg"
             __cb.Write("internal");
             #line hidden
-            #line (310,13)-(310,14) 25 "MetaModelGenerator.mxg"
+            #line (312,13)-(312,14) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (310,15)-(310,29) 24 "MetaModelGenerator.mxg"
+            #line (312,15)-(312,29) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (310,30)-(310,50) 25 "MetaModelGenerator.mxg"
+            #line (312,30)-(312,50) 25 "MetaModelGenerator.mxg"
             __cb.Write("ModelFactory(__Model");
             #line hidden
-            #line (310,50)-(310,51) 25 "MetaModelGenerator.mxg"
+            #line (312,50)-(312,51) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (310,51)-(310,57) 25 "MetaModelGenerator.mxg"
+            #line (312,51)-(312,57) 25 "MetaModelGenerator.mxg"
             __cb.Write("model,");
             #line hidden
-            #line (310,57)-(310,58) 25 "MetaModelGenerator.mxg"
+            #line (312,57)-(312,58) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (310,59)-(310,73) 24 "MetaModelGenerator.mxg"
+            #line (312,59)-(312,73) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (310,74)-(310,75) 25 "MetaModelGenerator.mxg"
+            #line (312,74)-(312,75) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (310,75)-(310,85) 25 "MetaModelGenerator.mxg"
+            #line (312,75)-(312,85) 25 "MetaModelGenerator.mxg"
             __cb.Write("metaModel)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (311,9)-(311,10) 25 "MetaModelGenerator.mxg"
+            #line (313,9)-(313,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (311,10)-(311,11) 25 "MetaModelGenerator.mxg"
+            #line (313,10)-(313,11) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (311,11)-(311,22) 25 "MetaModelGenerator.mxg"
+            #line (313,11)-(313,22) 25 "MetaModelGenerator.mxg"
             __cb.Write("base(model,");
             #line hidden
-            #line (311,22)-(311,23) 25 "MetaModelGenerator.mxg"
+            #line (313,22)-(313,23) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (311,23)-(311,33) 25 "MetaModelGenerator.mxg"
+            #line (313,23)-(313,33) 25 "MetaModelGenerator.mxg"
             __cb.Write("metaModel)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (312,5)-(312,6) 25 "MetaModelGenerator.mxg"
+            #line (314,5)-(314,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (313,5)-(313,6) 25 "MetaModelGenerator.mxg"
+            #line (315,5)-(315,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5412,7 +5414,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first37 = true;
-            #line (315,6)-(315,60) 13 "MetaModelGenerator.mxg"
+            #line (317,6)-(317,60) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes.Where(c => !c.IsAbstract))
             #line hidden
             
@@ -5422,94 +5424,94 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first37 = false;
                 }
                 __cb.Push("    ");
-                #line (316,10)-(316,38) 28 "MetaModelGenerator.mxg"
+                #line (318,10)-(318,38) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetDocumentationComment(cls));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (317,9)-(317,15) 29 "MetaModelGenerator.mxg"
+                #line (319,9)-(319,15) 29 "MetaModelGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (317,15)-(317,16) 29 "MetaModelGenerator.mxg"
+                #line (319,15)-(319,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (317,17)-(317,30) 28 "MetaModelGenerator.mxg"
+                #line (319,17)-(319,30) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(cls));
                 #line hidden
-                #line (317,31)-(317,32) 29 "MetaModelGenerator.mxg"
+                #line (319,31)-(319,32) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (317,33)-(317,41) 28 "MetaModelGenerator.mxg"
+                #line (319,33)-(319,41) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (317,42)-(317,50) 29 "MetaModelGenerator.mxg"
+                #line (319,42)-(319,50) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(string?");
                 #line hidden
-                #line (317,50)-(317,51) 29 "MetaModelGenerator.mxg"
+                #line (319,50)-(319,51) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (317,51)-(317,53) 29 "MetaModelGenerator.mxg"
+                #line (319,51)-(319,53) 29 "MetaModelGenerator.mxg"
                 __cb.Write("id");
                 #line hidden
-                #line (317,53)-(317,54) 29 "MetaModelGenerator.mxg"
+                #line (319,53)-(319,54) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (317,54)-(317,55) 29 "MetaModelGenerator.mxg"
+                #line (319,54)-(319,55) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=");
                 #line hidden
-                #line (317,55)-(317,56) 29 "MetaModelGenerator.mxg"
+                #line (319,55)-(319,56) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (317,56)-(317,61) 29 "MetaModelGenerator.mxg"
+                #line (319,56)-(319,61) 29 "MetaModelGenerator.mxg"
                 __cb.Write("null)");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (318,9)-(318,10) 29 "MetaModelGenerator.mxg"
+                #line (320,9)-(320,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (319,13)-(319,19) 29 "MetaModelGenerator.mxg"
+                #line (321,13)-(321,19) 29 "MetaModelGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (319,19)-(319,20) 29 "MetaModelGenerator.mxg"
+                #line (321,19)-(321,20) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (319,20)-(319,21) 29 "MetaModelGenerator.mxg"
+                #line (321,20)-(321,21) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
-                #line (319,22)-(319,35) 28 "MetaModelGenerator.mxg"
+                #line (321,22)-(321,35) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(cls));
                 #line hidden
-                #line (319,36)-(319,37) 29 "MetaModelGenerator.mxg"
+                #line (321,36)-(321,37) 29 "MetaModelGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
-                #line (319,38)-(319,52) 28 "MetaModelGenerator.mxg"
+                #line (321,38)-(321,52) 28 "MetaModelGenerator.mxg"
                 __cb.Write(MetaModel.Name);
                 #line hidden
-                #line (319,53)-(319,54) 29 "MetaModelGenerator.mxg"
+                #line (321,53)-(321,54) 29 "MetaModelGenerator.mxg"
                 __cb.Write(".");
                 #line hidden
-                #line (319,55)-(319,63) 28 "MetaModelGenerator.mxg"
+                #line (321,55)-(321,63) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (319,64)-(319,87) 29 "MetaModelGenerator.mxg"
+                #line (321,64)-(321,87) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info.Create(base.Model,");
                 #line hidden
-                #line (319,87)-(319,88) 29 "MetaModelGenerator.mxg"
+                #line (321,87)-(321,88) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (319,88)-(319,93) 29 "MetaModelGenerator.mxg"
+                #line (321,88)-(321,93) 29 "MetaModelGenerator.mxg"
                 __cb.Write("id)!;");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (320,9)-(320,10) 29 "MetaModelGenerator.mxg"
+                #line (322,9)-(322,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -5519,7 +5521,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first37) __cb.AppendLine();
             __cb.Push("");
-            #line (323,1)-(323,2) 25 "MetaModelGenerator.mxg"
+            #line (325,1)-(325,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5527,109 +5529,109 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (325,1)-(325,7) 25 "MetaModelGenerator.mxg"
+            #line (327,1)-(327,7) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (325,7)-(325,8) 25 "MetaModelGenerator.mxg"
+            #line (327,7)-(327,8) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (325,8)-(325,13) 25 "MetaModelGenerator.mxg"
+            #line (327,8)-(327,13) 25 "MetaModelGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (325,13)-(325,14) 25 "MetaModelGenerator.mxg"
+            #line (327,13)-(327,14) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (325,15)-(325,29) 24 "MetaModelGenerator.mxg"
+            #line (327,15)-(327,29) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (325,30)-(325,47) 25 "MetaModelGenerator.mxg"
+            #line (327,30)-(327,47) 25 "MetaModelGenerator.mxg"
             __cb.Write("ModelMultiFactory");
             #line hidden
-            #line (325,47)-(325,48) 25 "MetaModelGenerator.mxg"
+            #line (327,47)-(327,48) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (325,48)-(325,49) 25 "MetaModelGenerator.mxg"
+            #line (327,48)-(327,49) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (325,49)-(325,50) 25 "MetaModelGenerator.mxg"
+            #line (327,49)-(327,50) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (325,50)-(325,69) 25 "MetaModelGenerator.mxg"
+            #line (327,50)-(327,69) 25 "MetaModelGenerator.mxg"
             __cb.Write("__MultiModelFactory");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (326,1)-(326,2) 25 "MetaModelGenerator.mxg"
+            #line (328,1)-(328,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (327,5)-(327,11) 25 "MetaModelGenerator.mxg"
+            #line (329,5)-(329,11) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (327,11)-(327,12) 25 "MetaModelGenerator.mxg"
+            #line (329,11)-(329,12) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (327,13)-(327,27) 24 "MetaModelGenerator.mxg"
+            #line (329,13)-(329,27) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (327,28)-(327,47) 25 "MetaModelGenerator.mxg"
+            #line (329,28)-(329,47) 25 "MetaModelGenerator.mxg"
             __cb.Write("ModelMultiFactory()");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (328,9)-(328,10) 25 "MetaModelGenerator.mxg"
+            #line (330,9)-(330,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (328,10)-(328,11) 25 "MetaModelGenerator.mxg"
+            #line (330,10)-(330,11) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (328,11)-(328,19) 25 "MetaModelGenerator.mxg"
+            #line (330,11)-(330,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("base(new");
             #line hidden
-            #line (328,19)-(328,20) 25 "MetaModelGenerator.mxg"
+            #line (330,19)-(330,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (328,20)-(328,31) 25 "MetaModelGenerator.mxg"
+            #line (330,20)-(330,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("__MetaModel");
             #line hidden
-            #line (328,32)-(328,36) 24 "MetaModelGenerator.mxg"
+            #line (330,32)-(330,36) 24 "MetaModelGenerator.mxg"
             __cb.Write("[]");
             #line hidden
-            #line (328,37)-(328,38) 25 "MetaModelGenerator.mxg"
+            #line (330,37)-(330,38) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (328,38)-(328,39) 25 "MetaModelGenerator.mxg"
+            #line (330,38)-(330,39) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            #line (328,39)-(328,40) 25 "MetaModelGenerator.mxg"
+            #line (330,39)-(330,40) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (328,41)-(328,55) 24 "MetaModelGenerator.mxg"
+            #line (330,41)-(330,55) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (328,56)-(328,66) 25 "MetaModelGenerator.mxg"
+            #line (330,56)-(330,66) 25 "MetaModelGenerator.mxg"
             __cb.Write(".MInstance");
             #line hidden
-            #line (328,66)-(328,67) 25 "MetaModelGenerator.mxg"
+            #line (330,66)-(330,67) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (328,67)-(328,69) 25 "MetaModelGenerator.mxg"
+            #line (330,67)-(330,69) 25 "MetaModelGenerator.mxg"
             __cb.Write("})");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (329,5)-(329,6) 25 "MetaModelGenerator.mxg"
+            #line (331,5)-(331,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (330,5)-(330,6) 25 "MetaModelGenerator.mxg"
+            #line (332,5)-(332,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5637,7 +5639,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first38 = true;
-            #line (332,6)-(332,60) 13 "MetaModelGenerator.mxg"
+            #line (334,6)-(334,60) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes.Where(c => !c.IsAbstract))
             #line hidden
             
@@ -5647,106 +5649,106 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first38 = false;
                 }
                 __cb.Push("    ");
-                #line (333,10)-(333,38) 28 "MetaModelGenerator.mxg"
+                #line (335,10)-(335,38) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetDocumentationComment(cls));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (334,9)-(334,15) 29 "MetaModelGenerator.mxg"
+                #line (336,9)-(336,15) 29 "MetaModelGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (334,15)-(334,16) 29 "MetaModelGenerator.mxg"
+                #line (336,15)-(336,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (334,17)-(334,30) 28 "MetaModelGenerator.mxg"
+                #line (336,17)-(336,30) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(cls));
                 #line hidden
-                #line (334,31)-(334,32) 29 "MetaModelGenerator.mxg"
+                #line (336,31)-(336,32) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (334,33)-(334,41) 28 "MetaModelGenerator.mxg"
+                #line (336,33)-(336,41) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (334,42)-(334,50) 29 "MetaModelGenerator.mxg"
+                #line (336,42)-(336,50) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(__Model");
                 #line hidden
-                #line (334,50)-(334,51) 29 "MetaModelGenerator.mxg"
+                #line (336,50)-(336,51) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (334,51)-(334,57) 29 "MetaModelGenerator.mxg"
+                #line (336,51)-(336,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write("model,");
                 #line hidden
-                #line (334,57)-(334,58) 29 "MetaModelGenerator.mxg"
+                #line (336,57)-(336,58) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (334,58)-(334,65) 29 "MetaModelGenerator.mxg"
+                #line (336,58)-(336,65) 29 "MetaModelGenerator.mxg"
                 __cb.Write("string?");
                 #line hidden
-                #line (334,65)-(334,66) 29 "MetaModelGenerator.mxg"
+                #line (336,65)-(336,66) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (334,66)-(334,68) 29 "MetaModelGenerator.mxg"
+                #line (336,66)-(336,68) 29 "MetaModelGenerator.mxg"
                 __cb.Write("id");
                 #line hidden
-                #line (334,68)-(334,69) 29 "MetaModelGenerator.mxg"
+                #line (336,68)-(336,69) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (334,69)-(334,70) 29 "MetaModelGenerator.mxg"
+                #line (336,69)-(336,70) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=");
                 #line hidden
-                #line (334,70)-(334,71) 29 "MetaModelGenerator.mxg"
+                #line (336,70)-(336,71) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (334,71)-(334,76) 29 "MetaModelGenerator.mxg"
+                #line (336,71)-(336,76) 29 "MetaModelGenerator.mxg"
                 __cb.Write("null)");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (335,9)-(335,10) 29 "MetaModelGenerator.mxg"
+                #line (337,9)-(337,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (336,13)-(336,19) 29 "MetaModelGenerator.mxg"
+                #line (338,13)-(338,19) 29 "MetaModelGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (336,19)-(336,20) 29 "MetaModelGenerator.mxg"
+                #line (338,19)-(338,20) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (336,20)-(336,21) 29 "MetaModelGenerator.mxg"
+                #line (338,20)-(338,21) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
-                #line (336,22)-(336,35) 28 "MetaModelGenerator.mxg"
+                #line (338,22)-(338,35) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(cls));
                 #line hidden
-                #line (336,36)-(336,37) 29 "MetaModelGenerator.mxg"
+                #line (338,36)-(338,37) 29 "MetaModelGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
-                #line (336,38)-(336,52) 28 "MetaModelGenerator.mxg"
+                #line (338,38)-(338,52) 28 "MetaModelGenerator.mxg"
                 __cb.Write(MetaModel.Name);
                 #line hidden
-                #line (336,53)-(336,54) 29 "MetaModelGenerator.mxg"
+                #line (338,53)-(338,54) 29 "MetaModelGenerator.mxg"
                 __cb.Write(".");
                 #line hidden
-                #line (336,55)-(336,63) 28 "MetaModelGenerator.mxg"
+                #line (338,55)-(338,63) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (336,64)-(336,82) 29 "MetaModelGenerator.mxg"
+                #line (338,64)-(338,82) 29 "MetaModelGenerator.mxg"
                 __cb.Write("Info.Create(model,");
                 #line hidden
-                #line (336,82)-(336,83) 29 "MetaModelGenerator.mxg"
+                #line (338,82)-(338,83) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (336,83)-(336,88) 29 "MetaModelGenerator.mxg"
+                #line (338,83)-(338,88) 29 "MetaModelGenerator.mxg"
                 __cb.Write("id)!;");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (337,9)-(337,10) 29 "MetaModelGenerator.mxg"
+                #line (339,9)-(339,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -5756,7 +5758,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first38) __cb.AppendLine();
             __cb.Push("");
-            #line (340,1)-(340,2) 25 "MetaModelGenerator.mxg"
+            #line (342,1)-(342,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5766,43 +5768,43 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (344,9)-(344,36) 22 "MetaModelGenerator.mxg"
+        #line (346,9)-(346,36) 22 "MetaModelGenerator.mxg"
         public string GenerateEnum(MetaEnum enm)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (345,2)-(345,30) 24 "MetaModelGenerator.mxg"
+            #line (347,2)-(347,30) 24 "MetaModelGenerator.mxg"
             __cb.Write(GetDocumentationComment(enm));
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (346,1)-(346,7) 25 "MetaModelGenerator.mxg"
+            #line (348,1)-(348,7) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (346,7)-(346,8) 25 "MetaModelGenerator.mxg"
+            #line (348,7)-(348,8) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (346,8)-(346,12) 25 "MetaModelGenerator.mxg"
+            #line (348,8)-(348,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("enum");
             #line hidden
-            #line (346,12)-(346,13) 25 "MetaModelGenerator.mxg"
+            #line (348,12)-(348,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (346,14)-(346,22) 24 "MetaModelGenerator.mxg"
+            #line (348,14)-(348,22) 24 "MetaModelGenerator.mxg"
             __cb.Write(enm.Name);
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (347,1)-(347,2) 25 "MetaModelGenerator.mxg"
+            #line (349,1)-(349,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first39 = true;
-            #line (348,6)-(348,39) 13 "MetaModelGenerator.mxg"
+            #line (350,6)-(350,39) 13 "MetaModelGenerator.mxg"
             foreach (var lit in enm.Literals)
             #line hidden
             
@@ -5812,16 +5814,16 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first39 = false;
                 }
                 __cb.Push("    ");
-                #line (349,10)-(349,38) 28 "MetaModelGenerator.mxg"
+                #line (351,10)-(351,38) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetDocumentationComment(lit));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (350,10)-(350,18) 28 "MetaModelGenerator.mxg"
+                #line (352,10)-(352,18) 28 "MetaModelGenerator.mxg"
                 __cb.Write(lit.Name);
                 #line hidden
-                #line (350,19)-(350,20) 29 "MetaModelGenerator.mxg"
+                #line (352,19)-(352,20) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
                 __cb.AppendLine();
@@ -5829,7 +5831,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first39) __cb.AppendLine();
             __cb.Push("");
-            #line (352,1)-(352,2) 25 "MetaModelGenerator.mxg"
+            #line (354,1)-(354,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5837,109 +5839,109 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (355,9)-(355,40) 22 "MetaModelGenerator.mxg"
+        #line (357,9)-(357,40) 22 "MetaModelGenerator.mxg"
         public string GenerateEnumInfo(MetaEnum enm)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (356,1)-(356,9) 25 "MetaModelGenerator.mxg"
+            #line (358,1)-(358,9) 25 "MetaModelGenerator.mxg"
             __cb.Write("internal");
             #line hidden
-            #line (356,9)-(356,10) 25 "MetaModelGenerator.mxg"
+            #line (358,9)-(358,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (356,10)-(356,15) 25 "MetaModelGenerator.mxg"
+            #line (358,10)-(358,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (356,15)-(356,16) 25 "MetaModelGenerator.mxg"
+            #line (358,15)-(358,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (356,16)-(356,18) 25 "MetaModelGenerator.mxg"
+            #line (358,16)-(358,18) 25 "MetaModelGenerator.mxg"
             __cb.Write("__");
             #line hidden
-            #line (356,19)-(356,27) 24 "MetaModelGenerator.mxg"
+            #line (358,19)-(358,27) 24 "MetaModelGenerator.mxg"
             __cb.Write(enm.Name);
             #line hidden
-            #line (356,28)-(356,33) 25 "MetaModelGenerator.mxg"
+            #line (358,28)-(358,33) 25 "MetaModelGenerator.mxg"
             __cb.Write("_Info");
             #line hidden
-            #line (356,33)-(356,34) 25 "MetaModelGenerator.mxg"
+            #line (358,33)-(358,34) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (356,34)-(356,35) 25 "MetaModelGenerator.mxg"
+            #line (358,34)-(358,35) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (356,35)-(356,36) 25 "MetaModelGenerator.mxg"
+            #line (358,35)-(358,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (356,36)-(356,51) 25 "MetaModelGenerator.mxg"
+            #line (358,36)-(358,51) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelEnumInfo");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (357,1)-(357,2) 25 "MetaModelGenerator.mxg"
+            #line (359,1)-(359,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (358,5)-(358,11) 25 "MetaModelGenerator.mxg"
+            #line (360,5)-(360,11) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (358,11)-(358,12) 25 "MetaModelGenerator.mxg"
+            #line (360,11)-(360,12) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (358,12)-(358,18) 25 "MetaModelGenerator.mxg"
+            #line (360,12)-(360,18) 25 "MetaModelGenerator.mxg"
             __cb.Write("static");
             #line hidden
-            #line (358,18)-(358,19) 25 "MetaModelGenerator.mxg"
+            #line (360,18)-(360,19) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (358,19)-(358,27) 25 "MetaModelGenerator.mxg"
+            #line (360,19)-(360,27) 25 "MetaModelGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (358,27)-(358,28) 25 "MetaModelGenerator.mxg"
+            #line (360,27)-(360,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (358,28)-(358,30) 25 "MetaModelGenerator.mxg"
+            #line (360,28)-(360,30) 25 "MetaModelGenerator.mxg"
             __cb.Write("__");
             #line hidden
-            #line (358,31)-(358,39) 24 "MetaModelGenerator.mxg"
+            #line (360,31)-(360,39) 24 "MetaModelGenerator.mxg"
             __cb.Write(enm.Name);
             #line hidden
-            #line (358,40)-(358,45) 25 "MetaModelGenerator.mxg"
+            #line (360,40)-(360,45) 25 "MetaModelGenerator.mxg"
             __cb.Write("_Info");
             #line hidden
-            #line (358,45)-(358,46) 25 "MetaModelGenerator.mxg"
+            #line (360,45)-(360,46) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (358,46)-(358,54) 25 "MetaModelGenerator.mxg"
+            #line (360,46)-(360,54) 25 "MetaModelGenerator.mxg"
             __cb.Write("Instance");
             #line hidden
-            #line (358,54)-(358,55) 25 "MetaModelGenerator.mxg"
+            #line (360,54)-(360,55) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (358,55)-(358,56) 25 "MetaModelGenerator.mxg"
+            #line (360,55)-(360,56) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (358,56)-(358,57) 25 "MetaModelGenerator.mxg"
+            #line (360,56)-(360,57) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (358,57)-(358,60) 25 "MetaModelGenerator.mxg"
+            #line (360,57)-(360,60) 25 "MetaModelGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (358,60)-(358,61) 25 "MetaModelGenerator.mxg"
+            #line (360,60)-(360,61) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (358,61)-(358,63) 25 "MetaModelGenerator.mxg"
+            #line (360,61)-(360,63) 25 "MetaModelGenerator.mxg"
             __cb.Write("__");
             #line hidden
-            #line (358,64)-(358,72) 24 "MetaModelGenerator.mxg"
+            #line (360,64)-(360,72) 24 "MetaModelGenerator.mxg"
             __cb.Write(enm.Name);
             #line hidden
-            #line (358,73)-(358,81) 25 "MetaModelGenerator.mxg"
+            #line (360,73)-(360,81) 25 "MetaModelGenerator.mxg"
             __cb.Write("_Info();");
             #line hidden
             __cb.AppendLine();
@@ -5947,60 +5949,28 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (360,5)-(360,12) 25 "MetaModelGenerator.mxg"
+            #line (362,5)-(362,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (360,12)-(360,13) 25 "MetaModelGenerator.mxg"
+            #line (362,12)-(362,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (360,13)-(360,21) 25 "MetaModelGenerator.mxg"
+            #line (362,13)-(362,21) 25 "MetaModelGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (360,21)-(360,22) 25 "MetaModelGenerator.mxg"
+            #line (362,21)-(362,22) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (360,22)-(360,81) 25 "MetaModelGenerator.mxg"
+            #line (362,22)-(362,81) 25 "MetaModelGenerator.mxg"
             __cb.Write("global::System.Collections.Immutable.ImmutableArray<string>");
             #line hidden
-            #line (360,81)-(360,82) 25 "MetaModelGenerator.mxg"
+            #line (362,81)-(362,82) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (360,82)-(360,92) 25 "MetaModelGenerator.mxg"
+            #line (362,82)-(362,92) 25 "MetaModelGenerator.mxg"
             __cb.Write("_literals;");
             #line hidden
             __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (361,5)-(361,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write("private");
-            #line hidden
-            #line (361,12)-(361,13) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (361,13)-(361,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write("readonly");
-            #line hidden
-            #line (361,21)-(361,22) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (361,22)-(361,86) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
-            #line hidden
-            #line (361,86)-(361,87) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (361,87)-(361,100) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__MetaSymbol>");
-            #line hidden
-            #line (361,100)-(361,101) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (361,101)-(361,117) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_literalsByName;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (363,5)-(363,12) 25 "MetaModelGenerator.mxg"
@@ -6009,41 +5979,73 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (363,12)-(363,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (363,13)-(363,15) 25 "MetaModelGenerator.mxg"
+            #line (363,13)-(363,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write("readonly");
+            #line hidden
+            #line (363,21)-(363,22) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (363,22)-(363,86) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line hidden
+            #line (363,86)-(363,87) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (363,87)-(363,100) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__MetaSymbol>");
+            #line hidden
+            #line (363,100)-(363,101) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (363,101)-(363,117) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_literalsByName;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (365,5)-(365,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write("private");
+            #line hidden
+            #line (365,12)-(365,13) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (365,13)-(365,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("__");
             #line hidden
-            #line (363,16)-(363,24) 24 "MetaModelGenerator.mxg"
+            #line (365,16)-(365,24) 24 "MetaModelGenerator.mxg"
             __cb.Write(enm.Name);
             #line hidden
-            #line (363,25)-(363,32) 25 "MetaModelGenerator.mxg"
+            #line (365,25)-(365,32) 25 "MetaModelGenerator.mxg"
             __cb.Write("_Info()");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (364,5)-(364,6) 25 "MetaModelGenerator.mxg"
+            #line (366,5)-(366,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (365,9)-(365,18) 25 "MetaModelGenerator.mxg"
+            #line (367,9)-(367,18) 25 "MetaModelGenerator.mxg"
             __cb.Write("_literals");
             #line hidden
-            #line (365,18)-(365,19) 25 "MetaModelGenerator.mxg"
+            #line (367,18)-(367,19) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (365,19)-(365,20) 25 "MetaModelGenerator.mxg"
+            #line (367,19)-(367,20) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (365,20)-(365,21) 25 "MetaModelGenerator.mxg"
+            #line (367,20)-(367,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (365,21)-(365,53) 25 "MetaModelGenerator.mxg"
+            #line (367,21)-(367,53) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<string>(");
             #line hidden
             var __first40 = true;
-            #line (365,54)-(365,88) 13 "MetaModelGenerator.mxg"
+            #line (367,54)-(367,88) 13 "MetaModelGenerator.mxg"
             foreach (var lit in enm.Literals) 
             #line hidden
             
@@ -6056,53 +6058,53 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("        ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (365,98)-(365,102) 32 "MetaModelGenerator.mxg"
+                    #line (367,98)-(367,102) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (365,104)-(365,142) 28 "MetaModelGenerator.mxg"
+                #line (367,104)-(367,142) 28 "MetaModelGenerator.mxg"
                 __cb.Write(StringUtilities.EncodeString(lit.Name));
                 #line hidden
             }
-            #line (365,156)-(365,158) 25 "MetaModelGenerator.mxg"
+            #line (367,156)-(367,158) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (366,9)-(366,12) 25 "MetaModelGenerator.mxg"
+            #line (368,9)-(368,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (366,12)-(366,13) 25 "MetaModelGenerator.mxg"
+            #line (368,12)-(368,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (366,13)-(366,27) 25 "MetaModelGenerator.mxg"
+            #line (368,13)-(368,27) 25 "MetaModelGenerator.mxg"
             __cb.Write("literalsByName");
             #line hidden
-            #line (366,27)-(366,28) 25 "MetaModelGenerator.mxg"
+            #line (368,27)-(368,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (366,28)-(366,29) 25 "MetaModelGenerator.mxg"
+            #line (368,28)-(368,29) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (366,29)-(366,30) 25 "MetaModelGenerator.mxg"
+            #line (368,29)-(368,30) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (366,30)-(366,73) 25 "MetaModelGenerator.mxg"
+            #line (368,30)-(368,73) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<string,");
             #line hidden
-            #line (366,73)-(366,74) 25 "MetaModelGenerator.mxg"
+            #line (368,73)-(368,74) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (366,74)-(366,90) 25 "MetaModelGenerator.mxg"
+            #line (368,74)-(368,90) 25 "MetaModelGenerator.mxg"
             __cb.Write("__MetaSymbol>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first41 = true;
-            #line (367,10)-(367,43) 13 "MetaModelGenerator.mxg"
+            #line (369,10)-(369,43) 13 "MetaModelGenerator.mxg"
             foreach (var lit in enm.Literals)
             #line hidden
             
@@ -6112,31 +6114,31 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first41 = false;
                 }
                 __cb.Push("        ");
-                #line (368,13)-(368,33) 29 "MetaModelGenerator.mxg"
+                #line (370,13)-(370,33) 29 "MetaModelGenerator.mxg"
                 __cb.Write("literalsByName.Add(\"");
                 #line hidden
-                #line (368,34)-(368,42) 28 "MetaModelGenerator.mxg"
+                #line (370,34)-(370,42) 28 "MetaModelGenerator.mxg"
                 __cb.Write(lit.Name);
                 #line hidden
-                #line (368,43)-(368,45) 29 "MetaModelGenerator.mxg"
+                #line (370,43)-(370,45) 29 "MetaModelGenerator.mxg"
                 __cb.Write("\",");
                 #line hidden
-                #line (368,45)-(368,46) 29 "MetaModelGenerator.mxg"
+                #line (370,45)-(370,46) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (368,46)-(368,69) 29 "MetaModelGenerator.mxg"
+                #line (370,46)-(370,69) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__MetaSymbol.FromValue(");
                 #line hidden
-                #line (368,70)-(368,78) 28 "MetaModelGenerator.mxg"
+                #line (370,70)-(370,78) 28 "MetaModelGenerator.mxg"
                 __cb.Write(enm.Name);
                 #line hidden
-                #line (368,79)-(368,80) 29 "MetaModelGenerator.mxg"
+                #line (370,79)-(370,80) 29 "MetaModelGenerator.mxg"
                 __cb.Write(".");
                 #line hidden
-                #line (368,81)-(368,89) 28 "MetaModelGenerator.mxg"
+                #line (370,81)-(370,89) 28 "MetaModelGenerator.mxg"
                 __cb.Write(lit.Name);
                 #line hidden
-                #line (368,90)-(368,93) 29 "MetaModelGenerator.mxg"
+                #line (370,90)-(370,93) 29 "MetaModelGenerator.mxg"
                 __cb.Write("));");
                 #line hidden
                 __cb.AppendLine();
@@ -6144,111 +6146,30 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first41) __cb.AppendLine();
             __cb.Push("        ");
-            #line (370,9)-(370,24) 25 "MetaModelGenerator.mxg"
+            #line (372,9)-(372,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("_literalsByName");
             #line hidden
-            #line (370,24)-(370,25) 25 "MetaModelGenerator.mxg"
+            #line (372,24)-(372,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (370,25)-(370,26) 25 "MetaModelGenerator.mxg"
+            #line (372,25)-(372,26) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (370,26)-(370,27) 25 "MetaModelGenerator.mxg"
+            #line (372,26)-(372,27) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (370,27)-(370,56) 25 "MetaModelGenerator.mxg"
+            #line (372,27)-(372,56) 25 "MetaModelGenerator.mxg"
             __cb.Write("literalsByName.ToImmutable();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (371,5)-(371,6) 25 "MetaModelGenerator.mxg"
+            #line (373,5)-(373,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (373,5)-(373,11) 25 "MetaModelGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (373,11)-(373,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (373,12)-(373,20) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (373,20)-(373,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (373,21)-(373,32) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__MetaModel");
-            #line hidden
-            #line (373,32)-(373,33) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (373,33)-(373,42) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MetaModel");
-            #line hidden
-            #line (373,42)-(373,43) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (373,43)-(373,45) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (373,45)-(373,46) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (373,47)-(373,61) 24 "MetaModelGenerator.mxg"
-            __cb.Write(MetaModel.Name);
-            #line hidden
-            #line (373,62)-(373,73) 25 "MetaModelGenerator.mxg"
-            __cb.Write(".MInstance;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (374,5)-(374,11) 25 "MetaModelGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (374,11)-(374,12) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (374,12)-(374,20) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (374,20)-(374,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (374,21)-(374,31) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__MetaType");
-            #line hidden
-            #line (374,31)-(374,32) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (374,32)-(374,40) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MetaType");
-            #line hidden
-            #line (374,40)-(374,41) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (374,41)-(374,43) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (374,43)-(374,44) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (374,44)-(374,51) 25 "MetaModelGenerator.mxg"
-            __cb.Write("typeof(");
-            #line hidden
-            #line (374,52)-(374,60) 24 "MetaModelGenerator.mxg"
-            __cb.Write(enm.Name);
-            #line hidden
-            #line (374,61)-(374,63) 25 "MetaModelGenerator.mxg"
-            __cb.Write(");");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (375,5)-(375,11) 25 "MetaModelGenerator.mxg"
@@ -6263,73 +6184,154 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (375,20)-(375,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (375,21)-(375,80) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<string>");
+            #line (375,21)-(375,32) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__MetaModel");
             #line hidden
-            #line (375,80)-(375,81) 25 "MetaModelGenerator.mxg"
+            #line (375,32)-(375,33) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (375,81)-(375,89) 25 "MetaModelGenerator.mxg"
-            __cb.Write("Literals");
+            #line (375,33)-(375,42) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MetaModel");
             #line hidden
-            #line (375,89)-(375,90) 25 "MetaModelGenerator.mxg"
+            #line (375,42)-(375,43) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (375,90)-(375,92) 25 "MetaModelGenerator.mxg"
+            #line (375,43)-(375,45) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (375,92)-(375,93) 25 "MetaModelGenerator.mxg"
+            #line (375,45)-(375,46) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (375,93)-(375,103) 25 "MetaModelGenerator.mxg"
+            #line (375,47)-(375,61) 24 "MetaModelGenerator.mxg"
+            __cb.Write(MetaModel.Name);
+            #line hidden
+            #line (375,62)-(375,73) 25 "MetaModelGenerator.mxg"
+            __cb.Write(".MInstance;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (376,5)-(376,11) 25 "MetaModelGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (376,11)-(376,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (376,12)-(376,20) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (376,20)-(376,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (376,21)-(376,31) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__MetaType");
+            #line hidden
+            #line (376,31)-(376,32) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (376,32)-(376,40) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MetaType");
+            #line hidden
+            #line (376,40)-(376,41) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (376,41)-(376,43) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (376,43)-(376,44) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (376,44)-(376,51) 25 "MetaModelGenerator.mxg"
+            __cb.Write("typeof(");
+            #line hidden
+            #line (376,52)-(376,60) 24 "MetaModelGenerator.mxg"
+            __cb.Write(enm.Name);
+            #line hidden
+            #line (376,61)-(376,63) 25 "MetaModelGenerator.mxg"
+            __cb.Write(");");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (377,5)-(377,11) 25 "MetaModelGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (377,11)-(377,12) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (377,12)-(377,20) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (377,20)-(377,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (377,21)-(377,80) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<string>");
+            #line hidden
+            #line (377,80)-(377,81) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (377,81)-(377,89) 25 "MetaModelGenerator.mxg"
+            __cb.Write("Literals");
+            #line hidden
+            #line (377,89)-(377,90) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (377,90)-(377,92) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (377,92)-(377,93) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (377,93)-(377,103) 25 "MetaModelGenerator.mxg"
             __cb.Write("_literals;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (376,5)-(376,14) 25 "MetaModelGenerator.mxg"
+            #line (378,5)-(378,14) 25 "MetaModelGenerator.mxg"
             __cb.Write("protected");
             #line hidden
-            #line (376,14)-(376,15) 25 "MetaModelGenerator.mxg"
+            #line (378,14)-(378,15) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (376,15)-(376,23) 25 "MetaModelGenerator.mxg"
+            #line (378,15)-(378,23) 25 "MetaModelGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (376,23)-(376,24) 25 "MetaModelGenerator.mxg"
+            #line (378,23)-(378,24) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (376,24)-(376,88) 25 "MetaModelGenerator.mxg"
+            #line (378,24)-(378,88) 25 "MetaModelGenerator.mxg"
             __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
             #line hidden
-            #line (376,88)-(376,89) 25 "MetaModelGenerator.mxg"
+            #line (378,88)-(378,89) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (376,89)-(376,102) 25 "MetaModelGenerator.mxg"
+            #line (378,89)-(378,102) 25 "MetaModelGenerator.mxg"
             __cb.Write("__MetaSymbol>");
             #line hidden
-            #line (376,102)-(376,103) 25 "MetaModelGenerator.mxg"
+            #line (378,102)-(378,103) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (376,103)-(376,117) 25 "MetaModelGenerator.mxg"
+            #line (378,103)-(378,117) 25 "MetaModelGenerator.mxg"
             __cb.Write("LiteralsByName");
             #line hidden
-            #line (376,117)-(376,118) 25 "MetaModelGenerator.mxg"
+            #line (378,117)-(378,118) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (376,118)-(376,120) 25 "MetaModelGenerator.mxg"
+            #line (378,118)-(378,120) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (376,120)-(376,121) 25 "MetaModelGenerator.mxg"
+            #line (378,120)-(378,121) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (376,121)-(376,137) 25 "MetaModelGenerator.mxg"
+            #line (378,121)-(378,137) 25 "MetaModelGenerator.mxg"
             __cb.Write("_literalsByName;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (377,1)-(377,2) 25 "MetaModelGenerator.mxg"
+            #line (379,1)-(379,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -6337,38 +6339,38 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (380,9)-(380,42) 22 "MetaModelGenerator.mxg"
+        #line (382,9)-(382,42) 22 "MetaModelGenerator.mxg"
         public string GenerateInterface(MetaClass cls)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (381,2)-(381,119) 13 "MetaModelGenerator.mxg"
+            #line (383,2)-(383,119) 13 "MetaModelGenerator.mxg"
             var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls));
             #line hidden
             
             __cb.Push("");
-            #line (382,2)-(382,30) 24 "MetaModelGenerator.mxg"
+            #line (384,2)-(384,30) 24 "MetaModelGenerator.mxg"
             __cb.Write(GetDocumentationComment(cls));
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            #line (383,1)-(383,7) 25 "MetaModelGenerator.mxg"
+            #line (385,1)-(385,7) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (383,7)-(383,8) 25 "MetaModelGenerator.mxg"
+            #line (385,7)-(385,8) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (383,8)-(383,17) 25 "MetaModelGenerator.mxg"
+            #line (385,8)-(385,17) 25 "MetaModelGenerator.mxg"
             __cb.Write("interface");
             #line hidden
-            #line (383,17)-(383,18) 25 "MetaModelGenerator.mxg"
+            #line (385,17)-(385,18) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (383,19)-(383,27) 24 "MetaModelGenerator.mxg"
+            #line (385,19)-(385,27) 24 "MetaModelGenerator.mxg"
             __cb.Write(cls.Name);
             #line hidden
             var __first42 = true;
-            #line (383,29)-(383,53) 13 "MetaModelGenerator.mxg"
+            #line (385,29)-(385,53) 13 "MetaModelGenerator.mxg"
             if (cls.BaseTypes.Any())
             #line hidden
             
@@ -6377,17 +6379,17 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first42 = false;
                 }
-                #line (383,54)-(383,55) 29 "MetaModelGenerator.mxg"
+                #line (385,54)-(385,55) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (383,55)-(383,56) 29 "MetaModelGenerator.mxg"
+                #line (385,55)-(385,56) 29 "MetaModelGenerator.mxg"
                 __cb.Write(":");
                 #line hidden
-                #line (383,56)-(383,57) 29 "MetaModelGenerator.mxg"
+                #line (385,56)-(385,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
                 var __first43 = true;
-                #line (383,58)-(383,92) 17 "MetaModelGenerator.mxg"
+                #line (385,58)-(385,92) 17 "MetaModelGenerator.mxg"
                 foreach (var bt in cls.BaseTypes) 
                 #line hidden
                 
@@ -6400,21 +6402,21 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __cb.Push("");
                         __cb.DontIgnoreLastLineEnd = true;
-                        #line (383,102)-(383,106) 36 "MetaModelGenerator.mxg"
+                        #line (385,102)-(385,106) 36 "MetaModelGenerator.mxg"
                         __cb.Write(", ");
                         #line hidden
                         __cb.DontIgnoreLastLineEnd = false;
                         __cb.Pop();
                     }
-                    #line (383,107)-(383,115) 33 "MetaModelGenerator.mxg"
+                    #line (385,107)-(385,115) 33 "MetaModelGenerator.mxg"
                     __cb.Write("global::");
                     #line hidden
-                    #line (383,116)-(383,127) 32 "MetaModelGenerator.mxg"
+                    #line (385,116)-(385,127) 32 "MetaModelGenerator.mxg"
                     __cb.Write(bt.FullName);
                     #line hidden
                 }
             }
-            #line (383,142)-(383,146) 13 "MetaModelGenerator.mxg"
+            #line (385,142)-(385,146) 13 "MetaModelGenerator.mxg"
             else
             #line hidden
             
@@ -6423,28 +6425,28 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first42 = false;
                 }
-                #line (383,147)-(383,148) 29 "MetaModelGenerator.mxg"
+                #line (385,147)-(385,148) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (383,148)-(383,149) 29 "MetaModelGenerator.mxg"
+                #line (385,148)-(385,149) 29 "MetaModelGenerator.mxg"
                 __cb.Write(":");
                 #line hidden
-                #line (383,149)-(383,150) 29 "MetaModelGenerator.mxg"
+                #line (385,149)-(385,150) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (383,150)-(383,164) 29 "MetaModelGenerator.mxg"
+                #line (385,150)-(385,164) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__IModelObject");
                 #line hidden
             }
             if (!__first42) __cb.AppendLine();
             __cb.Push("");
-            #line (384,1)-(384,2) 25 "MetaModelGenerator.mxg"
+            #line (386,1)-(386,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first44 = true;
-            #line (385,6)-(385,54) 13 "MetaModelGenerator.mxg"
+            #line (387,6)-(387,54) 13 "MetaModelGenerator.mxg"
             foreach (var prop in metaCls.DeclaredProperties)
             #line hidden
             
@@ -6453,19 +6455,19 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first44 = false;
                 }
-                #line (386,10)-(386,53) 17 "MetaModelGenerator.mxg"
+                #line (388,10)-(388,53) 17 "MetaModelGenerator.mxg"
                 var info = metaCls.ModelPropertyInfos[prop];
                 #line hidden
                 
                 __cb.Push("    ");
-                #line (387,10)-(387,58) 28 "MetaModelGenerator.mxg"
+                #line (389,10)-(389,58) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetDocumentationComment(prop.UnderlyingProperty));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
                 var __first45 = true;
-                #line (388,10)-(388,47) 17 "MetaModelGenerator.mxg"
+                #line (390,10)-(390,47) 17 "MetaModelGenerator.mxg"
                 if (info.HiddenProperties.Length > 0)
                 #line hidden
                 
@@ -6474,39 +6476,39 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __first45 = false;
                     }
-                    #line (388,48)-(388,51) 33 "MetaModelGenerator.mxg"
+                    #line (390,48)-(390,51) 33 "MetaModelGenerator.mxg"
                     __cb.Write("new");
                     #line hidden
-                    #line (388,51)-(388,52) 33 "MetaModelGenerator.mxg"
+                    #line (390,51)-(390,52) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
                 }
-                #line (388,61)-(388,182) 28 "MetaModelGenerator.mxg"
+                #line (390,61)-(390,182) 28 "MetaModelGenerator.mxg"
                 __cb.Write(prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
                 #line hidden
-                #line (388,183)-(388,184) 29 "MetaModelGenerator.mxg"
+                #line (390,183)-(390,184) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (388,185)-(388,194) 28 "MetaModelGenerator.mxg"
+                #line (390,185)-(390,194) 28 "MetaModelGenerator.mxg"
                 __cb.Write(prop.Name);
                 #line hidden
-                #line (388,195)-(388,196) 29 "MetaModelGenerator.mxg"
+                #line (390,195)-(390,196) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (388,196)-(388,197) 29 "MetaModelGenerator.mxg"
+                #line (390,196)-(390,197) 29 "MetaModelGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
-                #line (388,197)-(388,198) 29 "MetaModelGenerator.mxg"
+                #line (390,197)-(390,198) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (388,198)-(388,202) 29 "MetaModelGenerator.mxg"
+                #line (390,198)-(390,202) 29 "MetaModelGenerator.mxg"
                 __cb.Write("get;");
                 #line hidden
-                #line (388,202)-(388,203) 29 "MetaModelGenerator.mxg"
+                #line (390,202)-(390,203) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
                 var __first46 = true;
-                #line (388,204)-(388,224) 17 "MetaModelGenerator.mxg"
+                #line (390,204)-(390,224) 17 "MetaModelGenerator.mxg"
                 if (HasSetter(prop))
                 #line hidden
                 
@@ -6515,14 +6517,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __first46 = false;
                     }
-                    #line (388,225)-(388,229) 33 "MetaModelGenerator.mxg"
+                    #line (390,225)-(390,229) 33 "MetaModelGenerator.mxg"
                     __cb.Write("set;");
                     #line hidden
-                    #line (388,229)-(388,230) 33 "MetaModelGenerator.mxg"
+                    #line (390,229)-(390,230) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
                 }
-                #line (388,238)-(388,239) 29 "MetaModelGenerator.mxg"
+                #line (390,238)-(390,239) 29 "MetaModelGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -6532,7 +6534,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first47 = true;
-            #line (391,6)-(391,40) 13 "MetaModelGenerator.mxg"
+            #line (393,6)-(393,40) 13 "MetaModelGenerator.mxg"
             foreach (var op in cls.Operations)
             #line hidden
             
@@ -6542,26 +6544,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first47 = false;
                 }
                 __cb.Push("    ");
-                #line (392,10)-(392,37) 28 "MetaModelGenerator.mxg"
+                #line (394,10)-(394,37) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetDocumentationComment(op));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (393,10)-(393,39) 28 "MetaModelGenerator.mxg"
+                #line (395,10)-(395,39) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharpOpType(op.ReturnType));
                 #line hidden
-                #line (393,40)-(393,41) 29 "MetaModelGenerator.mxg"
+                #line (395,40)-(395,41) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (393,42)-(393,49) 28 "MetaModelGenerator.mxg"
+                #line (395,42)-(395,49) 28 "MetaModelGenerator.mxg"
                 __cb.Write(op.Name);
                 #line hidden
-                #line (393,50)-(393,51) 29 "MetaModelGenerator.mxg"
+                #line (395,50)-(395,51) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
                 var __first48 = true;
-                #line (393,52)-(393,89) 17 "MetaModelGenerator.mxg"
+                #line (395,52)-(395,89) 17 "MetaModelGenerator.mxg"
                 foreach (var param in op.Parameters) 
                 #line hidden
                 
@@ -6574,23 +6576,23 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __cb.Push("    ");
                         __cb.DontIgnoreLastLineEnd = true;
-                        #line (393,99)-(393,103) 36 "MetaModelGenerator.mxg"
+                        #line (395,99)-(395,103) 36 "MetaModelGenerator.mxg"
                         __cb.Write(", ");
                         #line hidden
                         __cb.DontIgnoreLastLineEnd = false;
                         __cb.Pop();
                     }
-                    #line (393,105)-(393,131) 32 "MetaModelGenerator.mxg"
+                    #line (395,105)-(395,131) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharpOpType(param.Type));
                     #line hidden
-                    #line (393,132)-(393,133) 33 "MetaModelGenerator.mxg"
+                    #line (395,132)-(395,133) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (393,134)-(393,144) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(param.Name);
+                    #line (395,134)-(395,166) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(param.Name.EscapeCSharpKeyword());
                     #line hidden
                 }
-                #line (393,158)-(393,160) 29 "MetaModelGenerator.mxg"
+                #line (395,180)-(395,182) 29 "MetaModelGenerator.mxg"
                 __cb.Write(");");
                 #line hidden
                 __cb.AppendLine();
@@ -6598,7 +6600,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first47) __cb.AppendLine();
             __cb.Push("");
-            #line (395,1)-(395,2) 25 "MetaModelGenerator.mxg"
+            #line (397,1)-(397,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -6606,101 +6608,101 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (398,9)-(398,38) 22 "MetaModelGenerator.mxg"
+        #line (400,9)-(400,38) 22 "MetaModelGenerator.mxg"
         public string GenerateClass(MetaClass cls)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (399,2)-(399,119) 13 "MetaModelGenerator.mxg"
+            #line (401,2)-(401,119) 13 "MetaModelGenerator.mxg"
             var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls));
             #line hidden
             
             __cb.Push("");
-            #line (400,1)-(400,9) 25 "MetaModelGenerator.mxg"
+            #line (402,1)-(402,9) 25 "MetaModelGenerator.mxg"
             __cb.Write("internal");
             #line hidden
-            #line (400,9)-(400,10) 25 "MetaModelGenerator.mxg"
+            #line (402,9)-(402,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (400,10)-(400,15) 25 "MetaModelGenerator.mxg"
+            #line (402,10)-(402,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (400,15)-(400,16) 25 "MetaModelGenerator.mxg"
+            #line (402,15)-(402,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (400,17)-(400,25) 24 "MetaModelGenerator.mxg"
+            #line (402,17)-(402,25) 24 "MetaModelGenerator.mxg"
             __cb.Write(cls.Name);
             #line hidden
-            #line (400,26)-(400,31) 25 "MetaModelGenerator.mxg"
+            #line (402,26)-(402,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("_Impl");
             #line hidden
-            #line (400,31)-(400,32) 25 "MetaModelGenerator.mxg"
+            #line (402,31)-(402,32) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (400,32)-(400,33) 25 "MetaModelGenerator.mxg"
+            #line (402,32)-(402,33) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (400,33)-(400,34) 25 "MetaModelGenerator.mxg"
+            #line (402,33)-(402,34) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (400,34)-(400,52) 25 "MetaModelGenerator.mxg"
+            #line (402,34)-(402,52) 25 "MetaModelGenerator.mxg"
             __cb.Write("__MetaModelObject,");
             #line hidden
-            #line (400,52)-(400,53) 25 "MetaModelGenerator.mxg"
+            #line (402,52)-(402,53) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (400,54)-(400,62) 24 "MetaModelGenerator.mxg"
+            #line (402,54)-(402,62) 24 "MetaModelGenerator.mxg"
             __cb.Write(cls.Name);
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (401,1)-(401,2) 25 "MetaModelGenerator.mxg"
+            #line (403,1)-(403,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (402,5)-(402,12) 25 "MetaModelGenerator.mxg"
+            #line (404,5)-(404,12) 25 "MetaModelGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (402,12)-(402,13) 25 "MetaModelGenerator.mxg"
+            #line (404,12)-(404,13) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (402,14)-(402,22) 24 "MetaModelGenerator.mxg"
+            #line (404,14)-(404,22) 24 "MetaModelGenerator.mxg"
             __cb.Write(cls.Name);
             #line hidden
-            #line (402,23)-(402,36) 25 "MetaModelGenerator.mxg"
+            #line (404,23)-(404,36) 25 "MetaModelGenerator.mxg"
             __cb.Write("_Impl(string?");
             #line hidden
-            #line (402,36)-(402,37) 25 "MetaModelGenerator.mxg"
+            #line (404,36)-(404,37) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (402,37)-(402,40) 25 "MetaModelGenerator.mxg"
+            #line (404,37)-(404,40) 25 "MetaModelGenerator.mxg"
             __cb.Write("id)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (403,9)-(403,10) 25 "MetaModelGenerator.mxg"
+            #line (405,9)-(405,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (403,10)-(403,11) 25 "MetaModelGenerator.mxg"
+            #line (405,10)-(405,11) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (403,11)-(403,19) 25 "MetaModelGenerator.mxg"
+            #line (405,11)-(405,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("base(id)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (404,5)-(404,6) 25 "MetaModelGenerator.mxg"
+            #line (406,5)-(406,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first49 = true;
-            #line (405,10)-(405,45) 13 "MetaModelGenerator.mxg"
+            #line (407,10)-(407,45) 13 "MetaModelGenerator.mxg"
             foreach (var slot in metaCls.Slots)
             #line hidden
             
@@ -6709,12 +6711,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first49 = false;
                 }
-                #line (406,14)-(406,103) 17 "MetaModelGenerator.mxg"
+                #line (408,14)-(408,103) 17 "MetaModelGenerator.mxg"
                 var defaultValue = ToDefaultValue(slot.SlotProperty.Type, slot.SlotProperty.DefaultValue);
                 #line hidden
                 
                 var __first50 = true;
-                #line (407,14)-(407,83) 17 "MetaModelGenerator.mxg"
+                #line (409,14)-(409,83) 17 "MetaModelGenerator.mxg"
                 if (!string.IsNullOrEmpty(defaultValue) && defaultValue != "default")
                 #line hidden
                 
@@ -6724,25 +6726,25 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first50 = false;
                     }
                     __cb.Push("        ");
-                    #line (408,17)-(408,49) 33 "MetaModelGenerator.mxg"
+                    #line (410,17)-(410,49) 33 "MetaModelGenerator.mxg"
                     __cb.Write("((__IModelObject)this).MGetSlot(");
                     #line hidden
-                    #line (408,50)-(408,77) 32 "MetaModelGenerator.mxg"
+                    #line (410,50)-(410,77) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharp(slot.SlotProperty));
                     #line hidden
-                    #line (408,78)-(408,86) 33 "MetaModelGenerator.mxg"
+                    #line (410,78)-(410,86) 33 "MetaModelGenerator.mxg"
                     __cb.Write(")?.Add((");
                     #line hidden
-                    #line (408,87)-(408,119) 32 "MetaModelGenerator.mxg"
+                    #line (410,87)-(410,119) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharp(slot.SlotProperty.Type));
                     #line hidden
-                    #line (408,120)-(408,121) 33 "MetaModelGenerator.mxg"
+                    #line (410,120)-(410,121) 33 "MetaModelGenerator.mxg"
                     __cb.Write(")");
                     #line hidden
-                    #line (408,122)-(408,134) 32 "MetaModelGenerator.mxg"
+                    #line (410,122)-(410,134) 32 "MetaModelGenerator.mxg"
                     __cb.Write(defaultValue);
                     #line hidden
-                    #line (408,135)-(408,137) 33 "MetaModelGenerator.mxg"
+                    #line (410,135)-(410,137) 33 "MetaModelGenerator.mxg"
                     __cb.Write(");");
                     #line hidden
                     __cb.AppendLine();
@@ -6752,7 +6754,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first49) __cb.AppendLine();
             var __first51 = true;
-            #line (411,10)-(411,66) 13 "MetaModelGenerator.mxg"
+            #line (413,10)-(413,66) 13 "MetaModelGenerator.mxg"
             foreach (var baseType in metaCls.AllBaseTypes.Reverse())
             #line hidden
             
@@ -6762,16 +6764,16 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first51 = false;
                 }
                 __cb.Push("        ");
-                #line (412,14)-(412,28) 28 "MetaModelGenerator.mxg"
+                #line (414,14)-(414,28) 28 "MetaModelGenerator.mxg"
                 __cb.Write(MetaModel.Name);
                 #line hidden
-                #line (412,29)-(412,43) 29 "MetaModelGenerator.mxg"
+                #line (414,29)-(414,43) 29 "MetaModelGenerator.mxg"
                 __cb.Write(".__CustomImpl.");
                 #line hidden
-                #line (412,44)-(412,57) 28 "MetaModelGenerator.mxg"
+                #line (414,44)-(414,57) 28 "MetaModelGenerator.mxg"
                 __cb.Write(baseType.Name);
                 #line hidden
-                #line (412,58)-(412,65) 29 "MetaModelGenerator.mxg"
+                #line (414,58)-(414,65) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(this);");
                 #line hidden
                 __cb.AppendLine();
@@ -6779,22 +6781,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first51) __cb.AppendLine();
             __cb.Push("        ");
-            #line (414,10)-(414,24) 24 "MetaModelGenerator.mxg"
+            #line (416,10)-(416,24) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (414,25)-(414,39) 25 "MetaModelGenerator.mxg"
+            #line (416,25)-(416,39) 25 "MetaModelGenerator.mxg"
             __cb.Write(".__CustomImpl.");
             #line hidden
-            #line (414,40)-(414,48) 24 "MetaModelGenerator.mxg"
+            #line (416,40)-(416,48) 24 "MetaModelGenerator.mxg"
             __cb.Write(cls.Name);
             #line hidden
-            #line (414,49)-(414,56) 25 "MetaModelGenerator.mxg"
+            #line (416,49)-(416,56) 25 "MetaModelGenerator.mxg"
             __cb.Write("(this);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (415,5)-(415,6) 25 "MetaModelGenerator.mxg"
+            #line (417,5)-(417,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -6802,37 +6804,37 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (417,5)-(417,11) 25 "MetaModelGenerator.mxg"
+            #line (419,5)-(419,11) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (417,11)-(417,12) 25 "MetaModelGenerator.mxg"
+            #line (419,11)-(419,12) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (417,12)-(417,20) 25 "MetaModelGenerator.mxg"
+            #line (419,12)-(419,20) 25 "MetaModelGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (417,20)-(417,21) 25 "MetaModelGenerator.mxg"
+            #line (419,20)-(419,21) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (417,21)-(417,37) 25 "MetaModelGenerator.mxg"
+            #line (419,21)-(419,37) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelClassInfo");
             #line hidden
-            #line (417,37)-(417,38) 25 "MetaModelGenerator.mxg"
+            #line (419,37)-(419,38) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (417,38)-(417,43) 25 "MetaModelGenerator.mxg"
+            #line (419,38)-(419,43) 25 "MetaModelGenerator.mxg"
             __cb.Write("MInfo");
             #line hidden
-            #line (417,43)-(417,44) 25 "MetaModelGenerator.mxg"
+            #line (419,43)-(419,44) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (417,44)-(417,46) 25 "MetaModelGenerator.mxg"
+            #line (419,44)-(419,46) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (417,46)-(417,47) 25 "MetaModelGenerator.mxg"
+            #line (419,46)-(419,47) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (417,47)-(417,63) 25 "MetaModelGenerator.mxg"
+            #line (419,47)-(419,63) 25 "MetaModelGenerator.mxg"
             __cb.Write("__Info.Instance;");
             #line hidden
             __cb.AppendLine();
@@ -6840,7 +6842,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first52 = true;
-            #line (419,6)-(419,57) 13 "MetaModelGenerator.mxg"
+            #line (421,6)-(421,57) 13 "MetaModelGenerator.mxg"
             foreach (var prop in metaCls.AllDeclaredProperties)
             #line hidden
             
@@ -6849,12 +6851,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first52 = false;
                 }
-                #line (420,10)-(420,53) 17 "MetaModelGenerator.mxg"
+                #line (422,10)-(422,53) 17 "MetaModelGenerator.mxg"
                 var info = metaCls.ModelPropertyInfos[prop];
                 #line hidden
                 
                 var __first53 = true;
-                #line (421,10)-(421,54) 17 "MetaModelGenerator.mxg"
+                #line (423,10)-(423,54) 17 "MetaModelGenerator.mxg"
                 if (metaCls.PublicProperties.Contains(prop))
                 #line hidden
                 
@@ -6864,25 +6866,25 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first53 = false;
                     }
                     __cb.Push("    ");
-                    #line (422,13)-(422,19) 33 "MetaModelGenerator.mxg"
+                    #line (424,13)-(424,19) 33 "MetaModelGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
-                    #line (422,19)-(422,20) 33 "MetaModelGenerator.mxg"
+                    #line (424,19)-(424,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (422,21)-(422,142) 32 "MetaModelGenerator.mxg"
+                    #line (424,21)-(424,142) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
                     #line hidden
-                    #line (422,143)-(422,144) 33 "MetaModelGenerator.mxg"
+                    #line (424,143)-(424,144) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (422,145)-(422,154) 32 "MetaModelGenerator.mxg"
+                    #line (424,145)-(424,154) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                #line (423,10)-(423,14) 17 "MetaModelGenerator.mxg"
+                #line (425,10)-(425,14) 17 "MetaModelGenerator.mxg"
                 else
                 #line hidden
                 
@@ -6892,31 +6894,31 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first53 = false;
                     }
                     __cb.Push("    ");
-                    #line (424,14)-(424,17) 32 "MetaModelGenerator.mxg"
+                    #line (426,14)-(426,17) 32 "MetaModelGenerator.mxg"
                     __cb.Write("[");
                     #line hidden
-                    #line (424,18)-(424,119) 33 "MetaModelGenerator.mxg"
+                    #line (426,18)-(426,119) 33 "MetaModelGenerator.mxg"
                     __cb.Write("global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)");
                     #line hidden
-                    #line (424,120)-(424,123) 32 "MetaModelGenerator.mxg"
+                    #line (426,120)-(426,123) 32 "MetaModelGenerator.mxg"
                     __cb.Write("]");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                     __cb.Push("    ");
-                    #line (425,14)-(425,135) 32 "MetaModelGenerator.mxg"
+                    #line (427,14)-(427,135) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
                     #line hidden
-                    #line (425,136)-(425,137) 33 "MetaModelGenerator.mxg"
+                    #line (427,136)-(427,137) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (425,138)-(425,181) 32 "MetaModelGenerator.mxg"
+                    #line (427,138)-(427,181) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharp(prop.DeclaringType.UnderlyingType));
                     #line hidden
-                    #line (425,182)-(425,183) 33 "MetaModelGenerator.mxg"
+                    #line (427,182)-(427,183) 33 "MetaModelGenerator.mxg"
                     __cb.Write(".");
                     #line hidden
-                    #line (425,184)-(425,193) 32 "MetaModelGenerator.mxg"
+                    #line (427,184)-(427,193) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
                     __cb.AppendLine();
@@ -6924,13 +6926,13 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 }
                 if (!__first53) __cb.AppendLine();
                 __cb.Push("    ");
-                #line (427,9)-(427,10) 29 "MetaModelGenerator.mxg"
+                #line (429,9)-(429,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 var __first54 = true;
-                #line (428,14)-(428,52) 17 "MetaModelGenerator.mxg"
+                #line (430,14)-(430,52) 17 "MetaModelGenerator.mxg"
                 if (prop.UnderlyingProperty.IsDerived)
                 #line hidden
                 
@@ -6939,53 +6941,10 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __first54 = false;
                     }
-                    #line (429,18)-(429,81) 21 "MetaModelGenerator.mxg"
+                    #line (431,18)-(431,81) 21 "MetaModelGenerator.mxg"
                     var actualProp = info.HidingProperties.FirstOrDefault() ?? prop;
                     #line hidden
                     
-                    __cb.Push("        ");
-                    #line (430,17)-(430,20) 33 "MetaModelGenerator.mxg"
-                    __cb.Write("get");
-                    #line hidden
-                    #line (430,20)-(430,21) 33 "MetaModelGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (430,21)-(430,23) 33 "MetaModelGenerator.mxg"
-                    __cb.Write("=>");
-                    #line hidden
-                    #line (430,23)-(430,24) 33 "MetaModelGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (430,25)-(430,39) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(MetaModel.Name);
-                    #line hidden
-                    #line (430,40)-(430,54) 33 "MetaModelGenerator.mxg"
-                    __cb.Write(".__CustomImpl.");
-                    #line hidden
-                    #line (430,55)-(430,84) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(actualProp.DeclaringType.Name);
-                    #line hidden
-                    #line (430,85)-(430,86) 33 "MetaModelGenerator.mxg"
-                    __cb.Write("_");
-                    #line hidden
-                    #line (430,87)-(430,102) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(actualProp.Name);
-                    #line hidden
-                    #line (430,103)-(430,110) 33 "MetaModelGenerator.mxg"
-                    __cb.Write("(this);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                }
-                #line (431,14)-(431,41) 17 "MetaModelGenerator.mxg"
-                else if (prop.IsCollection)
-                #line hidden
-                
-                {
-                    if (__first54)
-                    {
-                        __first54 = false;
-                    }
                     __cb.Push("        ");
                     #line (432,17)-(432,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write("get");
@@ -6999,26 +6958,29 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     #line (432,23)-(432,24) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (432,24)-(432,39) 33 "MetaModelGenerator.mxg"
-                    __cb.Write("MGetCollection<");
+                    #line (432,25)-(432,39) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(MetaModel.Name);
                     #line hidden
-                    #line (432,40)-(432,59) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(ToCSharp(prop.Type));
+                    #line (432,40)-(432,54) 33 "MetaModelGenerator.mxg"
+                    __cb.Write(".__CustomImpl.");
                     #line hidden
-                    #line (432,60)-(432,62) 33 "MetaModelGenerator.mxg"
-                    __cb.Write(">(");
+                    #line (432,55)-(432,84) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(actualProp.DeclaringType.Name);
                     #line hidden
-                    #line (432,63)-(432,77) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(ToCSharp(prop));
+                    #line (432,85)-(432,86) 33 "MetaModelGenerator.mxg"
+                    __cb.Write("_");
                     #line hidden
-                    #line (432,78)-(432,80) 33 "MetaModelGenerator.mxg"
-                    __cb.Write(");");
+                    #line (432,87)-(432,102) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(actualProp.Name);
+                    #line hidden
+                    #line (432,103)-(432,110) 33 "MetaModelGenerator.mxg"
+                    __cb.Write("(this);");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                #line (433,14)-(433,18) 17 "MetaModelGenerator.mxg"
-                else
+                #line (433,14)-(433,41) 17 "MetaModelGenerator.mxg"
+                else if (prop.IsCollection)
                 #line hidden
                 
                 {
@@ -7039,25 +7001,65 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     #line (434,23)-(434,24) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (434,24)-(434,29) 33 "MetaModelGenerator.mxg"
-                    __cb.Write("MGet<");
+                    #line (434,24)-(434,39) 33 "MetaModelGenerator.mxg"
+                    __cb.Write("MGetCollection<");
                     #line hidden
-                    #line (434,30)-(434,68) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(ToCSharp(prop.UnderlyingProperty.Type));
+                    #line (434,40)-(434,59) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(ToCSharp(prop.Type));
                     #line hidden
-                    #line (434,69)-(434,71) 33 "MetaModelGenerator.mxg"
+                    #line (434,60)-(434,62) 33 "MetaModelGenerator.mxg"
                     __cb.Write(">(");
                     #line hidden
-                    #line (434,72)-(434,86) 32 "MetaModelGenerator.mxg"
+                    #line (434,63)-(434,77) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharp(prop));
                     #line hidden
-                    #line (434,87)-(434,89) 33 "MetaModelGenerator.mxg"
+                    #line (434,78)-(434,80) 33 "MetaModelGenerator.mxg"
+                    __cb.Write(");");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                }
+                #line (435,14)-(435,18) 17 "MetaModelGenerator.mxg"
+                else
+                #line hidden
+                
+                {
+                    if (__first54)
+                    {
+                        __first54 = false;
+                    }
+                    __cb.Push("        ");
+                    #line (436,17)-(436,20) 33 "MetaModelGenerator.mxg"
+                    __cb.Write("get");
+                    #line hidden
+                    #line (436,20)-(436,21) 33 "MetaModelGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (436,21)-(436,23) 33 "MetaModelGenerator.mxg"
+                    __cb.Write("=>");
+                    #line hidden
+                    #line (436,23)-(436,24) 33 "MetaModelGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (436,24)-(436,29) 33 "MetaModelGenerator.mxg"
+                    __cb.Write("MGet<");
+                    #line hidden
+                    #line (436,30)-(436,68) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(ToCSharp(prop.UnderlyingProperty.Type));
+                    #line hidden
+                    #line (436,69)-(436,71) 33 "MetaModelGenerator.mxg"
+                    __cb.Write(">(");
+                    #line hidden
+                    #line (436,72)-(436,86) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(ToCSharp(prop));
+                    #line hidden
+                    #line (436,87)-(436,89) 33 "MetaModelGenerator.mxg"
                     __cb.Write(");");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                     var __first55 = true;
-                    #line (435,18)-(435,38) 21 "MetaModelGenerator.mxg"
+                    #line (437,18)-(437,38) 21 "MetaModelGenerator.mxg"
                     if (HasSetter(prop))
                     #line hidden
                     
@@ -7067,37 +7069,37 @@ namespace MetaDslx.Languages.MetaModel.Generators
                             __first55 = false;
                         }
                         __cb.Push("        ");
-                        #line (436,21)-(436,24) 37 "MetaModelGenerator.mxg"
+                        #line (438,21)-(438,24) 37 "MetaModelGenerator.mxg"
                         __cb.Write("set");
                         #line hidden
-                        #line (436,24)-(436,25) 37 "MetaModelGenerator.mxg"
+                        #line (438,24)-(438,25) 37 "MetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (436,25)-(436,27) 37 "MetaModelGenerator.mxg"
+                        #line (438,25)-(438,27) 37 "MetaModelGenerator.mxg"
                         __cb.Write("=>");
                         #line hidden
-                        #line (436,27)-(436,28) 37 "MetaModelGenerator.mxg"
+                        #line (438,27)-(438,28) 37 "MetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (436,28)-(436,33) 37 "MetaModelGenerator.mxg"
+                        #line (438,28)-(438,33) 37 "MetaModelGenerator.mxg"
                         __cb.Write("MSet<");
                         #line hidden
-                        #line (436,34)-(436,72) 36 "MetaModelGenerator.mxg"
+                        #line (438,34)-(438,72) 36 "MetaModelGenerator.mxg"
                         __cb.Write(ToCSharp(prop.UnderlyingProperty.Type));
                         #line hidden
-                        #line (436,73)-(436,75) 37 "MetaModelGenerator.mxg"
+                        #line (438,73)-(438,75) 37 "MetaModelGenerator.mxg"
                         __cb.Write(">(");
                         #line hidden
-                        #line (436,76)-(436,90) 36 "MetaModelGenerator.mxg"
+                        #line (438,76)-(438,90) 36 "MetaModelGenerator.mxg"
                         __cb.Write(ToCSharp(prop));
                         #line hidden
-                        #line (436,91)-(436,92) 37 "MetaModelGenerator.mxg"
+                        #line (438,91)-(438,92) 37 "MetaModelGenerator.mxg"
                         __cb.Write(",");
                         #line hidden
-                        #line (436,92)-(436,93) 37 "MetaModelGenerator.mxg"
+                        #line (438,92)-(438,93) 37 "MetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (436,93)-(436,100) 37 "MetaModelGenerator.mxg"
+                        #line (438,93)-(438,100) 37 "MetaModelGenerator.mxg"
                         __cb.Write("value);");
                         #line hidden
                         __cb.AppendLine();
@@ -7107,7 +7109,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 }
                 if (!__first54) __cb.AppendLine();
                 __cb.Push("    ");
-                #line (439,9)-(439,10) 29 "MetaModelGenerator.mxg"
+                #line (441,9)-(441,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -7119,7 +7121,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first56 = true;
-            #line (443,6)-(443,55) 13 "MetaModelGenerator.mxg"
+            #line (445,6)-(445,55) 13 "MetaModelGenerator.mxg"
             foreach (var op in metaCls.AllDeclaredOperations)
             #line hidden
             
@@ -7128,35 +7130,35 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first56 = false;
                 }
-                #line (444,10)-(444,52) 17 "MetaModelGenerator.mxg"
+                #line (446,10)-(446,52) 17 "MetaModelGenerator.mxg"
                 var info = metaCls.ModelOperationInfos[op];
                 #line hidden
                 
-                #line (445,10)-(445,73) 17 "MetaModelGenerator.mxg"
+                #line (447,10)-(447,73) 17 "MetaModelGenerator.mxg"
                 var actualOp = info.OverridingOperations.FirstOrDefault() ?? op;
                 #line hidden
                 
                 __cb.Push("    ");
-                #line (446,10)-(446,59) 28 "MetaModelGenerator.mxg"
+                #line (448,10)-(448,59) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharpOpType(op.UnderlyingOperation.ReturnType));
                 #line hidden
-                #line (446,60)-(446,61) 29 "MetaModelGenerator.mxg"
+                #line (448,60)-(448,61) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (446,62)-(446,103) 28 "MetaModelGenerator.mxg"
+                #line (448,62)-(448,103) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(op.DeclaringType.UnderlyingType));
                 #line hidden
-                #line (446,104)-(446,105) 29 "MetaModelGenerator.mxg"
+                #line (448,104)-(448,105) 29 "MetaModelGenerator.mxg"
                 __cb.Write(".");
                 #line hidden
-                #line (446,106)-(446,113) 28 "MetaModelGenerator.mxg"
+                #line (448,106)-(448,113) 28 "MetaModelGenerator.mxg"
                 __cb.Write(op.Name);
                 #line hidden
-                #line (446,114)-(446,115) 29 "MetaModelGenerator.mxg"
+                #line (448,114)-(448,115) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
                 var __first57 = true;
-                #line (446,116)-(446,173) 17 "MetaModelGenerator.mxg"
+                #line (448,116)-(448,173) 17 "MetaModelGenerator.mxg"
                 foreach (var param in op.UnderlyingOperation.Parameters) 
                 #line hidden
                 
@@ -7169,54 +7171,54 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __cb.Push("    ");
                         __cb.DontIgnoreLastLineEnd = true;
-                        #line (446,183)-(446,187) 36 "MetaModelGenerator.mxg"
+                        #line (448,183)-(448,187) 36 "MetaModelGenerator.mxg"
                         __cb.Write(", ");
                         #line hidden
                         __cb.DontIgnoreLastLineEnd = false;
                         __cb.Pop();
                     }
-                    #line (446,189)-(446,215) 32 "MetaModelGenerator.mxg"
+                    #line (448,189)-(448,215) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharpOpType(param.Type));
                     #line hidden
-                    #line (446,216)-(446,217) 33 "MetaModelGenerator.mxg"
+                    #line (448,216)-(448,217) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (446,218)-(446,228) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(param.Name);
+                    #line (448,218)-(448,250) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(param.Name.EscapeCSharpKeyword());
                     #line hidden
                 }
-                #line (446,242)-(446,243) 29 "MetaModelGenerator.mxg"
+                #line (448,264)-(448,265) 29 "MetaModelGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
-                #line (446,243)-(446,244) 29 "MetaModelGenerator.mxg"
+                #line (448,265)-(448,266) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (446,244)-(446,246) 29 "MetaModelGenerator.mxg"
+                #line (448,266)-(448,268) 29 "MetaModelGenerator.mxg"
                 __cb.Write("=>");
                 #line hidden
-                #line (446,246)-(446,247) 29 "MetaModelGenerator.mxg"
+                #line (448,268)-(448,269) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (446,248)-(446,262) 28 "MetaModelGenerator.mxg"
+                #line (448,270)-(448,284) 28 "MetaModelGenerator.mxg"
                 __cb.Write(MetaModel.Name);
                 #line hidden
-                #line (446,263)-(446,277) 29 "MetaModelGenerator.mxg"
+                #line (448,285)-(448,299) 29 "MetaModelGenerator.mxg"
                 __cb.Write(".__CustomImpl.");
                 #line hidden
-                #line (446,278)-(446,305) 28 "MetaModelGenerator.mxg"
+                #line (448,300)-(448,327) 28 "MetaModelGenerator.mxg"
                 __cb.Write(actualOp.DeclaringType.Name);
                 #line hidden
-                #line (446,306)-(446,307) 29 "MetaModelGenerator.mxg"
+                #line (448,328)-(448,329) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_");
                 #line hidden
-                #line (446,308)-(446,321) 28 "MetaModelGenerator.mxg"
+                #line (448,330)-(448,343) 28 "MetaModelGenerator.mxg"
                 __cb.Write(actualOp.Name);
                 #line hidden
-                #line (446,322)-(446,327) 29 "MetaModelGenerator.mxg"
+                #line (448,344)-(448,349) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(this");
                 #line hidden
                 var __first58 = true;
-                #line (446,328)-(446,390) 17 "MetaModelGenerator.mxg"
+                #line (448,350)-(448,412) 17 "MetaModelGenerator.mxg"
                 foreach (var param in actualOp.UnderlyingOperation.Parameters)
                 #line hidden
                 
@@ -7225,17 +7227,17 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __first58 = false;
                     }
-                    #line (446,391)-(446,392) 33 "MetaModelGenerator.mxg"
+                    #line (448,413)-(448,414) 33 "MetaModelGenerator.mxg"
                     __cb.Write(",");
                     #line hidden
-                    #line (446,392)-(446,393) 33 "MetaModelGenerator.mxg"
+                    #line (448,414)-(448,415) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (446,394)-(446,404) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(param.Name);
+                    #line (448,416)-(448,448) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(param.Name.EscapeCSharpKeyword());
                     #line hidden
                 }
-                #line (446,418)-(446,420) 29 "MetaModelGenerator.mxg"
+                #line (448,462)-(448,464) 29 "MetaModelGenerator.mxg"
                 __cb.Write(");");
                 #line hidden
                 __cb.AppendLine();
@@ -7245,138 +7247,90 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (449,5)-(449,13) 25 "MetaModelGenerator.mxg"
+            #line (451,5)-(451,13) 25 "MetaModelGenerator.mxg"
             __cb.Write("internal");
             #line hidden
-            #line (449,13)-(449,14) 25 "MetaModelGenerator.mxg"
+            #line (451,13)-(451,14) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (449,14)-(449,19) 25 "MetaModelGenerator.mxg"
+            #line (451,14)-(451,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (449,19)-(449,20) 25 "MetaModelGenerator.mxg"
+            #line (451,19)-(451,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (449,20)-(449,26) 25 "MetaModelGenerator.mxg"
+            #line (451,20)-(451,26) 25 "MetaModelGenerator.mxg"
             __cb.Write("__Info");
             #line hidden
-            #line (449,26)-(449,27) 25 "MetaModelGenerator.mxg"
+            #line (451,26)-(451,27) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (449,27)-(449,28) 25 "MetaModelGenerator.mxg"
+            #line (451,27)-(451,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (449,28)-(449,29) 25 "MetaModelGenerator.mxg"
+            #line (451,28)-(451,29) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (449,29)-(449,45) 25 "MetaModelGenerator.mxg"
+            #line (451,29)-(451,45) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelClassInfo");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (450,5)-(450,6) 25 "MetaModelGenerator.mxg"
+            #line (452,5)-(452,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (451,9)-(451,15) 25 "MetaModelGenerator.mxg"
+            #line (453,9)-(453,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (451,15)-(451,16) 25 "MetaModelGenerator.mxg"
+            #line (453,15)-(453,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (451,16)-(451,22) 25 "MetaModelGenerator.mxg"
+            #line (453,16)-(453,22) 25 "MetaModelGenerator.mxg"
             __cb.Write("static");
             #line hidden
-            #line (451,22)-(451,23) 25 "MetaModelGenerator.mxg"
+            #line (453,22)-(453,23) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (451,23)-(451,31) 25 "MetaModelGenerator.mxg"
+            #line (453,23)-(453,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (451,31)-(451,32) 25 "MetaModelGenerator.mxg"
+            #line (453,31)-(453,32) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (451,32)-(451,38) 25 "MetaModelGenerator.mxg"
+            #line (453,32)-(453,38) 25 "MetaModelGenerator.mxg"
             __cb.Write("__Info");
             #line hidden
-            #line (451,38)-(451,39) 25 "MetaModelGenerator.mxg"
+            #line (453,38)-(453,39) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (451,39)-(451,47) 25 "MetaModelGenerator.mxg"
+            #line (453,39)-(453,47) 25 "MetaModelGenerator.mxg"
             __cb.Write("Instance");
             #line hidden
-            #line (451,47)-(451,48) 25 "MetaModelGenerator.mxg"
+            #line (453,47)-(453,48) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (451,48)-(451,49) 25 "MetaModelGenerator.mxg"
+            #line (453,48)-(453,49) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (451,49)-(451,50) 25 "MetaModelGenerator.mxg"
+            #line (453,49)-(453,50) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (451,50)-(451,53) 25 "MetaModelGenerator.mxg"
+            #line (453,50)-(453,53) 25 "MetaModelGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (451,53)-(451,54) 25 "MetaModelGenerator.mxg"
+            #line (453,53)-(453,54) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (451,54)-(451,63) 25 "MetaModelGenerator.mxg"
+            #line (453,54)-(453,63) 25 "MetaModelGenerator.mxg"
             __cb.Write("__Info();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (453,9)-(453,16) 25 "MetaModelGenerator.mxg"
-            __cb.Write("private");
-            #line hidden
-            #line (453,16)-(453,17) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (453,17)-(453,25) 25 "MetaModelGenerator.mxg"
-            __cb.Write("readonly");
-            #line hidden
-            #line (453,25)-(453,26) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (453,26)-(453,95) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
-            #line hidden
-            #line (453,95)-(453,96) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (453,96)-(453,107) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_baseTypes;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (454,9)-(454,16) 25 "MetaModelGenerator.mxg"
-            __cb.Write("private");
-            #line hidden
-            #line (454,16)-(454,17) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (454,17)-(454,25) 25 "MetaModelGenerator.mxg"
-            __cb.Write("readonly");
-            #line hidden
-            #line (454,25)-(454,26) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (454,26)-(454,95) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
-            #line hidden
-            #line (454,95)-(454,96) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (454,96)-(454,110) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_allBaseTypes;");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (455,9)-(455,16) 25 "MetaModelGenerator.mxg"
@@ -7391,14 +7345,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (455,25)-(455,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (455,26)-(455,94) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
+            #line (455,26)-(455,95) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
             #line hidden
-            #line (455,94)-(455,95) 25 "MetaModelGenerator.mxg"
+            #line (455,95)-(455,96) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (455,95)-(455,115) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_declaredProperties;");
+            #line (455,96)-(455,107) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_baseTypes;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7415,14 +7369,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (456,25)-(456,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (456,26)-(456,94) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
+            #line (456,26)-(456,95) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
             #line hidden
-            #line (456,94)-(456,95) 25 "MetaModelGenerator.mxg"
+            #line (456,95)-(456,96) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (456,95)-(456,118) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_allDeclaredProperties;");
+            #line (456,96)-(456,110) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_allBaseTypes;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7445,8 +7399,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (457,94)-(457,95) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (457,95)-(457,113) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_publicProperties;");
+            #line (457,95)-(457,115) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_declaredProperties;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7463,20 +7417,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (458,25)-(458,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (458,26)-(458,90) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
+            #line (458,26)-(458,94) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
             #line hidden
-            #line (458,90)-(458,91) 25 "MetaModelGenerator.mxg"
+            #line (458,94)-(458,95) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (458,91)-(458,107) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelProperty>");
-            #line hidden
-            #line (458,107)-(458,108) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (458,108)-(458,132) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_publicPropertiesByName;");
+            #line (458,95)-(458,118) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_allDeclaredProperties;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7493,20 +7441,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (459,25)-(459,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (459,26)-(459,99) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty,");
+            #line (459,26)-(459,94) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
             #line hidden
-            #line (459,99)-(459,100) 25 "MetaModelGenerator.mxg"
+            #line (459,94)-(459,95) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (459,100)-(459,120) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelPropertyInfo>");
-            #line hidden
-            #line (459,120)-(459,121) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (459,121)-(459,141) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_modelPropertyInfos;");
+            #line (459,95)-(459,113) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_publicProperties;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7523,14 +7465,20 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (460,25)-(460,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (460,26)-(460,95) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
+            #line (460,26)-(460,90) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
             #line hidden
-            #line (460,95)-(460,96) 25 "MetaModelGenerator.mxg"
+            #line (460,90)-(460,91) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (460,96)-(460,116) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_declaredOperations;");
+            #line (460,91)-(460,107) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelProperty>");
+            #line hidden
+            #line (460,107)-(460,108) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (460,108)-(460,132) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_publicPropertiesByName;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7547,14 +7495,20 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (461,25)-(461,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (461,26)-(461,95) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
+            #line (461,26)-(461,99) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty,");
             #line hidden
-            #line (461,95)-(461,96) 25 "MetaModelGenerator.mxg"
+            #line (461,99)-(461,100) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (461,96)-(461,119) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_allDeclaredOperations;");
+            #line (461,100)-(461,120) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelPropertyInfo>");
+            #line hidden
+            #line (461,120)-(461,121) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (461,121)-(461,141) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_modelPropertyInfos;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7577,8 +7531,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (462,95)-(462,96) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (462,96)-(462,114) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_publicOperations;");
+            #line (462,96)-(462,116) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_declaredOperations;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -7595,24 +7549,40 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (463,25)-(463,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (463,26)-(463,100) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation,");
+            #line (463,26)-(463,95) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
             #line hidden
-            #line (463,100)-(463,101) 25 "MetaModelGenerator.mxg"
+            #line (463,95)-(463,96) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (463,101)-(463,122) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelOperationInfo>");
-            #line hidden
-            #line (463,122)-(463,123) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (463,123)-(463,144) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_modelOperationInfos;");
+            #line (463,96)-(463,119) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_allDeclaredOperations;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            __cb.WriteLine();
+            __cb.Push("        ");
+            #line (464,9)-(464,16) 25 "MetaModelGenerator.mxg"
+            __cb.Write("private");
+            #line hidden
+            #line (464,16)-(464,17) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (464,17)-(464,25) 25 "MetaModelGenerator.mxg"
+            __cb.Write("readonly");
+            #line hidden
+            #line (464,25)-(464,26) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (464,26)-(464,95) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
+            #line hidden
+            #line (464,95)-(464,96) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (464,96)-(464,114) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_publicOperations;");
+            #line hidden
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (465,9)-(465,16) 25 "MetaModelGenerator.mxg"
@@ -7622,37 +7592,69 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.Write(" ");
             #line hidden
             #line (465,17)-(465,25) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__Info()");
+            __cb.Write("readonly");
             #line hidden
             #line (465,25)-(465,26) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (465,26)-(465,100) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation,");
+            #line hidden
+            #line (465,100)-(465,101) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (465,101)-(465,122) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelOperationInfo>");
+            #line hidden
+            #line (465,122)-(465,123) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (465,123)-(465,144) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_modelOperationInfos;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (467,9)-(467,16) 25 "MetaModelGenerator.mxg"
+            __cb.Write("private");
+            #line hidden
+            #line (467,16)-(467,17) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (467,17)-(467,25) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__Info()");
+            #line hidden
+            #line (467,25)-(467,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (466,9)-(466,10) 25 "MetaModelGenerator.mxg"
+            #line (468,9)-(468,10) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (467,13)-(467,23) 25 "MetaModelGenerator.mxg"
+            #line (469,13)-(469,23) 25 "MetaModelGenerator.mxg"
             __cb.Write("_baseTypes");
             #line hidden
-            #line (467,23)-(467,24) 25 "MetaModelGenerator.mxg"
+            #line (469,23)-(469,24) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (467,24)-(467,25) 25 "MetaModelGenerator.mxg"
+            #line (469,24)-(469,25) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (467,25)-(467,26) 25 "MetaModelGenerator.mxg"
+            #line (469,25)-(469,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (467,26)-(467,68) 25 "MetaModelGenerator.mxg"
+            #line (469,26)-(469,68) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelClassInfo>(");
             #line hidden
             var __first59 = true;
-            #line (467,69)-(467,107) 13 "MetaModelGenerator.mxg"
+            #line (469,69)-(469,107) 13 "MetaModelGenerator.mxg"
             foreach (var bt in metaCls.BaseTypes) 
             #line hidden
             
@@ -7665,39 +7667,39 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (467,117)-(467,121) 32 "MetaModelGenerator.mxg"
+                    #line (469,117)-(469,121) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (467,123)-(467,135) 28 "MetaModelGenerator.mxg"
+                #line (469,123)-(469,135) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(bt));
                 #line hidden
             }
-            #line (467,149)-(467,151) 25 "MetaModelGenerator.mxg"
+            #line (469,149)-(469,151) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (468,13)-(468,26) 25 "MetaModelGenerator.mxg"
+            #line (470,13)-(470,26) 25 "MetaModelGenerator.mxg"
             __cb.Write("_allBaseTypes");
             #line hidden
-            #line (468,26)-(468,27) 25 "MetaModelGenerator.mxg"
+            #line (470,26)-(470,27) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (468,27)-(468,28) 25 "MetaModelGenerator.mxg"
+            #line (470,27)-(470,28) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (468,28)-(468,29) 25 "MetaModelGenerator.mxg"
+            #line (470,28)-(470,29) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (468,29)-(468,71) 25 "MetaModelGenerator.mxg"
+            #line (470,29)-(470,71) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelClassInfo>(");
             #line hidden
             var __first60 = true;
-            #line (468,72)-(468,113) 13 "MetaModelGenerator.mxg"
+            #line (470,72)-(470,113) 13 "MetaModelGenerator.mxg"
             foreach (var bt in metaCls.AllBaseTypes) 
             #line hidden
             
@@ -7710,39 +7712,39 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (468,123)-(468,127) 32 "MetaModelGenerator.mxg"
+                    #line (470,123)-(470,127) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (468,129)-(468,141) 28 "MetaModelGenerator.mxg"
+                #line (470,129)-(470,141) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(bt));
                 #line hidden
             }
-            #line (468,155)-(468,157) 25 "MetaModelGenerator.mxg"
+            #line (470,155)-(470,157) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (469,13)-(469,32) 25 "MetaModelGenerator.mxg"
+            #line (471,13)-(471,32) 25 "MetaModelGenerator.mxg"
             __cb.Write("_declaredProperties");
             #line hidden
-            #line (469,32)-(469,33) 25 "MetaModelGenerator.mxg"
+            #line (471,32)-(471,33) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (469,33)-(469,34) 25 "MetaModelGenerator.mxg"
+            #line (471,33)-(471,34) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (469,34)-(469,35) 25 "MetaModelGenerator.mxg"
+            #line (471,34)-(471,35) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (469,35)-(469,76) 25 "MetaModelGenerator.mxg"
+            #line (471,35)-(471,76) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelProperty>(");
             #line hidden
             var __first61 = true;
-            #line (469,77)-(469,126) 13 "MetaModelGenerator.mxg"
+            #line (471,77)-(471,126) 13 "MetaModelGenerator.mxg"
             foreach (var prop in metaCls.DeclaredProperties) 
             #line hidden
             
@@ -7755,39 +7757,39 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (469,136)-(469,140) 32 "MetaModelGenerator.mxg"
+                    #line (471,136)-(471,140) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (469,142)-(469,156) 28 "MetaModelGenerator.mxg"
+                #line (471,142)-(471,156) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(prop));
                 #line hidden
             }
-            #line (469,170)-(469,172) 25 "MetaModelGenerator.mxg"
+            #line (471,170)-(471,172) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (470,13)-(470,35) 25 "MetaModelGenerator.mxg"
+            #line (472,13)-(472,35) 25 "MetaModelGenerator.mxg"
             __cb.Write("_allDeclaredProperties");
             #line hidden
-            #line (470,35)-(470,36) 25 "MetaModelGenerator.mxg"
+            #line (472,35)-(472,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (470,36)-(470,37) 25 "MetaModelGenerator.mxg"
+            #line (472,36)-(472,37) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (470,37)-(470,38) 25 "MetaModelGenerator.mxg"
+            #line (472,37)-(472,38) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (470,38)-(470,79) 25 "MetaModelGenerator.mxg"
+            #line (472,38)-(472,79) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelProperty>(");
             #line hidden
             var __first62 = true;
-            #line (470,80)-(470,132) 13 "MetaModelGenerator.mxg"
+            #line (472,80)-(472,132) 13 "MetaModelGenerator.mxg"
             foreach (var prop in metaCls.AllDeclaredProperties) 
             #line hidden
             
@@ -7800,39 +7802,39 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (470,142)-(470,146) 32 "MetaModelGenerator.mxg"
+                    #line (472,142)-(472,146) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (470,148)-(470,162) 28 "MetaModelGenerator.mxg"
+                #line (472,148)-(472,162) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(prop));
                 #line hidden
             }
-            #line (470,176)-(470,178) 25 "MetaModelGenerator.mxg"
+            #line (472,176)-(472,178) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (471,13)-(471,30) 25 "MetaModelGenerator.mxg"
+            #line (473,13)-(473,30) 25 "MetaModelGenerator.mxg"
             __cb.Write("_publicProperties");
             #line hidden
-            #line (471,30)-(471,31) 25 "MetaModelGenerator.mxg"
+            #line (473,30)-(473,31) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (471,31)-(471,32) 25 "MetaModelGenerator.mxg"
+            #line (473,31)-(473,32) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (471,32)-(471,33) 25 "MetaModelGenerator.mxg"
+            #line (473,32)-(473,33) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (471,33)-(471,74) 25 "MetaModelGenerator.mxg"
+            #line (473,33)-(473,74) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelProperty>(");
             #line hidden
             var __first63 = true;
-            #line (471,75)-(471,122) 13 "MetaModelGenerator.mxg"
+            #line (473,75)-(473,122) 13 "MetaModelGenerator.mxg"
             foreach (var prop in metaCls.PublicProperties) 
             #line hidden
             
@@ -7845,53 +7847,53 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (471,132)-(471,136) 32 "MetaModelGenerator.mxg"
+                    #line (473,132)-(473,136) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (471,138)-(471,152) 28 "MetaModelGenerator.mxg"
+                #line (473,138)-(473,152) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(prop));
                 #line hidden
             }
-            #line (471,166)-(471,168) 25 "MetaModelGenerator.mxg"
+            #line (473,166)-(473,168) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (472,13)-(472,16) 25 "MetaModelGenerator.mxg"
+            #line (474,13)-(474,16) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (472,16)-(472,17) 25 "MetaModelGenerator.mxg"
+            #line (474,16)-(474,17) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (472,17)-(472,39) 25 "MetaModelGenerator.mxg"
+            #line (474,17)-(474,39) 25 "MetaModelGenerator.mxg"
             __cb.Write("publicPropertiesByName");
             #line hidden
-            #line (472,39)-(472,40) 25 "MetaModelGenerator.mxg"
+            #line (474,39)-(474,40) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (472,40)-(472,41) 25 "MetaModelGenerator.mxg"
+            #line (474,40)-(474,41) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (472,41)-(472,42) 25 "MetaModelGenerator.mxg"
+            #line (474,41)-(474,42) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (472,42)-(472,85) 25 "MetaModelGenerator.mxg"
+            #line (474,42)-(474,85) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<string,");
             #line hidden
-            #line (472,85)-(472,86) 25 "MetaModelGenerator.mxg"
+            #line (474,85)-(474,86) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (472,86)-(472,105) 25 "MetaModelGenerator.mxg"
+            #line (474,86)-(474,105) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelProperty>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first64 = true;
-            #line (473,14)-(473,60) 13 "MetaModelGenerator.mxg"
+            #line (475,14)-(475,60) 13 "MetaModelGenerator.mxg"
             foreach (var prop in metaCls.PublicProperties)
             #line hidden
             
@@ -7901,22 +7903,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first64 = false;
                 }
                 __cb.Push("            ");
-                #line (474,17)-(474,45) 29 "MetaModelGenerator.mxg"
+                #line (476,17)-(476,45) 29 "MetaModelGenerator.mxg"
                 __cb.Write("publicPropertiesByName.Add(\"");
                 #line hidden
-                #line (474,46)-(474,55) 28 "MetaModelGenerator.mxg"
+                #line (476,46)-(476,55) 28 "MetaModelGenerator.mxg"
                 __cb.Write(prop.Name);
                 #line hidden
-                #line (474,56)-(474,58) 29 "MetaModelGenerator.mxg"
+                #line (476,56)-(476,58) 29 "MetaModelGenerator.mxg"
                 __cb.Write("\",");
                 #line hidden
-                #line (474,58)-(474,59) 29 "MetaModelGenerator.mxg"
+                #line (476,58)-(476,59) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (474,60)-(474,74) 28 "MetaModelGenerator.mxg"
+                #line (476,60)-(476,74) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(prop));
                 #line hidden
-                #line (474,75)-(474,77) 29 "MetaModelGenerator.mxg"
+                #line (476,75)-(476,77) 29 "MetaModelGenerator.mxg"
                 __cb.Write(");");
                 #line hidden
                 __cb.AppendLine();
@@ -7924,55 +7926,55 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first64) __cb.AppendLine();
             __cb.Push("            ");
-            #line (476,13)-(476,36) 25 "MetaModelGenerator.mxg"
+            #line (478,13)-(478,36) 25 "MetaModelGenerator.mxg"
             __cb.Write("_publicPropertiesByName");
             #line hidden
-            #line (476,36)-(476,37) 25 "MetaModelGenerator.mxg"
+            #line (478,36)-(478,37) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (476,37)-(476,38) 25 "MetaModelGenerator.mxg"
+            #line (478,37)-(478,38) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (476,38)-(476,39) 25 "MetaModelGenerator.mxg"
+            #line (478,38)-(478,39) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (476,39)-(476,76) 25 "MetaModelGenerator.mxg"
+            #line (478,39)-(478,76) 25 "MetaModelGenerator.mxg"
             __cb.Write("publicPropertiesByName.ToImmutable();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (477,13)-(477,16) 25 "MetaModelGenerator.mxg"
+            #line (479,13)-(479,16) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (477,16)-(477,17) 25 "MetaModelGenerator.mxg"
+            #line (479,16)-(479,17) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (477,17)-(477,35) 25 "MetaModelGenerator.mxg"
+            #line (479,17)-(479,35) 25 "MetaModelGenerator.mxg"
             __cb.Write("modelPropertyInfos");
             #line hidden
-            #line (477,35)-(477,36) 25 "MetaModelGenerator.mxg"
+            #line (479,35)-(479,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (477,36)-(477,37) 25 "MetaModelGenerator.mxg"
+            #line (479,36)-(479,37) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (477,37)-(477,38) 25 "MetaModelGenerator.mxg"
+            #line (479,37)-(479,38) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (477,38)-(477,90) 25 "MetaModelGenerator.mxg"
+            #line (479,38)-(479,90) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<__ModelProperty,");
             #line hidden
-            #line (477,90)-(477,91) 25 "MetaModelGenerator.mxg"
+            #line (479,90)-(479,91) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (477,91)-(477,114) 25 "MetaModelGenerator.mxg"
+            #line (479,91)-(479,114) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelPropertyInfo>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first65 = true;
-            #line (478,14)-(478,65) 13 "MetaModelGenerator.mxg"
+            #line (480,14)-(480,65) 13 "MetaModelGenerator.mxg"
             foreach (var prop in metaCls.AllDeclaredProperties)
             #line hidden
             
@@ -7981,136 +7983,136 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first65 = false;
                 }
-                #line (479,18)-(479,61) 17 "MetaModelGenerator.mxg"
+                #line (481,18)-(481,61) 17 "MetaModelGenerator.mxg"
                 var info = metaCls.ModelPropertyInfos[prop];
                 #line hidden
                 
-                #line (480,18)-(480,38) 17 "MetaModelGenerator.mxg"
+                #line (482,18)-(482,38) 17 "MetaModelGenerator.mxg"
                 var slot = info.Slot;
                 #line hidden
                 
                 __cb.Push("            ");
-                #line (481,17)-(481,40) 29 "MetaModelGenerator.mxg"
+                #line (483,17)-(483,40) 29 "MetaModelGenerator.mxg"
                 __cb.Write("modelPropertyInfos.Add(");
                 #line hidden
-                #line (481,41)-(481,55) 28 "MetaModelGenerator.mxg"
+                #line (483,41)-(483,55) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(prop));
                 #line hidden
-                #line (481,56)-(481,57) 29 "MetaModelGenerator.mxg"
+                #line (483,56)-(483,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,57)-(481,58) 29 "MetaModelGenerator.mxg"
+                #line (483,57)-(483,58) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,58)-(481,61) 29 "MetaModelGenerator.mxg"
+                #line (483,58)-(483,61) 29 "MetaModelGenerator.mxg"
                 __cb.Write("new");
                 #line hidden
-                #line (481,61)-(481,62) 29 "MetaModelGenerator.mxg"
+                #line (483,61)-(483,62) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,62)-(481,85) 29 "MetaModelGenerator.mxg"
+                #line (483,62)-(483,85) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__ModelPropertyInfo(new");
                 #line hidden
-                #line (481,85)-(481,86) 29 "MetaModelGenerator.mxg"
+                #line (483,85)-(483,86) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,86)-(481,106) 29 "MetaModelGenerator.mxg"
+                #line (483,86)-(483,106) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__ModelPropertySlot(");
                 #line hidden
-                #line (481,107)-(481,134) 28 "MetaModelGenerator.mxg"
+                #line (483,107)-(483,134) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(slot.SlotProperty));
                 #line hidden
-                #line (481,135)-(481,136) 29 "MetaModelGenerator.mxg"
+                #line (483,135)-(483,136) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,136)-(481,137) 29 "MetaModelGenerator.mxg"
+                #line (483,136)-(483,137) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,138)-(481,167) 28 "MetaModelGenerator.mxg"
+                #line (483,138)-(483,167) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(slot.SlotProperties));
                 #line hidden
-                #line (481,168)-(481,169) 29 "MetaModelGenerator.mxg"
+                #line (483,168)-(483,169) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,169)-(481,170) 29 "MetaModelGenerator.mxg"
+                #line (483,169)-(483,170) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,171)-(481,215) 28 "MetaModelGenerator.mxg"
+                #line (483,171)-(483,215) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToDefaultValue(prop.Type, prop.DefaultValue));
                 #line hidden
-                #line (481,216)-(481,217) 29 "MetaModelGenerator.mxg"
+                #line (483,216)-(483,217) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,217)-(481,218) 29 "MetaModelGenerator.mxg"
+                #line (483,217)-(483,218) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,219)-(481,239) 28 "MetaModelGenerator.mxg"
+                #line (483,219)-(483,239) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(slot.Flags));
                 #line hidden
-                #line (481,240)-(481,242) 29 "MetaModelGenerator.mxg"
+                #line (483,240)-(483,242) 29 "MetaModelGenerator.mxg"
                 __cb.Write("),");
                 #line hidden
-                #line (481,242)-(481,243) 29 "MetaModelGenerator.mxg"
+                #line (483,242)-(483,243) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,244)-(481,277) 28 "MetaModelGenerator.mxg"
+                #line (483,244)-(483,277) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.OppositeProperties));
                 #line hidden
-                #line (481,278)-(481,279) 29 "MetaModelGenerator.mxg"
+                #line (483,278)-(483,279) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,279)-(481,280) 29 "MetaModelGenerator.mxg"
+                #line (483,279)-(483,280) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,281)-(481,315) 28 "MetaModelGenerator.mxg"
+                #line (483,281)-(483,315) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.SubsettedProperties));
                 #line hidden
-                #line (481,316)-(481,317) 29 "MetaModelGenerator.mxg"
+                #line (483,316)-(483,317) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,317)-(481,318) 29 "MetaModelGenerator.mxg"
+                #line (483,317)-(483,318) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,319)-(481,354) 28 "MetaModelGenerator.mxg"
+                #line (483,319)-(483,354) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.SubsettingProperties));
                 #line hidden
-                #line (481,355)-(481,356) 29 "MetaModelGenerator.mxg"
+                #line (483,355)-(483,356) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,356)-(481,357) 29 "MetaModelGenerator.mxg"
+                #line (483,356)-(483,357) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,358)-(481,392) 28 "MetaModelGenerator.mxg"
+                #line (483,358)-(483,392) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.RedefinedProperties));
                 #line hidden
-                #line (481,393)-(481,394) 29 "MetaModelGenerator.mxg"
+                #line (483,393)-(483,394) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,394)-(481,395) 29 "MetaModelGenerator.mxg"
+                #line (483,394)-(483,395) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,396)-(481,431) 28 "MetaModelGenerator.mxg"
+                #line (483,396)-(483,431) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.RedefiningProperties));
                 #line hidden
-                #line (481,432)-(481,433) 29 "MetaModelGenerator.mxg"
+                #line (483,432)-(483,433) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,433)-(481,434) 29 "MetaModelGenerator.mxg"
+                #line (483,433)-(483,434) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,435)-(481,466) 28 "MetaModelGenerator.mxg"
+                #line (483,435)-(483,466) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.HiddenProperties));
                 #line hidden
-                #line (481,467)-(481,468) 29 "MetaModelGenerator.mxg"
+                #line (483,467)-(483,468) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (481,468)-(481,469) 29 "MetaModelGenerator.mxg"
+                #line (483,468)-(483,469) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (481,470)-(481,501) 28 "MetaModelGenerator.mxg"
+                #line (483,470)-(483,501) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.HidingProperties));
                 #line hidden
-                #line (481,502)-(481,505) 29 "MetaModelGenerator.mxg"
+                #line (483,502)-(483,505) 29 "MetaModelGenerator.mxg"
                 __cb.Write("));");
                 #line hidden
                 __cb.AppendLine();
@@ -8118,28 +8120,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first65) __cb.AppendLine();
             __cb.Push("            ");
-            #line (483,13)-(483,32) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_modelPropertyInfos");
-            #line hidden
-            #line (483,32)-(483,33) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (483,33)-(483,34) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (483,34)-(483,35) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (483,35)-(483,68) 25 "MetaModelGenerator.mxg"
-            __cb.Write("modelPropertyInfos.ToImmutable();");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("            ");
             #line (485,13)-(485,32) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_declaredOperations");
+            __cb.Write("_modelPropertyInfos");
             #line hidden
             #line (485,32)-(485,33) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
@@ -8150,11 +8132,31 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (485,34)-(485,35) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (485,35)-(485,77) 25 "MetaModelGenerator.mxg"
+            #line (485,35)-(485,68) 25 "MetaModelGenerator.mxg"
+            __cb.Write("modelPropertyInfos.ToImmutable();");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (487,13)-(487,32) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_declaredOperations");
+            #line hidden
+            #line (487,32)-(487,33) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (487,33)-(487,34) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (487,34)-(487,35) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (487,35)-(487,77) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelOperation>(");
             #line hidden
             var __first66 = true;
-            #line (485,78)-(485,125) 13 "MetaModelGenerator.mxg"
+            #line (487,78)-(487,125) 13 "MetaModelGenerator.mxg"
             foreach (var op in metaCls.DeclaredOperations) 
             #line hidden
             
@@ -8167,39 +8169,39 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (485,135)-(485,139) 32 "MetaModelGenerator.mxg"
+                    #line (487,135)-(487,139) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (485,141)-(485,153) 28 "MetaModelGenerator.mxg"
+                #line (487,141)-(487,153) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(op));
                 #line hidden
             }
-            #line (485,167)-(485,169) 25 "MetaModelGenerator.mxg"
+            #line (487,167)-(487,169) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (486,13)-(486,35) 25 "MetaModelGenerator.mxg"
+            #line (488,13)-(488,35) 25 "MetaModelGenerator.mxg"
             __cb.Write("_allDeclaredOperations");
             #line hidden
-            #line (486,35)-(486,36) 25 "MetaModelGenerator.mxg"
+            #line (488,35)-(488,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (486,36)-(486,37) 25 "MetaModelGenerator.mxg"
+            #line (488,36)-(488,37) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (486,37)-(486,38) 25 "MetaModelGenerator.mxg"
+            #line (488,37)-(488,38) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (486,38)-(486,80) 25 "MetaModelGenerator.mxg"
+            #line (488,38)-(488,80) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelOperation>(");
             #line hidden
             var __first67 = true;
-            #line (486,81)-(486,131) 13 "MetaModelGenerator.mxg"
+            #line (488,81)-(488,131) 13 "MetaModelGenerator.mxg"
             foreach (var op in metaCls.AllDeclaredOperations) 
             #line hidden
             
@@ -8212,39 +8214,39 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (486,141)-(486,145) 32 "MetaModelGenerator.mxg"
+                    #line (488,141)-(488,145) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (486,147)-(486,159) 28 "MetaModelGenerator.mxg"
+                #line (488,147)-(488,159) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(op));
                 #line hidden
             }
-            #line (486,173)-(486,175) 25 "MetaModelGenerator.mxg"
+            #line (488,173)-(488,175) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (487,13)-(487,30) 25 "MetaModelGenerator.mxg"
+            #line (489,13)-(489,30) 25 "MetaModelGenerator.mxg"
             __cb.Write("_publicOperations");
             #line hidden
-            #line (487,30)-(487,31) 25 "MetaModelGenerator.mxg"
+            #line (489,30)-(489,31) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (487,31)-(487,32) 25 "MetaModelGenerator.mxg"
+            #line (489,31)-(489,32) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (487,32)-(487,33) 25 "MetaModelGenerator.mxg"
+            #line (489,32)-(489,33) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (487,33)-(487,75) 25 "MetaModelGenerator.mxg"
+            #line (489,33)-(489,75) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableArray.Create<__ModelOperation>(");
             #line hidden
             var __first68 = true;
-            #line (487,76)-(487,121) 13 "MetaModelGenerator.mxg"
+            #line (489,76)-(489,121) 13 "MetaModelGenerator.mxg"
             foreach (var op in metaCls.PublicOperations) 
             #line hidden
             
@@ -8257,53 +8259,53 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __cb.Push("            ");
                     __cb.DontIgnoreLastLineEnd = true;
-                    #line (487,131)-(487,135) 32 "MetaModelGenerator.mxg"
+                    #line (489,131)-(489,135) 32 "MetaModelGenerator.mxg"
                     __cb.Write(", ");
                     #line hidden
                     __cb.DontIgnoreLastLineEnd = false;
                     __cb.Pop();
                 }
-                #line (487,137)-(487,149) 28 "MetaModelGenerator.mxg"
+                #line (489,137)-(489,149) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(op));
                 #line hidden
             }
-            #line (487,163)-(487,165) 25 "MetaModelGenerator.mxg"
+            #line (489,163)-(489,165) 25 "MetaModelGenerator.mxg"
             __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (488,13)-(488,16) 25 "MetaModelGenerator.mxg"
+            #line (490,13)-(490,16) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (488,16)-(488,17) 25 "MetaModelGenerator.mxg"
+            #line (490,16)-(490,17) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (488,17)-(488,36) 25 "MetaModelGenerator.mxg"
+            #line (490,17)-(490,36) 25 "MetaModelGenerator.mxg"
             __cb.Write("modelOperationInfos");
             #line hidden
-            #line (488,36)-(488,37) 25 "MetaModelGenerator.mxg"
+            #line (490,36)-(490,37) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (488,37)-(488,38) 25 "MetaModelGenerator.mxg"
+            #line (490,37)-(490,38) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (488,38)-(488,39) 25 "MetaModelGenerator.mxg"
+            #line (490,38)-(490,39) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (488,39)-(488,92) 25 "MetaModelGenerator.mxg"
+            #line (490,39)-(490,92) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ImmutableDictionary.CreateBuilder<__ModelOperation,");
             #line hidden
-            #line (488,92)-(488,93) 25 "MetaModelGenerator.mxg"
+            #line (490,92)-(490,93) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (488,93)-(488,117) 25 "MetaModelGenerator.mxg"
+            #line (490,93)-(490,117) 25 "MetaModelGenerator.mxg"
             __cb.Write("__ModelOperationInfo>();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first69 = true;
-            #line (489,14)-(489,63) 13 "MetaModelGenerator.mxg"
+            #line (491,14)-(491,63) 13 "MetaModelGenerator.mxg"
             foreach (var op in metaCls.AllDeclaredOperations)
             #line hidden
             
@@ -8312,45 +8314,45 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first69 = false;
                 }
-                #line (490,14)-(490,56) 17 "MetaModelGenerator.mxg"
+                #line (492,14)-(492,56) 17 "MetaModelGenerator.mxg"
                 var info = metaCls.ModelOperationInfos[op];
                 #line hidden
                 
                 __cb.Push("                ");
-                #line (491,17)-(491,41) 29 "MetaModelGenerator.mxg"
+                #line (493,17)-(493,41) 29 "MetaModelGenerator.mxg"
                 __cb.Write("modelOperationInfos.Add(");
                 #line hidden
-                #line (491,42)-(491,54) 28 "MetaModelGenerator.mxg"
+                #line (493,42)-(493,54) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(op));
                 #line hidden
-                #line (491,55)-(491,56) 29 "MetaModelGenerator.mxg"
+                #line (493,55)-(493,56) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (491,56)-(491,57) 29 "MetaModelGenerator.mxg"
+                #line (493,56)-(493,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (491,57)-(491,60) 29 "MetaModelGenerator.mxg"
+                #line (493,57)-(493,60) 29 "MetaModelGenerator.mxg"
                 __cb.Write("new");
                 #line hidden
-                #line (491,60)-(491,61) 29 "MetaModelGenerator.mxg"
+                #line (493,60)-(493,61) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (491,61)-(491,82) 29 "MetaModelGenerator.mxg"
+                #line (493,61)-(493,82) 29 "MetaModelGenerator.mxg"
                 __cb.Write("__ModelOperationInfo(");
                 #line hidden
-                #line (491,83)-(491,117) 28 "MetaModelGenerator.mxg"
+                #line (493,83)-(493,117) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.OverridenOperations));
                 #line hidden
-                #line (491,118)-(491,119) 29 "MetaModelGenerator.mxg"
+                #line (493,118)-(493,119) 29 "MetaModelGenerator.mxg"
                 __cb.Write(",");
                 #line hidden
-                #line (491,119)-(491,120) 29 "MetaModelGenerator.mxg"
+                #line (493,119)-(493,120) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (491,121)-(491,156) 28 "MetaModelGenerator.mxg"
+                #line (493,121)-(493,156) 28 "MetaModelGenerator.mxg"
                 __cb.Write(ToCSharp(info.OverridingOperations));
                 #line hidden
-                #line (491,157)-(491,160) 29 "MetaModelGenerator.mxg"
+                #line (493,157)-(493,160) 29 "MetaModelGenerator.mxg"
                 __cb.Write("));");
                 #line hidden
                 __cb.AppendLine();
@@ -8358,25 +8360,25 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first69) __cb.AppendLine();
             __cb.Push("            ");
-            #line (493,13)-(493,33) 25 "MetaModelGenerator.mxg"
+            #line (495,13)-(495,33) 25 "MetaModelGenerator.mxg"
             __cb.Write("_modelOperationInfos");
             #line hidden
-            #line (493,33)-(493,34) 25 "MetaModelGenerator.mxg"
+            #line (495,33)-(495,34) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (493,34)-(493,35) 25 "MetaModelGenerator.mxg"
+            #line (495,34)-(495,35) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (493,35)-(493,36) 25 "MetaModelGenerator.mxg"
+            #line (495,35)-(495,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (493,36)-(493,70) 25 "MetaModelGenerator.mxg"
+            #line (495,36)-(495,70) 25 "MetaModelGenerator.mxg"
             __cb.Write("modelOperationInfos.ToImmutable();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (494,9)-(494,10) 25 "MetaModelGenerator.mxg"
+            #line (496,9)-(496,10) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -8384,87 +8386,43 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (496,9)-(496,15) 25 "MetaModelGenerator.mxg"
+            #line (498,9)-(498,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (496,15)-(496,16) 25 "MetaModelGenerator.mxg"
+            #line (498,15)-(498,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (496,16)-(496,24) 25 "MetaModelGenerator.mxg"
+            #line (498,16)-(498,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (496,24)-(496,25) 25 "MetaModelGenerator.mxg"
+            #line (498,24)-(498,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (496,25)-(496,36) 25 "MetaModelGenerator.mxg"
+            #line (498,25)-(498,36) 25 "MetaModelGenerator.mxg"
             __cb.Write("__MetaModel");
             #line hidden
-            #line (496,36)-(496,37) 25 "MetaModelGenerator.mxg"
+            #line (498,36)-(498,37) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (496,37)-(496,46) 25 "MetaModelGenerator.mxg"
+            #line (498,37)-(498,46) 25 "MetaModelGenerator.mxg"
             __cb.Write("MetaModel");
             #line hidden
-            #line (496,46)-(496,47) 25 "MetaModelGenerator.mxg"
+            #line (498,46)-(498,47) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (496,47)-(496,49) 25 "MetaModelGenerator.mxg"
+            #line (498,47)-(498,49) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (496,49)-(496,50) 25 "MetaModelGenerator.mxg"
+            #line (498,49)-(498,50) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (496,51)-(496,65) 24 "MetaModelGenerator.mxg"
+            #line (498,51)-(498,65) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (496,66)-(496,77) 25 "MetaModelGenerator.mxg"
+            #line (498,66)-(498,77) 25 "MetaModelGenerator.mxg"
             __cb.Write(".MInstance;");
             #line hidden
             __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (497,9)-(497,15) 25 "MetaModelGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (497,15)-(497,16) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (497,16)-(497,24) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (497,24)-(497,25) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (497,25)-(497,35) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__MetaType");
-            #line hidden
-            #line (497,35)-(497,36) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (497,36)-(497,44) 25 "MetaModelGenerator.mxg"
-            __cb.Write("MetaType");
-            #line hidden
-            #line (497,44)-(497,45) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (497,45)-(497,47) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (497,47)-(497,48) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (497,48)-(497,55) 25 "MetaModelGenerator.mxg"
-            __cb.Write("typeof(");
-            #line hidden
-            #line (497,56)-(497,64) 24 "MetaModelGenerator.mxg"
-            __cb.Write(cls.Name);
-            #line hidden
-            #line (497,65)-(497,67) 25 "MetaModelGenerator.mxg"
-            __cb.Write(");");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (499,9)-(499,15) 25 "MetaModelGenerator.mxg"
@@ -8485,118 +8443,30 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (499,35)-(499,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (499,36)-(499,46) 25 "MetaModelGenerator.mxg"
-            __cb.Write("SymbolType");
+            #line (499,36)-(499,44) 25 "MetaModelGenerator.mxg"
+            __cb.Write("MetaType");
             #line hidden
-            #line (499,46)-(499,47) 25 "MetaModelGenerator.mxg"
+            #line (499,44)-(499,45) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (499,47)-(499,49) 25 "MetaModelGenerator.mxg"
+            #line (499,45)-(499,47) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (499,49)-(499,50) 25 "MetaModelGenerator.mxg"
+            #line (499,47)-(499,48) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            var __first70 = true;
-            #line (499,51)-(499,82) 13 "MetaModelGenerator.mxg"
-            if (metaCls.SymbolType is null)
+            #line (499,48)-(499,55) 25 "MetaModelGenerator.mxg"
+            __cb.Write("typeof(");
             #line hidden
-            
-            {
-                if (__first70)
-                {
-                    __first70 = false;
-                }
-                #line (499,83)-(499,90) 29 "MetaModelGenerator.mxg"
-                __cb.Write("default");
-                #line hidden
-            }
-            #line (499,91)-(499,95) 13 "MetaModelGenerator.mxg"
-            else
+            #line (499,56)-(499,64) 24 "MetaModelGenerator.mxg"
+            __cb.Write(cls.Name);
             #line hidden
-            
-            {
-                if (__first70)
-                {
-                    __first70 = false;
-                }
-                #line (499,96)-(499,103) 29 "MetaModelGenerator.mxg"
-                __cb.Write("typeof(");
-                #line hidden
-                #line (499,104)-(499,132) 28 "MetaModelGenerator.mxg"
-                __cb.Write(ToCSharp(metaCls.SymbolType));
-                #line hidden
-                #line (499,133)-(499,134) 29 "MetaModelGenerator.mxg"
-                __cb.Write(")");
-                #line hidden
-            }
-            #line (499,142)-(499,143) 25 "MetaModelGenerator.mxg"
-            __cb.Write(";");
+            #line (499,65)-(499,67) 25 "MetaModelGenerator.mxg"
+            __cb.Write(");");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            __cb.Push("        ");
-            #line (500,9)-(500,15) 25 "MetaModelGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (500,15)-(500,16) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (500,16)-(500,24) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (500,24)-(500,25) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (500,25)-(500,41) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelProperty?");
-            #line hidden
-            #line (500,41)-(500,42) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (500,42)-(500,54) 25 "MetaModelGenerator.mxg"
-            __cb.Write("NameProperty");
-            #line hidden
-            #line (500,54)-(500,55) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (500,55)-(500,57) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (500,57)-(500,58) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            var __first71 = true;
-            #line (500,59)-(500,92) 13 "MetaModelGenerator.mxg"
-            if (metaCls.NameProperty is null)
-            #line hidden
-            
-            {
-                if (__first71)
-                {
-                    __first71 = false;
-                }
-                #line (500,93)-(500,97) 29 "MetaModelGenerator.mxg"
-                __cb.Write("null");
-                #line hidden
-            }
-            #line (500,98)-(500,102) 13 "MetaModelGenerator.mxg"
-            else
-            #line hidden
-            
-            {
-                if (__first71)
-                {
-                    __first71 = false;
-                }
-                #line (500,104)-(500,134) 28 "MetaModelGenerator.mxg"
-                __cb.Write(ToCSharp(metaCls.NameProperty));
-                #line hidden
-            }
-            #line (500,143)-(500,144) 25 "MetaModelGenerator.mxg"
-            __cb.Write(";");
-            #line hidden
-            __cb.AppendLine();
+            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (501,9)-(501,15) 25 "MetaModelGenerator.mxg"
@@ -8611,52 +8481,58 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (501,24)-(501,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (501,25)-(501,41) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelProperty?");
+            #line (501,25)-(501,35) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__MetaType");
             #line hidden
-            #line (501,41)-(501,42) 25 "MetaModelGenerator.mxg"
+            #line (501,35)-(501,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (501,42)-(501,54) 25 "MetaModelGenerator.mxg"
-            __cb.Write("TypeProperty");
+            #line (501,36)-(501,46) 25 "MetaModelGenerator.mxg"
+            __cb.Write("SymbolType");
             #line hidden
-            #line (501,54)-(501,55) 25 "MetaModelGenerator.mxg"
+            #line (501,46)-(501,47) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (501,55)-(501,57) 25 "MetaModelGenerator.mxg"
+            #line (501,47)-(501,49) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (501,57)-(501,58) 25 "MetaModelGenerator.mxg"
+            #line (501,49)-(501,50) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            var __first72 = true;
-            #line (501,59)-(501,92) 13 "MetaModelGenerator.mxg"
-            if (metaCls.TypeProperty is null)
+            var __first70 = true;
+            #line (501,51)-(501,82) 13 "MetaModelGenerator.mxg"
+            if (metaCls.SymbolType is null)
             #line hidden
             
             {
-                if (__first72)
+                if (__first70)
                 {
-                    __first72 = false;
+                    __first70 = false;
                 }
-                #line (501,93)-(501,97) 29 "MetaModelGenerator.mxg"
-                __cb.Write("null");
+                #line (501,83)-(501,90) 29 "MetaModelGenerator.mxg"
+                __cb.Write("default");
                 #line hidden
             }
-            #line (501,98)-(501,102) 13 "MetaModelGenerator.mxg"
+            #line (501,91)-(501,95) 13 "MetaModelGenerator.mxg"
             else
             #line hidden
             
             {
-                if (__first72)
+                if (__first70)
                 {
-                    __first72 = false;
+                    __first70 = false;
                 }
-                #line (501,104)-(501,134) 28 "MetaModelGenerator.mxg"
-                __cb.Write(ToCSharp(metaCls.TypeProperty));
+                #line (501,96)-(501,103) 29 "MetaModelGenerator.mxg"
+                __cb.Write("typeof(");
+                #line hidden
+                #line (501,104)-(501,132) 28 "MetaModelGenerator.mxg"
+                __cb.Write(ToCSharp(metaCls.SymbolType));
+                #line hidden
+                #line (501,133)-(501,134) 29 "MetaModelGenerator.mxg"
+                __cb.Write(")");
                 #line hidden
             }
-            #line (501,143)-(501,144) 25 "MetaModelGenerator.mxg"
+            #line (501,142)-(501,143) 25 "MetaModelGenerator.mxg"
             __cb.Write(";");
             #line hidden
             __cb.AppendLine();
@@ -8674,26 +8550,53 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (502,24)-(502,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (502,25)-(502,94) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
+            #line (502,25)-(502,41) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelProperty?");
             #line hidden
-            #line (502,94)-(502,95) 25 "MetaModelGenerator.mxg"
+            #line (502,41)-(502,42) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (502,95)-(502,104) 25 "MetaModelGenerator.mxg"
-            __cb.Write("BaseTypes");
+            #line (502,42)-(502,54) 25 "MetaModelGenerator.mxg"
+            __cb.Write("NameProperty");
             #line hidden
-            #line (502,104)-(502,105) 25 "MetaModelGenerator.mxg"
+            #line (502,54)-(502,55) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (502,105)-(502,107) 25 "MetaModelGenerator.mxg"
+            #line (502,55)-(502,57) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (502,107)-(502,108) 25 "MetaModelGenerator.mxg"
+            #line (502,57)-(502,58) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (502,108)-(502,119) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_baseTypes;");
+            var __first71 = true;
+            #line (502,59)-(502,92) 13 "MetaModelGenerator.mxg"
+            if (metaCls.NameProperty is null)
+            #line hidden
+            
+            {
+                if (__first71)
+                {
+                    __first71 = false;
+                }
+                #line (502,93)-(502,97) 29 "MetaModelGenerator.mxg"
+                __cb.Write("null");
+                #line hidden
+            }
+            #line (502,98)-(502,102) 13 "MetaModelGenerator.mxg"
+            else
+            #line hidden
+            
+            {
+                if (__first71)
+                {
+                    __first71 = false;
+                }
+                #line (502,104)-(502,134) 28 "MetaModelGenerator.mxg"
+                __cb.Write(ToCSharp(metaCls.NameProperty));
+                #line hidden
+            }
+            #line (502,143)-(502,144) 25 "MetaModelGenerator.mxg"
+            __cb.Write(";");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -8710,26 +8613,53 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (503,24)-(503,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (503,25)-(503,94) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
+            #line (503,25)-(503,41) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelProperty?");
             #line hidden
-            #line (503,94)-(503,95) 25 "MetaModelGenerator.mxg"
+            #line (503,41)-(503,42) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (503,95)-(503,107) 25 "MetaModelGenerator.mxg"
-            __cb.Write("AllBaseTypes");
+            #line (503,42)-(503,54) 25 "MetaModelGenerator.mxg"
+            __cb.Write("TypeProperty");
             #line hidden
-            #line (503,107)-(503,108) 25 "MetaModelGenerator.mxg"
+            #line (503,54)-(503,55) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (503,108)-(503,110) 25 "MetaModelGenerator.mxg"
+            #line (503,55)-(503,57) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (503,110)-(503,111) 25 "MetaModelGenerator.mxg"
+            #line (503,57)-(503,58) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (503,111)-(503,125) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_allBaseTypes;");
+            var __first72 = true;
+            #line (503,59)-(503,92) 13 "MetaModelGenerator.mxg"
+            if (metaCls.TypeProperty is null)
+            #line hidden
+            
+            {
+                if (__first72)
+                {
+                    __first72 = false;
+                }
+                #line (503,93)-(503,97) 29 "MetaModelGenerator.mxg"
+                __cb.Write("null");
+                #line hidden
+            }
+            #line (503,98)-(503,102) 13 "MetaModelGenerator.mxg"
+            else
+            #line hidden
+            
+            {
+                if (__first72)
+                {
+                    __first72 = false;
+                }
+                #line (503,104)-(503,134) 28 "MetaModelGenerator.mxg"
+                __cb.Write(ToCSharp(metaCls.TypeProperty));
+                #line hidden
+            }
+            #line (503,143)-(503,144) 25 "MetaModelGenerator.mxg"
+            __cb.Write(";");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -8746,26 +8676,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (504,24)-(504,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (504,25)-(504,93) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
+            #line (504,25)-(504,94) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
             #line hidden
-            #line (504,93)-(504,94) 25 "MetaModelGenerator.mxg"
+            #line (504,94)-(504,95) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (504,94)-(504,112) 25 "MetaModelGenerator.mxg"
-            __cb.Write("DeclaredProperties");
+            #line (504,95)-(504,104) 25 "MetaModelGenerator.mxg"
+            __cb.Write("BaseTypes");
             #line hidden
-            #line (504,112)-(504,113) 25 "MetaModelGenerator.mxg"
+            #line (504,104)-(504,105) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (504,113)-(504,115) 25 "MetaModelGenerator.mxg"
+            #line (504,105)-(504,107) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (504,115)-(504,116) 25 "MetaModelGenerator.mxg"
+            #line (504,107)-(504,108) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (504,116)-(504,136) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_declaredProperties;");
+            #line (504,108)-(504,119) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_baseTypes;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -8782,26 +8712,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (505,24)-(505,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (505,25)-(505,93) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
+            #line (505,25)-(505,94) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo>");
             #line hidden
-            #line (505,93)-(505,94) 25 "MetaModelGenerator.mxg"
+            #line (505,94)-(505,95) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (505,94)-(505,115) 25 "MetaModelGenerator.mxg"
-            __cb.Write("AllDeclaredProperties");
+            #line (505,95)-(505,107) 25 "MetaModelGenerator.mxg"
+            __cb.Write("AllBaseTypes");
             #line hidden
-            #line (505,115)-(505,116) 25 "MetaModelGenerator.mxg"
+            #line (505,107)-(505,108) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (505,116)-(505,118) 25 "MetaModelGenerator.mxg"
+            #line (505,108)-(505,110) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (505,118)-(505,119) 25 "MetaModelGenerator.mxg"
+            #line (505,110)-(505,111) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (505,119)-(505,142) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_allDeclaredProperties;");
+            #line (505,111)-(505,125) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_allBaseTypes;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -8824,20 +8754,20 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (506,93)-(506,94) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (506,94)-(506,110) 25 "MetaModelGenerator.mxg"
-            __cb.Write("PublicProperties");
+            #line (506,94)-(506,112) 25 "MetaModelGenerator.mxg"
+            __cb.Write("DeclaredProperties");
             #line hidden
-            #line (506,110)-(506,111) 25 "MetaModelGenerator.mxg"
+            #line (506,112)-(506,113) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (506,111)-(506,113) 25 "MetaModelGenerator.mxg"
+            #line (506,113)-(506,115) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (506,113)-(506,114) 25 "MetaModelGenerator.mxg"
+            #line (506,115)-(506,116) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (506,114)-(506,132) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_publicProperties;");
+            #line (506,116)-(506,136) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_declaredProperties;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -8854,26 +8784,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (507,24)-(507,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (507,25)-(507,94) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
+            #line (507,25)-(507,93) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
             #line hidden
-            #line (507,94)-(507,95) 25 "MetaModelGenerator.mxg"
+            #line (507,93)-(507,94) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (507,95)-(507,113) 25 "MetaModelGenerator.mxg"
-            __cb.Write("DeclaredOperations");
+            #line (507,94)-(507,115) 25 "MetaModelGenerator.mxg"
+            __cb.Write("AllDeclaredProperties");
             #line hidden
-            #line (507,113)-(507,114) 25 "MetaModelGenerator.mxg"
+            #line (507,115)-(507,116) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (507,114)-(507,116) 25 "MetaModelGenerator.mxg"
+            #line (507,116)-(507,118) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (507,116)-(507,117) 25 "MetaModelGenerator.mxg"
+            #line (507,118)-(507,119) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (507,117)-(507,137) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_declaredOperations;");
+            #line (507,119)-(507,142) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_allDeclaredProperties;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -8890,26 +8820,26 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (508,24)-(508,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (508,25)-(508,94) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
+            #line (508,25)-(508,93) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelProperty>");
             #line hidden
-            #line (508,94)-(508,95) 25 "MetaModelGenerator.mxg"
+            #line (508,93)-(508,94) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (508,95)-(508,116) 25 "MetaModelGenerator.mxg"
-            __cb.Write("AllDeclaredOperations");
+            #line (508,94)-(508,110) 25 "MetaModelGenerator.mxg"
+            __cb.Write("PublicProperties");
             #line hidden
-            #line (508,116)-(508,117) 25 "MetaModelGenerator.mxg"
+            #line (508,110)-(508,111) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (508,117)-(508,119) 25 "MetaModelGenerator.mxg"
+            #line (508,111)-(508,113) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (508,119)-(508,120) 25 "MetaModelGenerator.mxg"
+            #line (508,113)-(508,114) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (508,120)-(508,143) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_allDeclaredOperations;");
+            #line (508,114)-(508,132) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_publicProperties;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -8932,108 +8862,96 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (509,94)-(509,95) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (509,95)-(509,111) 25 "MetaModelGenerator.mxg"
-            __cb.Write("PublicOperations");
+            #line (509,95)-(509,113) 25 "MetaModelGenerator.mxg"
+            __cb.Write("DeclaredOperations");
             #line hidden
-            #line (509,111)-(509,112) 25 "MetaModelGenerator.mxg"
+            #line (509,113)-(509,114) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (509,112)-(509,114) 25 "MetaModelGenerator.mxg"
+            #line (509,114)-(509,116) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (509,114)-(509,115) 25 "MetaModelGenerator.mxg"
+            #line (509,116)-(509,117) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (509,115)-(509,133) 25 "MetaModelGenerator.mxg"
+            #line (509,117)-(509,137) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_declaredOperations;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (510,9)-(510,15) 25 "MetaModelGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (510,15)-(510,16) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (510,16)-(510,24) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (510,24)-(510,25) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (510,25)-(510,94) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
+            #line hidden
+            #line (510,94)-(510,95) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (510,95)-(510,116) 25 "MetaModelGenerator.mxg"
+            __cb.Write("AllDeclaredOperations");
+            #line hidden
+            #line (510,116)-(510,117) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (510,117)-(510,119) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (510,119)-(510,120) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (510,120)-(510,143) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_allDeclaredOperations;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (511,9)-(511,15) 25 "MetaModelGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (511,15)-(511,16) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (511,16)-(511,24) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (511,24)-(511,25) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (511,25)-(511,94) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableArray<__ModelOperation>");
+            #line hidden
+            #line (511,94)-(511,95) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (511,95)-(511,111) 25 "MetaModelGenerator.mxg"
+            __cb.Write("PublicOperations");
+            #line hidden
+            #line (511,111)-(511,112) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (511,112)-(511,114) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (511,114)-(511,115) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (511,115)-(511,133) 25 "MetaModelGenerator.mxg"
             __cb.Write("_publicOperations;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (511,9)-(511,18) 25 "MetaModelGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (511,18)-(511,19) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (511,19)-(511,27) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (511,27)-(511,28) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (511,28)-(511,92) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
-            #line hidden
-            #line (511,92)-(511,93) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (511,93)-(511,109) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelProperty>");
-            #line hidden
-            #line (511,109)-(511,110) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (511,110)-(511,132) 25 "MetaModelGenerator.mxg"
-            __cb.Write("PublicPropertiesByName");
-            #line hidden
-            #line (511,132)-(511,133) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (511,133)-(511,135) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (511,135)-(511,136) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (511,136)-(511,160) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_publicPropertiesByName;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (512,9)-(512,18) 25 "MetaModelGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (512,18)-(512,19) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (512,19)-(512,27) 25 "MetaModelGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (512,27)-(512,28) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (512,28)-(512,101) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty,");
-            #line hidden
-            #line (512,101)-(512,102) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (512,102)-(512,122) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelPropertyInfo>");
-            #line hidden
-            #line (512,122)-(512,123) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (512,123)-(512,141) 25 "MetaModelGenerator.mxg"
-            __cb.Write("ModelPropertyInfos");
-            #line hidden
-            #line (512,141)-(512,142) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (512,142)-(512,144) 25 "MetaModelGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (512,144)-(512,145) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (512,145)-(512,165) 25 "MetaModelGenerator.mxg"
-            __cb.Write("_modelPropertyInfos;");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (513,9)-(513,18) 25 "MetaModelGenerator.mxg"
@@ -9048,31 +8966,115 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (513,27)-(513,28) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (513,28)-(513,102) 25 "MetaModelGenerator.mxg"
-            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation,");
+            #line (513,28)-(513,92) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<string,");
             #line hidden
-            #line (513,102)-(513,103) 25 "MetaModelGenerator.mxg"
+            #line (513,92)-(513,93) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (513,103)-(513,124) 25 "MetaModelGenerator.mxg"
-            __cb.Write("__ModelOperationInfo>");
+            #line (513,93)-(513,109) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelProperty>");
             #line hidden
-            #line (513,124)-(513,125) 25 "MetaModelGenerator.mxg"
+            #line (513,109)-(513,110) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (513,125)-(513,144) 25 "MetaModelGenerator.mxg"
-            __cb.Write("ModelOperationInfos");
+            #line (513,110)-(513,132) 25 "MetaModelGenerator.mxg"
+            __cb.Write("PublicPropertiesByName");
             #line hidden
-            #line (513,144)-(513,145) 25 "MetaModelGenerator.mxg"
+            #line (513,132)-(513,133) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (513,145)-(513,147) 25 "MetaModelGenerator.mxg"
+            #line (513,133)-(513,135) 25 "MetaModelGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (513,147)-(513,148) 25 "MetaModelGenerator.mxg"
+            #line (513,135)-(513,136) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (513,148)-(513,169) 25 "MetaModelGenerator.mxg"
+            #line (513,136)-(513,160) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_publicPropertiesByName;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (514,9)-(514,18) 25 "MetaModelGenerator.mxg"
+            __cb.Write("protected");
+            #line hidden
+            #line (514,18)-(514,19) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (514,19)-(514,27) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (514,27)-(514,28) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (514,28)-(514,101) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty,");
+            #line hidden
+            #line (514,101)-(514,102) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (514,102)-(514,122) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelPropertyInfo>");
+            #line hidden
+            #line (514,122)-(514,123) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (514,123)-(514,141) 25 "MetaModelGenerator.mxg"
+            __cb.Write("ModelPropertyInfos");
+            #line hidden
+            #line (514,141)-(514,142) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (514,142)-(514,144) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (514,144)-(514,145) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (514,145)-(514,165) 25 "MetaModelGenerator.mxg"
+            __cb.Write("_modelPropertyInfos;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (515,9)-(515,18) 25 "MetaModelGenerator.mxg"
+            __cb.Write("protected");
+            #line hidden
+            #line (515,18)-(515,19) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (515,19)-(515,27) 25 "MetaModelGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (515,27)-(515,28) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (515,28)-(515,102) 25 "MetaModelGenerator.mxg"
+            __cb.Write("global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation,");
+            #line hidden
+            #line (515,102)-(515,103) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (515,103)-(515,124) 25 "MetaModelGenerator.mxg"
+            __cb.Write("__ModelOperationInfo>");
+            #line hidden
+            #line (515,124)-(515,125) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (515,125)-(515,144) 25 "MetaModelGenerator.mxg"
+            __cb.Write("ModelOperationInfos");
+            #line hidden
+            #line (515,144)-(515,145) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (515,145)-(515,147) 25 "MetaModelGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (515,147)-(515,148) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (515,148)-(515,169) 25 "MetaModelGenerator.mxg"
             __cb.Write("_modelOperationInfos;");
             #line hidden
             __cb.AppendLine();
@@ -9080,160 +9082,160 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (515,9)-(515,15) 25 "MetaModelGenerator.mxg"
+            #line (517,9)-(517,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (515,15)-(515,16) 25 "MetaModelGenerator.mxg"
+            #line (517,15)-(517,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,16)-(515,24) 25 "MetaModelGenerator.mxg"
+            #line (517,16)-(517,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (515,24)-(515,25) 25 "MetaModelGenerator.mxg"
+            #line (517,24)-(517,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,25)-(515,40) 25 "MetaModelGenerator.mxg"
+            #line (517,25)-(517,40) 25 "MetaModelGenerator.mxg"
             __cb.Write("__IModelObject?");
             #line hidden
-            #line (515,40)-(515,41) 25 "MetaModelGenerator.mxg"
+            #line (517,40)-(517,41) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,41)-(515,56) 25 "MetaModelGenerator.mxg"
+            #line (517,41)-(517,56) 25 "MetaModelGenerator.mxg"
             __cb.Write("Create(__Model?");
             #line hidden
-            #line (515,56)-(515,57) 25 "MetaModelGenerator.mxg"
+            #line (517,56)-(517,57) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,57)-(515,62) 25 "MetaModelGenerator.mxg"
+            #line (517,57)-(517,62) 25 "MetaModelGenerator.mxg"
             __cb.Write("model");
             #line hidden
-            #line (515,62)-(515,63) 25 "MetaModelGenerator.mxg"
+            #line (517,62)-(517,63) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,63)-(515,64) 25 "MetaModelGenerator.mxg"
+            #line (517,63)-(517,64) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (515,64)-(515,65) 25 "MetaModelGenerator.mxg"
+            #line (517,64)-(517,65) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,65)-(515,70) 25 "MetaModelGenerator.mxg"
+            #line (517,65)-(517,70) 25 "MetaModelGenerator.mxg"
             __cb.Write("null,");
             #line hidden
-            #line (515,70)-(515,71) 25 "MetaModelGenerator.mxg"
+            #line (517,70)-(517,71) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,71)-(515,78) 25 "MetaModelGenerator.mxg"
+            #line (517,71)-(517,78) 25 "MetaModelGenerator.mxg"
             __cb.Write("string?");
             #line hidden
-            #line (515,78)-(515,79) 25 "MetaModelGenerator.mxg"
+            #line (517,78)-(517,79) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,79)-(515,81) 25 "MetaModelGenerator.mxg"
+            #line (517,79)-(517,81) 25 "MetaModelGenerator.mxg"
             __cb.Write("id");
             #line hidden
-            #line (515,81)-(515,82) 25 "MetaModelGenerator.mxg"
+            #line (517,81)-(517,82) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,82)-(515,83) 25 "MetaModelGenerator.mxg"
+            #line (517,82)-(517,83) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (515,83)-(515,84) 25 "MetaModelGenerator.mxg"
+            #line (517,83)-(517,84) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (515,84)-(515,89) 25 "MetaModelGenerator.mxg"
+            #line (517,84)-(517,89) 25 "MetaModelGenerator.mxg"
             __cb.Write("null)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (516,9)-(516,10) 25 "MetaModelGenerator.mxg"
+            #line (518,9)-(518,10) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (517,13)-(517,16) 25 "MetaModelGenerator.mxg"
+            #line (519,13)-(519,16) 25 "MetaModelGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (517,16)-(517,17) 25 "MetaModelGenerator.mxg"
+            #line (519,16)-(519,17) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (517,17)-(517,23) 25 "MetaModelGenerator.mxg"
+            #line (519,17)-(519,23) 25 "MetaModelGenerator.mxg"
             __cb.Write("result");
             #line hidden
-            #line (517,23)-(517,24) 25 "MetaModelGenerator.mxg"
+            #line (519,23)-(519,24) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (517,24)-(517,25) 25 "MetaModelGenerator.mxg"
+            #line (519,24)-(519,25) 25 "MetaModelGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (517,25)-(517,26) 25 "MetaModelGenerator.mxg"
+            #line (519,25)-(519,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (517,26)-(517,29) 25 "MetaModelGenerator.mxg"
+            #line (519,26)-(519,29) 25 "MetaModelGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (517,29)-(517,30) 25 "MetaModelGenerator.mxg"
+            #line (519,29)-(519,30) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (517,31)-(517,39) 24 "MetaModelGenerator.mxg"
+            #line (519,31)-(519,39) 24 "MetaModelGenerator.mxg"
             __cb.Write(cls.Name);
             #line hidden
-            #line (517,40)-(517,50) 25 "MetaModelGenerator.mxg"
+            #line (519,40)-(519,50) 25 "MetaModelGenerator.mxg"
             __cb.Write("_Impl(id);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (518,13)-(518,15) 25 "MetaModelGenerator.mxg"
+            #line (520,13)-(520,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (518,15)-(518,16) 25 "MetaModelGenerator.mxg"
+            #line (520,15)-(520,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (518,16)-(518,22) 25 "MetaModelGenerator.mxg"
+            #line (520,16)-(520,22) 25 "MetaModelGenerator.mxg"
             __cb.Write("(model");
             #line hidden
-            #line (518,22)-(518,23) 25 "MetaModelGenerator.mxg"
+            #line (520,22)-(520,23) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (518,23)-(518,25) 25 "MetaModelGenerator.mxg"
+            #line (520,23)-(520,25) 25 "MetaModelGenerator.mxg"
             __cb.Write("is");
             #line hidden
-            #line (518,25)-(518,26) 25 "MetaModelGenerator.mxg"
+            #line (520,25)-(520,26) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (518,26)-(518,29) 25 "MetaModelGenerator.mxg"
+            #line (520,26)-(520,29) 25 "MetaModelGenerator.mxg"
             __cb.Write("not");
             #line hidden
-            #line (518,29)-(518,30) 25 "MetaModelGenerator.mxg"
+            #line (520,29)-(520,30) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (518,30)-(518,35) 25 "MetaModelGenerator.mxg"
+            #line (520,30)-(520,35) 25 "MetaModelGenerator.mxg"
             __cb.Write("null)");
             #line hidden
-            #line (518,35)-(518,36) 25 "MetaModelGenerator.mxg"
+            #line (520,35)-(520,36) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (518,36)-(518,63) 25 "MetaModelGenerator.mxg"
+            #line (520,36)-(520,63) 25 "MetaModelGenerator.mxg"
             __cb.Write("model.AttachObject(result);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (519,13)-(519,19) 25 "MetaModelGenerator.mxg"
+            #line (521,13)-(521,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (519,19)-(519,20) 25 "MetaModelGenerator.mxg"
+            #line (521,19)-(521,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (519,20)-(519,27) 25 "MetaModelGenerator.mxg"
+            #line (521,20)-(521,27) 25 "MetaModelGenerator.mxg"
             __cb.Write("result;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (520,9)-(520,10) 25 "MetaModelGenerator.mxg"
+            #line (522,9)-(522,10) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -9241,73 +9243,73 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (522,9)-(522,15) 25 "MetaModelGenerator.mxg"
+            #line (524,9)-(524,15) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (522,15)-(522,16) 25 "MetaModelGenerator.mxg"
+            #line (524,15)-(524,16) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (522,16)-(522,24) 25 "MetaModelGenerator.mxg"
+            #line (524,16)-(524,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (522,24)-(522,25) 25 "MetaModelGenerator.mxg"
+            #line (524,24)-(524,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (522,25)-(522,31) 25 "MetaModelGenerator.mxg"
+            #line (524,25)-(524,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("string");
             #line hidden
-            #line (522,31)-(522,32) 25 "MetaModelGenerator.mxg"
+            #line (524,31)-(524,32) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (522,32)-(522,42) 25 "MetaModelGenerator.mxg"
+            #line (524,32)-(524,42) 25 "MetaModelGenerator.mxg"
             __cb.Write("ToString()");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (523,9)-(523,10) 25 "MetaModelGenerator.mxg"
+            #line (525,9)-(525,10) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (524,13)-(524,19) 25 "MetaModelGenerator.mxg"
+            #line (526,13)-(526,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (524,19)-(524,20) 25 "MetaModelGenerator.mxg"
+            #line (526,19)-(526,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (524,20)-(524,21) 25 "MetaModelGenerator.mxg"
+            #line (526,20)-(526,21) 25 "MetaModelGenerator.mxg"
             __cb.Write("\"");
             #line hidden
-            #line (524,22)-(524,36) 24 "MetaModelGenerator.mxg"
+            #line (526,22)-(526,36) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (524,37)-(524,38) 25 "MetaModelGenerator.mxg"
+            #line (526,37)-(526,38) 25 "MetaModelGenerator.mxg"
             __cb.Write(".");
             #line hidden
-            #line (524,39)-(524,47) 24 "MetaModelGenerator.mxg"
+            #line (526,39)-(526,47) 24 "MetaModelGenerator.mxg"
             __cb.Write(cls.Name);
             #line hidden
-            #line (524,48)-(524,54) 25 "MetaModelGenerator.mxg"
+            #line (526,48)-(526,54) 25 "MetaModelGenerator.mxg"
             __cb.Write("Info\";");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (525,9)-(525,10) 25 "MetaModelGenerator.mxg"
+            #line (527,9)-(527,10) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (526,5)-(526,6) 25 "MetaModelGenerator.mxg"
+            #line (528,5)-(528,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (527,1)-(527,2) 25 "MetaModelGenerator.mxg"
+            #line (529,1)-(529,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -9315,92 +9317,38 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (530,9)-(530,35) 22 "MetaModelGenerator.mxg"
+        #line (532,9)-(532,35) 22 "MetaModelGenerator.mxg"
         public string GenerateCustomInterface()
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (531,1)-(531,9) 25 "MetaModelGenerator.mxg"
+            #line (533,1)-(533,9) 25 "MetaModelGenerator.mxg"
             __cb.Write("internal");
             #line hidden
-            #line (531,9)-(531,10) 25 "MetaModelGenerator.mxg"
+            #line (533,9)-(533,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (531,10)-(531,19) 25 "MetaModelGenerator.mxg"
+            #line (533,10)-(533,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("interface");
             #line hidden
-            #line (531,19)-(531,20) 25 "MetaModelGenerator.mxg"
+            #line (533,19)-(533,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (531,20)-(531,27) 25 "MetaModelGenerator.mxg"
+            #line (533,20)-(533,27) 25 "MetaModelGenerator.mxg"
             __cb.Write("ICustom");
             #line hidden
-            #line (531,28)-(531,42) 24 "MetaModelGenerator.mxg"
+            #line (533,28)-(533,42) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (531,43)-(531,57) 25 "MetaModelGenerator.mxg"
+            #line (533,43)-(533,57) 25 "MetaModelGenerator.mxg"
             __cb.Write("Implementation");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (532,1)-(532,2) 25 "MetaModelGenerator.mxg"
+            #line (534,1)-(534,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (533,5)-(533,8) 25 "MetaModelGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (533,8)-(533,9) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (533,9)-(533,18) 25 "MetaModelGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (534,5)-(534,8) 25 "MetaModelGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (534,8)-(534,9) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (534,9)-(534,20) 25 "MetaModelGenerator.mxg"
-            __cb.Write("Constructor");
-            #line hidden
-            #line (534,20)-(534,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (534,21)-(534,24) 25 "MetaModelGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (534,24)-(534,25) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (534,25)-(534,28) 25 "MetaModelGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (534,28)-(534,29) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (534,29)-(534,33) 25 "MetaModelGenerator.mxg"
-            __cb.Write("meta");
-            #line hidden
-            #line (534,33)-(534,34) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (534,34)-(534,39) 25 "MetaModelGenerator.mxg"
-            __cb.Write("model");
-            #line hidden
-            #line (534,39)-(534,40) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (534,41)-(534,55) 24 "MetaModelGenerator.mxg"
-            __cb.Write(MetaModel.Name);
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -9411,31 +9359,85 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (535,8)-(535,9) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (535,9)-(535,19) 25 "MetaModelGenerator.mxg"
+            #line (535,9)-(535,18) 25 "MetaModelGenerator.mxg"
+            __cb.Write("<summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (536,5)-(536,8) 25 "MetaModelGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (536,8)-(536,9) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (536,9)-(536,20) 25 "MetaModelGenerator.mxg"
+            __cb.Write("Constructor");
+            #line hidden
+            #line (536,20)-(536,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (536,21)-(536,24) 25 "MetaModelGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (536,24)-(536,25) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (536,25)-(536,28) 25 "MetaModelGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (536,28)-(536,29) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (536,29)-(536,33) 25 "MetaModelGenerator.mxg"
+            __cb.Write("meta");
+            #line hidden
+            #line (536,33)-(536,34) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (536,34)-(536,39) 25 "MetaModelGenerator.mxg"
+            __cb.Write("model");
+            #line hidden
+            #line (536,39)-(536,40) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (536,41)-(536,55) 24 "MetaModelGenerator.mxg"
+            __cb.Write(MetaModel.Name);
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (537,5)-(537,8) 25 "MetaModelGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (537,8)-(537,9) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (537,9)-(537,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("</summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (536,5)-(536,9) 25 "MetaModelGenerator.mxg"
+            #line (538,5)-(538,9) 25 "MetaModelGenerator.mxg"
             __cb.Write("void");
             #line hidden
-            #line (536,9)-(536,10) 25 "MetaModelGenerator.mxg"
+            #line (538,9)-(538,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (536,11)-(536,25) 24 "MetaModelGenerator.mxg"
+            #line (538,11)-(538,25) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (536,26)-(536,28) 25 "MetaModelGenerator.mxg"
+            #line (538,26)-(538,28) 25 "MetaModelGenerator.mxg"
             __cb.Write("(I");
             #line hidden
-            #line (536,29)-(536,43) 24 "MetaModelGenerator.mxg"
+            #line (538,29)-(538,43) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (536,44)-(536,45) 25 "MetaModelGenerator.mxg"
+            #line (538,44)-(538,45) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (536,45)-(536,52) 25 "MetaModelGenerator.mxg"
+            #line (538,45)-(538,52) 25 "MetaModelGenerator.mxg"
             __cb.Write("_this);");
             #line hidden
             __cb.AppendLine();
@@ -9443,7 +9445,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first73 = true;
-            #line (538,6)-(538,34) 13 "MetaModelGenerator.mxg"
+            #line (540,6)-(540,34) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -9453,25 +9455,25 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first73 = false;
                 }
                 __cb.Push("    ");
-                #line (539,9)-(539,13) 29 "MetaModelGenerator.mxg"
+                #line (541,9)-(541,13) 29 "MetaModelGenerator.mxg"
                 __cb.Write("void");
                 #line hidden
-                #line (539,13)-(539,14) 29 "MetaModelGenerator.mxg"
+                #line (541,13)-(541,14) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (539,15)-(539,23) 28 "MetaModelGenerator.mxg"
+                #line (541,15)-(541,23) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (539,24)-(539,25) 29 "MetaModelGenerator.mxg"
+                #line (541,24)-(541,25) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
-                #line (539,26)-(539,34) 28 "MetaModelGenerator.mxg"
+                #line (541,26)-(541,34) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (539,35)-(539,36) 29 "MetaModelGenerator.mxg"
+                #line (541,35)-(541,36) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (539,36)-(539,43) 29 "MetaModelGenerator.mxg"
+                #line (541,36)-(541,43) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_this);");
                 #line hidden
                 __cb.AppendLine();
@@ -9483,7 +9485,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first74 = true;
-            #line (543,6)-(543,34) 13 "MetaModelGenerator.mxg"
+            #line (545,6)-(545,34) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -9493,7 +9495,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first74 = false;
                 }
                 var __first75 = true;
-                #line (544,10)-(544,70) 17 "MetaModelGenerator.mxg"
+                #line (546,10)-(546,70) 17 "MetaModelGenerator.mxg"
                 foreach (var prop in cls.Properties.Where(p => p.IsDerived))
                 #line hidden
                 
@@ -9503,31 +9505,31 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first75 = false;
                     }
                     __cb.Push("    ");
-                    #line (545,14)-(545,39) 32 "MetaModelGenerator.mxg"
+                    #line (547,14)-(547,39) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharpOpType(prop.Type));
                     #line hidden
-                    #line (545,40)-(545,41) 33 "MetaModelGenerator.mxg"
+                    #line (547,40)-(547,41) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (545,42)-(545,50) 32 "MetaModelGenerator.mxg"
+                    #line (547,42)-(547,50) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (545,51)-(545,52) 33 "MetaModelGenerator.mxg"
+                    #line (547,51)-(547,52) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (545,53)-(545,62) 32 "MetaModelGenerator.mxg"
+                    #line (547,53)-(547,62) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
-                    #line (545,63)-(545,64) 33 "MetaModelGenerator.mxg"
+                    #line (547,63)-(547,64) 33 "MetaModelGenerator.mxg"
                     __cb.Write("(");
                     #line hidden
-                    #line (545,65)-(545,73) 32 "MetaModelGenerator.mxg"
+                    #line (547,65)-(547,73) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (545,74)-(545,75) 33 "MetaModelGenerator.mxg"
+                    #line (547,74)-(547,75) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (545,75)-(545,82) 33 "MetaModelGenerator.mxg"
+                    #line (547,75)-(547,82) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_this);");
                     #line hidden
                     __cb.AppendLine();
@@ -9541,7 +9543,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first76 = true;
-            #line (550,6)-(550,34) 13 "MetaModelGenerator.mxg"
+            #line (552,6)-(552,34) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -9551,7 +9553,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first76 = false;
                 }
                 var __first77 = true;
-                #line (551,10)-(551,44) 17 "MetaModelGenerator.mxg"
+                #line (553,10)-(553,44) 17 "MetaModelGenerator.mxg"
                 foreach (var op in cls.Operations)
                 #line hidden
                 
@@ -9561,35 +9563,35 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first77 = false;
                     }
                     __cb.Push("    ");
-                    #line (552,14)-(552,43) 32 "MetaModelGenerator.mxg"
+                    #line (554,14)-(554,43) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharpOpType(op.ReturnType));
                     #line hidden
-                    #line (552,44)-(552,45) 33 "MetaModelGenerator.mxg"
+                    #line (554,44)-(554,45) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (552,46)-(552,54) 32 "MetaModelGenerator.mxg"
+                    #line (554,46)-(554,54) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (552,55)-(552,56) 33 "MetaModelGenerator.mxg"
+                    #line (554,55)-(554,56) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (552,57)-(552,64) 32 "MetaModelGenerator.mxg"
+                    #line (554,57)-(554,64) 32 "MetaModelGenerator.mxg"
                     __cb.Write(op.Name);
                     #line hidden
-                    #line (552,65)-(552,66) 33 "MetaModelGenerator.mxg"
+                    #line (554,65)-(554,66) 33 "MetaModelGenerator.mxg"
                     __cb.Write("(");
                     #line hidden
-                    #line (552,67)-(552,75) 32 "MetaModelGenerator.mxg"
+                    #line (554,67)-(554,75) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (552,76)-(552,77) 33 "MetaModelGenerator.mxg"
+                    #line (554,76)-(554,77) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (552,77)-(552,82) 33 "MetaModelGenerator.mxg"
+                    #line (554,77)-(554,82) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_this");
                     #line hidden
                     var __first78 = true;
-                    #line (552,83)-(552,119) 21 "MetaModelGenerator.mxg"
+                    #line (554,83)-(554,119) 21 "MetaModelGenerator.mxg"
                     foreach (var param in op.Parameters)
                     #line hidden
                     
@@ -9598,23 +9600,23 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         {
                             __first78 = false;
                         }
-                        #line (552,120)-(552,121) 37 "MetaModelGenerator.mxg"
+                        #line (554,120)-(554,121) 37 "MetaModelGenerator.mxg"
                         __cb.Write(",");
                         #line hidden
-                        #line (552,121)-(552,122) 37 "MetaModelGenerator.mxg"
+                        #line (554,121)-(554,122) 37 "MetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (552,123)-(552,149) 36 "MetaModelGenerator.mxg"
+                        #line (554,123)-(554,149) 36 "MetaModelGenerator.mxg"
                         __cb.Write(ToCSharpOpType(param.Type));
                         #line hidden
-                        #line (552,150)-(552,151) 37 "MetaModelGenerator.mxg"
+                        #line (554,150)-(554,151) 37 "MetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (552,152)-(552,162) 36 "MetaModelGenerator.mxg"
-                        __cb.Write(param.Name);
+                        #line (554,152)-(554,184) 36 "MetaModelGenerator.mxg"
+                        __cb.Write(param.Name.EscapeCSharpKeyword());
                         #line hidden
                     }
-                    #line (552,176)-(552,178) 33 "MetaModelGenerator.mxg"
+                    #line (554,198)-(554,200) 33 "MetaModelGenerator.mxg"
                     __cb.Write(");");
                     #line hidden
                     __cb.AppendLine();
@@ -9626,7 +9628,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first76) __cb.AppendLine();
             __cb.Push("");
-            #line (556,1)-(556,2) 25 "MetaModelGenerator.mxg"
+            #line (558,1)-(558,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -9634,116 +9636,62 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (559,9)-(559,40) 22 "MetaModelGenerator.mxg"
+        #line (561,9)-(561,40) 22 "MetaModelGenerator.mxg"
         public string GenerateCustomImplementation()
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (560,1)-(560,9) 25 "MetaModelGenerator.mxg"
+            #line (562,1)-(562,9) 25 "MetaModelGenerator.mxg"
             __cb.Write("internal");
             #line hidden
-            #line (560,9)-(560,10) 25 "MetaModelGenerator.mxg"
+            #line (562,9)-(562,10) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (560,10)-(560,18) 25 "MetaModelGenerator.mxg"
+            #line (562,10)-(562,18) 25 "MetaModelGenerator.mxg"
             __cb.Write("abstract");
             #line hidden
-            #line (560,18)-(560,19) 25 "MetaModelGenerator.mxg"
+            #line (562,18)-(562,19) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (560,19)-(560,24) 25 "MetaModelGenerator.mxg"
+            #line (562,19)-(562,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (560,24)-(560,25) 25 "MetaModelGenerator.mxg"
+            #line (562,24)-(562,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (560,25)-(560,31) 25 "MetaModelGenerator.mxg"
+            #line (562,25)-(562,31) 25 "MetaModelGenerator.mxg"
             __cb.Write("Custom");
             #line hidden
-            #line (560,32)-(560,46) 24 "MetaModelGenerator.mxg"
+            #line (562,32)-(562,46) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (560,47)-(560,65) 25 "MetaModelGenerator.mxg"
+            #line (562,47)-(562,65) 25 "MetaModelGenerator.mxg"
             __cb.Write("ImplementationBase");
             #line hidden
-            #line (560,65)-(560,66) 25 "MetaModelGenerator.mxg"
+            #line (562,65)-(562,66) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (560,66)-(560,67) 25 "MetaModelGenerator.mxg"
+            #line (562,66)-(562,67) 25 "MetaModelGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (560,67)-(560,68) 25 "MetaModelGenerator.mxg"
+            #line (562,67)-(562,68) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (560,68)-(560,75) 25 "MetaModelGenerator.mxg"
+            #line (562,68)-(562,75) 25 "MetaModelGenerator.mxg"
             __cb.Write("ICustom");
             #line hidden
-            #line (560,76)-(560,90) 24 "MetaModelGenerator.mxg"
+            #line (562,76)-(562,90) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (560,91)-(560,105) 25 "MetaModelGenerator.mxg"
+            #line (562,91)-(562,105) 25 "MetaModelGenerator.mxg"
             __cb.Write("Implementation");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (561,1)-(561,2) 25 "MetaModelGenerator.mxg"
+            #line (563,1)-(563,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (562,5)-(562,8) 25 "MetaModelGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (562,8)-(562,9) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (562,9)-(562,18) 25 "MetaModelGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (563,5)-(563,8) 25 "MetaModelGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (563,8)-(563,9) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (563,9)-(563,20) 25 "MetaModelGenerator.mxg"
-            __cb.Write("Constructor");
-            #line hidden
-            #line (563,20)-(563,21) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (563,21)-(563,24) 25 "MetaModelGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (563,24)-(563,25) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (563,25)-(563,28) 25 "MetaModelGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (563,28)-(563,29) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (563,29)-(563,33) 25 "MetaModelGenerator.mxg"
-            __cb.Write("meta");
-            #line hidden
-            #line (563,33)-(563,34) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (563,34)-(563,39) 25 "MetaModelGenerator.mxg"
-            __cb.Write("model");
-            #line hidden
-            #line (563,39)-(563,40) 25 "MetaModelGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (563,41)-(563,55) 24 "MetaModelGenerator.mxg"
-            __cb.Write(MetaModel.Name);
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -9754,55 +9702,109 @@ namespace MetaDslx.Languages.MetaModel.Generators
             #line (564,8)-(564,9) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (564,9)-(564,19) 25 "MetaModelGenerator.mxg"
+            #line (564,9)-(564,18) 25 "MetaModelGenerator.mxg"
+            __cb.Write("<summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (565,5)-(565,8) 25 "MetaModelGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (565,8)-(565,9) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (565,9)-(565,20) 25 "MetaModelGenerator.mxg"
+            __cb.Write("Constructor");
+            #line hidden
+            #line (565,20)-(565,21) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (565,21)-(565,24) 25 "MetaModelGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (565,24)-(565,25) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (565,25)-(565,28) 25 "MetaModelGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (565,28)-(565,29) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (565,29)-(565,33) 25 "MetaModelGenerator.mxg"
+            __cb.Write("meta");
+            #line hidden
+            #line (565,33)-(565,34) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (565,34)-(565,39) 25 "MetaModelGenerator.mxg"
+            __cb.Write("model");
+            #line hidden
+            #line (565,39)-(565,40) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (565,41)-(565,55) 24 "MetaModelGenerator.mxg"
+            __cb.Write(MetaModel.Name);
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (566,5)-(566,8) 25 "MetaModelGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (566,8)-(566,9) 25 "MetaModelGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (566,9)-(566,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("</summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (565,5)-(565,11) 25 "MetaModelGenerator.mxg"
+            #line (567,5)-(567,11) 25 "MetaModelGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (565,11)-(565,12) 25 "MetaModelGenerator.mxg"
+            #line (567,11)-(567,12) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (565,12)-(565,19) 25 "MetaModelGenerator.mxg"
+            #line (567,12)-(567,19) 25 "MetaModelGenerator.mxg"
             __cb.Write("virtual");
             #line hidden
-            #line (565,19)-(565,20) 25 "MetaModelGenerator.mxg"
+            #line (567,19)-(567,20) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (565,20)-(565,24) 25 "MetaModelGenerator.mxg"
+            #line (567,20)-(567,24) 25 "MetaModelGenerator.mxg"
             __cb.Write("void");
             #line hidden
-            #line (565,24)-(565,25) 25 "MetaModelGenerator.mxg"
+            #line (567,24)-(567,25) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (565,26)-(565,40) 24 "MetaModelGenerator.mxg"
+            #line (567,26)-(567,40) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (565,41)-(565,43) 25 "MetaModelGenerator.mxg"
+            #line (567,41)-(567,43) 25 "MetaModelGenerator.mxg"
             __cb.Write("(I");
             #line hidden
-            #line (565,44)-(565,58) 24 "MetaModelGenerator.mxg"
+            #line (567,44)-(567,58) 24 "MetaModelGenerator.mxg"
             __cb.Write(MetaModel.Name);
             #line hidden
-            #line (565,59)-(565,60) 25 "MetaModelGenerator.mxg"
+            #line (567,59)-(567,60) 25 "MetaModelGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (565,60)-(565,66) 25 "MetaModelGenerator.mxg"
+            #line (567,60)-(567,66) 25 "MetaModelGenerator.mxg"
             __cb.Write("_this)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (566,5)-(566,6) 25 "MetaModelGenerator.mxg"
+            #line (568,5)-(568,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (567,5)-(567,6) 25 "MetaModelGenerator.mxg"
+            #line (569,5)-(569,6) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -9810,7 +9812,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first79 = true;
-            #line (569,6)-(569,34) 13 "MetaModelGenerator.mxg"
+            #line (571,6)-(571,34) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -9820,55 +9822,55 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first79 = false;
                 }
                 __cb.Push("    ");
-                #line (570,10)-(570,38) 28 "MetaModelGenerator.mxg"
+                #line (572,10)-(572,38) 28 "MetaModelGenerator.mxg"
                 __cb.Write(GetDocumentationComment(cls));
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (571,9)-(571,15) 29 "MetaModelGenerator.mxg"
+                #line (573,9)-(573,15) 29 "MetaModelGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (571,15)-(571,16) 29 "MetaModelGenerator.mxg"
+                #line (573,15)-(573,16) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (571,16)-(571,23) 29 "MetaModelGenerator.mxg"
+                #line (573,16)-(573,23) 29 "MetaModelGenerator.mxg"
                 __cb.Write("virtual");
                 #line hidden
-                #line (571,23)-(571,24) 29 "MetaModelGenerator.mxg"
+                #line (573,23)-(573,24) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (571,24)-(571,28) 29 "MetaModelGenerator.mxg"
+                #line (573,24)-(573,28) 29 "MetaModelGenerator.mxg"
                 __cb.Write("void");
                 #line hidden
-                #line (571,28)-(571,29) 29 "MetaModelGenerator.mxg"
+                #line (573,28)-(573,29) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (571,30)-(571,38) 28 "MetaModelGenerator.mxg"
+                #line (573,30)-(573,38) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (571,39)-(571,40) 29 "MetaModelGenerator.mxg"
+                #line (573,39)-(573,40) 29 "MetaModelGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
-                #line (571,41)-(571,49) 28 "MetaModelGenerator.mxg"
+                #line (573,41)-(573,49) 28 "MetaModelGenerator.mxg"
                 __cb.Write(cls.Name);
                 #line hidden
-                #line (571,50)-(571,51) 29 "MetaModelGenerator.mxg"
+                #line (573,50)-(573,51) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (571,51)-(571,57) 29 "MetaModelGenerator.mxg"
+                #line (573,51)-(573,57) 29 "MetaModelGenerator.mxg"
                 __cb.Write("_this)");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (572,9)-(572,10) 29 "MetaModelGenerator.mxg"
+                #line (574,9)-(574,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (573,9)-(573,10) 29 "MetaModelGenerator.mxg"
+                #line (575,9)-(575,10) 29 "MetaModelGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -9880,7 +9882,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first80 = true;
-            #line (577,6)-(577,34) 13 "MetaModelGenerator.mxg"
+            #line (579,6)-(579,34) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -9890,7 +9892,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first80 = false;
                 }
                 var __first81 = true;
-                #line (578,10)-(578,70) 17 "MetaModelGenerator.mxg"
+                #line (580,10)-(580,70) 17 "MetaModelGenerator.mxg"
                 foreach (var prop in cls.Properties.Where(p => p.IsDerived))
                 #line hidden
                 
@@ -9900,49 +9902,49 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first81 = false;
                     }
                     __cb.Push("    ");
-                    #line (579,14)-(579,43) 32 "MetaModelGenerator.mxg"
+                    #line (581,14)-(581,43) 32 "MetaModelGenerator.mxg"
                     __cb.Write(GetDocumentationComment(prop));
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                     __cb.Push("    ");
-                    #line (580,13)-(580,19) 33 "MetaModelGenerator.mxg"
+                    #line (582,13)-(582,19) 33 "MetaModelGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
-                    #line (580,19)-(580,20) 33 "MetaModelGenerator.mxg"
+                    #line (582,19)-(582,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (580,20)-(580,28) 33 "MetaModelGenerator.mxg"
+                    #line (582,20)-(582,28) 33 "MetaModelGenerator.mxg"
                     __cb.Write("abstract");
                     #line hidden
-                    #line (580,28)-(580,29) 33 "MetaModelGenerator.mxg"
+                    #line (582,28)-(582,29) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (580,30)-(580,55) 32 "MetaModelGenerator.mxg"
+                    #line (582,30)-(582,55) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharpOpType(prop.Type));
                     #line hidden
-                    #line (580,56)-(580,57) 33 "MetaModelGenerator.mxg"
+                    #line (582,56)-(582,57) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (580,58)-(580,66) 32 "MetaModelGenerator.mxg"
+                    #line (582,58)-(582,66) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (580,67)-(580,68) 33 "MetaModelGenerator.mxg"
+                    #line (582,67)-(582,68) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (580,69)-(580,78) 32 "MetaModelGenerator.mxg"
+                    #line (582,69)-(582,78) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
-                    #line (580,79)-(580,80) 33 "MetaModelGenerator.mxg"
+                    #line (582,79)-(582,80) 33 "MetaModelGenerator.mxg"
                     __cb.Write("(");
                     #line hidden
-                    #line (580,81)-(580,89) 32 "MetaModelGenerator.mxg"
+                    #line (582,81)-(582,89) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (580,90)-(580,91) 33 "MetaModelGenerator.mxg"
+                    #line (582,90)-(582,91) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (580,91)-(580,98) 33 "MetaModelGenerator.mxg"
+                    #line (582,91)-(582,98) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_this);");
                     #line hidden
                     __cb.AppendLine();
@@ -9956,7 +9958,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first82 = true;
-            #line (585,6)-(585,34) 13 "MetaModelGenerator.mxg"
+            #line (587,6)-(587,34) 13 "MetaModelGenerator.mxg"
             foreach (var cls in Classes)
             #line hidden
             
@@ -9966,7 +9968,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first82 = false;
                 }
                 var __first83 = true;
-                #line (586,10)-(586,44) 17 "MetaModelGenerator.mxg"
+                #line (588,10)-(588,44) 17 "MetaModelGenerator.mxg"
                 foreach (var op in cls.Operations)
                 #line hidden
                 
@@ -9976,53 +9978,53 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         __first83 = false;
                     }
                     __cb.Push("    ");
-                    #line (587,14)-(587,41) 32 "MetaModelGenerator.mxg"
+                    #line (589,14)-(589,41) 32 "MetaModelGenerator.mxg"
                     __cb.Write(GetDocumentationComment(op));
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                     __cb.Push("    ");
-                    #line (588,13)-(588,19) 33 "MetaModelGenerator.mxg"
+                    #line (590,13)-(590,19) 33 "MetaModelGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
-                    #line (588,19)-(588,20) 33 "MetaModelGenerator.mxg"
+                    #line (590,19)-(590,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (588,20)-(588,28) 33 "MetaModelGenerator.mxg"
+                    #line (590,20)-(590,28) 33 "MetaModelGenerator.mxg"
                     __cb.Write("abstract");
                     #line hidden
-                    #line (588,28)-(588,29) 33 "MetaModelGenerator.mxg"
+                    #line (590,28)-(590,29) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (588,30)-(588,59) 32 "MetaModelGenerator.mxg"
+                    #line (590,30)-(590,59) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharpOpType(op.ReturnType));
                     #line hidden
-                    #line (588,60)-(588,61) 33 "MetaModelGenerator.mxg"
+                    #line (590,60)-(590,61) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (588,62)-(588,70) 32 "MetaModelGenerator.mxg"
+                    #line (590,62)-(590,70) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (588,71)-(588,72) 33 "MetaModelGenerator.mxg"
+                    #line (590,71)-(590,72) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_");
                     #line hidden
-                    #line (588,73)-(588,80) 32 "MetaModelGenerator.mxg"
+                    #line (590,73)-(590,80) 32 "MetaModelGenerator.mxg"
                     __cb.Write(op.Name);
                     #line hidden
-                    #line (588,81)-(588,82) 33 "MetaModelGenerator.mxg"
+                    #line (590,81)-(590,82) 33 "MetaModelGenerator.mxg"
                     __cb.Write("(");
                     #line hidden
-                    #line (588,83)-(588,91) 32 "MetaModelGenerator.mxg"
+                    #line (590,83)-(590,91) 32 "MetaModelGenerator.mxg"
                     __cb.Write(cls.Name);
                     #line hidden
-                    #line (588,92)-(588,93) 33 "MetaModelGenerator.mxg"
+                    #line (590,92)-(590,93) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (588,93)-(588,98) 33 "MetaModelGenerator.mxg"
+                    #line (590,93)-(590,98) 33 "MetaModelGenerator.mxg"
                     __cb.Write("_this");
                     #line hidden
                     var __first84 = true;
-                    #line (588,99)-(588,135) 21 "MetaModelGenerator.mxg"
+                    #line (590,99)-(590,135) 21 "MetaModelGenerator.mxg"
                     foreach (var param in op.Parameters)
                     #line hidden
                     
@@ -10031,23 +10033,23 @@ namespace MetaDslx.Languages.MetaModel.Generators
                         {
                             __first84 = false;
                         }
-                        #line (588,136)-(588,137) 37 "MetaModelGenerator.mxg"
+                        #line (590,136)-(590,137) 37 "MetaModelGenerator.mxg"
                         __cb.Write(",");
                         #line hidden
-                        #line (588,137)-(588,138) 37 "MetaModelGenerator.mxg"
+                        #line (590,137)-(590,138) 37 "MetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (588,139)-(588,165) 36 "MetaModelGenerator.mxg"
+                        #line (590,139)-(590,165) 36 "MetaModelGenerator.mxg"
                         __cb.Write(ToCSharpOpType(param.Type));
                         #line hidden
-                        #line (588,166)-(588,167) 37 "MetaModelGenerator.mxg"
+                        #line (590,166)-(590,167) 37 "MetaModelGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (588,168)-(588,178) 36 "MetaModelGenerator.mxg"
-                        __cb.Write(param.Name);
+                        #line (590,168)-(590,200) 36 "MetaModelGenerator.mxg"
+                        __cb.Write(param.Name.EscapeCSharpKeyword());
                         #line hidden
                     }
-                    #line (588,192)-(588,194) 33 "MetaModelGenerator.mxg"
+                    #line (590,214)-(590,216) 33 "MetaModelGenerator.mxg"
                     __cb.Write(");");
                     #line hidden
                     __cb.AppendLine();
@@ -10059,7 +10061,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (!__first82) __cb.AppendLine();
             __cb.Push("");
-            #line (592,1)-(592,2) 25 "MetaModelGenerator.mxg"
+            #line (594,1)-(594,2) 25 "MetaModelGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();

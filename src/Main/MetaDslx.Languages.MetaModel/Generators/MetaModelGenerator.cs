@@ -158,7 +158,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
 
         public string ToCSharp(MetaOperation<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> op)
         {
-            return $"{MetaModel.Name}.{op.DeclaringType.Name}_{op.Name}";
+            return $"{MetaModel.Name}.{op.DeclaringType.Name}_{op.UniqueName}";
         }
 
         public string ToCSharp(ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> properties)
@@ -292,7 +292,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             else if (type == "object" || type == "bool" || type == "char" || type == "string" ||
                 type == "byte" || type == "sbyte" || type == "short" || type == "ushort" ||
                 type == "int" || type == "uint" || type == "long" || type == "ulong" ||
-                type == "float" || type == "double" || type == "decimal") return type;
+                type == "float" || type == "double" || type == "decimal" || type == "void") return type;
             else return $"global::{type}";
         }
 

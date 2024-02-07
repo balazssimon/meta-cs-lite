@@ -20,9 +20,11 @@ namespace MetaDslx.Modeling.Meta
         public abstract string Name { get; }
         public abstract string Signature { get; }
 
+        public string UniqueName { get; internal set; }
+
         public override string ToString()
         {
-            return $"{DeclaringType.Name}.{UnderlyingOperation}";
+            return $"{DeclaringType.Name}.{UniqueName}";
         }
     }
 }

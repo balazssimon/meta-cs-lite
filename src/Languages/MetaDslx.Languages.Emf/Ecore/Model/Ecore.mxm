@@ -1,0 +1,257 @@
+﻿namespace MetaDslx.Languages.Ecore.Model
+
+using MetaDslx.Modeling
+using MetaDslx.CodeAnalysis.Symbols
+
+metamodel Ecore = "http://www.eclipse.org/emf/2002/Ecore"
+
+const EDataType EBigDecimal
+const EDataType EBigInteger
+const EDataType EBoolean
+const EDataType EBooleanObject
+const EDataType EByte
+const EDataType EByteArray
+const EDataType EByteObject
+const EDataType EChar
+const EDataType ECharacterObject
+const EDataType EDate
+const EDataType EDiagnosticChain
+const EDataType EDouble
+const EDataType EDoubleObject
+const EDataType EEList
+const EDataType EEnumerator
+const EDataType EFeatureMap
+const EDataType EFeatureMapEntry
+const EDataType EFloat
+const EDataType EFloatObject
+const EDataType EInt
+const EDataType EIntegerObject
+const EDataType EJavaClass
+const EDataType EJavaObject
+const EDataType ELong
+const EDataType ELongObject
+const EDataType EMap
+const EDataType EResource
+const EDataType EResourceSet
+const EDataType EShort
+const EDataType EShortObject
+const EDataType EString
+const EDataType ETreeIterator
+const EDataType EInvocationTargetException
+
+class EAttribute : EStructuralFeature
+{
+    bool ID
+    derived EDataType EAttributeType
+}
+
+class EAnnotation : EModelElement
+{
+    string Source
+    contains EStringToStringMapEntry[] Details
+    EModelElement EModelElement
+        opposite EModelElement.EAnnotations
+    contains EObject[] Contents
+    EObject[] References
+}
+
+class EClass $Type : EClassifier
+{
+    bool Abstract
+    bool Interface
+    EClass[] ESuperTypes $BaseTypes
+    contains EOperation[] EOperations
+        opposite EOperation.EContainingClass
+    derived EAttribute[] EAllAttributes
+    derived EReference[] EAllReferences
+    derived EReference[] EReferences
+    derived EAttribute[] EAttributes
+    derived EReference[] EAllContainments
+    derived EOperation[] EAllOperations
+    derived EStructuralFeature[] EAllStructuralFeatures
+    derived EClass[] EAllSuperTypes
+    derived EAttribute EIDAttribute
+    contains EStructuralFeature[] EStructuralFeatures
+        opposite EStructuralFeature.EContainingClass
+    contains EGenericType[] EGenericSuperTypes
+    derived EGenericType[] EAllGenericSuperTypes
+    bool IsSuperTypeOf(EClass someClass)
+    int GetFeatureCount()
+    EStructuralFeature GetEStructuralFeature(int featureID)
+    int GetFeatureID(EStructuralFeature feature)
+    EStructuralFeature GetEStructuralFeature(string featureName)
+    int GetOperationCount()
+    EOperation GetEOperation(int operationID)
+    int GetOperationID(EOperation operation)
+    EOperation GetOverride(EOperation operation)
+    EGenericType GetFeatureType(EStructuralFeature feature)
+}
+
+abstract class EClassifier $Type : ENamedElement
+{
+    type InstanceClassName
+    derived type InstanceClass
+    derived symbol DefaultValue
+    string InstanceTypeName
+    EPackage EPackage
+        opposite EPackage.EClassifiers
+    contains ETypeParameter[] ETypeParameters
+    bool IsInstance(symbol @object)
+    int GetClassifierID()
+}
+
+class EDataType : EClassifier
+{
+    bool Serializable = true
+}
+
+class EEnum : EDataType
+{
+    contains EEnumLiteral[] ELiterals
+        opposite EEnumLiteral.EEnum
+    EEnumLiteral GetEEnumLiteral(string name)
+    EEnumLiteral GetEEnumLiteral(int value)
+    EEnumLiteral GetEEnumLiteralByLiteral(string literal)
+}
+
+class EEnumLiteral : ENamedElement
+{
+    int Value
+    symbol[] Instance
+    string Literal
+    EEnum EEnum
+        opposite EEnum.ELiterals
+}
+
+class EFactory : EModelElement
+{
+    EPackage EPackage
+        opposite EPackage.EFactoryInstance
+    EObject Create(EClass eClass)
+    symbol CreateFromString(EDataType eDataType, string literalValue)
+    string ConvertToString(EDataType eDataType, symbol instanceValue)
+}
+
+abstract class EModelElement
+{
+    contains EAnnotation[] EAnnotations
+        opposite EAnnotation.EModelElement
+    EAnnotation GetEAnnotation(string source)
+}
+
+abstract class ENamedElement $Declaration : EModelElement
+{
+    string $Name
+}
+
+class EObject
+{
+    EClass EClass()
+    bool EIsProxy()
+    Model EResource()
+    EObject EContainer()
+    EStructuralFeature EContainingFeature()
+    EReference EContainmentFeature()
+    EObject[] EContents()
+    EObject[] EAllContents()
+    EObject[] ECrossReferences()
+    symbol EGet(EStructuralFeature feature)
+    symbol EGet(EStructuralFeature feature, bool resolve)
+    void ESet(EStructuralFeature feature, symbol newValue)
+    bool EIsSet(EStructuralFeature feature)
+    void EUnset(EStructuralFeature feature)
+    symbol EInvoke(EOperation operation, object[] arguments)
+}
+
+class EOperation : ETypedElement
+{
+    EClass EContainingClass
+        opposite EClass.EOperations
+    contains ETypeParameter[] ETypeParameters
+    contains EParameter[] EParameters
+        opposite EParameter.EOperation
+    EClassifier[] EExceptions
+    contains EGenericType[] EGenericExceptions
+    int GetOperationID()
+    bool IsOverrideOf(EOperation someOperation)
+}
+
+class EPackage $Namespace : ENamedElement
+{
+    string NsURI
+    string NsPrefix
+    EFactory EFactoryInstance
+        opposite EFactory.EPackage
+    contains EClassifier[] EClassifiers
+        opposite EClassifier.EPackage
+    contains EPackage[] ESubpackages
+        opposite EPackage.ESuperPackage
+    EPackage ESuperPackage
+        opposite EPackage.ESubpackages
+    EClassifier GetEClassifier(string name)
+}
+
+class EParameter : ETypedElement
+{
+    EOperation EOperation
+        opposite EOperation.EParameters
+}
+
+class EReference : EStructuralFeature
+{
+    bool Containment
+    derived bool Container
+    bool ResolveProxies = true
+    EReference EOpposite
+    derived EClass EReferenceType
+    EAttribute[] EKeys
+}
+
+abstract class EStructuralFeature : ETypedElement
+{
+    bool Changeable = true
+    bool Volatile
+    bool Transient
+    string DefaultValueLiteral
+    derived symbol DefaultValue
+    bool Unsettable
+    bool Derived
+    EClass EContainingClass
+        opposite EClass.EStructuralFeatures
+    int GetFeatureID()
+    type GetContainerClass()
+}
+
+abstract class ETypedElement : ENamedElement
+{
+    bool Ordered = true
+    bool Unique = true
+    int LowerBound
+    int UpperBound = 1
+    derived bool Many
+    derived bool Required
+    EClassifier EType
+    contains EGenericType EGenericType
+}
+
+class EStringToStringMapEntry
+{
+    string Key
+    string Value
+}
+
+class EGenericType
+{
+    contains EGenericType EUpperBound
+    contains EGenericType[] ETypeArguments
+    derived EClassifier ERawType
+    contains EGenericType ELowerBound
+    ETypeParameter ETypeParameter
+    EClassifier EClassifier
+    bool IsInstance(symbol @object)
+}
+
+class ETypeParameter : ENamedElement
+{
+    contains EGenericType[] EBounds
+}

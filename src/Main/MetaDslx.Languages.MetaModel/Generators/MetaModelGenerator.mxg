@@ -163,11 +163,12 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
     public static [MetaModel.Name] MInstance => _instance;
 
     [foreach (var cls in MetaModel.Parent.Declarations.OfType<MetaClass>())]
+        [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
         [foreach (var prop in cls.Properties)]
             private static readonly __ModelProperty _[cls.Name]_[prop.Name];
         [end foreach]
-        [foreach (var op in cls.Operations)]
-            private static readonly __ModelOperation _[cls.Name]_[op.Name];
+        [foreach (var op in metaCls.DeclaredOperations)]
+            private static readonly __ModelOperation _[cls.Name]_[op.UniqueName];
         [end foreach]
     [end foreach]
 
@@ -179,7 +180,7 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
                 _[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), [ToDefaultValue(prop.Type, prop.DefaultValue)], [ToCSharp(prop.Flags)], [if(prop.SymbolProperty is null)]null[else]"[prop.SymbolProperty]"[end if]);
             [end foreach]
             [foreach (var op in metaCls.DeclaredOperations)]
-                _[cls.Name]_[op.Name] = new __ModelOperation(typeof([cls.Name]), "[op.Name]", "[op.Name]([op.UnderlyingOperation.Parameters.Count])");
+                _[cls.Name]_[op.UniqueName] = new __ModelOperation(typeof([cls.Name]), "[op.Name]", "[op.Signature]");
             [end foreach]
         [end foreach]
         _instance = new [MetaModel.Name]();
@@ -289,12 +290,13 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
     [end foreach]
     [foreach (var cls in Classes)]
         public static __ModelClassInfo [cls.Name]Info => __Impl.[cls.Name]_Impl.__Info.Instance;
-    [foreach (var prop in cls.Properties)]
-        public static __ModelProperty [cls.Name]_[prop.Name] => _[cls.Name]_[prop.Name];
-    [end foreach]
-    [foreach (var op in cls.Operations)]
-        public static __ModelOperation [cls.Name]_[op.Name] => _[cls.Name]_[op.Name];
-    [end foreach]
+        [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
+        [foreach (var prop in cls.Properties)]
+            public static __ModelProperty [cls.Name]_[prop.Name] => _[cls.Name]_[prop.Name];
+        [end foreach]
+        [foreach (var op in metaCls.DeclaredOperations)]
+            public static __ModelOperation [cls.Name]_[op.UniqueName] => _[cls.Name]_[op.UniqueName];
+        [end foreach]
     [end foreach]
 }
 end template
@@ -390,7 +392,7 @@ public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.
 
     [foreach (var op in cls.Operations)]
         [GetDocumentationComment(op)]
-        [ToCSharpOpType(op.ReturnType)] [op.Name]([foreach (var param in op.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name][end foreach]);
+        [ToCSharpOpType(op.ReturnType)] [op.Name]([foreach (var param in op.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]);
     [end foreach]
 }
 end template
@@ -443,7 +445,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
     [foreach (var op in metaCls.AllDeclaredOperations)]
         [var info = metaCls.ModelOperationInfos[op]]
         [var actualOp = info.OverridingOperations.FirstOrDefault() ?? op]
-        [ToCSharpOpType(op.UnderlyingOperation.ReturnType)] [ToCSharp(op.DeclaringType.UnderlyingType)].[op.Name]([foreach (var param in op.UnderlyingOperation.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name][end foreach]) => [MetaModel.Name].__CustomImpl.[actualOp.DeclaringType.Name]_[actualOp.Name](this[foreach (var param in actualOp.UnderlyingOperation.Parameters)], [param.Name][end foreach]);
+        [ToCSharpOpType(op.UnderlyingOperation.ReturnType)] [ToCSharp(op.DeclaringType.UnderlyingType)].[op.Name]([foreach (var param in op.UnderlyingOperation.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]) => [MetaModel.Name].__CustomImpl.[actualOp.DeclaringType.Name]_[actualOp.Name](this[foreach (var param in actualOp.UnderlyingOperation.Parameters)], [param.Name.EscapeCSharpKeyword()][end foreach]);
     [end foreach]
 
     internal class __Info : __ModelClassInfo
@@ -549,7 +551,7 @@ internal interface ICustom[MetaModel.Name]Implementation
 
     [foreach (var cls in Classes)]
         [foreach (var op in cls.Operations)]
-            [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name][end foreach]);
+            [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]);
 
         [end foreach]
     [end foreach]
@@ -585,7 +587,7 @@ internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaM
     [foreach (var cls in Classes)]
         [foreach (var op in cls.Operations)]
             [GetDocumentationComment(op)]
-            public abstract [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name][end foreach]);
+            public abstract [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]);
 
         [end foreach]
     [end foreach]
