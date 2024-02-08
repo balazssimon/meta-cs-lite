@@ -1,0 +1,64 @@
+namespace MetaDslx.CodeAnalysis.Symbols
+
+symbol Symbol
+{
+    weak Attribute[] Attributes
+}
+
+symbol Assembly
+{
+    bool IsCorLibrary
+    Module[] Modules
+}
+
+symbol Module
+{
+    Namespace GlobalNamespace
+}
+
+symbol Declaration
+{
+    weak Accessibility DeclaredAccessibility
+    bool IsStatic
+    bool IsExtern
+    weak Type[] TypeArguments
+    weak Import[] Imports
+    derived Declaration[] Members
+}
+
+symbol Import
+{
+    string[] Files
+    Alias[] Aliases
+    Namespace[] Namespaces
+    Declaration[] Symbols
+}
+
+symbol ImportMetaModel : Import
+{
+    MetaSymbol MetaModelSymbols
+    derived MetaModel[] MetaModels
+}
+
+symbol Alias : Declaration
+{
+    Symbol Target
+}
+
+symbol Namespace : Declaration
+{
+}
+
+symbol Type : Declaration
+{
+    bool IsReferenceType
+    bool IsValueType
+    weak TypeParameter[] TypeParameters
+    weak Type[] BaseTypes
+    derived Type[] AllBaseTypes phase BaseTypes
+}
+
+symbol TypeParameter : Type
+{
+}
+

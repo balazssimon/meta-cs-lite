@@ -1,0 +1,51 @@
+namespace MetaDslx.Languages.MetaSymbols.Model
+
+using MetaDslx.CodeAnalysis.Symbols
+
+metamodel Symbols
+
+class $Declaration
+{
+	string? $Name
+	Declaration? Parent opposite Declarations
+	contains Declaration[] Declarations opposite Parent
+	derived string? FullName
+}
+
+class $Namespace : Declaration
+{
+}
+
+class Symbol $Type : Declaration
+{
+	bool IsAbstract
+	Symbol[] $BaseTypes
+	contains Property[] Properties subsets Declaration.Declarations
+	contains Operation[] Operations subsets Declaration.Declarations
+}
+
+class TypeReference $Type
+{
+	type Type;
+	bool IsNullable;
+	int Dimensions;
+}
+
+class Property : Declaration
+{
+	TypeReference Type
+	bool IsWeak
+	bool IsDerived
+	object? DefaultValue
+}
+
+class Operation: Declaration
+{
+	TypeReference ReturnType
+	contains Parameter[] Parameters redefines Declaration.Declarations
+}
+
+class Parameter : Declaration
+{
+	TypeReference Type
+}

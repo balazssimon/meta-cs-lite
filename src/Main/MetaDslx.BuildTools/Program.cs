@@ -45,10 +45,11 @@ namespace MetaDslx.BuildTools
 #else
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            @"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
-            @"..\..\..\..\..\Languages\MetaDslx.Languages.Emf",
+            //@"..\..\..\..\..\Languages\MetaDslx.Languages.Emf",
 #endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;

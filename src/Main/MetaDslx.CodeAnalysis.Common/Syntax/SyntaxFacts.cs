@@ -113,7 +113,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             else return null;
         }
 
-        public bool TryExtractValue(MetaType expectedType, SyntaxNodeOrToken nodeOrToken, out object? value)
+        public virtual bool TryExtractValue(MetaType expectedType, SyntaxNodeOrToken nodeOrToken, out object? value)
         {
             if (nodeOrToken.IsToken)
             {
