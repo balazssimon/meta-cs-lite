@@ -1,8 +1,12 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+
 public interface ImportMetaModelSymbol: ImportSymbol
     {
+        [__ModelProperty]
         global::MetaDslx.CodeAnalysis.MetaSymbol MetaModelSymbols { get; }
+        [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> MetaModels { get; }
 
         public static class CompletionParts
@@ -19,6 +23,9 @@ public interface ImportMetaModelSymbol: ImportSymbol
             public static readonly CompletionPart Finish_Namespaces = new CompletionPart(nameof(Finish_Namespaces));
             public static readonly CompletionPart Start_Symbols = new CompletionPart(nameof(Start_Symbols));
             public static readonly CompletionPart Finish_Symbols = new CompletionPart(nameof(Finish_Symbols));
+            public static readonly CompletionPart Start_Attribute = new CompletionPart(nameof(Start_Attribute));
+            public static readonly CompletionPart Finish_Attribute = new CompletionPart(nameof(Finish_Attribute));
+
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
                     Start_MetaModelSymbols, Finish_MetaModelSymbols,
@@ -26,7 +33,8 @@ public interface ImportMetaModelSymbol: ImportSymbol
                     Start_Files, Finish_Files,
                     Start_Aliases, Finish_Aliases,
                     Start_Namespaces, Finish_Namespaces,
-                    Start_Symbols, Finish_Symbols
+                    Start_Symbols, Finish_Symbols,
+                    Start_Attribute, Finish_Attribute
                 );
         }
     }

@@ -37,6 +37,12 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             else return $"global::{type.FullName}SymbolBase";
         }
 
+        public string GetDefaultImplName(Symbol context, Symbol type)
+        {
+            if (type.Parent == context.Parent) return $"{type.Name}SymbolDefaultImpl";
+            else return $"global::{type.FullName}SymbolDefaultImpl";
+        }
+
         public string GetImplName(Symbol context, Symbol type)
         {
             if (type.Parent == context.Parent) return $"{type.Name}SymbolImpl";
@@ -89,6 +95,11 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
         {
             if (prop.IsWeak) return $"s_{prop.Name}";
             return $"_{prop.Name.ToCamelCase()}";
+        }
+
+        public string? GetParamName(Property prop)
+        {
+            return prop.Name.ToCamelCase().EscapeCSharpKeyword();
         }
 
         public string? GetFieldType(Symbol context, Property prop)

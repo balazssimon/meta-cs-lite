@@ -1,12 +1,20 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+
 public interface DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
+        [__ModelProperty]
         global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility { get; }
+        [__ModelProperty]
         bool IsStatic { get; }
+        [__ModelProperty]
         bool IsExtern { get; }
+        [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments { get; }
+        [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports { get; }
+        [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members { get; }
 
         public static class CompletionParts
@@ -23,6 +31,9 @@ public interface DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
             public static readonly CompletionPart Finish_Imports = new CompletionPart(nameof(Finish_Imports));
             public static readonly CompletionPart Start_Members = new CompletionPart(nameof(Start_Members));
             public static readonly CompletionPart Finish_Members = new CompletionPart(nameof(Finish_Members));
+            public static readonly CompletionPart Start_Attribute = new CompletionPart(nameof(Start_Attribute));
+            public static readonly CompletionPart Finish_Attribute = new CompletionPart(nameof(Finish_Attribute));
+
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
                     Start_DeclaredAccessibility, Finish_DeclaredAccessibility,
@@ -30,7 +41,8 @@ public interface DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
                     Start_IsExtern, Finish_IsExtern,
                     Start_TypeArguments, Finish_TypeArguments,
                     Start_Imports, Finish_Imports,
-                    Start_Members, Finish_Members
+                    Start_Members, Finish_Members,
+                    Start_Attribute, Finish_Attribute
                 );
         }
     }

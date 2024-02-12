@@ -95,7 +95,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     {
                         var symbol = enclosingQualifier.GetIdentifierSymbol(this, key, cancellationToken);
                         symbols.Add(symbol);
-                        if (symbol is not null && symbol is DeclarationSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
+                        if (symbol is not null && symbol is DeclarationSymbol declaredSymbol && !declaredSymbol.IsErrorSymbol) MarkSymbolAsUsed(declaredSymbol);
                     }
                     return symbols.ToImmutableAndFree();
                 }

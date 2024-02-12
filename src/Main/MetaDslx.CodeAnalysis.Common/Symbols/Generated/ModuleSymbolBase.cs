@@ -11,10 +11,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __DiagnosticBag = global::MetaDslx.CodeAnalysis.DiagnosticBag;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
+    using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<ModuleSymbolImpl>;
+    using __NotImplementedException = global::System.NotImplementedException;
+    using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     internal abstract class ModuleSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolBase, ModuleSymbol
     {
-        private NamespaceSymbol _globalNamespace;
+        protected ModuleSymbolBase() 
+            : base()
+        {
+        }
 
         protected ModuleSymbolBase(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -36,10 +42,84 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
-        protected override __CompletionGraph CompletionGraph => ModuleSymbol.CompletionParts.CompletionGraph;
+        protected ModuleSymbolBase(Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, declaration, modelObject, name, metadataName, attributes)
+        {
+        }
 
-        [__ModelProperty]
-        public NamespaceSymbol GlobalNamespace
+        protected ModuleSymbolBase(Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, modelObject, name, metadataName, attributes)
+        {
+        }
+
+        protected ModuleSymbolBase(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, csharpSymbol, name, metadataName, attributes)
+        {
+        }
+
+        protected ModuleSymbolBase(Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, errorInfo, name, metadataName, attributes)
+        {
+        }
+
+        protected sealed override __CompletionGraph CompletionGraph => ModuleSymbol.CompletionParts.CompletionGraph;
+
+        public abstract NamespaceSymbol GlobalNamespace { get; }
+
+
+        protected abstract NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+    }
+
+    internal sealed class ModuleSymbolDefaultImpl : ModuleSymbolBase
+    {
+        private NamespaceSymbol _globalNamespace;
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
+            : base(container, declaration, modelObject)
+        {
+        }
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __IModelObject modelObject) 
+            : base(container, modelObject)
+        {
+        }
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol) 
+            : base(container, csharpSymbol)
+        {
+        }
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo) 
+            : base(container, errorInfo)
+        {
+        }
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+            : base(container, declaration, modelObject, name, metadataName, attributes)
+        {
+            _globalNamespace = globalNamespace;
+        }
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+            : base(container, modelObject, name, metadataName, attributes)
+        {
+            _globalNamespace = globalNamespace;
+        }
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+            : base(container, csharpSymbol, name, metadataName, attributes)
+        {
+            _globalNamespace = globalNamespace;
+        }
+
+        public ModuleSymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+            : base(container, errorInfo, name, metadataName, attributes)
+        {
+            _globalNamespace = globalNamespace;
+        }
+
+
+        public override NamespaceSymbol GlobalNamespace
         {
             get
             {
@@ -48,7 +128,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
+        protected sealed override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
             if (incompletePart == ModuleSymbol.CompletionParts.Start_GlobalNamespace || incompletePart == ModuleSymbol.CompletionParts.Finish_GlobalNamespace)
             {
@@ -69,7 +149,46 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        protected virtual NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+
+        protected override NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = ModuleSymbolImpl.GetInstance(this);
+            var result = impl.Complete_GlobalNamespace(diagnostics, cancellationToken);
+            impl.Free();
+            return result;
+        }
+    }
+
+    internal sealed partial class ModuleSymbolImpl
+    {
+        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new ModuleSymbolImpl(s_poolInstance), 32);
+
+        private readonly __ObjectPool _pool;
+
+        private ModuleSymbolImpl(__ObjectPool pool) 
+            : base()
+        {
+            _pool = pool;
+        }
+
+        public static ModuleSymbolImpl GetInstance(ModuleSymbol wrapped)
+        {
+            var result = s_poolInstance.Allocate();
+            global::System.Diagnostics.Debug.Assert(result.__WrappedInstance is null);
+            __InitInstance(result, wrapped);
+            return result;
+        }
+
+        public void Free()
+        {
+            this.__ClearInstance();
+            _pool?.Free(this);
+        }
+
+        public override NamespaceSymbol GlobalNamespace => ((ModuleSymbol)__WrappedInstance).GlobalNamespace;
+
+
+        protected override NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return default;
         }

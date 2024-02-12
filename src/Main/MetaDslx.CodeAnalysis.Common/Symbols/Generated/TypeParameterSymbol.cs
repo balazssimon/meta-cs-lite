@@ -1,5 +1,7 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+
 public interface TypeParameterSymbol: TypeSymbol
     {
 
@@ -27,6 +29,9 @@ public interface TypeParameterSymbol: TypeSymbol
             public static readonly CompletionPart Finish_Imports = new CompletionPart(nameof(Finish_Imports));
             public static readonly CompletionPart Start_Members = new CompletionPart(nameof(Start_Members));
             public static readonly CompletionPart Finish_Members = new CompletionPart(nameof(Finish_Members));
+            public static readonly CompletionPart Start_Attribute = new CompletionPart(nameof(Start_Attribute));
+            public static readonly CompletionPart Finish_Attribute = new CompletionPart(nameof(Finish_Attribute));
+
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
                     Start_IsReferenceType, Finish_IsReferenceType,
@@ -39,7 +44,8 @@ public interface TypeParameterSymbol: TypeSymbol
                     Start_IsExtern, Finish_IsExtern,
                     Start_TypeArguments, Finish_TypeArguments,
                     Start_Imports, Finish_Imports,
-                    Start_Members, Finish_Members
+                    Start_Members, Finish_Members,
+                    Start_Attribute, Finish_Attribute
                 );
         }
     }

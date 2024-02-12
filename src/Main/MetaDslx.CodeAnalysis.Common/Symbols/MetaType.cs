@@ -618,7 +618,7 @@ namespace MetaDslx.CodeAnalysis
                     var symbol = csts.SymbolFactory.GetSymbol(literal, diagnostics, cancellationToken);
                     if (freeDiagnostics) diagnostics.Free();
                     value = symbol;
-                    return symbol is not null && !symbol.IsError;
+                    return symbol is not null && !symbol.IsErrorSymbol;
                 }
             }
             value = default;
@@ -692,7 +692,7 @@ namespace MetaDslx.CodeAnalysis
                     if (freeDiagnostics) diagnostics = DiagnosticBag.GetInstance();
                     var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(nts.TypeArguments[0], diagnostics, cancellationToken);
                     if (freeDiagnostics) diagnostics.Free();
-                    if (symbol is not null && !symbol.IsError)
+                    if (symbol is not null && !symbol.IsErrorSymbol)
                     {
                         innerType = symbol;
                         return true;
@@ -796,7 +796,7 @@ namespace MetaDslx.CodeAnalysis
                 if (freeDiagnostics) diagnostics = DiagnosticBag.GetInstance();
                 var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(msts.TypeArguments[0], diagnostics, cancellationToken);
                 if (freeDiagnostics) diagnostics.Free();
-                if (symbol is not null && !symbol.IsError)
+                if (symbol is not null && !symbol.IsErrorSymbol)
                 {
                     itemType = symbol;
                     return true;

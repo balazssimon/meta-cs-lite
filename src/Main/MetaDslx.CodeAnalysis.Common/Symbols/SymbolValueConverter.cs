@@ -36,7 +36,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else if (tmpValue is Type t) valueTypeSymbol = MetaType.FromType(t).AsTypeSymbol(this.Compilation);
                 else if (tmpValue is TypeSymbol ts)
                 {
-                    if (ts.IsError)
+                    if (ts.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -69,7 +69,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                             return true;
                         }
                     }
-                    if (value is Symbol valueSymbol && valueSymbol.IsError)
+                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -78,7 +78,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, valueBinder.Location, $"Could not resolve TypeSymbol for '{value}'."));
                     return false;
                 }
-                else if (valueTypeSymbol.IsError)
+                else if (valueTypeSymbol.IsErrorSymbol)
                 {
                     convertedValue = null;
                     return false;
@@ -104,7 +104,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else if (tmpValue is Type t) valueType = t;
                 else if (tmpValue is TypeSymbol ts)
                 {
-                    if (ts.IsError)
+                    if (ts.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -115,7 +115,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else valueType = null;
                 if (valueType is null)
                 {
-                    if (value is Symbol valueSymbol && valueSymbol.IsError)
+                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -139,7 +139,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (tmpValue is IModelObject mo) valueSymbol = MetaSymbol.FromModelObject(mo).AsSymbol(this.Compilation);
                 else if (tmpValue is Symbol sym)
                 {
-                    if (sym.IsError)
+                    if (sym.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -150,7 +150,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else valueSymbol = null;
                 if (valueSymbol is null)
                 {
-                    if (value is Symbol valueSymbol2 && valueSymbol2.IsError)
+                    if (value is Symbol valueSymbol2 && valueSymbol2.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -175,7 +175,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         return false;
                     }
                 }
-                else if (valueSymbol.IsError)
+                else if (valueSymbol.IsErrorSymbol)
                 {
                     convertedValue = null;
                     return false;
@@ -196,7 +196,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else if (tmpValue is IModelObject mo) valueMObj = MetaSymbol.FromModelObject(mo).AsModelObject(this.Compilation);
                 else if (tmpValue is Symbol sym)
                 {
-                    if (sym.IsError)
+                    if (sym.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -207,7 +207,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else valueMObj = null;
                 if (valueMObj is null)
                 {
-                    if (value is Symbol valueSymbol && valueSymbol.IsError)
+                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -218,7 +218,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 }
                 else if (expectedType.IsAssignableFrom(valueMObj.GetType()))
                 {
-                    if (value is Symbol valueSymbol && valueSymbol.IsError)
+                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol)
                     {
                         convertedValue = null;
                         return false;
@@ -240,7 +240,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
             else 
             {
-                if (value is Symbol valueSymbol && valueSymbol.IsError)
+                if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol)
                 {
                     convertedValue = null;
                     return false;

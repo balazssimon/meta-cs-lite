@@ -34,7 +34,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var previous = result[0];
                 for (int i = 1; i < qualifier.Length; i++)
                 {
-                    if (previous is null || previous.IsError) break;
+                    if (previous is null || previous.IsErrorSymbol) break;
                     var isFinal = i == qualifier.Length - 1;
                     var identifierContext = qualifierContext;
                     if (isFinal) identifierContext = context;
@@ -73,7 +73,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var previous = result[0];
                 for (int i = 1; i < qualifier.Length; i++)
                 {
-                    if (previous is null || previous.IsError) break;
+                    if (previous is null || previous.IsErrorSymbol) break;
                     var isFinal = i == qualifier.Length - 1;
                     var identifierContext = qualifierContext;
                     if (isFinal) identifierContext = context;

@@ -1,16 +1,35 @@
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Modeling;
+using System;
 using System.Collections.Immutable;
 using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+
     public interface Symbol
     {
+        [ModelProperty]
         string Name { get; }
+
+        [ModelProperty]
         string MetadataName { get; }
+
+        bool MangleName { get; }
+
+        [ModelProperty]
+        ImmutableArray<AttributeSymbol> Attributes { get; }
+
         string Kind { get; }
+
         string DisplayKind { get; }
-        bool IsError { get; }
+
+        bool IsErrorSymbol { get; }
+        bool IsSourceSymbol { get; }
+        bool IsModelSymbol { get; }
+        bool IsCSharpSymbol { get; }
 
         Symbol ContainingSymbol { get; }
         AssemblySymbol? ContainingAssembly { get; }
@@ -23,10 +42,18 @@ namespace MetaDslx.CodeAnalysis.Symbols
         Compilation? DeclaringCompilation {  get; }
 
         LexicalSortKey GetLexicalSortKey();
+        MergedDeclaration? MergedDeclaration { get; }
+        ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences { get; }
         ImmutableArray<Location> Locations { get; }
         Location Location { get; }
 
-        global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> Attributes { get; }
+        IModelObject? ModelObject { get; }
+        Type? ModelObjectType { get; }
+
+        __ISymbol? CSharpSymbol { get; }
+
+        ImmutableArray<Diagnostic> Diagnostics { get; }
+        bool HasAnyErrors { get; }
 
         void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken);
         bool HasComplete(CompletionPart part);

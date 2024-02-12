@@ -60,7 +60,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Returns true if the symbol could not be resolved, 
         /// and this symbol serves as a placeholder, instead.
         /// </summary>
-        public virtual bool IsError => this is IErrorSymbol;
+        public virtual bool IsErrorSymbol => this is IErrorSymbol;
 
         /// <summary>
         /// Returns true if this symbol was automatically created by the compiler, and does not
@@ -242,7 +242,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
-                if (this.IsError) return null;
+                if (this.IsErrorSymbol) return null;
                 if (this is AssemblySymbol)
                 {
                     Debug.Assert(!(this is SourceAssemblySymbol), "SourceAssemblySymbol must override DeclaringCompilation");

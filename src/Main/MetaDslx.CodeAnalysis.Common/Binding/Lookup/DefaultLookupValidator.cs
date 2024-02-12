@@ -87,7 +87,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (result.Error != null)
             {
                 // Suppress cascading
-                if (context.Qualifier is null || !context.Qualifier.IsError) 
+                if (context.Qualifier is null || !context.Qualifier.IsErrorSymbol) 
                 {
                     context.AddDiagnostic(Diagnostic.Create(result.Error, context.Location));
                 }

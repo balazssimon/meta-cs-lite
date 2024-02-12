@@ -231,7 +231,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             var values = ((Binder)valueBinder).Bind(cancellationToken);
                             foreach (var value in values)
                             {
-                                if (value is Symbol valueSymbol && valueSymbol.IsError) continue;
+                                if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol) continue;
                                 var symbolValueSuccess = converter.TryConvertTo(value, typeof(TValue), out var symbolValue, (Binder)valueBinder, diagnostics, cancellationToken);
                                 if (symbolValueSuccess)
                                 {
@@ -276,7 +276,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                 var values = ((Binder)valueBinder).Bind(cancellationToken);
                                 foreach (var value in values)
                                 {
-                                    if (value is Symbol valueSymbol && valueSymbol.IsError) continue;
+                                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol) continue;
                                     var symbolValueSuccess = converter.TryConvertTo(value, typeof(TValue), out var symbolValue, (Binder)valueBinder, diagnostics, cancellationToken);
                                     var mobjValueSuccess = converter.TryConvertTo(value, slot.Property.SlotProperty.Type, out var mobjValue, (Binder)valueBinder, diagnostics, cancellationToken);
                                     if (symbolValueSuccess && mobjValueSuccess)
@@ -334,7 +334,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                 var values = ((Binder)valueBinder).Bind(cancellationToken);
                                 foreach (var value in values)
                                 {
-                                    if (value is Symbol valueSymbol && valueSymbol.IsError) continue;
+                                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol) continue;
                                     var mobjValueSuccess = converter.TryConvertTo(value, slot.Property.SlotProperty.Type, out var mobjValue, (Binder)valueBinder, diagnostics, cancellationToken);
                                     if (mobjValueSuccess)
                                     {

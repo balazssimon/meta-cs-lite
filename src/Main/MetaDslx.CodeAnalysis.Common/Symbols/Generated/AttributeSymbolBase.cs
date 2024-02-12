@@ -11,10 +11,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __DiagnosticBag = global::MetaDslx.CodeAnalysis.DiagnosticBag;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
+    using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<AttributeSymbolImpl>;
+    using __NotImplementedException = global::System.NotImplementedException;
+    using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     internal abstract class AttributeSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolBase, AttributeSymbol
     {
-        private TypeSymbol _attributeClass;
+        protected AttributeSymbolBase() 
+            : base()
+        {
+        }
 
         protected AttributeSymbolBase(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -36,10 +42,84 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
-        protected override __CompletionGraph CompletionGraph => AttributeSymbol.CompletionParts.CompletionGraph;
+        protected AttributeSymbolBase(Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, declaration, modelObject, name, metadataName, attributes)
+        {
+        }
 
-        [__ModelProperty]
-        public TypeSymbol AttributeClass
+        protected AttributeSymbolBase(Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, modelObject, name, metadataName, attributes)
+        {
+        }
+
+        protected AttributeSymbolBase(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, csharpSymbol, name, metadataName, attributes)
+        {
+        }
+
+        protected AttributeSymbolBase(Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, errorInfo, name, metadataName, attributes)
+        {
+        }
+
+        protected sealed override __CompletionGraph CompletionGraph => AttributeSymbol.CompletionParts.CompletionGraph;
+
+        public abstract TypeSymbol AttributeClass { get; }
+
+
+        protected abstract TypeSymbol Complete_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+    }
+
+    internal sealed class AttributeSymbolDefaultImpl : AttributeSymbolBase
+    {
+        private TypeSymbol _attributeClass;
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
+            : base(container, declaration, modelObject)
+        {
+        }
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __IModelObject modelObject) 
+            : base(container, modelObject)
+        {
+        }
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol) 
+            : base(container, csharpSymbol)
+        {
+        }
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo) 
+            : base(container, errorInfo)
+        {
+        }
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+            : base(container, declaration, modelObject, name, metadataName, attributes)
+        {
+            _attributeClass = attributeClass;
+        }
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+            : base(container, modelObject, name, metadataName, attributes)
+        {
+            _attributeClass = attributeClass;
+        }
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+            : base(container, csharpSymbol, name, metadataName, attributes)
+        {
+            _attributeClass = attributeClass;
+        }
+
+        public AttributeSymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+            : base(container, errorInfo, name, metadataName, attributes)
+        {
+            _attributeClass = attributeClass;
+        }
+
+
+        public override TypeSymbol AttributeClass
         {
             get
             {
@@ -48,7 +128,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
+        protected sealed override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
             if (incompletePart == AttributeSymbol.CompletionParts.Start_AttributeClass || incompletePart == AttributeSymbol.CompletionParts.Finish_AttributeClass)
             {
@@ -69,7 +149,46 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        protected virtual TypeSymbol Complete_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+
+        protected override TypeSymbol Complete_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = AttributeSymbolImpl.GetInstance(this);
+            var result = impl.Complete_AttributeClass(diagnostics, cancellationToken);
+            impl.Free();
+            return result;
+        }
+    }
+
+    internal sealed partial class AttributeSymbolImpl
+    {
+        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new AttributeSymbolImpl(s_poolInstance), 32);
+
+        private readonly __ObjectPool _pool;
+
+        private AttributeSymbolImpl(__ObjectPool pool) 
+            : base()
+        {
+            _pool = pool;
+        }
+
+        public static AttributeSymbolImpl GetInstance(AttributeSymbol wrapped)
+        {
+            var result = s_poolInstance.Allocate();
+            global::System.Diagnostics.Debug.Assert(result.__WrappedInstance is null);
+            __InitInstance(result, wrapped);
+            return result;
+        }
+
+        public void Free()
+        {
+            this.__ClearInstance();
+            _pool?.Free(this);
+        }
+
+        public override TypeSymbol AttributeClass => ((AttributeSymbol)__WrappedInstance).AttributeClass;
+
+
+        protected override TypeSymbol Complete_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return default;
         }

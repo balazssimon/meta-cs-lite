@@ -1,30 +1,24 @@
+using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
+using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.Model;
+using MetaDslx.CodeAnalysis.Symbols.Source;
+using Roslyn.Utilities;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System;
+using MetaDslx.CodeAnalysis.Text;
+using System.Xml.Linq;
+using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis;
+
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
-    using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
-    using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
-    using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
-    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
-    using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
-    using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
-    using __DiagnosticBag = global::MetaDslx.CodeAnalysis.DiagnosticBag;
-    using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
-    using __CancellationToken = global::System.Threading.CancellationToken;
-    using System.Collections.Immutable;
-    using System.Runtime.CompilerServices;
-    using MetaDslx.CodeAnalysis.Declarations;
-    using MetaDslx.CodeAnalysis.PooledObjects;
-    using MetaDslx.CodeAnalysis.Symbols.Model;
-    using MetaDslx.CodeAnalysis.Symbols.Source;
-    using Roslyn.Utilities;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System;
-    using MetaDslx.CodeAnalysis.Text;
 
     internal abstract class SymbolBase : Symbol
     {
@@ -40,46 +34,121 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         private volatile int _completeParts;
 
-        private readonly Symbol _container;
+        private Symbol _container;
         private ImmutableArray<Symbol> _containedSymbols;
+
+        private object? _wrapped;
 
         private static ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
         private static ConditionalWeakTable<Symbol, string> s_names = new ConditionalWeakTable<Symbol, string>();
         private static ConditionalWeakTable<Symbol, string> s_metadataNames = new ConditionalWeakTable<Symbol, string>();
         private static ConditionalWeakTable<Symbol, object> s_attributes = new ConditionalWeakTable<Symbol, object>();
-        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_Attributes = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
+        private static ConditionalWeakTable<Symbol, MergedDeclaration> s_declarations = new ConditionalWeakTable<Symbol, MergedDeclaration>();
 
-        private SymbolBase(__Symbol container)
+        protected SymbolBase()
+        {
+            _completeParts = -1;
+            _container = null;
+        }
+
+        protected SymbolBase(Symbol container)
         {
             _completeParts = -1;
             _container = container;
         }
 
-        protected SymbolBase(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
-            : this(container)
+        protected SymbolBase(Symbol container, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
         {
+            _completeParts = -1;
+            _container = container;
+            _containedSymbols = ImmutableArray<Symbol>.Empty;
+            if (!string.IsNullOrEmpty(name))
+            {
+                s_names.Add(this, name);
+            }
+            if (!string.IsNullOrEmpty(metadataName) && metadataName != name)
+            {
+                s_metadataNames.Add(this, metadataName);
+            }
+            if (!attributes.IsDefaultOrEmpty)
+            {
+                s_attributes.Add(this, attributes);
+            }
+            NotePartComplete(CompletionGraph.ContainedSymbolsCompleted);
         }
 
-        protected SymbolBase(__Symbol container, __IModelObject modelObject)
+        protected SymbolBase(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
             : this(container)
         {
+            _wrapped = modelObject;
+            s_declarations.Add(this, declaration);
         }
 
-        protected SymbolBase(__Symbol container, __ISymbol csharpSymbol)
+        protected SymbolBase(Symbol container, IModelObject modelObject)
             : this(container)
         {
+            _wrapped = modelObject;
         }
 
-        protected SymbolBase(__Symbol container, __ErrorSymbolInfo errorInfo)
+        protected SymbolBase(Symbol container, __ISymbol csharpSymbol)
             : this(container)
         {
+            _wrapped = csharpSymbol;
         }
+
+        protected SymbolBase(Symbol container, ErrorSymbolInfo errorInfo)
+            : this(container)
+        {
+            _wrapped = errorInfo;
+        }
+
+        protected SymbolBase(Symbol container, MergedDeclaration declaration, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+            : this(container, name, metadataName, attributes)
+        {
+            _wrapped = modelObject;
+            s_declarations.Add(this, declaration);
+        }
+
+        protected SymbolBase(Symbol container, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+            : this(container, name, metadataName, attributes)
+        {
+            _wrapped = modelObject;
+        }
+
+        protected SymbolBase(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+            : this(container, name, metadataName, attributes)
+        {
+            _wrapped = csharpSymbol;
+        }
+
+        protected SymbolBase(Symbol container, ErrorSymbolInfo errorInfo, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+            : this(container, name, metadataName, attributes)
+        {
+            _wrapped = errorInfo;
+        }
+
+        protected static void __InitInstance(SymbolBase impl, Symbol wrapped)
+        {
+            var ws = (SymbolBase)wrapped;
+            impl._container = ws._container;
+            impl._wrapped = ws._wrapped is Symbol wss ? wss : wrapped;
+        }
+
+        protected void __ClearInstance()
+        {
+            _wrapped = null;
+        }
+
+        protected SymbolBase? __WrappedInstance => _wrapped as SymbolBase;
 
         /// <summary>
         /// Returns true if the symbol could not be resolved, 
         /// and this symbol serves as a placeholder, instead.
         /// </summary>
-        public virtual bool IsError => this is IErrorSymbol;
+        public bool IsErrorSymbol => _wrapped is ErrorSymbolInfo;
+        public bool IsSourceSymbol => s_declarations.TryGetValue(this, out _);
+        public bool IsModelSymbol => _wrapped is IModelObject;
+        public bool IsCSharpSymbol => _wrapped is __ISymbol;
 
         /// <summary>
         /// Returns true if this symbol was automatically created by the compiler, and does not
@@ -113,6 +182,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.ContainedSymbols;
                 this.ForceComplete(CompletionGraph.FinishCreatingContainedSymbols, null, default);
                 return _containedSymbols;
             }
@@ -122,11 +192,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.Kind;
                 var typeName = this.GetType().Name;
-                if (typeName.EndsWith("Symbol")) typeName = typeName.Substring(0, typeName.Length - 6);
-                if (typeName.StartsWith("Source")) typeName = typeName.Substring(6);
-                else if (typeName.StartsWith("Model")) typeName = typeName.Substring(5);
-                else if (typeName.StartsWith("CSharp")) typeName = typeName.Substring(6);
+                if (typeName.EndsWith("SymbolBase") || typeName.EndsWith("SymbolImpl")) typeName = typeName.Substring(0, typeName.Length - 10);
                 return typeName;
             }
         }
@@ -135,6 +203,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.DisplayKind;
                 var kind = this.Kind;
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;
@@ -164,11 +233,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Gets the name of this symbol. Symbols without a name return the empty string; 
         /// null is never returned.
         /// </summary>
-        [ModelProperty]
         public string Name
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.Name;
                 this.ForceComplete(CompletionGraph.FinishInitializing, null, default);
                 if (s_names.TryGetValue(this, out var name))
                 {
@@ -190,11 +259,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// 2) The metadata name of explicit interface names have spaces removed, compared to
         /// the name property.
         /// </summary>
-        [ModelProperty]
         public string MetadataName
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.MetadataName;
                 this.ForceComplete(CompletionGraph.FinishInitializing, null, default);
                 if (s_metadataNames.TryGetValue(this, out var metadataName))
                 {
@@ -210,13 +279,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <summary>
         /// Should the name returned by Name property be mangled with any suffix in order to get metadata name.
         /// </summary>
-        public virtual bool MangleName => this.Name != this.MetadataName;
+        public bool MangleName => this.Name != this.MetadataName;
 
         [ModelProperty]
         public ImmutableArray<AttributeSymbol> Attributes
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.Attributes;
                 this.ForceComplete(Symbol.CompletionParts.Finish_Attributes, null, default);
                 if (s_attributes.TryGetValue(this, out var attributes))
                 {
@@ -237,6 +307,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.ContainingAssembly;
                 // Default implementation gets the container's assembly.
                 var container = this.ContainingSymbol;
                 return container?.ContainingAssembly;
@@ -261,17 +332,17 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
-                if (this.IsError) return null;
+                if (_wrapped is Symbol ws) return ws.DeclaringCompilation;
+                if (this.IsErrorSymbol) return null;
                 if (this is AssemblySymbol)
                 {
-                    Debug.Assert(!(this is SourceAssemblySymbol), "SourceAssemblySymbol must override DeclaringCompilation");
+                    Debug.Assert(!this.IsSourceSymbol, "SourceAssemblySymbol must override DeclaringCompilation");
                 }
                 if (this is ModuleSymbol)
                 {
-                    Debug.Assert(!(this is SourceModuleSymbol), "SourceModuleSymbol must override DeclaringCompilation");
+                    Debug.Assert(!this.IsSourceSymbol, "SourceModuleSymbol must override DeclaringCompilation");
                 }
-                var sourceModuleSymbol = this.ContainingModule as SourceModuleSymbol;
-                return sourceModuleSymbol?.DeclaringCompilation;
+                return this.ContainingModule.DeclaringCompilation;
             }
         }
 
@@ -283,6 +354,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.ContainingModule;
                 // Default implementation gets the container's module.
                 var container = this.ContainingSymbol;
                 if (container is ModuleSymbol moduleSymbol) return moduleSymbol;
@@ -297,6 +369,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.ContainingDeclaration;
                 Symbol container = this.ContainingSymbol;
                 while (container is not null)
                 {
@@ -317,6 +390,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.ContainingType;
                 Symbol container = this.ContainingSymbol;
                 while (container is not null)
                 {
@@ -338,6 +412,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.ContainingNamespace;
                 Symbol container = this.ContainingSymbol;
                 while (container is not null)
                 {
@@ -364,6 +439,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         public virtual LexicalSortKey GetLexicalSortKey()
         {
+            if (_wrapped is Symbol ws) return ws.GetLexicalSortKey();
             var declaringCompilation = this.DeclaringCompilation;
             if (declaringCompilation is null) return LexicalSortKey.NotInSource;
             var sourceLocation = this.Locations.OfType<SourceLocation>().FirstOrDefault();
@@ -371,21 +447,77 @@ namespace MetaDslx.CodeAnalysis.Symbols
             else return new LexicalSortKey(sourceLocation, declaringCompilation);
         }
 
+        public MergedDeclaration? MergedDeclaration
+        {
+            get
+            {
+                if (_wrapped is Symbol ws) return ws.MergedDeclaration;
+                if (s_declarations.TryGetValue(this, out var decl)) return decl;
+                else return null;
+            }
+        }
+
+        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences
+        {
+            get
+            {
+                return MergedDeclaration?.SyntaxReferences ?? ImmutableArray<SyntaxNodeOrToken>.Empty;
+            }
+        }
+
         /// <summary>
         /// Gets the locations where this symbol was originally defined, either in source or
         /// metadata. Some symbols (for example, partial classes) may be defined in more than one
         /// location.
         /// </summary>
-        public abstract ImmutableArray<Location> Locations { get; }
-
-        public Location Location => Locations.FirstOrDefault();
-
-        #region Diagnostics
-
-        public virtual ImmutableArray<Diagnostic> Diagnostics
+        public virtual ImmutableArray<Location> Locations
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.Locations;
+                return MergedDeclaration?.NameLocations.Cast<SourceLocation, Location>() ?? this.ContainingModule?.Locations ?? ImmutableArray<Location>.Empty;
+            }
+        }
+
+        public Location Location => Locations.FirstOrDefault() ?? Location.None;
+
+        public IModelObject? ModelObject
+        {
+            get
+            {
+                if (_wrapped is Symbol ws) return ws.ModelObject;
+                return _wrapped as IModelObject;
+            }
+        }
+
+        public Type? ModelObjectType
+        {
+            get
+            {
+                if (_wrapped is Symbol ws) return ws.ModelObjectType;
+                var decl = MergedDeclaration;
+                if (decl is not null) return decl.ModelObjectType;
+                if (_wrapped is IModelObject mobj) return mobj.MInfo.MetaType.AsType();
+                return null;
+            }
+        }
+
+        public __ISymbol? CSharpSymbol
+        {
+            get
+            {
+                if (_wrapped is Symbol ws) return ws.CSharpSymbol;
+                return _wrapped as __ISymbol;
+            }
+        }
+
+        #region Diagnostics
+
+        public ImmutableArray<Diagnostic> Diagnostics
+        {
+            get
+            {
+                if (_wrapped is Symbol ws) return ws.Diagnostics;
                 if (s_diagnostics.TryGetValue(this, out var diagnostics)) return diagnostics.ToReadOnly();
                 else return ImmutableArray<Diagnostic>.Empty;
             }
@@ -395,6 +527,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is Symbol ws) return ws.HasAnyErrors;
                 if (s_diagnostics.TryGetValue(this, out var diagnostics)) return diagnostics.HasAnyErrors();
                 else return false;
             }
@@ -402,6 +535,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected bool AddSymbolDiagnostics(Diagnostic diagnostic)
         {
+            if (_wrapped is SymbolBase ws) return ws.AddSymbolDiagnostics(diagnostic);
             if (diagnostic is not null)
             {
                 var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
@@ -413,6 +547,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected bool AddSymbolDiagnostics(DiagnosticBag diagnostics)
         {
+            if (_wrapped is SymbolBase ws) return ws.AddSymbolDiagnostics(diagnostics);
             if (!diagnostics.IsEmptyWithoutResolution)
             {
                 var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
@@ -424,6 +559,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected bool AddSymbolDiagnostics(HashSet<DiagnosticInfo>? diagnostics)
         {
+            if (_wrapped is SymbolBase ws) return ws.AddSymbolDiagnostics(diagnostics);
             if (diagnostics is not null && diagnostics.Count > 0)
             {
                 var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
@@ -444,6 +580,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
+                if (_wrapped is SymbolBase ws) return ws.HasUseSiteError;
                 var diagnostic = GetUseSiteDiagnostic();
                 return diagnostic != null && diagnostic.Severity == DiagnosticSeverity.Error;
             }
@@ -454,6 +591,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         public virtual DiagnosticInfo GetUseSiteDiagnostic()
         {
+            if (_wrapped is SymbolBase ws) return ws.GetUseSiteDiagnostic();
             return null;
         }
 
@@ -488,6 +626,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         internal bool MergeUseSiteDiagnostics(ref DiagnosticInfo result, DiagnosticInfo info)
         {
+            if (_wrapped is SymbolBase ws) return ws.MergeUseSiteDiagnostics(ref result, info);
+
             if (info == null)
             {
                 return false;
@@ -534,6 +674,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         public override string ToString()
         {
+            if (_wrapped is SymbolBase ws) return ws.ToString();
             return SymbolDisplayFormat.Default.ToString(this);
         }
 
@@ -543,6 +684,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         public virtual string GetDocumentationCommentId()
         {
+            if (_wrapped is SymbolBase ws) return ws.GetDocumentationCommentId();
             return "";
         }
 
@@ -555,15 +697,28 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <returns>The XML that would be written to the documentation file for the symbol.</returns>
         public virtual string GetDocumentationCommentXml(CultureInfo preferredCulture = null, bool expandIncludes = false, CancellationToken cancellationToken = default)
         {
+            if (_wrapped is SymbolBase ws) return ws.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
             return "";
         }
 
         #region Completion graph
 
-        protected virtual CompletionGraph CompletionGraph => Symbol.CompletionParts.CompletionGraph;
+        protected virtual CompletionGraph CompletionGraph
+        {
+            get
+            {
+                if (_wrapped is SymbolBase ws) return ws.CompletionGraph;
+                return Symbol.CompletionParts.CompletionGraph;
+            }
+        }
 
         public virtual void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
+            if (_wrapped is SymbolBase ws)
+            {
+                ws.ForceComplete(completionPart, locationOpt, cancellationToken);
+                return;
+            }
             if (completionPart != null && HasComplete(completionPart)) return;
             if (completionPart != null && !CompletionGraph.Contains(completionPart)) throw new ArgumentException(nameof(completionPart));
             while (true)
@@ -581,10 +736,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         if (!string.IsNullOrEmpty(name))
                         {
                             s_names.Add(this, name);
-                            if (this is ISourceSymbol && this is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
-                            {
-                                modelSymbol.ModelObject.MName = name;
-                            }
+                            var mobj = this.ModelObject;
+                            if (mobj is not null) mobj.MName = name;
                         }
                         if (!string.IsNullOrEmpty(metadataName) && metadataName != name)
                         {
@@ -727,6 +880,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected bool NotePartComplete(CompletionPart part)
         {
+            if (_wrapped is SymbolBase ws) return ws.NotePartComplete(part);
             // passing volatile completeParts byref is ok here.
             // ThreadSafeFlagOperations.Set performs interlocked assignments
             int index = CompletionGraph.IndexOf(part);

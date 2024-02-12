@@ -8,10 +8,13 @@ generator SymbolGenerator
 template GenerateInterface(Symbol symbol)
 namespace [symbol.NamespaceName]
 {
+    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+
     [var baseTypes = symbol.BaseTypes]
     public interface [GetIntfName(symbol, symbol)]: [if (baseTypes.Count == 0)]global::MetaDslx.CodeAnalysis.Symbols.Symbol[else][from bt in baseTypes select GetIntfName(symbol, bt) separator ", "][end if]
     {
         [foreach (var prop in symbol.Properties)]
+            ["["]__ModelProperty["]"]
             [GetTypeName(symbol, prop.Type)] [prop.Name] { get; }
         [end foreach]
 
@@ -21,11 +24,15 @@ namespace [symbol.NamespaceName]
                 public static readonly CompletionPart Start_[phase] = new CompletionPart(nameof(Start_[phase]));
                 public static readonly CompletionPart Finish_[phase] = new CompletionPart(nameof(Finish_[phase]));
             [end foreach]
+            public static readonly CompletionPart Start_Attribute = new CompletionPart(nameof(Start_Attribute));
+            public static readonly CompletionPart Finish_Attribute = new CompletionPart(nameof(Finish_Attribute));
+
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
-                    [foreach (var phase in GetPhases(symbol)) separator ",\n"]
-                        Start_[phase], Finish_[phase][\]
+                    [foreach (var phase in GetPhases(symbol))]
+                        Start_[phase], Finish_[phase],
                     [end foreach]
+                    Start_Attribute, Finish_Attribute
                 );
         }
     }
@@ -46,16 +53,16 @@ namespace [symbol.NamespaceName]
     using __DiagnosticBag = global::MetaDslx.CodeAnalysis.DiagnosticBag;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
+    using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<[GetImplName(symbol, symbol)]>;
+    using __NotImplementedException = global::System.NotImplementedException;
+    using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     internal abstract class [GetBaseName(symbol, symbol)] : global::MetaDslx.CodeAnalysis.Symbols.SymbolBase, [GetIntfName(symbol, symbol)]
     {
-        [foreach (var prop in GetProperties(symbol))]
-            [if (prop.IsWeak)]
-                private static [GetFieldType(symbol, prop)] [GetFieldName(prop)] = new [GetFieldType(symbol, prop)]();
-            [else]
-                private [GetFieldType(symbol, prop)] [GetFieldName(prop)];
-            [end if]
-        [end foreach]
+        protected [GetBaseName(symbol, symbol)]() 
+            : base()
+        {
+        }
 
         protected [GetBaseName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -77,11 +84,167 @@ namespace [symbol.NamespaceName]
         {
         }
 
-        protected override __CompletionGraph CompletionGraph => [GetIntfName(symbol, symbol)].CompletionParts.CompletionGraph;
+        protected [GetBaseName(symbol, symbol)](Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, declaration, modelObject, name, metadataName, attributes)
+        {
+        }
+
+        protected [GetBaseName(symbol, symbol)](Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, modelObject, name, metadataName, attributes)
+        {
+        }
+
+        protected [GetBaseName(symbol, symbol)](Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, csharpSymbol, name, metadataName, attributes)
+        {
+        }
+
+        protected [GetBaseName(symbol, symbol)](Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
+            : base(container, errorInfo, name, metadataName, attributes)
+        {
+        }
+
+        protected sealed override __CompletionGraph CompletionGraph => [GetIntfName(symbol, symbol)].CompletionParts.CompletionGraph;
 
         [foreach (var prop in GetProperties(symbol))]
-            ["["]__ModelProperty["]"]
-            public [GetTypeName(symbol, prop.Type)] [prop.Name]
+            public abstract [GetTypeName(symbol, prop.Type)] [prop.Name] { get; }
+        [end foreach]
+
+        [foreach (var phase in GetPhases(symbol))]
+
+            [var props = GetPhaseProperties(symbol, phase)]
+            [if (props.Length >= 2)]
+                protected abstract ([from prop in props select GetTypeName(symbol, prop.Type) separator ", "]) Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+            [else if (props.Length == 1)]
+                [var prop = props[0]]
+                protected abstract [GetTypeName(symbol, prop.Type)] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+            [else]
+                protected abstract void Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+            [end if]
+        [end foreach]
+    }
+
+    internal sealed class [GetDefaultImplName(symbol, symbol)] : [GetBaseName(symbol, symbol)]
+    {
+        [foreach (var prop in GetProperties(symbol))]
+            [if (prop.IsWeak)]
+                private static [GetFieldType(symbol, prop)] [GetFieldName(prop)] = new [GetFieldType(symbol, prop)]();
+            [else]
+                private [GetFieldType(symbol, prop)] [GetFieldName(prop)];
+            [end if]
+        [end foreach]
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
+            : base(container, declaration, modelObject)
+        {
+        }
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __IModelObject modelObject) 
+            : base(container, modelObject)
+        {
+        }
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __ISymbol csharpSymbol) 
+            : base(container, csharpSymbol)
+        {
+        }
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __ErrorSymbolInfo errorInfo) 
+            : base(container, errorInfo)
+        {
+        }
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
+            : base(container, declaration, modelObject, name, metadataName, attributes)
+        {
+            [foreach (var prop in GetProperties(symbol))]
+                [if (prop.IsWeak)]
+                    [if (prop.Type.Dimensions > 0)]
+                        if (![GetParamName(prop)].IsDefaultOrEmpty)
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [else]
+                        if ([GetParamName(prop)] != [GetDefaultValue(symbol, prop)])
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [end if]
+                [else]
+                    [GetFieldName(prop)] = [GetParamName(prop)];
+                [end if]
+            [end foreach]
+        }
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
+            : base(container, modelObject, name, metadataName, attributes)
+        {
+            [foreach (var prop in GetProperties(symbol))]
+                [if (prop.IsWeak)]
+                    [if (prop.Type.Dimensions > 0)]
+                        if (![GetParamName(prop)].IsDefaultOrEmpty)
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [else]
+                        if ([GetParamName(prop)] != [GetDefaultValue(symbol, prop)])
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [end if]
+                [else]
+                    [GetFieldName(prop)] = [GetParamName(prop)];
+                [end if]
+            [end foreach]
+        }
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
+            : base(container, csharpSymbol, name, metadataName, attributes)
+        {
+            [foreach (var prop in GetProperties(symbol))]
+                [if (prop.IsWeak)]
+                    [if (prop.Type.Dimensions > 0)]
+                        if (![GetParamName(prop)].IsDefaultOrEmpty)
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [else]
+                        if ([GetParamName(prop)] != [GetDefaultValue(symbol, prop)])
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [end if]
+                [else]
+                    [GetFieldName(prop)] = [GetParamName(prop)];
+                [end if]
+            [end foreach]
+        }
+
+        public [GetDefaultImplName(symbol, symbol)](__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
+            : base(container, errorInfo, name, metadataName, attributes)
+        {
+            [foreach (var prop in GetProperties(symbol))]
+                [if (prop.IsWeak)]
+                    [if (prop.Type.Dimensions > 0)]
+                        if (![GetParamName(prop)].IsDefaultOrEmpty)
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [else]
+                        if ([GetParamName(prop)] != [GetDefaultValue(symbol, prop)])
+                        {
+                            [GetFieldName(prop)].Add(this, [GetParamName(prop)]);
+                        }
+                    [end if]
+                [else]
+                    [GetFieldName(prop)] = [GetParamName(prop)];
+                [end if]
+            [end foreach]
+        }
+
+        [foreach (var prop in GetProperties(symbol))]
+
+            public override [GetTypeName(symbol, prop.Type)] [prop.Name]
             {
                 get
                 {
@@ -96,7 +259,7 @@ namespace [symbol.NamespaceName]
             }
         [end foreach]
 
-        protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
+        protected sealed override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
             [var phases = GetPhases(symbol)]
             [foreach (var phase in phases)]
@@ -164,28 +327,84 @@ namespace [symbol.NamespaceName]
         }
 
         [foreach (var phase in GetPhases(symbol))]
+
             [var props = GetPhaseProperties(symbol, phase)]
             [if (props.Length >= 2)]
-                [if (props.Where(p => p.IsDerived).Any())]
-                    protected abstract ([from prop in props select GetTypeName(symbol, prop.Type) separator ", "]) Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-                [else]
-                    protected virtual ([from prop in props select GetTypeName(symbol, prop.Type) separator ", "]) Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                protected override ([from prop in props select GetTypeName(symbol, prop.Type) separator ", "]) Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                {
+                    var impl = [GetImplName(symbol, symbol)].GetInstance(this);
+                    var result = impl.Complete_[phase](diagnostics, cancellationToken);
+                    impl.Free();
+                    return result;
+                }
+            [else if (props.Length == 1)]
+                [var prop = props[0]]
+                protected override [GetTypeName(symbol, prop.Type)] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                {
+                    var impl = [GetImplName(symbol, symbol)].GetInstance(this);
+                    var result = impl.Complete_[phase](diagnostics, cancellationToken);
+                    impl.Free();
+                    return result;
+                }
+            [else]
+                protected override void Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                {
+                    var impl = [GetImplName(symbol, symbol)].GetInstance(this);
+                    impl.Complete_[phase](diagnostics, cancellationToken);
+                    impl.Free();
+                }
+            [end if]
+        [end foreach]
+    }
+
+    internal sealed partial class [GetImplName(symbol, symbol)]
+    {
+        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new [GetImplName(symbol, symbol)](s_poolInstance), 32);
+
+        private readonly __ObjectPool _pool;
+
+        private [GetImplName(symbol, symbol)](__ObjectPool pool) 
+            : base()
+        {
+            _pool = pool;
+        }
+
+        public static [GetImplName(symbol, symbol)] GetInstance([GetIntfName(symbol, symbol)] wrapped)
+        {
+            var result = s_poolInstance.Allocate();
+            global::System.Diagnostics.Debug.Assert(result.__WrappedInstance is null);
+            __InitInstance(result, wrapped);
+            return result;
+        }
+
+        public void Free()
+        {
+            this.__ClearInstance();
+            _pool?.Free(this);
+        }
+
+        [foreach (var prop in GetProperties(symbol))]
+            public override [GetTypeName(symbol, prop.Type)] [prop.Name] => (([GetIntfName(symbol, symbol)])__WrappedInstance).[prop.Name];
+        [end foreach]
+
+        [foreach (var phase in GetPhases(symbol))]
+
+            [var props = GetPhaseProperties(symbol, phase)]
+            [if (props.Length >= 2)]
+                [if (!props.Where(p => p.IsDerived).Any())]
+                    protected override ([from prop in props select GetTypeName(symbol, prop.Type) separator ", "]) Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                     {
                         return ([from prop in props select GetDefaultValue(symbol, prop) separator ", "]);
                     }
                 [end if]
             [else if (props.Length == 1)]
                 [var prop = props[0]]
-                [if (prop.IsDerived)]
-                    protected abstract [GetTypeName(symbol, prop.Type)] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-                [else]
-                    protected virtual [GetTypeName(symbol, prop.Type)] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                [if (!prop.IsDerived)]
+                    protected override [GetTypeName(symbol, prop.Type)] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                     {
                         return [GetDefaultValue(symbol, prop)];
                     }
                 [end if]
-            [else]
-                protected abstract void Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
             [end if]
         [end foreach]
     }
@@ -193,36 +412,17 @@ namespace [symbol.NamespaceName]
 end template
 
 template GenerateImplementation(Symbol symbol)
+using System.Threading;
+using System.Collections.Immutable;
 using MetaDslx.Modeling;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
-using MetaDslx.CodeAnalysis.Symbols.Errors;
 
 namespace [symbol.NamespaceName]
 {
     internal partial class [GetImplName(symbol, symbol)] : [GetBaseName(symbol, symbol)]
     {
-        protected [GetImplName(symbol, symbol)](Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
-            : base(container, declaration, modelObject)
-        {
-        }
-
-        protected [GetImplName(symbol, symbol)](Symbol container, IModelObject modelObject) 
-            : base(container, modelObject)
-        {
-        }
-
-        protected [GetImplName(symbol, symbol)](Symbol container, Microsoft.CodeAnalysis.ISymbol csharpSymbol) 
-            : base(container, csharpSymbol)
-        {
-        }
-
-        protected [GetImplName(symbol, symbol)](Symbol container, ErrorSymbolInfo errorInfo) 
-            : base(container, errorInfo)
-        {
-        }
-
     }
 }
 end template
