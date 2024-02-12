@@ -293,16 +293,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.Symbol(default, this.Token(SymbolSyntaxKind.KSymbol), name, default, block2);
         }
 
-        public PropertySyntax Property(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2)
+        public PropertySyntax Property(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3)
         {
             if (type is null) throw new __ArgumentNullException(nameof(type));
             if (name is null) throw new __ArgumentNullException(nameof(name));
-            return (PropertySyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Property((InternalSyntax.PropertyBlock1Green)block1.Green, (InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.PropertyBlock2Green)block2.Green).CreateRed();
+            return (PropertySyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Property((InternalSyntax.PropertyBlock1Green)block1.Green, (InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.PropertyBlock2Green)block2.Green, (InternalSyntax.PropertyBlock3Green)block3.Green).CreateRed();
         }
         
         public PropertySyntax Property(TypeReferenceSyntax type, NameSyntax name)
         {
-            return this.Property(default, type, name, default);
+            return this.Property(default, type, name, default, default);
         }
 
         public OperationSyntax Operation(TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationBlock1Syntax block, __SyntaxToken tRParen)
@@ -523,6 +523,19 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.PropertyBlock2(this.Token(SymbolSyntaxKind.TEq), defaultValue);
         }
 
+        public PropertyBlock3Syntax PropertyBlock3(__SyntaxToken kPhase, IdentifierSyntax phase)
+        {
+            if (kPhase.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kPhase));
+            if (kPhase.RawKind != (int)SymbolSyntaxKind.KPhase) throw new __ArgumentException(nameof(kPhase));
+            if (phase is null) throw new __ArgumentNullException(nameof(phase));
+            return (PropertyBlock3Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock3((__InternalSyntaxToken)kPhase.Node, (InternalSyntax.IdentifierGreen)phase.Green).CreateRed();
+        }
+        
+        public PropertyBlock3Syntax PropertyBlock3(IdentifierSyntax phase)
+        {
+            return this.PropertyBlock3(this.Token(SymbolSyntaxKind.KPhase), phase);
+        }
+
         public OperationBlock1Syntax OperationBlock1(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParameterSyntax> parameters)
         {
             return (OperationBlock1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationBlock1(__GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.ParameterGreen>(parameters.Node, reversed: false)).CreateRed();
@@ -613,6 +626,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 typeof(PropertyBlock1Alt1Syntax),
                 typeof(PropertyBlock1Alt2Syntax),
                 typeof(PropertyBlock2Syntax),
+                typeof(PropertyBlock3Syntax),
                 typeof(OperationBlock1Syntax),
                 typeof(OperationBlock1parametersBlockSyntax),
                 typeof(TypeReferenceBlock1Syntax),

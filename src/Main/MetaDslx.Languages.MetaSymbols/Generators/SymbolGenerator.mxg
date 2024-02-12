@@ -1,0 +1,213 @@
+namespace MetaDslx.Languages.MetaSymbols.Generators
+
+using System.Linq
+using MetaDslx.Languages.MetaSymbols.Model
+
+generator SymbolGenerator
+
+template GenerateInterface(Symbol symbol)
+namespace [symbol.NamespaceName]
+{
+    public interface [symbol.Name][from bt in symbol.BaseTypes select GetIntfName(symbol, bt) before ": " separator ", "]
+    {
+        [foreach (var prop in symbol.Properties)]
+            [GetTypeName(symbol, prop.Type)] [prop.Name] { get; }
+        [end foreach]
+
+        public static class CompletionParts
+        {
+            [foreach (var phase in GetPhases(symbol))]
+                public static readonly CompletionPart Start_[phase] = new CompletionPart(nameof(Start_[phase]));
+                public static readonly CompletionPart Finish_[phase] = new CompletionPart(nameof(Finish_[phase]));
+            [end foreach]
+            public static readonly CompletionGraph CompletionGraph = 
+                CompletionGraph.CreateFromParts(
+                    [foreach (var phase in GetPhases(symbol)) separator ",\n"]
+                        Start_[phase], Finish_[phase][\]
+                    [end foreach]
+                );
+        }
+    }
+}
+end template
+
+template GenerateBase(Symbol symbol)
+namespace [symbol.NamespaceName]
+{
+    using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
+    using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
+    using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
+    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+    using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
+    using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
+    using __DiagnosticBag = global::MetaDslx.CodeAnalysis.DiagnosticBag;
+    using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
+    using __CancellationToken = global::System.Threading.CancellationToken;
+
+    internal abstract class [GetBaseName(symbol, symbol)] : global::MetaDslx.CodeAnalysis.Symbols.MultiSymbolBase, [symbol.Name]
+    {
+        [foreach (var prop in GetProperties(symbol))]
+            private [GetFieldType(symbol, prop)] [GetFieldName(prop)];
+        [end foreach]
+
+        protected [GetBaseName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
+            : base(container, declaration, modelObject)
+        {
+        }
+
+        protected [GetBaseName(symbol, symbol)](__Symbol container, __IModelObject modelObject) 
+            : base(container, modelObject)
+        {
+        }
+
+        protected [GetBaseName(symbol, symbol)](__Symbol container, __ISymbol csharpSymbol) 
+            : base(container, csharpSymbol)
+        {
+        }
+
+        protected [GetBaseName(symbol, symbol)](__Symbol container, __ErrorSymbolInfo errorInfo) 
+            : base(container, errorInfo)
+        {
+        }
+
+        protected override __CompletionGraph CompletionGraph => [symbol.Name].CompletionParts.CompletionGraph;
+
+        [foreach (var prop in GetProperties(symbol))]
+            ["["]__ModelProperty["]"]
+            public [GetTypeName(symbol, prop.Type)] [prop.Name]
+            {
+                get
+                {
+                    this.ForceComplete(CompletionGraph.Finish_[prop.Name], null, default);
+                    [if (prop.IsWeak)]
+                        if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
+                        else return [GetDefaultValue(symbol, prop)];
+                    [else]
+                        return [GetFieldName(prop)];
+                    [end if]
+                }
+            }
+        [end foreach]
+
+        protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
+        {
+            [foreach (var phase in GetPhases(symbol))]
+                [var props = GetPhaseProperties(symbol, phase)]
+                if (incompletePart == [symbol.Name].CompletionParts.Start_[phase] || incompletePart == [symbol.Name].CompletionParts.Finish_[phase])
+                {
+                    if (NotePartComplete([symbol.Name].CompletionParts.Start_[phase]))
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        [if (props.Length >= 2)]
+                            var result = Complete_[phase](diagnostics, cancellationToken);
+                            [foreach (var prop in props)]
+                                [if (prop.IsWeak)]
+                                    [if (prop.Type.Dimensions > 0)]
+                                        if (!result.[prop.Name].IsDefaultOrEmpty)
+                                        {
+                                            [GetFieldName(prop)].Add(this, result.[prop.Name]);
+                                        }
+                                    [else]
+                                        if (result.[prop.Name] != [GetDefaultValue(symbol, prop)])
+                                        {
+                                            [GetFieldName(prop)].Add(this, result.[prop.Name]);
+                                        }
+                                    [end if]
+                                [else]
+                                    [GetFieldName(prop)] = result.[prop.Name];
+                                [end if]
+                            [end foreach]
+                        [else if (props.Length == 1)]
+                            [var prop = props[0]]
+                            [if (prop.IsWeak)]
+                                [if (prop.Type.Dimensions > 0)]
+                                    if (!result.IsDefaultOrEmpty)
+                                    {
+                                        [GetFieldName(prop)].Add(this, result);
+                                    }
+                                [else]
+                                    if (result != [GetDefaultValue(symbol, prop)])
+                                    {
+                                        [GetFieldName(prop)].Add(this, result);
+                                    }
+                                [end if]
+                            [else]
+                                [GetFieldName(prop)] = result;
+                            [end if]
+                        [else]
+                            Complete_[phase](diagnostics, cancellationToken);
+                        [end if]
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                        NotePartComplete([symbol.Name].CompletionParts.Finish_[phase]);
+                    }
+                    return true;
+                }
+                else [\]
+            [end foreach]
+            return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
+        }
+
+        [foreach (var phase in GetPhases(symbol))]
+            [var props = GetPhaseProperties(symbol, phase)]
+            [if (props.Length >= 2)]
+                [if (props.Where(p => p.IsDerived).Any())]
+                    protected abstract ([from prop in props select GetTypeName(symbol, prop.Type) separator ", "]) Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+                [else]
+                    protected virtual ([from prop in props select GetTypeName(symbol, prop.Type) separator ", "]) Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                    {
+                        return ([from prop in props select GetDefaultValue(symbol, prop) separator ", "]);
+                    }
+                [end if]
+            [else if (props.Length == 1)]
+                [var prop = props[0]]
+                [if (prop.IsDerived)]
+                    protected abstract [GetTypeName(symbol, prop.Type)] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+                [else]
+                    protected virtual [GetTypeName(symbol, prop.Type)] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                    {
+                        return [GetDefaultValue(symbol, prop)];
+                    }
+                [end if]
+            [else]
+                protected abstract void Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+            [end if]
+        [end foreach]
+    }
+}
+end template
+
+template GenerateImplementation(Symbol symbol)
+using MetaDslx.CodeAnalysis;
+using MetaDslx.Modeling;
+using MetaDslx.CodeAnalysis.Symbols;
+
+namespace [symbol.NamespaceName]
+{
+    internal class [GetImplName(symbol, symbol)] : [GetBaseName(symbol, symbol)]
+    {
+        protected [GetImplName(symbol, symbol)](Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
+            : base(container, declaration, modelObject)
+        {
+        }
+
+        protected [GetImplName(symbol, symbol)](Symbol container, IModelObject modelObject) 
+            : base(container, modelObject)
+        {
+        }
+
+        protected [GetImplName(symbol, symbol)](Symbol container, Microsoft.CodeAnalysis.ISymbol csharpSymbol) 
+            : base(container, csharpSymbol)
+        {
+        }
+
+        protected [GetImplName(symbol, symbol)](Symbol container, ErrorSymbolInfo errorInfo) 
+            : base(container, errorInfo)
+        {
+        }
+
+    }
+}
+end template

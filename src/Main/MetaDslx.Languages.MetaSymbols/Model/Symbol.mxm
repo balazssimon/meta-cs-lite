@@ -22,6 +22,8 @@ class Symbol $Type : Declaration
 	Symbol[] $BaseTypes
 	contains Property[] Properties subsets Declaration.Declarations
 	contains Operation[] Operations subsets Declaration.Declarations
+
+	derived string NamespaceName
 }
 
 class TypeReference $Type
@@ -37,6 +39,7 @@ class Property : Declaration
 	bool IsWeak
 	bool IsDerived
 	object? DefaultValue
+	Property? Phase
 }
 
 class Operation: Declaration

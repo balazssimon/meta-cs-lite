@@ -47,6 +47,8 @@ namespace MetaDslx.Languages.MetaSymbols.Model
     
         string? Declaration_FullName(Declaration _this);
     
+        string Symbol_NamespaceName(Symbol _this);
+    
     
     }
 }

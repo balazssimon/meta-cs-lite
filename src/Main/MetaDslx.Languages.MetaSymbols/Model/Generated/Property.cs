@@ -28,6 +28,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         object? DefaultValue { get; set; }
         bool IsDerived { get; set; }
         bool IsWeak { get; set; }
+        Property? Phase { get; set; }
         TypeReference Type { get; set; }
     
     }

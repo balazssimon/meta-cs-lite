@@ -61,6 +61,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KVoid:
                 case SymbolSyntaxKind.KWeak:
                 case SymbolSyntaxKind.KDerived:
+                case SymbolSyntaxKind.KPhase:
                 return TK_Keyword;
                 case SymbolSyntaxKind.TComma:
                 return TK_DefaultSeparator;
@@ -132,6 +133,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KWeak:
                 case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.TEq:
+                case SymbolSyntaxKind.KPhase:
                 case SymbolSyntaxKind.TQuestion:
                 case SymbolSyntaxKind.TLBracket:
                 case SymbolSyntaxKind.TRBracket:
@@ -195,6 +197,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KWeak:
                 case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.TEq:
+                case SymbolSyntaxKind.KPhase:
                 case SymbolSyntaxKind.TQuestion:
                 case SymbolSyntaxKind.TLBracket:
                 case SymbolSyntaxKind.TRBracket:
@@ -282,6 +285,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return SymbolSyntaxKind.KDerived;
                 case "=": 
                     return SymbolSyntaxKind.TEq;
+                case "phase": 
+                    return SymbolSyntaxKind.KPhase;
                 case "?": 
                     return SymbolSyntaxKind.TQuestion;
                 case "[": 
@@ -397,6 +402,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "KDerived";
                 case SymbolSyntaxKind.TEq: 
                     return "TEq";
+                case SymbolSyntaxKind.KPhase: 
+                    return "KPhase";
                 case SymbolSyntaxKind.TQuestion: 
                     return "TQuestion";
                 case SymbolSyntaxKind.TLBracket: 
@@ -485,6 +492,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "PropertyBlock1Alt2";
                 case SymbolSyntaxKind.PropertyBlock2: 
                     return "PropertyBlock2";
+                case SymbolSyntaxKind.PropertyBlock3: 
+                    return "PropertyBlock3";
                 case SymbolSyntaxKind.OperationBlock1: 
                     return "OperationBlock1";
                 case SymbolSyntaxKind.OperationBlock1parametersBlock: 
@@ -577,6 +586,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "derived";
                 case SymbolSyntaxKind.TEq: 
                     return "=";
+                case SymbolSyntaxKind.KPhase: 
+                    return "phase";
                 case SymbolSyntaxKind.TQuestion: 
                     return "?";
                 case SymbolSyntaxKind.TLBracket: 
@@ -646,6 +657,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KVoid: 
                 case SymbolSyntaxKind.KWeak: 
                 case SymbolSyntaxKind.KDerived: 
+                case SymbolSyntaxKind.KPhase: 
                     return true;
                 default:
                     return false;
@@ -685,6 +697,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             yield return SymbolSyntaxKind.KVoid;
             yield return SymbolSyntaxKind.KWeak;
             yield return SymbolSyntaxKind.KDerived;
+            yield return SymbolSyntaxKind.KPhase;
             yield break;
         }
 
@@ -749,6 +762,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return SymbolSyntaxKind.KWeak;
                 case "derived": 
                     return SymbolSyntaxKind.KDerived;
+                case "phase": 
+                    return SymbolSyntaxKind.KPhase;
                 default:
                     return SymbolSyntaxKind.None;
             }

@@ -22,7 +22,7 @@ Symbol:
 	(':' baseTypes+=#Symbol (',' baseTypes+=#Symbol)*)?
 	[Scope]('{' (properties+=Property | operations+=Operation)* '}');
 
-Property: (isWeak?='weak' | isDerived?='derived')? @type=TypeReference Name ('=' defaultValue=Value)?;
+Property: (isWeak?='weak' | isDerived?='derived')? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
 
 Operation: returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')';
 Parameter: @type=TypeReference Name;

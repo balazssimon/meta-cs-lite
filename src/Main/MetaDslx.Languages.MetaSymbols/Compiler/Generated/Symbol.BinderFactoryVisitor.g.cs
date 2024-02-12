@@ -152,6 +152,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
                 {
                     this.Visit(node.Block2);
                 }
+                if (node.Block3 != null)
+                {
+                    this.Visit(node.Block3);
+                }
             }
             finally
             {
@@ -891,6 +895,29 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             finally
             {
                 this.End(__annot0);
+            }
+        }
+
+        public virtual void VisitPropertyBlock3(PropertyBlock3Syntax node)
+        {
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Phase");
+            this.Begin(__annot1, node.Phase);
+            try
+            {
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Languages.MetaSymbols.Model.Property)));
+                this.Begin(__annot0, node.Phase);
+                try
+                {
+                    this.Visit(node.Phase);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
+            }
+            finally
+            {
+                this.End(__annot1);
             }
         }
 

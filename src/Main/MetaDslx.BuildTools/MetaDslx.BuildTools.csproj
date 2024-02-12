@@ -72,6 +72,7 @@
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaSymbols\MetaDslx.Languages.MetaSymbols.csproj" PrivateAssets="all" />
 		<ProjectReference Condition="!$(MetaDslxBootstrap)" Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" PrivateAssets="all" />
 		<ProjectReference Condition="$(MetaDslxBootstrap)" Include="..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler2\MetaDslx.Bootstrap.MetaCompiler2.csproj" PrivateAssets="all" />
 	</ItemGroup>

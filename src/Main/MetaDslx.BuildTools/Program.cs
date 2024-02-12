@@ -13,6 +13,8 @@ using MetaDslx.Languages.MetaCompiler.Model;
 using MetaDslx.Languages.MetaGenerator.Syntax;
 using MetaDslx.Languages.MetaModel.Compiler;
 using MetaDslx.Languages.MetaModel.Generators;
+using MetaDslx.Languages.MetaSymbols.Compiler;
+using MetaDslx.Languages.MetaSymbols.Generators;
 using MetaDslx.Modeling;
 using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis.CSharp;
@@ -146,6 +148,7 @@ namespace MetaDslx.BuildTools
                 var mxgFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxg").ToImmutableArray();
                 var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
                 var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
+                var mxsFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxs").ToImmutableArray();
                 //*/
                 foreach (var mxgFile in mxgFiles)
                 {
@@ -156,6 +159,7 @@ namespace MetaDslx.BuildTools
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
+                    await CompileMetaSymbols(compilation, mxsFiles);
                     await CompileMetaModels(compilation, mxmFiles);
                     await CompileMetaLanguages(compilation, mxlFiles);
                 }
@@ -193,6 +197,110 @@ namespace MetaDslx.BuildTools
                 var exDiag = Diagnostic.Create(ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
                 await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(exDiag));
             }
+        }
+
+
+        private static async Task CompileMetaSymbols(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxsFiles)
+        {
+            var filePaths = ArrayBuilder<string>.GetInstance();
+            foreach (var mxsFile in mxsFiles)
+            {
+                var filePath = mxsFile.FilePath;
+                if (File.Exists(filePath))
+                {
+                    filePaths.Add(filePath);
+                    var outputDir = Path.Combine(Path.GetDirectoryName(filePath), "Generated");
+                    Directory.CreateDirectory(outputDir);
+                    if (EraseOutputDirectory)
+                    {
+                        var dirInfo = new DirectoryInfo(outputDir);
+                        foreach (FileInfo file in dirInfo.EnumerateFiles())
+                        {
+                            file.Delete();
+                        }
+                        foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+                        {
+                            dir.Delete(true);
+                        }
+                    }
+                }
+                else
+                {
+                    await Console.Out.WriteLineAsync($"{filePath}(1,1,1,1): error: File '{filePath}' does not exist.");
+                }
+            }
+            if (filePaths.Count == 0) return;
+            try
+            {
+                var mxsTrees = ArrayBuilder<SyntaxTree>.GetInstance();
+                foreach (var filePath in filePaths)
+                {
+                    var mxsCode = await File.ReadAllTextAsync(filePath);
+                    var mxsTree = SymbolSyntaxTree.ParseText(mxsCode, path: filePath);
+                    mxsTrees.Add(mxsTree);
+                }
+                var mxsCompiler = Compilation.Create("Meta",
+                                syntaxTrees: mxsTrees,
+                                initialCompilation: initialCompilation,
+                                references: new[]
+                                {
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaSymbols.Model.Symbols.MInstance)
+                                },
+                                options: CompilationOptions.Default.WithConcurrentBuild(false));
+                mxsCompiler.Compile();
+                var diagnostics = mxsCompiler.GetDiagnostics();
+                var mxsDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
+                foreach (var diag in mxsDiagnostics)
+                {
+                    await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+                }
+                var model = mxsCompiler.SourceModule.Model;
+                var generator = new SymbolGenerator();
+                foreach (var symbol in model.Objects.OfType<MetaDslx.Languages.MetaSymbols.Model.Symbol>())
+                {
+                    var modelFilePath = symbol.MSourceLocation?.GetLineSpan().Path;
+                    //var xmi = new XmiSerializer();
+                    //xmi.WriteModelToFile(Path.Combine(modelFilePath + ".xmi"), model);
+                    if (!mxsDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
+                    {
+                        await GenerateMetaSymbolFiles(generator, modelFilePath, symbol);
+                    }
+                }
+                mxsTrees.Free();
+            }
+            catch (Exception ex)
+            {
+                var exLocation = ExternalFileLocation.Create(filePaths[0], TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
+                var exDiag = Diagnostic.Create(ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(exDiag));
+            }
+            filePaths.Free();
+        }
+
+        private static async Task GenerateMetaSymbolFiles(SymbolGenerator generator, string originalFilePath, MetaDslx.Languages.MetaSymbols.Model.Symbol symbol)
+        {
+            var implDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Impl");
+            Directory.CreateDirectory(implDir);
+            var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
+            Directory.CreateDirectory(outputDir);
+            if (EraseOutputDirectory)
+            {
+                var dirInfo = new DirectoryInfo(outputDir);
+                foreach (FileInfo file in dirInfo.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
+            var intfCode = generator.GenerateInterface(symbol);
+            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}.cs"), intfCode);
+            var baseCode = generator.GenerateBase(symbol);
+            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}.Base.cs"), baseCode);
+            var implCode = generator.GenerateImplementation(symbol);
+            await AddGeneratedFile(Path.Combine(implDir, $"{symbol.Name}.cs"), implCode, overwrite: false);
         }
 
         private static async Task CompileMetaModels(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxmFiles)
@@ -495,10 +603,13 @@ namespace MetaDslx.BuildTools
             antlrDiagnostics.Free();
         }
 
-        private static async Task AddGeneratedFile(string filePath, string content)
+        private static async Task AddGeneratedFile(string filePath, string content, bool overwrite = true)
         {
-            await File.WriteAllTextAsync(filePath, content);
-            await Console.Out.WriteLineAsync($"generated file: {filePath}");
+            if (overwrite || !File.Exists(filePath))
+            {
+                await File.WriteAllTextAsync(filePath, content);
+                await Console.Out.WriteLineAsync($"generated file: {filePath}");
+            }
         }
     }
 }

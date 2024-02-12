@@ -27,6 +27,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
     {
         global::MetaDslx.Modeling.ICollectionSlot<Symbol> BaseTypes { get; }
         bool IsAbstract { get; set; }
+        string NamespaceName { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Operation> Operations { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Property> Properties { get; }
     

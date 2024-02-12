@@ -160,7 +160,9 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 else name = NameGreen.__Missing;
                 PropertyBlock2Green? block2 = null;
                 if (context.E_Block1 is not null) block2 = (PropertyBlock2Green?)this.Visit(context.E_Block1);
-                return _factory.Property(block1, type, name, block2);
+                PropertyBlock3Green? block3 = null;
+                if (context.E_Block2 is not null) block3 = (PropertyBlock3Green?)this.Visit(context.E_Block2);
+                return _factory.Property(block1, type, name, block2, block3);
             }
             
             public override GreenNode? VisitPr_Operation(SymbolParser.Pr_OperationContext? context)
@@ -481,6 +483,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.E_defaultValue is not null) defaultValue = (ValueGreen?)this.Visit(context.E_defaultValue) ?? ValueGreen.__Missing;
                 else defaultValue = ValueGreen.__Missing;
                 return _factory.PropertyBlock2(tEq, defaultValue);
+            }
+            
+            public override GreenNode? VisitPr_PropertyBlock3(SymbolParser.Pr_PropertyBlock3Context? context)
+            {
+                if (context == null) return PropertyBlock3Green.__Missing;
+                var kPhase = (InternalSyntaxToken?)this.VisitTerminal(context.E_KPhase, SymbolSyntaxKind.KPhase);
+                IdentifierGreen? phase = null;
+                if (context.E_phase is not null) phase = (IdentifierGreen?)this.Visit(context.E_phase) ?? IdentifierGreen.__Missing;
+                else phase = IdentifierGreen.__Missing;
+                return _factory.PropertyBlock3(kPhase, phase);
             }
             
             public override GreenNode? VisitPr_OperationBlock1(SymbolParser.Pr_OperationBlock1Context? context)

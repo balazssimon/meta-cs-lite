@@ -294,13 +294,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             #endif
             return new SymbolGreen(SymbolSyntaxKind.Symbol, isAbstract, kSymbol, name, block1, block2);
         }
-        internal PropertyGreen Property(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2)
+        internal PropertyGreen Property(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
         {
             #if DEBUG
                 if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
             #endif
-            return new PropertyGreen(SymbolSyntaxKind.Property, block1, type, name, block2);
+            return new PropertyGreen(SymbolSyntaxKind.Property, block1, type, name, block2, block3);
         }
         internal OperationGreen Operation(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationBlock1Green block, __InternalSyntaxToken tRParen)
         {
@@ -749,6 +749,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             if (cached != null) return (PropertyBlock2Green)cached;
         
             var result = new PropertyBlock2Green(SymbolSyntaxKind.PropertyBlock2, tEq, defaultValue);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        internal PropertyBlock3Green PropertyBlock3(__InternalSyntaxToken kPhase, IdentifierGreen phase)
+        {
+            #if DEBUG
+                if (kPhase is null) throw new __ArgumentNullException(nameof(kPhase));
+                if (kPhase.RawKind != (int)SymbolSyntaxKind.KPhase) throw new __ArgumentException(nameof(kPhase));
+                if (phase is null) throw new __ArgumentNullException(nameof(phase));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock3, kPhase, phase, out hash);
+            if (cached != null) return (PropertyBlock3Green)cached;
+        
+            var result = new PropertyBlock3Green(SymbolSyntaxKind.PropertyBlock3, kPhase, phase);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

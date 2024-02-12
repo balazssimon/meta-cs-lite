@@ -15,7 +15,7 @@ pr_Symbol
     :  E_isAbstract=LR_KAbstract?  E_KSymbol=LR_KSymbol  E_Name=pr_Name  E_Block=pr_SymbolBlock1?  E_Block1=pr_SymbolBlock2
     ;
 pr_Property
-    :  E_Block=pr_PropertyBlock1?  E_type=pr_TypeReference  E_Name=pr_Name  E_Block1=pr_PropertyBlock2?
+    :  E_Block=pr_PropertyBlock1?  E_type=pr_TypeReference  E_Name=pr_Name  E_Block1=pr_PropertyBlock2?  E_Block2=pr_PropertyBlock3?
     ;
 pr_Operation
     :  E_returnType=pr_TypeReference  E_Name=pr_Name  E_TLParen=LR_TLParen  E_Block=pr_OperationBlock1?  E_TRParen=LR_TRParen
@@ -78,6 +78,9 @@ pr_PropertyBlock1
     ;
 pr_PropertyBlock2
     :  E_TEq=LR_TEq  E_defaultValue=pr_Value
+    ;
+pr_PropertyBlock3
+    :  E_KPhase=LR_KPhase  E_phase=pr_Identifier
     ;
 pr_OperationBlock1
     :   E_parameters1=pr_Parameter(E_TComma1+=LR_TComma E_parameters2+=pr_Parameter)*

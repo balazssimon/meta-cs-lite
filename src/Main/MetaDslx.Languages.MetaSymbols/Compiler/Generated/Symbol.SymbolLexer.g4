@@ -34,6 +34,7 @@ LR_TRBrace: '}';
 LR_KWeak: 'weak';
 LR_KDerived: 'derived';
 LR_TEq: '=';
+LR_KPhase: 'phase';
 LR_TQuestion: '?';
 LR_TLBracket: '[';
 LR_TRBracket: ']';

@@ -47,6 +47,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         void VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node);
         void VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node);
         void VisitPropertyBlock2(PropertyBlock2Syntax node);
+        void VisitPropertyBlock3(PropertyBlock3Syntax node);
         void VisitOperationBlock1(OperationBlock1Syntax node);
         void VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node);
         void VisitTypeReferenceBlock1(TypeReferenceBlock1Syntax node);
@@ -211,6 +212,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
+        public virtual void VisitPropertyBlock3(PropertyBlock3Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
         public virtual void VisitOperationBlock1(OperationBlock1Syntax node)
         {
             this.DefaultVisit(node);
@@ -271,6 +277,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node);
         TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node);
         TResult VisitPropertyBlock2(PropertyBlock2Syntax node);
+        TResult VisitPropertyBlock3(PropertyBlock3Syntax node);
         TResult VisitOperationBlock1(OperationBlock1Syntax node);
         TResult VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node);
         TResult VisitTypeReferenceBlock1(TypeReferenceBlock1Syntax node);
@@ -435,6 +442,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
+        public virtual TResult VisitPropertyBlock3(PropertyBlock3Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
         public virtual TResult VisitOperationBlock1(OperationBlock1Syntax node)
         {
             return this.DefaultVisit(node);
@@ -495,6 +507,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node, TArg argument);
         TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node, TArg argument);
         TResult VisitPropertyBlock2(PropertyBlock2Syntax node, TArg argument);
+        TResult VisitPropertyBlock3(PropertyBlock3Syntax node, TArg argument);
         TResult VisitOperationBlock1(OperationBlock1Syntax node, TArg argument);
         TResult VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node, TArg argument);
         TResult VisitTypeReferenceBlock1(TypeReferenceBlock1Syntax node, TArg argument);
@@ -659,6 +672,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
+        public virtual TResult VisitPropertyBlock3(PropertyBlock3Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
         public virtual TResult VisitOperationBlock1(OperationBlock1Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
@@ -732,7 +750,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             var type = (TypeReferenceSyntax)this.Visit(node.Type);
             var name = (NameSyntax)this.Visit(node.Name);
             var block2 = (PropertyBlock2Syntax)this.Visit(node.Block2);
-            return node.Update(block1, type, name, block2);
+            var block3 = (PropertyBlock3Syntax)this.Visit(node.Block3);
+            return node.Update(block1, type, name, block2, block3);
         }
 
         public virtual SyntaxNode VisitOperation(OperationSyntax node)
@@ -901,6 +920,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             var tEq = this.VisitToken(node.TEq);
             var defaultValue = (ValueSyntax)this.Visit(node.DefaultValue);
             return node.Update(tEq, defaultValue);
+        }
+
+        public virtual SyntaxNode VisitPropertyBlock3(PropertyBlock3Syntax node)
+        {
+            var kPhase = this.VisitToken(node.KPhase);
+            var phase = (IdentifierSyntax)this.Visit(node.Phase);
+            return node.Update(kPhase, phase);
         }
 
         public virtual SyntaxNode VisitOperationBlock1(OperationBlock1Syntax node)
