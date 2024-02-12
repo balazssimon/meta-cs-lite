@@ -40,4 +40,7 @@
 		<Compile Remove="Symbols\MetaModelImport\**" />
 		<None Remove="Symbols\MetaModelImport\**" />
 	</ItemGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="Symbols\*.mxs" />
+	</ItemGroup>
 </Project>
