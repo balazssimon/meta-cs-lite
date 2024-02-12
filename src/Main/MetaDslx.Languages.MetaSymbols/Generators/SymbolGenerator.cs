@@ -95,7 +95,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
         {
             if (prop.IsWeak)
             {
-                if (prop.Type.Type.IsValueType) return $"global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>";
+                if (prop.Type.Type.IsValueType || prop.Type.Dimensions > 0) return $"global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>";
                 else return $"global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, {GetTypeName(context, prop.Type)}>";
             }
             else

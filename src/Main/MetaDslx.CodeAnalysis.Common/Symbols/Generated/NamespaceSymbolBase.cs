@@ -17,8 +17,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_DeclaredAccessibility = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private bool _isStatic;
         private bool _isExtern;
-        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>> s_TypeArguments = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>();
-        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Immutable.ImmutableArray<ImportSymbol>> s_Imports = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Immutable.ImmutableArray<ImportSymbol>>();
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_TypeArguments = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_Imports = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _members;
 
         protected NamespaceSymbolBase(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
