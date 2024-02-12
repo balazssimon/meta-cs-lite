@@ -336,7 +336,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         {
             #if DEBUG
                 if (type is null) throw new __ArgumentNullException(nameof(type));
-                if (block is null) throw new __ArgumentNullException(nameof(block));
                 if (dimensions is null) throw new __ArgumentNullException(nameof(dimensions));
             #endif
             int hash;

@@ -27,7 +27,7 @@ Property: (isWeak?='weak' | isDerived?='derived')? @type=TypeReference Name ('='
 Operation: returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')';
 Parameter: @type=TypeReference Name;
 
-TypeReference: @type=SimpleTypeReference (isNullable?='?') dimensions=ArrayDimensions;
+TypeReference: @type=SimpleTypeReference (isNullable?='?')? dimensions=ArrayDimensions;
 ArrayDimensions returns int: ('[' ']')*;
 
 SimpleTypeReference returns type: PrimitiveType | #type;

@@ -200,8 +200,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.E_type is not null) type = (SimpleTypeReferenceGreen?)this.Visit(context.E_type) ?? SimpleTypeReferenceGreen.__Missing;
                 else type = SimpleTypeReferenceGreen.__Missing;
                 TypeReferenceBlock1Green? block = null;
-                if (context.E_Block is not null) block = (TypeReferenceBlock1Green?)this.Visit(context.E_Block) ?? TypeReferenceBlock1Green.__Missing;
-                else block = TypeReferenceBlock1Green.__Missing;
+                if (context.E_Block is not null) block = (TypeReferenceBlock1Green?)this.Visit(context.E_Block);
                 ArrayDimensionsGreen? dimensions = null;
                 if (context.E_dimensions is not null) dimensions = (ArrayDimensionsGreen?)this.Visit(context.E_dimensions) ?? ArrayDimensionsGreen.__Missing;
                 else dimensions = ArrayDimensionsGreen.__Missing;

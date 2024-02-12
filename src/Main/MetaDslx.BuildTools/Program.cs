@@ -280,28 +280,17 @@ namespace MetaDslx.BuildTools
 
         private static async Task GenerateMetaSymbolFiles(SymbolGenerator generator, string originalFilePath, MetaDslx.Languages.MetaSymbols.Model.Symbol symbol)
         {
+            //if (symbol.FullName == "MetaDslx.CodeAnalysis.Symbols.Symbol") return;
             var implDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Impl");
             Directory.CreateDirectory(implDir);
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             Directory.CreateDirectory(outputDir);
-            if (EraseOutputDirectory)
-            {
-                var dirInfo = new DirectoryInfo(outputDir);
-                foreach (FileInfo file in dirInfo.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-            }
             var intfCode = generator.GenerateInterface(symbol);
-            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}.cs"), intfCode);
+            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}Symbol.cs"), intfCode);
             var baseCode = generator.GenerateBase(symbol);
-            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}.Base.cs"), baseCode);
+            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}SymbolBase.cs"), baseCode);
             var implCode = generator.GenerateImplementation(symbol);
-            await AddGeneratedFile(Path.Combine(implDir, $"{symbol.Name}.cs"), implCode, overwrite: false);
+            await AddGeneratedFile(Path.Combine(implDir, $"{symbol.Name}Symbol.cs"), implCode, overwrite: false);
         }
 
         private static async Task CompileMetaModels(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxmFiles)

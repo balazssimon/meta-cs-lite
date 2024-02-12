@@ -19,20 +19,28 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
 
         public string GetIntfName(Symbol context, Symbol type)
         {
-            if (type.Parent == context.Parent) return type.Name;
-            else return $"global::{type.FullName}";
+            if (type.FullName == "MetaDslx.CodeAnalysis.Symbols.Symbol")
+            {
+                if (type.Parent == context.Parent) return "Symbol";
+                else return $"global::{type.FullName}";
+            }
+            else
+            {
+                if (type.Parent == context.Parent) return $"{type.Name}Symbol";
+                else return $"global::{type.FullName}Symbol";
+            }
         }
 
         public string GetBaseName(Symbol context, Symbol type)
         {
-            if (type.Parent == context.Parent) return $"{type.Name}Base";
-            else return $"global::{type.FullName}Base";
+            if (type.Parent == context.Parent) return $"{type.Name}SymbolBase";
+            else return $"global::{type.FullName}SymbolBase";
         }
 
         public string GetImplName(Symbol context, Symbol type)
         {
-            if (type.Parent == context.Parent) return $"{type.Name}Impl";
-            else return $"global::{type.FullName}Impl";
+            if (type.Parent == context.Parent) return $"{type.Name}SymbolImpl";
+            else return $"global::{type.FullName}SymbolImpl";
         }
 
         public string GetTypeName(Symbol context, TypeReference type)
@@ -49,7 +57,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 var sb = builder.Builder;
                 for (int i = 0; i < type.Dimensions; i++)
                 {
-                    sb.Append("ImmutableArray<");
+                    sb.Append("global::System.Collections.Immutable.ImmutableArray<");
                 }
                 sb.Append(typeName);
                 for (int i = 0; i < type.Dimensions; i++)
@@ -67,6 +75,10 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             {
                 return GetIntfName(context, symbol);
             }
+            else if (type.CSharpKeyword is not null)
+            {
+                return type.CSharpKeyword;
+            }
             else
             {
                 return $"global::{type.CSharpFullName}";
@@ -83,8 +95,8 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
         {
             if (prop.IsWeak)
             {
-                if (prop.Type.Type.IsValueType) return $"static ConditionalWeakTable<Symbol, object>";
-                else return $"static ConditionalWeakTable<Symbol, {GetTypeName(context, prop.Type)}>";
+                if (prop.Type.Type.IsValueType) return $"global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>";
+                else return $"global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, {GetTypeName(context, prop.Type)}>";
             }
             else
             {

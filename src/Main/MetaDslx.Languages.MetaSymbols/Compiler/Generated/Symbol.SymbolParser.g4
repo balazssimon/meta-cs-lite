@@ -24,7 +24,7 @@ pr_Parameter
     :  E_type=pr_TypeReference  E_Name=pr_Name
     ;
 pr_TypeReference
-    :  E_type=pr_SimpleTypeReference  E_Block=pr_TypeReferenceBlock1  E_dimensions=pr_ArrayDimensions
+    :  E_type=pr_SimpleTypeReference  E_Block=pr_TypeReferenceBlock1?  E_dimensions=pr_ArrayDimensions
     ;
 pr_ArrayDimensions
     :  E_Block+=pr_ArrayDimensionsBlock1*

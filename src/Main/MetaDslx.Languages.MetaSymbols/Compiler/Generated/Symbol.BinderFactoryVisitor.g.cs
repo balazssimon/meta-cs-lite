@@ -231,7 +231,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
                 {
                     this.End(__annot0);
                 }
-                this.Visit(node.Block);
+                if (node.Block != null)
+                {
+                    this.Visit(node.Block);
+                }
                 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Dimensions");
                 this.Begin(__annot1, node.Dimensions);
                 try

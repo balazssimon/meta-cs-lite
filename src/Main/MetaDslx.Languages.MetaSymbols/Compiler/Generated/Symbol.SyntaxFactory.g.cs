@@ -331,9 +331,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         public TypeReferenceSyntax TypeReference(SimpleTypeReferenceSyntax type, TypeReferenceBlock1Syntax block, ArrayDimensionsSyntax dimensions)
         {
             if (type is null) throw new __ArgumentNullException(nameof(type));
-            if (block is null) throw new __ArgumentNullException(nameof(block));
             if (dimensions is null) throw new __ArgumentNullException(nameof(dimensions));
             return (TypeReferenceSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.TypeReference((InternalSyntax.SimpleTypeReferenceGreen)type.Green, (InternalSyntax.TypeReferenceBlock1Green)block.Green, (InternalSyntax.ArrayDimensionsGreen)dimensions.Green).CreateRed();
+        }
+        
+        public TypeReferenceSyntax TypeReference(SimpleTypeReferenceSyntax type, ArrayDimensionsSyntax dimensions)
+        {
+            return this.TypeReference(type, default, dimensions);
         }
 
         public ArrayDimensionsSyntax ArrayDimensions(global::MetaDslx.CodeAnalysis.SyntaxList<ArrayDimensionsBlock1Syntax> block)

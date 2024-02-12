@@ -1,8 +1,16 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 
+using MetaDslx.CodeAnalysis
+using MetaDslx.CodeAnalysis.Symbols
+
 symbol Symbol
 {
     weak Attribute[] Attributes
+}
+
+symbol Attribute
+{
+    Type AttributeClass
 }
 
 symbol Assembly
@@ -37,7 +45,7 @@ symbol Import
 symbol ImportMetaModel : Import
 {
     MetaSymbol MetaModelSymbols
-    derived MetaModel[] MetaModels
+    derived MetaDslx.Modeling.MetaModel[] MetaModels
 }
 
 symbol Alias : Declaration

@@ -8,7 +8,8 @@ generator SymbolGenerator
 template GenerateInterface(Symbol symbol)
 namespace [symbol.NamespaceName]
 {
-    public interface [symbol.Name][from bt in symbol.BaseTypes select GetIntfName(symbol, bt) before ": " separator ", "]
+    [var baseTypes = symbol.BaseTypes]
+    public interface [GetIntfName(symbol, symbol)]: [if (baseTypes.Count == 0)]global::MetaDslx.CodeAnalysis.Symbols.Symbol[else][from bt in baseTypes select GetIntfName(symbol, bt) separator ", "][end if]
     {
         [foreach (var prop in symbol.Properties)]
             [GetTypeName(symbol, prop.Type)] [prop.Name] { get; }
@@ -46,10 +47,14 @@ namespace [symbol.NamespaceName]
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
 
-    internal abstract class [GetBaseName(symbol, symbol)] : global::MetaDslx.CodeAnalysis.Symbols.MultiSymbolBase, [symbol.Name]
+    internal abstract class [GetBaseName(symbol, symbol)] : global::MetaDslx.CodeAnalysis.Symbols.SymbolBase, [GetIntfName(symbol, symbol)]
     {
         [foreach (var prop in GetProperties(symbol))]
-            private [GetFieldType(symbol, prop)] [GetFieldName(prop)];
+            [if (prop.IsWeak)]
+                private static [GetFieldType(symbol, prop)] [GetFieldName(prop)] = new [GetFieldType(symbol, prop)]();
+            [else]
+                private [GetFieldType(symbol, prop)] [GetFieldName(prop)];
+            [end if]
         [end foreach]
 
         protected [GetBaseName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
@@ -72,7 +77,7 @@ namespace [symbol.NamespaceName]
         {
         }
 
-        protected override __CompletionGraph CompletionGraph => [symbol.Name].CompletionParts.CompletionGraph;
+        protected override __CompletionGraph CompletionGraph => [GetIntfName(symbol, symbol)].CompletionParts.CompletionGraph;
 
         [foreach (var prop in GetProperties(symbol))]
             ["["]__ModelProperty["]"]
@@ -80,7 +85,7 @@ namespace [symbol.NamespaceName]
             {
                 get
                 {
-                    this.ForceComplete(CompletionGraph.Finish_[prop.Name], null, default);
+                    this.ForceComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Name], null, default);
                     [if (prop.IsWeak)]
                         if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
                         else return [GetDefaultValue(symbol, prop)];
@@ -93,11 +98,12 @@ namespace [symbol.NamespaceName]
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
-            [foreach (var phase in GetPhases(symbol))]
+            [var phases = GetPhases(symbol)]
+            [foreach (var phase in phases)]
                 [var props = GetPhaseProperties(symbol, phase)]
-                if (incompletePart == [symbol.Name].CompletionParts.Start_[phase] || incompletePart == [symbol.Name].CompletionParts.Finish_[phase])
+                if (incompletePart == [GetIntfName(symbol, symbol)].CompletionParts.Start_[phase] || incompletePart == [GetIntfName(symbol, symbol)].CompletionParts.Finish_[phase])
                 {
-                    if (NotePartComplete([symbol.Name].CompletionParts.Start_[phase]))
+                    if (NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Start_[phase]))
                     {
                         var diagnostics = __DiagnosticBag.GetInstance();
                         [if (props.Length >= 2)]
@@ -120,6 +126,7 @@ namespace [symbol.NamespaceName]
                                 [end if]
                             [end foreach]
                         [else if (props.Length == 1)]
+                            var result = Complete_[phase](diagnostics, cancellationToken);
                             [var prop = props[0]]
                             [if (prop.IsWeak)]
                                 [if (prop.Type.Dimensions > 0)]
@@ -141,13 +148,19 @@ namespace [symbol.NamespaceName]
                         [end if]
                         AddSymbolDiagnostics(diagnostics);
                         diagnostics.Free();
-                        NotePartComplete([symbol.Name].CompletionParts.Finish_[phase]);
+                        NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[phase]);
                     }
                     return true;
                 }
                 else [\]
             [end foreach]
-            return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
+            [if (phases.Length > 0)]
+                {
+                    return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
+                }
+            [else]
+                return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
+            [end if]
         }
 
         [foreach (var phase in GetPhases(symbol))]
@@ -180,13 +193,15 @@ namespace [symbol.NamespaceName]
 end template
 
 template GenerateImplementation(Symbol symbol)
-using MetaDslx.CodeAnalysis;
 using MetaDslx.Modeling;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.Errors;
 
 namespace [symbol.NamespaceName]
 {
-    internal class [GetImplName(symbol, symbol)] : [GetBaseName(symbol, symbol)]
+    internal partial class [GetImplName(symbol, symbol)] : [GetBaseName(symbol, symbol)]
     {
         protected [GetImplName(symbol, symbol)](Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
             : base(container, declaration, modelObject)
