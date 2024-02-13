@@ -16,12 +16,13 @@ using System.Xml.Linq;
 using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using System.Collections.Concurrent;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
 
-    public abstract class SymbolInst : SymbolBase
+    public abstract class SymbolInst : Symbol
     {
         internal static readonly ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
         internal static readonly ConditionalWeakTable<Symbol, DiagnosticBag> s_useSiteDiagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
@@ -131,16 +132,27 @@ namespace MetaDslx.CodeAnalysis.Symbols
             s_compilations.Add(this, compilation);
         }
 
-        public sealed override bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
-        public sealed override bool IsSourceSymbol => s_declarations.TryGetValue(this, out _) || s_compilations.TryGetValue(this, out _);
-        public sealed override bool IsModelSymbol => _underlyingObject is IModelObject;
-        public sealed override bool IsCSharpSymbol => _underlyingObject is __ISymbol;
+        public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
+        public bool IsSourceSymbol => s_declarations.TryGetValue(this, out _) || s_compilations.TryGetValue(this, out _);
+        public bool IsModelSymbol => _underlyingObject is IModelObject;
+        public bool IsCSharpSymbol => _underlyingObject is __ISymbol;
 
-        public sealed override bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _);
+        public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _);
 
-        public sealed override Symbol ContainingSymbol => _container;
+        public Symbol ContainingSymbol => _container;
 
-        public sealed override ImmutableArray<Symbol> ContainedSymbols
+        public virtual ISymbolFactory SymbolFactory
+        {
+            get
+            {
+                var impl = SymbolImpl.GetInstance(this);
+                var result = impl.SymbolFactory;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public ImmutableArray<Symbol> ContainedSymbols
         {
             get
             {
@@ -149,7 +161,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override string Kind
+        public string Kind
         {
             get
             {
@@ -160,7 +172,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override string DisplayKind
+        public string DisplayKind
         {
             get
             {
@@ -190,7 +202,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override string Name
+        public string Name
         {
             get
             {
@@ -206,7 +218,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override string MetadataName
+        public string MetadataName
         {
             get
             {
@@ -222,9 +234,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override bool MangleName => this.Name != this.MetadataName;
+        public bool MangleName => this.Name != this.MetadataName;
 
-        public sealed override ImmutableArray<AttributeSymbol> Attributes
+        public ImmutableArray<AttributeSymbol> Attributes
         {
             get
             {
@@ -240,11 +252,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        /// <summary>
-        /// Returns the assembly containing this symbol. If this symbol is shared across multiple
-        /// assemblies, or doesn't belong to an assembly, returns null.
-        /// </summary>
-        public override AssemblySymbol? ContainingAssembly
+        public virtual AssemblySymbol? ContainingAssembly
         {
             get
             {
@@ -255,7 +263,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override Compilation? DeclaringCompilation
+        public virtual Compilation? DeclaringCompilation
         {
             get
             {
@@ -266,7 +274,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override ModuleSymbol? ContainingModule
+        public virtual ModuleSymbol? ContainingModule
         {
             get
             {
@@ -277,7 +285,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override DeclarationSymbol? ContainingDeclaration
+        public virtual DeclarationSymbol? ContainingDeclaration
         {
             get
             {
@@ -288,7 +296,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override TypeSymbol? ContainingType
+        public virtual TypeSymbol? ContainingType
         {
             get
             {
@@ -299,7 +307,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override NamespaceSymbol? ContainingNamespace
+        public virtual NamespaceSymbol? ContainingNamespace
         {
             get
             {
@@ -310,18 +318,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        /// <summary>
-        /// <para>
-        /// Get a source location key for sorting. For performance, it's important that this
-        /// be able to be returned from a symbol without doing any additional allocations (even
-        /// if nothing is cached yet.)
-        /// </para>
-        /// <para>
-        /// Only (original) source symbols and namespaces that can be merged
-        /// need implement this function if they want to do so for efficiency.
-        /// </para>
-        /// </summary>
-        public override LexicalSortKey GetLexicalSortKey()
+        public virtual LexicalSortKey GetLexicalSortKey()
         {
             var impl = SymbolImpl.GetInstance(this);
             var result = impl.GetLexicalSortKey();
@@ -329,7 +326,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        public sealed override MergedDeclaration? MergedDeclaration
+        public MergedDeclaration? MergedDeclaration
         {
             get
             {
@@ -338,7 +335,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences
+        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences
         {
             get
             {
@@ -351,7 +348,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// metadata. Some symbols (for example, partial classes) may be defined in more than one
         /// location.
         /// </summary>
-        public sealed override ImmutableArray<Location> Locations
+        public ImmutableArray<Location> Locations
         {
             get
             {
@@ -359,11 +356,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override Location Location => Locations.FirstOrDefault() ?? Location.None;
+        public Location Location => Locations.FirstOrDefault() ?? Location.None;
 
-        public sealed override IModelObject? ModelObject => _underlyingObject as IModelObject;
+        public IModelObject? ModelObject => _underlyingObject as IModelObject;
 
-        public sealed override Type? ModelObjectType
+        public Type? ModelObjectType
         {
             get
             {
@@ -374,11 +371,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override __ISymbol? CSharpSymbol => _underlyingObject as __ISymbol;
+        public __ISymbol? CSharpSymbol => _underlyingObject as __ISymbol;
 
         #region Diagnostics
 
-        public sealed override ImmutableArray<Diagnostic> Diagnostics
+        public ImmutableArray<Diagnostic> Diagnostics
         {
             get
             {
@@ -387,7 +384,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public sealed override bool HasAnyErrors
+        public bool HasAnyErrors
         {
             get
             {
@@ -469,7 +466,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <summary>
         /// True if the symbol has a use-site diagnostic with error severity.
         /// </summary>
-        public sealed override bool HasUseSiteError
+        public bool HasUseSiteError
         {
             get
             {
@@ -513,7 +510,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Property - type is unsupported
         /// Parameter - type is unsupported
         /// </summary>
-        public override bool HasUnsupportedMetadata
+        public virtual bool HasUnsupportedMetadata
         {
             get
             {
@@ -573,7 +570,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Returns a string representation of this symbol, suitable for debugging purposes, or
         /// for placing in an error message.
         /// </summary>
-        public sealed override string ToString()
+        public string ToString()
         {
             return SymbolDisplayFormat.Default.ToString(this);
         }
@@ -582,7 +579,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Returns the Documentation Comment ID for the symbol, or null if the symbol doesn't
         /// support documentation comments.
         /// </summary>
-        public override string GetDocumentationCommentId()
+        public virtual string GetDocumentationCommentId()
         {
             var impl = SymbolImpl.GetInstance(this);
             var result = impl.GetDocumentationCommentId();
@@ -597,7 +594,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <param name="expandIncludes">Optionally, expand <![CDATA[<include>]]> elements. No impact on non-source documentation comments.</param>
         /// <param name="cancellationToken">Optionally, allow cancellation of documentation comment retrieval.</param>
         /// <returns>The XML that would be written to the documentation file for the symbol.</returns>
-        public override string GetDocumentationCommentXml(CultureInfo preferredCulture = null, bool expandIncludes = false, CancellationToken cancellationToken = default)
+        public virtual string GetDocumentationCommentXml(CultureInfo preferredCulture = null, bool expandIncludes = false, CancellationToken cancellationToken = default)
         {
             var impl = SymbolImpl.GetInstance(this);
             var result = impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
@@ -609,7 +606,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual CompletionGraph CompletionGraph => Symbol.CompletionParts.CompletionGraph;
 
-        public sealed override void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        public void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             if (completionPart != null && HasComplete(completionPart)) return;
             if (completionPart != null && !CompletionGraph.Contains(completionPart)) throw new ArgumentException(nameof(completionPart));
@@ -765,7 +762,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             throw ExceptionUtilities.Unreachable;
         }
 
-        public sealed override bool HasComplete(CompletionPart part)
+        public bool HasComplete(CompletionPart part)
         {
             return CompletionGraph.HasComplete(part, _completeParts);
         }
@@ -842,7 +839,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        public sealed override bool IsFromCompilation(Compilation compilation)
+        public bool IsFromCompilation(Compilation compilation)
         {
             Debug.Assert(compilation != null);
             return compilation == this.DeclaringCompilation;
@@ -850,7 +847,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public virtual ImmutableArray<SingleDeclaration> GetSingleDeclarations(CancellationToken cancellationToken = default)
         {
-            if (this is ISourceSymbol sourceSymbol) return sourceSymbol.Declaration.Declarations;
+            if (this.MergedDeclaration is not null) return this.MergedDeclaration.Declarations;
             else return ImmutableArray<SingleDeclaration>.Empty;
         }
 
@@ -864,7 +861,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result.ToImmutableAndFree();
         }
 
-        public sealed override bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default)
+        public bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default)
         {
             foreach (var decl in this.GetSingleDeclarations(cancellationToken))
             {
@@ -878,7 +875,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        public sealed override bool IsDefinedBySyntax(SyntaxNodeOrToken syntax, CancellationToken cancellationToken = default)
+        public bool IsDefinedBySyntax(SyntaxNodeOrToken syntax, CancellationToken cancellationToken = default)
         {
             foreach (var decl in this.GetSingleDeclarations(cancellationToken))
             {
@@ -900,14 +897,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        private void CompletePart_Initialize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual void CompletePart_Initialize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             impl.CompletePart_Initialize(diagnostics, cancellationToken);
             impl.Free();
         }
 
-        private string? Complete_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual string? Complete_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             var result = impl.Complete_Name(diagnostics, cancellationToken);
@@ -915,7 +912,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        private string? Complete_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual string? Complete_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             var result = impl.Complete_MetadataName(diagnostics, cancellationToken);
@@ -923,7 +920,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        private ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             var result = impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
@@ -931,7 +928,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        private ImmutableArray<AttributeSymbol> Complete_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual ImmutableArray<AttributeSymbol> Complete_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             var result = impl.Complete_Attributes(diagnostics, cancellationToken);
@@ -939,21 +936,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        private void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
             impl.Free();
         }
 
-        private void CompletePart_Finalize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual void CompletePart_Finalize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             impl.CompletePart_Finalize(diagnostics, cancellationToken);
             impl.Free();
         }
 
-        private void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var impl = SymbolImpl.GetInstance(this);
             impl.CompletePart_Validate(diagnostics, cancellationToken);

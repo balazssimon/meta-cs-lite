@@ -1,21 +1,32 @@
 namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
-    using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
+    using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
+    using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
+    using __ModuleSymbol = global::MetaDslx.CodeAnalysis.Symbols.ModuleSymbol;
+    using __DeclarationSymbol = global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol;
+    using __NamespaceSymbol = global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol;
+    using __TypeSymbol = global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol;
+    using __ISymbolFactory = global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory;
+    using __LexicalSortKey = global::MetaDslx.CodeAnalysis.Symbols.LexicalSortKey;
+    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
     using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
     using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
+    using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
     using __DiagnosticBag = global::MetaDslx.CodeAnalysis.DiagnosticBag;
+    using __Compilation = global::MetaDslx.CodeAnalysis.Compilation;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
+    using __IObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.IObjectPool;
     using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<DeclarationSymbolImpl>;
     using __NotImplementedException = global::System.NotImplementedException;
+    using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-    internal sealed class DeclarationSymbolInst : global::MetaDslx.CodeAnalysis.Symbols.SymbolInst, DeclarationSymbol
+    public partial class DeclarationSymbolInst : global::MetaDslx.CodeAnalysis.Symbols.SymbolInst, DeclarationSymbol
     {
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_DeclaredAccessibility = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private bool _isStatic;
@@ -104,8 +115,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             _members = members;
         }
 
-        public DeclarationSymbolInst(__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
-            : base(container, errorInfo, name, metadataName, attributes)
+        public DeclarationSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
+            : base(container, compilation, modelObject, name, metadataName, attributes)
         {
             if (declaredAccessibility != default)
             {
@@ -122,6 +133,118 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 s_Imports.Add(this, imports);
             }
             _members = members;
+        }
+
+        public override __ISymbolFactory SymbolFactory
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.SymbolFactory;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override __AssemblySymbol? ContainingAssembly
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.ContainingAssembly;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override __Compilation? DeclaringCompilation
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.DeclaringCompilation;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override __ModuleSymbol? ContainingModule
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.ContainingModule;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override __DeclarationSymbol? ContainingDeclaration
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.ContainingDeclaration;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override __TypeSymbol? ContainingType
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.ContainingType;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override __NamespaceSymbol? ContainingNamespace
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.ContainingNamespace;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override __LexicalSortKey GetLexicalSortKey()
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            var result = impl.GetLexicalSortKey();
+            impl.Free();
+            return result;
+        }
+
+        public override bool HasUnsupportedMetadata
+        {
+            get
+            {
+                var impl = DeclarationSymbolImpl.GetInstance(this);
+                var result = impl.HasUnsupportedMetadata;
+                impl.Free();
+                return result;
+            }
+        }
+
+        public override string GetDocumentationCommentId()
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            var result = impl.GetDocumentationCommentId();
+            impl.Free();
+            return result;
+        }
+
+        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            var result = impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
+            impl.Free();
+            return result;
         }
 
 
@@ -182,7 +305,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             }
         }
 
-        protected sealed override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
+        protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
             if (incompletePart == DeclarationSymbol.CompletionParts.Start_DeclaredAccessibility || incompletePart == DeclarationSymbol.CompletionParts.Finish_DeclaredAccessibility)
             {
@@ -200,7 +323,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 }
                 return true;
             }
-            else if (incompletePart == DeclarationSymbol.CompletionParts.Start_IsStatic || incompletePart == DeclarationSymbol.CompletionParts.Finish_IsStatic)
+            else 
+            if (incompletePart == DeclarationSymbol.CompletionParts.Start_IsStatic || incompletePart == DeclarationSymbol.CompletionParts.Finish_IsStatic)
             {
                 if (NotePartComplete(DeclarationSymbol.CompletionParts.Start_IsStatic))
                 {
@@ -213,7 +337,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 }
                 return true;
             }
-            else if (incompletePart == DeclarationSymbol.CompletionParts.Start_IsExtern || incompletePart == DeclarationSymbol.CompletionParts.Finish_IsExtern)
+            else 
+            if (incompletePart == DeclarationSymbol.CompletionParts.Start_IsExtern || incompletePart == DeclarationSymbol.CompletionParts.Finish_IsExtern)
             {
                 if (NotePartComplete(DeclarationSymbol.CompletionParts.Start_IsExtern))
                 {
@@ -226,7 +351,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 }
                 return true;
             }
-            else if (incompletePart == DeclarationSymbol.CompletionParts.Start_TypeArguments || incompletePart == DeclarationSymbol.CompletionParts.Finish_TypeArguments)
+            else 
+            if (incompletePart == DeclarationSymbol.CompletionParts.Start_TypeArguments || incompletePart == DeclarationSymbol.CompletionParts.Finish_TypeArguments)
             {
                 if (NotePartComplete(DeclarationSymbol.CompletionParts.Start_TypeArguments))
                 {
@@ -242,7 +368,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 }
                 return true;
             }
-            else if (incompletePart == DeclarationSymbol.CompletionParts.Start_Imports || incompletePart == DeclarationSymbol.CompletionParts.Finish_Imports)
+            else 
+            if (incompletePart == DeclarationSymbol.CompletionParts.Start_Imports || incompletePart == DeclarationSymbol.CompletionParts.Finish_Imports)
             {
                 if (NotePartComplete(DeclarationSymbol.CompletionParts.Start_Imports))
                 {
@@ -258,7 +385,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 }
                 return true;
             }
-            else if (incompletePart == DeclarationSymbol.CompletionParts.Start_Members || incompletePart == DeclarationSymbol.CompletionParts.Finish_Members)
+            else 
+            if (incompletePart == DeclarationSymbol.CompletionParts.Start_Members || incompletePart == DeclarationSymbol.CompletionParts.Finish_Members)
             {
                 if (NotePartComplete(DeclarationSymbol.CompletionParts.Start_Members))
                 {
@@ -278,7 +406,68 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         }
 
 
-        private global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected override void CompletePart_Initialize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            impl.CompletePart_Initialize(diagnostics, cancellationToken);
+            impl.Free();
+        }
+
+        protected override string? Complete_Name(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            var result = impl.Complete_Name(diagnostics, cancellationToken);
+            impl.Free();
+            return result;
+        }
+
+        protected override string? Complete_MetadataName(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            var result = impl.Complete_MetadataName(diagnostics, cancellationToken);
+            impl.Free();
+            return result;
+        }
+
+        protected override global::System.Collections.Immutable.ImmutableArray<__Symbol> CompletePart_CreateContainedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            var result = impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
+            impl.Free();
+            return result;
+        }
+
+        protected override global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> Complete_Attributes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            var result = impl.Complete_Attributes(diagnostics, cancellationToken);
+            impl.Free();
+            return result;
+        }
+
+        protected override void CompletePart_ComputeNonSymbolProperties(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
+            impl.Free();
+        }
+
+        protected override void CompletePart_Finalize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            impl.CompletePart_Finalize(diagnostics, cancellationToken);
+            impl.Free();
+        }
+
+        protected override void CompletePart_Validate(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            var impl = DeclarationSymbolImpl.GetInstance(this);
+            impl.CompletePart_Validate(diagnostics, cancellationToken);
+            impl.Free();
+        }
+
+
+        protected virtual global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = DeclarationSymbolImpl.GetInstance(this);
             var result = impl.Complete_DeclaredAccessibility(diagnostics, cancellationToken);
@@ -286,7 +475,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return result;
         }
 
-        private bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = DeclarationSymbolImpl.GetInstance(this);
             var result = impl.Complete_IsStatic(diagnostics, cancellationToken);
@@ -294,7 +483,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return result;
         }
 
-        private bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = DeclarationSymbolImpl.GetInstance(this);
             var result = impl.Complete_IsExtern(diagnostics, cancellationToken);
@@ -302,7 +491,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return result;
         }
 
-        private global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = DeclarationSymbolImpl.GetInstance(this);
             var result = impl.Complete_TypeArguments(diagnostics, cancellationToken);
@@ -310,7 +499,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return result;
         }
 
-        private global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = DeclarationSymbolImpl.GetInstance(this);
             var result = impl.Complete_Imports(diagnostics, cancellationToken);
@@ -318,7 +507,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return result;
         }
 
-        private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = DeclarationSymbolImpl.GetInstance(this);
             var result = impl.Complete_Members(diagnostics, cancellationToken);
@@ -329,93 +518,67 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
     public abstract class DeclarationSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl, DeclarationSymbol
     {
-        public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility => ((DeclarationSymbol)__WrappedInstance).]DeclaredAccessibility;
-        public bool IsStatic => ((DeclarationSymbol)__WrappedInstance).]IsStatic;
-        public bool IsExtern => ((DeclarationSymbol)__WrappedInstance).]IsExtern;
-        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments => ((DeclarationSymbol)__WrappedInstance).]TypeArguments;
-        public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports => ((DeclarationSymbol)__WrappedInstance).]Imports;
-        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members => ((DeclarationSymbol)__WrappedInstance).]Members;
+        protected DeclarationSymbolBase(__IObjectPool pool) 
+            : base(pool)
+        {
+        }
+
+        public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility => ((DeclarationSymbol)__Wrapped).DeclaredAccessibility;
+        public bool IsStatic => ((DeclarationSymbol)__Wrapped).IsStatic;
+        public bool IsExtern => ((DeclarationSymbol)__Wrapped).IsExtern;
+        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments => ((DeclarationSymbol)__Wrapped).TypeArguments;
+        public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports => ((DeclarationSymbol)__Wrapped).Imports;
+        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members => ((DeclarationSymbol)__Wrapped).Members;
 
 
         public virtual global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
+            // TODO
             return default;
         }
 
         public virtual bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
+            // TODO
             return default;
         }
 
         public virtual bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
+            // TODO
             return default;
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
+            // TODO
             return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
+            // TODO
             return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
         }
 
         public abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 
-    public sealed partial class DeclarationSymbolImpl : DeclarationSymbolBase
+    public partial class DeclarationSymbolImpl : DeclarationSymbolBase
     {
         private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new DeclarationSymbolImpl(s_poolInstance), 32);
 
-        private readonly __ObjectPool _pool;
-
-        private DeclarationSymbolImpl(__ObjectPool pool) 
-            : base()
+        protected DeclarationSymbolImpl(__IObjectPool pool) 
+            : base(pool)
         {
-            _pool = pool;
         }
 
-        public static DeclarationSymbolImpl GetInstance(DeclarationSymbol wrapped)
+        public static new DeclarationSymbolImpl GetInstance(DeclarationSymbol wrapped)
         {
             var result = s_poolInstance.Allocate();
-            global::System.Diagnostics.Debug.Assert(result.__WrappedInstance is null);
-            result.__InitInstance(wrapped);
+            global::System.Diagnostics.Debug.Assert(result.__Wrapped is null);
+            result.__InitWrapped(wrapped);
             return result;
         }
-
-        public void Free()
-        {
-            this.__ClearInstance();
-            _pool?.Free(this);
-        }
-
-
-        protected override global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return default;
-        }
-
-        protected override bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return default;
-        }
-
-        protected override bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return default;
-        }
-
-        protected override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
-        }
-
-        protected override global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
-        }
-
     }
 }

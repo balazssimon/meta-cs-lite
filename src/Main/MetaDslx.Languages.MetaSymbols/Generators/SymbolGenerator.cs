@@ -154,8 +154,9 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             _baseTypes.Add(symbol, baseTypes.ToImmutableAndFree());
         }
 
-        public ImmutableArray<string> GetPhases(Symbol symbol)
+        public ImmutableArray<string> GetPhases(Symbol? symbol)
         {
+            if (symbol is null) return ImmutableArray<string>.Empty;
             if (_phases.TryGetValue(symbol, out var phases)) return phases;
             var phs = ArrayBuilder<string>.GetInstance();
             foreach (var decl in symbol.Declarations)
@@ -177,8 +178,9 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             return result;
         }
 
-        public ImmutableArray<Property> GetProperties(Symbol symbol)
+        public ImmutableArray<Property> GetProperties(Symbol? symbol)
         {
+            if (symbol is null) return ImmutableArray<Property>.Empty;
             if (_properties.TryGetValue(symbol, out var properties)) return properties;
             var props = ArrayBuilder<Property>.GetInstance();
             props.AddRange(symbol.Properties);
@@ -197,8 +199,9 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             return result;
         }
 
-        public ImmutableArray<Operation> GetOperations(Symbol symbol)
+        public ImmutableArray<Operation> GetOperations(Symbol? symbol)
         {
+            if (symbol is null) return ImmutableArray<Operation>.Empty;
             if (_operations.TryGetValue(symbol, out var operations)) return operations;
             var ops = ArrayBuilder<Operation>.GetInstance();
             ops.AddRange(symbol.Operations);

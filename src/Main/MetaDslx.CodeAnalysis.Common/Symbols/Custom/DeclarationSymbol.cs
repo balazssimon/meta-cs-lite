@@ -9,5 +9,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 {
     public partial class DeclarationSymbolImpl
     {
+        public override ImmutableArray<DeclarationSymbol> Complete_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

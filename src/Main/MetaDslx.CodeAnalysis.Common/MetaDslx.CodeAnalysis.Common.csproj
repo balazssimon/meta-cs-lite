@@ -45,6 +45,16 @@
 	<ItemGroup>
 		<Compile Remove="Symbols\Original\**" />
 		<None Remove="Symbols\Original\**" />
+		<Compile Remove="Symbols\CSharp\**" />
+		<None Remove="Symbols\CSharp\**" />
+		<Compile Remove="Symbols\Errors\**" />
+		<None Remove="Symbols\Errors\**" />
+		<Compile Remove="Symbols\Fixed\**" />
+		<None Remove="Symbols\Fixed\**" />
+		<Compile Remove="Symbols\Model\**" />
+		<None Remove="Symbols\Model\**" />
+		<Compile Remove="Symbols\Source\**" />
+		<None Remove="Symbols\Source\**" />
 		<!--
 		<Compile Remove="Symbols\Generated\**" />
 		<None Remove="Symbols\Generated\**" />

@@ -26,9 +26,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new SymbolImpl(s_poolInstance), 32);
 
-        private readonly __ObjectPool _pool;
+        private readonly IObjectPool _pool;
 
-        protected SymbolImpl(__ObjectPool pool)
+        protected SymbolImpl(IObjectPool pool)
             : base()
         {
             _pool = pool;
@@ -49,6 +49,15 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         private SymbolInst _wrapped => (SymbolInst)__Wrapped;
+
+        public override ISymbolFactory SymbolFactory
+        {
+            get
+            {
+                var container = this.ContainingModule;
+                return container?.SymbolFactory;
+            }
+        }
 
         public override AssemblySymbol? ContainingAssembly
         {

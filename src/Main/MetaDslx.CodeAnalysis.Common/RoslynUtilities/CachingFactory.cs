@@ -32,10 +32,10 @@ namespace MetaDslx.CodeAnalysis
     //                  in a case where it is not possible to create a static valueFactory, it is advisable
     //                  to set valueFactory to null and use TryGetValue/Add pattern instead of GetOrMakeValue.
     //
-    internal class CachingFactory<TKey, TValue> : CachingBase<CachingFactory<TKey, TValue>.Entry>
+    public class CachingFactory<TKey, TValue> : CachingBase<CachingFactory<TKey, TValue>.Entry>
         where TKey : notnull
     {
-        internal struct Entry
+        public struct Entry
         {
             internal int hash;
             internal TValue value;
@@ -125,13 +125,13 @@ namespace MetaDslx.CodeAnalysis
     //      keyValueEquality    is an object == for the new and old keys 
     //                          NOTE: we do store the key in this case 
     //                          reference comparison of keys is as cheap as comparing hash codes.
-    internal class CachingIdentityFactory<TKey, TValue> : CachingBase<CachingIdentityFactory<TKey, TValue>.Entry>
+    public class CachingIdentityFactory<TKey, TValue> : CachingBase<CachingIdentityFactory<TKey, TValue>.Entry>
         where TKey : class
     {
         private readonly Func<TKey, TValue> _valueFactory;
         private readonly ObjectPool<CachingIdentityFactory<TKey, TValue>>? _pool;
 
-        internal struct Entry
+        public struct Entry
         {
             internal TKey key;
             internal TValue value;
@@ -213,7 +213,7 @@ namespace MetaDslx.CodeAnalysis
     }
 
     // Just holds the data for the derived caches.
-    internal abstract class CachingBase<TEntry>
+    public abstract class CachingBase<TEntry>
     {
         // cache size is always ^2. 
         // items are placed at [hash ^ mask]
@@ -221,7 +221,7 @@ namespace MetaDslx.CodeAnalysis
         protected readonly int mask;
         protected readonly TEntry[] entries;
 
-        internal CachingBase(int size)
+        public CachingBase(int size)
         {
             var alignedSize = AlignSize(size);
             this.mask = alignedSize - 1;

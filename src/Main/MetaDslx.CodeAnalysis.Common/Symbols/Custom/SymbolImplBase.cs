@@ -20,7 +20,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
 
-    public class SymbolImplBase : SymbolBase
+    public class SymbolImplBase : Symbol
     {
         private Symbol? _wrapped;
 
@@ -41,85 +41,106 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected Symbol? __Wrapped => _wrapped;
 
-        public override string Name => _wrapped.Name;
+        public string Name => _wrapped.Name;
 
-        public override string MetadataName => _wrapped.MetadataName;
+        public string MetadataName => _wrapped.MetadataName;
 
-        public override bool MangleName => _wrapped.MangleName;
+        public bool MangleName => _wrapped.MangleName;
 
-        public override ImmutableArray<AttributeSymbol> Attributes => _wrapped.Attributes;
+        public ImmutableArray<AttributeSymbol> Attributes => _wrapped.Attributes;
 
-        public override string Kind => _wrapped.Kind;
+        public string Kind => _wrapped.Kind;
 
-        public override string DisplayKind => _wrapped.DisplayKind;
+        public string DisplayKind => _wrapped.DisplayKind;
 
-        public override bool IsImplicitlyDeclared => _wrapped.IsImplicitlyDeclared;
+        public bool IsImplicitlyDeclared => _wrapped.IsImplicitlyDeclared;
 
-        public override bool IsErrorSymbol => _wrapped.IsErrorSymbol;
+        public bool IsErrorSymbol => _wrapped.IsErrorSymbol;
 
-        public override bool IsSourceSymbol => _wrapped.IsSourceSymbol;
+        public bool IsSourceSymbol => _wrapped.IsSourceSymbol;
 
-        public override bool IsModelSymbol => _wrapped.IsModelSymbol;
+        public bool IsModelSymbol => _wrapped.IsModelSymbol;
 
-        public override bool IsCSharpSymbol => _wrapped.IsCSharpSymbol;
+        public bool IsCSharpSymbol => _wrapped.IsCSharpSymbol;
 
-        public override Symbol ContainingSymbol => _wrapped.ContainingSymbol;
+        public virtual ISymbolFactory SymbolFactory => _wrapped.SymbolFactory;
 
-        public override AssemblySymbol? ContainingAssembly => _wrapped.ContainingAssembly;
+        public Symbol ContainingSymbol => _wrapped.ContainingSymbol;
 
-        public override ModuleSymbol? ContainingModule => _wrapped.ContainingModule;
+        public virtual AssemblySymbol? ContainingAssembly => _wrapped.ContainingAssembly;
 
-        public override DeclarationSymbol? ContainingDeclaration => _wrapped.ContainingDeclaration;
+        public virtual ModuleSymbol? ContainingModule => _wrapped.ContainingModule;
 
-        public override TypeSymbol? ContainingType => _wrapped.ContainingType;
+        public virtual DeclarationSymbol? ContainingDeclaration => _wrapped.ContainingDeclaration;
 
-        public override NamespaceSymbol? ContainingNamespace => _wrapped.ContainingNamespace;
+        public virtual TypeSymbol? ContainingType => _wrapped.ContainingType;
 
-        public override ImmutableArray<Symbol> ContainedSymbols => _wrapped.ContainedSymbols;
+        public virtual NamespaceSymbol? ContainingNamespace => _wrapped.ContainingNamespace;
 
-        public override Compilation? DeclaringCompilation => _wrapped.DeclaringCompilation;
+        public ImmutableArray<Symbol> ContainedSymbols => _wrapped.ContainedSymbols;
 
-        public override MergedDeclaration? MergedDeclaration => _wrapped.MergedDeclaration;
+        public virtual Compilation? DeclaringCompilation => _wrapped.DeclaringCompilation;
 
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _wrapped.DeclaringSyntaxReferences;
+        public MergedDeclaration? MergedDeclaration => _wrapped.MergedDeclaration;
 
-        public override ImmutableArray<Location> Locations => _wrapped.Locations;
+        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _wrapped.DeclaringSyntaxReferences;
 
-        public override Location Location => _wrapped.Location;
+        public ImmutableArray<Location> Locations => _wrapped.Locations;
 
-        public override IModelObject? ModelObject => _wrapped.ModelObject;
+        public Location Location => _wrapped.Location;
 
-        public override Type? ModelObjectType => _wrapped.ModelObjectType;
+        public IModelObject? ModelObject => _wrapped.ModelObject;
 
-        public override __ISymbol? CSharpSymbol => _wrapped.CSharpSymbol;
+        public Type? ModelObjectType => _wrapped.ModelObjectType;
 
-        public override ImmutableArray<Diagnostic> Diagnostics => _wrapped.Diagnostics;
+        public __ISymbol? CSharpSymbol => _wrapped.CSharpSymbol;
 
-        public override bool HasAnyErrors => _wrapped.HasAnyErrors;
+        public ImmutableArray<Diagnostic> Diagnostics => _wrapped.Diagnostics;
 
-        public override void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        public bool HasAnyErrors => _wrapped.HasAnyErrors;
+
+        public bool HasUseSiteError => _wrapped.HasUseSiteError;
+
+        public virtual bool HasUnsupportedMetadata => _wrapped.HasUnsupportedMetadata;
+
+        public void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             _wrapped.ForceComplete(completionPart, locationOpt, cancellationToken);
         }
 
-        public override LexicalSortKey GetLexicalSortKey()
+        public virtual LexicalSortKey GetLexicalSortKey()
         {
             return _wrapped.GetLexicalSortKey();
         }
 
-        public override bool HasComplete(CompletionPart part)
+        public bool HasComplete(CompletionPart part)
         {
             return _wrapped.HasComplete(part);
         }
 
-        public override bool IsDefinedBySyntax(SyntaxNodeOrToken syntax, CancellationToken cancellationToken = default)
+        public bool IsDefinedBySyntax(SyntaxNodeOrToken syntax, CancellationToken cancellationToken = default)
         {
             return _wrapped.IsDefinedBySyntax(syntax, cancellationToken);
         }
 
-        public override bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default)
+        public bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default)
         {
             return _wrapped.IsDefinedInSourceTree(tree, definedWithinSpan, cancellationToken);
+        }
+
+        public virtual string GetDocumentationCommentId()
+        {
+            return _wrapped.GetDocumentationCommentId();
+        }
+
+        public virtual string GetDocumentationCommentXml(CultureInfo preferredCulture = null, bool expandIncludes = false, CancellationToken cancellationToken = default)
+        {
+            return _wrapped.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
+        }
+
+        public bool IsFromCompilation(Compilation compilation)
+        {
+            return _wrapped.IsFromCompilation(compilation);
         }
     }
 }

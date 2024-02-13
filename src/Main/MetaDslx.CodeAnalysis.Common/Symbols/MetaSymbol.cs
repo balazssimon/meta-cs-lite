@@ -161,16 +161,6 @@ namespace MetaDslx.CodeAnalysis
             return !lhs.Equals(rhs);
         }
 
-        public static implicit operator MetaSymbol(Symbol symbol)
-        {
-            return MetaSymbol.FromSymbol(symbol);
-        }
-
-        public static implicit operator MetaSymbol(ModelObject modelObject)
-        {
-            return MetaSymbol.FromModelObject(modelObject);
-        }
-
         internal static string GetModelObjectFullName(IModelObject modelObject)
         {
             var builder = PooledStringBuilder.GetInstance();

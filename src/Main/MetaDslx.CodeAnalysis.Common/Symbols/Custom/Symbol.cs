@@ -50,6 +50,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         bool IsModelSymbol { get; }
         bool IsCSharpSymbol { get; }
 
+        ISymbolFactory SymbolFactory { get; }
+
         /// <summary>
         /// Get the symbol that directly contains this symbol. 
         /// </summary>
@@ -172,7 +174,19 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         bool HasUnsupportedMetadata { get; }
 
+        /// <summary>
+        /// Returns the Documentation Comment ID for the symbol, or null if the symbol doesn't
+        /// support documentation comments.
+        /// </summary>
         string GetDocumentationCommentId();
+
+        /// <summary>
+        /// Fetches the documentation comment for this element with a cancellation token.
+        /// </summary>
+        /// <param name="preferredCulture">Optionally, retrieve the comments formatted for a particular culture. No impact on source documentation comments.</param>
+        /// <param name="expandIncludes">Optionally, expand <![CDATA[<include>]]> elements. No impact on non-source documentation comments.</param>
+        /// <param name="cancellationToken">Optionally, allow cancellation of documentation comment retrieval.</param>
+        /// <returns>The XML that would be written to the documentation file for the symbol.</returns>
         string GetDocumentationCommentXml(CultureInfo preferredCulture = null, bool expandIncludes = false, CancellationToken cancellationToken = default);
 
         void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken);

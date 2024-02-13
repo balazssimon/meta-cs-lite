@@ -26,6 +26,11 @@ namespace MetaDslx.CodeAnalysis.PooledObjects
     internal delegate TReturn Func<TArg, TReturn>(TArg arg);
 #endif
 
+    public interface IObjectPool
+    {
+        void Free(object obj);
+    }
+
     /// <summary>
     /// Generic implementation of object pooling pattern with predefined pool size limit. The main
     /// purpose is that limited number of frequently used objects can be kept in the pool for
@@ -43,7 +48,8 @@ namespace MetaDslx.CodeAnalysis.PooledObjects
     /// Rationale: 
     ///    If there is no intent for reusing the object, do not use pool - just use "new". 
     /// </summary>
-    public class ObjectPool<T> where T : class
+    public class ObjectPool<T> : IObjectPool
+        where T : class
     {
         [DebuggerDisplay("{Value,nq}")]
         private struct Element
@@ -287,6 +293,11 @@ namespace MetaDslx.CodeAnalysis.PooledObjects
 
                 Debug.Assert(value != obj, "freeing twice?");
             }
+        }
+
+        void IObjectPool.Free(object obj)
+        {
+            this.Free((T)obj);
         }
     }
 }

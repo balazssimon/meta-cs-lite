@@ -1119,11 +1119,6 @@ namespace MetaDslx.CodeAnalysis
             return MetaType.FromType(type);
         }
 
-        public static implicit operator MetaType(TypeSymbol typeSymbol)
-        {
-            return MetaType.FromTypeSymbol(typeSymbol);
-        }
-
         internal static string GetModelObjectFullName(IModelObject modelObject)
         {
             var symbolType = modelObject?.MInfo?.SymbolType.AsType();
