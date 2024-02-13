@@ -5,9 +5,9 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
 
-namespace MetaDslx.CodeAnalysis.Symbols
+namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 {
-    internal partial class AttributeSymbolImpl : AttributeSymbolBase
+    public partial class DeclarationSymbolImpl
     {
     }
 }

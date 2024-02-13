@@ -17,7 +17,7 @@ public interface DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
         [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members { get; }
 
-        public static class CompletionParts
+        public static new class CompletionParts
         {
             public static readonly CompletionPart Start_DeclaredAccessibility = new CompletionPart(nameof(Start_DeclaredAccessibility));
             public static readonly CompletionPart Finish_DeclaredAccessibility = new CompletionPart(nameof(Finish_DeclaredAccessibility));

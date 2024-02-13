@@ -5,7 +5,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 public interface TypeParameterSymbol: TypeSymbol
     {
 
-        public static class CompletionParts
+        public static new class CompletionParts
         {
             public static readonly CompletionPart Start_IsReferenceType = new CompletionPart(nameof(Start_IsReferenceType));
             public static readonly CompletionPart Finish_IsReferenceType = new CompletionPart(nameof(Finish_IsReferenceType));

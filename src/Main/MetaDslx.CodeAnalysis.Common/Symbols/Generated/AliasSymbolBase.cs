@@ -1,4 +1,4 @@
-namespace MetaDslx.CodeAnalysis.Symbols
+namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
@@ -15,80 +15,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-    internal abstract class AliasSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolBase, AliasSymbol
-    {
-        protected AliasSymbolBase() 
-            : base()
-        {
-        }
-
-        protected AliasSymbolBase(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
-            : base(container, declaration, modelObject)
-        {
-        }
-
-        protected AliasSymbolBase(__Symbol container, __IModelObject modelObject) 
-            : base(container, modelObject)
-        {
-        }
-
-        protected AliasSymbolBase(__Symbol container, __ISymbol csharpSymbol) 
-            : base(container, csharpSymbol)
-        {
-        }
-
-        protected AliasSymbolBase(__Symbol container, __ErrorSymbolInfo errorInfo) 
-            : base(container, errorInfo)
-        {
-        }
-
-        protected AliasSymbolBase(Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, declaration, modelObject, name, metadataName, attributes)
-        {
-        }
-
-        protected AliasSymbolBase(Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, modelObject, name, metadataName, attributes)
-        {
-        }
-
-        protected AliasSymbolBase(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, csharpSymbol, name, metadataName, attributes)
-        {
-        }
-
-        protected AliasSymbolBase(Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, errorInfo, name, metadataName, attributes)
-        {
-        }
-
-        protected sealed override __CompletionGraph CompletionGraph => AliasSymbol.CompletionParts.CompletionGraph;
-
-        public abstract Symbol Target { get; }
-        public abstract global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility { get; }
-        public abstract bool IsStatic { get; }
-        public abstract bool IsExtern { get; }
-        public abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments { get; }
-        public abstract global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports { get; }
-        public abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members { get; }
-
-
-        protected abstract Symbol Complete_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-
-        protected abstract global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-
-        protected abstract bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-
-        protected abstract bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-
-        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-
-        protected abstract global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-
-        protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-    }
-
-    internal sealed class AliasSymbolDefaultImpl : AliasSymbolBase
+    internal sealed class AliasSymbolInst : global::MetaDslx.CodeAnalysis.Symbols.SymbolInst, AliasSymbol
     {
         private Symbol _target;
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_DeclaredAccessibility = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
@@ -98,27 +25,27 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_Imports = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _members;
 
-        public AliasSymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
+        public AliasSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
         {
         }
 
-        public AliasSymbolDefaultImpl(__Symbol container, __IModelObject modelObject) 
+        public AliasSymbolInst(__Symbol container, __IModelObject modelObject) 
             : base(container, modelObject)
         {
         }
 
-        public AliasSymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol) 
+        public AliasSymbolInst(__Symbol container, __ISymbol csharpSymbol) 
             : base(container, csharpSymbol)
         {
         }
 
-        public AliasSymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo) 
+        public AliasSymbolInst(__Symbol container, __ErrorSymbolInfo errorInfo) 
             : base(container, errorInfo)
         {
         }
 
-        public AliasSymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
+        public AliasSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
             : base(container, declaration, modelObject, name, metadataName, attributes)
         {
             _target = target;
@@ -139,7 +66,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _members = members;
         }
 
-        public AliasSymbolDefaultImpl(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
+        public AliasSymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
             : base(container, modelObject, name, metadataName, attributes)
         {
             _target = target;
@@ -160,7 +87,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _members = members;
         }
 
-        public AliasSymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
+        public AliasSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
             : base(container, csharpSymbol, name, metadataName, attributes)
         {
             _target = target;
@@ -181,7 +108,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _members = members;
         }
 
-        public AliasSymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
+        public AliasSymbolInst(__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, Symbol target, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
             : base(container, errorInfo, name, metadataName, attributes)
         {
             _target = target;
@@ -203,7 +130,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        public override Symbol Target
+        public Symbol Target
         {
             get
             {
@@ -212,7 +139,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility
+        public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility
         {
             get
             {
@@ -222,7 +149,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override bool IsStatic
+        public bool IsStatic
         {
             get
             {
@@ -231,7 +158,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override bool IsExtern
+        public bool IsExtern
         {
             get
             {
@@ -240,7 +167,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments
+        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments
         {
             get
             {
@@ -250,7 +177,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports
+        public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports
         {
             get
             {
@@ -260,7 +187,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members
+        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members
         {
             get
             {
@@ -378,7 +305,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        protected override Symbol Complete_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private Symbol Complete_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AliasSymbolImpl.GetInstance(this);
             var result = impl.Complete_Target(diagnostics, cancellationToken);
@@ -386,7 +313,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        protected override global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AliasSymbolImpl.GetInstance(this);
             var result = impl.Complete_DeclaredAccessibility(diagnostics, cancellationToken);
@@ -394,7 +321,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        protected override bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AliasSymbolImpl.GetInstance(this);
             var result = impl.Complete_IsStatic(diagnostics, cancellationToken);
@@ -402,7 +329,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        protected override bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AliasSymbolImpl.GetInstance(this);
             var result = impl.Complete_IsExtern(diagnostics, cancellationToken);
@@ -410,7 +337,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        protected override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AliasSymbolImpl.GetInstance(this);
             var result = impl.Complete_TypeArguments(diagnostics, cancellationToken);
@@ -418,7 +345,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        protected override global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AliasSymbolImpl.GetInstance(this);
             var result = impl.Complete_Imports(diagnostics, cancellationToken);
@@ -426,7 +353,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        protected override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AliasSymbolImpl.GetInstance(this);
             var result = impl.Complete_Members(diagnostics, cancellationToken);
@@ -435,7 +362,51 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
     }
 
-    internal sealed partial class AliasSymbolImpl
+    public abstract class AliasSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl, AliasSymbol
+    {
+        public Symbol Target => ((AliasSymbol)__WrappedInstance).]Target;
+        public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility => ((AliasSymbol)__WrappedInstance).]DeclaredAccessibility;
+        public bool IsStatic => ((AliasSymbol)__WrappedInstance).]IsStatic;
+        public bool IsExtern => ((AliasSymbol)__WrappedInstance).]IsExtern;
+        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments => ((AliasSymbol)__WrappedInstance).]TypeArguments;
+        public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports => ((AliasSymbol)__WrappedInstance).]Imports;
+        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members => ((AliasSymbol)__WrappedInstance).]Members;
+
+
+        public virtual Symbol Complete_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return default;
+        }
+
+        public virtual global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return default;
+        }
+
+        public virtual bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return default;
+        }
+
+        public virtual bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return default;
+        }
+
+        public virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
+        }
+
+        public virtual global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
+        }
+
+        public abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+    }
+
+    public sealed partial class AliasSymbolImpl : AliasSymbolBase
     {
         private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new AliasSymbolImpl(s_poolInstance), 32);
 
@@ -451,7 +422,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             var result = s_poolInstance.Allocate();
             global::System.Diagnostics.Debug.Assert(result.__WrappedInstance is null);
-            __InitInstance(result, wrapped);
+            result.__InitInstance(wrapped);
             return result;
         }
 
@@ -460,14 +431,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             this.__ClearInstance();
             _pool?.Free(this);
         }
-
-        public override Symbol Target => ((AliasSymbol)__WrappedInstance).Target;
-        public override global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility => ((AliasSymbol)__WrappedInstance).DeclaredAccessibility;
-        public override bool IsStatic => ((AliasSymbol)__WrappedInstance).IsStatic;
-        public override bool IsExtern => ((AliasSymbol)__WrappedInstance).IsExtern;
-        public override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments => ((AliasSymbol)__WrappedInstance).TypeArguments;
-        public override global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports => ((AliasSymbol)__WrappedInstance).Imports;
-        public override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members => ((AliasSymbol)__WrappedInstance).Members;
 
 
         protected override Symbol Complete_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)

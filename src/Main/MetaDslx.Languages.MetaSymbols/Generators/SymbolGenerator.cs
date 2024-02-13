@@ -31,16 +31,16 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             }
         }
 
+        public string GetInstName(Symbol context, Symbol type)
+        {
+            if (type.Parent == context.Parent) return $"{type.Name}SymbolInst";
+            else return $"global::{type.FullName}SymbolInst";
+        }
+
         public string GetBaseName(Symbol context, Symbol type)
         {
             if (type.Parent == context.Parent) return $"{type.Name}SymbolBase";
             else return $"global::{type.FullName}SymbolBase";
-        }
-
-        public string GetDefaultImplName(Symbol context, Symbol type)
-        {
-            if (type.Parent == context.Parent) return $"{type.Name}SymbolDefaultImpl";
-            else return $"global::{type.FullName}SymbolDefaultImpl";
         }
 
         public string GetImplName(Symbol context, Symbol type)

@@ -7,7 +7,7 @@ public interface AttributeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
         [__ModelProperty]
         TypeSymbol AttributeClass { get; }
 
-        public static class CompletionParts
+        public static new class CompletionParts
         {
             public static readonly CompletionPart Start_AttributeClass = new CompletionPart(nameof(Start_AttributeClass));
             public static readonly CompletionPart Finish_AttributeClass = new CompletionPart(nameof(Finish_AttributeClass));

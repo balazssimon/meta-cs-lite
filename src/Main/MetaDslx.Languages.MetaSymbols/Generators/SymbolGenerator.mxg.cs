@@ -219,13 +219,19 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             #line (21,22)-(21,23) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (21,23)-(21,28) 25 "SymbolGenerator.mxg"
-            __cb.Write("class");
+            #line (21,23)-(21,26) 25 "SymbolGenerator.mxg"
+            __cb.Write("new");
             #line hidden
-            #line (21,28)-(21,29) 25 "SymbolGenerator.mxg"
+            #line (21,26)-(21,27) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (21,29)-(21,44) 25 "SymbolGenerator.mxg"
+            #line (21,27)-(21,32) 25 "SymbolGenerator.mxg"
+            __cb.Write("class");
+            #line hidden
+            #line (21,32)-(21,33) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (21,33)-(21,48) 25 "SymbolGenerator.mxg"
             __cb.Write("CompletionParts");
             #line hidden
             __cb.AppendLine();
@@ -595,6 +601,9 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             #line (43,12)-(43,32) 24 "SymbolGenerator.mxg"
             __cb.Write(symbol.NamespaceName);
             #line hidden
+            #line (43,33)-(43,40) 25 "SymbolGenerator.mxg"
+            __cb.Write(".__Impl");
+            #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
@@ -954,37 +963,37 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             #line (60,13)-(60,14) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (60,14)-(60,22) 25 "SymbolGenerator.mxg"
-            __cb.Write("abstract");
+            #line (60,14)-(60,20) 25 "SymbolGenerator.mxg"
+            __cb.Write("sealed");
             #line hidden
-            #line (60,22)-(60,23) 25 "SymbolGenerator.mxg"
+            #line (60,20)-(60,21) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (60,23)-(60,28) 25 "SymbolGenerator.mxg"
+            #line (60,21)-(60,26) 25 "SymbolGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (60,28)-(60,29) 25 "SymbolGenerator.mxg"
+            #line (60,26)-(60,27) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (60,30)-(60,57) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
+            #line (60,28)-(60,55) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
+            #line hidden
+            #line (60,56)-(60,57) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (60,57)-(60,58) 25 "SymbolGenerator.mxg"
+            __cb.Write(":");
             #line hidden
             #line (60,58)-(60,59) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (60,59)-(60,60) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
+            #line (60,59)-(60,108) 25 "SymbolGenerator.mxg"
+            __cb.Write("global::MetaDslx.CodeAnalysis.Symbols.SymbolInst,");
             #line hidden
-            #line (60,60)-(60,61) 25 "SymbolGenerator.mxg"
+            #line (60,108)-(60,109) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (60,61)-(60,110) 25 "SymbolGenerator.mxg"
-            __cb.Write("global::MetaDslx.CodeAnalysis.Symbols.SymbolBase,");
-            #line hidden
-            #line (60,110)-(60,111) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (60,112)-(60,139) 24 "SymbolGenerator.mxg"
+            #line (60,110)-(60,137) 24 "SymbolGenerator.mxg"
             __cb.Write(GetIntfName(symbol, symbol));
             #line hidden
             __cb.AppendLine();
@@ -995,883 +1004,8 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            __cb.Push("        ");
-            #line (62,9)-(62,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (62,18)-(62,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (62,20)-(62,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (62,48)-(62,50) 25 "SymbolGenerator.mxg"
-            __cb.Write("()");
-            #line hidden
-            #line (62,50)-(62,51) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (63,13)-(63,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (63,14)-(63,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (63,15)-(63,21) 25 "SymbolGenerator.mxg"
-            __cb.Write("base()");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (64,9)-(64,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (65,9)-(65,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (67,9)-(67,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (67,18)-(67,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (67,20)-(67,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (67,48)-(67,57) 25 "SymbolGenerator.mxg"
-            __cb.Write("(__Symbol");
-            #line hidden
-            #line (67,57)-(67,58) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (67,58)-(67,68) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (67,68)-(67,69) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (67,69)-(67,88) 25 "SymbolGenerator.mxg"
-            __cb.Write("__MergedDeclaration");
-            #line hidden
-            #line (67,88)-(67,89) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (67,89)-(67,101) 25 "SymbolGenerator.mxg"
-            __cb.Write("declaration,");
-            #line hidden
-            #line (67,101)-(67,102) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (67,102)-(67,116) 25 "SymbolGenerator.mxg"
-            __cb.Write("__IModelObject");
-            #line hidden
-            #line (67,116)-(67,117) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (67,117)-(67,129) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject)");
-            #line hidden
-            #line (67,129)-(67,130) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (68,13)-(68,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (68,14)-(68,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (68,15)-(68,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (68,30)-(68,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (68,31)-(68,43) 25 "SymbolGenerator.mxg"
-            __cb.Write("declaration,");
-            #line hidden
-            #line (68,43)-(68,44) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (68,44)-(68,56) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (69,9)-(69,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (70,9)-(70,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (72,9)-(72,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (72,18)-(72,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (72,20)-(72,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (72,48)-(72,57) 25 "SymbolGenerator.mxg"
-            __cb.Write("(__Symbol");
-            #line hidden
-            #line (72,57)-(72,58) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (72,58)-(72,68) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (72,68)-(72,69) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (72,69)-(72,83) 25 "SymbolGenerator.mxg"
-            __cb.Write("__IModelObject");
-            #line hidden
-            #line (72,83)-(72,84) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (72,84)-(72,96) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject)");
-            #line hidden
-            #line (72,96)-(72,97) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (73,13)-(73,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (73,14)-(73,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (73,15)-(73,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (73,30)-(73,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (73,31)-(73,43) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (74,9)-(74,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (75,9)-(75,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (77,9)-(77,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (77,18)-(77,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (77,20)-(77,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (77,48)-(77,57) 25 "SymbolGenerator.mxg"
-            __cb.Write("(__Symbol");
-            #line hidden
-            #line (77,57)-(77,58) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (77,58)-(77,68) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (77,68)-(77,69) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (77,69)-(77,78) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ISymbol");
-            #line hidden
-            #line (77,78)-(77,79) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (77,79)-(77,92) 25 "SymbolGenerator.mxg"
-            __cb.Write("csharpSymbol)");
-            #line hidden
-            #line (77,92)-(77,93) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (78,13)-(78,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (78,14)-(78,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (78,15)-(78,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (78,30)-(78,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (78,31)-(78,44) 25 "SymbolGenerator.mxg"
-            __cb.Write("csharpSymbol)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (79,9)-(79,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (80,9)-(80,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (82,9)-(82,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (82,18)-(82,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (82,20)-(82,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (82,48)-(82,57) 25 "SymbolGenerator.mxg"
-            __cb.Write("(__Symbol");
-            #line hidden
-            #line (82,57)-(82,58) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (82,58)-(82,68) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (82,68)-(82,69) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (82,69)-(82,86) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ErrorSymbolInfo");
-            #line hidden
-            #line (82,86)-(82,87) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (82,87)-(82,97) 25 "SymbolGenerator.mxg"
-            __cb.Write("errorInfo)");
-            #line hidden
-            #line (82,97)-(82,98) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (83,13)-(83,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (83,14)-(83,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (83,15)-(83,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (83,30)-(83,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (83,31)-(83,41) 25 "SymbolGenerator.mxg"
-            __cb.Write("errorInfo)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (84,9)-(84,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (85,9)-(85,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (87,9)-(87,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (87,18)-(87,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,20)-(87,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (87,48)-(87,55) 25 "SymbolGenerator.mxg"
-            __cb.Write("(Symbol");
-            #line hidden
-            #line (87,55)-(87,56) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,56)-(87,66) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (87,66)-(87,67) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,67)-(87,86) 25 "SymbolGenerator.mxg"
-            __cb.Write("__MergedDeclaration");
-            #line hidden
-            #line (87,86)-(87,87) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,87)-(87,99) 25 "SymbolGenerator.mxg"
-            __cb.Write("declaration,");
-            #line hidden
-            #line (87,99)-(87,100) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,100)-(87,114) 25 "SymbolGenerator.mxg"
-            __cb.Write("__IModelObject");
-            #line hidden
-            #line (87,114)-(87,115) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,115)-(87,127) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject,");
-            #line hidden
-            #line (87,127)-(87,128) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,128)-(87,135) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (87,135)-(87,136) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,136)-(87,141) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (87,141)-(87,142) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,142)-(87,149) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (87,149)-(87,150) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,150)-(87,163) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (87,163)-(87,164) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,164)-(87,191) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ImmutableAttributeSymbols");
-            #line hidden
-            #line (87,191)-(87,192) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,192)-(87,203) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (88,13)-(88,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (88,14)-(88,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (88,15)-(88,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (88,30)-(88,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (88,31)-(88,43) 25 "SymbolGenerator.mxg"
-            __cb.Write("declaration,");
-            #line hidden
-            #line (88,43)-(88,44) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (88,44)-(88,56) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject,");
-            #line hidden
-            #line (88,56)-(88,57) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (88,57)-(88,62) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (88,62)-(88,63) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (88,63)-(88,76) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (88,76)-(88,77) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (88,77)-(88,88) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (89,9)-(89,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (90,9)-(90,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (92,9)-(92,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (92,18)-(92,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,20)-(92,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (92,48)-(92,55) 25 "SymbolGenerator.mxg"
-            __cb.Write("(Symbol");
-            #line hidden
-            #line (92,55)-(92,56) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,56)-(92,66) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (92,66)-(92,67) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,67)-(92,81) 25 "SymbolGenerator.mxg"
-            __cb.Write("__IModelObject");
-            #line hidden
-            #line (92,81)-(92,82) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,82)-(92,94) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject,");
-            #line hidden
-            #line (92,94)-(92,95) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,95)-(92,102) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (92,102)-(92,103) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,103)-(92,108) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (92,108)-(92,109) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,109)-(92,116) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (92,116)-(92,117) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,117)-(92,130) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (92,130)-(92,131) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,131)-(92,158) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ImmutableAttributeSymbols");
-            #line hidden
-            #line (92,158)-(92,159) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (92,159)-(92,170) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (93,13)-(93,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (93,14)-(93,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (93,15)-(93,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (93,30)-(93,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (93,31)-(93,43) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject,");
-            #line hidden
-            #line (93,43)-(93,44) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (93,44)-(93,49) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (93,49)-(93,50) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (93,50)-(93,63) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (93,63)-(93,64) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (93,64)-(93,75) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (94,9)-(94,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (95,9)-(95,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (97,9)-(97,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (97,18)-(97,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,20)-(97,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (97,48)-(97,55) 25 "SymbolGenerator.mxg"
-            __cb.Write("(Symbol");
-            #line hidden
-            #line (97,55)-(97,56) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,56)-(97,66) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (97,66)-(97,67) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,67)-(97,76) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ISymbol");
-            #line hidden
-            #line (97,76)-(97,77) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,77)-(97,90) 25 "SymbolGenerator.mxg"
-            __cb.Write("csharpSymbol,");
-            #line hidden
-            #line (97,90)-(97,91) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,91)-(97,98) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (97,98)-(97,99) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,99)-(97,104) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (97,104)-(97,105) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,105)-(97,112) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (97,112)-(97,113) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,113)-(97,126) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (97,126)-(97,127) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,127)-(97,154) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ImmutableAttributeSymbols");
-            #line hidden
-            #line (97,154)-(97,155) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (97,155)-(97,166) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (98,13)-(98,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (98,14)-(98,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (98,15)-(98,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (98,30)-(98,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (98,31)-(98,44) 25 "SymbolGenerator.mxg"
-            __cb.Write("csharpSymbol,");
-            #line hidden
-            #line (98,44)-(98,45) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (98,45)-(98,50) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (98,50)-(98,51) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (98,51)-(98,64) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (98,64)-(98,65) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (98,65)-(98,76) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (99,9)-(99,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (100,9)-(100,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (102,9)-(102,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (102,18)-(102,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,20)-(102,47) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            #line (102,48)-(102,55) 25 "SymbolGenerator.mxg"
-            __cb.Write("(Symbol");
-            #line hidden
-            #line (102,55)-(102,56) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,56)-(102,66) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (102,66)-(102,67) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,67)-(102,84) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ErrorSymbolInfo");
-            #line hidden
-            #line (102,84)-(102,85) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,85)-(102,95) 25 "SymbolGenerator.mxg"
-            __cb.Write("errorInfo,");
-            #line hidden
-            #line (102,95)-(102,96) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,96)-(102,103) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (102,103)-(102,104) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,104)-(102,109) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (102,109)-(102,110) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,110)-(102,117) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (102,117)-(102,118) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,118)-(102,131) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (102,131)-(102,132) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,132)-(102,159) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ImmutableAttributeSymbols");
-            #line hidden
-            #line (102,159)-(102,160) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (102,160)-(102,171) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (103,13)-(103,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (103,14)-(103,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (103,15)-(103,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (103,30)-(103,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (103,31)-(103,41) 25 "SymbolGenerator.mxg"
-            __cb.Write("errorInfo,");
-            #line hidden
-            #line (103,41)-(103,42) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (103,42)-(103,47) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (103,47)-(103,48) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (103,48)-(103,61) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (103,61)-(103,62) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (103,62)-(103,73) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (104,9)-(104,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (105,9)-(105,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (107,9)-(107,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (107,18)-(107,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (107,19)-(107,25) 25 "SymbolGenerator.mxg"
-            __cb.Write("sealed");
-            #line hidden
-            #line (107,25)-(107,26) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (107,26)-(107,34) 25 "SymbolGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (107,34)-(107,35) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (107,35)-(107,52) 25 "SymbolGenerator.mxg"
-            __cb.Write("__CompletionGraph");
-            #line hidden
-            #line (107,52)-(107,53) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (107,53)-(107,68) 25 "SymbolGenerator.mxg"
-            __cb.Write("CompletionGraph");
-            #line hidden
-            #line (107,68)-(107,69) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (107,69)-(107,71) 25 "SymbolGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (107,71)-(107,72) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (107,73)-(107,100) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetIntfName(symbol, symbol));
-            #line hidden
-            #line (107,101)-(107,134) 25 "SymbolGenerator.mxg"
-            __cb.Write(".CompletionParts.CompletionGraph;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
             var __first7 = true;
-            #line (109,10)-(109,53) 13 "SymbolGenerator.mxg"
+            #line (62,10)-(62,53) 13 "SymbolGenerator.mxg"
             foreach (var prop in GetProperties(symbol))
             #line hidden
             
@@ -1880,508 +1014,178 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 {
                     __first7 = false;
                 }
-                __cb.Push("        ");
-                #line (110,13)-(110,19) 29 "SymbolGenerator.mxg"
-                __cb.Write("public");
-                #line hidden
-                #line (110,19)-(110,20) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (110,20)-(110,28) 29 "SymbolGenerator.mxg"
-                __cb.Write("abstract");
-                #line hidden
-                #line (110,28)-(110,29) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (110,30)-(110,60) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetTypeName(symbol, prop.Type));
-                #line hidden
-                #line (110,61)-(110,62) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (110,63)-(110,72) 28 "SymbolGenerator.mxg"
-                __cb.Write(prop.Name);
-                #line hidden
-                #line (110,73)-(110,74) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (110,74)-(110,75) 29 "SymbolGenerator.mxg"
-                __cb.Write("{");
-                #line hidden
-                #line (110,75)-(110,76) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (110,76)-(110,80) 29 "SymbolGenerator.mxg"
-                __cb.Write("get;");
-                #line hidden
-                #line (110,80)-(110,81) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (110,81)-(110,82) 29 "SymbolGenerator.mxg"
-                __cb.Write("}");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-            }
-            if (!__first7) __cb.AppendLine();
-            __cb.WriteLine();
-            __cb.Pop();
-            var __first8 = true;
-            #line (113,10)-(113,50) 13 "SymbolGenerator.mxg"
-            foreach (var phase in GetPhases(symbol))
-            #line hidden
-            
-            {
-                if (__first8)
-                {
-                    __first8 = false;
-                }
-                __cb.WriteLine();
-                __cb.Pop();
-                #line (115,14)-(115,59) 17 "SymbolGenerator.mxg"
-                var props = GetPhaseProperties(symbol, phase);
-                #line hidden
-                
-                var __first9 = true;
-                #line (116,14)-(116,36) 17 "SymbolGenerator.mxg"
-                if (props.Length >= 2)
-                #line hidden
-                
-                {
-                    if (__first9)
-                    {
-                        __first9 = false;
-                    }
-                    __cb.Push("        ");
-                    #line (117,17)-(117,26) 33 "SymbolGenerator.mxg"
-                    __cb.Write("protected");
-                    #line hidden
-                    #line (117,26)-(117,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (117,27)-(117,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("abstract");
-                    #line hidden
-                    #line (117,35)-(117,36) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (117,36)-(117,37) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    var __first10 = true;
-                    foreach (var __item11 in 
-                    #line (117,38)-(117,95) 21 "SymbolGenerator.mxg"
-                    from prop in props select GetTypeName(symbol, prop.Type) 
-                    #line hidden
-                    )
-                    {
-                        if (__first10)
-                        {
-                            __first10 = false;
-                        }
-                        else
-                        {
-                            __cb.Push("        ");
-                            __cb.DontIgnoreLastLineEnd = true;
-                            #line (117,105)-(117,109) 40 "SymbolGenerator.mxg"
-                            __cb.Write(", ");
-                            #line hidden
-                            __cb.DontIgnoreLastLineEnd = false;
-                            __cb.Pop();
-                        }
-                        __cb.Write(__item11);
-                    }
-                    #line (117,110)-(117,111) 33 "SymbolGenerator.mxg"
-                    __cb.Write(")");
-                    #line hidden
-                    #line (117,111)-(117,112) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (117,112)-(117,121) 33 "SymbolGenerator.mxg"
-                    __cb.Write("Complete_");
-                    #line hidden
-                    #line (117,122)-(117,127) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (117,128)-(117,144) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(__DiagnosticBag");
-                    #line hidden
-                    #line (117,144)-(117,145) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (117,145)-(117,157) 33 "SymbolGenerator.mxg"
-                    __cb.Write("diagnostics,");
-                    #line hidden
-                    #line (117,157)-(117,158) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (117,158)-(117,177) 33 "SymbolGenerator.mxg"
-                    __cb.Write("__CancellationToken");
-                    #line hidden
-                    #line (117,177)-(117,178) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (117,178)-(117,197) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                }
-                #line (118,14)-(118,41) 17 "SymbolGenerator.mxg"
-                else if (props.Length == 1)
-                #line hidden
-                
-                {
-                    if (__first9)
-                    {
-                        __first9 = false;
-                    }
-                    #line (119,18)-(119,37) 21 "SymbolGenerator.mxg"
-                    var prop = props[0];
-                    #line hidden
-                    
-                    __cb.Push("        ");
-                    #line (120,17)-(120,26) 33 "SymbolGenerator.mxg"
-                    __cb.Write("protected");
-                    #line hidden
-                    #line (120,26)-(120,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (120,27)-(120,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("abstract");
-                    #line hidden
-                    #line (120,35)-(120,36) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (120,37)-(120,67) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetTypeName(symbol, prop.Type));
-                    #line hidden
-                    #line (120,68)-(120,69) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (120,69)-(120,78) 33 "SymbolGenerator.mxg"
-                    __cb.Write("Complete_");
-                    #line hidden
-                    #line (120,79)-(120,84) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (120,85)-(120,101) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(__DiagnosticBag");
-                    #line hidden
-                    #line (120,101)-(120,102) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (120,102)-(120,114) 33 "SymbolGenerator.mxg"
-                    __cb.Write("diagnostics,");
-                    #line hidden
-                    #line (120,114)-(120,115) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (120,115)-(120,134) 33 "SymbolGenerator.mxg"
-                    __cb.Write("__CancellationToken");
-                    #line hidden
-                    #line (120,134)-(120,135) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (120,135)-(120,154) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                }
-                #line (121,14)-(121,18) 17 "SymbolGenerator.mxg"
-                else
-                #line hidden
-                
-                {
-                    if (__first9)
-                    {
-                        __first9 = false;
-                    }
-                    __cb.Push("        ");
-                    #line (122,17)-(122,26) 33 "SymbolGenerator.mxg"
-                    __cb.Write("protected");
-                    #line hidden
-                    #line (122,26)-(122,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (122,27)-(122,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("abstract");
-                    #line hidden
-                    #line (122,35)-(122,36) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (122,36)-(122,40) 33 "SymbolGenerator.mxg"
-                    __cb.Write("void");
-                    #line hidden
-                    #line (122,40)-(122,41) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (122,41)-(122,50) 33 "SymbolGenerator.mxg"
-                    __cb.Write("Complete_");
-                    #line hidden
-                    #line (122,51)-(122,56) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (122,57)-(122,73) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(__DiagnosticBag");
-                    #line hidden
-                    #line (122,73)-(122,74) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (122,74)-(122,86) 33 "SymbolGenerator.mxg"
-                    __cb.Write("diagnostics,");
-                    #line hidden
-                    #line (122,86)-(122,87) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (122,87)-(122,106) 33 "SymbolGenerator.mxg"
-                    __cb.Write("__CancellationToken");
-                    #line hidden
-                    #line (122,106)-(122,107) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (122,107)-(122,126) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                }
-                if (!__first9) __cb.AppendLine();
-            }
-            if (!__first8) __cb.AppendLine();
-            __cb.Push("    ");
-            #line (125,5)-(125,6) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (127,5)-(127,13) 25 "SymbolGenerator.mxg"
-            __cb.Write("internal");
-            #line hidden
-            #line (127,13)-(127,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (127,14)-(127,20) 25 "SymbolGenerator.mxg"
-            __cb.Write("sealed");
-            #line hidden
-            #line (127,20)-(127,21) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (127,21)-(127,26) 25 "SymbolGenerator.mxg"
-            __cb.Write("class");
-            #line hidden
-            #line (127,26)-(127,27) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (127,28)-(127,62) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
-            #line hidden
-            #line (127,63)-(127,64) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (127,64)-(127,65) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (127,65)-(127,66) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (127,67)-(127,94) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (128,5)-(128,6) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            var __first12 = true;
-            #line (129,10)-(129,53) 13 "SymbolGenerator.mxg"
-            foreach (var prop in GetProperties(symbol))
-            #line hidden
-            
-            {
-                if (__first12)
-                {
-                    __first12 = false;
-                }
-                var __first13 = true;
-                #line (130,14)-(130,30) 17 "SymbolGenerator.mxg"
+                var __first8 = true;
+                #line (63,14)-(63,30) 17 "SymbolGenerator.mxg"
                 if (prop.IsWeak)
                 #line hidden
                 
                 {
-                    if (__first13)
+                    if (__first8)
                     {
-                        __first13 = false;
+                        __first8 = false;
                     }
                     __cb.Push("        ");
-                    #line (131,17)-(131,24) 33 "SymbolGenerator.mxg"
+                    #line (64,17)-(64,24) 33 "SymbolGenerator.mxg"
                     __cb.Write("private");
                     #line hidden
-                    #line (131,24)-(131,25) 33 "SymbolGenerator.mxg"
+                    #line (64,24)-(64,25) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (131,25)-(131,31) 33 "SymbolGenerator.mxg"
+                    #line (64,25)-(64,31) 33 "SymbolGenerator.mxg"
                     __cb.Write("static");
                     #line hidden
-                    #line (131,31)-(131,32) 33 "SymbolGenerator.mxg"
+                    #line (64,31)-(64,32) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (131,33)-(131,59) 32 "SymbolGenerator.mxg"
+                    #line (64,33)-(64,59) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldType(symbol, prop));
                     #line hidden
-                    #line (131,60)-(131,61) 33 "SymbolGenerator.mxg"
+                    #line (64,60)-(64,61) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (131,62)-(131,80) 32 "SymbolGenerator.mxg"
+                    #line (64,62)-(64,80) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldName(prop));
                     #line hidden
-                    #line (131,81)-(131,82) 33 "SymbolGenerator.mxg"
+                    #line (64,81)-(64,82) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (131,82)-(131,83) 33 "SymbolGenerator.mxg"
+                    #line (64,82)-(64,83) 33 "SymbolGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (131,83)-(131,84) 33 "SymbolGenerator.mxg"
+                    #line (64,83)-(64,84) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (131,84)-(131,87) 33 "SymbolGenerator.mxg"
+                    #line (64,84)-(64,87) 33 "SymbolGenerator.mxg"
                     __cb.Write("new");
                     #line hidden
-                    #line (131,87)-(131,88) 33 "SymbolGenerator.mxg"
+                    #line (64,87)-(64,88) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (131,89)-(131,115) 32 "SymbolGenerator.mxg"
+                    #line (64,89)-(64,115) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldType(symbol, prop));
                     #line hidden
-                    #line (131,116)-(131,119) 33 "SymbolGenerator.mxg"
+                    #line (64,116)-(64,119) 33 "SymbolGenerator.mxg"
                     __cb.Write("();");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                #line (132,14)-(132,18) 17 "SymbolGenerator.mxg"
+                #line (65,14)-(65,18) 17 "SymbolGenerator.mxg"
                 else
                 #line hidden
                 
                 {
-                    if (__first13)
+                    if (__first8)
                     {
-                        __first13 = false;
+                        __first8 = false;
                     }
                     __cb.Push("        ");
-                    #line (133,17)-(133,24) 33 "SymbolGenerator.mxg"
+                    #line (66,17)-(66,24) 33 "SymbolGenerator.mxg"
                     __cb.Write("private");
                     #line hidden
-                    #line (133,24)-(133,25) 33 "SymbolGenerator.mxg"
+                    #line (66,24)-(66,25) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (133,26)-(133,52) 32 "SymbolGenerator.mxg"
+                    #line (66,26)-(66,52) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldType(symbol, prop));
                     #line hidden
-                    #line (133,53)-(133,54) 33 "SymbolGenerator.mxg"
+                    #line (66,53)-(66,54) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (133,55)-(133,73) 32 "SymbolGenerator.mxg"
+                    #line (66,55)-(66,73) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldName(prop));
                     #line hidden
-                    #line (133,74)-(133,75) 33 "SymbolGenerator.mxg"
+                    #line (66,74)-(66,75) 33 "SymbolGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first13) __cb.AppendLine();
+                if (!__first8) __cb.AppendLine();
             }
-            if (!__first12) __cb.AppendLine();
+            if (!__first7) __cb.AppendLine();
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (137,9)-(137,15) 25 "SymbolGenerator.mxg"
+            #line (70,9)-(70,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (137,15)-(137,16) 25 "SymbolGenerator.mxg"
+            #line (70,15)-(70,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (137,17)-(137,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
+            #line (70,17)-(70,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
             #line hidden
-            #line (137,52)-(137,61) 25 "SymbolGenerator.mxg"
+            #line (70,45)-(70,54) 25 "SymbolGenerator.mxg"
             __cb.Write("(__Symbol");
             #line hidden
-            #line (137,61)-(137,62) 25 "SymbolGenerator.mxg"
+            #line (70,54)-(70,55) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (137,62)-(137,72) 25 "SymbolGenerator.mxg"
+            #line (70,55)-(70,65) 25 "SymbolGenerator.mxg"
             __cb.Write("container,");
             #line hidden
-            #line (137,72)-(137,73) 25 "SymbolGenerator.mxg"
+            #line (70,65)-(70,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (137,73)-(137,92) 25 "SymbolGenerator.mxg"
+            #line (70,66)-(70,85) 25 "SymbolGenerator.mxg"
             __cb.Write("__MergedDeclaration");
             #line hidden
-            #line (137,92)-(137,93) 25 "SymbolGenerator.mxg"
+            #line (70,85)-(70,86) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (137,93)-(137,105) 25 "SymbolGenerator.mxg"
+            #line (70,86)-(70,98) 25 "SymbolGenerator.mxg"
             __cb.Write("declaration,");
             #line hidden
-            #line (137,105)-(137,106) 25 "SymbolGenerator.mxg"
+            #line (70,98)-(70,99) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (137,106)-(137,120) 25 "SymbolGenerator.mxg"
+            #line (70,99)-(70,113) 25 "SymbolGenerator.mxg"
             __cb.Write("__IModelObject");
             #line hidden
-            #line (137,120)-(137,121) 25 "SymbolGenerator.mxg"
+            #line (70,113)-(70,114) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (137,121)-(137,133) 25 "SymbolGenerator.mxg"
+            #line (70,114)-(70,126) 25 "SymbolGenerator.mxg"
             __cb.Write("modelObject)");
             #line hidden
-            #line (137,133)-(137,134) 25 "SymbolGenerator.mxg"
+            #line (70,126)-(70,127) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (138,13)-(138,14) 25 "SymbolGenerator.mxg"
+            #line (71,13)-(71,14) 25 "SymbolGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (138,14)-(138,15) 25 "SymbolGenerator.mxg"
+            #line (71,14)-(71,15) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (138,15)-(138,30) 25 "SymbolGenerator.mxg"
+            #line (71,15)-(71,30) 25 "SymbolGenerator.mxg"
             __cb.Write("base(container,");
             #line hidden
-            #line (138,30)-(138,31) 25 "SymbolGenerator.mxg"
+            #line (71,30)-(71,31) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (138,31)-(138,43) 25 "SymbolGenerator.mxg"
+            #line (71,31)-(71,43) 25 "SymbolGenerator.mxg"
             __cb.Write("declaration,");
             #line hidden
-            #line (138,43)-(138,44) 25 "SymbolGenerator.mxg"
+            #line (71,43)-(71,44) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (138,44)-(138,56) 25 "SymbolGenerator.mxg"
+            #line (71,44)-(71,56) 25 "SymbolGenerator.mxg"
             __cb.Write("modelObject)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (139,9)-(139,10) 25 "SymbolGenerator.mxg"
+            #line (72,9)-(72,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (140,9)-(140,10) 25 "SymbolGenerator.mxg"
+            #line (73,9)-(73,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -2389,67 +1193,67 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (142,9)-(142,15) 25 "SymbolGenerator.mxg"
+            #line (75,9)-(75,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (142,15)-(142,16) 25 "SymbolGenerator.mxg"
+            #line (75,15)-(75,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (142,17)-(142,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
+            #line (75,17)-(75,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
             #line hidden
-            #line (142,52)-(142,61) 25 "SymbolGenerator.mxg"
+            #line (75,45)-(75,54) 25 "SymbolGenerator.mxg"
             __cb.Write("(__Symbol");
             #line hidden
-            #line (142,61)-(142,62) 25 "SymbolGenerator.mxg"
+            #line (75,54)-(75,55) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (142,62)-(142,72) 25 "SymbolGenerator.mxg"
+            #line (75,55)-(75,65) 25 "SymbolGenerator.mxg"
             __cb.Write("container,");
             #line hidden
-            #line (142,72)-(142,73) 25 "SymbolGenerator.mxg"
+            #line (75,65)-(75,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (142,73)-(142,87) 25 "SymbolGenerator.mxg"
+            #line (75,66)-(75,80) 25 "SymbolGenerator.mxg"
             __cb.Write("__IModelObject");
             #line hidden
-            #line (142,87)-(142,88) 25 "SymbolGenerator.mxg"
+            #line (75,80)-(75,81) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (142,88)-(142,100) 25 "SymbolGenerator.mxg"
+            #line (75,81)-(75,93) 25 "SymbolGenerator.mxg"
             __cb.Write("modelObject)");
             #line hidden
-            #line (142,100)-(142,101) 25 "SymbolGenerator.mxg"
+            #line (75,93)-(75,94) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (143,13)-(143,14) 25 "SymbolGenerator.mxg"
+            #line (76,13)-(76,14) 25 "SymbolGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (143,14)-(143,15) 25 "SymbolGenerator.mxg"
+            #line (76,14)-(76,15) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (143,15)-(143,30) 25 "SymbolGenerator.mxg"
+            #line (76,15)-(76,30) 25 "SymbolGenerator.mxg"
             __cb.Write("base(container,");
             #line hidden
-            #line (143,30)-(143,31) 25 "SymbolGenerator.mxg"
+            #line (76,30)-(76,31) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (143,31)-(143,43) 25 "SymbolGenerator.mxg"
+            #line (76,31)-(76,43) 25 "SymbolGenerator.mxg"
             __cb.Write("modelObject)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (144,9)-(144,10) 25 "SymbolGenerator.mxg"
+            #line (77,9)-(77,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (145,9)-(145,10) 25 "SymbolGenerator.mxg"
+            #line (78,9)-(78,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -2457,67 +1261,67 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (147,9)-(147,15) 25 "SymbolGenerator.mxg"
+            #line (80,9)-(80,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (147,15)-(147,16) 25 "SymbolGenerator.mxg"
+            #line (80,15)-(80,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (147,17)-(147,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
+            #line (80,17)-(80,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
             #line hidden
-            #line (147,52)-(147,61) 25 "SymbolGenerator.mxg"
+            #line (80,45)-(80,54) 25 "SymbolGenerator.mxg"
             __cb.Write("(__Symbol");
             #line hidden
-            #line (147,61)-(147,62) 25 "SymbolGenerator.mxg"
+            #line (80,54)-(80,55) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (147,62)-(147,72) 25 "SymbolGenerator.mxg"
+            #line (80,55)-(80,65) 25 "SymbolGenerator.mxg"
             __cb.Write("container,");
             #line hidden
-            #line (147,72)-(147,73) 25 "SymbolGenerator.mxg"
+            #line (80,65)-(80,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (147,73)-(147,82) 25 "SymbolGenerator.mxg"
+            #line (80,66)-(80,75) 25 "SymbolGenerator.mxg"
             __cb.Write("__ISymbol");
             #line hidden
-            #line (147,82)-(147,83) 25 "SymbolGenerator.mxg"
+            #line (80,75)-(80,76) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (147,83)-(147,96) 25 "SymbolGenerator.mxg"
+            #line (80,76)-(80,89) 25 "SymbolGenerator.mxg"
             __cb.Write("csharpSymbol)");
             #line hidden
-            #line (147,96)-(147,97) 25 "SymbolGenerator.mxg"
+            #line (80,89)-(80,90) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (148,13)-(148,14) 25 "SymbolGenerator.mxg"
+            #line (81,13)-(81,14) 25 "SymbolGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (148,14)-(148,15) 25 "SymbolGenerator.mxg"
+            #line (81,14)-(81,15) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (148,15)-(148,30) 25 "SymbolGenerator.mxg"
+            #line (81,15)-(81,30) 25 "SymbolGenerator.mxg"
             __cb.Write("base(container,");
             #line hidden
-            #line (148,30)-(148,31) 25 "SymbolGenerator.mxg"
+            #line (81,30)-(81,31) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (148,31)-(148,44) 25 "SymbolGenerator.mxg"
+            #line (81,31)-(81,44) 25 "SymbolGenerator.mxg"
             __cb.Write("csharpSymbol)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (149,9)-(149,10) 25 "SymbolGenerator.mxg"
+            #line (82,9)-(82,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (150,9)-(150,10) 25 "SymbolGenerator.mxg"
+            #line (83,9)-(83,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -2525,67 +1329,67 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (152,9)-(152,15) 25 "SymbolGenerator.mxg"
+            #line (85,9)-(85,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (152,15)-(152,16) 25 "SymbolGenerator.mxg"
+            #line (85,15)-(85,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (152,17)-(152,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
+            #line (85,17)-(85,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
             #line hidden
-            #line (152,52)-(152,61) 25 "SymbolGenerator.mxg"
+            #line (85,45)-(85,54) 25 "SymbolGenerator.mxg"
             __cb.Write("(__Symbol");
             #line hidden
-            #line (152,61)-(152,62) 25 "SymbolGenerator.mxg"
+            #line (85,54)-(85,55) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (152,62)-(152,72) 25 "SymbolGenerator.mxg"
+            #line (85,55)-(85,65) 25 "SymbolGenerator.mxg"
             __cb.Write("container,");
             #line hidden
-            #line (152,72)-(152,73) 25 "SymbolGenerator.mxg"
+            #line (85,65)-(85,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (152,73)-(152,90) 25 "SymbolGenerator.mxg"
+            #line (85,66)-(85,83) 25 "SymbolGenerator.mxg"
             __cb.Write("__ErrorSymbolInfo");
             #line hidden
-            #line (152,90)-(152,91) 25 "SymbolGenerator.mxg"
+            #line (85,83)-(85,84) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (152,91)-(152,101) 25 "SymbolGenerator.mxg"
+            #line (85,84)-(85,94) 25 "SymbolGenerator.mxg"
             __cb.Write("errorInfo)");
             #line hidden
-            #line (152,101)-(152,102) 25 "SymbolGenerator.mxg"
+            #line (85,94)-(85,95) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (153,13)-(153,14) 25 "SymbolGenerator.mxg"
+            #line (86,13)-(86,14) 25 "SymbolGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (153,14)-(153,15) 25 "SymbolGenerator.mxg"
+            #line (86,14)-(86,15) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (153,15)-(153,30) 25 "SymbolGenerator.mxg"
+            #line (86,15)-(86,30) 25 "SymbolGenerator.mxg"
             __cb.Write("base(container,");
             #line hidden
-            #line (153,30)-(153,31) 25 "SymbolGenerator.mxg"
+            #line (86,30)-(86,31) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (153,31)-(153,41) 25 "SymbolGenerator.mxg"
+            #line (86,31)-(86,41) 25 "SymbolGenerator.mxg"
             __cb.Write("errorInfo)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (154,9)-(154,10) 25 "SymbolGenerator.mxg"
+            #line (87,9)-(87,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (155,9)-(155,10) 25 "SymbolGenerator.mxg"
+            #line (88,9)-(88,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -2593,86 +1397,504 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (157,9)-(157,15) 25 "SymbolGenerator.mxg"
+            #line (90,9)-(90,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (157,15)-(157,16) 25 "SymbolGenerator.mxg"
+            #line (90,15)-(90,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,17)-(157,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
+            #line (90,17)-(90,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
             #line hidden
-            #line (157,52)-(157,61) 25 "SymbolGenerator.mxg"
+            #line (90,45)-(90,54) 25 "SymbolGenerator.mxg"
             __cb.Write("(__Symbol");
             #line hidden
-            #line (157,61)-(157,62) 25 "SymbolGenerator.mxg"
+            #line (90,54)-(90,55) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,62)-(157,72) 25 "SymbolGenerator.mxg"
+            #line (90,55)-(90,65) 25 "SymbolGenerator.mxg"
             __cb.Write("container,");
             #line hidden
-            #line (157,72)-(157,73) 25 "SymbolGenerator.mxg"
+            #line (90,65)-(90,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,73)-(157,92) 25 "SymbolGenerator.mxg"
+            #line (90,66)-(90,85) 25 "SymbolGenerator.mxg"
             __cb.Write("__MergedDeclaration");
             #line hidden
-            #line (157,92)-(157,93) 25 "SymbolGenerator.mxg"
+            #line (90,85)-(90,86) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,93)-(157,105) 25 "SymbolGenerator.mxg"
+            #line (90,86)-(90,98) 25 "SymbolGenerator.mxg"
             __cb.Write("declaration,");
             #line hidden
-            #line (157,105)-(157,106) 25 "SymbolGenerator.mxg"
+            #line (90,98)-(90,99) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,106)-(157,120) 25 "SymbolGenerator.mxg"
+            #line (90,99)-(90,113) 25 "SymbolGenerator.mxg"
             __cb.Write("__IModelObject");
             #line hidden
-            #line (157,120)-(157,121) 25 "SymbolGenerator.mxg"
+            #line (90,113)-(90,114) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,121)-(157,133) 25 "SymbolGenerator.mxg"
+            #line (90,114)-(90,126) 25 "SymbolGenerator.mxg"
             __cb.Write("modelObject,");
             #line hidden
-            #line (157,133)-(157,134) 25 "SymbolGenerator.mxg"
+            #line (90,126)-(90,127) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,134)-(157,141) 25 "SymbolGenerator.mxg"
+            #line (90,127)-(90,134) 25 "SymbolGenerator.mxg"
             __cb.Write("string?");
             #line hidden
-            #line (157,141)-(157,142) 25 "SymbolGenerator.mxg"
+            #line (90,134)-(90,135) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,142)-(157,147) 25 "SymbolGenerator.mxg"
+            #line (90,135)-(90,140) 25 "SymbolGenerator.mxg"
             __cb.Write("name,");
             #line hidden
-            #line (157,147)-(157,148) 25 "SymbolGenerator.mxg"
+            #line (90,140)-(90,141) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,148)-(157,155) 25 "SymbolGenerator.mxg"
+            #line (90,141)-(90,148) 25 "SymbolGenerator.mxg"
             __cb.Write("string?");
             #line hidden
-            #line (157,155)-(157,156) 25 "SymbolGenerator.mxg"
+            #line (90,148)-(90,149) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,156)-(157,169) 25 "SymbolGenerator.mxg"
+            #line (90,149)-(90,162) 25 "SymbolGenerator.mxg"
             __cb.Write("metadataName,");
             #line hidden
-            #line (157,169)-(157,170) 25 "SymbolGenerator.mxg"
+            #line (90,162)-(90,163) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,170)-(157,197) 25 "SymbolGenerator.mxg"
+            #line (90,163)-(90,190) 25 "SymbolGenerator.mxg"
             __cb.Write("__ImmutableAttributeSymbols");
             #line hidden
-            #line (157,197)-(157,198) 25 "SymbolGenerator.mxg"
+            #line (90,190)-(90,191) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (157,198)-(157,208) 25 "SymbolGenerator.mxg"
+            #line (90,191)-(90,201) 25 "SymbolGenerator.mxg"
             __cb.Write("attributes");
             #line hidden
+            var __first9 = true;
+            #line (90,202)-(90,245) 13 "SymbolGenerator.mxg"
+            foreach (var prop in GetProperties(symbol))
+            #line hidden
+            
+            {
+                if (__first9)
+                {
+                    __first9 = false;
+                }
+                #line (90,246)-(90,247) 29 "SymbolGenerator.mxg"
+                __cb.Write(",");
+                #line hidden
+                #line (90,247)-(90,248) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (90,249)-(90,279) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetTypeName(symbol, prop.Type));
+                #line hidden
+                #line (90,280)-(90,281) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (90,282)-(90,300) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetParamName(prop));
+                #line hidden
+            }
+            #line (90,314)-(90,315) 25 "SymbolGenerator.mxg"
+            __cb.Write(")");
+            #line hidden
+            #line (90,315)-(90,316) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (91,13)-(91,14) 25 "SymbolGenerator.mxg"
+            __cb.Write(":");
+            #line hidden
+            #line (91,14)-(91,15) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (91,15)-(91,30) 25 "SymbolGenerator.mxg"
+            __cb.Write("base(container,");
+            #line hidden
+            #line (91,30)-(91,31) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (91,31)-(91,43) 25 "SymbolGenerator.mxg"
+            __cb.Write("declaration,");
+            #line hidden
+            #line (91,43)-(91,44) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (91,44)-(91,56) 25 "SymbolGenerator.mxg"
+            __cb.Write("modelObject,");
+            #line hidden
+            #line (91,56)-(91,57) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (91,57)-(91,62) 25 "SymbolGenerator.mxg"
+            __cb.Write("name,");
+            #line hidden
+            #line (91,62)-(91,63) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (91,63)-(91,76) 25 "SymbolGenerator.mxg"
+            __cb.Write("metadataName,");
+            #line hidden
+            #line (91,76)-(91,77) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (91,77)-(91,88) 25 "SymbolGenerator.mxg"
+            __cb.Write("attributes)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (92,9)-(92,10) 25 "SymbolGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            var __first10 = true;
+            #line (93,14)-(93,57) 13 "SymbolGenerator.mxg"
+            foreach (var prop in GetProperties(symbol))
+            #line hidden
+            
+            {
+                if (__first10)
+                {
+                    __first10 = false;
+                }
+                var __first11 = true;
+                #line (94,18)-(94,34) 17 "SymbolGenerator.mxg"
+                if (prop.IsWeak)
+                #line hidden
+                
+                {
+                    if (__first11)
+                    {
+                        __first11 = false;
+                    }
+                    var __first12 = true;
+                    #line (95,22)-(95,51) 21 "SymbolGenerator.mxg"
+                    if (prop.Type.Dimensions > 0)
+                    #line hidden
+                    
+                    {
+                        if (__first12)
+                        {
+                            __first12 = false;
+                        }
+                        __cb.Push("            ");
+                        #line (96,25)-(96,27) 37 "SymbolGenerator.mxg"
+                        __cb.Write("if");
+                        #line hidden
+                        #line (96,27)-(96,28) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (96,28)-(96,30) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(!");
+                        #line hidden
+                        #line (96,31)-(96,49) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetParamName(prop));
+                        #line hidden
+                        #line (96,50)-(96,68) 37 "SymbolGenerator.mxg"
+                        __cb.Write(".IsDefaultOrEmpty)");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("            ");
+                        #line (97,25)-(97,26) 37 "SymbolGenerator.mxg"
+                        __cb.Write("{");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("                ");
+                        #line (98,30)-(98,48) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetFieldName(prop));
+                        #line hidden
+                        #line (98,49)-(98,59) 37 "SymbolGenerator.mxg"
+                        __cb.Write(".Add(this,");
+                        #line hidden
+                        #line (98,59)-(98,60) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (98,61)-(98,79) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetParamName(prop));
+                        #line hidden
+                        #line (98,80)-(98,82) 37 "SymbolGenerator.mxg"
+                        __cb.Write(");");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("            ");
+                        #line (99,25)-(99,26) 37 "SymbolGenerator.mxg"
+                        __cb.Write("}");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    #line (100,22)-(100,26) 21 "SymbolGenerator.mxg"
+                    else
+                    #line hidden
+                    
+                    {
+                        if (__first12)
+                        {
+                            __first12 = false;
+                        }
+                        __cb.Push("            ");
+                        #line (101,25)-(101,27) 37 "SymbolGenerator.mxg"
+                        __cb.Write("if");
+                        #line hidden
+                        #line (101,27)-(101,28) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (101,28)-(101,29) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(");
+                        #line hidden
+                        #line (101,30)-(101,48) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetParamName(prop));
+                        #line hidden
+                        #line (101,49)-(101,50) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (101,50)-(101,52) 37 "SymbolGenerator.mxg"
+                        __cb.Write("!=");
+                        #line hidden
+                        #line (101,52)-(101,53) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (101,54)-(101,83) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetDefaultValue(symbol, prop));
+                        #line hidden
+                        #line (101,84)-(101,85) 37 "SymbolGenerator.mxg"
+                        __cb.Write(")");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("            ");
+                        #line (102,25)-(102,26) 37 "SymbolGenerator.mxg"
+                        __cb.Write("{");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("                ");
+                        #line (103,30)-(103,48) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetFieldName(prop));
+                        #line hidden
+                        #line (103,49)-(103,59) 37 "SymbolGenerator.mxg"
+                        __cb.Write(".Add(this,");
+                        #line hidden
+                        #line (103,59)-(103,60) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (103,61)-(103,79) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetParamName(prop));
+                        #line hidden
+                        #line (103,80)-(103,82) 37 "SymbolGenerator.mxg"
+                        __cb.Write(");");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("            ");
+                        #line (104,25)-(104,26) 37 "SymbolGenerator.mxg"
+                        __cb.Write("}");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    if (!__first12) __cb.AppendLine();
+                }
+                #line (106,18)-(106,22) 17 "SymbolGenerator.mxg"
+                else
+                #line hidden
+                
+                {
+                    if (__first11)
+                    {
+                        __first11 = false;
+                    }
+                    __cb.Push("            ");
+                    #line (107,22)-(107,40) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetFieldName(prop));
+                    #line hidden
+                    #line (107,41)-(107,42) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (107,42)-(107,43) 33 "SymbolGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (107,43)-(107,44) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (107,45)-(107,63) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetParamName(prop));
+                    #line hidden
+                    #line (107,64)-(107,65) 33 "SymbolGenerator.mxg"
+                    __cb.Write(";");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                }
+                if (!__first11) __cb.AppendLine();
+            }
+            if (!__first10) __cb.AppendLine();
+            __cb.Push("        ");
+            #line (110,9)-(110,10) 25 "SymbolGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (112,9)-(112,15) 25 "SymbolGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (112,15)-(112,16) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,17)-(112,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
+            #line hidden
+            #line (112,45)-(112,54) 25 "SymbolGenerator.mxg"
+            __cb.Write("(__Symbol");
+            #line hidden
+            #line (112,54)-(112,55) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,55)-(112,65) 25 "SymbolGenerator.mxg"
+            __cb.Write("container,");
+            #line hidden
+            #line (112,65)-(112,66) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,66)-(112,80) 25 "SymbolGenerator.mxg"
+            __cb.Write("__IModelObject");
+            #line hidden
+            #line (112,80)-(112,81) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,81)-(112,93) 25 "SymbolGenerator.mxg"
+            __cb.Write("modelObject,");
+            #line hidden
+            #line (112,93)-(112,94) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,94)-(112,101) 25 "SymbolGenerator.mxg"
+            __cb.Write("string?");
+            #line hidden
+            #line (112,101)-(112,102) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,102)-(112,107) 25 "SymbolGenerator.mxg"
+            __cb.Write("name,");
+            #line hidden
+            #line (112,107)-(112,108) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,108)-(112,115) 25 "SymbolGenerator.mxg"
+            __cb.Write("string?");
+            #line hidden
+            #line (112,115)-(112,116) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,116)-(112,129) 25 "SymbolGenerator.mxg"
+            __cb.Write("metadataName,");
+            #line hidden
+            #line (112,129)-(112,130) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,130)-(112,157) 25 "SymbolGenerator.mxg"
+            __cb.Write("__ImmutableAttributeSymbols");
+            #line hidden
+            #line (112,157)-(112,158) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (112,158)-(112,168) 25 "SymbolGenerator.mxg"
+            __cb.Write("attributes");
+            #line hidden
+            var __first13 = true;
+            #line (112,169)-(112,212) 13 "SymbolGenerator.mxg"
+            foreach (var prop in GetProperties(symbol))
+            #line hidden
+            
+            {
+                if (__first13)
+                {
+                    __first13 = false;
+                }
+                #line (112,213)-(112,214) 29 "SymbolGenerator.mxg"
+                __cb.Write(",");
+                #line hidden
+                #line (112,214)-(112,215) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (112,216)-(112,246) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetTypeName(symbol, prop.Type));
+                #line hidden
+                #line (112,247)-(112,248) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (112,249)-(112,267) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetParamName(prop));
+                #line hidden
+            }
+            #line (112,281)-(112,282) 25 "SymbolGenerator.mxg"
+            __cb.Write(")");
+            #line hidden
+            #line (112,282)-(112,283) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (113,13)-(113,14) 25 "SymbolGenerator.mxg"
+            __cb.Write(":");
+            #line hidden
+            #line (113,14)-(113,15) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (113,15)-(113,30) 25 "SymbolGenerator.mxg"
+            __cb.Write("base(container,");
+            #line hidden
+            #line (113,30)-(113,31) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (113,31)-(113,43) 25 "SymbolGenerator.mxg"
+            __cb.Write("modelObject,");
+            #line hidden
+            #line (113,43)-(113,44) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (113,44)-(113,49) 25 "SymbolGenerator.mxg"
+            __cb.Write("name,");
+            #line hidden
+            #line (113,49)-(113,50) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (113,50)-(113,63) 25 "SymbolGenerator.mxg"
+            __cb.Write("metadataName,");
+            #line hidden
+            #line (113,63)-(113,64) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (113,64)-(113,75) 25 "SymbolGenerator.mxg"
+            __cb.Write("attributes)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (114,9)-(114,10) 25 "SymbolGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
             var __first14 = true;
-            #line (157,209)-(157,252) 13 "SymbolGenerator.mxg"
+            #line (115,14)-(115,57) 13 "SymbolGenerator.mxg"
             foreach (var prop in GetProperties(symbol))
             #line hidden
             
@@ -2681,265 +1903,183 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 {
                     __first14 = false;
                 }
-                #line (157,253)-(157,254) 29 "SymbolGenerator.mxg"
-                __cb.Write(",");
-                #line hidden
-                #line (157,254)-(157,255) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (157,256)-(157,286) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetTypeName(symbol, prop.Type));
-                #line hidden
-                #line (157,287)-(157,288) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (157,289)-(157,307) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetParamName(prop));
-                #line hidden
-            }
-            #line (157,321)-(157,322) 25 "SymbolGenerator.mxg"
-            __cb.Write(")");
-            #line hidden
-            #line (157,322)-(157,323) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (158,13)-(158,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (158,14)-(158,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (158,15)-(158,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (158,30)-(158,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (158,31)-(158,43) 25 "SymbolGenerator.mxg"
-            __cb.Write("declaration,");
-            #line hidden
-            #line (158,43)-(158,44) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (158,44)-(158,56) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject,");
-            #line hidden
-            #line (158,56)-(158,57) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (158,57)-(158,62) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (158,62)-(158,63) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (158,63)-(158,76) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (158,76)-(158,77) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (158,77)-(158,88) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (159,9)-(159,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            var __first15 = true;
-            #line (160,14)-(160,57) 13 "SymbolGenerator.mxg"
-            foreach (var prop in GetProperties(symbol))
-            #line hidden
-            
-            {
-                if (__first15)
-                {
-                    __first15 = false;
-                }
-                var __first16 = true;
-                #line (161,18)-(161,34) 17 "SymbolGenerator.mxg"
+                var __first15 = true;
+                #line (116,18)-(116,34) 17 "SymbolGenerator.mxg"
                 if (prop.IsWeak)
                 #line hidden
                 
                 {
-                    if (__first16)
+                    if (__first15)
                     {
-                        __first16 = false;
+                        __first15 = false;
                     }
-                    var __first17 = true;
-                    #line (162,22)-(162,51) 21 "SymbolGenerator.mxg"
+                    var __first16 = true;
+                    #line (117,22)-(117,51) 21 "SymbolGenerator.mxg"
                     if (prop.Type.Dimensions > 0)
                     #line hidden
                     
                     {
-                        if (__first17)
+                        if (__first16)
                         {
-                            __first17 = false;
+                            __first16 = false;
                         }
                         __cb.Push("            ");
-                        #line (163,25)-(163,27) 37 "SymbolGenerator.mxg"
+                        #line (118,25)-(118,27) 37 "SymbolGenerator.mxg"
                         __cb.Write("if");
                         #line hidden
-                        #line (163,27)-(163,28) 37 "SymbolGenerator.mxg"
+                        #line (118,27)-(118,28) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (163,28)-(163,30) 37 "SymbolGenerator.mxg"
+                        #line (118,28)-(118,30) 37 "SymbolGenerator.mxg"
                         __cb.Write("(!");
                         #line hidden
-                        #line (163,31)-(163,49) 36 "SymbolGenerator.mxg"
+                        #line (118,31)-(118,49) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (163,50)-(163,68) 37 "SymbolGenerator.mxg"
+                        #line (118,50)-(118,68) 37 "SymbolGenerator.mxg"
                         __cb.Write(".IsDefaultOrEmpty)");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (164,25)-(164,26) 37 "SymbolGenerator.mxg"
+                        #line (119,25)-(119,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("{");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("                ");
-                        #line (165,30)-(165,48) 36 "SymbolGenerator.mxg"
+                        #line (120,30)-(120,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetFieldName(prop));
                         #line hidden
-                        #line (165,49)-(165,59) 37 "SymbolGenerator.mxg"
+                        #line (120,49)-(120,59) 37 "SymbolGenerator.mxg"
                         __cb.Write(".Add(this,");
                         #line hidden
-                        #line (165,59)-(165,60) 37 "SymbolGenerator.mxg"
+                        #line (120,59)-(120,60) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (165,61)-(165,79) 36 "SymbolGenerator.mxg"
+                        #line (120,61)-(120,79) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (165,80)-(165,82) 37 "SymbolGenerator.mxg"
+                        #line (120,80)-(120,82) 37 "SymbolGenerator.mxg"
                         __cb.Write(");");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (166,25)-(166,26) 37 "SymbolGenerator.mxg"
+                        #line (121,25)-(121,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("}");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    #line (167,22)-(167,26) 21 "SymbolGenerator.mxg"
+                    #line (122,22)-(122,26) 21 "SymbolGenerator.mxg"
                     else
                     #line hidden
                     
                     {
-                        if (__first17)
+                        if (__first16)
                         {
-                            __first17 = false;
+                            __first16 = false;
                         }
                         __cb.Push("            ");
-                        #line (168,25)-(168,27) 37 "SymbolGenerator.mxg"
+                        #line (123,25)-(123,27) 37 "SymbolGenerator.mxg"
                         __cb.Write("if");
                         #line hidden
-                        #line (168,27)-(168,28) 37 "SymbolGenerator.mxg"
+                        #line (123,27)-(123,28) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (168,28)-(168,29) 37 "SymbolGenerator.mxg"
+                        #line (123,28)-(123,29) 37 "SymbolGenerator.mxg"
                         __cb.Write("(");
                         #line hidden
-                        #line (168,30)-(168,48) 36 "SymbolGenerator.mxg"
+                        #line (123,30)-(123,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (168,49)-(168,50) 37 "SymbolGenerator.mxg"
+                        #line (123,49)-(123,50) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (168,50)-(168,52) 37 "SymbolGenerator.mxg"
+                        #line (123,50)-(123,52) 37 "SymbolGenerator.mxg"
                         __cb.Write("!=");
                         #line hidden
-                        #line (168,52)-(168,53) 37 "SymbolGenerator.mxg"
+                        #line (123,52)-(123,53) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (168,54)-(168,83) 36 "SymbolGenerator.mxg"
+                        #line (123,54)-(123,83) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetDefaultValue(symbol, prop));
                         #line hidden
-                        #line (168,84)-(168,85) 37 "SymbolGenerator.mxg"
+                        #line (123,84)-(123,85) 37 "SymbolGenerator.mxg"
                         __cb.Write(")");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (169,25)-(169,26) 37 "SymbolGenerator.mxg"
+                        #line (124,25)-(124,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("{");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("                ");
-                        #line (170,30)-(170,48) 36 "SymbolGenerator.mxg"
+                        #line (125,30)-(125,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetFieldName(prop));
                         #line hidden
-                        #line (170,49)-(170,59) 37 "SymbolGenerator.mxg"
+                        #line (125,49)-(125,59) 37 "SymbolGenerator.mxg"
                         __cb.Write(".Add(this,");
                         #line hidden
-                        #line (170,59)-(170,60) 37 "SymbolGenerator.mxg"
+                        #line (125,59)-(125,60) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (170,61)-(170,79) 36 "SymbolGenerator.mxg"
+                        #line (125,61)-(125,79) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (170,80)-(170,82) 37 "SymbolGenerator.mxg"
+                        #line (125,80)-(125,82) 37 "SymbolGenerator.mxg"
                         __cb.Write(");");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (171,25)-(171,26) 37 "SymbolGenerator.mxg"
+                        #line (126,25)-(126,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("}");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first17) __cb.AppendLine();
+                    if (!__first16) __cb.AppendLine();
                 }
-                #line (173,18)-(173,22) 17 "SymbolGenerator.mxg"
+                #line (128,18)-(128,22) 17 "SymbolGenerator.mxg"
                 else
                 #line hidden
                 
                 {
-                    if (__first16)
+                    if (__first15)
                     {
-                        __first16 = false;
+                        __first15 = false;
                     }
                     __cb.Push("            ");
-                    #line (174,22)-(174,40) 32 "SymbolGenerator.mxg"
+                    #line (129,22)-(129,40) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldName(prop));
                     #line hidden
-                    #line (174,41)-(174,42) 33 "SymbolGenerator.mxg"
+                    #line (129,41)-(129,42) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (174,42)-(174,43) 33 "SymbolGenerator.mxg"
+                    #line (129,42)-(129,43) 33 "SymbolGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (174,43)-(174,44) 33 "SymbolGenerator.mxg"
+                    #line (129,43)-(129,44) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (174,45)-(174,63) 32 "SymbolGenerator.mxg"
+                    #line (129,45)-(129,63) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetParamName(prop));
                     #line hidden
-                    #line (174,64)-(174,65) 33 "SymbolGenerator.mxg"
+                    #line (129,64)-(129,65) 33 "SymbolGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first16) __cb.AppendLine();
+                if (!__first15) __cb.AppendLine();
             }
-            if (!__first15) __cb.AppendLine();
+            if (!__first14) __cb.AppendLine();
             __cb.Push("        ");
-            #line (177,9)-(177,10) 25 "SymbolGenerator.mxg"
+            #line (132,9)-(132,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -2947,74 +2087,150 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (179,9)-(179,15) 25 "SymbolGenerator.mxg"
+            #line (134,9)-(134,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (179,15)-(179,16) 25 "SymbolGenerator.mxg"
+            #line (134,15)-(134,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,17)-(179,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
+            #line (134,17)-(134,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
             #line hidden
-            #line (179,52)-(179,61) 25 "SymbolGenerator.mxg"
+            #line (134,45)-(134,54) 25 "SymbolGenerator.mxg"
             __cb.Write("(__Symbol");
             #line hidden
-            #line (179,61)-(179,62) 25 "SymbolGenerator.mxg"
+            #line (134,54)-(134,55) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,62)-(179,72) 25 "SymbolGenerator.mxg"
+            #line (134,55)-(134,65) 25 "SymbolGenerator.mxg"
             __cb.Write("container,");
             #line hidden
-            #line (179,72)-(179,73) 25 "SymbolGenerator.mxg"
+            #line (134,65)-(134,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,73)-(179,87) 25 "SymbolGenerator.mxg"
-            __cb.Write("__IModelObject");
+            #line (134,66)-(134,75) 25 "SymbolGenerator.mxg"
+            __cb.Write("__ISymbol");
             #line hidden
-            #line (179,87)-(179,88) 25 "SymbolGenerator.mxg"
+            #line (134,75)-(134,76) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,88)-(179,100) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject,");
+            #line (134,76)-(134,89) 25 "SymbolGenerator.mxg"
+            __cb.Write("csharpSymbol,");
             #line hidden
-            #line (179,100)-(179,101) 25 "SymbolGenerator.mxg"
+            #line (134,89)-(134,90) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,101)-(179,108) 25 "SymbolGenerator.mxg"
+            #line (134,90)-(134,97) 25 "SymbolGenerator.mxg"
             __cb.Write("string?");
             #line hidden
-            #line (179,108)-(179,109) 25 "SymbolGenerator.mxg"
+            #line (134,97)-(134,98) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,109)-(179,114) 25 "SymbolGenerator.mxg"
+            #line (134,98)-(134,103) 25 "SymbolGenerator.mxg"
             __cb.Write("name,");
             #line hidden
-            #line (179,114)-(179,115) 25 "SymbolGenerator.mxg"
+            #line (134,103)-(134,104) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,115)-(179,122) 25 "SymbolGenerator.mxg"
+            #line (134,104)-(134,111) 25 "SymbolGenerator.mxg"
             __cb.Write("string?");
             #line hidden
-            #line (179,122)-(179,123) 25 "SymbolGenerator.mxg"
+            #line (134,111)-(134,112) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,123)-(179,136) 25 "SymbolGenerator.mxg"
+            #line (134,112)-(134,125) 25 "SymbolGenerator.mxg"
             __cb.Write("metadataName,");
             #line hidden
-            #line (179,136)-(179,137) 25 "SymbolGenerator.mxg"
+            #line (134,125)-(134,126) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,137)-(179,164) 25 "SymbolGenerator.mxg"
+            #line (134,126)-(134,153) 25 "SymbolGenerator.mxg"
             __cb.Write("__ImmutableAttributeSymbols");
             #line hidden
-            #line (179,164)-(179,165) 25 "SymbolGenerator.mxg"
+            #line (134,153)-(134,154) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (179,165)-(179,175) 25 "SymbolGenerator.mxg"
+            #line (134,154)-(134,164) 25 "SymbolGenerator.mxg"
             __cb.Write("attributes");
             #line hidden
+            var __first17 = true;
+            #line (134,165)-(134,208) 13 "SymbolGenerator.mxg"
+            foreach (var prop in GetProperties(symbol))
+            #line hidden
+            
+            {
+                if (__first17)
+                {
+                    __first17 = false;
+                }
+                #line (134,209)-(134,210) 29 "SymbolGenerator.mxg"
+                __cb.Write(",");
+                #line hidden
+                #line (134,210)-(134,211) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (134,212)-(134,242) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetTypeName(symbol, prop.Type));
+                #line hidden
+                #line (134,243)-(134,244) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (134,245)-(134,263) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetParamName(prop));
+                #line hidden
+            }
+            #line (134,277)-(134,278) 25 "SymbolGenerator.mxg"
+            __cb.Write(")");
+            #line hidden
+            #line (134,278)-(134,279) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (135,13)-(135,14) 25 "SymbolGenerator.mxg"
+            __cb.Write(":");
+            #line hidden
+            #line (135,14)-(135,15) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (135,15)-(135,30) 25 "SymbolGenerator.mxg"
+            __cb.Write("base(container,");
+            #line hidden
+            #line (135,30)-(135,31) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (135,31)-(135,44) 25 "SymbolGenerator.mxg"
+            __cb.Write("csharpSymbol,");
+            #line hidden
+            #line (135,44)-(135,45) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (135,45)-(135,50) 25 "SymbolGenerator.mxg"
+            __cb.Write("name,");
+            #line hidden
+            #line (135,50)-(135,51) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (135,51)-(135,64) 25 "SymbolGenerator.mxg"
+            __cb.Write("metadataName,");
+            #line hidden
+            #line (135,64)-(135,65) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (135,65)-(135,76) 25 "SymbolGenerator.mxg"
+            __cb.Write("attributes)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (136,9)-(136,10) 25 "SymbolGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
             var __first18 = true;
-            #line (179,176)-(179,219) 13 "SymbolGenerator.mxg"
+            #line (137,14)-(137,57) 13 "SymbolGenerator.mxg"
             foreach (var prop in GetProperties(symbol))
             #line hidden
             
@@ -3023,259 +2239,183 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 {
                     __first18 = false;
                 }
-                #line (179,220)-(179,221) 29 "SymbolGenerator.mxg"
-                __cb.Write(",");
-                #line hidden
-                #line (179,221)-(179,222) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (179,223)-(179,253) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetTypeName(symbol, prop.Type));
-                #line hidden
-                #line (179,254)-(179,255) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (179,256)-(179,274) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetParamName(prop));
-                #line hidden
-            }
-            #line (179,288)-(179,289) 25 "SymbolGenerator.mxg"
-            __cb.Write(")");
-            #line hidden
-            #line (179,289)-(179,290) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (180,13)-(180,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (180,14)-(180,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (180,15)-(180,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (180,30)-(180,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (180,31)-(180,43) 25 "SymbolGenerator.mxg"
-            __cb.Write("modelObject,");
-            #line hidden
-            #line (180,43)-(180,44) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (180,44)-(180,49) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (180,49)-(180,50) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (180,50)-(180,63) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (180,63)-(180,64) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (180,64)-(180,75) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (181,9)-(181,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            var __first19 = true;
-            #line (182,14)-(182,57) 13 "SymbolGenerator.mxg"
-            foreach (var prop in GetProperties(symbol))
-            #line hidden
-            
-            {
-                if (__first19)
-                {
-                    __first19 = false;
-                }
-                var __first20 = true;
-                #line (183,18)-(183,34) 17 "SymbolGenerator.mxg"
+                var __first19 = true;
+                #line (138,18)-(138,34) 17 "SymbolGenerator.mxg"
                 if (prop.IsWeak)
                 #line hidden
                 
                 {
-                    if (__first20)
+                    if (__first19)
                     {
-                        __first20 = false;
+                        __first19 = false;
                     }
-                    var __first21 = true;
-                    #line (184,22)-(184,51) 21 "SymbolGenerator.mxg"
+                    var __first20 = true;
+                    #line (139,22)-(139,51) 21 "SymbolGenerator.mxg"
                     if (prop.Type.Dimensions > 0)
                     #line hidden
                     
                     {
-                        if (__first21)
+                        if (__first20)
                         {
-                            __first21 = false;
+                            __first20 = false;
                         }
                         __cb.Push("            ");
-                        #line (185,25)-(185,27) 37 "SymbolGenerator.mxg"
+                        #line (140,25)-(140,27) 37 "SymbolGenerator.mxg"
                         __cb.Write("if");
                         #line hidden
-                        #line (185,27)-(185,28) 37 "SymbolGenerator.mxg"
+                        #line (140,27)-(140,28) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (185,28)-(185,30) 37 "SymbolGenerator.mxg"
+                        #line (140,28)-(140,30) 37 "SymbolGenerator.mxg"
                         __cb.Write("(!");
                         #line hidden
-                        #line (185,31)-(185,49) 36 "SymbolGenerator.mxg"
+                        #line (140,31)-(140,49) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (185,50)-(185,68) 37 "SymbolGenerator.mxg"
+                        #line (140,50)-(140,68) 37 "SymbolGenerator.mxg"
                         __cb.Write(".IsDefaultOrEmpty)");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (186,25)-(186,26) 37 "SymbolGenerator.mxg"
+                        #line (141,25)-(141,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("{");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("                ");
-                        #line (187,30)-(187,48) 36 "SymbolGenerator.mxg"
+                        #line (142,30)-(142,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetFieldName(prop));
                         #line hidden
-                        #line (187,49)-(187,59) 37 "SymbolGenerator.mxg"
+                        #line (142,49)-(142,59) 37 "SymbolGenerator.mxg"
                         __cb.Write(".Add(this,");
                         #line hidden
-                        #line (187,59)-(187,60) 37 "SymbolGenerator.mxg"
+                        #line (142,59)-(142,60) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (187,61)-(187,79) 36 "SymbolGenerator.mxg"
+                        #line (142,61)-(142,79) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (187,80)-(187,82) 37 "SymbolGenerator.mxg"
+                        #line (142,80)-(142,82) 37 "SymbolGenerator.mxg"
                         __cb.Write(");");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (188,25)-(188,26) 37 "SymbolGenerator.mxg"
+                        #line (143,25)-(143,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("}");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    #line (189,22)-(189,26) 21 "SymbolGenerator.mxg"
+                    #line (144,22)-(144,26) 21 "SymbolGenerator.mxg"
                     else
                     #line hidden
                     
                     {
-                        if (__first21)
+                        if (__first20)
                         {
-                            __first21 = false;
+                            __first20 = false;
                         }
                         __cb.Push("            ");
-                        #line (190,25)-(190,27) 37 "SymbolGenerator.mxg"
+                        #line (145,25)-(145,27) 37 "SymbolGenerator.mxg"
                         __cb.Write("if");
                         #line hidden
-                        #line (190,27)-(190,28) 37 "SymbolGenerator.mxg"
+                        #line (145,27)-(145,28) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (190,28)-(190,29) 37 "SymbolGenerator.mxg"
+                        #line (145,28)-(145,29) 37 "SymbolGenerator.mxg"
                         __cb.Write("(");
                         #line hidden
-                        #line (190,30)-(190,48) 36 "SymbolGenerator.mxg"
+                        #line (145,30)-(145,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (190,49)-(190,50) 37 "SymbolGenerator.mxg"
+                        #line (145,49)-(145,50) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (190,50)-(190,52) 37 "SymbolGenerator.mxg"
+                        #line (145,50)-(145,52) 37 "SymbolGenerator.mxg"
                         __cb.Write("!=");
                         #line hidden
-                        #line (190,52)-(190,53) 37 "SymbolGenerator.mxg"
+                        #line (145,52)-(145,53) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (190,54)-(190,83) 36 "SymbolGenerator.mxg"
+                        #line (145,54)-(145,83) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetDefaultValue(symbol, prop));
                         #line hidden
-                        #line (190,84)-(190,85) 37 "SymbolGenerator.mxg"
+                        #line (145,84)-(145,85) 37 "SymbolGenerator.mxg"
                         __cb.Write(")");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (191,25)-(191,26) 37 "SymbolGenerator.mxg"
+                        #line (146,25)-(146,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("{");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("                ");
-                        #line (192,30)-(192,48) 36 "SymbolGenerator.mxg"
+                        #line (147,30)-(147,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetFieldName(prop));
                         #line hidden
-                        #line (192,49)-(192,59) 37 "SymbolGenerator.mxg"
+                        #line (147,49)-(147,59) 37 "SymbolGenerator.mxg"
                         __cb.Write(".Add(this,");
                         #line hidden
-                        #line (192,59)-(192,60) 37 "SymbolGenerator.mxg"
+                        #line (147,59)-(147,60) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (192,61)-(192,79) 36 "SymbolGenerator.mxg"
+                        #line (147,61)-(147,79) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (192,80)-(192,82) 37 "SymbolGenerator.mxg"
+                        #line (147,80)-(147,82) 37 "SymbolGenerator.mxg"
                         __cb.Write(");");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (193,25)-(193,26) 37 "SymbolGenerator.mxg"
+                        #line (148,25)-(148,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("}");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first21) __cb.AppendLine();
+                    if (!__first20) __cb.AppendLine();
                 }
-                #line (195,18)-(195,22) 17 "SymbolGenerator.mxg"
+                #line (150,18)-(150,22) 17 "SymbolGenerator.mxg"
                 else
                 #line hidden
                 
                 {
-                    if (__first20)
+                    if (__first19)
                     {
-                        __first20 = false;
+                        __first19 = false;
                     }
                     __cb.Push("            ");
-                    #line (196,22)-(196,40) 32 "SymbolGenerator.mxg"
+                    #line (151,22)-(151,40) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldName(prop));
                     #line hidden
-                    #line (196,41)-(196,42) 33 "SymbolGenerator.mxg"
+                    #line (151,41)-(151,42) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (196,42)-(196,43) 33 "SymbolGenerator.mxg"
+                    #line (151,42)-(151,43) 33 "SymbolGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (196,43)-(196,44) 33 "SymbolGenerator.mxg"
+                    #line (151,43)-(151,44) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (196,45)-(196,63) 32 "SymbolGenerator.mxg"
+                    #line (151,45)-(151,63) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetParamName(prop));
                     #line hidden
-                    #line (196,64)-(196,65) 33 "SymbolGenerator.mxg"
+                    #line (151,64)-(151,65) 33 "SymbolGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first20) __cb.AppendLine();
+                if (!__first19) __cb.AppendLine();
             }
-            if (!__first19) __cb.AppendLine();
+            if (!__first18) __cb.AppendLine();
             __cb.Push("        ");
-            #line (199,9)-(199,10) 25 "SymbolGenerator.mxg"
+            #line (154,9)-(154,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -3283,74 +2423,150 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (201,9)-(201,15) 25 "SymbolGenerator.mxg"
+            #line (156,9)-(156,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (201,15)-(201,16) 25 "SymbolGenerator.mxg"
+            #line (156,15)-(156,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,17)-(201,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
+            #line (156,17)-(156,44) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetInstName(symbol, symbol));
             #line hidden
-            #line (201,52)-(201,61) 25 "SymbolGenerator.mxg"
+            #line (156,45)-(156,54) 25 "SymbolGenerator.mxg"
             __cb.Write("(__Symbol");
             #line hidden
-            #line (201,61)-(201,62) 25 "SymbolGenerator.mxg"
+            #line (156,54)-(156,55) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,62)-(201,72) 25 "SymbolGenerator.mxg"
+            #line (156,55)-(156,65) 25 "SymbolGenerator.mxg"
             __cb.Write("container,");
             #line hidden
-            #line (201,72)-(201,73) 25 "SymbolGenerator.mxg"
+            #line (156,65)-(156,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,73)-(201,82) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ISymbol");
+            #line (156,66)-(156,83) 25 "SymbolGenerator.mxg"
+            __cb.Write("__ErrorSymbolInfo");
             #line hidden
-            #line (201,82)-(201,83) 25 "SymbolGenerator.mxg"
+            #line (156,83)-(156,84) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,83)-(201,96) 25 "SymbolGenerator.mxg"
-            __cb.Write("csharpSymbol,");
+            #line (156,84)-(156,94) 25 "SymbolGenerator.mxg"
+            __cb.Write("errorInfo,");
             #line hidden
-            #line (201,96)-(201,97) 25 "SymbolGenerator.mxg"
+            #line (156,94)-(156,95) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,97)-(201,104) 25 "SymbolGenerator.mxg"
+            #line (156,95)-(156,102) 25 "SymbolGenerator.mxg"
             __cb.Write("string?");
             #line hidden
-            #line (201,104)-(201,105) 25 "SymbolGenerator.mxg"
+            #line (156,102)-(156,103) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,105)-(201,110) 25 "SymbolGenerator.mxg"
+            #line (156,103)-(156,108) 25 "SymbolGenerator.mxg"
             __cb.Write("name,");
             #line hidden
-            #line (201,110)-(201,111) 25 "SymbolGenerator.mxg"
+            #line (156,108)-(156,109) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,111)-(201,118) 25 "SymbolGenerator.mxg"
+            #line (156,109)-(156,116) 25 "SymbolGenerator.mxg"
             __cb.Write("string?");
             #line hidden
-            #line (201,118)-(201,119) 25 "SymbolGenerator.mxg"
+            #line (156,116)-(156,117) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,119)-(201,132) 25 "SymbolGenerator.mxg"
+            #line (156,117)-(156,130) 25 "SymbolGenerator.mxg"
             __cb.Write("metadataName,");
             #line hidden
-            #line (201,132)-(201,133) 25 "SymbolGenerator.mxg"
+            #line (156,130)-(156,131) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,133)-(201,160) 25 "SymbolGenerator.mxg"
+            #line (156,131)-(156,158) 25 "SymbolGenerator.mxg"
             __cb.Write("__ImmutableAttributeSymbols");
             #line hidden
-            #line (201,160)-(201,161) 25 "SymbolGenerator.mxg"
+            #line (156,158)-(156,159) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (201,161)-(201,171) 25 "SymbolGenerator.mxg"
+            #line (156,159)-(156,169) 25 "SymbolGenerator.mxg"
             __cb.Write("attributes");
             #line hidden
+            var __first21 = true;
+            #line (156,170)-(156,213) 13 "SymbolGenerator.mxg"
+            foreach (var prop in GetProperties(symbol))
+            #line hidden
+            
+            {
+                if (__first21)
+                {
+                    __first21 = false;
+                }
+                #line (156,214)-(156,215) 29 "SymbolGenerator.mxg"
+                __cb.Write(",");
+                #line hidden
+                #line (156,215)-(156,216) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (156,217)-(156,247) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetTypeName(symbol, prop.Type));
+                #line hidden
+                #line (156,248)-(156,249) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (156,250)-(156,268) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetParamName(prop));
+                #line hidden
+            }
+            #line (156,282)-(156,283) 25 "SymbolGenerator.mxg"
+            __cb.Write(")");
+            #line hidden
+            #line (156,283)-(156,284) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (157,13)-(157,14) 25 "SymbolGenerator.mxg"
+            __cb.Write(":");
+            #line hidden
+            #line (157,14)-(157,15) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (157,15)-(157,30) 25 "SymbolGenerator.mxg"
+            __cb.Write("base(container,");
+            #line hidden
+            #line (157,30)-(157,31) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (157,31)-(157,41) 25 "SymbolGenerator.mxg"
+            __cb.Write("errorInfo,");
+            #line hidden
+            #line (157,41)-(157,42) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (157,42)-(157,47) 25 "SymbolGenerator.mxg"
+            __cb.Write("name,");
+            #line hidden
+            #line (157,47)-(157,48) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (157,48)-(157,61) 25 "SymbolGenerator.mxg"
+            __cb.Write("metadataName,");
+            #line hidden
+            #line (157,61)-(157,62) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (157,62)-(157,73) 25 "SymbolGenerator.mxg"
+            __cb.Write("attributes)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (158,9)-(158,10) 25 "SymbolGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
             var __first22 = true;
-            #line (201,172)-(201,215) 13 "SymbolGenerator.mxg"
+            #line (159,14)-(159,57) 13 "SymbolGenerator.mxg"
             foreach (var prop in GetProperties(symbol))
             #line hidden
             
@@ -3359,411 +2575,474 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 {
                     __first22 = false;
                 }
-                #line (201,216)-(201,217) 29 "SymbolGenerator.mxg"
-                __cb.Write(",");
-                #line hidden
-                #line (201,217)-(201,218) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (201,219)-(201,249) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetTypeName(symbol, prop.Type));
-                #line hidden
-                #line (201,250)-(201,251) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (201,252)-(201,270) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetParamName(prop));
-                #line hidden
-            }
-            #line (201,284)-(201,285) 25 "SymbolGenerator.mxg"
-            __cb.Write(")");
-            #line hidden
-            #line (201,285)-(201,286) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (202,13)-(202,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (202,14)-(202,15) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,15)-(202,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
-            #line hidden
-            #line (202,30)-(202,31) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,31)-(202,44) 25 "SymbolGenerator.mxg"
-            __cb.Write("csharpSymbol,");
-            #line hidden
-            #line (202,44)-(202,45) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,45)-(202,50) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (202,50)-(202,51) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,51)-(202,64) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (202,64)-(202,65) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,65)-(202,76) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (203,9)-(203,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            var __first23 = true;
-            #line (204,14)-(204,57) 13 "SymbolGenerator.mxg"
-            foreach (var prop in GetProperties(symbol))
-            #line hidden
-            
-            {
-                if (__first23)
-                {
-                    __first23 = false;
-                }
-                var __first24 = true;
-                #line (205,18)-(205,34) 17 "SymbolGenerator.mxg"
+                var __first23 = true;
+                #line (160,18)-(160,34) 17 "SymbolGenerator.mxg"
                 if (prop.IsWeak)
                 #line hidden
                 
                 {
-                    if (__first24)
+                    if (__first23)
                     {
-                        __first24 = false;
+                        __first23 = false;
                     }
-                    var __first25 = true;
-                    #line (206,22)-(206,51) 21 "SymbolGenerator.mxg"
+                    var __first24 = true;
+                    #line (161,22)-(161,51) 21 "SymbolGenerator.mxg"
                     if (prop.Type.Dimensions > 0)
                     #line hidden
                     
                     {
-                        if (__first25)
+                        if (__first24)
                         {
-                            __first25 = false;
+                            __first24 = false;
                         }
                         __cb.Push("            ");
-                        #line (207,25)-(207,27) 37 "SymbolGenerator.mxg"
+                        #line (162,25)-(162,27) 37 "SymbolGenerator.mxg"
                         __cb.Write("if");
                         #line hidden
-                        #line (207,27)-(207,28) 37 "SymbolGenerator.mxg"
+                        #line (162,27)-(162,28) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (207,28)-(207,30) 37 "SymbolGenerator.mxg"
+                        #line (162,28)-(162,30) 37 "SymbolGenerator.mxg"
                         __cb.Write("(!");
                         #line hidden
-                        #line (207,31)-(207,49) 36 "SymbolGenerator.mxg"
+                        #line (162,31)-(162,49) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (207,50)-(207,68) 37 "SymbolGenerator.mxg"
+                        #line (162,50)-(162,68) 37 "SymbolGenerator.mxg"
                         __cb.Write(".IsDefaultOrEmpty)");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (208,25)-(208,26) 37 "SymbolGenerator.mxg"
+                        #line (163,25)-(163,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("{");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("                ");
-                        #line (209,30)-(209,48) 36 "SymbolGenerator.mxg"
+                        #line (164,30)-(164,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetFieldName(prop));
                         #line hidden
-                        #line (209,49)-(209,59) 37 "SymbolGenerator.mxg"
+                        #line (164,49)-(164,59) 37 "SymbolGenerator.mxg"
                         __cb.Write(".Add(this,");
                         #line hidden
-                        #line (209,59)-(209,60) 37 "SymbolGenerator.mxg"
+                        #line (164,59)-(164,60) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (209,61)-(209,79) 36 "SymbolGenerator.mxg"
+                        #line (164,61)-(164,79) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (209,80)-(209,82) 37 "SymbolGenerator.mxg"
+                        #line (164,80)-(164,82) 37 "SymbolGenerator.mxg"
                         __cb.Write(");");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (210,25)-(210,26) 37 "SymbolGenerator.mxg"
+                        #line (165,25)-(165,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("}");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    #line (211,22)-(211,26) 21 "SymbolGenerator.mxg"
+                    #line (166,22)-(166,26) 21 "SymbolGenerator.mxg"
                     else
                     #line hidden
                     
                     {
-                        if (__first25)
+                        if (__first24)
                         {
-                            __first25 = false;
+                            __first24 = false;
                         }
                         __cb.Push("            ");
-                        #line (212,25)-(212,27) 37 "SymbolGenerator.mxg"
+                        #line (167,25)-(167,27) 37 "SymbolGenerator.mxg"
                         __cb.Write("if");
                         #line hidden
-                        #line (212,27)-(212,28) 37 "SymbolGenerator.mxg"
+                        #line (167,27)-(167,28) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (212,28)-(212,29) 37 "SymbolGenerator.mxg"
+                        #line (167,28)-(167,29) 37 "SymbolGenerator.mxg"
                         __cb.Write("(");
                         #line hidden
-                        #line (212,30)-(212,48) 36 "SymbolGenerator.mxg"
+                        #line (167,30)-(167,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (212,49)-(212,50) 37 "SymbolGenerator.mxg"
+                        #line (167,49)-(167,50) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (212,50)-(212,52) 37 "SymbolGenerator.mxg"
+                        #line (167,50)-(167,52) 37 "SymbolGenerator.mxg"
                         __cb.Write("!=");
                         #line hidden
-                        #line (212,52)-(212,53) 37 "SymbolGenerator.mxg"
+                        #line (167,52)-(167,53) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (212,54)-(212,83) 36 "SymbolGenerator.mxg"
+                        #line (167,54)-(167,83) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetDefaultValue(symbol, prop));
                         #line hidden
-                        #line (212,84)-(212,85) 37 "SymbolGenerator.mxg"
+                        #line (167,84)-(167,85) 37 "SymbolGenerator.mxg"
                         __cb.Write(")");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (213,25)-(213,26) 37 "SymbolGenerator.mxg"
+                        #line (168,25)-(168,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("{");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("                ");
-                        #line (214,30)-(214,48) 36 "SymbolGenerator.mxg"
+                        #line (169,30)-(169,48) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetFieldName(prop));
                         #line hidden
-                        #line (214,49)-(214,59) 37 "SymbolGenerator.mxg"
+                        #line (169,49)-(169,59) 37 "SymbolGenerator.mxg"
                         __cb.Write(".Add(this,");
                         #line hidden
-                        #line (214,59)-(214,60) 37 "SymbolGenerator.mxg"
+                        #line (169,59)-(169,60) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (214,61)-(214,79) 36 "SymbolGenerator.mxg"
+                        #line (169,61)-(169,79) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetParamName(prop));
                         #line hidden
-                        #line (214,80)-(214,82) 37 "SymbolGenerator.mxg"
+                        #line (169,80)-(169,82) 37 "SymbolGenerator.mxg"
                         __cb.Write(");");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (215,25)-(215,26) 37 "SymbolGenerator.mxg"
+                        #line (170,25)-(170,26) 37 "SymbolGenerator.mxg"
                         __cb.Write("}");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first25) __cb.AppendLine();
+                    if (!__first24) __cb.AppendLine();
                 }
-                #line (217,18)-(217,22) 17 "SymbolGenerator.mxg"
+                #line (172,18)-(172,22) 17 "SymbolGenerator.mxg"
                 else
                 #line hidden
                 
                 {
-                    if (__first24)
+                    if (__first23)
                     {
-                        __first24 = false;
+                        __first23 = false;
                     }
                     __cb.Push("            ");
-                    #line (218,22)-(218,40) 32 "SymbolGenerator.mxg"
+                    #line (173,22)-(173,40) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetFieldName(prop));
                     #line hidden
-                    #line (218,41)-(218,42) 33 "SymbolGenerator.mxg"
+                    #line (173,41)-(173,42) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (218,42)-(218,43) 33 "SymbolGenerator.mxg"
+                    #line (173,42)-(173,43) 33 "SymbolGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (218,43)-(218,44) 33 "SymbolGenerator.mxg"
+                    #line (173,43)-(173,44) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (218,45)-(218,63) 32 "SymbolGenerator.mxg"
+                    #line (173,45)-(173,63) 32 "SymbolGenerator.mxg"
                     __cb.Write(GetParamName(prop));
                     #line hidden
-                    #line (218,64)-(218,65) 33 "SymbolGenerator.mxg"
+                    #line (173,64)-(173,65) 33 "SymbolGenerator.mxg"
                     __cb.Write(";");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first24) __cb.AppendLine();
+                if (!__first23) __cb.AppendLine();
             }
-            if (!__first23) __cb.AppendLine();
+            if (!__first22) __cb.AppendLine();
             __cb.Push("        ");
-            #line (221,9)-(221,10) 25 "SymbolGenerator.mxg"
+            #line (176,9)-(176,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("        ");
-            #line (223,9)-(223,15) 25 "SymbolGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (223,15)-(223,16) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,17)-(223,51) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetDefaultImplName(symbol, symbol));
-            #line hidden
-            #line (223,52)-(223,61) 25 "SymbolGenerator.mxg"
-            __cb.Write("(__Symbol");
-            #line hidden
-            #line (223,61)-(223,62) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,62)-(223,72) 25 "SymbolGenerator.mxg"
-            __cb.Write("container,");
-            #line hidden
-            #line (223,72)-(223,73) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,73)-(223,90) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ErrorSymbolInfo");
-            #line hidden
-            #line (223,90)-(223,91) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,91)-(223,101) 25 "SymbolGenerator.mxg"
-            __cb.Write("errorInfo,");
-            #line hidden
-            #line (223,101)-(223,102) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,102)-(223,109) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (223,109)-(223,110) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,110)-(223,115) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
-            #line hidden
-            #line (223,115)-(223,116) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,116)-(223,123) 25 "SymbolGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (223,123)-(223,124) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,124)-(223,137) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
-            #line hidden
-            #line (223,137)-(223,138) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,138)-(223,165) 25 "SymbolGenerator.mxg"
-            __cb.Write("__ImmutableAttributeSymbols");
-            #line hidden
-            #line (223,165)-(223,166) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (223,166)-(223,176) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes");
-            #line hidden
-            var __first26 = true;
-            #line (223,177)-(223,220) 13 "SymbolGenerator.mxg"
+            var __first25 = true;
+            #line (178,10)-(178,53) 13 "SymbolGenerator.mxg"
             foreach (var prop in GetProperties(symbol))
             #line hidden
             
             {
-                if (__first26)
+                if (__first25)
                 {
-                    __first26 = false;
+                    __first25 = false;
                 }
-                #line (223,221)-(223,222) 29 "SymbolGenerator.mxg"
-                __cb.Write(",");
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("        ");
+                #line (180,13)-(180,19) 29 "SymbolGenerator.mxg"
+                __cb.Write("public");
                 #line hidden
-                #line (223,222)-(223,223) 29 "SymbolGenerator.mxg"
+                #line (180,19)-(180,20) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (223,224)-(223,254) 28 "SymbolGenerator.mxg"
+                #line (180,21)-(180,51) 28 "SymbolGenerator.mxg"
                 __cb.Write(GetTypeName(symbol, prop.Type));
                 #line hidden
-                #line (223,255)-(223,256) 29 "SymbolGenerator.mxg"
+                #line (180,52)-(180,53) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (223,257)-(223,275) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetParamName(prop));
+                #line (180,54)-(180,63) 28 "SymbolGenerator.mxg"
+                __cb.Write(prop.Name);
                 #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                __cb.Push("        ");
+                #line (181,13)-(181,14) 29 "SymbolGenerator.mxg"
+                __cb.Write("{");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                __cb.Push("            ");
+                #line (182,17)-(182,20) 29 "SymbolGenerator.mxg"
+                __cb.Write("get");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                __cb.Push("            ");
+                #line (183,17)-(183,18) 29 "SymbolGenerator.mxg"
+                __cb.Write("{");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                __cb.Push("                ");
+                #line (184,21)-(184,40) 29 "SymbolGenerator.mxg"
+                __cb.Write("this.ForceComplete(");
+                #line hidden
+                #line (184,41)-(184,68) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetIntfName(symbol, symbol));
+                #line hidden
+                #line (184,69)-(184,93) 29 "SymbolGenerator.mxg"
+                __cb.Write(".CompletionParts.Finish_");
+                #line hidden
+                #line (184,94)-(184,103) 28 "SymbolGenerator.mxg"
+                __cb.Write(prop.Name);
+                #line hidden
+                #line (184,104)-(184,105) 29 "SymbolGenerator.mxg"
+                __cb.Write(",");
+                #line hidden
+                #line (184,105)-(184,106) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (184,106)-(184,111) 29 "SymbolGenerator.mxg"
+                __cb.Write("null,");
+                #line hidden
+                #line (184,111)-(184,112) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (184,112)-(184,121) 29 "SymbolGenerator.mxg"
+                __cb.Write("default);");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                var __first26 = true;
+                #line (185,22)-(185,38) 17 "SymbolGenerator.mxg"
+                if (prop.IsWeak)
+                #line hidden
+                
+                {
+                    if (__first26)
+                    {
+                        __first26 = false;
+                    }
+                    __cb.Push("                ");
+                    #line (186,25)-(186,27) 33 "SymbolGenerator.mxg"
+                    __cb.Write("if");
+                    #line hidden
+                    #line (186,27)-(186,28) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (186,28)-(186,29) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(");
+                    #line hidden
+                    #line (186,30)-(186,48) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetFieldName(prop));
+                    #line hidden
+                    #line (186,49)-(186,67) 33 "SymbolGenerator.mxg"
+                    __cb.Write(".TryGetValue(this,");
+                    #line hidden
+                    #line (186,67)-(186,68) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (186,68)-(186,71) 33 "SymbolGenerator.mxg"
+                    __cb.Write("out");
+                    #line hidden
+                    #line (186,71)-(186,72) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (186,72)-(186,75) 33 "SymbolGenerator.mxg"
+                    __cb.Write("var");
+                    #line hidden
+                    #line (186,75)-(186,76) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (186,76)-(186,84) 33 "SymbolGenerator.mxg"
+                    __cb.Write("result))");
+                    #line hidden
+                    #line (186,84)-(186,85) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (186,85)-(186,91) 33 "SymbolGenerator.mxg"
+                    __cb.Write("return");
+                    #line hidden
+                    #line (186,91)-(186,92) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (186,92)-(186,93) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(");
+                    #line hidden
+                    #line (186,94)-(186,124) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetTypeName(symbol, prop.Type));
+                    #line hidden
+                    #line (186,125)-(186,133) 33 "SymbolGenerator.mxg"
+                    __cb.Write(")result;");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("                ");
+                    #line (187,25)-(187,29) 33 "SymbolGenerator.mxg"
+                    __cb.Write("else");
+                    #line hidden
+                    #line (187,29)-(187,30) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (187,30)-(187,36) 33 "SymbolGenerator.mxg"
+                    __cb.Write("return");
+                    #line hidden
+                    #line (187,36)-(187,37) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (187,38)-(187,67) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetDefaultValue(symbol, prop));
+                    #line hidden
+                    #line (187,68)-(187,69) 33 "SymbolGenerator.mxg"
+                    __cb.Write(";");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                }
+                #line (188,22)-(188,26) 17 "SymbolGenerator.mxg"
+                else
+                #line hidden
+                
+                {
+                    if (__first26)
+                    {
+                        __first26 = false;
+                    }
+                    __cb.Push("                ");
+                    #line (189,25)-(189,31) 33 "SymbolGenerator.mxg"
+                    __cb.Write("return");
+                    #line hidden
+                    #line (189,31)-(189,32) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (189,33)-(189,51) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetFieldName(prop));
+                    #line hidden
+                    #line (189,52)-(189,53) 33 "SymbolGenerator.mxg"
+                    __cb.Write(";");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                }
+                if (!__first26) __cb.AppendLine();
+                __cb.Push("            ");
+                #line (191,17)-(191,18) 29 "SymbolGenerator.mxg"
+                __cb.Write("}");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+                __cb.Push("        ");
+                #line (192,13)-(192,14) 29 "SymbolGenerator.mxg"
+                __cb.Write("}");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
             }
-            #line (223,289)-(223,290) 25 "SymbolGenerator.mxg"
-            __cb.Write(")");
-            #line hidden
-            #line (223,290)-(223,291) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            __cb.AppendLine();
+            if (!__first25) __cb.AppendLine();
+            __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("            ");
-            #line (224,13)-(224,14) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
+            __cb.Push("        ");
+            #line (195,9)-(195,18) 25 "SymbolGenerator.mxg"
+            __cb.Write("protected");
             #line hidden
-            #line (224,14)-(224,15) 25 "SymbolGenerator.mxg"
+            #line (195,18)-(195,19) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (224,15)-(224,30) 25 "SymbolGenerator.mxg"
-            __cb.Write("base(container,");
+            #line (195,19)-(195,25) 25 "SymbolGenerator.mxg"
+            __cb.Write("sealed");
             #line hidden
-            #line (224,30)-(224,31) 25 "SymbolGenerator.mxg"
+            #line (195,25)-(195,26) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (224,31)-(224,41) 25 "SymbolGenerator.mxg"
-            __cb.Write("errorInfo,");
+            #line (195,26)-(195,34) 25 "SymbolGenerator.mxg"
+            __cb.Write("override");
             #line hidden
-            #line (224,41)-(224,42) 25 "SymbolGenerator.mxg"
+            #line (195,34)-(195,35) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (224,42)-(224,47) 25 "SymbolGenerator.mxg"
-            __cb.Write("name,");
+            #line (195,35)-(195,39) 25 "SymbolGenerator.mxg"
+            __cb.Write("bool");
             #line hidden
-            #line (224,47)-(224,48) 25 "SymbolGenerator.mxg"
+            #line (195,39)-(195,40) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (224,48)-(224,61) 25 "SymbolGenerator.mxg"
-            __cb.Write("metadataName,");
+            #line (195,40)-(195,61) 25 "SymbolGenerator.mxg"
+            __cb.Write("ForceCompletePart(ref");
             #line hidden
-            #line (224,61)-(224,62) 25 "SymbolGenerator.mxg"
+            #line (195,61)-(195,62) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (224,62)-(224,73) 25 "SymbolGenerator.mxg"
-            __cb.Write("attributes)");
+            #line (195,62)-(195,78) 25 "SymbolGenerator.mxg"
+            __cb.Write("__CompletionPart");
+            #line hidden
+            #line (195,78)-(195,79) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (195,79)-(195,94) 25 "SymbolGenerator.mxg"
+            __cb.Write("incompletePart,");
+            #line hidden
+            #line (195,94)-(195,95) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (195,95)-(195,112) 25 "SymbolGenerator.mxg"
+            __cb.Write("__SourceLocation?");
+            #line hidden
+            #line (195,112)-(195,113) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (195,113)-(195,125) 25 "SymbolGenerator.mxg"
+            __cb.Write("locationOpt,");
+            #line hidden
+            #line (195,125)-(195,126) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (195,126)-(195,145) 25 "SymbolGenerator.mxg"
+            __cb.Write("__CancellationToken");
+            #line hidden
+            #line (195,145)-(195,146) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (195,146)-(195,164) 25 "SymbolGenerator.mxg"
+            __cb.Write("cancellationToken)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (225,9)-(225,10) 25 "SymbolGenerator.mxg"
+            #line (196,9)-(196,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
+            #line (197,14)-(197,44) 13 "SymbolGenerator.mxg"
+            var phases = GetPhases(symbol);
+            #line hidden
+            
             var __first27 = true;
-            #line (226,14)-(226,57) 13 "SymbolGenerator.mxg"
-            foreach (var prop in GetProperties(symbol))
+            #line (198,14)-(198,43) 13 "SymbolGenerator.mxg"
+            foreach (var phase in phases)
             #line hidden
             
             {
@@ -3771,1259 +3050,1345 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 {
                     __first27 = false;
                 }
-                var __first28 = true;
-                #line (227,18)-(227,34) 17 "SymbolGenerator.mxg"
-                if (prop.IsWeak)
-                #line hidden
-                
-                {
-                    if (__first28)
-                    {
-                        __first28 = false;
-                    }
-                    var __first29 = true;
-                    #line (228,22)-(228,51) 21 "SymbolGenerator.mxg"
-                    if (prop.Type.Dimensions > 0)
-                    #line hidden
-                    
-                    {
-                        if (__first29)
-                        {
-                            __first29 = false;
-                        }
-                        __cb.Push("            ");
-                        #line (229,25)-(229,27) 37 "SymbolGenerator.mxg"
-                        __cb.Write("if");
-                        #line hidden
-                        #line (229,27)-(229,28) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (229,28)-(229,30) 37 "SymbolGenerator.mxg"
-                        __cb.Write("(!");
-                        #line hidden
-                        #line (229,31)-(229,49) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetParamName(prop));
-                        #line hidden
-                        #line (229,50)-(229,68) 37 "SymbolGenerator.mxg"
-                        __cb.Write(".IsDefaultOrEmpty)");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("            ");
-                        #line (230,25)-(230,26) 37 "SymbolGenerator.mxg"
-                        __cb.Write("{");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("                ");
-                        #line (231,30)-(231,48) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetFieldName(prop));
-                        #line hidden
-                        #line (231,49)-(231,59) 37 "SymbolGenerator.mxg"
-                        __cb.Write(".Add(this,");
-                        #line hidden
-                        #line (231,59)-(231,60) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (231,61)-(231,79) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetParamName(prop));
-                        #line hidden
-                        #line (231,80)-(231,82) 37 "SymbolGenerator.mxg"
-                        __cb.Write(");");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("            ");
-                        #line (232,25)-(232,26) 37 "SymbolGenerator.mxg"
-                        __cb.Write("}");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                    }
-                    #line (233,22)-(233,26) 21 "SymbolGenerator.mxg"
-                    else
-                    #line hidden
-                    
-                    {
-                        if (__first29)
-                        {
-                            __first29 = false;
-                        }
-                        __cb.Push("            ");
-                        #line (234,25)-(234,27) 37 "SymbolGenerator.mxg"
-                        __cb.Write("if");
-                        #line hidden
-                        #line (234,27)-(234,28) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (234,28)-(234,29) 37 "SymbolGenerator.mxg"
-                        __cb.Write("(");
-                        #line hidden
-                        #line (234,30)-(234,48) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetParamName(prop));
-                        #line hidden
-                        #line (234,49)-(234,50) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (234,50)-(234,52) 37 "SymbolGenerator.mxg"
-                        __cb.Write("!=");
-                        #line hidden
-                        #line (234,52)-(234,53) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (234,54)-(234,83) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetDefaultValue(symbol, prop));
-                        #line hidden
-                        #line (234,84)-(234,85) 37 "SymbolGenerator.mxg"
-                        __cb.Write(")");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("            ");
-                        #line (235,25)-(235,26) 37 "SymbolGenerator.mxg"
-                        __cb.Write("{");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("                ");
-                        #line (236,30)-(236,48) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetFieldName(prop));
-                        #line hidden
-                        #line (236,49)-(236,59) 37 "SymbolGenerator.mxg"
-                        __cb.Write(".Add(this,");
-                        #line hidden
-                        #line (236,59)-(236,60) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (236,61)-(236,79) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetParamName(prop));
-                        #line hidden
-                        #line (236,80)-(236,82) 37 "SymbolGenerator.mxg"
-                        __cb.Write(");");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("            ");
-                        #line (237,25)-(237,26) 37 "SymbolGenerator.mxg"
-                        __cb.Write("}");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                    }
-                    if (!__first29) __cb.AppendLine();
-                }
-                #line (239,18)-(239,22) 17 "SymbolGenerator.mxg"
-                else
-                #line hidden
-                
-                {
-                    if (__first28)
-                    {
-                        __first28 = false;
-                    }
-                    __cb.Push("            ");
-                    #line (240,22)-(240,40) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetFieldName(prop));
-                    #line hidden
-                    #line (240,41)-(240,42) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (240,42)-(240,43) 33 "SymbolGenerator.mxg"
-                    __cb.Write("=");
-                    #line hidden
-                    #line (240,43)-(240,44) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (240,45)-(240,63) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetParamName(prop));
-                    #line hidden
-                    #line (240,64)-(240,65) 33 "SymbolGenerator.mxg"
-                    __cb.Write(";");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                }
-                if (!__first28) __cb.AppendLine();
-            }
-            if (!__first27) __cb.AppendLine();
-            __cb.Push("        ");
-            #line (243,9)-(243,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            var __first30 = true;
-            #line (245,10)-(245,53) 13 "SymbolGenerator.mxg"
-            foreach (var prop in GetProperties(symbol))
-            #line hidden
-            
-            {
-                if (__first30)
-                {
-                    __first30 = false;
-                }
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("        ");
-                #line (247,13)-(247,19) 29 "SymbolGenerator.mxg"
-                __cb.Write("public");
-                #line hidden
-                #line (247,19)-(247,20) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (247,20)-(247,28) 29 "SymbolGenerator.mxg"
-                __cb.Write("override");
-                #line hidden
-                #line (247,28)-(247,29) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (247,30)-(247,60) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetTypeName(symbol, prop.Type));
-                #line hidden
-                #line (247,61)-(247,62) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (247,63)-(247,72) 28 "SymbolGenerator.mxg"
-                __cb.Write(prop.Name);
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-                __cb.Push("        ");
-                #line (248,13)-(248,14) 29 "SymbolGenerator.mxg"
-                __cb.Write("{");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-                __cb.Push("            ");
-                #line (249,17)-(249,20) 29 "SymbolGenerator.mxg"
-                __cb.Write("get");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-                __cb.Push("            ");
-                #line (250,17)-(250,18) 29 "SymbolGenerator.mxg"
-                __cb.Write("{");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-                __cb.Push("                ");
-                #line (251,21)-(251,40) 29 "SymbolGenerator.mxg"
-                __cb.Write("this.ForceComplete(");
-                #line hidden
-                #line (251,41)-(251,68) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetIntfName(symbol, symbol));
-                #line hidden
-                #line (251,69)-(251,93) 29 "SymbolGenerator.mxg"
-                __cb.Write(".CompletionParts.Finish_");
-                #line hidden
-                #line (251,94)-(251,103) 28 "SymbolGenerator.mxg"
-                __cb.Write(prop.Name);
-                #line hidden
-                #line (251,104)-(251,105) 29 "SymbolGenerator.mxg"
-                __cb.Write(",");
-                #line hidden
-                #line (251,105)-(251,106) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (251,106)-(251,111) 29 "SymbolGenerator.mxg"
-                __cb.Write("null,");
-                #line hidden
-                #line (251,111)-(251,112) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (251,112)-(251,121) 29 "SymbolGenerator.mxg"
-                __cb.Write("default);");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-                var __first31 = true;
-                #line (252,22)-(252,38) 17 "SymbolGenerator.mxg"
-                if (prop.IsWeak)
-                #line hidden
-                
-                {
-                    if (__first31)
-                    {
-                        __first31 = false;
-                    }
-                    __cb.Push("                ");
-                    #line (253,25)-(253,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write("if");
-                    #line hidden
-                    #line (253,27)-(253,28) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (253,28)-(253,29) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    #line (253,30)-(253,48) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetFieldName(prop));
-                    #line hidden
-                    #line (253,49)-(253,67) 33 "SymbolGenerator.mxg"
-                    __cb.Write(".TryGetValue(this,");
-                    #line hidden
-                    #line (253,67)-(253,68) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (253,68)-(253,71) 33 "SymbolGenerator.mxg"
-                    __cb.Write("out");
-                    #line hidden
-                    #line (253,71)-(253,72) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (253,72)-(253,75) 33 "SymbolGenerator.mxg"
-                    __cb.Write("var");
-                    #line hidden
-                    #line (253,75)-(253,76) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (253,76)-(253,84) 33 "SymbolGenerator.mxg"
-                    __cb.Write("result))");
-                    #line hidden
-                    #line (253,84)-(253,85) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (253,85)-(253,91) 33 "SymbolGenerator.mxg"
-                    __cb.Write("return");
-                    #line hidden
-                    #line (253,91)-(253,92) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (253,92)-(253,93) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    #line (253,94)-(253,124) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetTypeName(symbol, prop.Type));
-                    #line hidden
-                    #line (253,125)-(253,133) 33 "SymbolGenerator.mxg"
-                    __cb.Write(")result;");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("                ");
-                    #line (254,25)-(254,29) 33 "SymbolGenerator.mxg"
-                    __cb.Write("else");
-                    #line hidden
-                    #line (254,29)-(254,30) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (254,30)-(254,36) 33 "SymbolGenerator.mxg"
-                    __cb.Write("return");
-                    #line hidden
-                    #line (254,36)-(254,37) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (254,38)-(254,67) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetDefaultValue(symbol, prop));
-                    #line hidden
-                    #line (254,68)-(254,69) 33 "SymbolGenerator.mxg"
-                    __cb.Write(";");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                }
-                #line (255,22)-(255,26) 17 "SymbolGenerator.mxg"
-                else
-                #line hidden
-                
-                {
-                    if (__first31)
-                    {
-                        __first31 = false;
-                    }
-                    __cb.Push("                ");
-                    #line (256,25)-(256,31) 33 "SymbolGenerator.mxg"
-                    __cb.Write("return");
-                    #line hidden
-                    #line (256,31)-(256,32) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (256,33)-(256,51) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetFieldName(prop));
-                    #line hidden
-                    #line (256,52)-(256,53) 33 "SymbolGenerator.mxg"
-                    __cb.Write(";");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                }
-                if (!__first31) __cb.AppendLine();
-                __cb.Push("            ");
-                #line (258,17)-(258,18) 29 "SymbolGenerator.mxg"
-                __cb.Write("}");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-                __cb.Push("        ");
-                #line (259,13)-(259,14) 29 "SymbolGenerator.mxg"
-                __cb.Write("}");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-            }
-            if (!__first30) __cb.AppendLine();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (262,9)-(262,18) 25 "SymbolGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (262,18)-(262,19) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,19)-(262,25) 25 "SymbolGenerator.mxg"
-            __cb.Write("sealed");
-            #line hidden
-            #line (262,25)-(262,26) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,26)-(262,34) 25 "SymbolGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (262,34)-(262,35) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,35)-(262,39) 25 "SymbolGenerator.mxg"
-            __cb.Write("bool");
-            #line hidden
-            #line (262,39)-(262,40) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,40)-(262,61) 25 "SymbolGenerator.mxg"
-            __cb.Write("ForceCompletePart(ref");
-            #line hidden
-            #line (262,61)-(262,62) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,62)-(262,78) 25 "SymbolGenerator.mxg"
-            __cb.Write("__CompletionPart");
-            #line hidden
-            #line (262,78)-(262,79) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,79)-(262,94) 25 "SymbolGenerator.mxg"
-            __cb.Write("incompletePart,");
-            #line hidden
-            #line (262,94)-(262,95) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,95)-(262,112) 25 "SymbolGenerator.mxg"
-            __cb.Write("__SourceLocation?");
-            #line hidden
-            #line (262,112)-(262,113) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,113)-(262,125) 25 "SymbolGenerator.mxg"
-            __cb.Write("locationOpt,");
-            #line hidden
-            #line (262,125)-(262,126) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,126)-(262,145) 25 "SymbolGenerator.mxg"
-            __cb.Write("__CancellationToken");
-            #line hidden
-            #line (262,145)-(262,146) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (262,146)-(262,164) 25 "SymbolGenerator.mxg"
-            __cb.Write("cancellationToken)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (263,9)-(263,10) 25 "SymbolGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            #line (264,14)-(264,44) 13 "SymbolGenerator.mxg"
-            var phases = GetPhases(symbol);
-            #line hidden
-            
-            var __first32 = true;
-            #line (265,14)-(265,43) 13 "SymbolGenerator.mxg"
-            foreach (var phase in phases)
-            #line hidden
-            
-            {
-                if (__first32)
-                {
-                    __first32 = false;
-                }
-                #line (266,18)-(266,63) 17 "SymbolGenerator.mxg"
+                #line (199,18)-(199,63) 17 "SymbolGenerator.mxg"
                 var props = GetPhaseProperties(symbol, phase);
                 #line hidden
                 
                 __cb.Push("            ");
-                #line (267,17)-(267,19) 29 "SymbolGenerator.mxg"
+                #line (200,17)-(200,19) 29 "SymbolGenerator.mxg"
                 __cb.Write("if");
                 #line hidden
-                #line (267,19)-(267,20) 29 "SymbolGenerator.mxg"
+                #line (200,19)-(200,20) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,20)-(267,35) 29 "SymbolGenerator.mxg"
+                #line (200,20)-(200,35) 29 "SymbolGenerator.mxg"
                 __cb.Write("(incompletePart");
                 #line hidden
-                #line (267,35)-(267,36) 29 "SymbolGenerator.mxg"
+                #line (200,35)-(200,36) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,36)-(267,38) 29 "SymbolGenerator.mxg"
+                #line (200,36)-(200,38) 29 "SymbolGenerator.mxg"
                 __cb.Write("==");
                 #line hidden
-                #line (267,38)-(267,39) 29 "SymbolGenerator.mxg"
+                #line (200,38)-(200,39) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,40)-(267,67) 28 "SymbolGenerator.mxg"
+                #line (200,40)-(200,67) 28 "SymbolGenerator.mxg"
                 __cb.Write(GetIntfName(symbol, symbol));
                 #line hidden
-                #line (267,68)-(267,91) 29 "SymbolGenerator.mxg"
+                #line (200,68)-(200,91) 29 "SymbolGenerator.mxg"
                 __cb.Write(".CompletionParts.Start_");
                 #line hidden
-                #line (267,92)-(267,97) 28 "SymbolGenerator.mxg"
+                #line (200,92)-(200,97) 28 "SymbolGenerator.mxg"
                 __cb.Write(phase);
                 #line hidden
-                #line (267,98)-(267,99) 29 "SymbolGenerator.mxg"
+                #line (200,98)-(200,99) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,99)-(267,101) 29 "SymbolGenerator.mxg"
+                #line (200,99)-(200,101) 29 "SymbolGenerator.mxg"
                 __cb.Write("||");
                 #line hidden
-                #line (267,101)-(267,102) 29 "SymbolGenerator.mxg"
+                #line (200,101)-(200,102) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,102)-(267,116) 29 "SymbolGenerator.mxg"
+                #line (200,102)-(200,116) 29 "SymbolGenerator.mxg"
                 __cb.Write("incompletePart");
                 #line hidden
-                #line (267,116)-(267,117) 29 "SymbolGenerator.mxg"
+                #line (200,116)-(200,117) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,117)-(267,119) 29 "SymbolGenerator.mxg"
+                #line (200,117)-(200,119) 29 "SymbolGenerator.mxg"
                 __cb.Write("==");
                 #line hidden
-                #line (267,119)-(267,120) 29 "SymbolGenerator.mxg"
+                #line (200,119)-(200,120) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,121)-(267,148) 28 "SymbolGenerator.mxg"
+                #line (200,121)-(200,148) 28 "SymbolGenerator.mxg"
                 __cb.Write(GetIntfName(symbol, symbol));
                 #line hidden
-                #line (267,149)-(267,173) 29 "SymbolGenerator.mxg"
+                #line (200,149)-(200,173) 29 "SymbolGenerator.mxg"
                 __cb.Write(".CompletionParts.Finish_");
                 #line hidden
-                #line (267,174)-(267,179) 28 "SymbolGenerator.mxg"
+                #line (200,174)-(200,179) 28 "SymbolGenerator.mxg"
                 __cb.Write(phase);
                 #line hidden
-                #line (267,180)-(267,181) 29 "SymbolGenerator.mxg"
+                #line (200,180)-(200,181) 29 "SymbolGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("            ");
-                #line (268,17)-(268,18) 29 "SymbolGenerator.mxg"
+                #line (201,17)-(201,18) 29 "SymbolGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                ");
-                #line (269,21)-(269,23) 29 "SymbolGenerator.mxg"
+                #line (202,21)-(202,23) 29 "SymbolGenerator.mxg"
                 __cb.Write("if");
                 #line hidden
-                #line (269,23)-(269,24) 29 "SymbolGenerator.mxg"
+                #line (202,23)-(202,24) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (269,24)-(269,42) 29 "SymbolGenerator.mxg"
+                #line (202,24)-(202,42) 29 "SymbolGenerator.mxg"
                 __cb.Write("(NotePartComplete(");
                 #line hidden
-                #line (269,43)-(269,70) 28 "SymbolGenerator.mxg"
+                #line (202,43)-(202,70) 28 "SymbolGenerator.mxg"
                 __cb.Write(GetIntfName(symbol, symbol));
                 #line hidden
-                #line (269,71)-(269,94) 29 "SymbolGenerator.mxg"
+                #line (202,71)-(202,94) 29 "SymbolGenerator.mxg"
                 __cb.Write(".CompletionParts.Start_");
                 #line hidden
-                #line (269,95)-(269,100) 28 "SymbolGenerator.mxg"
+                #line (202,95)-(202,100) 28 "SymbolGenerator.mxg"
                 __cb.Write(phase);
                 #line hidden
-                #line (269,101)-(269,103) 29 "SymbolGenerator.mxg"
+                #line (202,101)-(202,103) 29 "SymbolGenerator.mxg"
                 __cb.Write("))");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                ");
-                #line (270,21)-(270,22) 29 "SymbolGenerator.mxg"
+                #line (203,21)-(203,22) 29 "SymbolGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                    ");
-                #line (271,25)-(271,28) 29 "SymbolGenerator.mxg"
+                #line (204,25)-(204,28) 29 "SymbolGenerator.mxg"
                 __cb.Write("var");
                 #line hidden
-                #line (271,28)-(271,29) 29 "SymbolGenerator.mxg"
+                #line (204,28)-(204,29) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (271,29)-(271,40) 29 "SymbolGenerator.mxg"
+                #line (204,29)-(204,40) 29 "SymbolGenerator.mxg"
                 __cb.Write("diagnostics");
                 #line hidden
-                #line (271,40)-(271,41) 29 "SymbolGenerator.mxg"
+                #line (204,40)-(204,41) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (271,41)-(271,42) 29 "SymbolGenerator.mxg"
+                #line (204,41)-(204,42) 29 "SymbolGenerator.mxg"
                 __cb.Write("=");
                 #line hidden
-                #line (271,42)-(271,43) 29 "SymbolGenerator.mxg"
+                #line (204,42)-(204,43) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (271,43)-(271,73) 29 "SymbolGenerator.mxg"
+                #line (204,43)-(204,73) 29 "SymbolGenerator.mxg"
                 __cb.Write("__DiagnosticBag.GetInstance();");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
-                var __first33 = true;
-                #line (272,26)-(272,48) 17 "SymbolGenerator.mxg"
+                var __first28 = true;
+                #line (205,26)-(205,48) 17 "SymbolGenerator.mxg"
                 if (props.Length >= 2)
                 #line hidden
                 
                 {
-                    if (__first33)
+                    if (__first28)
                     {
-                        __first33 = false;
+                        __first28 = false;
                     }
                     __cb.Push("                    ");
-                    #line (273,29)-(273,32) 33 "SymbolGenerator.mxg"
+                    #line (206,29)-(206,32) 33 "SymbolGenerator.mxg"
                     __cb.Write("var");
                     #line hidden
-                    #line (273,32)-(273,33) 33 "SymbolGenerator.mxg"
+                    #line (206,32)-(206,33) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (273,33)-(273,39) 33 "SymbolGenerator.mxg"
+                    #line (206,33)-(206,39) 33 "SymbolGenerator.mxg"
                     __cb.Write("result");
                     #line hidden
-                    #line (273,39)-(273,40) 33 "SymbolGenerator.mxg"
+                    #line (206,39)-(206,40) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (273,40)-(273,41) 33 "SymbolGenerator.mxg"
+                    #line (206,40)-(206,41) 33 "SymbolGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (273,41)-(273,42) 33 "SymbolGenerator.mxg"
+                    #line (206,41)-(206,42) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (273,42)-(273,51) 33 "SymbolGenerator.mxg"
+                    #line (206,42)-(206,51) 33 "SymbolGenerator.mxg"
                     __cb.Write("Complete_");
                     #line hidden
-                    #line (273,52)-(273,57) 32 "SymbolGenerator.mxg"
+                    #line (206,52)-(206,57) 32 "SymbolGenerator.mxg"
                     __cb.Write(phase);
                     #line hidden
-                    #line (273,58)-(273,71) 33 "SymbolGenerator.mxg"
+                    #line (206,58)-(206,71) 33 "SymbolGenerator.mxg"
                     __cb.Write("(diagnostics,");
                     #line hidden
-                    #line (273,71)-(273,72) 33 "SymbolGenerator.mxg"
+                    #line (206,71)-(206,72) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (273,72)-(273,91) 33 "SymbolGenerator.mxg"
+                    #line (206,72)-(206,91) 33 "SymbolGenerator.mxg"
                     __cb.Write("cancellationToken);");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
-                    var __first34 = true;
-                    #line (274,30)-(274,57) 21 "SymbolGenerator.mxg"
+                    var __first29 = true;
+                    #line (207,30)-(207,57) 21 "SymbolGenerator.mxg"
                     foreach (var prop in props)
                     #line hidden
                     
                     {
-                        if (__first34)
+                        if (__first29)
                         {
-                            __first34 = false;
+                            __first29 = false;
                         }
-                        var __first35 = true;
-                        #line (275,34)-(275,50) 25 "SymbolGenerator.mxg"
+                        var __first30 = true;
+                        #line (208,34)-(208,50) 25 "SymbolGenerator.mxg"
                         if (prop.IsWeak)
                         #line hidden
                         
                         {
-                            if (__first35)
+                            if (__first30)
                             {
-                                __first35 = false;
+                                __first30 = false;
                             }
-                            var __first36 = true;
-                            #line (276,38)-(276,67) 29 "SymbolGenerator.mxg"
+                            var __first31 = true;
+                            #line (209,38)-(209,67) 29 "SymbolGenerator.mxg"
                             if (prop.Type.Dimensions > 0)
                             #line hidden
                             
                             {
-                                if (__first36)
+                                if (__first31)
                                 {
-                                    __first36 = false;
+                                    __first31 = false;
                                 }
                                 __cb.Push("                    ");
-                                #line (277,41)-(277,43) 45 "SymbolGenerator.mxg"
+                                #line (210,41)-(210,43) 45 "SymbolGenerator.mxg"
                                 __cb.Write("if");
                                 #line hidden
-                                #line (277,43)-(277,44) 45 "SymbolGenerator.mxg"
+                                #line (210,43)-(210,44) 45 "SymbolGenerator.mxg"
                                 __cb.Write(" ");
                                 #line hidden
-                                #line (277,44)-(277,53) 45 "SymbolGenerator.mxg"
+                                #line (210,44)-(210,53) 45 "SymbolGenerator.mxg"
                                 __cb.Write("(!result.");
                                 #line hidden
-                                #line (277,54)-(277,63) 44 "SymbolGenerator.mxg"
+                                #line (210,54)-(210,63) 44 "SymbolGenerator.mxg"
                                 __cb.Write(prop.Name);
                                 #line hidden
-                                #line (277,64)-(277,82) 45 "SymbolGenerator.mxg"
+                                #line (210,64)-(210,82) 45 "SymbolGenerator.mxg"
                                 __cb.Write(".IsDefaultOrEmpty)");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                                 __cb.Push("                    ");
-                                #line (278,41)-(278,42) 45 "SymbolGenerator.mxg"
+                                #line (211,41)-(211,42) 45 "SymbolGenerator.mxg"
                                 __cb.Write("{");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                                 __cb.Push("                        ");
-                                #line (279,46)-(279,64) 44 "SymbolGenerator.mxg"
+                                #line (212,46)-(212,64) 44 "SymbolGenerator.mxg"
                                 __cb.Write(GetFieldName(prop));
                                 #line hidden
-                                #line (279,65)-(279,75) 45 "SymbolGenerator.mxg"
+                                #line (212,65)-(212,75) 45 "SymbolGenerator.mxg"
                                 __cb.Write(".Add(this,");
                                 #line hidden
-                                #line (279,75)-(279,76) 45 "SymbolGenerator.mxg"
+                                #line (212,75)-(212,76) 45 "SymbolGenerator.mxg"
                                 __cb.Write(" ");
                                 #line hidden
-                                #line (279,76)-(279,83) 45 "SymbolGenerator.mxg"
+                                #line (212,76)-(212,83) 45 "SymbolGenerator.mxg"
                                 __cb.Write("result.");
                                 #line hidden
-                                #line (279,84)-(279,93) 44 "SymbolGenerator.mxg"
+                                #line (212,84)-(212,93) 44 "SymbolGenerator.mxg"
                                 __cb.Write(prop.Name);
                                 #line hidden
-                                #line (279,94)-(279,96) 45 "SymbolGenerator.mxg"
+                                #line (212,94)-(212,96) 45 "SymbolGenerator.mxg"
                                 __cb.Write(");");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                                 __cb.Push("                    ");
-                                #line (280,41)-(280,42) 45 "SymbolGenerator.mxg"
+                                #line (213,41)-(213,42) 45 "SymbolGenerator.mxg"
                                 __cb.Write("}");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                             }
-                            #line (281,38)-(281,42) 29 "SymbolGenerator.mxg"
+                            #line (214,38)-(214,42) 29 "SymbolGenerator.mxg"
                             else
                             #line hidden
                             
                             {
-                                if (__first36)
+                                if (__first31)
                                 {
-                                    __first36 = false;
+                                    __first31 = false;
                                 }
                                 __cb.Push("                    ");
-                                #line (282,41)-(282,43) 45 "SymbolGenerator.mxg"
+                                #line (215,41)-(215,43) 45 "SymbolGenerator.mxg"
                                 __cb.Write("if");
                                 #line hidden
-                                #line (282,43)-(282,44) 45 "SymbolGenerator.mxg"
+                                #line (215,43)-(215,44) 45 "SymbolGenerator.mxg"
                                 __cb.Write(" ");
                                 #line hidden
-                                #line (282,44)-(282,52) 45 "SymbolGenerator.mxg"
+                                #line (215,44)-(215,52) 45 "SymbolGenerator.mxg"
                                 __cb.Write("(result.");
                                 #line hidden
-                                #line (282,53)-(282,62) 44 "SymbolGenerator.mxg"
+                                #line (215,53)-(215,62) 44 "SymbolGenerator.mxg"
                                 __cb.Write(prop.Name);
                                 #line hidden
-                                #line (282,63)-(282,64) 45 "SymbolGenerator.mxg"
+                                #line (215,63)-(215,64) 45 "SymbolGenerator.mxg"
                                 __cb.Write(" ");
                                 #line hidden
-                                #line (282,64)-(282,66) 45 "SymbolGenerator.mxg"
+                                #line (215,64)-(215,66) 45 "SymbolGenerator.mxg"
                                 __cb.Write("!=");
                                 #line hidden
-                                #line (282,66)-(282,67) 45 "SymbolGenerator.mxg"
+                                #line (215,66)-(215,67) 45 "SymbolGenerator.mxg"
                                 __cb.Write(" ");
                                 #line hidden
-                                #line (282,68)-(282,97) 44 "SymbolGenerator.mxg"
+                                #line (215,68)-(215,97) 44 "SymbolGenerator.mxg"
                                 __cb.Write(GetDefaultValue(symbol, prop));
                                 #line hidden
-                                #line (282,98)-(282,99) 45 "SymbolGenerator.mxg"
+                                #line (215,98)-(215,99) 45 "SymbolGenerator.mxg"
                                 __cb.Write(")");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                                 __cb.Push("                    ");
-                                #line (283,41)-(283,42) 45 "SymbolGenerator.mxg"
+                                #line (216,41)-(216,42) 45 "SymbolGenerator.mxg"
                                 __cb.Write("{");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                                 __cb.Push("                        ");
-                                #line (284,46)-(284,64) 44 "SymbolGenerator.mxg"
+                                #line (217,46)-(217,64) 44 "SymbolGenerator.mxg"
                                 __cb.Write(GetFieldName(prop));
                                 #line hidden
-                                #line (284,65)-(284,75) 45 "SymbolGenerator.mxg"
+                                #line (217,65)-(217,75) 45 "SymbolGenerator.mxg"
                                 __cb.Write(".Add(this,");
                                 #line hidden
-                                #line (284,75)-(284,76) 45 "SymbolGenerator.mxg"
+                                #line (217,75)-(217,76) 45 "SymbolGenerator.mxg"
                                 __cb.Write(" ");
                                 #line hidden
-                                #line (284,76)-(284,83) 45 "SymbolGenerator.mxg"
+                                #line (217,76)-(217,83) 45 "SymbolGenerator.mxg"
                                 __cb.Write("result.");
                                 #line hidden
-                                #line (284,84)-(284,93) 44 "SymbolGenerator.mxg"
+                                #line (217,84)-(217,93) 44 "SymbolGenerator.mxg"
                                 __cb.Write(prop.Name);
                                 #line hidden
-                                #line (284,94)-(284,96) 45 "SymbolGenerator.mxg"
+                                #line (217,94)-(217,96) 45 "SymbolGenerator.mxg"
                                 __cb.Write(");");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                                 __cb.Push("                    ");
-                                #line (285,41)-(285,42) 45 "SymbolGenerator.mxg"
+                                #line (218,41)-(218,42) 45 "SymbolGenerator.mxg"
                                 __cb.Write("}");
                                 #line hidden
                                 __cb.AppendLine();
                                 __cb.Pop();
                             }
-                            if (!__first36) __cb.AppendLine();
+                            if (!__first31) __cb.AppendLine();
                         }
-                        #line (287,34)-(287,38) 25 "SymbolGenerator.mxg"
+                        #line (220,34)-(220,38) 25 "SymbolGenerator.mxg"
                         else
                         #line hidden
                         
                         {
-                            if (__first35)
+                            if (__first30)
                             {
-                                __first35 = false;
+                                __first30 = false;
                             }
                             __cb.Push("                    ");
-                            #line (288,38)-(288,56) 40 "SymbolGenerator.mxg"
+                            #line (221,38)-(221,56) 40 "SymbolGenerator.mxg"
                             __cb.Write(GetFieldName(prop));
                             #line hidden
-                            #line (288,57)-(288,58) 41 "SymbolGenerator.mxg"
+                            #line (221,57)-(221,58) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (288,58)-(288,59) 41 "SymbolGenerator.mxg"
+                            #line (221,58)-(221,59) 41 "SymbolGenerator.mxg"
                             __cb.Write("=");
                             #line hidden
-                            #line (288,59)-(288,60) 41 "SymbolGenerator.mxg"
+                            #line (221,59)-(221,60) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (288,60)-(288,67) 41 "SymbolGenerator.mxg"
+                            #line (221,60)-(221,67) 41 "SymbolGenerator.mxg"
                             __cb.Write("result.");
                             #line hidden
-                            #line (288,68)-(288,77) 40 "SymbolGenerator.mxg"
+                            #line (221,68)-(221,77) 40 "SymbolGenerator.mxg"
                             __cb.Write(prop.Name);
                             #line hidden
-                            #line (288,78)-(288,79) 41 "SymbolGenerator.mxg"
+                            #line (221,78)-(221,79) 41 "SymbolGenerator.mxg"
                             __cb.Write(";");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                         }
-                        if (!__first35) __cb.AppendLine();
+                        if (!__first30) __cb.AppendLine();
                     }
-                    if (!__first34) __cb.AppendLine();
+                    if (!__first29) __cb.AppendLine();
                 }
-                #line (291,26)-(291,53) 17 "SymbolGenerator.mxg"
+                #line (224,26)-(224,53) 17 "SymbolGenerator.mxg"
                 else if (props.Length == 1)
                 #line hidden
                 
                 {
-                    if (__first33)
+                    if (__first28)
                     {
-                        __first33 = false;
+                        __first28 = false;
                     }
                     __cb.Push("                    ");
-                    #line (292,29)-(292,32) 33 "SymbolGenerator.mxg"
+                    #line (225,29)-(225,32) 33 "SymbolGenerator.mxg"
                     __cb.Write("var");
                     #line hidden
-                    #line (292,32)-(292,33) 33 "SymbolGenerator.mxg"
+                    #line (225,32)-(225,33) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (292,33)-(292,39) 33 "SymbolGenerator.mxg"
+                    #line (225,33)-(225,39) 33 "SymbolGenerator.mxg"
                     __cb.Write("result");
                     #line hidden
-                    #line (292,39)-(292,40) 33 "SymbolGenerator.mxg"
+                    #line (225,39)-(225,40) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (292,40)-(292,41) 33 "SymbolGenerator.mxg"
+                    #line (225,40)-(225,41) 33 "SymbolGenerator.mxg"
                     __cb.Write("=");
                     #line hidden
-                    #line (292,41)-(292,42) 33 "SymbolGenerator.mxg"
+                    #line (225,41)-(225,42) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (292,42)-(292,51) 33 "SymbolGenerator.mxg"
+                    #line (225,42)-(225,51) 33 "SymbolGenerator.mxg"
                     __cb.Write("Complete_");
                     #line hidden
-                    #line (292,52)-(292,57) 32 "SymbolGenerator.mxg"
+                    #line (225,52)-(225,57) 32 "SymbolGenerator.mxg"
                     __cb.Write(phase);
                     #line hidden
-                    #line (292,58)-(292,71) 33 "SymbolGenerator.mxg"
+                    #line (225,58)-(225,71) 33 "SymbolGenerator.mxg"
                     __cb.Write("(diagnostics,");
                     #line hidden
-                    #line (292,71)-(292,72) 33 "SymbolGenerator.mxg"
+                    #line (225,71)-(225,72) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (292,72)-(292,91) 33 "SymbolGenerator.mxg"
+                    #line (225,72)-(225,91) 33 "SymbolGenerator.mxg"
                     __cb.Write("cancellationToken);");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
-                    #line (293,30)-(293,49) 21 "SymbolGenerator.mxg"
+                    #line (226,30)-(226,49) 21 "SymbolGenerator.mxg"
                     var prop = props[0];
                     #line hidden
                     
-                    var __first37 = true;
-                    #line (294,30)-(294,46) 21 "SymbolGenerator.mxg"
+                    var __first32 = true;
+                    #line (227,30)-(227,46) 21 "SymbolGenerator.mxg"
                     if (prop.IsWeak)
                     #line hidden
                     
                     {
-                        if (__first37)
+                        if (__first32)
                         {
-                            __first37 = false;
+                            __first32 = false;
                         }
-                        var __first38 = true;
-                        #line (295,34)-(295,63) 25 "SymbolGenerator.mxg"
+                        var __first33 = true;
+                        #line (228,34)-(228,63) 25 "SymbolGenerator.mxg"
                         if (prop.Type.Dimensions > 0)
                         #line hidden
                         
                         {
-                            if (__first38)
+                            if (__first33)
                             {
-                                __first38 = false;
+                                __first33 = false;
                             }
                             __cb.Push("                    ");
-                            #line (296,37)-(296,39) 41 "SymbolGenerator.mxg"
+                            #line (229,37)-(229,39) 41 "SymbolGenerator.mxg"
                             __cb.Write("if");
                             #line hidden
-                            #line (296,39)-(296,40) 41 "SymbolGenerator.mxg"
+                            #line (229,39)-(229,40) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (296,40)-(296,66) 41 "SymbolGenerator.mxg"
+                            #line (229,40)-(229,66) 41 "SymbolGenerator.mxg"
                             __cb.Write("(!result.IsDefaultOrEmpty)");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                             __cb.Push("                    ");
-                            #line (297,37)-(297,38) 41 "SymbolGenerator.mxg"
+                            #line (230,37)-(230,38) 41 "SymbolGenerator.mxg"
                             __cb.Write("{");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                             __cb.Push("                        ");
-                            #line (298,42)-(298,60) 40 "SymbolGenerator.mxg"
+                            #line (231,42)-(231,60) 40 "SymbolGenerator.mxg"
                             __cb.Write(GetFieldName(prop));
                             #line hidden
-                            #line (298,61)-(298,71) 41 "SymbolGenerator.mxg"
+                            #line (231,61)-(231,71) 41 "SymbolGenerator.mxg"
                             __cb.Write(".Add(this,");
                             #line hidden
-                            #line (298,71)-(298,72) 41 "SymbolGenerator.mxg"
+                            #line (231,71)-(231,72) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (298,72)-(298,80) 41 "SymbolGenerator.mxg"
+                            #line (231,72)-(231,80) 41 "SymbolGenerator.mxg"
                             __cb.Write("result);");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                             __cb.Push("                    ");
-                            #line (299,37)-(299,38) 41 "SymbolGenerator.mxg"
+                            #line (232,37)-(232,38) 41 "SymbolGenerator.mxg"
                             __cb.Write("}");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                         }
-                        #line (300,34)-(300,38) 25 "SymbolGenerator.mxg"
+                        #line (233,34)-(233,38) 25 "SymbolGenerator.mxg"
                         else
                         #line hidden
                         
                         {
-                            if (__first38)
+                            if (__first33)
                             {
-                                __first38 = false;
+                                __first33 = false;
                             }
                             __cb.Push("                    ");
-                            #line (301,37)-(301,39) 41 "SymbolGenerator.mxg"
+                            #line (234,37)-(234,39) 41 "SymbolGenerator.mxg"
                             __cb.Write("if");
                             #line hidden
-                            #line (301,39)-(301,40) 41 "SymbolGenerator.mxg"
+                            #line (234,39)-(234,40) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (301,40)-(301,47) 41 "SymbolGenerator.mxg"
+                            #line (234,40)-(234,47) 41 "SymbolGenerator.mxg"
                             __cb.Write("(result");
                             #line hidden
-                            #line (301,47)-(301,48) 41 "SymbolGenerator.mxg"
+                            #line (234,47)-(234,48) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (301,48)-(301,50) 41 "SymbolGenerator.mxg"
+                            #line (234,48)-(234,50) 41 "SymbolGenerator.mxg"
                             __cb.Write("!=");
                             #line hidden
-                            #line (301,50)-(301,51) 41 "SymbolGenerator.mxg"
+                            #line (234,50)-(234,51) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (301,52)-(301,81) 40 "SymbolGenerator.mxg"
+                            #line (234,52)-(234,81) 40 "SymbolGenerator.mxg"
                             __cb.Write(GetDefaultValue(symbol, prop));
                             #line hidden
-                            #line (301,82)-(301,83) 41 "SymbolGenerator.mxg"
+                            #line (234,82)-(234,83) 41 "SymbolGenerator.mxg"
                             __cb.Write(")");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                             __cb.Push("                    ");
-                            #line (302,37)-(302,38) 41 "SymbolGenerator.mxg"
+                            #line (235,37)-(235,38) 41 "SymbolGenerator.mxg"
                             __cb.Write("{");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                             __cb.Push("                        ");
-                            #line (303,42)-(303,60) 40 "SymbolGenerator.mxg"
+                            #line (236,42)-(236,60) 40 "SymbolGenerator.mxg"
                             __cb.Write(GetFieldName(prop));
                             #line hidden
-                            #line (303,61)-(303,71) 41 "SymbolGenerator.mxg"
+                            #line (236,61)-(236,71) 41 "SymbolGenerator.mxg"
                             __cb.Write(".Add(this,");
                             #line hidden
-                            #line (303,71)-(303,72) 41 "SymbolGenerator.mxg"
+                            #line (236,71)-(236,72) 41 "SymbolGenerator.mxg"
                             __cb.Write(" ");
                             #line hidden
-                            #line (303,72)-(303,80) 41 "SymbolGenerator.mxg"
+                            #line (236,72)-(236,80) 41 "SymbolGenerator.mxg"
                             __cb.Write("result);");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                             __cb.Push("                    ");
-                            #line (304,37)-(304,38) 41 "SymbolGenerator.mxg"
+                            #line (237,37)-(237,38) 41 "SymbolGenerator.mxg"
                             __cb.Write("}");
                             #line hidden
                             __cb.AppendLine();
                             __cb.Pop();
                         }
-                        if (!__first38) __cb.AppendLine();
+                        if (!__first33) __cb.AppendLine();
                     }
-                    #line (306,30)-(306,34) 21 "SymbolGenerator.mxg"
+                    #line (239,30)-(239,34) 21 "SymbolGenerator.mxg"
                     else
                     #line hidden
                     
                     {
-                        if (__first37)
+                        if (__first32)
                         {
-                            __first37 = false;
+                            __first32 = false;
                         }
                         __cb.Push("                    ");
-                        #line (307,34)-(307,52) 36 "SymbolGenerator.mxg"
+                        #line (240,34)-(240,52) 36 "SymbolGenerator.mxg"
                         __cb.Write(GetFieldName(prop));
                         #line hidden
-                        #line (307,53)-(307,54) 37 "SymbolGenerator.mxg"
+                        #line (240,53)-(240,54) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (307,54)-(307,55) 37 "SymbolGenerator.mxg"
+                        #line (240,54)-(240,55) 37 "SymbolGenerator.mxg"
                         __cb.Write("=");
                         #line hidden
-                        #line (307,55)-(307,56) 37 "SymbolGenerator.mxg"
+                        #line (240,55)-(240,56) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (307,56)-(307,63) 37 "SymbolGenerator.mxg"
+                        #line (240,56)-(240,63) 37 "SymbolGenerator.mxg"
                         __cb.Write("result;");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                     }
-                    if (!__first37) __cb.AppendLine();
+                    if (!__first32) __cb.AppendLine();
                 }
-                #line (309,26)-(309,30) 17 "SymbolGenerator.mxg"
+                #line (242,26)-(242,30) 17 "SymbolGenerator.mxg"
                 else
                 #line hidden
                 
                 {
-                    if (__first33)
+                    if (__first28)
                     {
-                        __first33 = false;
+                        __first28 = false;
                     }
                     __cb.Push("                    ");
-                    #line (310,29)-(310,38) 33 "SymbolGenerator.mxg"
+                    #line (243,29)-(243,38) 33 "SymbolGenerator.mxg"
                     __cb.Write("Complete_");
                     #line hidden
-                    #line (310,39)-(310,44) 32 "SymbolGenerator.mxg"
+                    #line (243,39)-(243,44) 32 "SymbolGenerator.mxg"
                     __cb.Write(phase);
                     #line hidden
-                    #line (310,45)-(310,58) 33 "SymbolGenerator.mxg"
+                    #line (243,45)-(243,58) 33 "SymbolGenerator.mxg"
                     __cb.Write("(diagnostics,");
                     #line hidden
-                    #line (310,58)-(310,59) 33 "SymbolGenerator.mxg"
+                    #line (243,58)-(243,59) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (310,59)-(310,78) 33 "SymbolGenerator.mxg"
+                    #line (243,59)-(243,78) 33 "SymbolGenerator.mxg"
                     __cb.Write("cancellationToken);");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first33) __cb.AppendLine();
+                if (!__first28) __cb.AppendLine();
                 __cb.Push("                    ");
-                #line (312,25)-(312,59) 29 "SymbolGenerator.mxg"
+                #line (245,25)-(245,59) 29 "SymbolGenerator.mxg"
                 __cb.Write("AddSymbolDiagnostics(diagnostics);");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                    ");
-                #line (313,25)-(313,44) 29 "SymbolGenerator.mxg"
+                #line (246,25)-(246,44) 29 "SymbolGenerator.mxg"
                 __cb.Write("diagnostics.Free();");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                    ");
-                #line (314,25)-(314,42) 29 "SymbolGenerator.mxg"
+                #line (247,25)-(247,42) 29 "SymbolGenerator.mxg"
                 __cb.Write("NotePartComplete(");
                 #line hidden
-                #line (314,43)-(314,70) 28 "SymbolGenerator.mxg"
+                #line (247,43)-(247,70) 28 "SymbolGenerator.mxg"
                 __cb.Write(GetIntfName(symbol, symbol));
                 #line hidden
-                #line (314,71)-(314,95) 29 "SymbolGenerator.mxg"
+                #line (247,71)-(247,95) 29 "SymbolGenerator.mxg"
                 __cb.Write(".CompletionParts.Finish_");
                 #line hidden
-                #line (314,96)-(314,101) 28 "SymbolGenerator.mxg"
+                #line (247,96)-(247,101) 28 "SymbolGenerator.mxg"
                 __cb.Write(phase);
                 #line hidden
-                #line (314,102)-(314,104) 29 "SymbolGenerator.mxg"
+                #line (247,102)-(247,104) 29 "SymbolGenerator.mxg"
                 __cb.Write(");");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                ");
-                #line (315,21)-(315,22) 29 "SymbolGenerator.mxg"
+                #line (248,21)-(248,22) 29 "SymbolGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                ");
-                #line (316,21)-(316,27) 29 "SymbolGenerator.mxg"
+                #line (249,21)-(249,27) 29 "SymbolGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (316,27)-(316,28) 29 "SymbolGenerator.mxg"
+                #line (249,27)-(249,28) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (316,28)-(316,33) 29 "SymbolGenerator.mxg"
+                #line (249,28)-(249,33) 29 "SymbolGenerator.mxg"
                 __cb.Write("true;");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("            ");
-                #line (317,17)-(317,18) 29 "SymbolGenerator.mxg"
+                #line (250,17)-(250,18) 29 "SymbolGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("            ");
-                #line (318,17)-(318,21) 29 "SymbolGenerator.mxg"
+                #line (251,17)-(251,21) 29 "SymbolGenerator.mxg"
                 __cb.Write("else");
                 #line hidden
-                #line (318,21)-(318,22) 29 "SymbolGenerator.mxg"
+                #line (251,21)-(251,22) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
                 __cb.SkipLineEnd = true;
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first32) __cb.AppendLine();
-            var __first39 = true;
-            #line (320,14)-(320,36) 13 "SymbolGenerator.mxg"
+            if (!__first27) __cb.AppendLine();
+            var __first34 = true;
+            #line (253,14)-(253,36) 13 "SymbolGenerator.mxg"
             if (phases.Length > 0)
             #line hidden
             
             {
-                if (__first39)
+                if (__first34)
                 {
-                    __first39 = false;
+                    __first34 = false;
                 }
                 __cb.Push("            ");
-                #line (321,17)-(321,18) 29 "SymbolGenerator.mxg"
+                #line (254,17)-(254,18) 29 "SymbolGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("                ");
-                #line (322,21)-(322,27) 29 "SymbolGenerator.mxg"
+                #line (255,21)-(255,27) 29 "SymbolGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (322,27)-(322,28) 29 "SymbolGenerator.mxg"
+                #line (255,27)-(255,28) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (322,28)-(322,54) 29 "SymbolGenerator.mxg"
+                #line (255,28)-(255,54) 29 "SymbolGenerator.mxg"
                 __cb.Write("base.ForceCompletePart(ref");
                 #line hidden
-                #line (322,54)-(322,55) 29 "SymbolGenerator.mxg"
+                #line (255,54)-(255,55) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (322,55)-(322,70) 29 "SymbolGenerator.mxg"
+                #line (255,55)-(255,70) 29 "SymbolGenerator.mxg"
                 __cb.Write("incompletePart,");
                 #line hidden
-                #line (322,70)-(322,71) 29 "SymbolGenerator.mxg"
+                #line (255,70)-(255,71) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (322,71)-(322,83) 29 "SymbolGenerator.mxg"
+                #line (255,71)-(255,83) 29 "SymbolGenerator.mxg"
                 __cb.Write("locationOpt,");
                 #line hidden
-                #line (322,83)-(322,84) 29 "SymbolGenerator.mxg"
+                #line (255,83)-(255,84) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (322,84)-(322,103) 29 "SymbolGenerator.mxg"
+                #line (255,84)-(255,103) 29 "SymbolGenerator.mxg"
                 __cb.Write("cancellationToken);");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("            ");
-                #line (323,17)-(323,18) 29 "SymbolGenerator.mxg"
+                #line (256,17)-(256,18) 29 "SymbolGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            #line (324,14)-(324,18) 13 "SymbolGenerator.mxg"
+            #line (257,14)-(257,18) 13 "SymbolGenerator.mxg"
             else
             #line hidden
             
             {
-                if (__first39)
+                if (__first34)
                 {
-                    __first39 = false;
+                    __first34 = false;
                 }
                 __cb.Push("            ");
-                #line (325,17)-(325,23) 29 "SymbolGenerator.mxg"
+                #line (258,17)-(258,23) 29 "SymbolGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (325,23)-(325,24) 29 "SymbolGenerator.mxg"
+                #line (258,23)-(258,24) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (325,24)-(325,50) 29 "SymbolGenerator.mxg"
+                #line (258,24)-(258,50) 29 "SymbolGenerator.mxg"
                 __cb.Write("base.ForceCompletePart(ref");
                 #line hidden
-                #line (325,50)-(325,51) 29 "SymbolGenerator.mxg"
+                #line (258,50)-(258,51) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (325,51)-(325,66) 29 "SymbolGenerator.mxg"
+                #line (258,51)-(258,66) 29 "SymbolGenerator.mxg"
                 __cb.Write("incompletePart,");
                 #line hidden
-                #line (325,66)-(325,67) 29 "SymbolGenerator.mxg"
+                #line (258,66)-(258,67) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (325,67)-(325,79) 29 "SymbolGenerator.mxg"
+                #line (258,67)-(258,79) 29 "SymbolGenerator.mxg"
                 __cb.Write("locationOpt,");
                 #line hidden
-                #line (325,79)-(325,80) 29 "SymbolGenerator.mxg"
+                #line (258,79)-(258,80) 29 "SymbolGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (325,80)-(325,99) 29 "SymbolGenerator.mxg"
+                #line (258,80)-(258,99) 29 "SymbolGenerator.mxg"
                 __cb.Write("cancellationToken);");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first39) __cb.AppendLine();
+            if (!__first34) __cb.AppendLine();
             __cb.Push("        ");
-            #line (327,9)-(327,10) 25 "SymbolGenerator.mxg"
+            #line (260,9)-(260,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
+            var __first35 = true;
+            #line (262,10)-(262,50) 13 "SymbolGenerator.mxg"
+            foreach (var phase in GetPhases(symbol))
+            #line hidden
+            
+            {
+                if (__first35)
+                {
+                    __first35 = false;
+                }
+                __cb.WriteLine();
+                __cb.Pop();
+                #line (264,14)-(264,59) 17 "SymbolGenerator.mxg"
+                var props = GetPhaseProperties(symbol, phase);
+                #line hidden
+                
+                var __first36 = true;
+                #line (265,14)-(265,36) 17 "SymbolGenerator.mxg"
+                if (props.Length >= 2)
+                #line hidden
+                
+                {
+                    if (__first36)
+                    {
+                        __first36 = false;
+                    }
+                    __cb.Push("        ");
+                    #line (266,17)-(266,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("private");
+                    #line hidden
+                    #line (266,24)-(266,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (266,25)-(266,26) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(");
+                    #line hidden
+                    var __first37 = true;
+                    foreach (var __item38 in 
+                    #line (266,27)-(266,84) 21 "SymbolGenerator.mxg"
+                    from prop in props select GetTypeName(symbol, prop.Type) 
+                    #line hidden
+                    )
+                    {
+                        if (__first37)
+                        {
+                            __first37 = false;
+                        }
+                        else
+                        {
+                            __cb.Push("        ");
+                            __cb.DontIgnoreLastLineEnd = true;
+                            #line (266,94)-(266,98) 40 "SymbolGenerator.mxg"
+                            __cb.Write(", ");
+                            #line hidden
+                            __cb.DontIgnoreLastLineEnd = false;
+                            __cb.Pop();
+                        }
+                        __cb.Write(__item38);
+                    }
+                    #line (266,99)-(266,100) 33 "SymbolGenerator.mxg"
+                    __cb.Write(")");
+                    #line hidden
+                    #line (266,100)-(266,101) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (266,101)-(266,110) 33 "SymbolGenerator.mxg"
+                    __cb.Write("Complete_");
+                    #line hidden
+                    #line (266,111)-(266,116) 32 "SymbolGenerator.mxg"
+                    __cb.Write(phase);
+                    #line hidden
+                    #line (266,117)-(266,133) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(__DiagnosticBag");
+                    #line hidden
+                    #line (266,133)-(266,134) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (266,134)-(266,146) 33 "SymbolGenerator.mxg"
+                    __cb.Write("diagnostics,");
+                    #line hidden
+                    #line (266,146)-(266,147) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (266,147)-(266,166) 33 "SymbolGenerator.mxg"
+                    __cb.Write("__CancellationToken");
+                    #line hidden
+                    #line (266,166)-(266,167) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (266,167)-(266,185) 33 "SymbolGenerator.mxg"
+                    __cb.Write("cancellationToken)");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("        ");
+                    #line (267,17)-(267,18) 33 "SymbolGenerator.mxg"
+                    __cb.Write("{");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (268,21)-(268,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("var");
+                    #line hidden
+                    #line (268,24)-(268,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (268,25)-(268,29) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl");
+                    #line hidden
+                    #line (268,29)-(268,30) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (268,30)-(268,31) 33 "SymbolGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (268,31)-(268,32) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (268,33)-(268,60) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetImplName(symbol, symbol));
+                    #line hidden
+                    #line (268,61)-(268,80) 33 "SymbolGenerator.mxg"
+                    __cb.Write(".GetInstance(this);");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (269,21)-(269,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("var");
+                    #line hidden
+                    #line (269,24)-(269,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (269,25)-(269,31) 33 "SymbolGenerator.mxg"
+                    __cb.Write("result");
+                    #line hidden
+                    #line (269,31)-(269,32) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (269,32)-(269,33) 33 "SymbolGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (269,33)-(269,34) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (269,34)-(269,48) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl.Complete_");
+                    #line hidden
+                    #line (269,49)-(269,54) 32 "SymbolGenerator.mxg"
+                    __cb.Write(phase);
+                    #line hidden
+                    #line (269,55)-(269,68) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(diagnostics,");
+                    #line hidden
+                    #line (269,68)-(269,69) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (269,69)-(269,88) 33 "SymbolGenerator.mxg"
+                    __cb.Write("cancellationToken);");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (270,21)-(270,33) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl.Free();");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (271,21)-(271,27) 33 "SymbolGenerator.mxg"
+                    __cb.Write("return");
+                    #line hidden
+                    #line (271,27)-(271,28) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (271,28)-(271,35) 33 "SymbolGenerator.mxg"
+                    __cb.Write("result;");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("        ");
+                    #line (272,17)-(272,18) 33 "SymbolGenerator.mxg"
+                    __cb.Write("}");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                }
+                #line (273,14)-(273,41) 17 "SymbolGenerator.mxg"
+                else if (props.Length == 1)
+                #line hidden
+                
+                {
+                    if (__first36)
+                    {
+                        __first36 = false;
+                    }
+                    #line (274,18)-(274,37) 21 "SymbolGenerator.mxg"
+                    var prop = props[0];
+                    #line hidden
+                    
+                    __cb.Push("        ");
+                    #line (275,17)-(275,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("private");
+                    #line hidden
+                    #line (275,24)-(275,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (275,26)-(275,56) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetTypeName(symbol, prop.Type));
+                    #line hidden
+                    #line (275,57)-(275,58) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (275,58)-(275,67) 33 "SymbolGenerator.mxg"
+                    __cb.Write("Complete_");
+                    #line hidden
+                    #line (275,68)-(275,73) 32 "SymbolGenerator.mxg"
+                    __cb.Write(phase);
+                    #line hidden
+                    #line (275,74)-(275,90) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(__DiagnosticBag");
+                    #line hidden
+                    #line (275,90)-(275,91) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (275,91)-(275,103) 33 "SymbolGenerator.mxg"
+                    __cb.Write("diagnostics,");
+                    #line hidden
+                    #line (275,103)-(275,104) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (275,104)-(275,123) 33 "SymbolGenerator.mxg"
+                    __cb.Write("__CancellationToken");
+                    #line hidden
+                    #line (275,123)-(275,124) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (275,124)-(275,142) 33 "SymbolGenerator.mxg"
+                    __cb.Write("cancellationToken)");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("        ");
+                    #line (276,17)-(276,18) 33 "SymbolGenerator.mxg"
+                    __cb.Write("{");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (277,21)-(277,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("var");
+                    #line hidden
+                    #line (277,24)-(277,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (277,25)-(277,29) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl");
+                    #line hidden
+                    #line (277,29)-(277,30) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (277,30)-(277,31) 33 "SymbolGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (277,31)-(277,32) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (277,33)-(277,60) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetImplName(symbol, symbol));
+                    #line hidden
+                    #line (277,61)-(277,80) 33 "SymbolGenerator.mxg"
+                    __cb.Write(".GetInstance(this);");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (278,21)-(278,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("var");
+                    #line hidden
+                    #line (278,24)-(278,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (278,25)-(278,31) 33 "SymbolGenerator.mxg"
+                    __cb.Write("result");
+                    #line hidden
+                    #line (278,31)-(278,32) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (278,32)-(278,33) 33 "SymbolGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (278,33)-(278,34) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (278,34)-(278,48) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl.Complete_");
+                    #line hidden
+                    #line (278,49)-(278,54) 32 "SymbolGenerator.mxg"
+                    __cb.Write(phase);
+                    #line hidden
+                    #line (278,55)-(278,68) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(diagnostics,");
+                    #line hidden
+                    #line (278,68)-(278,69) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (278,69)-(278,88) 33 "SymbolGenerator.mxg"
+                    __cb.Write("cancellationToken);");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (279,21)-(279,33) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl.Free();");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (280,21)-(280,27) 33 "SymbolGenerator.mxg"
+                    __cb.Write("return");
+                    #line hidden
+                    #line (280,27)-(280,28) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (280,28)-(280,35) 33 "SymbolGenerator.mxg"
+                    __cb.Write("result;");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("        ");
+                    #line (281,17)-(281,18) 33 "SymbolGenerator.mxg"
+                    __cb.Write("}");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                }
+                #line (282,14)-(282,18) 17 "SymbolGenerator.mxg"
+                else
+                #line hidden
+                
+                {
+                    if (__first36)
+                    {
+                        __first36 = false;
+                    }
+                    __cb.Push("        ");
+                    #line (283,17)-(283,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("private");
+                    #line hidden
+                    #line (283,24)-(283,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (283,25)-(283,29) 33 "SymbolGenerator.mxg"
+                    __cb.Write("void");
+                    #line hidden
+                    #line (283,29)-(283,30) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (283,30)-(283,39) 33 "SymbolGenerator.mxg"
+                    __cb.Write("Complete_");
+                    #line hidden
+                    #line (283,40)-(283,45) 32 "SymbolGenerator.mxg"
+                    __cb.Write(phase);
+                    #line hidden
+                    #line (283,46)-(283,62) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(__DiagnosticBag");
+                    #line hidden
+                    #line (283,62)-(283,63) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (283,63)-(283,75) 33 "SymbolGenerator.mxg"
+                    __cb.Write("diagnostics,");
+                    #line hidden
+                    #line (283,75)-(283,76) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (283,76)-(283,95) 33 "SymbolGenerator.mxg"
+                    __cb.Write("__CancellationToken");
+                    #line hidden
+                    #line (283,95)-(283,96) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (283,96)-(283,114) 33 "SymbolGenerator.mxg"
+                    __cb.Write("cancellationToken)");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("        ");
+                    #line (284,17)-(284,18) 33 "SymbolGenerator.mxg"
+                    __cb.Write("{");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (285,21)-(285,24) 33 "SymbolGenerator.mxg"
+                    __cb.Write("var");
+                    #line hidden
+                    #line (285,24)-(285,25) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (285,25)-(285,29) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl");
+                    #line hidden
+                    #line (285,29)-(285,30) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (285,30)-(285,31) 33 "SymbolGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (285,31)-(285,32) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (285,33)-(285,60) 32 "SymbolGenerator.mxg"
+                    __cb.Write(GetImplName(symbol, symbol));
+                    #line hidden
+                    #line (285,61)-(285,80) 33 "SymbolGenerator.mxg"
+                    __cb.Write(".GetInstance(this);");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (286,21)-(286,35) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl.Complete_");
+                    #line hidden
+                    #line (286,36)-(286,41) 32 "SymbolGenerator.mxg"
+                    __cb.Write(phase);
+                    #line hidden
+                    #line (286,42)-(286,55) 33 "SymbolGenerator.mxg"
+                    __cb.Write("(diagnostics,");
+                    #line hidden
+                    #line (286,55)-(286,56) 33 "SymbolGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (286,56)-(286,75) 33 "SymbolGenerator.mxg"
+                    __cb.Write("cancellationToken);");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("            ");
+                    #line (287,21)-(287,33) 33 "SymbolGenerator.mxg"
+                    __cb.Write("impl.Free();");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                    __cb.Push("        ");
+                    #line (288,17)-(288,18) 33 "SymbolGenerator.mxg"
+                    __cb.Write("}");
+                    #line hidden
+                    __cb.AppendLine();
+                    __cb.Pop();
+                }
+                if (!__first36) __cb.AppendLine();
+            }
+            if (!__first35) __cb.AppendLine();
+            __cb.Push("    ");
+            #line (291,5)-(291,6) 25 "SymbolGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (293,5)-(293,11) 25 "SymbolGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (293,11)-(293,12) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (293,12)-(293,20) 25 "SymbolGenerator.mxg"
+            __cb.Write("abstract");
+            #line hidden
+            #line (293,20)-(293,21) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (293,21)-(293,26) 25 "SymbolGenerator.mxg"
+            __cb.Write("class");
+            #line hidden
+            #line (293,26)-(293,27) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (293,28)-(293,55) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetBaseName(symbol, symbol));
+            #line hidden
+            #line (293,56)-(293,57) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (293,57)-(293,58) 25 "SymbolGenerator.mxg"
+            __cb.Write(":");
+            #line hidden
+            #line (293,58)-(293,59) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (293,59)-(293,108) 25 "SymbolGenerator.mxg"
+            __cb.Write("global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl,");
+            #line hidden
+            #line (293,108)-(293,109) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (293,110)-(293,137) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetIntfName(symbol, symbol));
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (294,5)-(294,6) 25 "SymbolGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            var __first39 = true;
+            #line (295,10)-(295,53) 13 "SymbolGenerator.mxg"
+            foreach (var prop in GetProperties(symbol))
+            #line hidden
+            
+            {
+                if (__first39)
+                {
+                    __first39 = false;
+                }
+                __cb.Push("        ");
+                #line (296,13)-(296,19) 29 "SymbolGenerator.mxg"
+                __cb.Write("public");
+                #line hidden
+                #line (296,19)-(296,20) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (296,21)-(296,51) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetTypeName(symbol, prop.Type));
+                #line hidden
+                #line (296,52)-(296,53) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (296,54)-(296,63) 28 "SymbolGenerator.mxg"
+                __cb.Write(prop.Name);
+                #line hidden
+                #line (296,64)-(296,65) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (296,65)-(296,67) 29 "SymbolGenerator.mxg"
+                __cb.Write("=>");
+                #line hidden
+                #line (296,67)-(296,68) 29 "SymbolGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (296,68)-(296,70) 29 "SymbolGenerator.mxg"
+                __cb.Write("((");
+                #line hidden
+                #line (296,71)-(296,98) 28 "SymbolGenerator.mxg"
+                __cb.Write(GetIntfName(symbol, symbol));
+                #line hidden
+                #line (296,99)-(296,120) 29 "SymbolGenerator.mxg"
+                __cb.Write(")__WrappedInstance).]");
+                #line hidden
+                #line (296,121)-(296,130) 28 "SymbolGenerator.mxg"
+                __cb.Write(prop.Name);
+                #line hidden
+                #line (296,131)-(296,132) 29 "SymbolGenerator.mxg"
+                __cb.Write(";");
+                #line hidden
+                __cb.AppendLine();
+                __cb.Pop();
+            }
+            if (!__first39) __cb.AppendLine();
+            __cb.WriteLine();
+            __cb.Pop();
             var __first40 = true;
-            #line (329,10)-(329,50) 13 "SymbolGenerator.mxg"
+            #line (299,10)-(299,50) 13 "SymbolGenerator.mxg"
             foreach (var phase in GetPhases(symbol))
             #line hidden
             
@@ -5034,12 +4399,12 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 }
                 __cb.WriteLine();
                 __cb.Pop();
-                #line (331,14)-(331,59) 17 "SymbolGenerator.mxg"
+                #line (301,14)-(301,59) 17 "SymbolGenerator.mxg"
                 var props = GetPhaseProperties(symbol, phase);
                 #line hidden
                 
                 var __first41 = true;
-                #line (332,14)-(332,36) 17 "SymbolGenerator.mxg"
+                #line (302,14)-(302,36) 17 "SymbolGenerator.mxg"
                 if (props.Length >= 2)
                 #line hidden
                 
@@ -5048,175 +4413,228 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                     {
                         __first41 = false;
                     }
-                    __cb.Push("        ");
-                    #line (333,17)-(333,26) 33 "SymbolGenerator.mxg"
-                    __cb.Write("protected");
-                    #line hidden
-                    #line (333,26)-(333,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (333,27)-(333,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("override");
-                    #line hidden
-                    #line (333,35)-(333,36) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (333,36)-(333,37) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
                     var __first42 = true;
-                    foreach (var __item43 in 
-                    #line (333,38)-(333,95) 21 "SymbolGenerator.mxg"
-                    from prop in props select GetTypeName(symbol, prop.Type) 
+                    #line (303,18)-(303,58) 21 "SymbolGenerator.mxg"
+                    if (props.Where(p => p.IsDerived).Any())
                     #line hidden
-                    )
+                    
                     {
                         if (__first42)
                         {
                             __first42 = false;
                         }
-                        else
+                        __cb.Push("        ");
+                        #line (304,21)-(304,27) 37 "SymbolGenerator.mxg"
+                        __cb.Write("public");
+                        #line hidden
+                        #line (304,27)-(304,28) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (304,28)-(304,36) 37 "SymbolGenerator.mxg"
+                        __cb.Write("abstract");
+                        #line hidden
+                        #line (304,36)-(304,37) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (304,37)-(304,38) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(");
+                        #line hidden
+                        var __first43 = true;
+                        foreach (var __item44 in 
+                        #line (304,39)-(304,96) 25 "SymbolGenerator.mxg"
+                        from prop in props select GetTypeName(symbol, prop.Type) 
+                        #line hidden
+                        )
                         {
-                            __cb.Push("        ");
-                            __cb.DontIgnoreLastLineEnd = true;
-                            #line (333,105)-(333,109) 40 "SymbolGenerator.mxg"
-                            __cb.Write(", ");
-                            #line hidden
-                            __cb.DontIgnoreLastLineEnd = false;
-                            __cb.Pop();
+                            if (__first43)
+                            {
+                                __first43 = false;
+                            }
+                            else
+                            {
+                                __cb.Push("        ");
+                                __cb.DontIgnoreLastLineEnd = true;
+                                #line (304,106)-(304,110) 44 "SymbolGenerator.mxg"
+                                __cb.Write(", ");
+                                #line hidden
+                                __cb.DontIgnoreLastLineEnd = false;
+                                __cb.Pop();
+                            }
+                            __cb.Write(__item44);
                         }
-                        __cb.Write(__item43);
+                        #line (304,111)-(304,112) 37 "SymbolGenerator.mxg"
+                        __cb.Write(")");
+                        #line hidden
+                        #line (304,112)-(304,113) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (304,113)-(304,122) 37 "SymbolGenerator.mxg"
+                        __cb.Write("Complete_");
+                        #line hidden
+                        #line (304,123)-(304,128) 36 "SymbolGenerator.mxg"
+                        __cb.Write(phase);
+                        #line hidden
+                        #line (304,129)-(304,145) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(__DiagnosticBag");
+                        #line hidden
+                        #line (304,145)-(304,146) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (304,146)-(304,158) 37 "SymbolGenerator.mxg"
+                        __cb.Write("diagnostics,");
+                        #line hidden
+                        #line (304,158)-(304,159) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (304,159)-(304,178) 37 "SymbolGenerator.mxg"
+                        __cb.Write("__CancellationToken");
+                        #line hidden
+                        #line (304,178)-(304,179) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (304,179)-(304,198) 37 "SymbolGenerator.mxg"
+                        __cb.Write("cancellationToken);");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
                     }
-                    #line (333,110)-(333,111) 33 "SymbolGenerator.mxg"
-                    __cb.Write(")");
+                    #line (305,18)-(305,22) 21 "SymbolGenerator.mxg"
+                    else
                     #line hidden
-                    #line (333,111)-(333,112) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (333,112)-(333,121) 33 "SymbolGenerator.mxg"
-                    __cb.Write("Complete_");
-                    #line hidden
-                    #line (333,122)-(333,127) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (333,128)-(333,144) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(__DiagnosticBag");
-                    #line hidden
-                    #line (333,144)-(333,145) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (333,145)-(333,157) 33 "SymbolGenerator.mxg"
-                    __cb.Write("diagnostics,");
-                    #line hidden
-                    #line (333,157)-(333,158) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (333,158)-(333,177) 33 "SymbolGenerator.mxg"
-                    __cb.Write("__CancellationToken");
-                    #line hidden
-                    #line (333,177)-(333,178) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (333,178)-(333,196) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken)");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("        ");
-                    #line (334,17)-(334,18) 33 "SymbolGenerator.mxg"
-                    __cb.Write("{");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (335,21)-(335,24) 33 "SymbolGenerator.mxg"
-                    __cb.Write("var");
-                    #line hidden
-                    #line (335,24)-(335,25) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (335,25)-(335,29) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl");
-                    #line hidden
-                    #line (335,29)-(335,30) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (335,30)-(335,31) 33 "SymbolGenerator.mxg"
-                    __cb.Write("=");
-                    #line hidden
-                    #line (335,31)-(335,32) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (335,33)-(335,60) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetImplName(symbol, symbol));
-                    #line hidden
-                    #line (335,61)-(335,80) 33 "SymbolGenerator.mxg"
-                    __cb.Write(".GetInstance(this);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (336,21)-(336,24) 33 "SymbolGenerator.mxg"
-                    __cb.Write("var");
-                    #line hidden
-                    #line (336,24)-(336,25) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (336,25)-(336,31) 33 "SymbolGenerator.mxg"
-                    __cb.Write("result");
-                    #line hidden
-                    #line (336,31)-(336,32) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (336,32)-(336,33) 33 "SymbolGenerator.mxg"
-                    __cb.Write("=");
-                    #line hidden
-                    #line (336,33)-(336,34) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (336,34)-(336,48) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl.Complete_");
-                    #line hidden
-                    #line (336,49)-(336,54) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (336,55)-(336,68) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(diagnostics,");
-                    #line hidden
-                    #line (336,68)-(336,69) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (336,69)-(336,88) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (337,21)-(337,33) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl.Free();");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (338,21)-(338,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write("return");
-                    #line hidden
-                    #line (338,27)-(338,28) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (338,28)-(338,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("result;");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("        ");
-                    #line (339,17)-(339,18) 33 "SymbolGenerator.mxg"
-                    __cb.Write("}");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
+                    
+                    {
+                        if (__first42)
+                        {
+                            __first42 = false;
+                        }
+                        __cb.Push("        ");
+                        #line (306,21)-(306,27) 37 "SymbolGenerator.mxg"
+                        __cb.Write("public");
+                        #line hidden
+                        #line (306,27)-(306,28) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (306,28)-(306,35) 37 "SymbolGenerator.mxg"
+                        __cb.Write("virtual");
+                        #line hidden
+                        #line (306,35)-(306,36) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (306,36)-(306,37) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(");
+                        #line hidden
+                        var __first45 = true;
+                        foreach (var __item46 in 
+                        #line (306,38)-(306,95) 25 "SymbolGenerator.mxg"
+                        from prop in props select GetTypeName(symbol, prop.Type) 
+                        #line hidden
+                        )
+                        {
+                            if (__first45)
+                            {
+                                __first45 = false;
+                            }
+                            else
+                            {
+                                __cb.Push("        ");
+                                __cb.DontIgnoreLastLineEnd = true;
+                                #line (306,105)-(306,109) 44 "SymbolGenerator.mxg"
+                                __cb.Write(", ");
+                                #line hidden
+                                __cb.DontIgnoreLastLineEnd = false;
+                                __cb.Pop();
+                            }
+                            __cb.Write(__item46);
+                        }
+                        #line (306,110)-(306,111) 37 "SymbolGenerator.mxg"
+                        __cb.Write(")");
+                        #line hidden
+                        #line (306,111)-(306,112) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (306,112)-(306,121) 37 "SymbolGenerator.mxg"
+                        __cb.Write("Complete_");
+                        #line hidden
+                        #line (306,122)-(306,127) 36 "SymbolGenerator.mxg"
+                        __cb.Write(phase);
+                        #line hidden
+                        #line (306,128)-(306,144) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(__DiagnosticBag");
+                        #line hidden
+                        #line (306,144)-(306,145) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (306,145)-(306,157) 37 "SymbolGenerator.mxg"
+                        __cb.Write("diagnostics,");
+                        #line hidden
+                        #line (306,157)-(306,158) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (306,158)-(306,177) 37 "SymbolGenerator.mxg"
+                        __cb.Write("__CancellationToken");
+                        #line hidden
+                        #line (306,177)-(306,178) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (306,178)-(306,196) 37 "SymbolGenerator.mxg"
+                        __cb.Write("cancellationToken)");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("        ");
+                        #line (307,21)-(307,22) 37 "SymbolGenerator.mxg"
+                        __cb.Write("{");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("            ");
+                        #line (308,25)-(308,31) 37 "SymbolGenerator.mxg"
+                        __cb.Write("return");
+                        #line hidden
+                        #line (308,31)-(308,32) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (308,32)-(308,33) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(");
+                        #line hidden
+                        var __first47 = true;
+                        foreach (var __item48 in 
+                        #line (308,34)-(308,90) 25 "SymbolGenerator.mxg"
+                        from prop in props select GetDefaultValue(symbol, prop) 
+                        #line hidden
+                        )
+                        {
+                            if (__first47)
+                            {
+                                __first47 = false;
+                            }
+                            else
+                            {
+                                __cb.Push("            ");
+                                __cb.DontIgnoreLastLineEnd = true;
+                                #line (308,100)-(308,104) 44 "SymbolGenerator.mxg"
+                                __cb.Write(", ");
+                                #line hidden
+                                __cb.DontIgnoreLastLineEnd = false;
+                                __cb.Pop();
+                            }
+                            __cb.Write(__item48);
+                        }
+                        #line (308,105)-(308,107) 37 "SymbolGenerator.mxg"
+                        __cb.Write(");");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("        ");
+                        #line (309,21)-(309,22) 37 "SymbolGenerator.mxg"
+                        __cb.Write("}");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    if (!__first42) __cb.AppendLine();
                 }
-                #line (340,14)-(340,41) 17 "SymbolGenerator.mxg"
+                #line (311,14)-(311,41) 17 "SymbolGenerator.mxg"
                 else if (props.Length == 1)
                 #line hidden
                 
@@ -5225,153 +4643,157 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                     {
                         __first41 = false;
                     }
-                    #line (341,18)-(341,37) 21 "SymbolGenerator.mxg"
+                    #line (312,18)-(312,37) 21 "SymbolGenerator.mxg"
                     var prop = props[0];
                     #line hidden
                     
-                    __cb.Push("        ");
-                    #line (342,17)-(342,26) 33 "SymbolGenerator.mxg"
-                    __cb.Write("protected");
+                    var __first49 = true;
+                    #line (313,18)-(313,37) 21 "SymbolGenerator.mxg"
+                    if (prop.IsDerived)
                     #line hidden
-                    #line (342,26)-(342,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
+                    
+                    {
+                        if (__first49)
+                        {
+                            __first49 = false;
+                        }
+                        __cb.Push("        ");
+                        #line (314,21)-(314,27) 37 "SymbolGenerator.mxg"
+                        __cb.Write("public");
+                        #line hidden
+                        #line (314,27)-(314,28) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (314,28)-(314,36) 37 "SymbolGenerator.mxg"
+                        __cb.Write("abstract");
+                        #line hidden
+                        #line (314,36)-(314,37) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (314,38)-(314,68) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetTypeName(symbol, prop.Type));
+                        #line hidden
+                        #line (314,69)-(314,70) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (314,70)-(314,79) 37 "SymbolGenerator.mxg"
+                        __cb.Write("Complete_");
+                        #line hidden
+                        #line (314,80)-(314,85) 36 "SymbolGenerator.mxg"
+                        __cb.Write(phase);
+                        #line hidden
+                        #line (314,86)-(314,102) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(__DiagnosticBag");
+                        #line hidden
+                        #line (314,102)-(314,103) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (314,103)-(314,115) 37 "SymbolGenerator.mxg"
+                        __cb.Write("diagnostics,");
+                        #line hidden
+                        #line (314,115)-(314,116) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (314,116)-(314,135) 37 "SymbolGenerator.mxg"
+                        __cb.Write("__CancellationToken");
+                        #line hidden
+                        #line (314,135)-(314,136) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (314,136)-(314,155) 37 "SymbolGenerator.mxg"
+                        __cb.Write("cancellationToken);");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    #line (315,18)-(315,22) 21 "SymbolGenerator.mxg"
+                    else
                     #line hidden
-                    #line (342,27)-(342,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("override");
-                    #line hidden
-                    #line (342,35)-(342,36) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (342,37)-(342,67) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetTypeName(symbol, prop.Type));
-                    #line hidden
-                    #line (342,68)-(342,69) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (342,69)-(342,78) 33 "SymbolGenerator.mxg"
-                    __cb.Write("Complete_");
-                    #line hidden
-                    #line (342,79)-(342,84) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (342,85)-(342,101) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(__DiagnosticBag");
-                    #line hidden
-                    #line (342,101)-(342,102) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (342,102)-(342,114) 33 "SymbolGenerator.mxg"
-                    __cb.Write("diagnostics,");
-                    #line hidden
-                    #line (342,114)-(342,115) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (342,115)-(342,134) 33 "SymbolGenerator.mxg"
-                    __cb.Write("__CancellationToken");
-                    #line hidden
-                    #line (342,134)-(342,135) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (342,135)-(342,153) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken)");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("        ");
-                    #line (343,17)-(343,18) 33 "SymbolGenerator.mxg"
-                    __cb.Write("{");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (344,21)-(344,24) 33 "SymbolGenerator.mxg"
-                    __cb.Write("var");
-                    #line hidden
-                    #line (344,24)-(344,25) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (344,25)-(344,29) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl");
-                    #line hidden
-                    #line (344,29)-(344,30) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (344,30)-(344,31) 33 "SymbolGenerator.mxg"
-                    __cb.Write("=");
-                    #line hidden
-                    #line (344,31)-(344,32) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (344,33)-(344,60) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetImplName(symbol, symbol));
-                    #line hidden
-                    #line (344,61)-(344,80) 33 "SymbolGenerator.mxg"
-                    __cb.Write(".GetInstance(this);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (345,21)-(345,24) 33 "SymbolGenerator.mxg"
-                    __cb.Write("var");
-                    #line hidden
-                    #line (345,24)-(345,25) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (345,25)-(345,31) 33 "SymbolGenerator.mxg"
-                    __cb.Write("result");
-                    #line hidden
-                    #line (345,31)-(345,32) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (345,32)-(345,33) 33 "SymbolGenerator.mxg"
-                    __cb.Write("=");
-                    #line hidden
-                    #line (345,33)-(345,34) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (345,34)-(345,48) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl.Complete_");
-                    #line hidden
-                    #line (345,49)-(345,54) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (345,55)-(345,68) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(diagnostics,");
-                    #line hidden
-                    #line (345,68)-(345,69) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (345,69)-(345,88) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (346,21)-(346,33) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl.Free();");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (347,21)-(347,27) 33 "SymbolGenerator.mxg"
-                    __cb.Write("return");
-                    #line hidden
-                    #line (347,27)-(347,28) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (347,28)-(347,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("result;");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("        ");
-                    #line (348,17)-(348,18) 33 "SymbolGenerator.mxg"
-                    __cb.Write("}");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
+                    
+                    {
+                        if (__first49)
+                        {
+                            __first49 = false;
+                        }
+                        __cb.Push("        ");
+                        #line (316,21)-(316,27) 37 "SymbolGenerator.mxg"
+                        __cb.Write("public");
+                        #line hidden
+                        #line (316,27)-(316,28) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (316,28)-(316,35) 37 "SymbolGenerator.mxg"
+                        __cb.Write("virtual");
+                        #line hidden
+                        #line (316,35)-(316,36) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (316,37)-(316,67) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetTypeName(symbol, prop.Type));
+                        #line hidden
+                        #line (316,68)-(316,69) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (316,69)-(316,78) 37 "SymbolGenerator.mxg"
+                        __cb.Write("Complete_");
+                        #line hidden
+                        #line (316,79)-(316,84) 36 "SymbolGenerator.mxg"
+                        __cb.Write(phase);
+                        #line hidden
+                        #line (316,85)-(316,101) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(__DiagnosticBag");
+                        #line hidden
+                        #line (316,101)-(316,102) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (316,102)-(316,114) 37 "SymbolGenerator.mxg"
+                        __cb.Write("diagnostics,");
+                        #line hidden
+                        #line (316,114)-(316,115) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (316,115)-(316,134) 37 "SymbolGenerator.mxg"
+                        __cb.Write("__CancellationToken");
+                        #line hidden
+                        #line (316,134)-(316,135) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (316,135)-(316,153) 37 "SymbolGenerator.mxg"
+                        __cb.Write("cancellationToken)");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("        ");
+                        #line (317,21)-(317,22) 37 "SymbolGenerator.mxg"
+                        __cb.Write("{");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("            ");
+                        #line (318,25)-(318,31) 37 "SymbolGenerator.mxg"
+                        __cb.Write("return");
+                        #line hidden
+                        #line (318,31)-(318,32) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (318,33)-(318,62) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetDefaultValue(symbol, prop));
+                        #line hidden
+                        #line (318,63)-(318,64) 37 "SymbolGenerator.mxg"
+                        __cb.Write(";");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("        ");
+                        #line (319,21)-(319,22) 37 "SymbolGenerator.mxg"
+                        __cb.Write("}");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    if (!__first49) __cb.AppendLine();
                 }
-                #line (349,14)-(349,18) 17 "SymbolGenerator.mxg"
+                #line (321,14)-(321,18) 17 "SymbolGenerator.mxg"
                 else
                 #line hidden
                 
@@ -5381,113 +4803,50 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                         __first41 = false;
                     }
                     __cb.Push("        ");
-                    #line (350,17)-(350,26) 33 "SymbolGenerator.mxg"
-                    __cb.Write("protected");
+                    #line (322,17)-(322,23) 33 "SymbolGenerator.mxg"
+                    __cb.Write("public");
                     #line hidden
-                    #line (350,26)-(350,27) 33 "SymbolGenerator.mxg"
+                    #line (322,23)-(322,24) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (350,27)-(350,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("override");
+                    #line (322,24)-(322,32) 33 "SymbolGenerator.mxg"
+                    __cb.Write("abstract");
                     #line hidden
-                    #line (350,35)-(350,36) 33 "SymbolGenerator.mxg"
+                    #line (322,32)-(322,33) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (350,36)-(350,40) 33 "SymbolGenerator.mxg"
+                    #line (322,33)-(322,37) 33 "SymbolGenerator.mxg"
                     __cb.Write("void");
                     #line hidden
-                    #line (350,40)-(350,41) 33 "SymbolGenerator.mxg"
+                    #line (322,37)-(322,38) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (350,41)-(350,50) 33 "SymbolGenerator.mxg"
+                    #line (322,38)-(322,47) 33 "SymbolGenerator.mxg"
                     __cb.Write("Complete_");
                     #line hidden
-                    #line (350,51)-(350,56) 32 "SymbolGenerator.mxg"
+                    #line (322,48)-(322,53) 32 "SymbolGenerator.mxg"
                     __cb.Write(phase);
                     #line hidden
-                    #line (350,57)-(350,73) 33 "SymbolGenerator.mxg"
+                    #line (322,54)-(322,70) 33 "SymbolGenerator.mxg"
                     __cb.Write("(__DiagnosticBag");
                     #line hidden
-                    #line (350,73)-(350,74) 33 "SymbolGenerator.mxg"
+                    #line (322,70)-(322,71) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (350,74)-(350,86) 33 "SymbolGenerator.mxg"
+                    #line (322,71)-(322,83) 33 "SymbolGenerator.mxg"
                     __cb.Write("diagnostics,");
                     #line hidden
-                    #line (350,86)-(350,87) 33 "SymbolGenerator.mxg"
+                    #line (322,83)-(322,84) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (350,87)-(350,106) 33 "SymbolGenerator.mxg"
+                    #line (322,84)-(322,103) 33 "SymbolGenerator.mxg"
                     __cb.Write("__CancellationToken");
                     #line hidden
-                    #line (350,106)-(350,107) 33 "SymbolGenerator.mxg"
+                    #line (322,103)-(322,104) 33 "SymbolGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (350,107)-(350,125) 33 "SymbolGenerator.mxg"
-                    __cb.Write("cancellationToken)");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("        ");
-                    #line (351,17)-(351,18) 33 "SymbolGenerator.mxg"
-                    __cb.Write("{");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (352,21)-(352,24) 33 "SymbolGenerator.mxg"
-                    __cb.Write("var");
-                    #line hidden
-                    #line (352,24)-(352,25) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (352,25)-(352,29) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl");
-                    #line hidden
-                    #line (352,29)-(352,30) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (352,30)-(352,31) 33 "SymbolGenerator.mxg"
-                    __cb.Write("=");
-                    #line hidden
-                    #line (352,31)-(352,32) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (352,33)-(352,60) 32 "SymbolGenerator.mxg"
-                    __cb.Write(GetImplName(symbol, symbol));
-                    #line hidden
-                    #line (352,61)-(352,80) 33 "SymbolGenerator.mxg"
-                    __cb.Write(".GetInstance(this);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (353,21)-(353,35) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl.Complete_");
-                    #line hidden
-                    #line (353,36)-(353,41) 32 "SymbolGenerator.mxg"
-                    __cb.Write(phase);
-                    #line hidden
-                    #line (353,42)-(353,55) 33 "SymbolGenerator.mxg"
-                    __cb.Write("(diagnostics,");
-                    #line hidden
-                    #line (353,55)-(353,56) 33 "SymbolGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (353,56)-(353,75) 33 "SymbolGenerator.mxg"
+                    #line (322,104)-(322,123) 33 "SymbolGenerator.mxg"
                     __cb.Write("cancellationToken);");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("            ");
-                    #line (354,21)-(354,33) 33 "SymbolGenerator.mxg"
-                    __cb.Write("impl.Free();");
-                    #line hidden
-                    __cb.AppendLine();
-                    __cb.Pop();
-                    __cb.Push("        ");
-                    #line (355,17)-(355,18) 33 "SymbolGenerator.mxg"
-                    __cb.Write("}");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
@@ -5496,7 +4855,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             }
             if (!__first40) __cb.AppendLine();
             __cb.Push("    ");
-            #line (358,5)-(358,6) 25 "SymbolGenerator.mxg"
+            #line (325,5)-(325,6) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5504,112 +4863,124 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (360,5)-(360,13) 25 "SymbolGenerator.mxg"
-            __cb.Write("internal");
+            #line (327,5)-(327,11) 25 "SymbolGenerator.mxg"
+            __cb.Write("public");
             #line hidden
-            #line (360,13)-(360,14) 25 "SymbolGenerator.mxg"
+            #line (327,11)-(327,12) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (360,14)-(360,20) 25 "SymbolGenerator.mxg"
+            #line (327,12)-(327,18) 25 "SymbolGenerator.mxg"
             __cb.Write("sealed");
             #line hidden
-            #line (360,20)-(360,21) 25 "SymbolGenerator.mxg"
+            #line (327,18)-(327,19) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (360,21)-(360,28) 25 "SymbolGenerator.mxg"
+            #line (327,19)-(327,26) 25 "SymbolGenerator.mxg"
             __cb.Write("partial");
             #line hidden
-            #line (360,28)-(360,29) 25 "SymbolGenerator.mxg"
+            #line (327,26)-(327,27) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (360,29)-(360,34) 25 "SymbolGenerator.mxg"
+            #line (327,27)-(327,32) 25 "SymbolGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (360,34)-(360,35) 25 "SymbolGenerator.mxg"
+            #line (327,32)-(327,33) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (360,36)-(360,63) 24 "SymbolGenerator.mxg"
+            #line (327,34)-(327,61) 24 "SymbolGenerator.mxg"
             __cb.Write(GetImplName(symbol, symbol));
+            #line hidden
+            #line (327,62)-(327,63) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (327,63)-(327,64) 25 "SymbolGenerator.mxg"
+            __cb.Write(":");
+            #line hidden
+            #line (327,64)-(327,65) 25 "SymbolGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (327,66)-(327,93) 24 "SymbolGenerator.mxg"
+            __cb.Write(GetBaseName(symbol, symbol));
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (361,5)-(361,6) 25 "SymbolGenerator.mxg"
+            #line (328,5)-(328,6) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (362,9)-(362,16) 25 "SymbolGenerator.mxg"
+            #line (329,9)-(329,16) 25 "SymbolGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (362,16)-(362,17) 25 "SymbolGenerator.mxg"
+            #line (329,16)-(329,17) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,17)-(362,23) 25 "SymbolGenerator.mxg"
+            #line (329,17)-(329,23) 25 "SymbolGenerator.mxg"
             __cb.Write("static");
             #line hidden
-            #line (362,23)-(362,24) 25 "SymbolGenerator.mxg"
+            #line (329,23)-(329,24) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,24)-(362,32) 25 "SymbolGenerator.mxg"
+            #line (329,24)-(329,32) 25 "SymbolGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (362,32)-(362,33) 25 "SymbolGenerator.mxg"
+            #line (329,32)-(329,33) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,33)-(362,45) 25 "SymbolGenerator.mxg"
+            #line (329,33)-(329,45) 25 "SymbolGenerator.mxg"
             __cb.Write("__ObjectPool");
             #line hidden
-            #line (362,45)-(362,46) 25 "SymbolGenerator.mxg"
+            #line (329,45)-(329,46) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,46)-(362,60) 25 "SymbolGenerator.mxg"
+            #line (329,46)-(329,60) 25 "SymbolGenerator.mxg"
             __cb.Write("s_poolInstance");
             #line hidden
-            #line (362,60)-(362,61) 25 "SymbolGenerator.mxg"
+            #line (329,60)-(329,61) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,61)-(362,62) 25 "SymbolGenerator.mxg"
+            #line (329,61)-(329,62) 25 "SymbolGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (362,62)-(362,63) 25 "SymbolGenerator.mxg"
+            #line (329,62)-(329,63) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,63)-(362,66) 25 "SymbolGenerator.mxg"
+            #line (329,63)-(329,66) 25 "SymbolGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (362,66)-(362,67) 25 "SymbolGenerator.mxg"
+            #line (329,66)-(329,67) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,67)-(362,82) 25 "SymbolGenerator.mxg"
+            #line (329,67)-(329,82) 25 "SymbolGenerator.mxg"
             __cb.Write("__ObjectPool(()");
             #line hidden
-            #line (362,82)-(362,83) 25 "SymbolGenerator.mxg"
+            #line (329,82)-(329,83) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,83)-(362,85) 25 "SymbolGenerator.mxg"
+            #line (329,83)-(329,85) 25 "SymbolGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (362,85)-(362,86) 25 "SymbolGenerator.mxg"
+            #line (329,85)-(329,86) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,86)-(362,89) 25 "SymbolGenerator.mxg"
+            #line (329,86)-(329,89) 25 "SymbolGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (362,89)-(362,90) 25 "SymbolGenerator.mxg"
+            #line (329,89)-(329,90) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,91)-(362,118) 24 "SymbolGenerator.mxg"
+            #line (329,91)-(329,118) 24 "SymbolGenerator.mxg"
             __cb.Write(GetImplName(symbol, symbol));
             #line hidden
-            #line (362,119)-(362,136) 25 "SymbolGenerator.mxg"
+            #line (329,119)-(329,136) 25 "SymbolGenerator.mxg"
             __cb.Write("(s_poolInstance),");
             #line hidden
-            #line (362,136)-(362,137) 25 "SymbolGenerator.mxg"
+            #line (329,136)-(329,137) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (362,137)-(362,141) 25 "SymbolGenerator.mxg"
+            #line (329,137)-(329,141) 25 "SymbolGenerator.mxg"
             __cb.Write("32);");
             #line hidden
             __cb.AppendLine();
@@ -5617,25 +4988,25 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (364,9)-(364,16) 25 "SymbolGenerator.mxg"
+            #line (331,9)-(331,16) 25 "SymbolGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (364,16)-(364,17) 25 "SymbolGenerator.mxg"
+            #line (331,16)-(331,17) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (364,17)-(364,25) 25 "SymbolGenerator.mxg"
+            #line (331,17)-(331,25) 25 "SymbolGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (364,25)-(364,26) 25 "SymbolGenerator.mxg"
+            #line (331,25)-(331,26) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (364,26)-(364,38) 25 "SymbolGenerator.mxg"
+            #line (331,26)-(331,38) 25 "SymbolGenerator.mxg"
             __cb.Write("__ObjectPool");
             #line hidden
-            #line (364,38)-(364,39) 25 "SymbolGenerator.mxg"
+            #line (331,38)-(331,39) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (364,39)-(364,45) 25 "SymbolGenerator.mxg"
+            #line (331,39)-(331,45) 25 "SymbolGenerator.mxg"
             __cb.Write("_pool;");
             #line hidden
             __cb.AppendLine();
@@ -5643,67 +5014,67 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (366,9)-(366,16) 25 "SymbolGenerator.mxg"
+            #line (333,9)-(333,16) 25 "SymbolGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (366,16)-(366,17) 25 "SymbolGenerator.mxg"
+            #line (333,16)-(333,17) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (366,18)-(366,45) 24 "SymbolGenerator.mxg"
+            #line (333,18)-(333,45) 24 "SymbolGenerator.mxg"
             __cb.Write(GetImplName(symbol, symbol));
             #line hidden
-            #line (366,46)-(366,59) 25 "SymbolGenerator.mxg"
+            #line (333,46)-(333,59) 25 "SymbolGenerator.mxg"
             __cb.Write("(__ObjectPool");
             #line hidden
-            #line (366,59)-(366,60) 25 "SymbolGenerator.mxg"
+            #line (333,59)-(333,60) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (366,60)-(366,65) 25 "SymbolGenerator.mxg"
+            #line (333,60)-(333,65) 25 "SymbolGenerator.mxg"
             __cb.Write("pool)");
             #line hidden
-            #line (366,65)-(366,66) 25 "SymbolGenerator.mxg"
+            #line (333,65)-(333,66) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (367,13)-(367,14) 25 "SymbolGenerator.mxg"
+            #line (334,13)-(334,14) 25 "SymbolGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (367,14)-(367,15) 25 "SymbolGenerator.mxg"
+            #line (334,14)-(334,15) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (367,15)-(367,21) 25 "SymbolGenerator.mxg"
+            #line (334,15)-(334,21) 25 "SymbolGenerator.mxg"
             __cb.Write("base()");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (368,9)-(368,10) 25 "SymbolGenerator.mxg"
+            #line (335,9)-(335,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (369,13)-(369,18) 25 "SymbolGenerator.mxg"
+            #line (336,13)-(336,18) 25 "SymbolGenerator.mxg"
             __cb.Write("_pool");
             #line hidden
-            #line (369,18)-(369,19) 25 "SymbolGenerator.mxg"
+            #line (336,18)-(336,19) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (369,19)-(369,20) 25 "SymbolGenerator.mxg"
+            #line (336,19)-(336,20) 25 "SymbolGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (369,20)-(369,21) 25 "SymbolGenerator.mxg"
+            #line (336,20)-(336,21) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (369,21)-(369,26) 25 "SymbolGenerator.mxg"
+            #line (336,21)-(336,26) 25 "SymbolGenerator.mxg"
             __cb.Write("pool;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (370,9)-(370,10) 25 "SymbolGenerator.mxg"
+            #line (337,9)-(337,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5711,112 +5082,106 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (372,9)-(372,15) 25 "SymbolGenerator.mxg"
+            #line (339,9)-(339,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (372,15)-(372,16) 25 "SymbolGenerator.mxg"
+            #line (339,15)-(339,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (372,16)-(372,22) 25 "SymbolGenerator.mxg"
+            #line (339,16)-(339,22) 25 "SymbolGenerator.mxg"
             __cb.Write("static");
             #line hidden
-            #line (372,22)-(372,23) 25 "SymbolGenerator.mxg"
+            #line (339,22)-(339,23) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (372,24)-(372,51) 24 "SymbolGenerator.mxg"
+            #line (339,24)-(339,51) 24 "SymbolGenerator.mxg"
             __cb.Write(GetImplName(symbol, symbol));
             #line hidden
-            #line (372,52)-(372,53) 25 "SymbolGenerator.mxg"
+            #line (339,52)-(339,53) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (372,53)-(372,65) 25 "SymbolGenerator.mxg"
+            #line (339,53)-(339,65) 25 "SymbolGenerator.mxg"
             __cb.Write("GetInstance(");
             #line hidden
-            #line (372,66)-(372,93) 24 "SymbolGenerator.mxg"
+            #line (339,66)-(339,93) 24 "SymbolGenerator.mxg"
             __cb.Write(GetIntfName(symbol, symbol));
             #line hidden
-            #line (372,94)-(372,95) 25 "SymbolGenerator.mxg"
+            #line (339,94)-(339,95) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (372,95)-(372,103) 25 "SymbolGenerator.mxg"
+            #line (339,95)-(339,103) 25 "SymbolGenerator.mxg"
             __cb.Write("wrapped)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (373,9)-(373,10) 25 "SymbolGenerator.mxg"
+            #line (340,9)-(340,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (374,13)-(374,16) 25 "SymbolGenerator.mxg"
+            #line (341,13)-(341,16) 25 "SymbolGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (374,16)-(374,17) 25 "SymbolGenerator.mxg"
+            #line (341,16)-(341,17) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (374,17)-(374,23) 25 "SymbolGenerator.mxg"
+            #line (341,17)-(341,23) 25 "SymbolGenerator.mxg"
             __cb.Write("result");
             #line hidden
-            #line (374,23)-(374,24) 25 "SymbolGenerator.mxg"
+            #line (341,23)-(341,24) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (374,24)-(374,25) 25 "SymbolGenerator.mxg"
+            #line (341,24)-(341,25) 25 "SymbolGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (374,25)-(374,26) 25 "SymbolGenerator.mxg"
+            #line (341,25)-(341,26) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (374,26)-(374,52) 25 "SymbolGenerator.mxg"
+            #line (341,26)-(341,52) 25 "SymbolGenerator.mxg"
             __cb.Write("s_poolInstance.Allocate();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (375,13)-(375,77) 25 "SymbolGenerator.mxg"
+            #line (342,13)-(342,77) 25 "SymbolGenerator.mxg"
             __cb.Write("global::System.Diagnostics.Debug.Assert(result.__WrappedInstance");
             #line hidden
-            #line (375,77)-(375,78) 25 "SymbolGenerator.mxg"
+            #line (342,77)-(342,78) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (375,78)-(375,80) 25 "SymbolGenerator.mxg"
+            #line (342,78)-(342,80) 25 "SymbolGenerator.mxg"
             __cb.Write("is");
             #line hidden
-            #line (375,80)-(375,81) 25 "SymbolGenerator.mxg"
+            #line (342,80)-(342,81) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (375,81)-(375,87) 25 "SymbolGenerator.mxg"
+            #line (342,81)-(342,87) 25 "SymbolGenerator.mxg"
             __cb.Write("null);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (376,13)-(376,35) 25 "SymbolGenerator.mxg"
-            __cb.Write("__InitInstance(result,");
-            #line hidden
-            #line (376,35)-(376,36) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (376,36)-(376,45) 25 "SymbolGenerator.mxg"
-            __cb.Write("wrapped);");
+            #line (343,13)-(343,44) 25 "SymbolGenerator.mxg"
+            __cb.Write("result.__InitInstance(wrapped);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (377,13)-(377,19) 25 "SymbolGenerator.mxg"
+            #line (344,13)-(344,19) 25 "SymbolGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (377,19)-(377,20) 25 "SymbolGenerator.mxg"
+            #line (344,19)-(344,20) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (377,20)-(377,27) 25 "SymbolGenerator.mxg"
+            #line (344,20)-(344,27) 25 "SymbolGenerator.mxg"
             __cb.Write("result;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (378,9)-(378,10) 25 "SymbolGenerator.mxg"
+            #line (345,9)-(345,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -5824,290 +5189,78 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (380,9)-(380,15) 25 "SymbolGenerator.mxg"
+            #line (347,9)-(347,15) 25 "SymbolGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (380,15)-(380,16) 25 "SymbolGenerator.mxg"
+            #line (347,15)-(347,16) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (380,16)-(380,20) 25 "SymbolGenerator.mxg"
+            #line (347,16)-(347,20) 25 "SymbolGenerator.mxg"
             __cb.Write("void");
             #line hidden
-            #line (380,20)-(380,21) 25 "SymbolGenerator.mxg"
+            #line (347,20)-(347,21) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (380,21)-(380,27) 25 "SymbolGenerator.mxg"
+            #line (347,21)-(347,27) 25 "SymbolGenerator.mxg"
             __cb.Write("Free()");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (381,9)-(381,10) 25 "SymbolGenerator.mxg"
+            #line (348,9)-(348,10) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (382,13)-(382,36) 25 "SymbolGenerator.mxg"
+            #line (349,13)-(349,36) 25 "SymbolGenerator.mxg"
             __cb.Write("this.__ClearInstance();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (383,13)-(383,31) 25 "SymbolGenerator.mxg"
+            #line (350,13)-(350,31) 25 "SymbolGenerator.mxg"
             __cb.Write("_pool?.Free(this);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (384,9)-(384,10) 25 "SymbolGenerator.mxg"
+            #line (351,9)-(351,10) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
-            var __first44 = true;
-            #line (386,10)-(386,53) 13 "SymbolGenerator.mxg"
-            foreach (var prop in GetProperties(symbol))
-            #line hidden
-            
-            {
-                if (__first44)
-                {
-                    __first44 = false;
-                }
-                __cb.Push("        ");
-                #line (387,13)-(387,19) 29 "SymbolGenerator.mxg"
-                __cb.Write("public");
-                #line hidden
-                #line (387,19)-(387,20) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (387,20)-(387,28) 29 "SymbolGenerator.mxg"
-                __cb.Write("override");
-                #line hidden
-                #line (387,28)-(387,29) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (387,30)-(387,60) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetTypeName(symbol, prop.Type));
-                #line hidden
-                #line (387,61)-(387,62) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (387,63)-(387,72) 28 "SymbolGenerator.mxg"
-                __cb.Write(prop.Name);
-                #line hidden
-                #line (387,73)-(387,74) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (387,74)-(387,76) 29 "SymbolGenerator.mxg"
-                __cb.Write("=>");
-                #line hidden
-                #line (387,76)-(387,77) 29 "SymbolGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (387,77)-(387,79) 29 "SymbolGenerator.mxg"
-                __cb.Write("((");
-                #line hidden
-                #line (387,80)-(387,107) 28 "SymbolGenerator.mxg"
-                __cb.Write(GetIntfName(symbol, symbol));
-                #line hidden
-                #line (387,108)-(387,128) 29 "SymbolGenerator.mxg"
-                __cb.Write(")__WrappedInstance).");
-                #line hidden
-                #line (387,129)-(387,138) 28 "SymbolGenerator.mxg"
-                __cb.Write(prop.Name);
-                #line hidden
-                #line (387,139)-(387,140) 29 "SymbolGenerator.mxg"
-                __cb.Write(";");
-                #line hidden
-                __cb.AppendLine();
-                __cb.Pop();
-            }
-            if (!__first44) __cb.AppendLine();
-            __cb.WriteLine();
-            __cb.Pop();
-            var __first45 = true;
-            #line (390,10)-(390,50) 13 "SymbolGenerator.mxg"
+            var __first50 = true;
+            #line (353,10)-(353,50) 13 "SymbolGenerator.mxg"
             foreach (var phase in GetPhases(symbol))
             #line hidden
             
             {
-                if (__first45)
+                if (__first50)
                 {
-                    __first45 = false;
+                    __first50 = false;
                 }
                 __cb.WriteLine();
                 __cb.Pop();
-                #line (392,14)-(392,59) 17 "SymbolGenerator.mxg"
+                #line (355,14)-(355,59) 17 "SymbolGenerator.mxg"
                 var props = GetPhaseProperties(symbol, phase);
                 #line hidden
                 
-                var __first46 = true;
-                #line (393,14)-(393,36) 17 "SymbolGenerator.mxg"
+                var __first51 = true;
+                #line (356,14)-(356,36) 17 "SymbolGenerator.mxg"
                 if (props.Length >= 2)
                 #line hidden
                 
                 {
-                    if (__first46)
+                    if (__first51)
                     {
-                        __first46 = false;
+                        __first51 = false;
                     }
-                    var __first47 = true;
-                    #line (394,18)-(394,59) 21 "SymbolGenerator.mxg"
-                    if (!props.Where(p => p.IsDerived).Any())
-                    #line hidden
-                    
-                    {
-                        if (__first47)
-                        {
-                            __first47 = false;
-                        }
-                        __cb.Push("        ");
-                        #line (395,21)-(395,30) 37 "SymbolGenerator.mxg"
-                        __cb.Write("protected");
-                        #line hidden
-                        #line (395,30)-(395,31) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (395,31)-(395,39) 37 "SymbolGenerator.mxg"
-                        __cb.Write("override");
-                        #line hidden
-                        #line (395,39)-(395,40) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (395,40)-(395,41) 37 "SymbolGenerator.mxg"
-                        __cb.Write("(");
-                        #line hidden
-                        var __first48 = true;
-                        foreach (var __item49 in 
-                        #line (395,42)-(395,99) 25 "SymbolGenerator.mxg"
-                        from prop in props select GetTypeName(symbol, prop.Type) 
-                        #line hidden
-                        )
-                        {
-                            if (__first48)
-                            {
-                                __first48 = false;
-                            }
-                            else
-                            {
-                                __cb.Push("        ");
-                                __cb.DontIgnoreLastLineEnd = true;
-                                #line (395,109)-(395,113) 44 "SymbolGenerator.mxg"
-                                __cb.Write(", ");
-                                #line hidden
-                                __cb.DontIgnoreLastLineEnd = false;
-                                __cb.Pop();
-                            }
-                            __cb.Write(__item49);
-                        }
-                        #line (395,114)-(395,115) 37 "SymbolGenerator.mxg"
-                        __cb.Write(")");
-                        #line hidden
-                        #line (395,115)-(395,116) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (395,116)-(395,125) 37 "SymbolGenerator.mxg"
-                        __cb.Write("Complete_");
-                        #line hidden
-                        #line (395,126)-(395,131) 36 "SymbolGenerator.mxg"
-                        __cb.Write(phase);
-                        #line hidden
-                        #line (395,132)-(395,148) 37 "SymbolGenerator.mxg"
-                        __cb.Write("(__DiagnosticBag");
-                        #line hidden
-                        #line (395,148)-(395,149) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (395,149)-(395,161) 37 "SymbolGenerator.mxg"
-                        __cb.Write("diagnostics,");
-                        #line hidden
-                        #line (395,161)-(395,162) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (395,162)-(395,181) 37 "SymbolGenerator.mxg"
-                        __cb.Write("__CancellationToken");
-                        #line hidden
-                        #line (395,181)-(395,182) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (395,182)-(395,200) 37 "SymbolGenerator.mxg"
-                        __cb.Write("cancellationToken)");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("        ");
-                        #line (396,21)-(396,22) 37 "SymbolGenerator.mxg"
-                        __cb.Write("{");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("            ");
-                        #line (397,25)-(397,31) 37 "SymbolGenerator.mxg"
-                        __cb.Write("return");
-                        #line hidden
-                        #line (397,31)-(397,32) 37 "SymbolGenerator.mxg"
-                        __cb.Write(" ");
-                        #line hidden
-                        #line (397,32)-(397,33) 37 "SymbolGenerator.mxg"
-                        __cb.Write("(");
-                        #line hidden
-                        var __first50 = true;
-                        foreach (var __item51 in 
-                        #line (397,34)-(397,90) 25 "SymbolGenerator.mxg"
-                        from prop in props select GetDefaultValue(symbol, prop) 
-                        #line hidden
-                        )
-                        {
-                            if (__first50)
-                            {
-                                __first50 = false;
-                            }
-                            else
-                            {
-                                __cb.Push("            ");
-                                __cb.DontIgnoreLastLineEnd = true;
-                                #line (397,100)-(397,104) 44 "SymbolGenerator.mxg"
-                                __cb.Write(", ");
-                                #line hidden
-                                __cb.DontIgnoreLastLineEnd = false;
-                                __cb.Pop();
-                            }
-                            __cb.Write(__item51);
-                        }
-                        #line (397,105)-(397,107) 37 "SymbolGenerator.mxg"
-                        __cb.Write(");");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                        __cb.Push("        ");
-                        #line (398,21)-(398,22) 37 "SymbolGenerator.mxg"
-                        __cb.Write("}");
-                        #line hidden
-                        __cb.AppendLine();
-                        __cb.Pop();
-                    }
-                    if (!__first47) __cb.AppendLine();
-                }
-                #line (400,14)-(400,41) 17 "SymbolGenerator.mxg"
-                else if (props.Length == 1)
-                #line hidden
-                
-                {
-                    if (__first46)
-                    {
-                        __first46 = false;
-                    }
-                    #line (401,18)-(401,37) 21 "SymbolGenerator.mxg"
-                    var prop = props[0];
-                    #line hidden
-                    
                     var __first52 = true;
-                    #line (402,18)-(402,38) 21 "SymbolGenerator.mxg"
-                    if (!prop.IsDerived)
+                    #line (357,18)-(357,59) 21 "SymbolGenerator.mxg"
+                    if (!props.Where(p => p.IsDerived).Any())
                     #line hidden
                     
                     {
@@ -6116,76 +5269,125 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                             __first52 = false;
                         }
                         __cb.Push("        ");
-                        #line (403,21)-(403,30) 37 "SymbolGenerator.mxg"
+                        #line (358,21)-(358,30) 37 "SymbolGenerator.mxg"
                         __cb.Write("protected");
                         #line hidden
-                        #line (403,30)-(403,31) 37 "SymbolGenerator.mxg"
+                        #line (358,30)-(358,31) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (403,31)-(403,39) 37 "SymbolGenerator.mxg"
+                        #line (358,31)-(358,39) 37 "SymbolGenerator.mxg"
                         __cb.Write("override");
                         #line hidden
-                        #line (403,39)-(403,40) 37 "SymbolGenerator.mxg"
+                        #line (358,39)-(358,40) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (403,41)-(403,71) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetTypeName(symbol, prop.Type));
+                        #line (358,40)-(358,41) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(");
                         #line hidden
-                        #line (403,72)-(403,73) 37 "SymbolGenerator.mxg"
+                        var __first53 = true;
+                        foreach (var __item54 in 
+                        #line (358,42)-(358,99) 25 "SymbolGenerator.mxg"
+                        from prop in props select GetTypeName(symbol, prop.Type) 
+                        #line hidden
+                        )
+                        {
+                            if (__first53)
+                            {
+                                __first53 = false;
+                            }
+                            else
+                            {
+                                __cb.Push("        ");
+                                __cb.DontIgnoreLastLineEnd = true;
+                                #line (358,109)-(358,113) 44 "SymbolGenerator.mxg"
+                                __cb.Write(", ");
+                                #line hidden
+                                __cb.DontIgnoreLastLineEnd = false;
+                                __cb.Pop();
+                            }
+                            __cb.Write(__item54);
+                        }
+                        #line (358,114)-(358,115) 37 "SymbolGenerator.mxg"
+                        __cb.Write(")");
+                        #line hidden
+                        #line (358,115)-(358,116) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (403,73)-(403,82) 37 "SymbolGenerator.mxg"
+                        #line (358,116)-(358,125) 37 "SymbolGenerator.mxg"
                         __cb.Write("Complete_");
                         #line hidden
-                        #line (403,83)-(403,88) 36 "SymbolGenerator.mxg"
+                        #line (358,126)-(358,131) 36 "SymbolGenerator.mxg"
                         __cb.Write(phase);
                         #line hidden
-                        #line (403,89)-(403,105) 37 "SymbolGenerator.mxg"
+                        #line (358,132)-(358,148) 37 "SymbolGenerator.mxg"
                         __cb.Write("(__DiagnosticBag");
                         #line hidden
-                        #line (403,105)-(403,106) 37 "SymbolGenerator.mxg"
+                        #line (358,148)-(358,149) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (403,106)-(403,118) 37 "SymbolGenerator.mxg"
+                        #line (358,149)-(358,161) 37 "SymbolGenerator.mxg"
                         __cb.Write("diagnostics,");
                         #line hidden
-                        #line (403,118)-(403,119) 37 "SymbolGenerator.mxg"
+                        #line (358,161)-(358,162) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (403,119)-(403,138) 37 "SymbolGenerator.mxg"
+                        #line (358,162)-(358,181) 37 "SymbolGenerator.mxg"
                         __cb.Write("__CancellationToken");
                         #line hidden
-                        #line (403,138)-(403,139) 37 "SymbolGenerator.mxg"
+                        #line (358,181)-(358,182) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (403,139)-(403,157) 37 "SymbolGenerator.mxg"
+                        #line (358,182)-(358,200) 37 "SymbolGenerator.mxg"
                         __cb.Write("cancellationToken)");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("        ");
-                        #line (404,21)-(404,22) 37 "SymbolGenerator.mxg"
+                        #line (359,21)-(359,22) 37 "SymbolGenerator.mxg"
                         __cb.Write("{");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("            ");
-                        #line (405,25)-(405,31) 37 "SymbolGenerator.mxg"
+                        #line (360,25)-(360,31) 37 "SymbolGenerator.mxg"
                         __cb.Write("return");
                         #line hidden
-                        #line (405,31)-(405,32) 37 "SymbolGenerator.mxg"
+                        #line (360,31)-(360,32) 37 "SymbolGenerator.mxg"
                         __cb.Write(" ");
                         #line hidden
-                        #line (405,33)-(405,62) 36 "SymbolGenerator.mxg"
-                        __cb.Write(GetDefaultValue(symbol, prop));
+                        #line (360,32)-(360,33) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(");
                         #line hidden
-                        #line (405,63)-(405,64) 37 "SymbolGenerator.mxg"
-                        __cb.Write(";");
+                        var __first55 = true;
+                        foreach (var __item56 in 
+                        #line (360,34)-(360,90) 25 "SymbolGenerator.mxg"
+                        from prop in props select GetDefaultValue(symbol, prop) 
+                        #line hidden
+                        )
+                        {
+                            if (__first55)
+                            {
+                                __first55 = false;
+                            }
+                            else
+                            {
+                                __cb.Push("            ");
+                                __cb.DontIgnoreLastLineEnd = true;
+                                #line (360,100)-(360,104) 44 "SymbolGenerator.mxg"
+                                __cb.Write(", ");
+                                #line hidden
+                                __cb.DontIgnoreLastLineEnd = false;
+                                __cb.Pop();
+                            }
+                            __cb.Write(__item56);
+                        }
+                        #line (360,105)-(360,107) 37 "SymbolGenerator.mxg"
+                        __cb.Write(");");
                         #line hidden
                         __cb.AppendLine();
                         __cb.Pop();
                         __cb.Push("        ");
-                        #line (406,21)-(406,22) 37 "SymbolGenerator.mxg"
+                        #line (361,21)-(361,22) 37 "SymbolGenerator.mxg"
                         __cb.Write("}");
                         #line hidden
                         __cb.AppendLine();
@@ -6193,17 +5395,128 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                     }
                     if (!__first52) __cb.AppendLine();
                 }
-                if (!__first46) __cb.AppendLine();
+                #line (363,14)-(363,41) 17 "SymbolGenerator.mxg"
+                else if (props.Length == 1)
+                #line hidden
+                
+                {
+                    if (__first51)
+                    {
+                        __first51 = false;
+                    }
+                    #line (364,18)-(364,37) 21 "SymbolGenerator.mxg"
+                    var prop = props[0];
+                    #line hidden
+                    
+                    var __first57 = true;
+                    #line (365,18)-(365,38) 21 "SymbolGenerator.mxg"
+                    if (!prop.IsDerived)
+                    #line hidden
+                    
+                    {
+                        if (__first57)
+                        {
+                            __first57 = false;
+                        }
+                        __cb.Push("        ");
+                        #line (366,21)-(366,30) 37 "SymbolGenerator.mxg"
+                        __cb.Write("protected");
+                        #line hidden
+                        #line (366,30)-(366,31) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (366,31)-(366,39) 37 "SymbolGenerator.mxg"
+                        __cb.Write("override");
+                        #line hidden
+                        #line (366,39)-(366,40) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (366,41)-(366,71) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetTypeName(symbol, prop.Type));
+                        #line hidden
+                        #line (366,72)-(366,73) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (366,73)-(366,82) 37 "SymbolGenerator.mxg"
+                        __cb.Write("Complete_");
+                        #line hidden
+                        #line (366,83)-(366,88) 36 "SymbolGenerator.mxg"
+                        __cb.Write(phase);
+                        #line hidden
+                        #line (366,89)-(366,105) 37 "SymbolGenerator.mxg"
+                        __cb.Write("(__DiagnosticBag");
+                        #line hidden
+                        #line (366,105)-(366,106) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (366,106)-(366,118) 37 "SymbolGenerator.mxg"
+                        __cb.Write("diagnostics,");
+                        #line hidden
+                        #line (366,118)-(366,119) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (366,119)-(366,138) 37 "SymbolGenerator.mxg"
+                        __cb.Write("__CancellationToken");
+                        #line hidden
+                        #line (366,138)-(366,139) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (366,139)-(366,157) 37 "SymbolGenerator.mxg"
+                        __cb.Write("cancellationToken)");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("        ");
+                        #line (367,21)-(367,22) 37 "SymbolGenerator.mxg"
+                        __cb.Write("{");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("            ");
+                        #line (368,25)-(368,31) 37 "SymbolGenerator.mxg"
+                        __cb.Write("return");
+                        #line hidden
+                        #line (368,31)-(368,32) 37 "SymbolGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (368,33)-(368,62) 36 "SymbolGenerator.mxg"
+                        __cb.Write(GetDefaultValue(symbol, prop));
+                        #line hidden
+                        #line (368,63)-(368,64) 37 "SymbolGenerator.mxg"
+                        __cb.Write(";");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                        __cb.Push("        ");
+                        #line (369,21)-(369,22) 37 "SymbolGenerator.mxg"
+                        __cb.Write("}");
+                        #line hidden
+                        __cb.AppendLine();
+                        __cb.Pop();
+                    }
+                    if (!__first57) __cb.AppendLine();
+                }
+                #line (371,14)-(371,18) 17 "SymbolGenerator.mxg"
+                else
+                #line hidden
+                
+                {
+                    if (__first51)
+                    {
+                        __first51 = false;
+                    }
+                }
+                if (!__first51) __cb.AppendLine();
             }
-            if (!__first45) __cb.AppendLine();
+            if (!__first50) __cb.AppendLine();
             __cb.Push("    ");
-            #line (410,5)-(410,6) 25 "SymbolGenerator.mxg"
+            #line (374,5)-(374,6) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (411,1)-(411,2) 25 "SymbolGenerator.mxg"
+            #line (375,1)-(375,2) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -6211,79 +5524,79 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (414,9)-(414,47) 22 "SymbolGenerator.mxg"
+        #line (378,9)-(378,47) 22 "SymbolGenerator.mxg"
         public string GenerateImplementation(Symbol symbol)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (415,1)-(415,6) 25 "SymbolGenerator.mxg"
+            #line (379,1)-(379,6) 25 "SymbolGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (415,6)-(415,7) 25 "SymbolGenerator.mxg"
+            #line (379,6)-(379,7) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (415,7)-(415,24) 25 "SymbolGenerator.mxg"
+            #line (379,7)-(379,24) 25 "SymbolGenerator.mxg"
             __cb.Write("System.Threading;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (416,1)-(416,6) 25 "SymbolGenerator.mxg"
+            #line (380,1)-(380,6) 25 "SymbolGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (416,6)-(416,7) 25 "SymbolGenerator.mxg"
+            #line (380,6)-(380,7) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (416,7)-(416,36) 25 "SymbolGenerator.mxg"
+            #line (380,7)-(380,36) 25 "SymbolGenerator.mxg"
             __cb.Write("System.Collections.Immutable;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (417,1)-(417,6) 25 "SymbolGenerator.mxg"
+            #line (381,1)-(381,6) 25 "SymbolGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (417,6)-(417,7) 25 "SymbolGenerator.mxg"
+            #line (381,6)-(381,7) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (417,7)-(417,25) 25 "SymbolGenerator.mxg"
+            #line (381,7)-(381,25) 25 "SymbolGenerator.mxg"
             __cb.Write("MetaDslx.Modeling;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (418,1)-(418,6) 25 "SymbolGenerator.mxg"
+            #line (382,1)-(382,6) 25 "SymbolGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (418,6)-(418,7) 25 "SymbolGenerator.mxg"
+            #line (382,6)-(382,7) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (418,7)-(418,29) 25 "SymbolGenerator.mxg"
+            #line (382,7)-(382,29) 25 "SymbolGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (419,1)-(419,6) 25 "SymbolGenerator.mxg"
+            #line (383,1)-(383,6) 25 "SymbolGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (419,6)-(419,7) 25 "SymbolGenerator.mxg"
+            #line (383,6)-(383,7) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (419,7)-(419,42) 25 "SymbolGenerator.mxg"
+            #line (383,7)-(383,42) 25 "SymbolGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Declarations;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (420,1)-(420,6) 25 "SymbolGenerator.mxg"
+            #line (384,1)-(384,6) 25 "SymbolGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (420,6)-(420,7) 25 "SymbolGenerator.mxg"
+            #line (384,6)-(384,7) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (420,7)-(420,37) 25 "SymbolGenerator.mxg"
+            #line (384,7)-(384,37) 25 "SymbolGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Symbols;");
             #line hidden
             __cb.AppendLine();
@@ -6291,73 +5604,64 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (422,1)-(422,10) 25 "SymbolGenerator.mxg"
+            #line (386,1)-(386,10) 25 "SymbolGenerator.mxg"
             __cb.Write("namespace");
             #line hidden
-            #line (422,10)-(422,11) 25 "SymbolGenerator.mxg"
+            #line (386,10)-(386,11) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (422,12)-(422,32) 24 "SymbolGenerator.mxg"
+            #line (386,12)-(386,32) 24 "SymbolGenerator.mxg"
             __cb.Write(symbol.NamespaceName);
+            #line hidden
+            #line (386,33)-(386,40) 25 "SymbolGenerator.mxg"
+            __cb.Write(".__Impl");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (423,1)-(423,2) 25 "SymbolGenerator.mxg"
+            #line (387,1)-(387,2) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (424,5)-(424,13) 25 "SymbolGenerator.mxg"
-            __cb.Write("internal");
+            #line (388,5)-(388,11) 25 "SymbolGenerator.mxg"
+            __cb.Write("public");
             #line hidden
-            #line (424,13)-(424,14) 25 "SymbolGenerator.mxg"
+            #line (388,11)-(388,12) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (424,14)-(424,21) 25 "SymbolGenerator.mxg"
+            #line (388,12)-(388,19) 25 "SymbolGenerator.mxg"
             __cb.Write("partial");
             #line hidden
-            #line (424,21)-(424,22) 25 "SymbolGenerator.mxg"
+            #line (388,19)-(388,20) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (424,22)-(424,27) 25 "SymbolGenerator.mxg"
+            #line (388,20)-(388,25) 25 "SymbolGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (424,27)-(424,28) 25 "SymbolGenerator.mxg"
+            #line (388,25)-(388,26) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (424,29)-(424,56) 24 "SymbolGenerator.mxg"
+            #line (388,27)-(388,54) 24 "SymbolGenerator.mxg"
             __cb.Write(GetImplName(symbol, symbol));
-            #line hidden
-            #line (424,57)-(424,58) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (424,58)-(424,59) 25 "SymbolGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (424,59)-(424,60) 25 "SymbolGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (424,61)-(424,88) 24 "SymbolGenerator.mxg"
-            __cb.Write(GetBaseName(symbol, symbol));
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (425,5)-(425,6) 25 "SymbolGenerator.mxg"
+            #line (389,5)-(389,6) 25 "SymbolGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (426,5)-(426,6) 25 "SymbolGenerator.mxg"
+            #line (390,5)-(390,6) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (427,1)-(427,2) 25 "SymbolGenerator.mxg"
+            #line (391,1)-(391,2) 25 "SymbolGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();

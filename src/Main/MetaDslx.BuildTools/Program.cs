@@ -281,7 +281,7 @@ namespace MetaDslx.BuildTools
         private static async Task GenerateMetaSymbolFiles(SymbolGenerator generator, string originalFilePath, MetaDslx.Languages.MetaSymbols.Model.Symbol symbol)
         {
             if (symbol.FullName == "MetaDslx.CodeAnalysis.Symbols.Symbol") return;
-            var implDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Impl");
+            var implDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Custom");
             Directory.CreateDirectory(implDir);
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             Directory.CreateDirectory(outputDir);

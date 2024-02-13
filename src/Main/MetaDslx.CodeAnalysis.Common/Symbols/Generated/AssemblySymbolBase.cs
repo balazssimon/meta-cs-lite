@@ -1,4 +1,4 @@
-namespace MetaDslx.CodeAnalysis.Symbols
+namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
@@ -15,111 +15,53 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-    internal abstract class AssemblySymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolBase, AssemblySymbol
-    {
-        protected AssemblySymbolBase() 
-            : base()
-        {
-        }
-
-        protected AssemblySymbolBase(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
-            : base(container, declaration, modelObject)
-        {
-        }
-
-        protected AssemblySymbolBase(__Symbol container, __IModelObject modelObject) 
-            : base(container, modelObject)
-        {
-        }
-
-        protected AssemblySymbolBase(__Symbol container, __ISymbol csharpSymbol) 
-            : base(container, csharpSymbol)
-        {
-        }
-
-        protected AssemblySymbolBase(__Symbol container, __ErrorSymbolInfo errorInfo) 
-            : base(container, errorInfo)
-        {
-        }
-
-        protected AssemblySymbolBase(Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, declaration, modelObject, name, metadataName, attributes)
-        {
-        }
-
-        protected AssemblySymbolBase(Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, modelObject, name, metadataName, attributes)
-        {
-        }
-
-        protected AssemblySymbolBase(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, csharpSymbol, name, metadataName, attributes)
-        {
-        }
-
-        protected AssemblySymbolBase(Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes)
-            : base(container, errorInfo, name, metadataName, attributes)
-        {
-        }
-
-        protected sealed override __CompletionGraph CompletionGraph => AssemblySymbol.CompletionParts.CompletionGraph;
-
-        public abstract bool IsCorLibrary { get; }
-        public abstract global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules { get; }
-
-
-        protected abstract bool Complete_IsCorLibrary(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-
-        protected abstract global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Complete_Modules(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-    }
-
-    internal sealed class AssemblySymbolDefaultImpl : AssemblySymbolBase
+    internal sealed class AssemblySymbolInst : global::MetaDslx.CodeAnalysis.Symbols.SymbolInst, AssemblySymbol
     {
         private bool _isCorLibrary;
         private global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> _modules;
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
+        public AssemblySymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
         {
         }
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __IModelObject modelObject) 
+        public AssemblySymbolInst(__Symbol container, __IModelObject modelObject) 
             : base(container, modelObject)
         {
         }
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol) 
+        public AssemblySymbolInst(__Symbol container, __ISymbol csharpSymbol) 
             : base(container, csharpSymbol)
         {
         }
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo) 
+        public AssemblySymbolInst(__Symbol container, __ErrorSymbolInfo errorInfo) 
             : base(container, errorInfo)
         {
         }
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
             : base(container, declaration, modelObject, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
             _modules = modules;
         }
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
             : base(container, modelObject, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
             _modules = modules;
         }
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
             : base(container, csharpSymbol, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
             _modules = modules;
         }
 
-        public AssemblySymbolDefaultImpl(__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __ErrorSymbolInfo errorInfo, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
             : base(container, errorInfo, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
@@ -127,7 +69,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        public override bool IsCorLibrary
+        public bool IsCorLibrary
         {
             get
             {
@@ -136,7 +78,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules
+        public global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules
         {
             get
             {
@@ -180,7 +122,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        protected override bool Complete_IsCorLibrary(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private bool Complete_IsCorLibrary(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AssemblySymbolImpl.GetInstance(this);
             var result = impl.Complete_IsCorLibrary(diagnostics, cancellationToken);
@@ -188,7 +130,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result;
         }
 
-        protected override global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Complete_Modules(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        private global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Complete_Modules(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             var impl = AssemblySymbolImpl.GetInstance(this);
             var result = impl.Complete_Modules(diagnostics, cancellationToken);
@@ -197,7 +139,24 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
     }
 
-    internal sealed partial class AssemblySymbolImpl
+    public abstract class AssemblySymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl, AssemblySymbol
+    {
+        public bool IsCorLibrary => ((AssemblySymbol)__WrappedInstance).]IsCorLibrary;
+        public global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules => ((AssemblySymbol)__WrappedInstance).]Modules;
+
+
+        public virtual bool Complete_IsCorLibrary(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return default;
+        }
+
+        public virtual global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Complete_Modules(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return global::System.Collections.Immutable.ImmutableArray<ModuleSymbol>.Empty;
+        }
+    }
+
+    public sealed partial class AssemblySymbolImpl : AssemblySymbolBase
     {
         private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new AssemblySymbolImpl(s_poolInstance), 32);
 
@@ -213,7 +172,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             var result = s_poolInstance.Allocate();
             global::System.Diagnostics.Debug.Assert(result.__WrappedInstance is null);
-            __InitInstance(result, wrapped);
+            result.__InitInstance(wrapped);
             return result;
         }
 
@@ -222,9 +181,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             this.__ClearInstance();
             _pool?.Free(this);
         }
-
-        public override bool IsCorLibrary => ((AssemblySymbol)__WrappedInstance).IsCorLibrary;
-        public override global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules => ((AssemblySymbol)__WrappedInstance).Modules;
 
 
         protected override bool Complete_IsCorLibrary(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)

@@ -9,7 +9,7 @@ public interface AssemblySymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
         [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules { get; }
 
-        public static class CompletionParts
+        public static new class CompletionParts
         {
             public static readonly CompletionPart Start_IsCorLibrary = new CompletionPart(nameof(Start_IsCorLibrary));
             public static readonly CompletionPart Finish_IsCorLibrary = new CompletionPart(nameof(Finish_IsCorLibrary));

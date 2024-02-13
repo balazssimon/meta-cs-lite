@@ -43,13 +43,16 @@
 		<AdditionalFiles Include="Symbols\*.mxs" />
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Remove="Symbols\Original\**" />
+		<None Remove="Symbols\Original\**" />
 		<!--
 		<Compile Remove="Symbols\Generated\**" />
 		<None Remove="Symbols\Generated\**" />
+		<Compile Remove="Symbols\Custom\**" />
+		<None Remove="Symbols\Custom\**" />
+		-->
+
 		<Compile Remove="Symbols\Impl\**" />
 		<None Remove="Symbols\Impl\**" />
-		-->
-		<Compile Remove="Symbols\Original\**" />
-		<None Remove="Symbols\Original\**" />
 	</ItemGroup>
 </Project>
