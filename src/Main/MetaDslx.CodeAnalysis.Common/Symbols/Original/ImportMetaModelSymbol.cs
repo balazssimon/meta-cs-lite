@@ -183,7 +183,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     foreach (var metaModel in _metaModels)
                     {
                         sb.Clear();
-                        foreach (var symbol in unusedSymbols.OfType<TypeSymbol>().Where(ts => metaModel.MContains(ts)).OrderBy(us => us.Name))
+                        foreach (var symbol in unusedSymbols.OfType<TypeSymbol>().Where(ts => metaModel.MContains(MetaType.FromTypeSymbol(ts))).OrderBy(us => us.Name))
                         {
                             if (sb.Length > 0) sb.Append(", ");
                             sb.Append(symbol.Name);

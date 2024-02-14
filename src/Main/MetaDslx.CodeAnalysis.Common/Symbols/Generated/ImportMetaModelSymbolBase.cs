@@ -20,8 +20,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     using __Compilation = global::MetaDslx.CodeAnalysis.Compilation;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
-    using __IObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.IObjectPool;
-    using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<ImportMetaModelSymbolImpl>;
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
@@ -79,116 +77,35 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             _metaModels = metaModels;
         }
 
-        public override __ISymbolFactory SymbolFactory
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.SymbolFactory;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.SymbolFactory);
 
-        public override __AssemblySymbol? ContainingAssembly
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.ContainingAssembly;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.ContainingAssembly);
 
-        public override __Compilation? DeclaringCompilation
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.DeclaringCompilation;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __Compilation? DeclaringCompilation => CallImpl<__Compilation, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.DeclaringCompilation);
 
-        public override __ModuleSymbol? ContainingModule
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.ContainingModule;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ModuleSymbol? ContainingModule => CallImpl<__ModuleSymbol, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.ContainingModule);
 
-        public override __DeclarationSymbol? ContainingDeclaration
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.ContainingDeclaration;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __DeclarationSymbol? ContainingDeclaration => CallImpl<__DeclarationSymbol, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.ContainingDeclaration);
 
-        public override __TypeSymbol? ContainingType
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.ContainingType;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __TypeSymbol? ContainingType => CallImpl<__TypeSymbol, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.ContainingType);
 
-        public override __NamespaceSymbol? ContainingNamespace
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.ContainingNamespace;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.ContainingNamespace);
 
         public override __LexicalSortKey GetLexicalSortKey()
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.GetLexicalSortKey();
-            impl.Free();
-            return result;
+            return CallImpl<__LexicalSortKey, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetLexicalSortKey());
         }
 
-        public override bool HasUnsupportedMetadata
-        {
-            get
-            {
-                var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-                var result = impl.HasUnsupportedMetadata;
-                impl.Free();
-                return result;
-            }
-        }
+        public override bool HasUnsupportedMetadata => CallImpl<bool, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.HasUnsupportedMetadata);
 
         public override string GetDocumentationCommentId()
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentId();
-            impl.Free();
-            return result;
+            return CallImpl<string, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetDocumentationCommentId());
         }
 
         public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
 
@@ -248,121 +165,78 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         protected override void CompletePart_Initialize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            impl.CompletePart_Initialize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.CompletePart_Initialize(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_Name(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Name(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_Name(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_MetadataName(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_MetadataName(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_MetadataName(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__Symbol> CompletePart_CreateContainedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__Symbol>, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> Complete_Attributes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Attributes(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol>, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_Attributes(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_ComputeNonSymbolProperties(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Finalize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            impl.CompletePart_Finalize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.CompletePart_Finalize(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Validate(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            impl.CompletePart_Validate(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.CompletePart_Validate(diagnostics, cancellationToken));
         }
 
 
         protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Complete_MetaModelSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_MetaModelSymbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::MetaDslx.CodeAnalysis.MetaSymbol, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_MetaModelSymbols(diagnostics, cancellationToken));
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> Complete_MetaModels(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_MetaModels(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel>, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_MetaModels(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<string> Complete_Files(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Files(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<string>, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_Files(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Complete_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Aliases(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<AliasSymbol>, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_Aliases(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Complete_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Namespaces(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol>, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_Namespaces(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportMetaModelSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Symbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.Complete_Symbols(diagnostics, cancellationToken));
         }
     }
 
     public abstract class ImportMetaModelSymbolBase : ImportSymbolImpl, ImportMetaModelSymbol
     {
-        protected ImportMetaModelSymbolBase(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
-
         public global::MetaDslx.CodeAnalysis.MetaSymbol MetaModelSymbols => ((ImportMetaModelSymbol)__Wrapped).MetaModelSymbols;
         public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> MetaModels => ((ImportMetaModelSymbol)__Wrapped).MetaModels;
 
@@ -374,24 +248,5 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         }
 
         public abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> Complete_MetaModels(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-    }
-
-    public partial class ImportMetaModelSymbolImpl : ImportMetaModelSymbolBase
-    {
-        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new ImportMetaModelSymbolImpl(s_poolInstance), 32);
-
-        protected ImportMetaModelSymbolImpl(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
-
-        public static new ImportMetaModelSymbolImpl GetInstance(ImportMetaModelSymbol wrapped)
-        {
-            var result = s_poolInstance.Allocate();
-            global::System.Diagnostics.Debug.Assert(result.__Wrapped is null);
-            result.__InitWrapped(wrapped);
-            return result;
-        }
-
     }
 }

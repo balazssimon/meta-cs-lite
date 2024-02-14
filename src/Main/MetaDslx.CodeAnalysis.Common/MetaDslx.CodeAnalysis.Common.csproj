@@ -60,6 +60,8 @@
 		<None Remove="Symbols\Generated\**" />
 		<Compile Remove="Symbols\Custom\**" />
 		<None Remove="Symbols\Custom\**" />
+		<Compile Remove="Symbols\Custom2\**" />
+		<None Remove="Symbols\Custom2\**" />
 		-->
 
 		<Compile Remove="Symbols\Impl\**" />

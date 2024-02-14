@@ -24,32 +24,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
     public class SymbolImpl : SymbolImplBase
     {
-        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new SymbolImpl(s_poolInstance), 32);
-
-        private readonly IObjectPool _pool;
-
-        protected SymbolImpl(IObjectPool pool)
-            : base()
-        {
-            _pool = pool;
-        }
-
-        public static SymbolImpl GetInstance(Symbol wrapped)
-        {
-            var result = s_poolInstance.Allocate();
-            global::System.Diagnostics.Debug.Assert(result.__Wrapped is null);
-            result.__InitWrapped(wrapped);
-            return result;
-        }
-
-        public void Free()
-        {
-            this.__ClearWrapped();
-            _pool?.Free(this);
-        }
-
-        private SymbolInst _wrapped => (SymbolInst)__Wrapped;
-
         public override ISymbolFactory SymbolFactory
         {
             get

@@ -617,7 +617,7 @@ namespace MetaDslx.CodeAnalysis
                     if (freeDiagnostics) diagnostics = DiagnosticBag.GetInstance();
                     var symbol = csts.SymbolFactory.GetSymbol(literal, diagnostics, cancellationToken);
                     if (freeDiagnostics) diagnostics.Free();
-                    value = symbol;
+                    value = MetaSymbol.FromSymbol(symbol);
                     return symbol is not null && !symbol.IsErrorSymbol;
                 }
             }
@@ -694,7 +694,7 @@ namespace MetaDslx.CodeAnalysis
                     if (freeDiagnostics) diagnostics.Free();
                     if (symbol is not null && !symbol.IsErrorSymbol)
                     {
-                        innerType = symbol;
+                        innerType = MetaType.FromTypeSymbol(symbol);
                         return true;
                     }
                     else
@@ -798,7 +798,7 @@ namespace MetaDslx.CodeAnalysis
                 if (freeDiagnostics) diagnostics.Free();
                 if (symbol is not null && !symbol.IsErrorSymbol)
                 {
-                    itemType = symbol;
+                    itemType = MetaType.FromTypeSymbol(symbol);
                     return true;
                 }
                 else
@@ -1022,6 +1022,11 @@ namespace MetaDslx.CodeAnalysis
         public IModelObject? AsModelObject(ModelGroup modelGroup)
         {
             throw new NotImplementedException();
+        }
+
+        public bool IsAssignableFrom(TypeSymbol? type)
+        {
+            return IsAssignableFrom(MetaType.FromTypeSymbol(type));
         }
 
         public bool IsAssignableFrom(Type? type)

@@ -20,8 +20,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     using __Compilation = global::MetaDslx.CodeAnalysis.Compilation;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
-    using __IObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.IObjectPool;
-    using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<TypeParameterSymbolImpl>;
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
@@ -69,116 +67,35 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
-        public override __ISymbolFactory SymbolFactory
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.SymbolFactory;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.SymbolFactory);
 
-        public override __AssemblySymbol? ContainingAssembly
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.ContainingAssembly;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.ContainingAssembly);
 
-        public override __Compilation? DeclaringCompilation
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.DeclaringCompilation;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __Compilation? DeclaringCompilation => CallImpl<__Compilation, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.DeclaringCompilation);
 
-        public override __ModuleSymbol? ContainingModule
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.ContainingModule;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ModuleSymbol? ContainingModule => CallImpl<__ModuleSymbol, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.ContainingModule);
 
-        public override __DeclarationSymbol? ContainingDeclaration
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.ContainingDeclaration;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __DeclarationSymbol? ContainingDeclaration => CallImpl<__DeclarationSymbol, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.ContainingDeclaration);
 
-        public override __TypeSymbol? ContainingType
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.ContainingType;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __TypeSymbol? ContainingType => CallImpl<__TypeSymbol, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.ContainingType);
 
-        public override __NamespaceSymbol? ContainingNamespace
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.ContainingNamespace;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.ContainingNamespace);
 
         public override __LexicalSortKey GetLexicalSortKey()
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.GetLexicalSortKey();
-            impl.Free();
-            return result;
+            return CallImpl<__LexicalSortKey, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.GetLexicalSortKey());
         }
 
-        public override bool HasUnsupportedMetadata
-        {
-            get
-            {
-                var impl = TypeParameterSymbolImpl.GetInstance(this);
-                var result = impl.HasUnsupportedMetadata;
-                impl.Free();
-                return result;
-            }
-        }
+        public override bool HasUnsupportedMetadata => CallImpl<bool, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.HasUnsupportedMetadata);
 
         public override string GetDocumentationCommentId()
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentId();
-            impl.Free();
-            return result;
+            return CallImpl<string, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.GetDocumentationCommentId());
         }
 
         public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
 
@@ -190,179 +107,98 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         protected override void CompletePart_Initialize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            impl.CompletePart_Initialize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.CompletePart_Initialize(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_Name(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Name(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_Name(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_MetadataName(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_MetadataName(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_MetadataName(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__Symbol> CompletePart_CreateContainedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__Symbol>, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> Complete_Attributes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Attributes(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol>, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_Attributes(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_ComputeNonSymbolProperties(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Finalize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            impl.CompletePart_Finalize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.CompletePart_Finalize(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Validate(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            impl.CompletePart_Validate(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.CompletePart_Validate(diagnostics, cancellationToken));
         }
 
 
         protected override bool Complete_IsReferenceType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_IsReferenceType(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<bool, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_IsReferenceType(diagnostics, cancellationToken));
         }
 
         protected override bool Complete_IsValueType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_IsValueType(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<bool, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_IsValueType(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> Complete_TypeParameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_TypeParameters(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_TypeParameters(diagnostics, cancellationToken));
         }
 
-        protected override (global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>) Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected override (global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes) Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_BaseTypes(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
-        }
-
-        protected override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_AllBaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_AllBaseTypes(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<(global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes), TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_BaseTypes(diagnostics, cancellationToken));
         }
 
         protected override global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_DeclaredAccessibility(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::MetaDslx.CodeAnalysis.Accessibility, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_DeclaredAccessibility(diagnostics, cancellationToken));
         }
 
         protected override bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_IsStatic(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<bool, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_IsStatic(diagnostics, cancellationToken));
         }
 
         protected override bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_IsExtern(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<bool, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_IsExtern(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_TypeArguments(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_TypeArguments(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Imports(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<ImportSymbol>, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_Imports(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = TypeParameterSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Members(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, TypeParameterSymbol, TypeParameterSymbolImpl>(impl => impl.Complete_Members(diagnostics, cancellationToken));
         }
     }
 
     public abstract class TypeParameterSymbolBase : TypeSymbolImpl, TypeParameterSymbol
     {
-        protected TypeParameterSymbolBase(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
 
-
-    }
-
-    public partial class TypeParameterSymbolImpl : TypeParameterSymbolBase
-    {
-        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new TypeParameterSymbolImpl(s_poolInstance), 32);
-
-        protected TypeParameterSymbolImpl(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
-
-        public static new TypeParameterSymbolImpl GetInstance(TypeParameterSymbol wrapped)
-        {
-            var result = s_poolInstance.Allocate();
-            global::System.Diagnostics.Debug.Assert(result.__Wrapped is null);
-            result.__InitWrapped(wrapped);
-            return result;
-        }
     }
 }

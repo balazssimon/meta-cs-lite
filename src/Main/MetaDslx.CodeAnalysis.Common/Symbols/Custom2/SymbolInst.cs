@@ -17,6 +17,7 @@ using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using System.Collections.Concurrent;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Drawing;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
@@ -132,6 +133,33 @@ namespace MetaDslx.CodeAnalysis.Symbols
             s_compilations.Add(this, compilation);
         }
 
+        protected TImpl GetImpl<TIntf, TImpl>()
+            where TIntf : Symbol
+            where TImpl : SymbolImpl, TIntf, new()
+        {
+            if (!(this is TIntf)) throw new InvalidOperationException($"Symbol '{this.GetType().FullName}' does not implement the interface '{typeof(TIntf).FullName}'");
+            return SymbolImplBase.GetInstance<TIntf, TImpl>((TIntf)(object)this);
+        }
+
+        protected T CallImpl<T, TIntf, TImpl>(Func<TImpl, T> func)
+            where TIntf : Symbol
+            where TImpl : SymbolImpl, TIntf, new()
+        {
+            var impl = GetImpl<TIntf, TImpl>();
+            var result = func(impl);
+            impl.Free();
+            return result;
+        }
+
+        protected void CallImpl<TIntf, TImpl>(Action<TImpl> func)
+            where TIntf : Symbol
+            where TImpl : SymbolImpl, TIntf, new()
+        {
+            var impl = GetImpl<TIntf, TImpl>();
+            func(impl);
+            impl.Free();
+        }
+
         public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
         public bool IsSourceSymbol => s_declarations.TryGetValue(this, out _) || s_compilations.TryGetValue(this, out _);
         public bool IsModelSymbol => _underlyingObject is IModelObject;
@@ -141,16 +169,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public Symbol ContainingSymbol => _container;
 
-        public virtual ISymbolFactory SymbolFactory
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.SymbolFactory;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual ISymbolFactory SymbolFactory => CallImpl<ISymbolFactory, Symbol, SymbolImpl>(impl => impl.SymbolFactory);
 
         public ImmutableArray<Symbol> ContainedSymbols
         {
@@ -252,78 +271,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public virtual AssemblySymbol? ContainingAssembly
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.ContainingAssembly;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual AssemblySymbol? ContainingAssembly => CallImpl<AssemblySymbol, Symbol, SymbolImpl>(impl => impl.ContainingAssembly);
 
-        public virtual Compilation? DeclaringCompilation
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.DeclaringCompilation;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual Compilation? DeclaringCompilation => CallImpl<Compilation, Symbol, SymbolImpl>(impl => impl.DeclaringCompilation);
 
-        public virtual ModuleSymbol? ContainingModule
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.ContainingModule;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual ModuleSymbol? ContainingModule => CallImpl<ModuleSymbol, Symbol, SymbolImpl>(impl => impl.ContainingModule);
 
-        public virtual DeclarationSymbol? ContainingDeclaration
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.ContainingDeclaration;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual DeclarationSymbol? ContainingDeclaration => CallImpl<DeclarationSymbol, Symbol, SymbolImpl>(impl => impl.ContainingDeclaration);
 
-        public virtual TypeSymbol? ContainingType
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.ContainingType;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual TypeSymbol? ContainingType => CallImpl<TypeSymbol, Symbol, SymbolImpl>(impl => impl.ContainingType);
 
-        public virtual NamespaceSymbol? ContainingNamespace
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.ContainingNamespace;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual NamespaceSymbol? ContainingNamespace => CallImpl<NamespaceSymbol, Symbol, SymbolImpl>(impl => impl.ContainingNamespace);
 
         public virtual LexicalSortKey GetLexicalSortKey()
         {
-            var impl = SymbolImpl.GetInstance(this);
-            var result = impl.GetLexicalSortKey();
-            impl.Free();
-            return result;
+            return CallImpl<LexicalSortKey, Symbol, SymbolImpl>(impl => impl.GetLexicalSortKey());
         }
 
         public MergedDeclaration? MergedDeclaration
@@ -510,16 +472,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Property - type is unsupported
         /// Parameter - type is unsupported
         /// </summary>
-        public virtual bool HasUnsupportedMetadata
-        {
-            get
-            {
-                var impl = SymbolImpl.GetInstance(this);
-                var result = impl.HasUnsupportedMetadata;
-                impl.Free();
-                return result;
-            }
-        }
+        public virtual bool HasUnsupportedMetadata => CallImpl<bool, Symbol, SymbolImpl>(impl => impl.HasUnsupportedMetadata);
 
         /// <summary>
         /// Merges given diagnostic to the existing result diagnostic.
@@ -581,10 +534,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         public virtual string GetDocumentationCommentId()
         {
-            var impl = SymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentId();
-            impl.Free();
-            return result;
+            return CallImpl<string, Symbol, SymbolImpl>(impl => impl.GetDocumentationCommentId());
         }
 
         /// <summary>
@@ -596,10 +546,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <returns>The XML that would be written to the documentation file for the symbol.</returns>
         public virtual string GetDocumentationCommentXml(CultureInfo preferredCulture = null, bool expandIncludes = false, CancellationToken cancellationToken = default)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string, Symbol, SymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
         #region Completion graph
@@ -899,62 +846,42 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual void CompletePart_Initialize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            impl.CompletePart_Initialize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<Symbol, SymbolImpl>(impl => impl.CompletePart_Initialize(diagnostics, cancellationToken));
         }
 
         protected virtual string? Complete_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            var result = impl.Complete_Name(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, Symbol, SymbolImpl>(impl => impl.Complete_Name(diagnostics, cancellationToken));
         }
 
         protected virtual string? Complete_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            var result = impl.Complete_MetadataName(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, Symbol, SymbolImpl>(impl => impl.Complete_MetadataName(diagnostics, cancellationToken));
         }
 
         protected virtual ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            var result = impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<ImmutableArray<Symbol>, Symbol, SymbolImpl>(impl => impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken));
         }
 
         protected virtual ImmutableArray<AttributeSymbol> Complete_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            var result = impl.Complete_Attributes(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<ImmutableArray<AttributeSymbol>, Symbol, SymbolImpl>(impl => impl.Complete_Attributes(diagnostics, cancellationToken));
         }
 
         protected virtual void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<Symbol, SymbolImpl>(impl => impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken));
         }
 
         protected virtual void CompletePart_Finalize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            impl.CompletePart_Finalize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<Symbol, SymbolImpl>(impl => impl.CompletePart_Finalize(diagnostics, cancellationToken));
         }
 
         protected virtual void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var impl = SymbolImpl.GetInstance(this);
-            impl.CompletePart_Validate(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<Symbol, SymbolImpl>(impl => impl.CompletePart_Validate(diagnostics, cancellationToken));
         }
 
         #endregion

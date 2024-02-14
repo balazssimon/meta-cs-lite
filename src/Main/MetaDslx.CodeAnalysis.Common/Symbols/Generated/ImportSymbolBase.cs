@@ -20,8 +20,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     using __Compilation = global::MetaDslx.CodeAnalysis.Compilation;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
-    using __IObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.IObjectPool;
-    using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<ImportSymbolImpl>;
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
@@ -89,116 +87,35 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             _symbols = symbols;
         }
 
-        public override __ISymbolFactory SymbolFactory
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.SymbolFactory;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, ImportSymbol, ImportSymbolImpl>(impl => impl.SymbolFactory);
 
-        public override __AssemblySymbol? ContainingAssembly
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.ContainingAssembly;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, ImportSymbol, ImportSymbolImpl>(impl => impl.ContainingAssembly);
 
-        public override __Compilation? DeclaringCompilation
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.DeclaringCompilation;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __Compilation? DeclaringCompilation => CallImpl<__Compilation, ImportSymbol, ImportSymbolImpl>(impl => impl.DeclaringCompilation);
 
-        public override __ModuleSymbol? ContainingModule
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.ContainingModule;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ModuleSymbol? ContainingModule => CallImpl<__ModuleSymbol, ImportSymbol, ImportSymbolImpl>(impl => impl.ContainingModule);
 
-        public override __DeclarationSymbol? ContainingDeclaration
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.ContainingDeclaration;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __DeclarationSymbol? ContainingDeclaration => CallImpl<__DeclarationSymbol, ImportSymbol, ImportSymbolImpl>(impl => impl.ContainingDeclaration);
 
-        public override __TypeSymbol? ContainingType
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.ContainingType;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __TypeSymbol? ContainingType => CallImpl<__TypeSymbol, ImportSymbol, ImportSymbolImpl>(impl => impl.ContainingType);
 
-        public override __NamespaceSymbol? ContainingNamespace
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.ContainingNamespace;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, ImportSymbol, ImportSymbolImpl>(impl => impl.ContainingNamespace);
 
         public override __LexicalSortKey GetLexicalSortKey()
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.GetLexicalSortKey();
-            impl.Free();
-            return result;
+            return CallImpl<__LexicalSortKey, ImportSymbol, ImportSymbolImpl>(impl => impl.GetLexicalSortKey());
         }
 
-        public override bool HasUnsupportedMetadata
-        {
-            get
-            {
-                var impl = ImportSymbolImpl.GetInstance(this);
-                var result = impl.HasUnsupportedMetadata;
-                impl.Free();
-                return result;
-            }
-        }
+        public override bool HasUnsupportedMetadata => CallImpl<bool, ImportSymbol, ImportSymbolImpl>(impl => impl.HasUnsupportedMetadata);
 
         public override string GetDocumentationCommentId()
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentId();
-            impl.Free();
-            return result;
+            return CallImpl<string, ImportSymbol, ImportSymbolImpl>(impl => impl.GetDocumentationCommentId());
         }
 
         public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string, ImportSymbol, ImportSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
 
@@ -304,105 +221,68 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         protected override void CompletePart_Initialize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            impl.CompletePart_Initialize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportSymbol, ImportSymbolImpl>(impl => impl.CompletePart_Initialize(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_Name(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Name(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_Name(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_MetadataName(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.Complete_MetadataName(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_MetadataName(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__Symbol> CompletePart_CreateContainedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__Symbol>, ImportSymbol, ImportSymbolImpl>(impl => impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> Complete_Attributes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Attributes(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol>, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_Attributes(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_ComputeNonSymbolProperties(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportSymbol, ImportSymbolImpl>(impl => impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Finalize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            impl.CompletePart_Finalize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportSymbol, ImportSymbolImpl>(impl => impl.CompletePart_Finalize(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Validate(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            impl.CompletePart_Validate(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<ImportSymbol, ImportSymbolImpl>(impl => impl.CompletePart_Validate(diagnostics, cancellationToken));
         }
 
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<string> Complete_Files(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Files(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<string>, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_Files(diagnostics, cancellationToken));
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Complete_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Aliases(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<AliasSymbol>, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_Aliases(diagnostics, cancellationToken));
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Complete_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Namespaces(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol>, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_Namespaces(diagnostics, cancellationToken));
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = ImportSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Symbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_Symbols(diagnostics, cancellationToken));
         }
     }
 
     public abstract class ImportSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl, ImportSymbol
     {
-        protected ImportSymbolBase(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
-
         public global::System.Collections.Immutable.ImmutableArray<string> Files => ((ImportSymbol)__Wrapped).Files;
         public global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Aliases => ((ImportSymbol)__Wrapped).Aliases;
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Namespaces => ((ImportSymbol)__Wrapped).Namespaces;
@@ -431,24 +311,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
             // TODO
             return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
-        }
-    }
-
-    public partial class ImportSymbolImpl : ImportSymbolBase
-    {
-        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new ImportSymbolImpl(s_poolInstance), 32);
-
-        protected ImportSymbolImpl(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
-
-        public static new ImportSymbolImpl GetInstance(ImportSymbol wrapped)
-        {
-            var result = s_poolInstance.Allocate();
-            global::System.Diagnostics.Debug.Assert(result.__Wrapped is null);
-            result.__InitWrapped(wrapped);
-            return result;
         }
     }
 }

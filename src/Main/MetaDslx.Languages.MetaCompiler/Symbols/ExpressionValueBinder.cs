@@ -90,7 +90,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             var containingAlt = expr.GetOutermostContainingSymbol<PAlternativeSymbol>();
             if (containingAlt is not null)
             {
-                _modelObjectType = containingAlt.ReturnType.AsTypeSymbol(Compilation);
+                _modelObjectType = MetaType.FromTypeSymbol(containingAlt.ReturnType.AsTypeSymbol(Compilation));
             }
             if (result.IsDefaultOrNull) return result;
             if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsDefaultOrNull)

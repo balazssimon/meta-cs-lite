@@ -7,7 +7,7 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 {
-    public partial class TypeParameterSymbolImpl
+    public class TypeParameterSymbolImpl : TypeParameterSymbolBase
     {
     }
 }

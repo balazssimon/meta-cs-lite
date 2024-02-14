@@ -159,9 +159,9 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             if (symbol is null) return ImmutableArray<string>.Empty;
             if (_phases.TryGetValue(symbol, out var phases)) return phases;
             var phs = ArrayBuilder<string>.GetInstance();
-            foreach (var decl in symbol.Declarations)
+            foreach (var prop in symbol.Properties)
             {
-                if (!string.IsNullOrEmpty(decl.Name)) phs.Add(decl.Name);
+                if (prop.Phase is null) phs.Add(prop.Name);
             }
             foreach (var bs in GetBaseTypes(symbol))
             {

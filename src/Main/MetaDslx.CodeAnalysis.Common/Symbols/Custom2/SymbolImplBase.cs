@@ -15,6 +15,7 @@ using MetaDslx.CodeAnalysis.Text;
 using System.Xml.Linq;
 using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
+using System.Collections.Concurrent;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
@@ -22,22 +23,31 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
     public class SymbolImplBase : Symbol
     {
+        private static ConcurrentDictionary<Type, IObjectPool> s_pools = new ConcurrentDictionary<Type, IObjectPool>();
+        private IObjectPool _pool;
         private Symbol? _wrapped;
 
         protected SymbolImplBase()
         {
         }
 
-        public void __InitWrapped(Symbol wrapped)
+        internal static TImpl GetInstance<TIntf, TImpl>(TIntf wrapped)
+            where TIntf: Symbol
+            where TImpl: SymbolImpl, TIntf, new()
         {
-            _wrapped = wrapped is SymbolImplBase sib ? sib._wrapped : wrapped;
+            var pool = (ObjectPool<TImpl>)s_pools.GetOrAdd(typeof(TImpl), new ObjectPool<TImpl>(() => new TImpl()));
+            var result = pool.Allocate();
+            global::System.Diagnostics.Debug.Assert(result._wrapped is null);
+            result._pool = pool;
+            result._wrapped = wrapped is SymbolImplBase sib ? sib._wrapped : wrapped;
+            return result;
         }
 
-        protected void __ClearWrapped()
+        public void Free()
         {
             _wrapped = null;
+            _pool?.Free(this);
         }
-
 
         protected Symbol? __Wrapped => _wrapped;
 

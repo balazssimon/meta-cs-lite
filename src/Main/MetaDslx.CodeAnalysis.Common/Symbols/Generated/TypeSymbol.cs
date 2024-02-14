@@ -25,8 +25,6 @@ public interface TypeSymbol: DeclarationSymbol
             public static readonly CompletionPart Finish_TypeParameters = new CompletionPart(nameof(Finish_TypeParameters));
             public static readonly CompletionPart Start_BaseTypes = new CompletionPart(nameof(Start_BaseTypes));
             public static readonly CompletionPart Finish_BaseTypes = new CompletionPart(nameof(Finish_BaseTypes));
-            public static readonly CompletionPart Start_AllBaseTypes = new CompletionPart(nameof(Start_AllBaseTypes));
-            public static readonly CompletionPart Finish_AllBaseTypes = new CompletionPart(nameof(Finish_AllBaseTypes));
             public static readonly CompletionPart Start_DeclaredAccessibility = new CompletionPart(nameof(Start_DeclaredAccessibility));
             public static readonly CompletionPart Finish_DeclaredAccessibility = new CompletionPart(nameof(Finish_DeclaredAccessibility));
             public static readonly CompletionPart Start_IsStatic = new CompletionPart(nameof(Start_IsStatic));
@@ -48,7 +46,6 @@ public interface TypeSymbol: DeclarationSymbol
                     Start_IsValueType, Finish_IsValueType,
                     Start_TypeParameters, Finish_TypeParameters,
                     Start_BaseTypes, Finish_BaseTypes,
-                    Start_AllBaseTypes, Finish_AllBaseTypes,
                     Start_DeclaredAccessibility, Finish_DeclaredAccessibility,
                     Start_IsStatic, Finish_IsStatic,
                     Start_IsExtern, Finish_IsExtern,

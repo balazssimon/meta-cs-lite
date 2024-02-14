@@ -7,7 +7,7 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 {
-    public partial class ModuleSymbolImpl
+    public class ModuleSymbolImpl : ModuleSymbolBase
     {
     }
 }

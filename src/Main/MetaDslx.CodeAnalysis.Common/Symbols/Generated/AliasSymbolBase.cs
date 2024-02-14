@@ -20,8 +20,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     using __Compilation = global::MetaDslx.CodeAnalysis.Compilation;
     using __SourceLocation = global::MetaDslx.CodeAnalysis.SourceLocation;
     using __CancellationToken = global::System.Threading.CancellationToken;
-    using __IObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.IObjectPool;
-    using __ObjectPool = global::MetaDslx.CodeAnalysis.PooledObjects.ObjectPool<AliasSymbolImpl>;
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
@@ -74,116 +72,35 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             _target = target;
         }
 
-        public override __ISymbolFactory SymbolFactory
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.SymbolFactory;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, AliasSymbol, AliasSymbolImpl>(impl => impl.SymbolFactory);
 
-        public override __AssemblySymbol? ContainingAssembly
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.ContainingAssembly;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, AliasSymbol, AliasSymbolImpl>(impl => impl.ContainingAssembly);
 
-        public override __Compilation? DeclaringCompilation
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.DeclaringCompilation;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __Compilation? DeclaringCompilation => CallImpl<__Compilation, AliasSymbol, AliasSymbolImpl>(impl => impl.DeclaringCompilation);
 
-        public override __ModuleSymbol? ContainingModule
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.ContainingModule;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __ModuleSymbol? ContainingModule => CallImpl<__ModuleSymbol, AliasSymbol, AliasSymbolImpl>(impl => impl.ContainingModule);
 
-        public override __DeclarationSymbol? ContainingDeclaration
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.ContainingDeclaration;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __DeclarationSymbol? ContainingDeclaration => CallImpl<__DeclarationSymbol, AliasSymbol, AliasSymbolImpl>(impl => impl.ContainingDeclaration);
 
-        public override __TypeSymbol? ContainingType
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.ContainingType;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __TypeSymbol? ContainingType => CallImpl<__TypeSymbol, AliasSymbol, AliasSymbolImpl>(impl => impl.ContainingType);
 
-        public override __NamespaceSymbol? ContainingNamespace
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.ContainingNamespace;
-                impl.Free();
-                return result;
-            }
-        }
+        public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, AliasSymbol, AliasSymbolImpl>(impl => impl.ContainingNamespace);
 
         public override __LexicalSortKey GetLexicalSortKey()
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.GetLexicalSortKey();
-            impl.Free();
-            return result;
+            return CallImpl<__LexicalSortKey, AliasSymbol, AliasSymbolImpl>(impl => impl.GetLexicalSortKey());
         }
 
-        public override bool HasUnsupportedMetadata
-        {
-            get
-            {
-                var impl = AliasSymbolImpl.GetInstance(this);
-                var result = impl.HasUnsupportedMetadata;
-                impl.Free();
-                return result;
-            }
-        }
+        public override bool HasUnsupportedMetadata => CallImpl<bool, AliasSymbol, AliasSymbolImpl>(impl => impl.HasUnsupportedMetadata);
 
         public override string GetDocumentationCommentId()
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentId();
-            impl.Free();
-            return result;
+            return CallImpl<string, AliasSymbol, AliasSymbolImpl>(impl => impl.GetDocumentationCommentId());
         }
 
         public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string, AliasSymbol, AliasSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
 
@@ -220,129 +137,83 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         protected override void CompletePart_Initialize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            impl.CompletePart_Initialize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<AliasSymbol, AliasSymbolImpl>(impl => impl.CompletePart_Initialize(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_Name(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Name(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_Name(diagnostics, cancellationToken));
         }
 
         protected override string? Complete_MetadataName(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_MetadataName(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<string?, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_MetadataName(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__Symbol> CompletePart_CreateContainedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__Symbol>, AliasSymbol, AliasSymbolImpl>(impl => impl.CompletePart_CreateContainedSymbols(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> Complete_Attributes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Attributes(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol>, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_Attributes(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_ComputeNonSymbolProperties(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<AliasSymbol, AliasSymbolImpl>(impl => impl.CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Finalize(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            impl.CompletePart_Finalize(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<AliasSymbol, AliasSymbolImpl>(impl => impl.CompletePart_Finalize(diagnostics, cancellationToken));
         }
 
         protected override void CompletePart_Validate(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            impl.CompletePart_Validate(diagnostics, cancellationToken);
-            impl.Free();
+            CallImpl<AliasSymbol, AliasSymbolImpl>(impl => impl.CompletePart_Validate(diagnostics, cancellationToken));
         }
 
 
         protected virtual Symbol Complete_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Target(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<Symbol, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_Target(diagnostics, cancellationToken));
         }
 
         protected override global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_DeclaredAccessibility(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::MetaDslx.CodeAnalysis.Accessibility, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_DeclaredAccessibility(diagnostics, cancellationToken));
         }
 
         protected override bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_IsStatic(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<bool, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_IsStatic(diagnostics, cancellationToken));
         }
 
         protected override bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_IsExtern(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<bool, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_IsExtern(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_TypeArguments(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_TypeArguments(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Imports(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<ImportSymbol>, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_Imports(diagnostics, cancellationToken));
         }
 
         protected override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            var impl = AliasSymbolImpl.GetInstance(this);
-            var result = impl.Complete_Members(diagnostics, cancellationToken);
-            impl.Free();
-            return result;
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, AliasSymbol, AliasSymbolImpl>(impl => impl.Complete_Members(diagnostics, cancellationToken));
         }
     }
 
     public abstract class AliasSymbolBase : DeclarationSymbolImpl, AliasSymbol
     {
-        protected AliasSymbolBase(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
-
         public Symbol Target => ((AliasSymbol)__Wrapped).Target;
 
 
@@ -350,24 +221,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
             // TODO
             return default;
-        }
-    }
-
-    public partial class AliasSymbolImpl : AliasSymbolBase
-    {
-        private static readonly __ObjectPool s_poolInstance = new __ObjectPool(() => new AliasSymbolImpl(s_poolInstance), 32);
-
-        protected AliasSymbolImpl(__IObjectPool pool) 
-            : base(pool)
-        {
-        }
-
-        public static new AliasSymbolImpl GetInstance(AliasSymbol wrapped)
-        {
-            var result = s_poolInstance.Allocate();
-            global::System.Diagnostics.Debug.Assert(result.__Wrapped is null);
-            result.__InitWrapped(wrapped);
-            return result;
         }
     }
 }
