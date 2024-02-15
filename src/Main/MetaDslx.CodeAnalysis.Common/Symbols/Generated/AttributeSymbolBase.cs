@@ -86,6 +86,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, AttributeSymbol, AttributeSymbolImpl>(impl => impl.ContainingNamespace);
 
+
+        public TypeSymbol AttributeClass
+        {
+            get
+            {
+                this.ForceComplete(AttributeSymbol.CompletionParts.Finish_AttributeClass, null, default);
+                return _attributeClass;
+            }
+        }
+
         public override __LexicalSortKey GetLexicalSortKey()
         {
             return CallImpl<__LexicalSortKey, AttributeSymbol, AttributeSymbolImpl>(impl => impl.GetLexicalSortKey());
@@ -103,15 +113,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return CallImpl<string, AttributeSymbol, AttributeSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
-
-        public TypeSymbol AttributeClass
-        {
-            get
-            {
-                this.ForceComplete(AttributeSymbol.CompletionParts.Finish_AttributeClass, null, default);
-                return _attributeClass;
-            }
-        }
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -187,10 +188,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public TypeSymbol AttributeClass => ((AttributeSymbol)__Wrapped).AttributeClass;
 
 
+
         public virtual TypeSymbol Complete_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<TypeSymbol>(this, nameof(AttributeClass), diagnostics, cancellationToken);
         }
     }
 }

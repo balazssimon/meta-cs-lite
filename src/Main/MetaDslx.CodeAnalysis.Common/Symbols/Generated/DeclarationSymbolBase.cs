@@ -147,23 +147,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.ContainingNamespace);
 
-        public override __LexicalSortKey GetLexicalSortKey()
-        {
-            return CallImpl<__LexicalSortKey, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.GetLexicalSortKey());
-        }
-
-        public override bool HasUnsupportedMetadata => CallImpl<bool, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.HasUnsupportedMetadata);
-
-        public override string GetDocumentationCommentId()
-        {
-            return CallImpl<string, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.GetDocumentationCommentId());
-        }
-
-        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
-        {
-            return CallImpl<string, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
-        }
-
 
         public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility
         {
@@ -221,6 +204,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _members;
             }
         }
+
+        public override __LexicalSortKey GetLexicalSortKey()
+        {
+            return CallImpl<__LexicalSortKey, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.GetLexicalSortKey());
+        }
+
+        public override bool HasUnsupportedMetadata => CallImpl<bool, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.HasUnsupportedMetadata);
+
+        public override string GetDocumentationCommentId()
+        {
+            return CallImpl<string, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.GetDocumentationCommentId());
+        }
+
+        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
+        {
+            return CallImpl<string, DeclarationSymbol, DeclarationSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
+        }
+
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -405,34 +406,30 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members => ((DeclarationSymbol)__Wrapped).Members;
 
 
+
         public virtual global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.Accessibility>(this, nameof(DeclaredAccessibility), diagnostics, cancellationToken);
         }
 
         public virtual bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsStatic), diagnostics, cancellationToken);
         }
 
         public virtual bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsExtern), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
+            return SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(this, nameof(TypeArguments), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
+            return SymbolFactory.GetSymbolPropertyValues<ImportSymbol>(this, nameof(Imports), diagnostics, cancellationToken);
         }
 
         public abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

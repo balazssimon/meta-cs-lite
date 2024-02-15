@@ -25,6 +25,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
 
     public interface Operation : global::MetaDslx.Languages.MetaSymbols.Model.Declaration
     {
+        bool IsPhase { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Parameter> Parameters { get; }
         TypeReference ReturnType { get; set; }
     

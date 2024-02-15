@@ -154,26 +154,27 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public virtual string? Complete_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return null;
+            return SymbolFactory.GetName(__Wrapped._underlyingObject, diagnostics, cancellationToken);
         }
 
         public virtual string? Complete_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return null;
+            return SymbolFactory.GetMetadataName(__Wrapped._underlyingObject, diagnostics, cancellationToken);
         }
 
         public virtual ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ImmutableArray<Symbol>.Empty;
+            return SymbolFactory.GetContainedSymbols(this, diagnostics, cancellationToken);
         }
 
         public virtual ImmutableArray<AttributeSymbol> Complete_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ImmutableArray<AttributeSymbol>.Empty;
+            return SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
         }
 
         public virtual void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            SymbolFactory.ComputeNonSymbolProperties(this, diagnostics, cancellationToken);
         }
 
         public virtual void CompletePart_Finalize(DiagnosticBag diagnostics, CancellationToken cancellationToken)

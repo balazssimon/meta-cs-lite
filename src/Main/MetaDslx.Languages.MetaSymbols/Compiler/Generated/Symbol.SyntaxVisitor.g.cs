@@ -21,7 +21,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         void VisitUsing(UsingSyntax node);
         void VisitSymbol(SymbolSyntax node);
         void VisitProperty(PropertySyntax node);
-        void VisitOperation(OperationSyntax node);
+        void VisitOperationAlt1(OperationAlt1Syntax node);
+        void VisitOperationAlt2(OperationAlt2Syntax node);
         void VisitParameter(ParameterSyntax node);
         void VisitTypeReference(TypeReferenceSyntax node);
         void VisitArrayDimensions(ArrayDimensionsSyntax node);
@@ -48,8 +49,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         void VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node);
         void VisitPropertyBlock2(PropertyBlock2Syntax node);
         void VisitPropertyBlock3(PropertyBlock3Syntax node);
-        void VisitOperationBlock1(OperationBlock1Syntax node);
-        void VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node);
+        void VisitOperationAlt2Block1(OperationAlt2Block1Syntax node);
+        void VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node);
         void VisitTypeReferenceBlock1(TypeReferenceBlock1Syntax node);
         void VisitArrayDimensionsBlock1(ArrayDimensionsBlock1Syntax node);
         void VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node);
@@ -82,7 +83,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitOperation(OperationSyntax node)
+        public virtual void VisitOperationAlt1(OperationAlt1Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitOperationAlt2(OperationAlt2Syntax node)
         {
             this.DefaultVisit(node);
         }
@@ -217,12 +223,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitOperationBlock1(OperationBlock1Syntax node)
+        public virtual void VisitOperationAlt2Block1(OperationAlt2Block1Syntax node)
         {
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node)
+        public virtual void VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node)
         {
             this.DefaultVisit(node);
         }
@@ -251,7 +257,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitUsing(UsingSyntax node);
         TResult VisitSymbol(SymbolSyntax node);
         TResult VisitProperty(PropertySyntax node);
-        TResult VisitOperation(OperationSyntax node);
+        TResult VisitOperationAlt1(OperationAlt1Syntax node);
+        TResult VisitOperationAlt2(OperationAlt2Syntax node);
         TResult VisitParameter(ParameterSyntax node);
         TResult VisitTypeReference(TypeReferenceSyntax node);
         TResult VisitArrayDimensions(ArrayDimensionsSyntax node);
@@ -278,8 +285,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node);
         TResult VisitPropertyBlock2(PropertyBlock2Syntax node);
         TResult VisitPropertyBlock3(PropertyBlock3Syntax node);
-        TResult VisitOperationBlock1(OperationBlock1Syntax node);
-        TResult VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node);
+        TResult VisitOperationAlt2Block1(OperationAlt2Block1Syntax node);
+        TResult VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node);
         TResult VisitTypeReferenceBlock1(TypeReferenceBlock1Syntax node);
         TResult VisitArrayDimensionsBlock1(ArrayDimensionsBlock1Syntax node);
         TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node);
@@ -312,7 +319,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitOperation(OperationSyntax node)
+        public virtual TResult VisitOperationAlt1(OperationAlt1Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitOperationAlt2(OperationAlt2Syntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -447,12 +459,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitOperationBlock1(OperationBlock1Syntax node)
+        public virtual TResult VisitOperationAlt2Block1(OperationAlt2Block1Syntax node)
         {
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node)
+        public virtual TResult VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -481,7 +493,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitUsing(UsingSyntax node, TArg argument);
         TResult VisitSymbol(SymbolSyntax node, TArg argument);
         TResult VisitProperty(PropertySyntax node, TArg argument);
-        TResult VisitOperation(OperationSyntax node, TArg argument);
+        TResult VisitOperationAlt1(OperationAlt1Syntax node, TArg argument);
+        TResult VisitOperationAlt2(OperationAlt2Syntax node, TArg argument);
         TResult VisitParameter(ParameterSyntax node, TArg argument);
         TResult VisitTypeReference(TypeReferenceSyntax node, TArg argument);
         TResult VisitArrayDimensions(ArrayDimensionsSyntax node, TArg argument);
@@ -508,8 +521,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node, TArg argument);
         TResult VisitPropertyBlock2(PropertyBlock2Syntax node, TArg argument);
         TResult VisitPropertyBlock3(PropertyBlock3Syntax node, TArg argument);
-        TResult VisitOperationBlock1(OperationBlock1Syntax node, TArg argument);
-        TResult VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node, TArg argument);
+        TResult VisitOperationAlt2Block1(OperationAlt2Block1Syntax node, TArg argument);
+        TResult VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node, TArg argument);
         TResult VisitTypeReferenceBlock1(TypeReferenceBlock1Syntax node, TArg argument);
         TResult VisitArrayDimensionsBlock1(ArrayDimensionsBlock1Syntax node, TArg argument);
         TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node, TArg argument);
@@ -542,7 +555,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitOperation(OperationSyntax node, TArg argument)
+        public virtual TResult VisitOperationAlt1(OperationAlt1Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitOperationAlt2(OperationAlt2Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -677,12 +695,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitOperationBlock1(OperationBlock1Syntax node, TArg argument)
+        public virtual TResult VisitOperationAlt2Block1(OperationAlt2Block1Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node, TArg argument)
+        public virtual TResult VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -754,12 +772,21 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return node.Update(block1, type, name, block2, block3);
         }
 
-        public virtual SyntaxNode VisitOperation(OperationSyntax node)
+        public virtual SyntaxNode VisitOperationAlt1(OperationAlt1Syntax node)
+        {
+            var isPhase = this.VisitToken(node.IsPhase);
+            var name = (NameSyntax)this.Visit(node.Name);
+            var tLParen = this.VisitToken(node.TLParen);
+            var tRParen = this.VisitToken(node.TRParen);
+            return node.Update(isPhase, name, tLParen, tRParen);
+        }
+
+        public virtual SyntaxNode VisitOperationAlt2(OperationAlt2Syntax node)
         {
             var returnType = (TypeReferenceSyntax)this.Visit(node.ReturnType);
             var name = (NameSyntax)this.Visit(node.Name);
             var tLParen = this.VisitToken(node.TLParen);
-            var block = (OperationBlock1Syntax)this.Visit(node.Block);
+            var block = (OperationAlt2Block1Syntax)this.Visit(node.Block);
             var tRParen = this.VisitToken(node.TRParen);
             return node.Update(returnType, name, tLParen, block, tRParen);
         }
@@ -929,13 +956,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return node.Update(kPhase, phase);
         }
 
-        public virtual SyntaxNode VisitOperationBlock1(OperationBlock1Syntax node)
+        public virtual SyntaxNode VisitOperationAlt2Block1(OperationAlt2Block1Syntax node)
         {
             var parameters = this.VisitList(node.Parameters);
             return node.Update(parameters);
         }
 
-        public virtual SyntaxNode VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node)
+        public virtual SyntaxNode VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node)
         {
             var tComma = this.VisitToken(node.TComma);
             var parameters = (ParameterSyntax)this.Visit(node.Parameters);

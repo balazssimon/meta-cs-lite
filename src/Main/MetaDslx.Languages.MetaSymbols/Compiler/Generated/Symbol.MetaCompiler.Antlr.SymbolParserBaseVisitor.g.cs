@@ -76,7 +76,8 @@ public partial class SymbolParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_Property([NotNull] SymbolParser.Pr_PropertyContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SymbolParser.pr_Operation"/>.
+	/// Visit a parse tree produced by the <c>pr_OperationAlt1</c>
+	/// labeled alternative in <see cref="SymbolParser.pr_Operation"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -84,7 +85,18 @@ public partial class SymbolParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_Operation([NotNull] SymbolParser.Pr_OperationContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_OperationAlt1([NotNull] SymbolParser.Pr_OperationAlt1Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_OperationAlt2</c>
+	/// labeled alternative in <see cref="SymbolParser.pr_Operation"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_OperationAlt2([NotNull] SymbolParser.Pr_OperationAlt2Context context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SymbolParser.pr_Parameter"/>.
 	/// <para>
@@ -358,7 +370,7 @@ public partial class SymbolParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_PropertyBlock3([NotNull] SymbolParser.Pr_PropertyBlock3Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SymbolParser.pr_OperationBlock1"/>.
+	/// Visit a parse tree produced by <see cref="SymbolParser.pr_OperationAlt2Block1"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -366,9 +378,9 @@ public partial class SymbolParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_OperationBlock1([NotNull] SymbolParser.Pr_OperationBlock1Context context) { return VisitChildren(context); }
+	public virtual Result VisitPr_OperationAlt2Block1([NotNull] SymbolParser.Pr_OperationAlt2Block1Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SymbolParser.pr_OperationBlock1parametersBlock"/>.
+	/// Visit a parse tree produced by <see cref="SymbolParser.pr_OperationAlt2Block1parametersBlock"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -376,7 +388,7 @@ public partial class SymbolParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_OperationBlock1parametersBlock([NotNull] SymbolParser.Pr_OperationBlock1parametersBlockContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_OperationAlt2Block1parametersBlock([NotNull] SymbolParser.Pr_OperationAlt2Block1parametersBlockContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SymbolParser.pr_TypeReferenceBlock1"/>.
 	/// <para>

@@ -91,23 +91,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.ContainingNamespace);
 
-        public override __LexicalSortKey GetLexicalSortKey()
-        {
-            return CallImpl<__LexicalSortKey, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetLexicalSortKey());
-        }
-
-        public override bool HasUnsupportedMetadata => CallImpl<bool, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.HasUnsupportedMetadata);
-
-        public override string GetDocumentationCommentId()
-        {
-            return CallImpl<string, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetDocumentationCommentId());
-        }
-
-        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
-        {
-            return CallImpl<string, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
-        }
-
 
         public global::MetaDslx.CodeAnalysis.MetaSymbol MetaModelSymbols
         {
@@ -126,6 +109,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _metaModels;
             }
         }
+
+        public override __LexicalSortKey GetLexicalSortKey()
+        {
+            return CallImpl<__LexicalSortKey, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetLexicalSortKey());
+        }
+
+        public override bool HasUnsupportedMetadata => CallImpl<bool, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.HasUnsupportedMetadata);
+
+        public override string GetDocumentationCommentId()
+        {
+            return CallImpl<string, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetDocumentationCommentId());
+        }
+
+        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
+        {
+            return CallImpl<string, ImportMetaModelSymbol, ImportMetaModelSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
+        }
+
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -241,10 +242,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> MetaModels => ((ImportMetaModelSymbol)__Wrapped).MetaModels;
 
 
+
         public virtual global::MetaDslx.CodeAnalysis.MetaSymbol Complete_MetaModelSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(MetaModelSymbols), diagnostics, cancellationToken);
         }
 
         public abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> Complete_MetaModels(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

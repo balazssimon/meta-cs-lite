@@ -7,6 +7,8 @@ public interface ModuleSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
         [__ModelProperty]
         NamespaceSymbol GlobalNamespace { get; }
 
+        NamespaceSymbol GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree);
+
         public static new class CompletionParts
         {
             public static readonly CompletionPart Start_GlobalNamespace = new CompletionPart(nameof(Start_GlobalNamespace));

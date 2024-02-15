@@ -163,7 +163,31 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             }
         }
 
-        public virtual void VisitOperation(OperationSyntax node)
+        public virtual void VisitOperationAlt1(OperationAlt1Syntax node)
+        {
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Operation));
+            this.Begin(__annot1, node);
+            try
+            {
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsPhase", values: ImmutableArray.Create<object?>(true));
+                this.Begin(__annot0, node.IsPhase);
+                try
+                {
+                    //this.VisitToken(node.IsPhase);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
+                this.Visit(node.Name);
+            }
+            finally
+            {
+                this.End(__annot1);
+            }
+        }
+
+        public virtual void VisitOperationAlt2(OperationAlt2Syntax node)
         {
             var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Operation));
             this.Begin(__annot1, node);
@@ -924,7 +948,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             }
         }
 
-        public virtual void VisitOperationBlock1(OperationBlock1Syntax node)
+        public virtual void VisitOperationAlt2Block1(OperationAlt2Block1Syntax node)
         {
             var parametersList = node.Parameters;
             for (var parametersIndex = 0; parametersIndex < parametersList.Count; ++parametersIndex)
@@ -965,7 +989,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             }
         }
 
-        public virtual void VisitOperationBlock1parametersBlock(OperationBlock1parametersBlockSyntax node)
+        public virtual void VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node)
         {
             var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Parameters");
             this.Begin(__annot0, node.Parameters);

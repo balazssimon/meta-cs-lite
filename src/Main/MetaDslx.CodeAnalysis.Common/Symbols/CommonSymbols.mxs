@@ -17,11 +17,13 @@ symbol Assembly
 {
     bool IsCorLibrary
     Module[] Modules
+    derived Namespace GlobalNamespace
 }
 
 symbol Module
 {
-    Namespace GlobalNamespace
+    Namespace GetRootNamespace(SyntaxTree syntaxTree)
+    derived Namespace GlobalNamespace
 }
 
 symbol Declaration

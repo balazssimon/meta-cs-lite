@@ -163,6 +163,10 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             {
                 if (prop.Phase is null) phs.Add(prop.Name);
             }
+            /*foreach (var op in symbol.Operations)
+            {
+                if (op.IsPhase) phs.Add(op.Name);
+            }*/
             foreach (var bs in GetBaseTypes(symbol))
             {
                 foreach (var phase in GetPhases(bs))
@@ -204,7 +208,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             if (symbol is null) return ImmutableArray<Operation>.Empty;
             if (_operations.TryGetValue(symbol, out var operations)) return operations;
             var ops = ArrayBuilder<Operation>.GetInstance();
-            ops.AddRange(symbol.Operations);
+            ops.AddRange(symbol.Operations/*.Where(o => !o.IsPhase)*/);
             foreach (var bs in GetBaseTypes(symbol))
             {
                 foreach (var op in bs.Operations)

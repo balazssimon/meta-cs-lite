@@ -302,7 +302,20 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             #endif
             return new PropertyGreen(SymbolSyntaxKind.Property, block1, type, name, block2, block3);
         }
-        internal OperationGreen Operation(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationBlock1Green block, __InternalSyntaxToken tRParen)
+        internal OperationAlt1Green OperationAlt1(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
+        {
+            #if DEBUG
+                if (isPhase is null) throw new __ArgumentNullException(nameof(isPhase));
+                if (isPhase.RawKind != (int)SymbolSyntaxKind.KPhase) throw new __ArgumentException(nameof(isPhase));
+                if (name is null) throw new __ArgumentNullException(nameof(name));
+                if (tLParen is null) throw new __ArgumentNullException(nameof(tLParen));
+                if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
+                if (tRParen is null) throw new __ArgumentNullException(nameof(tRParen));
+                if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
+            #endif
+            return new OperationAlt1Green(SymbolSyntaxKind.OperationAlt1, isPhase, name, tLParen, tRParen);
+        }
+        internal OperationAlt2Green OperationAlt2(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block, __InternalSyntaxToken tRParen)
         {
             #if DEBUG
                 if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
@@ -312,7 +325,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 if (tRParen is null) throw new __ArgumentNullException(nameof(tRParen));
                 if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
             #endif
-            return new OperationGreen(SymbolSyntaxKind.Operation, returnType, name, tLParen, block, tRParen);
+            return new OperationAlt2Green(SymbolSyntaxKind.OperationAlt2, returnType, name, tLParen, block, tRParen);
         }
         internal ParameterGreen Parameter(TypeReferenceGreen type, NameGreen name)
         {
@@ -774,15 +787,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal OperationBlock1Green OperationBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ParameterGreen> parameters)
+        internal OperationAlt2Block1Green OperationAlt2Block1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ParameterGreen> parameters)
         {
             #if DEBUG
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.OperationBlock1, parameters.Node, out hash);
-            if (cached != null) return (OperationBlock1Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.OperationAlt2Block1, parameters.Node, out hash);
+            if (cached != null) return (OperationAlt2Block1Green)cached;
         
-            var result = new OperationBlock1Green(SymbolSyntaxKind.OperationBlock1, parameters.Node);
+            var result = new OperationAlt2Block1Green(SymbolSyntaxKind.OperationAlt2Block1, parameters.Node);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -790,7 +803,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal OperationBlock1parametersBlockGreen OperationBlock1parametersBlock(__InternalSyntaxToken tComma, ParameterGreen parameters)
+        internal OperationAlt2Block1parametersBlockGreen OperationAlt2Block1parametersBlock(__InternalSyntaxToken tComma, ParameterGreen parameters)
         {
             #if DEBUG
                 if (tComma is null) throw new __ArgumentNullException(nameof(tComma));
@@ -798,10 +811,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 if (parameters is null) throw new __ArgumentNullException(nameof(parameters));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.OperationBlock1parametersBlock, tComma, parameters, out hash);
-            if (cached != null) return (OperationBlock1parametersBlockGreen)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.OperationAlt2Block1parametersBlock, tComma, parameters, out hash);
+            if (cached != null) return (OperationAlt2Block1parametersBlockGreen)cached;
         
-            var result = new OperationBlock1parametersBlockGreen(SymbolSyntaxKind.OperationBlock1parametersBlock, tComma, parameters);
+            var result = new OperationAlt2Block1parametersBlockGreen(SymbolSyntaxKind.OperationAlt2Block1parametersBlock, tComma, parameters);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

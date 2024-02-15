@@ -13,6 +13,7 @@ public interface ImportSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
         [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Symbols { get; }
 
+
         public static new class CompletionParts
         {
             public static readonly CompletionPart Start_Files = new CompletionPart(nameof(Start_Files));

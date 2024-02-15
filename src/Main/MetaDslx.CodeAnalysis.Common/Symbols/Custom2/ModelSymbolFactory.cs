@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -14,27 +15,40 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         {
         }
 
-        public override void AddSymbol(Symbol symbol)
+        public override string? GetName(IModelObject underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.MName;
         }
 
-        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override string? GetMetadataName(IModelObject underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.MName;
         }
 
         public override ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var mobj = container.ModelObject;
+            if (mobj is null || mobj.MChildren.Count == 0) return ImmutableArray<Symbol>.Empty;
+            var symbols = ArrayBuilder<Symbol>.GetInstance();
+            foreach (var child in mobj.MChildren)
+            {
+                var symbol = GetSymbol<Symbol>(container, child, diagnostics, cancellationToken);
+                if (symbol is not null) symbols.Add(symbol);
+            }
+            return symbols.ToImmutableAndFree();
         }
 
-        public override TSymbol? GetSymbol<TSymbol>(Symbol container, IModelObject underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
+        protected override TSymbol? CreateSymbol<TSymbol>(Symbol container, IModelObject underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
         {
             throw new NotImplementedException();
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

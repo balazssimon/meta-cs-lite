@@ -1,5 +1,8 @@
-using System.Threading;
+using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
+using System.Threading;
 using MetaDslx.Modeling;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
@@ -11,12 +14,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     {
         public override (ImmutableArray<TypeSymbol> BaseTypes, ImmutableArray<TypeSymbol> AllBaseTypes) Complete_BaseTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override ImmutableArray<DeclarationSymbol> Complete_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
+            SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(this, nameof(BaseTypes), diagnostics, cancellationToken);
+            throw new NotImplementedException();
         }
     }
 }

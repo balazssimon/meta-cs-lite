@@ -7,6 +7,7 @@ public interface AliasSymbol: DeclarationSymbol
         [__ModelProperty]
         Symbol Target { get; }
 
+
         public static new class CompletionParts
         {
             public static readonly CompletionPart Start_Target = new CompletionPart(nameof(Start_Target));

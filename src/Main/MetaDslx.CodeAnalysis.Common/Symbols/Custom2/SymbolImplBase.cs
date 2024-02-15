@@ -25,7 +25,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         private static ConcurrentDictionary<Type, IObjectPool> s_pools = new ConcurrentDictionary<Type, IObjectPool>();
         private IObjectPool _pool;
-        private Symbol? _wrapped;
+        private SymbolInst? _wrapped;
 
         protected SymbolImplBase()
         {
@@ -39,7 +39,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             var result = pool.Allocate();
             global::System.Diagnostics.Debug.Assert(result._wrapped is null);
             result._pool = pool;
-            result._wrapped = wrapped is SymbolImplBase sib ? sib._wrapped : wrapped;
+            if (wrapped is SymbolImplBase sib) result._wrapped = sib._wrapped;
+            else if (wrapped is SymbolInst si) result._wrapped = si;
+            else throw new ArgumentException("Parameter 'wrapped' must be a descendant of 'SymbolInst'", nameof(wrapped));
             return result;
         }
 
@@ -49,7 +51,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _pool?.Free(this);
         }
 
-        protected Symbol? __Wrapped => _wrapped;
+        internal protected SymbolInst? __Wrapped => _wrapped;
 
         public string Name => _wrapped.Name;
 

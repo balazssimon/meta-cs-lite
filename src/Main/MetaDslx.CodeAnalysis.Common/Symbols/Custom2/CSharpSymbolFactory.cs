@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -14,29 +15,43 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         {
         }
 
-        public override void AddSymbol(Symbol symbol)
+        public override string? GetName(ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.Name;
         }
 
-        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override string? GetMetadataName(ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.MetadataName;
         }
 
         public override ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var csharpSymbol = container.CSharpSymbol as INamespaceOrTypeSymbol;
+            if (csharpSymbol is null) return ImmutableArray<Symbol>.Empty;
+            var members = csharpSymbol.GetMembers();
+            if (members.Length == 0) return ImmutableArray<Symbol>.Empty;
+            var symbols = ArrayBuilder<Symbol>.GetInstance();
+            foreach (var child in members)
+            {
+                var symbol = GetSymbol<Symbol>(container, child, diagnostics, cancellationToken);
+                if (symbol is not null) symbols.Add(symbol);
+            }
+            return symbols.ToImmutableAndFree();
         }
 
-        public override TSymbol? GetSymbol<TSymbol>(Symbol container, ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
+        protected override TSymbol? CreateSymbol<TSymbol>(Symbol container, ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
         {
             throw new NotImplementedException();
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return ImmutableArray<TValue>.Empty;
+        }
+
+        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
         }
     }
 }

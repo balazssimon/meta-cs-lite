@@ -9,6 +9,7 @@ public interface ImportMetaModelSymbol: ImportSymbol
         [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> MetaModels { get; }
 
+
         public static new class CompletionParts
         {
             public static readonly CompletionPart Start_MetaModelSymbols = new CompletionPart(nameof(Start_MetaModelSymbols));

@@ -130,23 +130,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, TypeSymbol, TypeSymbolImpl>(impl => impl.ContainingNamespace);
 
-        public override __LexicalSortKey GetLexicalSortKey()
-        {
-            return CallImpl<__LexicalSortKey, TypeSymbol, TypeSymbolImpl>(impl => impl.GetLexicalSortKey());
-        }
-
-        public override bool HasUnsupportedMetadata => CallImpl<bool, TypeSymbol, TypeSymbolImpl>(impl => impl.HasUnsupportedMetadata);
-
-        public override string GetDocumentationCommentId()
-        {
-            return CallImpl<string, TypeSymbol, TypeSymbolImpl>(impl => impl.GetDocumentationCommentId());
-        }
-
-        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
-        {
-            return CallImpl<string, TypeSymbol, TypeSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
-        }
-
 
         public bool IsReferenceType
         {
@@ -194,6 +177,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _allBaseTypes;
             }
         }
+
+        public override __LexicalSortKey GetLexicalSortKey()
+        {
+            return CallImpl<__LexicalSortKey, TypeSymbol, TypeSymbolImpl>(impl => impl.GetLexicalSortKey());
+        }
+
+        public override bool HasUnsupportedMetadata => CallImpl<bool, TypeSymbol, TypeSymbolImpl>(impl => impl.HasUnsupportedMetadata);
+
+        public override string GetDocumentationCommentId()
+        {
+            return CallImpl<string, TypeSymbol, TypeSymbolImpl>(impl => impl.GetDocumentationCommentId());
+        }
+
+        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
+        {
+            return CallImpl<string, TypeSymbol, TypeSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
+        }
+
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -367,22 +368,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes => ((TypeSymbol)__Wrapped).AllBaseTypes;
 
 
+
         public virtual bool Complete_IsReferenceType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsReferenceType), diagnostics, cancellationToken);
         }
 
         public virtual bool Complete_IsValueType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsValueType), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> Complete_TypeParameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>.Empty;
+            return SymbolFactory.GetSymbolPropertyValues<TypeParameterSymbol>(this, nameof(TypeParameters), diagnostics, cancellationToken);
         }
 
         public abstract (global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes) Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

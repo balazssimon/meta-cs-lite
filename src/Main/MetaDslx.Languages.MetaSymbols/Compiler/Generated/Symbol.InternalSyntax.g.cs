@@ -1536,16 +1536,149 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    internal class OperationGreen : GreenSyntaxNode
+    internal abstract class OperationGreen : GreenSyntaxNode
     {
-        internal static new readonly OperationGreen __Missing = new OperationGreen();
+        internal static readonly OperationGreen __Missing = OperationAlt1Green.__Missing;
+    
+        protected OperationGreen(SymbolSyntaxKind kind, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+        }
+    }
+    internal class OperationAlt1Green : OperationGreen
+    {
+        internal static new readonly OperationAlt1Green __Missing = new OperationAlt1Green();
+        private __InternalSyntaxToken _isPhase;
+        private NameGreen _name;
+        private __InternalSyntaxToken _tLParen;
+        private __InternalSyntaxToken _tRParen;
+    
+        public OperationAlt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
+            : base(kind, null, null)
+        {
+            SlotCount = 4;
+            if (isPhase != null)
+            {
+                AdjustFlagsAndWidth(isPhase);
+                _isPhase = isPhase;
+            }
+            if (name != null)
+            {
+                AdjustFlagsAndWidth(name);
+                _name = name;
+            }
+            if (tLParen != null)
+            {
+                AdjustFlagsAndWidth(tLParen);
+                _tLParen = tLParen;
+            }
+            if (tRParen != null)
+            {
+                AdjustFlagsAndWidth(tRParen);
+                _tRParen = tRParen;
+            }
+        }
+    
+        public OperationAlt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 4;
+            if (isPhase != null)
+            {
+                AdjustFlagsAndWidth(isPhase);
+                _isPhase = isPhase;
+            }
+            if (name != null)
+            {
+                AdjustFlagsAndWidth(name);
+                _name = name;
+            }
+            if (tLParen != null)
+            {
+                AdjustFlagsAndWidth(tLParen);
+                _tLParen = tLParen;
+            }
+            if (tRParen != null)
+            {
+                AdjustFlagsAndWidth(tRParen);
+                _tRParen = tRParen;
+            }
+        }
+    
+        private OperationAlt1Green()
+            : base((SymbolSyntaxKind)SymbolSyntaxKind.OperationAlt1, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken IsPhase { get { return _isPhase; } }
+        public NameGreen Name { get { return _name; } }
+        public __InternalSyntaxToken TLParen { get { return _tLParen; } }
+        public __InternalSyntaxToken TRParen { get { return _tRParen; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.OperationAlt1Syntax(this, (SymbolSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _isPhase;
+                case 1: return _name;
+                case 2: return _tLParen;
+                case 3: return _tRParen;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitOperationAlt1Green(this);
+    
+        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitOperationAlt1Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public OperationAlt1Green Update(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
+        {
+            if (_isPhase != isPhase || _name != name || _tLParen != tLParen || _tRParen != tRParen)
+            {
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt1(isPhase, name, tLParen, tRParen);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (OperationAlt1Green)newNode;
+            }
+            return this;
+        }
+    }
+    internal class OperationAlt2Green : OperationGreen
+    {
+        internal static new readonly OperationAlt2Green __Missing = new OperationAlt2Green();
         private TypeReferenceGreen _returnType;
         private NameGreen _name;
         private __InternalSyntaxToken _tLParen;
-        private OperationBlock1Green _block;
+        private OperationAlt2Block1Green _block;
         private __InternalSyntaxToken _tRParen;
     
-        public OperationGreen(SymbolSyntaxKind kind, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationBlock1Green block, __InternalSyntaxToken tRParen)
+        public OperationAlt2Green(SymbolSyntaxKind kind, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block, __InternalSyntaxToken tRParen)
             : base(kind, null, null)
         {
             SlotCount = 5;
@@ -1576,7 +1709,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public OperationGreen(SymbolSyntaxKind kind, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationBlock1Green block, __InternalSyntaxToken tRParen, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public OperationAlt2Green(SymbolSyntaxKind kind, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block, __InternalSyntaxToken tRParen, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 5;
@@ -1607,8 +1740,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        private OperationGreen()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.Operation, null, null)
+        private OperationAlt2Green()
+            : base((SymbolSyntaxKind)SymbolSyntaxKind.OperationAlt2, null, null)
         {
             this.flags &= ~NodeFlags.IsNotMissing;
         }
@@ -1616,12 +1749,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         public TypeReferenceGreen ReturnType { get { return _returnType; } }
         public NameGreen Name { get { return _name; } }
         public __InternalSyntaxToken TLParen { get { return _tLParen; } }
-        public OperationBlock1Green Block { get { return _block; } }
+        public OperationAlt2Block1Green Block { get { return _block; } }
         public __InternalSyntaxToken TRParen { get { return _tRParen; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.OperationSyntax(this, (SymbolSyntaxNode)parent, position);
+            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.OperationAlt2Syntax(this, (SymbolSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1637,38 +1770,38 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitOperationGreen(this);
+        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitOperationAlt2Green(this);
     
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitOperationGreen(this);
+        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitOperationAlt2Green(this);
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new OperationGreen(this.Kind, _returnType, _name, _tLParen, _block, _tRParen, diagnostics, this.GetAnnotations());
+            return new OperationAlt2Green(this.Kind, _returnType, _name, _tLParen, _block, _tRParen, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new OperationGreen(this.Kind, _returnType, _name, _tLParen, _block, _tRParen, this.GetDiagnostics(), annotations);
+            return new OperationAlt2Green(this.Kind, _returnType, _name, _tLParen, _block, _tRParen, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new OperationGreen(this.Kind, _returnType, _name, _tLParen, _block, _tRParen, this.GetDiagnostics(), this.GetAnnotations());
+            return new OperationAlt2Green(this.Kind, _returnType, _name, _tLParen, _block, _tRParen, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public OperationGreen Update(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationBlock1Green block, __InternalSyntaxToken tRParen)
+        public OperationAlt2Green Update(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block, __InternalSyntaxToken tRParen)
         {
             if (_returnType != returnType || _name != name || _tLParen != tLParen || _block != block || _tRParen != tRParen)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Operation(returnType, name, tLParen, block, tRParen);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2(returnType, name, tLParen, block, tRParen);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
-                return (OperationGreen)newNode;
+                return (OperationAlt2Green)newNode;
             }
             return this;
         }
@@ -4036,12 +4169,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    internal class OperationBlock1Green : GreenSyntaxNode
+    internal class OperationAlt2Block1Green : GreenSyntaxNode
     {
-        internal static new readonly OperationBlock1Green __Missing = new OperationBlock1Green();
+        internal static new readonly OperationAlt2Block1Green __Missing = new OperationAlt2Block1Green();
         private __GreenNode _parameters;
     
-        public OperationBlock1Green(SymbolSyntaxKind kind, __GreenNode parameters)
+        public OperationAlt2Block1Green(SymbolSyntaxKind kind, __GreenNode parameters)
             : base(kind, null, null)
         {
             SlotCount = 1;
@@ -4052,7 +4185,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public OperationBlock1Green(SymbolSyntaxKind kind, __GreenNode parameters, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public OperationAlt2Block1Green(SymbolSyntaxKind kind, __GreenNode parameters, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 1;
@@ -4063,8 +4196,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        private OperationBlock1Green()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.OperationBlock1, null, null)
+        private OperationAlt2Block1Green()
+            : base((SymbolSyntaxKind)SymbolSyntaxKind.OperationAlt2Block1, null, null)
         {
             this.flags &= ~NodeFlags.IsNotMissing;
         }
@@ -4073,7 +4206,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.OperationBlock1Syntax(this, (SymbolSyntaxNode)parent, position);
+            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.OperationAlt2Block1Syntax(this, (SymbolSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4085,49 +4218,49 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitOperationBlock1Green(this);
+        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitOperationAlt2Block1Green(this);
     
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitOperationBlock1Green(this);
+        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitOperationAlt2Block1Green(this);
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new OperationBlock1Green(this.Kind, _parameters, diagnostics, this.GetAnnotations());
+            return new OperationAlt2Block1Green(this.Kind, _parameters, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new OperationBlock1Green(this.Kind, _parameters, this.GetDiagnostics(), annotations);
+            return new OperationAlt2Block1Green(this.Kind, _parameters, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new OperationBlock1Green(this.Kind, _parameters, this.GetDiagnostics(), this.GetAnnotations());
+            return new OperationAlt2Block1Green(this.Kind, _parameters, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public OperationBlock1Green Update(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ParameterGreen> parameters)
+        public OperationAlt2Block1Green Update(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ParameterGreen> parameters)
         {
             if (_parameters != parameters.Node)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationBlock1(parameters);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2Block1(parameters);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
-                return (OperationBlock1Green)newNode;
+                return (OperationAlt2Block1Green)newNode;
             }
             return this;
         }
     }
-    internal class OperationBlock1parametersBlockGreen : GreenSyntaxNode
+    internal class OperationAlt2Block1parametersBlockGreen : GreenSyntaxNode
     {
-        internal static new readonly OperationBlock1parametersBlockGreen __Missing = new OperationBlock1parametersBlockGreen();
+        internal static new readonly OperationAlt2Block1parametersBlockGreen __Missing = new OperationAlt2Block1parametersBlockGreen();
         private __InternalSyntaxToken _tComma;
         private ParameterGreen _parameters;
     
-        public OperationBlock1parametersBlockGreen(SymbolSyntaxKind kind, __InternalSyntaxToken tComma, ParameterGreen parameters)
+        public OperationAlt2Block1parametersBlockGreen(SymbolSyntaxKind kind, __InternalSyntaxToken tComma, ParameterGreen parameters)
             : base(kind, null, null)
         {
             SlotCount = 2;
@@ -4143,7 +4276,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public OperationBlock1parametersBlockGreen(SymbolSyntaxKind kind, __InternalSyntaxToken tComma, ParameterGreen parameters, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public OperationAlt2Block1parametersBlockGreen(SymbolSyntaxKind kind, __InternalSyntaxToken tComma, ParameterGreen parameters, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 2;
@@ -4159,8 +4292,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        private OperationBlock1parametersBlockGreen()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.OperationBlock1parametersBlock, null, null)
+        private OperationAlt2Block1parametersBlockGreen()
+            : base((SymbolSyntaxKind)SymbolSyntaxKind.OperationAlt2Block1parametersBlock, null, null)
         {
             this.flags &= ~NodeFlags.IsNotMissing;
         }
@@ -4170,7 +4303,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.OperationBlock1parametersBlockSyntax(this, (SymbolSyntaxNode)parent, position);
+            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.OperationAlt2Block1parametersBlockSyntax(this, (SymbolSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4183,38 +4316,38 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitOperationBlock1parametersBlockGreen(this);
+        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitOperationAlt2Block1parametersBlockGreen(this);
     
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitOperationBlock1parametersBlockGreen(this);
+        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitOperationAlt2Block1parametersBlockGreen(this);
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new OperationBlock1parametersBlockGreen(this.Kind, _tComma, _parameters, diagnostics, this.GetAnnotations());
+            return new OperationAlt2Block1parametersBlockGreen(this.Kind, _tComma, _parameters, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new OperationBlock1parametersBlockGreen(this.Kind, _tComma, _parameters, this.GetDiagnostics(), annotations);
+            return new OperationAlt2Block1parametersBlockGreen(this.Kind, _tComma, _parameters, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new OperationBlock1parametersBlockGreen(this.Kind, _tComma, _parameters, this.GetDiagnostics(), this.GetAnnotations());
+            return new OperationAlt2Block1parametersBlockGreen(this.Kind, _tComma, _parameters, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public OperationBlock1parametersBlockGreen Update(__InternalSyntaxToken tComma, ParameterGreen parameters)
+        public OperationAlt2Block1parametersBlockGreen Update(__InternalSyntaxToken tComma, ParameterGreen parameters)
         {
             if (_tComma != tComma || _parameters != parameters)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationBlock1parametersBlock(tComma, parameters);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2Block1parametersBlock(tComma, parameters);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
-                return (OperationBlock1parametersBlockGreen)newNode;
+                return (OperationAlt2Block1parametersBlockGreen)newNode;
             }
             return this;
         }

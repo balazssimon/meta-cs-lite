@@ -165,20 +165,32 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 return _factory.Property(block1, type, name, block2, block3);
             }
             
-            public override GreenNode? VisitPr_Operation(SymbolParser.Pr_OperationContext? context)
+            public override GreenNode? VisitPr_OperationAlt1(SymbolParser.Pr_OperationAlt1Context? context)
             {
-                if (context == null) return OperationGreen.__Missing;
-                TypeReferenceGreen? returnType = null;
-                if (context.E_returnType is not null) returnType = (TypeReferenceGreen?)this.Visit(context.E_returnType) ?? TypeReferenceGreen.__Missing;
-                else returnType = TypeReferenceGreen.__Missing;
+                if (context == null) return OperationAlt1Green.__Missing;
+                var isPhase = (InternalSyntaxToken?)this.VisitTerminal(context.E_isPhase, SymbolSyntaxKind.KPhase);
                 NameGreen? name = null;
                 if (context.E_Name is not null) name = (NameGreen?)this.Visit(context.E_Name) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
                 var tLParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TLParen, SymbolSyntaxKind.TLParen);
-                OperationBlock1Green? block = null;
-                if (context.E_Block is not null) block = (OperationBlock1Green?)this.Visit(context.E_Block);
                 var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRParen, SymbolSyntaxKind.TRParen);
-                return _factory.Operation(returnType, name, tLParen, block, tRParen);
+                return _factory.OperationAlt1(isPhase, name, tLParen, tRParen);
+            }
+            
+            public override GreenNode? VisitPr_OperationAlt2(SymbolParser.Pr_OperationAlt2Context? context)
+            {
+                if (context == null) return OperationAlt2Green.__Missing;
+                TypeReferenceGreen? returnType = null;
+                if (context.E_returnType is not null) returnType = (TypeReferenceGreen?)this.Visit(context.E_returnType) ?? TypeReferenceGreen.__Missing;
+                else returnType = TypeReferenceGreen.__Missing;
+                NameGreen? name = null;
+                if (context.E_Name1 is not null) name = (NameGreen?)this.Visit(context.E_Name1) ?? NameGreen.__Missing;
+                else name = NameGreen.__Missing;
+                var tLParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TLParen1, SymbolSyntaxKind.TLParen);
+                OperationAlt2Block1Green? block = null;
+                if (context.E_Block is not null) block = (OperationAlt2Block1Green?)this.Visit(context.E_Block);
+                var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRParen1, SymbolSyntaxKind.TRParen);
+                return _factory.OperationAlt2(returnType, name, tLParen, block, tRParen);
             }
             
             public override GreenNode? VisitPr_Parameter(SymbolParser.Pr_ParameterContext? context)
@@ -494,9 +506,9 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 return _factory.PropertyBlock3(kPhase, phase);
             }
             
-            public override GreenNode? VisitPr_OperationBlock1(SymbolParser.Pr_OperationBlock1Context? context)
+            public override GreenNode? VisitPr_OperationAlt2Block1(SymbolParser.Pr_OperationAlt2Block1Context? context)
             {
-                if (context == null) return OperationBlock1Green.__Missing;
+                if (context == null) return OperationAlt2Block1Green.__Missing;
                 var parametersBuilder = _pool.AllocateSeparated<ParameterGreen>(reversed: false);
                 var E_parameters1Context = context.E_parameters1;
                 if (E_parameters1Context is not null) parametersBuilder.Add((ParameterGreen?)this.Visit(E_parameters1Context) ?? ParameterGreen.__Missing);
@@ -520,17 +532,17 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 }
                 var parameters = parametersBuilder.ToList();
                 _pool.Free(parametersBuilder);
-                return _factory.OperationBlock1(parameters);
+                return _factory.OperationAlt2Block1(parameters);
             }
             
-            public override GreenNode? VisitPr_OperationBlock1parametersBlock(SymbolParser.Pr_OperationBlock1parametersBlockContext? context)
+            public override GreenNode? VisitPr_OperationAlt2Block1parametersBlock(SymbolParser.Pr_OperationAlt2Block1parametersBlockContext? context)
             {
-                if (context == null) return OperationBlock1parametersBlockGreen.__Missing;
+                if (context == null) return OperationAlt2Block1parametersBlockGreen.__Missing;
                 var tComma = (InternalSyntaxToken?)this.VisitTerminal(context.E_TComma1, SymbolSyntaxKind.TComma);
                 ParameterGreen? parameters = null;
                 if (context.E_parameters2 is not null) parameters = (ParameterGreen?)this.Visit(context.E_parameters2) ?? ParameterGreen.__Missing;
                 else parameters = ParameterGreen.__Missing;
-                return _factory.OperationBlock1parametersBlock(tComma, parameters);
+                return _factory.OperationAlt2Block1parametersBlock(tComma, parameters);
             }
             
             public override GreenNode? VisitPr_TypeReferenceBlock1(SymbolParser.Pr_TypeReferenceBlock1Context? context)

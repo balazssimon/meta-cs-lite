@@ -5,6 +5,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 public interface NamespaceSymbol: DeclarationSymbol
     {
 
+
         public static new class CompletionParts
         {
             public static readonly CompletionPart Start_DeclaredAccessibility = new CompletionPart(nameof(Start_DeclaredAccessibility));

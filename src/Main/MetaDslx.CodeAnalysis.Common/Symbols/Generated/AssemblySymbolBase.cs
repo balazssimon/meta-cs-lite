@@ -28,6 +28,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     {
         private bool _isCorLibrary;
         private global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> _modules;
+        private NamespaceSymbol _globalNamespace;
 
         public AssemblySymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -49,32 +50,36 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
-        public AssemblySymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules, NamespaceSymbol globalNamespace) 
             : base(container, declaration, modelObject, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
             _modules = modules;
+            _globalNamespace = globalNamespace;
         }
 
-        public AssemblySymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules, NamespaceSymbol globalNamespace) 
             : base(container, modelObject, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
             _modules = modules;
+            _globalNamespace = globalNamespace;
         }
 
-        public AssemblySymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules, NamespaceSymbol globalNamespace) 
             : base(container, csharpSymbol, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
             _modules = modules;
+            _globalNamespace = globalNamespace;
         }
 
-        public AssemblySymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules) 
+        public AssemblySymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isCorLibrary, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules, NamespaceSymbol globalNamespace) 
             : base(container, compilation, modelObject, name, metadataName, attributes)
         {
             _isCorLibrary = isCorLibrary;
             _modules = modules;
+            _globalNamespace = globalNamespace;
         }
 
         public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, AssemblySymbol, AssemblySymbolImpl>(impl => impl.SymbolFactory);
@@ -90,23 +95,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public override __TypeSymbol? ContainingType => CallImpl<__TypeSymbol, AssemblySymbol, AssemblySymbolImpl>(impl => impl.ContainingType);
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, AssemblySymbol, AssemblySymbolImpl>(impl => impl.ContainingNamespace);
-
-        public override __LexicalSortKey GetLexicalSortKey()
-        {
-            return CallImpl<__LexicalSortKey, AssemblySymbol, AssemblySymbolImpl>(impl => impl.GetLexicalSortKey());
-        }
-
-        public override bool HasUnsupportedMetadata => CallImpl<bool, AssemblySymbol, AssemblySymbolImpl>(impl => impl.HasUnsupportedMetadata);
-
-        public override string GetDocumentationCommentId()
-        {
-            return CallImpl<string, AssemblySymbol, AssemblySymbolImpl>(impl => impl.GetDocumentationCommentId());
-        }
-
-        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
-        {
-            return CallImpl<string, AssemblySymbol, AssemblySymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
-        }
 
 
         public bool IsCorLibrary
@@ -126,6 +114,33 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _modules;
             }
         }
+
+        public NamespaceSymbol GlobalNamespace
+        {
+            get
+            {
+                this.ForceComplete(AssemblySymbol.CompletionParts.Finish_GlobalNamespace, null, default);
+                return _globalNamespace;
+            }
+        }
+
+        public override __LexicalSortKey GetLexicalSortKey()
+        {
+            return CallImpl<__LexicalSortKey, AssemblySymbol, AssemblySymbolImpl>(impl => impl.GetLexicalSortKey());
+        }
+
+        public override bool HasUnsupportedMetadata => CallImpl<bool, AssemblySymbol, AssemblySymbolImpl>(impl => impl.HasUnsupportedMetadata);
+
+        public override string GetDocumentationCommentId()
+        {
+            return CallImpl<string, AssemblySymbol, AssemblySymbolImpl>(impl => impl.GetDocumentationCommentId());
+        }
+
+        public override string GetDocumentationCommentXml(__CultureInfo preferredCulture = null, bool expandIncludes = false, __CancellationToken cancellationToken = default)
+        {
+            return CallImpl<string, AssemblySymbol, AssemblySymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
+        }
+
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -153,6 +168,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(AssemblySymbol.CompletionParts.Finish_Modules);
+                }
+                return true;
+            }
+            else 
+            if (incompletePart == AssemblySymbol.CompletionParts.Start_GlobalNamespace || incompletePart == AssemblySymbol.CompletionParts.Finish_GlobalNamespace)
+            {
+                if (NotePartComplete(AssemblySymbol.CompletionParts.Start_GlobalNamespace))
+                {
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Complete_GlobalNamespace(diagnostics, cancellationToken);
+                    _globalNamespace = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(AssemblySymbol.CompletionParts.Finish_GlobalNamespace);
                 }
                 return true;
             }
@@ -213,24 +242,31 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
             return CallImpl<global::System.Collections.Immutable.ImmutableArray<ModuleSymbol>, AssemblySymbol, AssemblySymbolImpl>(impl => impl.Complete_Modules(diagnostics, cancellationToken));
         }
+
+        protected virtual NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return CallImpl<NamespaceSymbol, AssemblySymbol, AssemblySymbolImpl>(impl => impl.Complete_GlobalNamespace(diagnostics, cancellationToken));
+        }
     }
 
     public abstract class AssemblySymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl, AssemblySymbol
     {
         public bool IsCorLibrary => ((AssemblySymbol)__Wrapped).IsCorLibrary;
         public global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules => ((AssemblySymbol)__Wrapped).Modules;
+        public NamespaceSymbol GlobalNamespace => ((AssemblySymbol)__Wrapped).GlobalNamespace;
+
 
 
         public virtual bool Complete_IsCorLibrary(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsCorLibrary), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Complete_Modules(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return global::System.Collections.Immutable.ImmutableArray<ModuleSymbol>.Empty;
+            return SymbolFactory.GetSymbolPropertyValues<ModuleSymbol>(this, nameof(Modules), diagnostics, cancellationToken);
         }
+
+        public abstract NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

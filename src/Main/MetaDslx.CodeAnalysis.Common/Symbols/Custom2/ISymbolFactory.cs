@@ -12,24 +12,18 @@ namespace MetaDslx.CodeAnalysis.Symbols
         ModuleSymbol ModuleSymbol { get; }
 
         void AddSymbol(Symbol symbol);
-
+        string? GetName(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        string? GetMetadataName(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         TSymbol? GetSymbol<TSymbol>(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol;
-
-        ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-
-        ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-
-        void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-
         ImmutableArray<TSymbol> GetSymbols<TSymbol>(Symbol container, IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol;
-
-        ImmutableArray<ImportSymbol> GetImportSymbols(Symbol container);
-
+        ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        ImmutableArray<ImportSymbol> GetImportSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         ImmutableArray<DeclarationSymbol> GetMemberSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-
         TValue GetSymbolPropertyValue<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken);
 
     }
 }

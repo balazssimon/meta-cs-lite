@@ -5,7 +5,10 @@
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<RootNamespace>MetaDslx.CodeAnalysis</RootNamespace>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+		<MetaDslxBootstrap>false</MetaDslxBootstrap>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<NoWarn>$(NoWarn);nullable</NoWarn>
 	</PropertyGroup>
@@ -43,26 +46,29 @@
 		<AdditionalFiles Include="Symbols\*.mxs" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Remove="Symbols\Original\**" />
-		<None Remove="Symbols\Original\**" />
-		<Compile Remove="Symbols\CSharp\**" />
-		<None Remove="Symbols\CSharp\**" />
-		<Compile Remove="Symbols\Errors\**" />
-		<None Remove="Symbols\Errors\**" />
-		<Compile Remove="Symbols\Fixed\**" />
-		<None Remove="Symbols\Fixed\**" />
-		<Compile Remove="Symbols\Model\**" />
-		<None Remove="Symbols\Model\**" />
-		<Compile Remove="Symbols\Source\**" />
-		<None Remove="Symbols\Source\**" />
-		<!--
-		<Compile Remove="Symbols\Generated\**" />
-		<None Remove="Symbols\Generated\**" />
-		<Compile Remove="Symbols\Custom\**" />
-		<None Remove="Symbols\Custom\**" />
-		<Compile Remove="Symbols\Custom2\**" />
-		<None Remove="Symbols\Custom2\**" />
-		-->
+		<Compile Remove="Symbols\Original\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Original\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="Symbols\CSharp\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\CSharp\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="Symbols\Errors\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Errors\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="Symbols\Fixed\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Fixed\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="Symbols\Model\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Model\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="Symbols\Source\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Source\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="CommonOld\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="CommonOld\**" Condition="!$(MetaDslxBootstrap)" />
+
+		<Compile Remove="Symbols\Generated\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Generated\**" Condition="$(MetaDslxBootstrap)" />
+		<Compile Remove="Symbols\Custom\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Custom\**" Condition="$(MetaDslxBootstrap)" />
+		<Compile Remove="Symbols\Custom2\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\Custom2\**" Condition="$(MetaDslxBootstrap)" />
+		<Compile Remove="CommonNew\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="CommonNew\**" Condition="$(MetaDslxBootstrap)" />
 
 		<Compile Remove="Symbols\Impl\**" />
 		<None Remove="Symbols\Impl\**" />

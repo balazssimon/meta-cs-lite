@@ -305,7 +305,24 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.Property(default, type, name, default, default);
         }
 
-        public OperationSyntax Operation(TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationBlock1Syntax block, __SyntaxToken tRParen)
+        public OperationAlt1Syntax OperationAlt1(__SyntaxToken isPhase, NameSyntax name, __SyntaxToken tLParen, __SyntaxToken tRParen)
+        {
+            if (isPhase.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isPhase));
+            if (isPhase.RawKind != (int)SymbolSyntaxKind.KPhase) throw new __ArgumentException(nameof(isPhase));
+            if (name is null) throw new __ArgumentNullException(nameof(name));
+            if (tLParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tLParen));
+            if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
+            if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
+            if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
+            return (OperationAlt1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt1((__InternalSyntaxToken)isPhase.Node, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (__InternalSyntaxToken)tRParen.Node).CreateRed();
+        }
+        
+        public OperationAlt1Syntax OperationAlt1(NameSyntax name)
+        {
+            return this.OperationAlt1(this.Token(SymbolSyntaxKind.KPhase), name, this.Token(SymbolSyntaxKind.TLParen), this.Token(SymbolSyntaxKind.TRParen));
+        }
+
+        public OperationAlt2Syntax OperationAlt2(TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationAlt2Block1Syntax block, __SyntaxToken tRParen)
         {
             if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
             if (name is null) throw new __ArgumentNullException(nameof(name));
@@ -313,12 +330,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
             if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
             if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-            return (OperationSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Operation((InternalSyntax.TypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.OperationBlock1Green)block.Green, (__InternalSyntaxToken)tRParen.Node).CreateRed();
+            return (OperationAlt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2((InternalSyntax.TypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.OperationAlt2Block1Green)block.Green, (__InternalSyntaxToken)tRParen.Node).CreateRed();
         }
         
-        public OperationSyntax Operation(TypeReferenceSyntax returnType, NameSyntax name)
+        public OperationAlt2Syntax OperationAlt2(TypeReferenceSyntax returnType, NameSyntax name)
         {
-            return this.Operation(returnType, name, this.Token(SymbolSyntaxKind.TLParen), default, this.Token(SymbolSyntaxKind.TRParen));
+            return this.OperationAlt2(returnType, name, this.Token(SymbolSyntaxKind.TLParen), default, this.Token(SymbolSyntaxKind.TRParen));
         }
 
         public ParameterSyntax Parameter(TypeReferenceSyntax type, NameSyntax name)
@@ -540,22 +557,22 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.PropertyBlock3(this.Token(SymbolSyntaxKind.KPhase), phase);
         }
 
-        public OperationBlock1Syntax OperationBlock1(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParameterSyntax> parameters)
+        public OperationAlt2Block1Syntax OperationAlt2Block1(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParameterSyntax> parameters)
         {
-            return (OperationBlock1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationBlock1(__GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.ParameterGreen>(parameters.Node, reversed: false)).CreateRed();
+            return (OperationAlt2Block1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2Block1(__GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.ParameterGreen>(parameters.Node, reversed: false)).CreateRed();
         }
 
-        public OperationBlock1parametersBlockSyntax OperationBlock1parametersBlock(__SyntaxToken tComma, ParameterSyntax parameters)
+        public OperationAlt2Block1parametersBlockSyntax OperationAlt2Block1parametersBlock(__SyntaxToken tComma, ParameterSyntax parameters)
         {
             if (tComma.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tComma));
             if (tComma.RawKind != (int)SymbolSyntaxKind.TComma) throw new __ArgumentException(nameof(tComma));
             if (parameters is null) throw new __ArgumentNullException(nameof(parameters));
-            return (OperationBlock1parametersBlockSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationBlock1parametersBlock((__InternalSyntaxToken)tComma.Node, (InternalSyntax.ParameterGreen)parameters.Green).CreateRed();
+            return (OperationAlt2Block1parametersBlockSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2Block1parametersBlock((__InternalSyntaxToken)tComma.Node, (InternalSyntax.ParameterGreen)parameters.Green).CreateRed();
         }
         
-        public OperationBlock1parametersBlockSyntax OperationBlock1parametersBlock(ParameterSyntax parameters)
+        public OperationAlt2Block1parametersBlockSyntax OperationAlt2Block1parametersBlock(ParameterSyntax parameters)
         {
-            return this.OperationBlock1parametersBlock(this.Token(SymbolSyntaxKind.TComma), parameters);
+            return this.OperationAlt2Block1parametersBlock(this.Token(SymbolSyntaxKind.TComma), parameters);
         }
 
         public TypeReferenceBlock1Syntax TypeReferenceBlock1(__SyntaxToken isNullable)
@@ -604,7 +621,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 typeof(UsingSyntax),
                 typeof(SymbolSyntax),
                 typeof(PropertySyntax),
-                typeof(OperationSyntax),
+                typeof(OperationAlt1Syntax),
+                typeof(OperationAlt2Syntax),
                 typeof(ParameterSyntax),
                 typeof(TypeReferenceSyntax),
                 typeof(ArrayDimensionsSyntax),
@@ -631,8 +649,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 typeof(PropertyBlock1Alt2Syntax),
                 typeof(PropertyBlock2Syntax),
                 typeof(PropertyBlock3Syntax),
-                typeof(OperationBlock1Syntax),
-                typeof(OperationBlock1parametersBlockSyntax),
+                typeof(OperationAlt2Block1Syntax),
+                typeof(OperationAlt2Block1parametersBlockSyntax),
                 typeof(TypeReferenceBlock1Syntax),
                 typeof(ArrayDimensionsBlock1Syntax),
                 typeof(QualifierIdentifierBlockSyntax),

@@ -15,6 +15,7 @@ public interface TypeSymbol: DeclarationSymbol
         [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes { get; }
 
+
         public static new class CompletionParts
         {
             public static readonly CompletionPart Start_IsReferenceType = new CompletionPart(nameof(Start_IsReferenceType));

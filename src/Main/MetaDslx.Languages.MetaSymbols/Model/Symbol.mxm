@@ -44,6 +44,7 @@ class Property : Declaration
 
 class Operation: Declaration
 {
+	bool IsPhase;
 	TypeReference ReturnType
 	contains Parameter[] Parameters redefines Declaration.Declarations
 }

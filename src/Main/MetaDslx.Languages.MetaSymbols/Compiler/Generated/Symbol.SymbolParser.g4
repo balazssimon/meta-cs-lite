@@ -18,7 +18,8 @@ pr_Property
     :  E_Block=pr_PropertyBlock1?  E_type=pr_TypeReference  E_Name=pr_Name  E_Block1=pr_PropertyBlock2?  E_Block2=pr_PropertyBlock3?
     ;
 pr_Operation
-    :  E_returnType=pr_TypeReference  E_Name=pr_Name  E_TLParen=LR_TLParen  E_Block=pr_OperationBlock1?  E_TRParen=LR_TRParen
+    :  E_isPhase=LR_KPhase  E_Name=pr_Name  E_TLParen=LR_TLParen  E_TRParen=LR_TRParen #pr_OperationAlt1
+    |  E_returnType=pr_TypeReference  E_Name1=pr_Name  E_TLParen1=LR_TLParen  E_Block=pr_OperationAlt2Block1?  E_TRParen1=LR_TRParen #pr_OperationAlt2
     ;
 pr_Parameter
     :  E_type=pr_TypeReference  E_Name=pr_Name
@@ -82,10 +83,10 @@ pr_PropertyBlock2
 pr_PropertyBlock3
     :  E_KPhase=LR_KPhase  E_phase=pr_Identifier
     ;
-pr_OperationBlock1
+pr_OperationAlt2Block1
     :   E_parameters1=pr_Parameter(E_TComma1+=LR_TComma E_parameters2+=pr_Parameter)*
     ;
-pr_OperationBlock1parametersBlock
+pr_OperationAlt2Block1parametersBlock
     :  E_TComma1=LR_TComma  E_parameters2=pr_Parameter
     ;
 pr_TypeReferenceBlock1

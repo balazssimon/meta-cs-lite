@@ -13,29 +13,33 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
         {
         }
 
-        public override void AddSymbol(Symbol symbol)
+        public override string? GetName(ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.Name;
         }
 
-        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override string? GetMetadataName(ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.MetadataName;
         }
 
         public override ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return ImmutableArray<Symbol>.Empty;
         }
 
-        public override TSymbol? GetSymbol<TSymbol>(Symbol container, ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
+        protected override TSymbol? CreateSymbol<TSymbol>(Symbol container, ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
         {
             throw new NotImplementedException();
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return ImmutableArray<TValue>.Empty;
+        }
+
+        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
         }
     }
 }

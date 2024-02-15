@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
@@ -13,24 +14,38 @@ namespace MetaDslx.CodeAnalysis.Symbols
     public abstract class SymbolFactory<T> : ISymbolFactory
     {
         private readonly ModuleSymbol _moduleSymbol;
+        private readonly ConditionalWeakTable<object, Symbol> _symbols;
 
         public SymbolFactory(ModuleSymbol moduleSymbol)
         {
             _moduleSymbol = moduleSymbol;
+            _symbols = new ConditionalWeakTable<object, Symbol>();
         }
 
         public ModuleSymbol ModuleSymbol => _moduleSymbol;
 
-        public abstract void AddSymbol(Symbol symbol);
+        public void AddSymbol(Symbol symbol)
+        {
+            if (symbol is SymbolInst si) _symbols.Add(si._underlyingObject, symbol);
+            else if (symbol is SymbolImpl sim) _symbols.Add(sim.__Wrapped._underlyingObject, symbol);
+        }
 
-        public abstract TSymbol? GetSymbol<TSymbol>(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-            where TSymbol : Symbol;
-
-        public abstract ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-
-        public abstract ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-
-        public abstract void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        public TSymbol? GetSymbol<TSymbol>(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : Symbol
+        {
+            if (_symbols.TryGetValue(underlyingObject, out var symbol))
+            {
+                if (symbol is TSymbol tsymbol) return tsymbol;
+                else return default;
+            }
+            symbol = CreateSymbol<TSymbol>(container, underlyingObject, diagnostics, cancellationToken);
+            if (symbol is not null)
+            {
+                _symbols.Add(underlyingObject, symbol);
+                if (symbol is TSymbol tsymbol) return tsymbol;
+            }
+            return default;
+        }
 
         public ImmutableArray<TSymbol> GetSymbols<TSymbol>(Symbol container, IEnumerable<T> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol
@@ -44,7 +59,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return builder.ToImmutableAndFree();
         }
 
-        public ImmutableArray<ImportSymbol> GetImportSymbols(Symbol container)
+        public ImmutableArray<ImportSymbol> GetImportSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (container.ContainedSymbols.Length == 0) return ImmutableArray<ImportSymbol>.Empty;
             else return container.ContainedSymbols.OfType<ImportSymbol>().ToImmutableArray();
@@ -95,5 +110,24 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             return GetSymbols<TSymbol>(container, underlyingObjects.Select(uo => (T)uo), diagnostics, cancellationToken);
         }
+
+        string? ISymbolFactory.GetName(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return GetName((T)underlyingObject, diagnostics, cancellationToken);
+        }
+
+        string? ISymbolFactory.GetMetadataName(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return GetMetadataName((T)underlyingObject, diagnostics, cancellationToken);
+        }
+
+
+        public abstract string? GetName(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        public abstract string? GetMetadataName(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        public abstract ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        public abstract ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        public abstract void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        protected abstract TSymbol? CreateSymbol<TSymbol>(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : Symbol;
     }
 }

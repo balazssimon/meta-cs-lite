@@ -86,6 +86,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, ModuleSymbol, ModuleSymbolImpl>(impl => impl.ContainingNamespace);
 
+
+        public NamespaceSymbol GlobalNamespace
+        {
+            get
+            {
+                this.ForceComplete(ModuleSymbol.CompletionParts.Finish_GlobalNamespace, null, default);
+                return _globalNamespace;
+            }
+        }
+
         public override __LexicalSortKey GetLexicalSortKey()
         {
             return CallImpl<__LexicalSortKey, ModuleSymbol, ModuleSymbolImpl>(impl => impl.GetLexicalSortKey());
@@ -103,14 +113,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return CallImpl<string, ModuleSymbol, ModuleSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
-
-        public NamespaceSymbol GlobalNamespace
+        public virtual NamespaceSymbol GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree)
         {
-            get
-            {
-                this.ForceComplete(ModuleSymbol.CompletionParts.Finish_GlobalNamespace, null, default);
-                return _globalNamespace;
-            }
+            return CallImpl<NamespaceSymbol, ModuleSymbol, ModuleSymbolImpl>(impl => impl.GetRootNamespace(syntaxTree));
         }
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
@@ -186,11 +191,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     {
         public NamespaceSymbol GlobalNamespace => ((ModuleSymbol)__Wrapped).GlobalNamespace;
 
+        public abstract NamespaceSymbol GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree);
 
-        public virtual NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            // TODO
-            return default;
-        }
+
+        public abstract NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

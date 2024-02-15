@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
@@ -15,27 +16,40 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         {
         }
 
-        public override void AddSymbol(Symbol symbol)
+        public override string? GetName(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.Name;
         }
 
-        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override string? GetMetadataName(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return underlyingObject.MetadataName;
         }
 
         public override ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var declaration = container.MergedDeclaration;
+            if (declaration is null || declaration.Children.Length == 0) return ImmutableArray<Symbol>.Empty;
+            var symbols = ArrayBuilder<Symbol>.GetInstance();
+            foreach (var child in declaration.Children)
+            {
+                var symbol = GetSymbol<Symbol>(container, child, diagnostics, cancellationToken);
+                if (symbol is not null) symbols.Add(symbol);
+            }
+            return symbols.ToImmutableAndFree();
         }
 
-        public override TSymbol? GetSymbol<TSymbol>(Symbol container, MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
+        protected override TSymbol? CreateSymbol<TSymbol>(Symbol container, MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
         {
             throw new NotImplementedException();
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

@@ -24,7 +24,10 @@ Symbol:
 
 Property: (isWeak?='weak' | isDerived?='derived')? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
 
-Operation: returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')';
+Operation
+	: isPhase?='phase' Name '(' ')' 
+	| returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')'
+	;
 Parameter: @type=TypeReference Name;
 
 TypeReference: @type=SimpleTypeReference (isNullable?='?')? dimensions=ArrayDimensions;

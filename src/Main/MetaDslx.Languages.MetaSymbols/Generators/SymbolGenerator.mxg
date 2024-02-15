@@ -1,6 +1,7 @@
 namespace MetaDslx.Languages.MetaSymbols.Generators
 
 using System.Linq
+using MetaDslx.CodeAnalysis
 using MetaDslx.Languages.MetaSymbols.Model
 
 generator SymbolGenerator
@@ -16,6 +17,10 @@ namespace [symbol.NamespaceName]
         [foreach (var prop in symbol.Properties)]
             ["["]__ModelProperty["]"]
             [GetTypeName(symbol, prop.Type)] [prop.Name] { get; }
+        [end foreach]
+
+        [foreach (var op in symbol.Operations.Where(o => !o.IsPhase))]
+            [GetTypeName(symbol, op.ReturnType)] [op.Name]([from p in op.Parameters select GetTypeName(symbol, p.Type)+" "+p.Name separator ", "]);
         [end foreach]
 
         public static new class CompletionParts
@@ -152,6 +157,23 @@ namespace [symbol.NamespaceName].__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => [CallImpl(symbol, "__NamespaceSymbol", "ContainingNamespace")];
 
+        [foreach (var prop in symbol.Properties)]
+
+            public [GetTypeName(symbol, prop.Type)] [prop.Name]
+            {
+                get
+                {
+                    this.ForceComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name], null, default);
+                    [if (prop.IsWeak)]
+                        if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
+                        else return [GetDefaultValue(symbol, prop)];
+                    [else]
+                        return [GetFieldName(prop)];
+                    [end if]
+                }
+            }
+        [end foreach]
+
         public override __LexicalSortKey GetLexicalSortKey()
         {
             return [CallImpl(symbol, "__LexicalSortKey", "GetLexicalSortKey()")];
@@ -169,20 +191,16 @@ namespace [symbol.NamespaceName].__Impl
             return [CallImpl(symbol, "string", "GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken)")];
         }
 
-        [foreach (var prop in symbol.Properties)]
-
-            public [GetTypeName(symbol, prop.Type)] [prop.Name]
+        [foreach (var op in GetOperations(symbol))]
+            [var call = op.Name+"("+string.Join(", ", op.Parameters.Select(p => p.Name))+")"]
+            [var virtOvrd = symbol.Operations.Contains(op) ? "virtual" : "override"]
+            public [virtOvrd] [GetTypeName(symbol, op.ReturnType)] [op.Name]([from p in op.Parameters select GetTypeName(symbol, p.Type)+" "+p.Name separator ", "])
             {
-                get
-                {
-                    this.ForceComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name], null, default);
-                    [if (prop.IsWeak)]
-                        if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
-                        else return [GetDefaultValue(symbol, prop)];
-                    [else]
-                        return [GetFieldName(prop)];
-                    [end if]
-                }
+                [if (op.ReturnType.Type.SpecialType == SpecialType.System_Void)]
+                    [CallImpl(symbol, call)];
+                [else]
+                    return [CallImpl(symbol, GetTypeName(symbol, op.ReturnType), call)];
+                [end if]
             }
         [end foreach]
 
@@ -302,6 +320,10 @@ namespace [symbol.NamespaceName].__Impl
             public [GetTypeName(symbol, prop.Type)] [prop.Name] => (([GetIntfName(symbol, symbol)])__Wrapped).[prop.Name];
         [end foreach]
 
+        [foreach (var op in symbol.Operations.Where(o => !o.IsPhase))]
+            public abstract [GetTypeName(symbol, op.ReturnType)] [op.Name]([from p in op.Parameters select GetTypeName(symbol, p.Type)+" "+p.Name separator ", "]);
+        [end foreach]
+
         [foreach (var phase in phases)]
             [if (!basePhases.Contains(phase))]
 
@@ -313,8 +335,13 @@ namespace [symbol.NamespaceName].__Impl
                     [else]
                         public virtual [returnType] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                         {
-                            // TODO
-                            return ([from prop in props select GetDefaultValue(symbol, prop) separator ", "]);
+                            [-]
+                            return (
+                                [foreach (var prop in props) separator ", "]
+                                    SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
+                                [end foreach]
+                            );
+                            [=]
                         }
                     [end if]
                 [else if (props.Length == 1)]
@@ -325,8 +352,7 @@ namespace [symbol.NamespaceName].__Impl
                     [else]
                         public virtual [returnType] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                         {
-                            // TODO
-                            return [GetDefaultValue(symbol, prop)];
+                            return SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
                         }
                     [end if]
                 [else]
@@ -370,8 +396,11 @@ namespace [symbol.NamespaceName].__Impl
 end template
 
 template GenerateImplementation(Symbol symbol)
-using System.Threading;
+using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
+using System.Threading;
 using MetaDslx.Modeling;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;

@@ -81,6 +81,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, NamespaceSymbol, NamespaceSymbolImpl>(impl => impl.ContainingNamespace);
 
+
         public override __LexicalSortKey GetLexicalSortKey()
         {
             return CallImpl<__LexicalSortKey, NamespaceSymbol, NamespaceSymbolImpl>(impl => impl.GetLexicalSortKey());
@@ -179,6 +180,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
     public abstract class NamespaceSymbolBase : DeclarationSymbolImpl, NamespaceSymbol
     {
+
 
     }
 }

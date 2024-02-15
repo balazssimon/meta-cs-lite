@@ -86,6 +86,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, AliasSymbol, AliasSymbolImpl>(impl => impl.ContainingNamespace);
 
+
+        public Symbol Target
+        {
+            get
+            {
+                this.ForceComplete(AliasSymbol.CompletionParts.Finish_Target, null, default);
+                return _target;
+            }
+        }
+
         public override __LexicalSortKey GetLexicalSortKey()
         {
             return CallImpl<__LexicalSortKey, AliasSymbol, AliasSymbolImpl>(impl => impl.GetLexicalSortKey());
@@ -103,15 +113,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return CallImpl<string, AliasSymbol, AliasSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
-
-        public Symbol Target
-        {
-            get
-            {
-                this.ForceComplete(AliasSymbol.CompletionParts.Finish_Target, null, default);
-                return _target;
-            }
-        }
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -217,10 +218,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public Symbol Target => ((AliasSymbol)__Wrapped).Target;
 
 
+
         public virtual Symbol Complete_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            // TODO
-            return default;
+            return SymbolFactory.GetSymbolPropertyValue<Symbol>(this, nameof(Target), diagnostics, cancellationToken);
         }
     }
 }
