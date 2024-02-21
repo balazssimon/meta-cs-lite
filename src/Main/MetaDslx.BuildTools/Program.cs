@@ -48,8 +48,8 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
             //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Emf",
@@ -160,8 +160,8 @@ namespace MetaDslx.BuildTools
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
-                    //await CompileMetaSymbols(compilation, mxsFiles);
-                    await CompileMetaModels(compilation, mxmFiles);
+                    await CompileMetaSymbols(compilation, mxsFiles);
+                    //await CompileMetaModels(compilation, mxmFiles);
                     //await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/

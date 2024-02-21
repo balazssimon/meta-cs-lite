@@ -6,7 +6,7 @@
 		<RootNamespace>MetaDslx.CodeAnalysis</RootNamespace>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-		<MetaDslxBootstrap>false</MetaDslxBootstrap>
+		<MetaDslxBootstrap>true</MetaDslxBootstrap>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

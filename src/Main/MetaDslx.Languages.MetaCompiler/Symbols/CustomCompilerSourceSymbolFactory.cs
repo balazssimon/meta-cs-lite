@@ -9,8 +9,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
     internal class CustomCompilerSourceSymbolFactory : SourceSymbolFactory
     {
-        public CustomCompilerSourceSymbolFactory(SourceModuleSymbol module) 
-            : base(module)
+        public CustomCompilerSourceSymbolFactory() 
         {
             Register((s, d, mo) => new AnnotationSymbol(s, d, mo));
             Register((s, d, mo) => new AnnotationArgumentSymbol(s, d, mo));

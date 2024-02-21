@@ -31,7 +31,11 @@
 		<AdditionalFiles Include="Compiler\*.mxl" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Remove="Symbols\CompilerSymbols.mxs" />
 		<None Remove="tools\antlr-4.13.0-complete.jar" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AdditionalFiles Include="Symbols\CompilerSymbols.mxs" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="tools\antlr-4.13.0-complete.jar">
