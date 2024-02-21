@@ -14,8 +14,6 @@ public interface ImportMetaModelSymbol: ImportSymbol
         {
             public static readonly CompletionPart Start_MetaModelSymbols = new CompletionPart(nameof(Start_MetaModelSymbols));
             public static readonly CompletionPart Finish_MetaModelSymbols = new CompletionPart(nameof(Finish_MetaModelSymbols));
-            public static readonly CompletionPart Start_MetaModels = new CompletionPart(nameof(Start_MetaModels));
-            public static readonly CompletionPart Finish_MetaModels = new CompletionPart(nameof(Finish_MetaModels));
             public static readonly CompletionPart Start_Files = new CompletionPart(nameof(Start_Files));
             public static readonly CompletionPart Finish_Files = new CompletionPart(nameof(Finish_Files));
             public static readonly CompletionPart Start_Aliases = new CompletionPart(nameof(Start_Aliases));
@@ -24,18 +22,23 @@ public interface ImportMetaModelSymbol: ImportSymbol
             public static readonly CompletionPart Finish_Namespaces = new CompletionPart(nameof(Finish_Namespaces));
             public static readonly CompletionPart Start_Symbols = new CompletionPart(nameof(Start_Symbols));
             public static readonly CompletionPart Finish_Symbols = new CompletionPart(nameof(Finish_Symbols));
+            public static readonly CompletionPart Start_MetaModels = new CompletionPart(nameof(Start_MetaModels));
+            public static readonly CompletionPart Finish_MetaModels = new CompletionPart(nameof(Finish_MetaModels));
+            public static readonly CompletionPart Start_ImportedSymbols = new CompletionPart(nameof(Start_ImportedSymbols));
+            public static readonly CompletionPart Finish_ImportedSymbols = new CompletionPart(nameof(Finish_ImportedSymbols));
             public static readonly CompletionPart Start_Attribute = new CompletionPart(nameof(Start_Attribute));
             public static readonly CompletionPart Finish_Attribute = new CompletionPart(nameof(Finish_Attribute));
 
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
-                    Start_MetaModelSymbols, Finish_MetaModelSymbols,
-                    Start_MetaModels, Finish_MetaModels,
-                    Start_Files, Finish_Files,
-                    Start_Aliases, Finish_Aliases,
-                    Start_Namespaces, Finish_Namespaces,
-                    Start_Symbols, Finish_Symbols,
                     Start_Attribute, Finish_Attribute
+                    , Start_MetaModelSymbols, Finish_MetaModelSymbols
+                    , Start_Files, Finish_Files
+                    , Start_Aliases, Finish_Aliases
+                    , Start_Namespaces, Finish_Namespaces
+                    , Start_Symbols, Finish_Symbols
+                    , Start_MetaModels, Finish_MetaModels
+                    , Start_ImportedSymbols, Finish_ImportedSymbols
                 );
         }
     }

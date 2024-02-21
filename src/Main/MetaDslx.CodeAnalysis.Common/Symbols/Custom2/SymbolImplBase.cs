@@ -75,8 +75,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public bool IsCSharpSymbol => _wrapped.IsCSharpSymbol;
 
-        public virtual ISymbolFactory SymbolFactory => _wrapped.SymbolFactory;
-
         public Symbol ContainingSymbol => _wrapped.ContainingSymbol;
 
         public virtual AssemblySymbol? ContainingAssembly => _wrapped.ContainingAssembly;
@@ -95,11 +93,13 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public MergedDeclaration? MergedDeclaration => _wrapped.MergedDeclaration;
 
-        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _wrapped.DeclaringSyntaxReferences;
+        public virtual ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _wrapped.DeclaringSyntaxReferences;
 
-        public ImmutableArray<Location> Locations => _wrapped.Locations;
+        public virtual ImmutableArray<Location> Locations => _wrapped.Locations;
 
         public Location Location => _wrapped.Location;
+
+        public virtual MetaDslx.Modeling.Model? Model => _wrapped.Model;
 
         public IModelObject? ModelObject => _wrapped.ModelObject;
 
@@ -153,6 +153,17 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public bool IsFromCompilation(Compilation compilation)
         {
             return _wrapped.IsFromCompilation(compilation);
+        }
+
+        public TSymbol AsInstance<TSymbol>()
+            where TSymbol : Symbol
+        {
+            return (TSymbol)(object)_wrapped;
+        }
+
+        public ImmutableArray<SingleDeclaration> GetSingleDeclarations(CancellationToken cancellationToken = default)
+        {
+            return _wrapped.GetSingleDeclarations(cancellationToken);
         }
     }
 }

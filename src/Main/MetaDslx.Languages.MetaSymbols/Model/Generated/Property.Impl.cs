@@ -44,6 +44,12 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
             set => MSet<bool>(Symbols.Property_IsDerived, value);
         }
     
+        public bool IsInit
+        {
+            get => MGet<bool>(Symbols.Property_IsInit);
+            set => MSet<bool>(Symbols.Property_IsInit, value);
+        }
+    
         public bool IsWeak
         {
             get => MGet<bool>(Symbols.Property_IsWeak);
@@ -106,12 +112,13 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Symbols.DeclarationInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Symbols.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsDerived, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsDerived, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_Declarations, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsDerived, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_Declarations, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Parent);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsDerived, Symbols.Property_IsInit, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsDerived, Symbols.Property_IsInit, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_Declarations, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsDerived, Symbols.Property_IsInit, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_Declarations, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Parent);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
                 publicPropertiesByName.Add("DefaultValue", Symbols.Property_DefaultValue);
                 publicPropertiesByName.Add("IsDerived", Symbols.Property_IsDerived);
+                publicPropertiesByName.Add("IsInit", Symbols.Property_IsInit);
                 publicPropertiesByName.Add("IsWeak", Symbols.Property_IsWeak);
                 publicPropertiesByName.Add("Phase", Symbols.Property_Phase);
                 publicPropertiesByName.Add("Type", Symbols.Property_Type);
@@ -123,6 +130,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
                 modelPropertyInfos.Add(Symbols.Property_DefaultValue, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_DefaultValue, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Property_IsDerived, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_IsDerived, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_IsDerived), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Symbols.Property_IsInit, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_IsInit, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_IsInit), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Property_IsWeak, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_IsWeak, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_IsWeak), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Property_Phase, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_Phase, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_Phase), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Property_Type, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_Type, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_Type), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));

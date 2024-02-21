@@ -31,6 +31,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_TypeParameters = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_BaseTypes = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private global::System.Collections.Immutable.ImmutableArray<TypeSymbol> _allBaseTypes;
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>> s_GetMembers1 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>>();
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>> s_GetMembers2 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>>();
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers1 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers2 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
 
         public TypeSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -52,71 +56,100 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
-        public TypeSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isReferenceType, bool isValueType, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> allBaseTypes, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
-            : base(container, declaration, modelObject, name, metadataName, attributes, declaredAccessibility, isStatic, isExtern, typeArguments, imports, members)
+        public TypeSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, bool isReferenceType = default, bool isValueType = default, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+            : base(container, declaration, modelObject, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
         {
             _isReferenceType = isReferenceType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsReferenceType);
             _isValueType = isValueType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsValueType);
             if (!typeParameters.IsDefaultOrEmpty)
             {
                 s_TypeParameters.Add(this, typeParameters);
             }
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_TypeParameters);
             if (!baseTypes.IsDefaultOrEmpty)
             {
                 s_BaseTypes.Add(this, baseTypes);
             }
-            _allBaseTypes = allBaseTypes;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_BaseTypes);
         }
 
-        public TypeSymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isReferenceType, bool isValueType, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> allBaseTypes, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
-            : base(container, modelObject, name, metadataName, attributes, declaredAccessibility, isStatic, isExtern, typeArguments, imports, members)
+        public TypeSymbolInst(__Symbol container, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, bool isReferenceType = default, bool isValueType = default, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+            : base(container, modelObject, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
         {
             _isReferenceType = isReferenceType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsReferenceType);
             _isValueType = isValueType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsValueType);
             if (!typeParameters.IsDefaultOrEmpty)
             {
                 s_TypeParameters.Add(this, typeParameters);
             }
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_TypeParameters);
             if (!baseTypes.IsDefaultOrEmpty)
             {
                 s_BaseTypes.Add(this, baseTypes);
             }
-            _allBaseTypes = allBaseTypes;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_BaseTypes);
         }
 
-        public TypeSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isReferenceType, bool isValueType, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> allBaseTypes, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
-            : base(container, csharpSymbol, name, metadataName, attributes, declaredAccessibility, isStatic, isExtern, typeArguments, imports, members)
+        public TypeSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, bool isReferenceType = default, bool isValueType = default, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+            : base(container, csharpSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
         {
             _isReferenceType = isReferenceType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsReferenceType);
             _isValueType = isValueType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsValueType);
             if (!typeParameters.IsDefaultOrEmpty)
             {
                 s_TypeParameters.Add(this, typeParameters);
             }
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_TypeParameters);
             if (!baseTypes.IsDefaultOrEmpty)
             {
                 s_BaseTypes.Add(this, baseTypes);
             }
-            _allBaseTypes = allBaseTypes;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_BaseTypes);
         }
 
-        public TypeSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, bool isReferenceType, bool isValueType, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> allBaseTypes, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility, bool isStatic, bool isExtern, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> members) 
-            : base(container, compilation, modelObject, name, metadataName, attributes, declaredAccessibility, isStatic, isExtern, typeArguments, imports, members)
+        public TypeSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject = default, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, bool isReferenceType = default, bool isValueType = default, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+            : base(container, compilation, modelObject, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
         {
             _isReferenceType = isReferenceType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsReferenceType);
             _isValueType = isValueType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsValueType);
             if (!typeParameters.IsDefaultOrEmpty)
             {
                 s_TypeParameters.Add(this, typeParameters);
             }
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_TypeParameters);
             if (!baseTypes.IsDefaultOrEmpty)
             {
                 s_BaseTypes.Add(this, baseTypes);
             }
-            _allBaseTypes = allBaseTypes;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_BaseTypes);
         }
 
-        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, TypeSymbol, TypeSymbolImpl>(impl => impl.SymbolFactory);
+        public TypeSymbolInst(__Symbol container, __Compilation compilation, __MergedDeclaration declaration, __IModelObject? modelObject = default, string? name = null, string? metadataName = null, __ImmutableAttributeSymbols attributes = default, bool isReferenceType = default, bool isValueType = default, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+            : base(container, compilation, declaration, modelObject, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
+        {
+            _isReferenceType = isReferenceType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsReferenceType);
+            _isValueType = isValueType;
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_IsValueType);
+            if (!typeParameters.IsDefaultOrEmpty)
+            {
+                s_TypeParameters.Add(this, typeParameters);
+            }
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_TypeParameters);
+            if (!baseTypes.IsDefaultOrEmpty)
+            {
+                s_BaseTypes.Add(this, baseTypes);
+            }
+            NotePartComplete(TypeSymbol.CompletionParts.Finish_BaseTypes);
+        }
 
         public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, TypeSymbol, TypeSymbolImpl>(impl => impl.ContainingAssembly);
 
@@ -130,7 +163,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, TypeSymbol, TypeSymbolImpl>(impl => impl.ContainingNamespace);
 
-
         public bool IsReferenceType
         {
             get
@@ -139,7 +171,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _isReferenceType;
             }
         }
-
         public bool IsValueType
         {
             get
@@ -148,7 +179,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _isValueType;
             }
         }
-
         public global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> TypeParameters
         {
             get
@@ -158,7 +188,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 else return global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>.Empty;
             }
         }
-
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes
         {
             get
@@ -168,12 +197,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
             }
         }
-
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes
         {
             get
             {
-                this.ForceComplete(TypeSymbol.CompletionParts.Finish_BaseTypes, null, default);
+                this.ForceComplete(TypeSymbol.CompletionParts.Finish_AllBaseTypes, null, default);
                 return _allBaseTypes;
             }
         }
@@ -195,6 +223,43 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return CallImpl<string, TypeSymbol, TypeSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
+        public virtual bool IsDerivedFrom(TypeSymbol type, global::MetaDslx.CodeAnalysis.Symbols.TypeEqualityComparer comparison)
+        {
+            return CallImpl<bool, TypeSymbol, TypeSymbolImpl>(impl => impl.IsDerivedFrom(type, comparison));
+        }
+
+        public virtual bool IsEqualToOrDerivedFrom(TypeSymbol type, global::MetaDslx.CodeAnalysis.Symbols.TypeEqualityComparer comparison)
+        {
+            return CallImpl<bool, TypeSymbol, TypeSymbolImpl>(impl => impl.IsEqualToOrDerivedFrom(type, comparison));
+        }
+
+        public override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> GetMembers(string name)
+        {
+            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
+            var __cachedDictionary = s_GetMembers1.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>());
+            return __cachedDictionary.GetOrAdd((name), __args => CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.GetMembers(name)));
+        }
+
+        public override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> GetMembers(string name, string metadataName)
+        {
+            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
+            var __cachedDictionary = s_GetMembers2.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>());
+            return __cachedDictionary.GetOrAdd((name, metadataName), __args => CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.GetMembers(name, metadataName)));
+        }
+
+        public override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name)
+        {
+            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
+            var __cachedDictionary = s_GetTypeMembers1.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>());
+            return __cachedDictionary.GetOrAdd((name), __args => CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.GetTypeMembers(name)));
+        }
+
+        public override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name, string metadataName)
+        {
+            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
+            var __cachedDictionary = s_GetTypeMembers2.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>());
+            return __cachedDictionary.GetOrAdd((name, metadataName), __args => CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.GetTypeMembers(name, metadataName)));
+        }
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -249,14 +314,27 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
                     var result = Complete_BaseTypes(diagnostics, cancellationToken);
-                    if (!result.BaseTypes.IsDefaultOrEmpty)
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        s_BaseTypes.Add(this, result.BaseTypes);
+                        s_BaseTypes.Add(this, result);
                     }
-                    _allBaseTypes = result.AllBaseTypes;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(TypeSymbol.CompletionParts.Finish_BaseTypes);
+                }
+                return true;
+            }
+            else 
+            if (incompletePart == TypeSymbol.CompletionParts.Start_AllBaseTypes || incompletePart == TypeSymbol.CompletionParts.Finish_AllBaseTypes)
+            {
+                if (NotePartComplete(TypeSymbol.CompletionParts.Start_AllBaseTypes))
+                {
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Complete_AllBaseTypes(diagnostics, cancellationToken);
+                    _allBaseTypes = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(TypeSymbol.CompletionParts.Finish_AllBaseTypes);
                 }
                 return true;
             }
@@ -323,9 +401,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_TypeParameters(diagnostics, cancellationToken));
         }
 
-        protected virtual (global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes) Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return CallImpl<(global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes), TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_BaseTypes(diagnostics, cancellationToken));
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_BaseTypes(diagnostics, cancellationToken));
         }
 
         protected override global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
@@ -353,9 +431,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return CallImpl<global::System.Collections.Immutable.ImmutableArray<ImportSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_Imports(diagnostics, cancellationToken));
         }
 
+        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_AllBaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_AllBaseTypes(diagnostics, cancellationToken));
+        }
+
+        protected override global::System.Collections.Immutable.ImmutableArray<string> Complete_MemberNames(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<string>, TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_MemberNames(diagnostics, cancellationToken));
+        }
+
         protected override global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_Members(diagnostics, cancellationToken));
+        }
+
+        protected override global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeMembers(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<TypeSymbol>, TypeSymbol, TypeSymbolImpl>(impl => impl.Complete_TypeMembers(diagnostics, cancellationToken));
         }
     }
 
@@ -367,23 +460,30 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes => ((TypeSymbol)__Wrapped).BaseTypes;
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes => ((TypeSymbol)__Wrapped).AllBaseTypes;
 
+        public abstract bool IsDerivedFrom(TypeSymbol type, global::MetaDslx.CodeAnalysis.Symbols.TypeEqualityComparer comparison);
+        public abstract bool IsEqualToOrDerivedFrom(TypeSymbol type, global::MetaDslx.CodeAnalysis.Symbols.TypeEqualityComparer comparison);
 
 
         public virtual bool Complete_IsReferenceType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsReferenceType), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsReferenceType), diagnostics, cancellationToken);
         }
 
         public virtual bool Complete_IsValueType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsValueType), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsValueType), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> Complete_TypeParameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<TypeParameterSymbol>(this, nameof(TypeParameters), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<TypeParameterSymbol>(this, nameof(TypeParameters), diagnostics, cancellationToken);
         }
 
-        public abstract (global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes) Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        public virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(this, nameof(BaseTypes), diagnostics, cancellationToken);
+        }
+
+        public abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_AllBaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

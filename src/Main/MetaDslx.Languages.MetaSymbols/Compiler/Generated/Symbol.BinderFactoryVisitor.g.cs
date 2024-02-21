@@ -133,10 +133,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             this.Begin(__annot1, node);
             try
             {
-                if (node.Block1 != null)
-                {
-                    this.Visit(node.Block1);
-                }
+                this.Visit(node.Block1);
                 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Type");
                 this.Begin(__annot0, node.Type);
                 try
@@ -189,8 +186,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitOperationAlt2(OperationAlt2Syntax node)
         {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Operation));
-            this.Begin(__annot1, node);
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Operation));
+            this.Begin(__annot2, node);
             try
             {
                 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReturnType");
@@ -204,14 +201,31 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
                     this.End(__annot0);
                 }
                 this.Visit(node.Name);
-                if (node.Block != null)
+                if (node.Block1 != null)
                 {
-                    this.Visit(node.Block);
+                    this.Visit(node.Block1);
+                }
+                if (node.CacheResult.GetSymbolKind() != SymbolSyntaxKind.None)
+                {
+                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "CacheResult", values: ImmutableArray.Create<object?>(true));
+                    this.Begin(__annot1, node.CacheResult);
+                    try
+                    {
+                        //this.VisitToken(node.CacheResult);
+                    }
+                    finally
+                    {
+                        this.End(__annot1);
+                    }
+                }
+                if (node.Block2 != null)
+                {
+                    this.Visit(node.Block2);
                 }
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot2);
             }
         }
 
@@ -885,29 +899,48 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node)
         {
-            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
-            this.Begin(__annot0, node.IsWeak);
-            try
+            if (node.IsInit.GetSymbolKind() != SymbolSyntaxKind.None)
             {
-                //this.VisitToken(node.IsWeak);
-            }
-            finally
-            {
-                this.End(__annot0);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsInit", values: ImmutableArray.Create<object?>(true));
+                this.Begin(__annot0, node.IsInit);
+                try
+                {
+                    //this.VisitToken(node.IsInit);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
             }
         }
 
         public virtual void VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node)
         {
-            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsDerived", values: ImmutableArray.Create<object?>(true));
-            this.Begin(__annot0, node.IsDerived);
-            try
+            if (node.IsWeak.GetSymbolKind() != SymbolSyntaxKind.None)
             {
-                //this.VisitToken(node.IsDerived);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
+                this.Begin(__annot0, node.IsWeak);
+                try
+                {
+                    //this.VisitToken(node.IsWeak);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
             }
-            finally
+            if (node.IsDerived.GetSymbolKind() != SymbolSyntaxKind.None)
             {
-                this.End(__annot0);
+                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsDerived", values: ImmutableArray.Create<object?>(true));
+                this.Begin(__annot1, node.IsDerived);
+                try
+                {
+                    //this.VisitToken(node.IsDerived);
+                }
+                finally
+                {
+                    this.End(__annot1);
+                }
             }
         }
 
@@ -1000,6 +1033,29 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             finally
             {
                 this.End(__annot0);
+            }
+        }
+
+        public virtual void VisitOperationAlt2Block2(OperationAlt2Block2Syntax node)
+        {
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "CacheCondition");
+            this.Begin(__annot1, node.CacheCondition);
+            try
+            {
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(string));
+                this.Begin(__annot0, node.CacheCondition);
+                try
+                {
+                    //this.VisitToken(node.CacheCondition);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
+            }
+            finally
+            {
+                this.End(__annot1);
             }
         }
 

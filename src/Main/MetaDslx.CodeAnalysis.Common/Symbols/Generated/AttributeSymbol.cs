@@ -17,8 +17,8 @@ public interface AttributeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
 
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
-                    Start_AttributeClass, Finish_AttributeClass,
                     Start_Attribute, Finish_Attribute
+                    , Start_AttributeClass, Finish_AttributeClass
                 );
         }
     }

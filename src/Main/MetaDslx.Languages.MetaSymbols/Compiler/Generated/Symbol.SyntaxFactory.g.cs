@@ -295,14 +295,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
 
         public PropertySyntax Property(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3)
         {
+            if (block1 is null) throw new __ArgumentNullException(nameof(block1));
             if (type is null) throw new __ArgumentNullException(nameof(type));
             if (name is null) throw new __ArgumentNullException(nameof(name));
             return (PropertySyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Property((InternalSyntax.PropertyBlock1Green)block1.Green, (InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.PropertyBlock2Green)block2.Green, (InternalSyntax.PropertyBlock3Green)block3.Green).CreateRed();
         }
         
-        public PropertySyntax Property(TypeReferenceSyntax type, NameSyntax name)
+        public PropertySyntax Property(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name)
         {
-            return this.Property(default, type, name, default, default);
+            return this.Property(block1, type, name, default, default);
         }
 
         public OperationAlt1Syntax OperationAlt1(__SyntaxToken isPhase, NameSyntax name, __SyntaxToken tLParen, __SyntaxToken tRParen)
@@ -322,7 +323,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.OperationAlt1(this.Token(SymbolSyntaxKind.KPhase), name, this.Token(SymbolSyntaxKind.TLParen), this.Token(SymbolSyntaxKind.TRParen));
         }
 
-        public OperationAlt2Syntax OperationAlt2(TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationAlt2Block1Syntax block, __SyntaxToken tRParen)
+        public OperationAlt2Syntax OperationAlt2(TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationAlt2Block1Syntax block1, __SyntaxToken tRParen, __SyntaxToken cacheResult, OperationAlt2Block2Syntax block2)
         {
             if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
             if (name is null) throw new __ArgumentNullException(nameof(name));
@@ -330,12 +331,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
             if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
             if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-            return (OperationAlt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2((InternalSyntax.TypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.OperationAlt2Block1Green)block.Green, (__InternalSyntaxToken)tRParen.Node).CreateRed();
+            if (cacheResult.RawKind != (int)__InternalSyntaxKind.None && (cacheResult.RawKind != (int)SymbolSyntaxKind.KCache)) throw new __ArgumentException(nameof(cacheResult));
+            return (OperationAlt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2((InternalSyntax.TypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.OperationAlt2Block1Green)block1.Green, (__InternalSyntaxToken)tRParen.Node, (__InternalSyntaxToken)cacheResult.Node, (InternalSyntax.OperationAlt2Block2Green)block2.Green).CreateRed();
         }
         
         public OperationAlt2Syntax OperationAlt2(TypeReferenceSyntax returnType, NameSyntax name)
         {
-            return this.OperationAlt2(returnType, name, this.Token(SymbolSyntaxKind.TLParen), default, this.Token(SymbolSyntaxKind.TRParen));
+            return this.OperationAlt2(returnType, name, this.Token(SymbolSyntaxKind.TLParen), default, this.Token(SymbolSyntaxKind.TRParen), default, default);
         }
 
         public ParameterSyntax Parameter(TypeReferenceSyntax type, NameSyntax name)
@@ -507,28 +509,27 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return (SymbolBlock2Block1Alt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.SymbolBlock2Block1Alt2((InternalSyntax.OperationGreen)operations.Green).CreateRed();
         }
 
-        public PropertyBlock1Alt1Syntax PropertyBlock1Alt1(__SyntaxToken isWeak)
+        public PropertyBlock1Alt1Syntax PropertyBlock1Alt1(__SyntaxToken isInit)
         {
-            if (isWeak.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isWeak));
-            if (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak) throw new __ArgumentException(nameof(isWeak));
-            return (PropertyBlock1Alt1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt1((__InternalSyntaxToken)isWeak.Node).CreateRed();
+            if (isInit.RawKind != (int)__InternalSyntaxKind.None && (isInit.RawKind != (int)SymbolSyntaxKind.KInit)) throw new __ArgumentException(nameof(isInit));
+            return (PropertyBlock1Alt1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt1((__InternalSyntaxToken)isInit.Node).CreateRed();
         }
         
         public PropertyBlock1Alt1Syntax PropertyBlock1Alt1()
         {
-            return this.PropertyBlock1Alt1(this.Token(SymbolSyntaxKind.KWeak));
+            return this.PropertyBlock1Alt1(default);
         }
 
-        public PropertyBlock1Alt2Syntax PropertyBlock1Alt2(__SyntaxToken isDerived)
+        public PropertyBlock1Alt2Syntax PropertyBlock1Alt2(__SyntaxToken isWeak, __SyntaxToken isDerived)
         {
-            if (isDerived.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isDerived));
-            if (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived) throw new __ArgumentException(nameof(isDerived));
-            return (PropertyBlock1Alt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt2((__InternalSyntaxToken)isDerived.Node).CreateRed();
+            if (isWeak.RawKind != (int)__InternalSyntaxKind.None && (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak)) throw new __ArgumentException(nameof(isWeak));
+            if (isDerived.RawKind != (int)__InternalSyntaxKind.None && (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived)) throw new __ArgumentException(nameof(isDerived));
+            return (PropertyBlock1Alt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt2((__InternalSyntaxToken)isWeak.Node, (__InternalSyntaxToken)isDerived.Node).CreateRed();
         }
         
         public PropertyBlock1Alt2Syntax PropertyBlock1Alt2()
         {
-            return this.PropertyBlock1Alt2(this.Token(SymbolSyntaxKind.KDerived));
+            return this.PropertyBlock1Alt2(default, default);
         }
 
         public PropertyBlock2Syntax PropertyBlock2(__SyntaxToken tEq, ValueSyntax defaultValue)
@@ -573,6 +574,20 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         public OperationAlt2Block1parametersBlockSyntax OperationAlt2Block1parametersBlock(ParameterSyntax parameters)
         {
             return this.OperationAlt2Block1parametersBlock(this.Token(SymbolSyntaxKind.TComma), parameters);
+        }
+
+        public OperationAlt2Block2Syntax OperationAlt2Block2(__SyntaxToken kIf, __SyntaxToken cacheCondition)
+        {
+            if (kIf.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kIf));
+            if (kIf.RawKind != (int)SymbolSyntaxKind.KIf) throw new __ArgumentException(nameof(kIf));
+            if (cacheCondition.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(cacheCondition));
+            if (cacheCondition.RawKind != (int)SymbolSyntaxKind.TString) throw new __ArgumentException(nameof(cacheCondition));
+            return (OperationAlt2Block2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2Block2((__InternalSyntaxToken)kIf.Node, (__InternalSyntaxToken)cacheCondition.Node).CreateRed();
+        }
+        
+        public OperationAlt2Block2Syntax OperationAlt2Block2(__SyntaxToken cacheCondition)
+        {
+            return this.OperationAlt2Block2(this.Token(SymbolSyntaxKind.KIf), this.Token(SymbolSyntaxKind.TString));
         }
 
         public TypeReferenceBlock1Syntax TypeReferenceBlock1(__SyntaxToken isNullable)
@@ -651,6 +666,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 typeof(PropertyBlock3Syntax),
                 typeof(OperationAlt2Block1Syntax),
                 typeof(OperationAlt2Block1parametersBlockSyntax),
+                typeof(OperationAlt2Block2Syntax),
                 typeof(TypeReferenceBlock1Syntax),
                 typeof(ArrayDimensionsBlock1Syntax),
                 typeof(QualifierIdentifierBlockSyntax),

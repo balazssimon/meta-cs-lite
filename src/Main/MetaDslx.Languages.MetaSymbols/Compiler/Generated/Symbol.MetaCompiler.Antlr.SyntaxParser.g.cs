@@ -85,7 +85,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             {
                 if (node?.Symbol == null)
                 {
-                    if (kind != SymbolSyntaxKind.None) return _factory.MissingToken(kind);
+                    if (kind != SymbolSyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
                     else return null;
                 }
                 var green = _tokenStream.ConsumeGreenToken(node.Symbol, _parser);
@@ -151,7 +151,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             {
                 if (context == null) return PropertyGreen.__Missing;
                 PropertyBlock1Green? block1 = null;
-                if (context.E_Block is not null) block1 = (PropertyBlock1Green?)this.Visit(context.E_Block);
+                if (context.E_Block is not null) block1 = (PropertyBlock1Green?)this.Visit(context.E_Block) ?? PropertyBlock1Green.__Missing;
+                else block1 = PropertyBlock1Green.__Missing;
                 TypeReferenceGreen? type = null;
                 if (context.E_type is not null) type = (TypeReferenceGreen?)this.Visit(context.E_type) ?? TypeReferenceGreen.__Missing;
                 else type = TypeReferenceGreen.__Missing;
@@ -187,10 +188,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.E_Name1 is not null) name = (NameGreen?)this.Visit(context.E_Name1) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
                 var tLParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TLParen1, SymbolSyntaxKind.TLParen);
-                OperationAlt2Block1Green? block = null;
-                if (context.E_Block is not null) block = (OperationAlt2Block1Green?)this.Visit(context.E_Block);
+                OperationAlt2Block1Green? block1 = null;
+                if (context.E_Block is not null) block1 = (OperationAlt2Block1Green?)this.Visit(context.E_Block);
                 var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRParen1, SymbolSyntaxKind.TRParen);
-                return _factory.OperationAlt2(returnType, name, tLParen, block, tRParen);
+                var cacheResult = (InternalSyntaxToken?)this.VisitTerminal(context.E_cacheResult);
+                OperationAlt2Block2Green? block2 = null;
+                if (context.E_Block1 is not null) block2 = (OperationAlt2Block2Green?)this.Visit(context.E_Block1);
+                return _factory.OperationAlt2(returnType, name, tLParen, block1, tRParen, cacheResult, block2);
             }
             
             public override GreenNode? VisitPr_Parameter(SymbolParser.Pr_ParameterContext? context)
@@ -254,7 +258,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             
             public override GreenNode? VisitPr_PrimitiveType(SymbolParser.Pr_PrimitiveTypeContext? context)
             {
-                if (context == null) return PrimitiveTypeGreen.__Missing;
+                if (context?.E_Token == null) return PrimitiveTypeGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_KObject() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KObject());
                 if (context.LR_KBool() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KBool());
@@ -274,7 +278,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.LR_KType() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KType());
                 if (context.LR_KSymbol() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KSymbol());
                 if (context.LR_KVoid() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KVoid());
-                if (token is null) token = _factory.None;
+                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, SymbolSyntaxKind.KObject);
                 return _factory.PrimitiveType(token);
             }
             
@@ -364,21 +368,21 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             
             public override GreenNode? VisitPr_Identifier(SymbolParser.Pr_IdentifierContext? context)
             {
-                if (context == null) return IdentifierGreen.__Missing;
+                if (context?.E_Token == null) return IdentifierGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_TIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TIdentifier());
                 if (context.LR_TVerbatimIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TVerbatimIdentifier());
-                if (token is null) token = _factory.None;
+                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, SymbolSyntaxKind.TIdentifier);
                 return _factory.Identifier(token);
             }
             
             public override GreenNode? VisitPr_TBoolean(SymbolParser.Pr_TBooleanContext? context)
             {
-                if (context == null) return TBooleanGreen.__Missing;
+                if (context?.E_Token == null) return TBooleanGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_KTrue() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KTrue());
                 if (context.LR_KFalse() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KFalse());
-                if (token is null) token = _factory.None;
+                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, SymbolSyntaxKind.KTrue);
                 return _factory.TBoolean(token);
             }
             
@@ -475,15 +479,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             public override GreenNode? VisitPr_PropertyBlock1Alt1(SymbolParser.Pr_PropertyBlock1Alt1Context? context)
             {
                 if (context == null) return PropertyBlock1Alt1Green.__Missing;
-                var isWeak = (InternalSyntaxToken?)this.VisitTerminal(context.E_isWeak, SymbolSyntaxKind.KWeak);
-                return _factory.PropertyBlock1Alt1(isWeak);
+                var isInit = (InternalSyntaxToken?)this.VisitTerminal(context.E_isInit);
+                return _factory.PropertyBlock1Alt1(isInit);
             }
             
             public override GreenNode? VisitPr_PropertyBlock1Alt2(SymbolParser.Pr_PropertyBlock1Alt2Context? context)
             {
                 if (context == null) return PropertyBlock1Alt2Green.__Missing;
-                var isDerived = (InternalSyntaxToken?)this.VisitTerminal(context.E_isDerived, SymbolSyntaxKind.KDerived);
-                return _factory.PropertyBlock1Alt2(isDerived);
+                var isWeak = (InternalSyntaxToken?)this.VisitTerminal(context.E_isWeak);
+                var isDerived = (InternalSyntaxToken?)this.VisitTerminal(context.E_isDerived);
+                return _factory.PropertyBlock1Alt2(isWeak, isDerived);
             }
             
             public override GreenNode? VisitPr_PropertyBlock2(SymbolParser.Pr_PropertyBlock2Context? context)
@@ -543,6 +548,14 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.E_parameters2 is not null) parameters = (ParameterGreen?)this.Visit(context.E_parameters2) ?? ParameterGreen.__Missing;
                 else parameters = ParameterGreen.__Missing;
                 return _factory.OperationAlt2Block1parametersBlock(tComma, parameters);
+            }
+            
+            public override GreenNode? VisitPr_OperationAlt2Block2(SymbolParser.Pr_OperationAlt2Block2Context? context)
+            {
+                if (context == null) return OperationAlt2Block2Green.__Missing;
+                var kIf = (InternalSyntaxToken?)this.VisitTerminal(context.E_KIf, SymbolSyntaxKind.KIf);
+                var cacheCondition = (InternalSyntaxToken?)this.VisitTerminal(context.E_cacheCondition, SymbolSyntaxKind.TString);
+                return _factory.OperationAlt2Block2(kIf, cacheCondition);
             }
             
             public override GreenNode? VisitPr_TypeReferenceBlock1(SymbolParser.Pr_TypeReferenceBlock1Context? context)

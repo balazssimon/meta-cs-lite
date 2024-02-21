@@ -17,7 +17,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             throw new NotImplementedException();
         }
 
-        public override NamespaceSymbol GetRootNamespace(SyntaxTree syntaxTree)
+        public override NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
         {
             throw new NotImplementedException();
         }

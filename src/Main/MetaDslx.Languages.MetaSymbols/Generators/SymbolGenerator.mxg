@@ -15,7 +15,9 @@ namespace [symbol.NamespaceName]
     public interface [GetIntfName(symbol, symbol)]: [if (baseTypes.Count == 0)]global::MetaDslx.CodeAnalysis.Symbols.Symbol[else][from bt in baseTypes select GetIntfName(symbol, bt) separator ", "][end if]
     {
         [foreach (var prop in symbol.Properties)]
-            ["["]__ModelProperty["]"]
+            [if (!prop.IsInit)]
+                ["["]__ModelProperty["]"]
+            [end if]
             [GetTypeName(symbol, prop.Type)] [prop.Name] { get; }
         [end foreach]
 
@@ -25,7 +27,7 @@ namespace [symbol.NamespaceName]
 
         public static new class CompletionParts
         {
-            [foreach (var phase in GetPhases(symbol))]
+            [foreach (var phase in GetAllPhases(symbol))]
                 public static readonly CompletionPart Start_[phase] = new CompletionPart(nameof(Start_[phase]));
                 public static readonly CompletionPart Finish_[phase] = new CompletionPart(nameof(Finish_[phase]));
             [end foreach]
@@ -34,10 +36,10 @@ namespace [symbol.NamespaceName]
 
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
-                    [foreach (var phase in GetPhases(symbol))]
-                        Start_[phase], Finish_[phase],
-                    [end foreach]
                     Start_Attribute, Finish_Attribute
+                    [foreach (var phase in GetAllPhases(symbol))]
+                        , Start_[phase], Finish_[phase]
+                    [end foreach]
                 );
         }
     }
@@ -90,6 +92,9 @@ namespace [symbol.NamespaceName].__Impl
                 private [GetFieldType(symbol, prop)] [GetFieldName(prop)];
             [end if]
         [end foreach]
+        [foreach (var op in GetOperations(symbol).Where(o => o.CacheResult))]
+            private static [GetFieldType(symbol, op)] [GetFieldName(op)] = new [GetFieldType(symbol, op)]();
+        [end foreach]
 
         public [GetInstName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -111,39 +116,60 @@ namespace [symbol.NamespaceName].__Impl
         {
         }
 
-        public [GetInstName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
-            : base(container, declaration, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol))], [GetParamName(prop)][end foreach])
+        public [GetInstName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+            : base(container, declaration, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
         {
-            [foreach (var prop in symbol.Properties)]
+            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
                 [AssignProperty(symbol, prop, GetParamName(prop))]
+                [if (!prop.IsInit)]
+                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
+                [end if]
             [end foreach]
         }
 
-        public [GetInstName(symbol, symbol)](__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
-            : base(container, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol))], [GetParamName(prop)][end foreach])
+        public [GetInstName(symbol, symbol)](__Symbol container, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+            : base(container, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
         {
-            [foreach (var prop in symbol.Properties)]
+            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
                 [AssignProperty(symbol, prop, GetParamName(prop))]
+                [if (!prop.IsInit)]
+                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
+                [end if]
             [end foreach]
         }
 
-        public [GetInstName(symbol, symbol)](__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
-            : base(container, csharpSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol))], [GetParamName(prop)][end foreach])
+        public [GetInstName(symbol, symbol)](__Symbol container, __ISymbol csharpSymbol, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+            : base(container, csharpSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
         {
-            [foreach (var prop in symbol.Properties)]
+            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
                 [AssignProperty(symbol, prop, GetParamName(prop))]
+                [if (!prop.IsInit)]
+                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
+                [end if]
             [end foreach]
         }
 
-        public [GetInstName(symbol, symbol)](__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes[foreach (var prop in GetProperties(symbol))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)][end foreach]) 
-            : base(container, compilation, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol))], [GetParamName(prop)][end foreach])
+        public [GetInstName(symbol, symbol)](__Symbol container, __Compilation compilation, __IModelObject? modelObject = default, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+            : base(container, compilation, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
         {
-            [foreach (var prop in symbol.Properties)]
+            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
                 [AssignProperty(symbol, prop, GetParamName(prop))]
+                [if (!prop.IsInit)]
+                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
+                [end if]
             [end foreach]
         }
 
-        public override __ISymbolFactory SymbolFactory => [CallImpl(symbol, "__ISymbolFactory", "SymbolFactory")];
+        public [GetInstName(symbol, symbol)](__Symbol container, __Compilation compilation, __MergedDeclaration declaration, __IModelObject? modelObject = default, string? name = null, string? metadataName = null, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+            : base(container, compilation, declaration, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
+        {
+            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
+                [AssignProperty(symbol, prop, GetParamName(prop))]
+                [if (!prop.IsInit)]
+                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
+                [end if]
+            [end foreach]
+        }
 
         public override __AssemblySymbol? ContainingAssembly => [CallImpl(symbol, "__AssemblySymbol", "ContainingAssembly")];
 
@@ -158,20 +184,27 @@ namespace [symbol.NamespaceName].__Impl
         public override __NamespaceSymbol? ContainingNamespace => [CallImpl(symbol, "__NamespaceSymbol", "ContainingNamespace")];
 
         [foreach (var prop in symbol.Properties)]
-
-            public [GetTypeName(symbol, prop.Type)] [prop.Name]
-            {
-                get
+            [if (prop.IsInit)]
+                public virtual [GetTypeName(symbol, prop.Type)] [prop.Name]
                 {
-                    this.ForceComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name], null, default);
-                    [if (prop.IsWeak)]
-                        if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
-                        else return [GetDefaultValue(symbol, prop)];
-                    [else]
-                        return [GetFieldName(prop)];
-                    [end if]
+                    get => [GetFieldName(prop)];
+                    protected set => [GetFieldName(prop)] = value;
                 }
-            }
+            [else]
+                public [GetTypeName(symbol, prop.Type)] [prop.Name]
+                {
+                    get
+                    {
+                        this.ForceComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name], null, default);
+                        [if (prop.IsWeak)]
+                            if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
+                            else return [GetDefaultValue(symbol, prop)];
+                        [else]
+                            return [GetFieldName(prop)];
+                        [end if]
+                    }
+                }
+            [end if]
         [end foreach]
 
         public override __LexicalSortKey GetLexicalSortKey()
@@ -190,16 +223,29 @@ namespace [symbol.NamespaceName].__Impl
         {
             return [CallImpl(symbol, "string", "GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken)")];
         }
-
         [foreach (var op in GetOperations(symbol))]
-            [var call = op.Name+"("+string.Join(", ", op.Parameters.Select(p => p.Name))+")"]
+            [var arguments = "("+string.Join(", ", op.Parameters.Select(p => p.Name))+")"]
+            [var call = op.Name+arguments]
             [var virtOvrd = symbol.Operations.Contains(op) ? "virtual" : "override"]
-            public [virtOvrd] [GetTypeName(symbol, op.ReturnType)] [op.Name]([from p in op.Parameters select GetTypeName(symbol, p.Type)+" "+p.Name separator ", "])
+            [var returnType = GetTypeName(symbol, op.ReturnType)]
+
+            public [virtOvrd] [returnType] [op.Name]([from p in op.Parameters select GetTypeName(symbol, p.Type)+" "+p.Name separator ", "])
             {
                 [if (op.ReturnType.Type.SpecialType == SpecialType.System_Void)]
                     [CallImpl(symbol, call)];
+                [else if (op.CacheResult)]
+                    [if (!string.IsNullOrEmpty(op.CacheCondition))]
+                        if (!([op.CacheCondition])) return [GetDefaultValue(symbol, op.ReturnType)];
+                    [end if]
+                    [var fieldName = GetFieldName(op)]
+                    [if (op.Parameters.Count == 0)]
+                        return ([returnType])[fieldName].GetValue(this, __this => [CallImpl(symbol, returnType, call)]);
+                    [else]
+                        var __cachedDictionary = [fieldName].GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<[GetCacheKeyType(symbol, op)], [returnType]>());
+                        return __cachedDictionary.GetOrAdd([arguments], __args => [CallImpl(symbol, returnType, call)]);
+                    [end if]
                 [else]
-                    return [CallImpl(symbol, GetTypeName(symbol, op.ReturnType), call)];
+                    return [CallImpl(symbol, returnType, call)];
                 [end if]
             }
         [end foreach]
@@ -207,8 +253,8 @@ namespace [symbol.NamespaceName].__Impl
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
             [var hasNewPhase = false]
-            [var phases = GetPhases(symbol)]
-            [var basePhases = GetPhases(baseSymbol)]
+            [var phases = GetAllPhases(symbol)]
+            [var basePhases = GetAllPhases(baseSymbol)]
             [foreach (var phase in phases)]
                 [if (!basePhases.Contains(phase))]
                     [hasNewPhase = true;]
@@ -288,7 +334,7 @@ namespace [symbol.NamespaceName].__Impl
             [CallImpl(symbol, "CompletePart_Validate(diagnostics, cancellationToken)")];
         }
 
-        [foreach (var phase in GetPhases(symbol))]
+        [foreach (var phase in GetAllPhases(symbol))]
 
             [var virtOvrd = basePhases.Contains(phase) ? "override" : "virtual"]
             [var props = GetPhaseProperties(symbol, phase)]
@@ -338,7 +384,7 @@ namespace [symbol.NamespaceName].__Impl
                             [-]
                             return (
                                 [foreach (var prop in props) separator ", "]
-                                    SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
+                                    ContainingModule!.SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
                                 [end foreach]
                             );
                             [=]
@@ -352,7 +398,7 @@ namespace [symbol.NamespaceName].__Impl
                     [else]
                         public virtual [returnType] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                         {
-                            return SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
+                            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
                         }
                     [end if]
                 [else]

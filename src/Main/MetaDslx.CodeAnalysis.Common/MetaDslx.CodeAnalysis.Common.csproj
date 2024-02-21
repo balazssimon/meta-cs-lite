@@ -24,7 +24,7 @@
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
 		<PackageReference Include="Autofac" Version="$(AutofacVersion)" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
-	</ItemGroup>	
+	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
@@ -60,7 +60,7 @@
 		<None Remove="Symbols\Source\**" Condition="!$(MetaDslxBootstrap)" />
 		<Compile Remove="CommonOld\**" Condition="!$(MetaDslxBootstrap)" />
 		<None Remove="CommonOld\**" Condition="!$(MetaDslxBootstrap)" />
-
+		
 		<Compile Remove="Symbols\Generated\**" Condition="$(MetaDslxBootstrap)" />
 		<None Remove="Symbols\Generated\**" Condition="$(MetaDslxBootstrap)" />
 		<Compile Remove="Symbols\Custom\**" Condition="$(MetaDslxBootstrap)" />

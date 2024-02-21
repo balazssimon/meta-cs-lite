@@ -24,12 +24,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
     public class SymbolImpl : SymbolImplBase
     {
-        public override ISymbolFactory SymbolFactory
+        public override Modeling.Model? Model => ModelObject?.MModel;
+
+        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences
         {
             get
             {
-                var container = this.ContainingModule;
-                return container?.SymbolFactory;
+                return MergedDeclaration?.SyntaxReferences ?? ImmutableArray<SyntaxNodeOrToken>.Empty;
+            }
+        }
+
+        public override ImmutableArray<Location> Locations
+        {
+            get
+            {
+                return MergedDeclaration?.NameLocations.Cast<SourceLocation, Location>() ?? this.ContainingModule?.Locations ?? ImmutableArray<Location>.Empty;
             }
         }
 
@@ -154,27 +163,27 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public virtual string? Complete_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetName(__Wrapped._underlyingObject, diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetName(__Wrapped._underlyingObject, diagnostics, cancellationToken);
         }
 
         public virtual string? Complete_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetMetadataName(__Wrapped._underlyingObject, diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetMetadataName(__Wrapped._underlyingObject, diagnostics, cancellationToken);
         }
 
         public virtual ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetContainedSymbols(this, diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetContainedSymbols(this, diagnostics, cancellationToken);
         }
 
         public virtual ImmutableArray<AttributeSymbol> Complete_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
         }
 
         public virtual void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            SymbolFactory.ComputeNonSymbolProperties(this, diagnostics, cancellationToken);
+            ContainingModule!.SymbolFactory.ComputeNonSymbolProperties(this, diagnostics, cancellationToken);
         }
 
         public virtual void CompletePart_Finalize(DiagnosticBag diagnostics, CancellationToken cancellationToken)

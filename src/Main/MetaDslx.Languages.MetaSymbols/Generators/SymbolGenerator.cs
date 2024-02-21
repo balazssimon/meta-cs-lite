@@ -3,19 +3,29 @@ using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Languages.MetaSymbols.Model;
 using Roslyn.Utilities;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Xml;
 
 namespace MetaDslx.Languages.MetaSymbols.Generators
 {
     public partial class SymbolGenerator
     {
+        private DiagnosticBag _diagnostics = new DiagnosticBag();
+
         private Dictionary<Symbol, ImmutableArray<Symbol>> _baseTypes = new Dictionary<Symbol, ImmutableArray<Symbol>>();
         private Dictionary<Symbol, ImmutableArray<string>> _phases = new Dictionary<Symbol, ImmutableArray<string>>();
+        private Dictionary<Symbol, ImmutableArray<string>> _derivedPhases = new Dictionary<Symbol, ImmutableArray<string>>();
         private Dictionary<Symbol, ImmutableArray<Property>> _properties = new Dictionary<Symbol, ImmutableArray<Property>>();
         private Dictionary<Symbol, ImmutableArray<Operation>> _operations = new Dictionary<Symbol, ImmutableArray<Operation>>();
+        private Dictionary<Operation, string> _operationUniqueNames = new Dictionary<Operation, string>();
+        private Dictionary<string, int> _uniqueCounter = new Dictionary<string, int>();
+
+        public ImmutableArray<Diagnostic> Diagnostics => _diagnostics.ToReadOnly();
 
         public string GetIntfName(Symbol context, Symbol type)
         {
@@ -115,10 +125,68 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             }
         }
 
+        public string? GetFieldName(Operation op)
+        {
+            return $"s_{GetUniqueName(op)}";
+        }
+
+        public string? GetFieldType(Symbol context, Operation op)
+        {
+            string valueType;
+            if (op.Parameters.Count == 0)
+            {
+                valueType = op.ReturnType.Type.IsValueType || op.ReturnType.Dimensions > 0 ? "object" : GetTypeName(context, op.ReturnType);
+            }
+            else
+            {
+                valueType = $"global::System.Collections.Concurrent.ConcurrentDictionary<{GetCacheKeyType(context, op)}, {GetTypeName(context, op.ReturnType)}>";
+            }
+            return $"global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, {valueType}>";
+        }
+
+        public string? GetCacheKeyType(Symbol context, Operation op)
+        {
+            if (op.Parameters.Count == 0)
+            {
+                return null;
+            }
+            else if (op.Parameters.Count == 1)
+            {
+                var param = op.Parameters[0];
+                return GetTypeName(context, param.Type);
+            }
+            else
+            {
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                foreach (var param in op.Parameters)
+                {
+                    if (sb.Length == 0) sb.Append("(");
+                    else sb.Append(", ");
+                    var paramType = GetTypeName(context, param.Type);
+                    sb.Append(paramType);
+                }
+                sb.Append(")");
+                return builder.ToStringAndFree();
+            }
+        }
+
         public string GetDefaultValue(Symbol context, Property prop)
         {
             if (prop.DefaultValue is not null) return prop.DefaultValue.ToString();
             else if (prop.Type.Dimensions > 0) return $"{GetTypeName(context, prop.Type)}.Empty";
+            else return "default";
+        }
+
+        public string GetConstDefaultValue(Symbol context, Property prop)
+        {
+            if (prop.DefaultValue is not null) return prop.DefaultValue.ToString();
+            else return "default";
+        }
+
+        public string GetDefaultValue(Symbol context, TypeReference type)
+        {
+            if (type.Dimensions > 0) return $"{GetTypeName(context, type)}.Empty";
             else return "default";
         }
 
@@ -154,12 +222,25 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             _baseTypes.Add(symbol, baseTypes.ToImmutableAndFree());
         }
 
+        public IEnumerable<string> GetAllPhases(Symbol? symbol)
+        {
+            if (symbol is null) yield break;
+            foreach (var phase in GetPhases(symbol))
+            {
+                yield return phase;
+            }
+            foreach (var phase in GetDerivedPhases(symbol))
+            {
+                yield return phase;
+            }
+        }
+
         public ImmutableArray<string> GetPhases(Symbol? symbol)
         {
             if (symbol is null) return ImmutableArray<string>.Empty;
             if (_phases.TryGetValue(symbol, out var phases)) return phases;
             var phs = ArrayBuilder<string>.GetInstance();
-            foreach (var prop in symbol.Properties)
+            foreach (var prop in symbol.Properties.Where(p => !p.IsInit && !p.IsDerived))
             {
                 if (prop.Phase is null) phs.Add(prop.Name);
             }
@@ -179,6 +260,34 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             }
             var result = phs.ToImmutableAndFree();
             _phases.Add(symbol, result);
+            return result;
+        }
+
+        public ImmutableArray<string> GetDerivedPhases(Symbol? symbol)
+        {
+            if (symbol is null) return ImmutableArray<string>.Empty;
+            if (_derivedPhases.TryGetValue(symbol, out var phases)) return phases;
+            var phs = ArrayBuilder<string>.GetInstance();
+            foreach (var prop in symbol.Properties.Where(p => !p.IsInit && p.IsDerived))
+            {
+                if (prop.Phase is null) phs.Add(prop.Name);
+            }
+            /*foreach (var op in symbol.Operations)
+            {
+                if (op.IsPhase) phs.Add(op.Name);
+            }*/
+            foreach (var bs in GetBaseTypes(symbol))
+            {
+                foreach (var phase in GetDerivedPhases(bs))
+                {
+                    if (!phs.Contains(phase))
+                    {
+                        phs.Add(phase);
+                    }
+                }
+            }
+            var result = phs.ToImmutableAndFree();
+            _derivedPhases.Add(symbol, result);
             return result;
         }
 
@@ -209,19 +318,48 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             if (_operations.TryGetValue(symbol, out var operations)) return operations;
             var ops = ArrayBuilder<Operation>.GetInstance();
             ops.AddRange(symbol.Operations/*.Where(o => !o.IsPhase)*/);
+            foreach (var op in symbol.Operations)
+            {
+                if (!_uniqueCounter.ContainsKey(op.Name))
+                {
+                    _uniqueCounter.Add(op.Name, 0);
+                }
+                var uniqueId = _uniqueCounter[op.Name] + 1;
+                _uniqueCounter[op.Name] = uniqueId;
+                var uniqueName = $"{op.Name}{uniqueId}";
+                _operationUniqueNames.Add(op, uniqueName);
+                if (op.CacheResult)
+                {
+                    if (op.ReturnType.Type.SpecialType == SpecialType.System_Void)
+                    {
+                        _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_CodeGenerationError, op.ReturnType.MSourceLocation, $"Return type must not be void if the result of the operation is to be cached."));
+                    }
+                    /*foreach (var param in op.Parameters)
+                    {
+                        if (param.Type.Dimensions > 0)
+                        {
+                            _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_CodeGenerationError, param.MSourceLocation, $"Parameter '{param.Name}' must be a simple value, not an array, if the result of the operation is to be cached."));
+                        }
+                    }*/
+                }
+            }
             foreach (var bs in GetBaseTypes(symbol))
             {
                 foreach (var op in bs.Operations)
                 {
-                    if (!ops.Where(o => o.Name == op.Name).Any())
-                    {
-                        ops.Add(op);
-                    }
+                    ops.Add(op);
                 }
             }
             var result = ops.ToImmutableAndFree();
             _operations.Add(symbol, result);
             return result;
+        }
+
+        public string GetUniqueName(Operation op)
+        {
+            if (!_operationUniqueNames.ContainsKey(op)) GetOperations(op.MParent as Symbol);
+            if (_operationUniqueNames.TryGetValue(op, out var uniqueName)) return uniqueName;
+            else return string.Empty;
         }
 
         public ImmutableArray<Property> GetPhaseProperties(Symbol symbol, string phase)

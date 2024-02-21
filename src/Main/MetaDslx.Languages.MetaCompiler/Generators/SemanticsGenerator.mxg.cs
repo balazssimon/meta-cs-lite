@@ -513,25 +513,25 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
-            var __first74 = true;
+            var __first75 = true;
             #line (55,14)-(55,50) 13 "SemanticsGenerator.mxg"
             foreach (var rule in RulesAndBlocks)
             #line hidden
             
             {
-                if (__first74)
+                if (__first75)
                 {
-                    __first74 = false;
+                    __first75 = false;
                 }
-                var __first75 = true;
+                var __first76 = true;
                 #line (56,18)-(56,56) 17 "SemanticsGenerator.mxg"
                 foreach (var alt in rule.Alternatives)
                 #line hidden
                 
                 {
-                    if (__first75)
+                    if (__first76)
                     {
-                        __first75 = false;
+                        __first76 = false;
                     }
                     __cb.WriteLine();
                     __cb.Pop();
@@ -542,9 +542,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first75) __cb.AppendLine();
+                if (!__first76) __cb.AppendLine();
             }
-            if (!__first74) __cb.AppendLine();
+            if (!__first75) __cb.AppendLine();
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -714,15 +714,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first76 = true;
+            var __first77 = true;
             #line (86,6)-(86,70) 13 "SemanticsGenerator.mxg"
             foreach (var elem in alt.Elements.Where(e => e.ContainsBinders))
             #line hidden
             
             {
-                if (__first76)
+                if (__first77)
                 {
-                    __first76 = false;
+                    __first77 = false;
                 }
                 __cb.Push("");
                 #line (87,10)-(87,70) 28 "SemanticsGenerator.mxg"
@@ -731,7 +731,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first76) __cb.AppendLine();
+            if (!__first77) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -740,22 +740,22 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first77 = true;
+            var __first78 = true;
             #line (92,6)-(92,82) 13 "SemanticsGenerator.mxg"
             foreach (var binder in binders.Where(b => b.IsNegated == negated).Reverse())
             #line hidden
             
             {
-                if (__first77)
+                if (__first78)
                 {
-                    __first77 = false;
+                    __first78 = false;
                 }
                 #line (93,10)-(93,89) 17 "SemanticsGenerator.mxg"
                 body = GenerateBinderFactoryVisitBinder(binder, nodeName, body, ref annotIndex);
                 #line hidden
                 
             }
-            if (!__first77) __cb.AppendLine();
+            if (!__first78) __cb.AppendLine();
             __cb.Push("");
             #line (95,6)-(95,10) 24 "SemanticsGenerator.mxg"
             __cb.Write(body);
@@ -904,15 +904,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             var isOptional = MetaDslx.Languages.MetaCompiler.Model.MultiplicityExtensions.IsOptional(elem.Value.Multiplicity);
             #line hidden
             
-            var __first78 = true;
+            var __first79 = true;
             #line (115,6)-(115,17) 13 "SemanticsGenerator.mxg"
             if (isList)
             #line hidden
             
             {
-                if (__first78)
+                if (__first79)
                 {
-                    __first78 = false;
+                    __first79 = false;
                 }
                 #line (116,10)-(116,58) 17 "SemanticsGenerator.mxg"
                 var elemName = "node."+elem.PropertyName+".Node";
@@ -934,9 +934,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first78)
+                if (__first79)
                 {
-                    __first78 = false;
+                    __first79 = false;
                 }
                 #line (120,10)-(120,58) 17 "SemanticsGenerator.mxg"
                 var elemName = "node."+elem.PropertyName+".Node";
@@ -962,9 +962,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first78)
+                if (__first79)
                 {
-                    __first78 = false;
+                    __first79 = false;
                 }
                 #line (125,10)-(125,50) 17 "SemanticsGenerator.mxg"
                 var elemName = "node."+elem.PropertyName;
@@ -983,15 +983,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line (126,14)-(126,22) 28 "SemanticsGenerator.mxg"
                 __cb.Write(elemName);
                 #line hidden
-                var __first79 = true;
+                var __first80 = true;
                 #line (126,24)-(126,41) 17 "SemanticsGenerator.mxg"
                 if (elem.IsToken)
                 #line hidden
                 
                 {
-                    if (__first79)
+                    if (__first80)
                     {
-                        __first79 = false;
+                        __first80 = false;
                     }
                     #line (126,42)-(126,46) 33 "SemanticsGenerator.mxg"
                     __cb.Write(".Get");
@@ -1023,9 +1023,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
                 {
-                    if (__first79)
+                    if (__first80)
                     {
-                        __first79 = false;
+                        __first80 = false;
                     }
                     #line (126,89)-(126,90) 33 "SemanticsGenerator.mxg"
                     __cb.Write(" ");
@@ -1069,9 +1069,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first78)
+                if (__first79)
                 {
-                    __first78 = false;
+                    __first79 = false;
                 }
                 #line (131,10)-(131,50) 17 "SemanticsGenerator.mxg"
                 var elemName = "node."+elem.PropertyName;
@@ -1084,7 +1084,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first78) __cb.AppendLine();
+            if (!__first79) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -1397,15 +1397,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             var ifElse = "";
             #line hidden
             
-            var __first80 = true;
+            var __first81 = true;
             #line (158,10)-(158,50) 13 "SemanticsGenerator.mxg"
             for (int i = 0; i < firstCount - 1; ++i)
             #line hidden
             
             {
-                if (__first80)
+                if (__first81)
                 {
-                    __first80 = false;
+                    __first81 = false;
                 }
                 __cb.Push("    ");
                 #line (159,14)-(159,20) 28 "SemanticsGenerator.mxg"
@@ -1499,16 +1499,16 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
             }
-            if (!__first80) __cb.AppendLine();
-            var __first81 = true;
+            if (!__first81) __cb.AppendLine();
+            var __first82 = true;
             #line (167,10)-(167,29) 13 "SemanticsGenerator.mxg"
             if (firstCount > 0)
             #line hidden
             
             {
-                if (__first81)
+                if (__first82)
                 {
-                    __first81 = false;
+                    __first82 = false;
                 }
                 __cb.Push("    ");
                 #line (168,14)-(168,20) 28 "SemanticsGenerator.mxg"
@@ -1549,15 +1549,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
-                var __first82 = true;
+                var __first83 = true;
                 #line (170,18)-(170,42) 17 "SemanticsGenerator.mxg"
                 if (list.SeparatorFirst)
                 #line hidden
                 
                 {
-                    if (__first82)
+                    if (__first83)
                     {
-                        __first82 = false;
+                        __first83 = false;
                     }
                     __cb.Push("        ");
                     #line (171,22)-(171,169) 32 "SemanticsGenerator.mxg"
@@ -1589,9 +1589,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
                 {
-                    if (__first82)
+                    if (__first83)
                     {
-                        __first82 = false;
+                        __first83 = false;
                     }
                     __cb.Push("        ");
                     #line (174,22)-(174,160) 32 "SemanticsGenerator.mxg"
@@ -1618,7 +1618,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first82) __cb.AppendLine();
+                if (!__first83) __cb.AppendLine();
                 __cb.Push("    ");
                 #line (177,13)-(177,14) 29 "SemanticsGenerator.mxg"
                 __cb.Write("}");
@@ -1630,16 +1630,16 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
             }
-            if (!__first81) __cb.AppendLine();
-            var __first83 = true;
+            if (!__first82) __cb.AppendLine();
+            var __first84 = true;
             #line (180,10)-(180,45) 13 "SemanticsGenerator.mxg"
             for (int i = 0; i < lastCount; ++i)
             #line hidden
             
             {
-                if (__first83)
+                if (__first84)
                 {
-                    __first83 = false;
+                    __first84 = false;
                 }
                 __cb.Push("    ");
                 #line (181,14)-(181,20) 28 "SemanticsGenerator.mxg"
@@ -1699,15 +1699,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 var j = lastCount - 1 - i;
                 #line hidden
                 
-                var __first84 = true;
+                var __first85 = true;
                 #line (184,18)-(184,80) 17 "SemanticsGenerator.mxg"
                 if (j < list.LastItems.Count && j < list.LastSeparators.Count)
                 #line hidden
                 
                 {
-                    if (__first84)
+                    if (__first85)
                     {
-                        __first84 = false;
+                        __first85 = false;
                     }
                     __cb.Push("        ");
                     #line (185,22)-(185,172) 32 "SemanticsGenerator.mxg"
@@ -1757,9 +1757,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
                 {
-                    if (__first84)
+                    if (__first85)
                     {
-                        __first84 = false;
+                        __first85 = false;
                     }
                     __cb.Push("        ");
                     #line (189,22)-(189,136) 32 "SemanticsGenerator.mxg"
@@ -1791,9 +1791,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
                 {
-                    if (__first84)
+                    if (__first85)
                     {
-                        __first84 = false;
+                        __first85 = false;
                     }
                     __cb.Push("        ");
                     #line (192,22)-(192,145) 32 "SemanticsGenerator.mxg"
@@ -1825,9 +1825,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
                 {
-                    if (__first84)
+                    if (__first85)
                     {
-                        __first84 = false;
+                        __first85 = false;
                     }
                     __cb.Push("        ");
                     #line (195,21)-(195,29) 33 "SemanticsGenerator.mxg"
@@ -1842,7 +1842,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __cb.AppendLine();
                     __cb.Pop();
                 }
-                if (!__first84) __cb.AppendLine();
+                if (!__first85) __cb.AppendLine();
                 __cb.Push("    ");
                 #line (197,13)-(197,14) 29 "SemanticsGenerator.mxg"
                 __cb.Write("}");
@@ -1854,7 +1854,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
             }
-            if (!__first83) __cb.AppendLine();
+            if (!__first84) __cb.AppendLine();
             __cb.Push("    ");
             #line (200,9)-(200,11) 25 "SemanticsGenerator.mxg"
             __cb.Write("if");
@@ -1997,15 +1997,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first85 = true;
+            var __first86 = true;
             #line (214,6)-(214,25) 13 "SemanticsGenerator.mxg"
             if (separatorFirst)
             #line hidden
             
             {
-                if (__first85)
+                if (__first86)
                 {
-                    __first85 = false;
+                    __first86 = false;
                 }
                 __cb.Push("");
                 #line (215,10)-(215,103) 28 "SemanticsGenerator.mxg"
@@ -2025,9 +2025,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first85)
+                if (__first86)
                 {
-                    __first85 = false;
+                    __first86 = false;
                 }
                 __cb.Push("");
                 #line (218,10)-(218,106) 28 "SemanticsGenerator.mxg"
@@ -2042,7 +2042,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first85) __cb.AppendLine();
+            if (!__first86) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -2051,15 +2051,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first86 = true;
+            var __first87 = true;
             #line (224,6)-(224,38) 13 "SemanticsGenerator.mxg"
             if (elemValue is TokenAlts alts)
             #line hidden
             
             {
-                if (__first86)
+                if (__first87)
                 {
-                    __first86 = false;
+                    __first87 = false;
                 }
                 __cb.Push("");
                 #line (225,9)-(225,11) 29 "SemanticsGenerator.mxg"
@@ -2114,22 +2114,22 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 body = GenerateBinderFactoryVisitBinders(alts.Binders, elemName, body, false, ref annotIndex);
                 #line hidden
                 
-                var __first87 = true;
+                var __first88 = true;
                 #line (229,14)-(229,34) 17 "SemanticsGenerator.mxg"
                 if (withElemBinders)
                 #line hidden
                 
                 {
-                    if (__first87)
+                    if (__first88)
                     {
-                        __first87 = false;
+                        __first88 = false;
                     }
                     #line (230,18)-(230,111) 21 "SemanticsGenerator.mxg"
                     body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex);
                     #line hidden
                     
                 }
-                if (!__first87) __cb.AppendLine();
+                if (!__first88) __cb.AppendLine();
                 __cb.Push("    ");
                 #line (232,14)-(232,18) 28 "SemanticsGenerator.mxg"
                 __cb.Write(body);
@@ -2158,22 +2158,22 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 body = GenerateBinderFactoryVisitBinders(alts.Binders, elemName, "// default", true, ref annotIndex);
                 #line hidden
                 
-                var __first88 = true;
+                var __first89 = true;
                 #line (237,14)-(237,34) 17 "SemanticsGenerator.mxg"
                 if (withElemBinders)
                 #line hidden
                 
                 {
-                    if (__first88)
+                    if (__first89)
                     {
-                        __first88 = false;
+                        __first89 = false;
                     }
                     #line (238,18)-(238,110) 21 "SemanticsGenerator.mxg"
                     body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, true, ref annotIndex);
                     #line hidden
                     
                 }
-                if (!__first88) __cb.AppendLine();
+                if (!__first89) __cb.AppendLine();
                 __cb.Push("    ");
                 #line (240,14)-(240,18) 28 "SemanticsGenerator.mxg"
                 __cb.Write(body);
@@ -2192,9 +2192,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first86)
+                if (__first87)
                 {
-                    __first86 = false;
+                    __first87 = false;
                 }
                 #line (243,10)-(243,95) 17 "SemanticsGenerator.mxg"
                 var body = GenerateBinderFactoryVisitElementBody(elemName, elemValue, ref annotIndex);
@@ -2204,22 +2204,22 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 body = GenerateBinderFactoryVisitBinders(elemValue.Binders, elemName, body, false, ref annotIndex);
                 #line hidden
                 
-                var __first89 = true;
+                var __first90 = true;
                 #line (245,10)-(245,30) 17 "SemanticsGenerator.mxg"
                 if (withElemBinders)
                 #line hidden
                 
                 {
-                    if (__first89)
+                    if (__first90)
                     {
-                        __first89 = false;
+                        __first90 = false;
                     }
                     #line (246,14)-(246,107) 21 "SemanticsGenerator.mxg"
                     body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex);
                     #line hidden
                     
                 }
-                if (!__first89) __cb.AppendLine();
+                if (!__first90) __cb.AppendLine();
                 __cb.Push("");
                 #line (248,10)-(248,14) 28 "SemanticsGenerator.mxg"
                 __cb.Write(body);
@@ -2227,7 +2227,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first86) __cb.AppendLine();
+            if (!__first87) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -2266,15 +2266,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            var __first90 = true;
+            var __first91 = true;
             #line (255,10)-(255,42) 13 "SemanticsGenerator.mxg"
             foreach (var alt in alts.Tokens)
             #line hidden
             
             {
-                if (__first90)
+                if (__first91)
                 {
-                    __first90 = false;
+                    __first91 = false;
                 }
                 __cb.Push("    ");
                 #line (256,13)-(256,17) 29 "SemanticsGenerator.mxg"
@@ -2310,7 +2310,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first90) __cb.AppendLine();
+            if (!__first91) __cb.AppendLine();
             __cb.Push("    ");
             #line (260,9)-(260,17) 25 "SemanticsGenerator.mxg"
             __cb.Write("default:");
@@ -2337,15 +2337,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first91 = true;
+            var __first92 = true;
             #line (266,6)-(266,58) 13 "SemanticsGenerator.mxg"
             if (elemValue is RuleRef rr && rr.Token is not null)
             #line hidden
             
             {
-                if (__first91)
+                if (__first92)
                 {
-                    __first91 = false;
+                    __first92 = false;
                 }
                 #line (267,10)-(267,55) 17 "SemanticsGenerator.mxg"
                 var body = "//this.VisitToken("+elemName+");";
@@ -2363,9 +2363,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first91)
+                if (__first92)
                 {
-                    __first91 = false;
+                    __first92 = false;
                 }
                 __cb.Push("");
                 #line (270,9)-(270,20) 29 "SemanticsGenerator.mxg"
@@ -2380,7 +2380,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.AppendLine();
                 __cb.Pop();
             }
-            if (!__first91) __cb.AppendLine();
+            if (!__first92) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         

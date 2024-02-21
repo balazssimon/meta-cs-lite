@@ -12,6 +12,8 @@ public interface ImportSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
         global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Namespaces { get; }
         [__ModelProperty]
         global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Symbols { get; }
+        [__ModelProperty]
+        global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> ImportedSymbols { get; }
 
 
         public static new class CompletionParts
@@ -24,16 +26,19 @@ public interface ImportSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
             public static readonly CompletionPart Finish_Namespaces = new CompletionPart(nameof(Finish_Namespaces));
             public static readonly CompletionPart Start_Symbols = new CompletionPart(nameof(Start_Symbols));
             public static readonly CompletionPart Finish_Symbols = new CompletionPart(nameof(Finish_Symbols));
+            public static readonly CompletionPart Start_ImportedSymbols = new CompletionPart(nameof(Start_ImportedSymbols));
+            public static readonly CompletionPart Finish_ImportedSymbols = new CompletionPart(nameof(Finish_ImportedSymbols));
             public static readonly CompletionPart Start_Attribute = new CompletionPart(nameof(Start_Attribute));
             public static readonly CompletionPart Finish_Attribute = new CompletionPart(nameof(Finish_Attribute));
 
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
-                    Start_Files, Finish_Files,
-                    Start_Aliases, Finish_Aliases,
-                    Start_Namespaces, Finish_Namespaces,
-                    Start_Symbols, Finish_Symbols,
                     Start_Attribute, Finish_Attribute
+                    , Start_Files, Finish_Files
+                    , Start_Aliases, Finish_Aliases
+                    , Start_Namespaces, Finish_Namespaces
+                    , Start_Symbols, Finish_Symbols
+                    , Start_ImportedSymbols, Finish_ImportedSymbols
                 );
         }
     }

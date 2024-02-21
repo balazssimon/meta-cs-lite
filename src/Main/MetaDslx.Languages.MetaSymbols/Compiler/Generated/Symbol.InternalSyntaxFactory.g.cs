@@ -297,6 +297,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         internal PropertyGreen Property(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
         {
             #if DEBUG
+                if (block1 is null) throw new __ArgumentNullException(nameof(block1));
                 if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
             #endif
@@ -315,7 +316,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             #endif
             return new OperationAlt1Green(SymbolSyntaxKind.OperationAlt1, isPhase, name, tLParen, tRParen);
         }
-        internal OperationAlt2Green OperationAlt2(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block, __InternalSyntaxToken tRParen)
+        internal OperationAlt2Green OperationAlt2(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, __InternalSyntaxToken cacheResult, OperationAlt2Block2Green block2)
         {
             #if DEBUG
                 if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
@@ -324,8 +325,9 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
                 if (tRParen is null) throw new __ArgumentNullException(nameof(tRParen));
                 if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
+                if (cacheResult is not null && (cacheResult.RawKind != (int)SymbolSyntaxKind.KCache)) throw new __ArgumentException(nameof(cacheResult));
             #endif
-            return new OperationAlt2Green(SymbolSyntaxKind.OperationAlt2, returnType, name, tLParen, block, tRParen);
+            return new OperationAlt2Green(SymbolSyntaxKind.OperationAlt2, returnType, name, tLParen, block1, tRParen, cacheResult, block2);
         }
         internal ParameterGreen Parameter(TypeReferenceGreen type, NameGreen name)
         {
@@ -713,17 +715,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal PropertyBlock1Alt1Green PropertyBlock1Alt1(__InternalSyntaxToken isWeak)
+        internal PropertyBlock1Alt1Green PropertyBlock1Alt1(__InternalSyntaxToken isInit)
         {
             #if DEBUG
-                if (isWeak is null) throw new __ArgumentNullException(nameof(isWeak));
-                if (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak) throw new __ArgumentException(nameof(isWeak));
+                if (isInit is not null && (isInit.RawKind != (int)SymbolSyntaxKind.KInit)) throw new __ArgumentException(nameof(isInit));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt1, isWeak, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt1, isInit, out hash);
             if (cached != null) return (PropertyBlock1Alt1Green)cached;
         
-            var result = new PropertyBlock1Alt1Green(SymbolSyntaxKind.PropertyBlock1Alt1, isWeak);
+            var result = new PropertyBlock1Alt1Green(SymbolSyntaxKind.PropertyBlock1Alt1, isInit);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -731,17 +732,17 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal PropertyBlock1Alt2Green PropertyBlock1Alt2(__InternalSyntaxToken isDerived)
+        internal PropertyBlock1Alt2Green PropertyBlock1Alt2(__InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived)
         {
             #if DEBUG
-                if (isDerived is null) throw new __ArgumentNullException(nameof(isDerived));
-                if (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived) throw new __ArgumentException(nameof(isDerived));
+                if (isWeak is not null && (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak)) throw new __ArgumentException(nameof(isWeak));
+                if (isDerived is not null && (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived)) throw new __ArgumentException(nameof(isDerived));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt2, isDerived, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt2, isWeak, isDerived, out hash);
             if (cached != null) return (PropertyBlock1Alt2Green)cached;
         
-            var result = new PropertyBlock1Alt2Green(SymbolSyntaxKind.PropertyBlock1Alt2, isDerived);
+            var result = new PropertyBlock1Alt2Green(SymbolSyntaxKind.PropertyBlock1Alt2, isWeak, isDerived);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -815,6 +816,26 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             if (cached != null) return (OperationAlt2Block1parametersBlockGreen)cached;
         
             var result = new OperationAlt2Block1parametersBlockGreen(SymbolSyntaxKind.OperationAlt2Block1parametersBlock, tComma, parameters);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        internal OperationAlt2Block2Green OperationAlt2Block2(__InternalSyntaxToken kIf, __InternalSyntaxToken cacheCondition)
+        {
+            #if DEBUG
+                if (kIf is null) throw new __ArgumentNullException(nameof(kIf));
+                if (kIf.RawKind != (int)SymbolSyntaxKind.KIf) throw new __ArgumentException(nameof(kIf));
+                if (cacheCondition is null) throw new __ArgumentNullException(nameof(cacheCondition));
+                if (cacheCondition.RawKind != (int)SymbolSyntaxKind.TString) throw new __ArgumentException(nameof(cacheCondition));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.OperationAlt2Block2, kIf, cacheCondition, out hash);
+            if (cached != null) return (OperationAlt2Block2Green)cached;
+        
+            var result = new OperationAlt2Block2Green(SymbolSyntaxKind.OperationAlt2Block2, kIf, cacheCondition);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

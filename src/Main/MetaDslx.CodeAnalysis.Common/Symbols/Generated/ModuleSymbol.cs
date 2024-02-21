@@ -4,10 +4,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
 public interface ModuleSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
+        global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory { get; }
         [__ModelProperty]
         NamespaceSymbol GlobalNamespace { get; }
 
-        NamespaceSymbol GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree);
+        global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol? GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree);
 
         public static new class CompletionParts
         {
@@ -18,8 +19,8 @@ public interface ModuleSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
 
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
-                    Start_GlobalNamespace, Finish_GlobalNamespace,
                     Start_Attribute, Finish_Attribute
+                    , Start_GlobalNamespace, Finish_GlobalNamespace
                 );
         }
     }

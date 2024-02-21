@@ -39,6 +39,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         public virtual void VisitPropertyBlock3Green(PropertyBlock3Green node) => this.DefaultVisit(node);
         public virtual void VisitOperationAlt2Block1Green(OperationAlt2Block1Green node) => this.DefaultVisit(node);
         public virtual void VisitOperationAlt2Block1parametersBlockGreen(OperationAlt2Block1parametersBlockGreen node) => this.DefaultVisit(node);
+        public virtual void VisitOperationAlt2Block2Green(OperationAlt2Block2Green node) => this.DefaultVisit(node);
         public virtual void VisitTypeReferenceBlock1Green(TypeReferenceBlock1Green node) => this.DefaultVisit(node);
         public virtual void VisitArrayDimensionsBlock1Green(ArrayDimensionsBlock1Green node) => this.DefaultVisit(node);
         public virtual void VisitQualifierIdentifierBlockGreen(QualifierIdentifierBlockGreen node) => this.DefaultVisit(node);
@@ -81,6 +82,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         public virtual TResult VisitPropertyBlock3Green(PropertyBlock3Green node) => this.DefaultVisit(node);
         public virtual TResult VisitOperationAlt2Block1Green(OperationAlt2Block1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitOperationAlt2Block1parametersBlockGreen(OperationAlt2Block1parametersBlockGreen node) => this.DefaultVisit(node);
+        public virtual TResult VisitOperationAlt2Block2Green(OperationAlt2Block2Green node) => this.DefaultVisit(node);
         public virtual TResult VisitTypeReferenceBlock1Green(TypeReferenceBlock1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitArrayDimensionsBlock1Green(ArrayDimensionsBlock1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitQualifierIdentifierBlockGreen(QualifierIdentifierBlockGreen node) => this.DefaultVisit(node);

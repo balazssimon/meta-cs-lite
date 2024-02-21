@@ -34,6 +34,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         [ModelProperty]
         ImmutableArray<AttributeSymbol> Attributes { get; }
 
+        TSymbol AsInstance<TSymbol>() where TSymbol: Symbol;
+
         string Kind { get; }
         string DisplayKind { get; }
         /// <summary>
@@ -49,8 +51,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         bool IsSourceSymbol { get; }
         bool IsModelSymbol { get; }
         bool IsCSharpSymbol { get; }
-
-        ISymbolFactory SymbolFactory { get; }
 
         /// <summary>
         /// Get the symbol that directly contains this symbol. 
@@ -144,6 +144,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         ImmutableArray<Location> Locations { get; }
         Location Location { get; }
 
+        MetaDslx.Modeling.Model Model { get; }
         IModelObject? ModelObject { get; }
         Type? ModelObjectType { get; }
 
@@ -173,6 +174,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Parameter - type is unsupported
         /// </summary>
         bool HasUnsupportedMetadata { get; }
+
+        ImmutableArray<SingleDeclaration> GetSingleDeclarations(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns the Documentation Comment ID for the symbol, or null if the symbol doesn't

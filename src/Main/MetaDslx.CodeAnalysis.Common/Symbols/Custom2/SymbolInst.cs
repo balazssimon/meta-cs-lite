@@ -79,7 +79,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 s_attributes.Add(this, attributes);
             }
-            NotePartComplete(CompletionGraph.ContainedSymbolsCompleted);
+            NotePartComplete(Symbol.CompletionParts.Finish_Attributes);
         }
 
         protected SymbolInst(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
@@ -107,27 +107,34 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _underlyingObject = errorInfo;
         }
 
-        protected SymbolInst(Symbol container, MergedDeclaration declaration, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+        protected SymbolInst(Symbol container, MergedDeclaration declaration, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
             : this(container, name, metadataName, attributes)
         {
             _underlyingObject = modelObject;
             s_declarations.Add(this, declaration);
         }
 
-        protected SymbolInst(Symbol container, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+        protected SymbolInst(Symbol container, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
             : this(container, name, metadataName, attributes)
         {
             _underlyingObject = modelObject;
         }
 
-        protected SymbolInst(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+        protected SymbolInst(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
             : this(container, name, metadataName, attributes)
         {
             _underlyingObject = csharpSymbol;
         }
 
-        protected SymbolInst(Symbol container, Compilation compilation, IModelObject? modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
+        protected SymbolInst(Symbol container, Compilation compilation, IModelObject? modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
             : this(container, name, metadataName, attributes)
+        {
+            _underlyingObject = modelObject;
+            s_compilations.Add(this, compilation);
+        }
+
+        protected SymbolInst(Symbol container, Compilation compilation, MergedDeclaration declaration, IModelObject? modelObject = null, string? name = null, string? metadataName = null, ImmutableArray<AttributeSymbol> attributes = default)
+            : this(container, name ?? declaration.Name, metadataName ?? name ?? declaration.MetadataName, attributes)
         {
             _underlyingObject = modelObject;
             s_compilations.Add(this, compilation);
@@ -168,8 +175,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _);
 
         public Symbol ContainingSymbol => _container;
-
-        public virtual ISymbolFactory SymbolFactory => CallImpl<ISymbolFactory, Symbol, SymbolImpl>(impl => impl.SymbolFactory);
 
         public ImmutableArray<Symbol> ContainedSymbols
         {
@@ -297,28 +302,18 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences
-        {
-            get
-            {
-                return MergedDeclaration?.SyntaxReferences ?? ImmutableArray<SyntaxNodeOrToken>.Empty;
-            }
-        }
+        public virtual ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => CallImpl<ImmutableArray<SyntaxNodeOrToken>, Symbol, SymbolImpl>(impl => impl.DeclaringSyntaxReferences);
 
         /// <summary>
         /// Gets the locations where this symbol was originally defined, either in source or
         /// metadata. Some symbols (for example, partial classes) may be defined in more than one
         /// location.
         /// </summary>
-        public ImmutableArray<Location> Locations
-        {
-            get
-            {
-                return MergedDeclaration?.NameLocations.Cast<SourceLocation, Location>() ?? this.ContainingModule?.Locations ?? ImmutableArray<Location>.Empty;
-            }
-        }
+        public virtual ImmutableArray<Location> Locations => CallImpl<ImmutableArray<Location>, Symbol, SymbolImpl>(impl => impl.Locations);
 
         public Location Location => Locations.FirstOrDefault() ?? Location.None;
+
+        public virtual MetaDslx.Modeling.Model Model => CallImpl<ImmutableArray<Location>, Symbol, SymbolImpl>(impl => impl.Model);
 
         public IModelObject? ModelObject => _underlyingObject as IModelObject;
 
@@ -554,6 +549,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected virtual CompletionGraph CompletionGraph => Symbol.CompletionParts.CompletionGraph;
 
         public void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        {
+            ForceCompleteCore(completionPart, locationOpt, cancellationToken);
+        }
+
+        protected virtual void ForceCompleteCore(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             if (completionPart != null && HasComplete(completionPart)) return;
             if (completionPart != null && !CompletionGraph.Contains(completionPart)) throw new ArgumentException(nameof(completionPart));
@@ -882,6 +882,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected virtual void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             CallImpl<Symbol, SymbolImpl>(impl => impl.CompletePart_Validate(diagnostics, cancellationToken));
+        }
+
+        public TSymbol AsInstance<TSymbol>()
+            where TSymbol: Symbol
+        {
+            return (TSymbol)(object)this;
         }
 
         #endregion

@@ -121,7 +121,7 @@ template GenerateAntlrSyntaxParser()
                 {
                     if (node?.Symbol == null)
                     {
-                        if (kind != [Lang]SyntaxKind.None) return _factory.MissingToken(kind);
+                        if (kind != [Lang]SyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
                         else return null;
                     }
                     var green = _tokenStream.ConsumeGreenToken(node.Symbol, _parser);
@@ -147,7 +147,11 @@ template GenerateVisitAlt(Alternative alt)
 
     public override GreenNode? Visit[alt.AntlrName.ToPascalCase()]([Lang]Parser.[alt.AntlrName.ToPascalCase()]Context? context)
     {
-        if (context == null) return [alt.GreenName].__Missing;
+        [if (alt.Elements.Count == 1 && alt.Elements[0].Value is TokenAlts)]
+            if (context?.[alt.Elements[0].AntlrName] == null) return [alt.GreenName].__Missing;
+        [else]
+            if (context == null) return [alt.GreenName].__Missing;
+        [end if]
         [foreach (var elem in alt.Elements)]
             [if (elem.Value is SeparatedList sl)]
                 [GenerateVisitSeparatedList(elem, sl)]
@@ -186,7 +190,7 @@ template GenerateVisitTokenAlts(Element elem, TokenAlts tokenAlts)
         if (context.[token.Token.AntlrName]() is not null) [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[token.Token.AntlrName]());
     [end foreach]
     [if (!elem.Value.Multiplicity.IsOptional())]
-        if ([elem.ParameterName] is null) [elem.ParameterName] = _factory.None;
+        if ([elem.ParameterName] is null) [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[tokenAlts.Tokens.FirstOrDefault()?.Token?.CSharpName]);
     [end if]
 end template
 

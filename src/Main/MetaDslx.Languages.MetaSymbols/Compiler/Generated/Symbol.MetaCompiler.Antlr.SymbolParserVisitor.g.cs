@@ -251,6 +251,12 @@ public interface ISymbolParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_OperationAlt2Block1parametersBlock([NotNull] SymbolParser.Pr_OperationAlt2Block1parametersBlockContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="SymbolParser.pr_OperationAlt2Block2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_OperationAlt2Block2([NotNull] SymbolParser.Pr_OperationAlt2Block2Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="SymbolParser.pr_TypeReferenceBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

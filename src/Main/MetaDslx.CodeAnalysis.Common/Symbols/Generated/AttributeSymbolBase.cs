@@ -48,31 +48,40 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
-        public AttributeSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+        public AttributeSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, TypeSymbol attributeClass = default) 
             : base(container, declaration, modelObject, name, metadataName, attributes)
         {
             _attributeClass = attributeClass;
+            NotePartComplete(AttributeSymbol.CompletionParts.Finish_AttributeClass);
         }
 
-        public AttributeSymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+        public AttributeSymbolInst(__Symbol container, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, TypeSymbol attributeClass = default) 
             : base(container, modelObject, name, metadataName, attributes)
         {
             _attributeClass = attributeClass;
+            NotePartComplete(AttributeSymbol.CompletionParts.Finish_AttributeClass);
         }
 
-        public AttributeSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+        public AttributeSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, TypeSymbol attributeClass = default) 
             : base(container, csharpSymbol, name, metadataName, attributes)
         {
             _attributeClass = attributeClass;
+            NotePartComplete(AttributeSymbol.CompletionParts.Finish_AttributeClass);
         }
 
-        public AttributeSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, TypeSymbol attributeClass) 
+        public AttributeSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject = default, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, TypeSymbol attributeClass = default) 
             : base(container, compilation, modelObject, name, metadataName, attributes)
         {
             _attributeClass = attributeClass;
+            NotePartComplete(AttributeSymbol.CompletionParts.Finish_AttributeClass);
         }
 
-        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, AttributeSymbol, AttributeSymbolImpl>(impl => impl.SymbolFactory);
+        public AttributeSymbolInst(__Symbol container, __Compilation compilation, __MergedDeclaration declaration, __IModelObject? modelObject = default, string? name = null, string? metadataName = null, __ImmutableAttributeSymbols attributes = default, TypeSymbol attributeClass = default) 
+            : base(container, compilation, declaration, modelObject, name, metadataName, attributes)
+        {
+            _attributeClass = attributeClass;
+            NotePartComplete(AttributeSymbol.CompletionParts.Finish_AttributeClass);
+        }
 
         public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, AttributeSymbol, AttributeSymbolImpl>(impl => impl.ContainingAssembly);
 
@@ -85,7 +94,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public override __TypeSymbol? ContainingType => CallImpl<__TypeSymbol, AttributeSymbol, AttributeSymbolImpl>(impl => impl.ContainingType);
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, AttributeSymbol, AttributeSymbolImpl>(impl => impl.ContainingNamespace);
-
 
         public TypeSymbol AttributeClass
         {
@@ -112,7 +120,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
             return CallImpl<string, AttributeSymbol, AttributeSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
-
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -191,7 +198,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public virtual TypeSymbol Complete_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<TypeSymbol>(this, nameof(AttributeClass), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<TypeSymbol>(this, nameof(AttributeClass), diagnostics, cancellationToken);
         }
     }
 }

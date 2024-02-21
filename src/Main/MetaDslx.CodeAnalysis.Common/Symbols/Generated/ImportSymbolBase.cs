@@ -30,6 +30,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         private global::System.Collections.Immutable.ImmutableArray<AliasSymbol> _aliases;
         private global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> _namespaces;
         private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _symbols;
+        private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _importedSymbols;
 
         public ImportSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -51,43 +52,70 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
-        public ImportSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, global::System.Collections.Immutable.ImmutableArray<string> files, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols) 
+        public ImportSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
             : base(container, declaration, modelObject, name, metadataName, attributes)
         {
             _files = files;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Files);
             _aliases = aliases;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Aliases);
             _namespaces = namespaces;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Namespaces);
             _symbols = symbols;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Symbols);
         }
 
-        public ImportSymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, global::System.Collections.Immutable.ImmutableArray<string> files, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols) 
+        public ImportSymbolInst(__Symbol container, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
             : base(container, modelObject, name, metadataName, attributes)
         {
             _files = files;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Files);
             _aliases = aliases;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Aliases);
             _namespaces = namespaces;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Namespaces);
             _symbols = symbols;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Symbols);
         }
 
-        public ImportSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, global::System.Collections.Immutable.ImmutableArray<string> files, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols) 
+        public ImportSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
             : base(container, csharpSymbol, name, metadataName, attributes)
         {
             _files = files;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Files);
             _aliases = aliases;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Aliases);
             _namespaces = namespaces;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Namespaces);
             _symbols = symbols;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Symbols);
         }
 
-        public ImportSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, global::System.Collections.Immutable.ImmutableArray<string> files, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols) 
+        public ImportSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject = default, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
             : base(container, compilation, modelObject, name, metadataName, attributes)
         {
             _files = files;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Files);
             _aliases = aliases;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Aliases);
             _namespaces = namespaces;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Namespaces);
             _symbols = symbols;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Symbols);
         }
 
-        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, ImportSymbol, ImportSymbolImpl>(impl => impl.SymbolFactory);
+        public ImportSymbolInst(__Symbol container, __Compilation compilation, __MergedDeclaration declaration, __IModelObject? modelObject = default, string? name = null, string? metadataName = null, __ImmutableAttributeSymbols attributes = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
+            : base(container, compilation, declaration, modelObject, name, metadataName, attributes)
+        {
+            _files = files;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Files);
+            _aliases = aliases;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Aliases);
+            _namespaces = namespaces;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Namespaces);
+            _symbols = symbols;
+            NotePartComplete(ImportSymbol.CompletionParts.Finish_Symbols);
+        }
 
         public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, ImportSymbol, ImportSymbolImpl>(impl => impl.ContainingAssembly);
 
@@ -101,7 +129,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, ImportSymbol, ImportSymbolImpl>(impl => impl.ContainingNamespace);
 
-
         public global::System.Collections.Immutable.ImmutableArray<string> Files
         {
             get
@@ -110,7 +137,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _files;
             }
         }
-
         public global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Aliases
         {
             get
@@ -119,7 +145,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _aliases;
             }
         }
-
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Namespaces
         {
             get
@@ -128,13 +153,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                 return _namespaces;
             }
         }
-
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Symbols
         {
             get
             {
                 this.ForceComplete(ImportSymbol.CompletionParts.Finish_Symbols, null, default);
                 return _symbols;
+            }
+        }
+        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> ImportedSymbols
+        {
+            get
+            {
+                this.ForceComplete(ImportSymbol.CompletionParts.Finish_ImportedSymbols, null, default);
+                return _importedSymbols;
             }
         }
 
@@ -154,7 +186,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
             return CallImpl<string, ImportSymbol, ImportSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
-
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -210,6 +241,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(ImportSymbol.CompletionParts.Finish_Symbols);
+                }
+                return true;
+            }
+            else 
+            if (incompletePart == ImportSymbol.CompletionParts.Start_ImportedSymbols || incompletePart == ImportSymbol.CompletionParts.Finish_ImportedSymbols)
+            {
+                if (NotePartComplete(ImportSymbol.CompletionParts.Start_ImportedSymbols))
+                {
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Complete_ImportedSymbols(diagnostics, cancellationToken);
+                    _importedSymbols = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(ImportSymbol.CompletionParts.Finish_ImportedSymbols);
                 }
                 return true;
             }
@@ -280,6 +325,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
             return CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_Symbols(diagnostics, cancellationToken));
         }
+
+        protected virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_ImportedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return CallImpl<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>, ImportSymbol, ImportSymbolImpl>(impl => impl.Complete_ImportedSymbols(diagnostics, cancellationToken));
+        }
     }
 
     public abstract class ImportSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl, ImportSymbol
@@ -288,27 +338,30 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         public global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Aliases => ((ImportSymbol)__Wrapped).Aliases;
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Namespaces => ((ImportSymbol)__Wrapped).Namespaces;
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Symbols => ((ImportSymbol)__Wrapped).Symbols;
+        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> ImportedSymbols => ((ImportSymbol)__Wrapped).ImportedSymbols;
 
 
 
         public virtual global::System.Collections.Immutable.ImmutableArray<string> Complete_Files(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Complete_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Complete_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
         }
 
         public virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
         }
+
+        public abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_ImportedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

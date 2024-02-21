@@ -28,14 +28,15 @@ class Symbol $Type : Declaration
 
 class TypeReference $Type
 {
-	type Type;
-	bool IsNullable;
-	int Dimensions;
+	type Type
+	bool IsNullable
+	int Dimensions
 }
 
 class Property : Declaration
 {
 	TypeReference Type
+	bool IsInit
 	bool IsWeak
 	bool IsDerived
 	object? DefaultValue
@@ -44,7 +45,9 @@ class Property : Declaration
 
 class Operation: Declaration
 {
-	bool IsPhase;
+	bool IsPhase
+	bool CacheResult
+	string CacheCondition
 	TypeReference ReturnType
 	contains Parameter[] Parameters redefines Declaration.Declarations
 }

@@ -46,9 +46,9 @@ namespace MetaDslx.BuildTools
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
             @"..\..\..\..\MetaDslx.CodeAnalysis.Common",
+            //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
-            //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
@@ -266,6 +266,11 @@ namespace MetaDslx.BuildTools
                     {
                         await GenerateMetaSymbolFiles(generator, modelFilePath, symbol);
                     }
+                }
+                var genDiagnostics = generator.Diagnostics;
+                foreach (var diag in genDiagnostics)
+                {
+                    await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
                 mxsTrees.Free();
             }

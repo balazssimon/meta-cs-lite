@@ -26,6 +26,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
     public partial class ModuleSymbolInst : global::MetaDslx.CodeAnalysis.Symbols.SymbolInst, ModuleSymbol
     {
+        private global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory _symbolFactory;
         private NamespaceSymbol _globalNamespace;
 
         public ModuleSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject) 
@@ -48,31 +49,35 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
-        public ModuleSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+        public ModuleSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory symbolFactory = default) 
             : base(container, declaration, modelObject, name, metadataName, attributes)
         {
-            _globalNamespace = globalNamespace;
+            _symbolFactory = symbolFactory;
         }
 
-        public ModuleSymbolInst(__Symbol container, __IModelObject modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+        public ModuleSymbolInst(__Symbol container, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory symbolFactory = default) 
             : base(container, modelObject, name, metadataName, attributes)
         {
-            _globalNamespace = globalNamespace;
+            _symbolFactory = symbolFactory;
         }
 
-        public ModuleSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+        public ModuleSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory symbolFactory = default) 
             : base(container, csharpSymbol, name, metadataName, attributes)
         {
-            _globalNamespace = globalNamespace;
+            _symbolFactory = symbolFactory;
         }
 
-        public ModuleSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject, string? name, string? metadataName, __ImmutableAttributeSymbols attributes, NamespaceSymbol globalNamespace) 
+        public ModuleSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject = default, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory symbolFactory = default) 
             : base(container, compilation, modelObject, name, metadataName, attributes)
         {
-            _globalNamespace = globalNamespace;
+            _symbolFactory = symbolFactory;
         }
 
-        public override __ISymbolFactory SymbolFactory => CallImpl<__ISymbolFactory, ModuleSymbol, ModuleSymbolImpl>(impl => impl.SymbolFactory);
+        public ModuleSymbolInst(__Symbol container, __Compilation compilation, __MergedDeclaration declaration, __IModelObject? modelObject = default, string? name = null, string? metadataName = null, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory symbolFactory = default) 
+            : base(container, compilation, declaration, modelObject, name, metadataName, attributes)
+        {
+            _symbolFactory = symbolFactory;
+        }
 
         public override __AssemblySymbol? ContainingAssembly => CallImpl<__AssemblySymbol, ModuleSymbol, ModuleSymbolImpl>(impl => impl.ContainingAssembly);
 
@@ -86,7 +91,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
         public override __NamespaceSymbol? ContainingNamespace => CallImpl<__NamespaceSymbol, ModuleSymbol, ModuleSymbolImpl>(impl => impl.ContainingNamespace);
 
-
+        public virtual global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory
+        {
+            get => _symbolFactory;
+            protected set => _symbolFactory = value;
+        }
         public NamespaceSymbol GlobalNamespace
         {
             get
@@ -113,9 +122,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
             return CallImpl<string, ModuleSymbol, ModuleSymbolImpl>(impl => impl.GetDocumentationCommentXml(preferredCulture, expandIncludes, cancellationToken));
         }
 
-        public virtual NamespaceSymbol GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree)
+        public virtual global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol? GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree)
         {
-            return CallImpl<NamespaceSymbol, ModuleSymbol, ModuleSymbolImpl>(impl => impl.GetRootNamespace(syntaxTree));
+            return CallImpl<global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol?, ModuleSymbol, ModuleSymbolImpl>(impl => impl.GetRootNamespace(syntaxTree));
         }
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
@@ -189,9 +198,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
 
     public abstract class ModuleSymbolBase : global::MetaDslx.CodeAnalysis.Symbols.SymbolImpl, ModuleSymbol
     {
+        public global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory => ((ModuleSymbol)__Wrapped).SymbolFactory;
         public NamespaceSymbol GlobalNamespace => ((ModuleSymbol)__Wrapped).GlobalNamespace;
 
-        public abstract NamespaceSymbol GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree);
+        public abstract global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol? GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree);
 
 
         public abstract NamespaceSymbol Complete_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
