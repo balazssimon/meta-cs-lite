@@ -58,9 +58,11 @@
 		<None Remove="Symbols\Model\**" Condition="!$(MetaDslxBootstrap)" />
 		<Compile Remove="Symbols\Source\**" Condition="!$(MetaDslxBootstrap)" />
 		<None Remove="Symbols\Source\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="Binding\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Binding\**" Condition="!$(MetaDslxBootstrap)" />
 		<Compile Remove="CommonOld\**" Condition="!$(MetaDslxBootstrap)" />
 		<None Remove="CommonOld\**" Condition="!$(MetaDslxBootstrap)" />
-		
+
 		<Compile Remove="Symbols\Generated\**" Condition="$(MetaDslxBootstrap)" />
 		<None Remove="Symbols\Generated\**" Condition="$(MetaDslxBootstrap)" />
 		<Compile Remove="Symbols\Custom\**" Condition="$(MetaDslxBootstrap)" />
@@ -69,6 +71,8 @@
 		<None Remove="Symbols\Custom2\**" Condition="$(MetaDslxBootstrap)" />
 		<Compile Remove="CommonNew\**" Condition="$(MetaDslxBootstrap)" />
 		<None Remove="CommonNew\**" Condition="$(MetaDslxBootstrap)" />
+		<Compile Remove="BindingNew\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="BindingNew\**" Condition="$(MetaDslxBootstrap)" />
 
 		<Compile Remove="Symbols\Impl\**" />
 		<None Remove="Symbols\Impl\**" />

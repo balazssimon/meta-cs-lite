@@ -24,7 +24,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             if (MergedDeclaration is null)
             {
-                return ContainingModule.SymbolFactory.GetSymbols<Symbol>(this, _model.RootObjects, diagnostics, cancellationToken);
+                return ContainingModule.SymbolFactory.CreateSymbols<Symbol>(this, _model.RootObjects, diagnostics, cancellationToken);
             }
             else
             {

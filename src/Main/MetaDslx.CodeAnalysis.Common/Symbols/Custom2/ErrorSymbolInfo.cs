@@ -9,20 +9,20 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         private readonly string _name;
         private readonly string _metadataName;
-        private readonly ImmutableArray<Symbol> _symbols;
+        private readonly ImmutableArray<Symbol> _candidateSymbols;
         private readonly Diagnostic _diagnostic;
 
-        public ErrorSymbolInfo(string name, string metadataName, ImmutableArray<Symbol> symbols, Diagnostic diagnostic)
+        public ErrorSymbolInfo(string name, string metadataName, ImmutableArray<Symbol> candidateSymbols, Diagnostic diagnostic)
         {
             _name = name;
             _metadataName = metadataName;
-            _symbols = symbols;
+            _candidateSymbols = candidateSymbols;
             _diagnostic = diagnostic;
         }
 
         public string Name => _name;
         public string MetadataName => _metadataName;
-        public ImmutableArray<Symbol> Symbols => _symbols;
+        public ImmutableArray<Symbol> CandidateSymbols => _candidateSymbols;
         public Diagnostic Diagnostic => _diagnostic;
     }
 }

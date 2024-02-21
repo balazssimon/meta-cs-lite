@@ -70,6 +70,7 @@ namespace [symbol.NamespaceName].__Impl
     using __ISymbolFactory = global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory;
     using __LexicalSortKey = global::MetaDslx.CodeAnalysis.Symbols.LexicalSortKey;
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
     using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
@@ -106,6 +107,11 @@ namespace [symbol.NamespaceName].__Impl
         {
         }
 
+        public [GetInstName(symbol, symbol)](__Symbol container, __Model model) 
+            : base(container, model)
+        {
+        }
+
         public [GetInstName(symbol, symbol)](__Symbol container, __ISymbol csharpSymbol) 
             : base(container, csharpSymbol)
         {
@@ -116,52 +122,13 @@ namespace [symbol.NamespaceName].__Impl
         {
         }
 
-        public [GetInstName(symbol, symbol)](__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, declaration, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
+        public [GetInstName(symbol, symbol)](__Symbol container, __Compilation compilation) 
+            : base(container, compilation)
         {
-            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
-                [AssignProperty(symbol, prop, GetParamName(prop))]
-                [if (!prop.IsInit)]
-                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
-                [end if]
-            [end foreach]
         }
 
-        public [GetInstName(symbol, symbol)](__Symbol container, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
-        {
-            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
-                [AssignProperty(symbol, prop, GetParamName(prop))]
-                [if (!prop.IsInit)]
-                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
-                [end if]
-            [end foreach]
-        }
-
-        public [GetInstName(symbol, symbol)](__Symbol container, __ISymbol csharpSymbol, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, csharpSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
-        {
-            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
-                [AssignProperty(symbol, prop, GetParamName(prop))]
-                [if (!prop.IsInit)]
-                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
-                [end if]
-            [end foreach]
-        }
-
-        public [GetInstName(symbol, symbol)](__Symbol container, __Compilation compilation, __IModelObject? modelObject = default, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, compilation, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
-        {
-            [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
-                [AssignProperty(symbol, prop, GetParamName(prop))]
-                [if (!prop.IsInit)]
-                    NotePartComplete([GetIntfName(symbol, symbol)].CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name]);
-                [end if]
-            [end foreach]
-        }
-
-        public [GetInstName(symbol, symbol)](__Symbol container, __Compilation compilation, __MergedDeclaration declaration, __IModelObject? modelObject = default, string? name = null, string? metadataName = null, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, compilation, declaration, modelObject, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
+        public [GetInstName(symbol, symbol)](__Symbol container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
         {
             [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
                 [AssignProperty(symbol, prop, GetParamName(prop))]

@@ -24,8 +24,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
     public class SymbolImpl : SymbolImplBase
     {
-        public override Modeling.Model? Model => ModelObject?.MModel;
-
         public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences
         {
             get
@@ -173,7 +171,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public virtual ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetContainedSymbols(this, diagnostics, cancellationToken);
+            return ContainingModule!.SymbolFactory.CreateContainedSymbols(this, diagnostics, cancellationToken);
         }
 
         public virtual ImmutableArray<AttributeSymbol> Complete_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)

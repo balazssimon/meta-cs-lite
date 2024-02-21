@@ -8,8 +8,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
 {
     public class ErrorSymbolFactory : SymbolFactory<ErrorSymbolInfo>
     {
-        public ErrorSymbolFactory(ModuleSymbol moduleSymbol) 
-            : base(moduleSymbol)
+        public ErrorSymbolFactory() 
         {
         }
 
@@ -23,14 +22,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
             return underlyingObject.MetadataName;
         }
 
-        public override ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override ImmutableArray<Symbol> CreateContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ImmutableArray<Symbol>.Empty;
-        }
-
-        protected override TSymbol? CreateSymbol<TSymbol>(Symbol container, ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
-        {
-            throw new NotImplementedException();
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -40,6 +34,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
 
         public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            // nop
+        }
+
+        protected override ErrorSymbolInfo? GetParentCore(ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return null;
+        }
+
+        protected override Symbol? CreateSymbolCore(Symbol container, ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

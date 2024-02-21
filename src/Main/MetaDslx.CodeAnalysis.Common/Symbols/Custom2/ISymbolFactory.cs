@@ -9,16 +9,20 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     public interface ISymbolFactory
     {
-        ModuleSymbol ModuleSymbol { get; }
-
         void AddSymbol(Symbol symbol);
         string? GetName(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         string? GetMetadataName(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-        TSymbol? GetSymbol<TSymbol>(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        Symbol? CreateSymbol(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        TSymbol? CreateSymbol<TSymbol>(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol;
-        ImmutableArray<TSymbol> GetSymbols<TSymbol>(Symbol container, IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        ImmutableArray<TSymbol> CreateSymbols<TSymbol>(Symbol container, IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol;
-        ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        Symbol? GetSymbol(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        TSymbol? GetSymbol<TSymbol>(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : Symbol;
+        ImmutableArray<TSymbol> GetSymbols<TSymbol>(IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : Symbol;
+        ImmutableArray<Symbol> CreateContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         ImmutableArray<ImportSymbol> GetImportSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         ImmutableArray<DeclarationSymbol> GetMemberSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         TValue GetSymbolPropertyValue<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken);

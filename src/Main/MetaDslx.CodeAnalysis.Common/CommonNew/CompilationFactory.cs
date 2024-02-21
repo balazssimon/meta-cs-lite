@@ -68,22 +68,22 @@ namespace MetaDslx.CodeAnalysis
             return new Model();
         }
 
-        public virtual ModelSymbolFactory CreateModelSymbolFactory(Compilation compilation)
+        public virtual ModelSymbolFactory CreateModelSymbolFactory()
         {
-            return new ModelSymbolFactory(compilation);
+            return new ModelSymbolFactory();
         }
 
-        public virtual SourceSymbolFactory CreateSourceSymbolFactory(Compilation compilation, ModuleSymbolInst sourceModule)
+        public virtual SourceSymbolFactory CreateSourceSymbolFactory()
         {
-            return new SourceSymbolFactory(sourceModule);
+            return new SourceSymbolFactory();
         }
 
-        public virtual ErrorSymbolFactory CreateErrorSymbolFactory(Compilation compilation)
+        public virtual ErrorSymbolFactory CreateErrorSymbolFactory()
         {
             return new ErrorSymbolFactory();
         }
 
-        internal virtual CSharpSymbolFactory CreateCSharpSymbolFactory(Compilation compilation)
+        internal virtual CSharpSymbolFactory CreateCSharpSymbolFactory()
         {
             return new CSharpSymbolFactory();
         }

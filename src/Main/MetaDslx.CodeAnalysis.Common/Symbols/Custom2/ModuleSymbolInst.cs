@@ -22,7 +22,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private ImmutableArray<NamespaceSymbol> _fileNamespaces;
 
         public ModuleSymbolInst(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, string moduleName, DeclarationTable? declarations)
-            : base(assemblySymbol, declaration: declarations?.GetMergedRoot(assemblySymbol.DeclaringCompilation), null)
+            : base(assemblySymbol, declaration: declarations?.GetMergedRoot(assemblySymbol.DeclaringCompilation), modelObject: null)
         {
             SymbolFactory = symbolFactory;
             _declarations = declarations;
@@ -33,14 +33,19 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _model.Name = moduleName;
         }
 
-        public ModuleSymbolInst(AssemblySymbol assemblySymbol, ISymbolFactory symbolFactory, IModuleSymbol csharpModuleSymbol)
+        public ModuleSymbolInst(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, MetaDslx.Modeling.Model model)
+            : base(assemblySymbol, model: model)
+        {
+            SymbolFactory = symbolFactory;
+        }
+
+        public ModuleSymbolInst(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, IModuleSymbol csharpModuleSymbol)
             : base(assemblySymbol, csharpSymbol: csharpModuleSymbol)
         {
             SymbolFactory = symbolFactory;
         }
 
         public MultiModelFactory ModelFactory => _modelFactory;
-        public override Modeling.Model Model => _model;
 
         public override AssemblySymbol? ContainingAssembly => this.ContainingSymbol as AssemblySymbol;
         public override ModuleSymbol? ContainingModule => null;
@@ -50,7 +55,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             if (IsCSharpSymbol)
             {
-                return SymbolFactory.GetSymbol<NamespaceSymbol>(ContainingAssembly, ((IModuleSymbol)CSharpSymbol).GlobalNamespace, diagnostics, cancellationToken);
+                return SymbolFactory.CreateSymbol<NamespaceSymbol>(ContainingAssembly, ((IModuleSymbol)CSharpSymbol).GlobalNamespace, diagnostics, cancellationToken);
             }
             else
             {
@@ -64,7 +69,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         Debug.Assert(decl is not null);
                         if (decl is not null)
                         {
-                            var fileNamespace = SymbolFactory.GetSymbol<NamespaceSymbol>(globalNamespace, MergedDeclaration, diagnostics, cancellationToken);
+                            var fileNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>(globalNamespace, MergedDeclaration, diagnostics, cancellationToken);
                             fileNamespaces.Add(fileNamespace);
                         }
                         else

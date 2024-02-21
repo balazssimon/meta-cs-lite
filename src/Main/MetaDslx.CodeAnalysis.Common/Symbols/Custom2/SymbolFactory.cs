@@ -13,16 +13,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     public abstract class SymbolFactory<T> : ISymbolFactory
     {
-        private readonly ModuleSymbol _moduleSymbol;
         private readonly ConditionalWeakTable<object, Symbol> _symbols;
 
-        public SymbolFactory(ModuleSymbol moduleSymbol)
+        public SymbolFactory()
         {
-            _moduleSymbol = moduleSymbol;
             _symbols = new ConditionalWeakTable<object, Symbol>();
         }
-
-        public ModuleSymbol ModuleSymbol => _moduleSymbol;
 
         public void AddSymbol(Symbol symbol)
         {
@@ -30,35 +26,79 @@ namespace MetaDslx.CodeAnalysis.Symbols
             else if (symbol is SymbolImpl sim) _symbols.Add(sim.__Wrapped._underlyingObject, symbol);
         }
 
-        public TSymbol? GetSymbol<TSymbol>(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-            where TSymbol : Symbol
+        public Symbol? CreateSymbol(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (_symbols.TryGetValue(underlyingObject, out var symbol))
             {
-                if (symbol is TSymbol tsymbol) return tsymbol;
-                else return default;
+                return symbol;
             }
-            symbol = CreateSymbol<TSymbol>(container, underlyingObject, diagnostics, cancellationToken);
+            symbol = CreateSymbolCore(container, underlyingObject, diagnostics, cancellationToken);
             if (symbol is not null)
             {
                 _symbols.Add(underlyingObject, symbol);
-                if (symbol is TSymbol tsymbol) return tsymbol;
+                return symbol;
             }
             return default;
         }
 
-        public ImmutableArray<TSymbol> GetSymbols<TSymbol>(Symbol container, IEnumerable<T> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public TSymbol? CreateSymbol<TSymbol>(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : Symbol
+        {
+            var symbol = CreateSymbol(container, underlyingObject, diagnostics, cancellationToken);
+            if (symbol is TSymbol tsymbol) return tsymbol;
+            else return default;
+        }
+
+        public ImmutableArray<TSymbol> CreateSymbols<TSymbol>(Symbol container, IEnumerable<T> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol
         {
             var builder = ArrayBuilder<TSymbol>.GetInstance();
             foreach (var underlyingObject in underlyingObjects)
             {
-                var symbol = GetSymbol<TSymbol>(container, underlyingObject, diagnostics, cancellationToken);
+                var symbol = CreateSymbol<TSymbol>(container, underlyingObject, diagnostics, cancellationToken);
                 if (symbol is TSymbol typedSymbol) builder.Add(typedSymbol);
             }
             return builder.ToImmutableAndFree();
         }
 
+        public Symbol? GetSymbol(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (_symbols.TryGetValue(underlyingObject, out var symbol))
+            {
+                return symbol;
+            }
+            var parent = GetParentCore(underlyingObject, diagnostics, cancellationToken);
+            if (parent is null) return default;
+            var container = GetSymbol(parent, diagnostics, cancellationToken);
+            if (container is null) return default;
+            symbol = CreateSymbolCore(container, underlyingObject, diagnostics, cancellationToken);
+            if (symbol is not null)
+            {
+                _symbols.Add(underlyingObject, symbol);
+                return symbol;
+            }
+            return default;
+        }
+
+        public TSymbol? GetSymbol<TSymbol>(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : Symbol
+        {
+            var symbol = GetSymbol(underlyingObject, diagnostics, cancellationToken);
+            if (symbol is TSymbol tsymbol) return tsymbol;
+            else return default;
+        }
+
+        public ImmutableArray<TSymbol> GetSymbols<TSymbol>(IEnumerable<T> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : Symbol
+        {
+            var builder = ArrayBuilder<TSymbol>.GetInstance();
+            foreach (var underlyingObject in underlyingObjects)
+            {
+                var symbol = GetSymbol<TSymbol>(underlyingObject, diagnostics, cancellationToken);
+                if (symbol is TSymbol typedSymbol) builder.Add(typedSymbol);
+            }
+            return builder.ToImmutableAndFree();
+        }
         public ImmutableArray<ImportSymbol> GetImportSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (container.ContainedSymbols.Length == 0) return ImmutableArray<ImportSymbol>.Empty;
@@ -101,14 +141,38 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        TSymbol? ISymbolFactory.GetSymbol<TSymbol>(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
+        Symbol? ISymbolFactory.CreateSymbol(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return GetSymbol<TSymbol>(container, (T)underlyingObject, diagnostics, cancellationToken);
+            return CreateSymbol(container, (T)underlyingObject, diagnostics, cancellationToken);
+        }
+        
+        TSymbol? ISymbolFactory.CreateSymbol<TSymbol>(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) 
+            where TSymbol : default
+        {
+            return CreateSymbol<TSymbol>(container, (T)underlyingObject, diagnostics, cancellationToken);
         }
 
-        ImmutableArray<TSymbol> ISymbolFactory.GetSymbols<TSymbol>(Symbol container, IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        ImmutableArray<TSymbol> ISymbolFactory.CreateSymbols<TSymbol>(Symbol container, IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : default
         {
-            return GetSymbols<TSymbol>(container, underlyingObjects.Select(uo => (T)uo), diagnostics, cancellationToken);
+            return CreateSymbols<TSymbol>(container, underlyingObjects.Select(uo => (T)uo), diagnostics, cancellationToken);
+        }
+
+        Symbol? ISymbolFactory.GetSymbol(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return GetSymbol((T)underlyingObject, diagnostics, cancellationToken);
+        }
+
+        TSymbol? ISymbolFactory.GetSymbol<TSymbol>(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : default
+        {
+            return GetSymbol<TSymbol>((T)underlyingObject, diagnostics, cancellationToken);
+        }
+
+        ImmutableArray<TSymbol> ISymbolFactory.GetSymbols<TSymbol>(IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : default
+        {
+            return GetSymbols<TSymbol>(underlyingObjects.Select(uo => (T)uo), diagnostics, cancellationToken);
         }
 
         string? ISymbolFactory.GetName(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -124,10 +188,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public abstract string? GetName(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         public abstract string? GetMetadataName(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-        public abstract ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        public abstract ImmutableArray<Symbol> CreateContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         public abstract ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         public abstract void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-        protected abstract TSymbol? CreateSymbol<TSymbol>(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-            where TSymbol : Symbol;
+        protected abstract T? GetParentCore(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+        protected abstract Symbol? CreateSymbolCore(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+
     }
 }

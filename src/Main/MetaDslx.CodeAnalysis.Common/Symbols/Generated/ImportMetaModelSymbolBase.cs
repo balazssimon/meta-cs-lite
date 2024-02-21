@@ -11,6 +11,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
     using __ISymbolFactory = global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory;
     using __LexicalSortKey = global::MetaDslx.CodeAnalysis.Symbols.LexicalSortKey;
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
     using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
@@ -39,6 +40,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
+        public ImportMetaModelSymbolInst(__Symbol container, __Model model) 
+            : base(container, model)
+        {
+        }
+
         public ImportMetaModelSymbolInst(__Symbol container, __ISymbol csharpSymbol) 
             : base(container, csharpSymbol)
         {
@@ -49,36 +55,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.__Impl
         {
         }
 
-        public ImportMetaModelSymbolInst(__Symbol container, __MergedDeclaration declaration, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
-            : base(container, declaration, modelObject, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
+        public ImportMetaModelSymbolInst(__Symbol container, __Compilation compilation) 
+            : base(container, compilation)
         {
-            _metaModelSymbols = metaModelSymbols;
-            NotePartComplete(ImportMetaModelSymbol.CompletionParts.Finish_MetaModelSymbols);
         }
 
-        public ImportMetaModelSymbolInst(__Symbol container, __IModelObject modelObject, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
-            : base(container, modelObject, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
-        {
-            _metaModelSymbols = metaModelSymbols;
-            NotePartComplete(ImportMetaModelSymbol.CompletionParts.Finish_MetaModelSymbols);
-        }
-
-        public ImportMetaModelSymbolInst(__Symbol container, __ISymbol csharpSymbol, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
-            : base(container, csharpSymbol, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
-        {
-            _metaModelSymbols = metaModelSymbols;
-            NotePartComplete(ImportMetaModelSymbol.CompletionParts.Finish_MetaModelSymbols);
-        }
-
-        public ImportMetaModelSymbolInst(__Symbol container, __Compilation compilation, __IModelObject? modelObject = default, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
-            : base(container, compilation, modelObject, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
-        {
-            _metaModelSymbols = metaModelSymbols;
-            NotePartComplete(ImportMetaModelSymbol.CompletionParts.Finish_MetaModelSymbols);
-        }
-
-        public ImportMetaModelSymbolInst(__Symbol container, __Compilation compilation, __MergedDeclaration declaration, __IModelObject? modelObject = default, string? name = null, string? metadataName = null, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
-            : base(container, compilation, declaration, modelObject, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
+        public ImportMetaModelSymbolInst(__Symbol container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, string? name = default, string? metadataName = default, __ImmutableAttributeSymbols attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
         {
             _metaModelSymbols = metaModelSymbols;
             NotePartComplete(ImportMetaModelSymbol.CompletionParts.Finish_MetaModelSymbols);

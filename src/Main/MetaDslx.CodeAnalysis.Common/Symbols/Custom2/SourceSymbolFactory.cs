@@ -11,8 +11,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
     public class SourceSymbolFactory : SymbolFactory<MergedDeclaration>
     {
-        public SourceSymbolFactory(ModuleSymbol moduleSymbol)
-            : base(moduleSymbol)
+        public SourceSymbolFactory()
         {
         }
 
@@ -26,20 +25,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return underlyingObject.MetadataName;
         }
 
-        public override ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override ImmutableArray<Symbol> CreateContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var declaration = container.MergedDeclaration;
             if (declaration is null || declaration.Children.Length == 0) return ImmutableArray<Symbol>.Empty;
             var symbols = ArrayBuilder<Symbol>.GetInstance();
             foreach (var child in declaration.Children)
             {
-                var symbol = GetSymbol<Symbol>(container, child, diagnostics, cancellationToken);
+                var symbol = CreateSymbol<Symbol>(container, child, diagnostics, cancellationToken);
                 if (symbol is not null) symbols.Add(symbol);
             }
             return symbols.ToImmutableAndFree();
         }
 
-        protected override TSymbol? CreateSymbol<TSymbol>(Symbol container, MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
+        protected override Symbol? CreateSymbolCore(Symbol container, MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) 
         {
             throw new NotImplementedException();
         }
@@ -52,6 +51,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        protected override MergedDeclaration? GetParentCore(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return null;
         }
     }
 }

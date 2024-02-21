@@ -50,6 +50,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         bool IsErrorSymbol { get; }
         bool IsSourceSymbol { get; }
         bool IsModelSymbol { get; }
+        bool IsModelObjectSymbol { get; }
         bool IsCSharpSymbol { get; }
 
         /// <summary>
@@ -149,6 +150,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         Type? ModelObjectType { get; }
 
         __ISymbol? CSharpSymbol { get; }
+        ErrorSymbolInfo? ErrorInfo { get; }
 
         ImmutableArray<Diagnostic> Diagnostics { get; }
         bool HasAnyErrors { get; }

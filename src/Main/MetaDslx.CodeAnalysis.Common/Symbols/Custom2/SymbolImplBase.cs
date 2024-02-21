@@ -73,6 +73,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public bool IsModelSymbol => _wrapped.IsModelSymbol;
 
+        public bool IsModelObjectSymbol => _wrapped.IsModelObjectSymbol;
+
         public bool IsCSharpSymbol => _wrapped.IsCSharpSymbol;
 
         public Symbol ContainingSymbol => _wrapped.ContainingSymbol;
@@ -106,6 +108,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public Type? ModelObjectType => _wrapped.ModelObjectType;
 
         public __ISymbol? CSharpSymbol => _wrapped.CSharpSymbol;
+
+        public ErrorSymbolInfo? ErrorInfo => _wrapped.ErrorInfo;
 
         public ImmutableArray<Diagnostic> Diagnostics => _wrapped.Diagnostics;
 

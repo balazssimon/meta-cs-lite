@@ -62,26 +62,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _container = container;
         }
 
-        protected SymbolInst(Symbol container, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes)
-        {
-            _completeParts = -1;
-            _container = container;
-            _containedSymbols = ImmutableArray<Symbol>.Empty;
-            if (!string.IsNullOrEmpty(name))
-            {
-                s_names.Add(this, name);
-            }
-            if (!string.IsNullOrEmpty(metadataName) && metadataName != name)
-            {
-                s_metadataNames.Add(this, metadataName);
-            }
-            if (!attributes.IsDefaultOrEmpty)
-            {
-                s_attributes.Add(this, attributes);
-            }
-            NotePartComplete(Symbol.CompletionParts.Finish_Attributes);
-        }
-
         protected SymbolInst(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
             : this(container)
         {
@@ -101,43 +81,44 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _underlyingObject = csharpSymbol;
         }
 
+        protected SymbolInst(Symbol container, MetaDslx.Modeling.Model model)
+            : this(container)
+        {
+            _underlyingObject = model;
+        }
+
         protected SymbolInst(Symbol container, ErrorSymbolInfo errorInfo)
             : this(container)
         {
             _underlyingObject = errorInfo;
         }
 
-        protected SymbolInst(Symbol container, MergedDeclaration declaration, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
-            : this(container, name, metadataName, attributes)
+        protected SymbolInst(Symbol container, Compilation compilation)
+            : this(container)
         {
-            _underlyingObject = modelObject;
-            s_declarations.Add(this, declaration);
+            if (compilation is not null) s_compilations.Add(this, compilation);
         }
 
-        protected SymbolInst(Symbol container, IModelObject modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
-            : this(container, name, metadataName, attributes)
+        protected SymbolInst(Symbol container, Compilation? compilation = null, MergedDeclaration? declaration = null, MetaDslx.Modeling.Model? model = null, IModelObject? modelObject = null, __ISymbol csharpSymbol = null, string? name = null, string? metadataName = null, ImmutableArray<AttributeSymbol> attributes = default)
+            : this(container)
         {
-            _underlyingObject = modelObject;
-        }
-
-        protected SymbolInst(Symbol container, __ISymbol csharpSymbol, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
-            : this(container, name, metadataName, attributes)
-        {
-            _underlyingObject = csharpSymbol;
-        }
-
-        protected SymbolInst(Symbol container, Compilation compilation, IModelObject? modelObject, string? name, string? metadataName, ImmutableArray<AttributeSymbol> attributes = default)
-            : this(container, name, metadataName, attributes)
-        {
-            _underlyingObject = modelObject;
-            s_compilations.Add(this, compilation);
-        }
-
-        protected SymbolInst(Symbol container, Compilation compilation, MergedDeclaration declaration, IModelObject? modelObject = null, string? name = null, string? metadataName = null, ImmutableArray<AttributeSymbol> attributes = default)
-            : this(container, name ?? declaration.Name, metadataName ?? name ?? declaration.MetadataName, attributes)
-        {
-            _underlyingObject = modelObject;
-            s_compilations.Add(this, compilation);
+            if (declaration is not null) s_declarations.Add(this, declaration);
+            if (compilation is not null) s_compilations.Add(this, compilation);
+            _underlyingObject = modelObject ?? (object)model ?? (object)csharpSymbol;
+            _containedSymbols = ImmutableArray<Symbol>.Empty;
+            if (!string.IsNullOrEmpty(name))
+            {
+                s_names.Add(this, name);
+            }
+            if (!string.IsNullOrEmpty(metadataName) && metadataName != name)
+            {
+                s_metadataNames.Add(this, metadataName);
+            }
+            if (!attributes.IsDefaultOrEmpty)
+            {
+                s_attributes.Add(this, attributes);
+            }
+            NotePartComplete(Symbol.CompletionParts.Finish_Attributes);
         }
 
         protected TImpl GetImpl<TIntf, TImpl>()
@@ -169,7 +150,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
         public bool IsSourceSymbol => s_declarations.TryGetValue(this, out _) || s_compilations.TryGetValue(this, out _);
-        public bool IsModelSymbol => _underlyingObject is IModelObject;
+        public bool IsModelSymbol => _underlyingObject is MetaDslx.Modeling.Model;
+        public bool IsModelObjectSymbol => _underlyingObject is IModelObject;
         public bool IsCSharpSymbol => _underlyingObject is __ISymbol;
 
         public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _);
@@ -313,7 +295,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public Location Location => Locations.FirstOrDefault() ?? Location.None;
 
-        public virtual MetaDslx.Modeling.Model Model => CallImpl<ImmutableArray<Location>, Symbol, SymbolImpl>(impl => impl.Model);
+        public MetaDslx.Modeling.Model Model => _underlyingObject is MetaDslx.Modeling.Model model ? model : ModelObject?.MModel;
 
         public IModelObject? ModelObject => _underlyingObject as IModelObject;
 
@@ -329,6 +311,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         public __ISymbol? CSharpSymbol => _underlyingObject as __ISymbol;
+
+        public ErrorSymbolInfo? ErrorInfo => _underlyingObject as ErrorSymbolInfo;
 
         #region Diagnostics
 

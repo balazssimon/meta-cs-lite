@@ -10,8 +10,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
     public class CSharpSymbolFactory : SymbolFactory<ISymbol>
     {
-        public CSharpSymbolFactory(ModuleSymbol moduleSymbol) 
-            : base(moduleSymbol)
+        public CSharpSymbolFactory() 
         {
         }
 
@@ -25,7 +24,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             return underlyingObject.MetadataName;
         }
 
-        public override ImmutableArray<Symbol> GetContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override ImmutableArray<Symbol> CreateContainedSymbols(Symbol container, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var csharpSymbol = container.CSharpSymbol as INamespaceOrTypeSymbol;
             if (csharpSymbol is null) return ImmutableArray<Symbol>.Empty;
@@ -34,15 +33,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             var symbols = ArrayBuilder<Symbol>.GetInstance();
             foreach (var child in members)
             {
-                var symbol = GetSymbol<Symbol>(container, child, diagnostics, cancellationToken);
+                var symbol = CreateSymbol<Symbol>(container, child, diagnostics, cancellationToken);
                 if (symbol is not null) symbols.Add(symbol);
             }
             return symbols.ToImmutableAndFree();
-        }
-
-        protected override TSymbol? CreateSymbol<TSymbol>(Symbol container, ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) where TSymbol : default
-        {
-            throw new NotImplementedException();
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -52,6 +46,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            // nop
+        }
+
+        protected override ISymbol? GetParentCore(ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return underlyingObject.ContainingSymbol;
+        }
+
+        protected override Symbol? CreateSymbolCore(Symbol container, ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

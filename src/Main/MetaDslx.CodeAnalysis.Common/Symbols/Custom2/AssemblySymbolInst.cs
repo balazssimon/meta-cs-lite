@@ -30,6 +30,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _modelGroup = compilationFactory.CreateModelGroup(compilation);
 
             _sourceModule = new ModuleSymbolInst(this, symbolFactory, moduleName, compilation.DeclarationTable);
+            symbolFactory.AddSymbol(_sourceModule);
 
             ArrayBuilder<ModuleSymbol> moduleBuilder = new ArrayBuilder<ModuleSymbol>(1 + referencedModules.Length);
             moduleBuilder.Add(_sourceModule);
