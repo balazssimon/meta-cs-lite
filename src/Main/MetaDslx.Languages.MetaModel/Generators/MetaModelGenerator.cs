@@ -238,10 +238,10 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 if (value.GetType() == typeof(bool)) symbolValue = symbolValue.ToLower();
                 if (value.GetType() == typeof(string)) symbolValue = symbolValue.EncodeString();
                 if (value is MetaEnumLiteral lit2) symbolValue = $"{lit2.MParent?.MName}.{lit2.MName}";
-                if (value is Symbol sym2)
+                if (value is ICSharpSymbol) symbolValue = ((Symbol)value).Name.EncodeString();
+                if (value is IModelSymbol msym2)
                 {
-                    if (sym2.ModelObject is not null) return GetName(sym2.ModelObject);
-                    if (sym2.IsCSharpSymbol) symbolValue = sym2.Name.EncodeString();
+                    return GetName(msym2.ModelObject);
                 }
                 return $"__MetaSymbol.FromValue({symbolValue})";
             }
@@ -249,10 +249,10 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type == typeof(bool)) return value.ToString().ToLower();
             if (type == typeof(string)) return value.ToString().EncodeString();
             if (type.IsPrimitive) return value.ToString();
-            if (value is Symbol sym)
+            if (value is ICSharpSymbol) return ((Symbol)value).Name.EncodeString();
+            if (value is IModelSymbol msym)
             {
-                if (sym.ModelObject is not null) return GetName(sym.ModelObject);
-                if (sym.IsCSharpSymbol) return sym.Name.EncodeString();
+                return GetName(msym.ModelObject);
             }
             return GetName(value);
         }

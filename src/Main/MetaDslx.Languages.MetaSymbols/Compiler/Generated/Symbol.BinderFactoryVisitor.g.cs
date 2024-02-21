@@ -129,34 +129,59 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitProperty(PropertySyntax node)
         {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Property));
-            this.Begin(__annot1, node);
+            var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Property));
+            this.Begin(__annot3, node);
             try
             {
-                this.Visit(node.Block1);
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Type");
-                this.Begin(__annot0, node.Type);
+                if (node.IsWeak.GetSymbolKind() != SymbolSyntaxKind.None)
+                {
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
+                    this.Begin(__annot0, node.IsWeak);
+                    try
+                    {
+                        //this.VisitToken(node.IsWeak);
+                    }
+                    finally
+                    {
+                        this.End(__annot0);
+                    }
+                }
+                if (node.IsDerived.GetSymbolKind() != SymbolSyntaxKind.None)
+                {
+                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsDerived", values: ImmutableArray.Create<object?>(true));
+                    this.Begin(__annot1, node.IsDerived);
+                    try
+                    {
+                        //this.VisitToken(node.IsDerived);
+                    }
+                    finally
+                    {
+                        this.End(__annot1);
+                    }
+                }
+                var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Type");
+                this.Begin(__annot2, node.Type);
                 try
                 {
                     this.Visit(node.Type);
                 }
                 finally
                 {
-                    this.End(__annot0);
+                    this.End(__annot2);
                 }
                 this.Visit(node.Name);
+                if (node.Block1 != null)
+                {
+                    this.Visit(node.Block1);
+                }
                 if (node.Block2 != null)
                 {
                     this.Visit(node.Block2);
                 }
-                if (node.Block3 != null)
-                {
-                    this.Visit(node.Block3);
-                }
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot3);
             }
         }
 
@@ -771,65 +796,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitSymbolBlock1(SymbolBlock1Syntax node)
         {
-            var baseTypesList = node.BaseTypes;
-            for (var baseTypesIndex = 0; baseTypesIndex < baseTypesList.Count; ++baseTypesIndex)
-            {
-                bool __itemHandled = false;
-                bool __sepHandled = false;
-                if (baseTypesIndex == 0)
-                {
-                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "BaseTypes");
-                    this.Begin(__annot1, node.BaseTypes[baseTypesIndex]);
-                    try
-                    {
-                        var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Languages.MetaSymbols.Model.Symbol)));
-                        this.Begin(__annot0, node.BaseTypes[baseTypesIndex]);
-                        try
-                        {
-                            this.Visit(node.BaseTypes[baseTypesIndex]);
-                        }
-                        finally
-                        {
-                            this.End(__annot0);
-                        }
-                    }
-                    finally
-                    {
-                        this.End(__annot1);
-                    }
-                    __itemHandled = true;
-                }
-                if (!__itemHandled && baseTypesIndex < node.BaseTypes.Count)
-                {
-                    var __annot3 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "BaseTypes");
-                    this.Begin(__annot3, node.BaseTypes[baseTypesIndex]);
-                    try
-                    {
-                        var __annot2 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Languages.MetaSymbols.Model.Symbol)));
-                        this.Begin(__annot2, node.BaseTypes[baseTypesIndex]);
-                        try
-                        {
-                            this.Visit(node.BaseTypes[baseTypesIndex]);
-                        }
-                        finally
-                        {
-                            this.End(__annot2);
-                        }
-                    }
-                    finally
-                    {
-                        this.End(__annot3);
-                    }
-                }
-                if (!__sepHandled && baseTypesIndex < node.BaseTypes.SeparatorCount)
-                {
-                    //this.VisitToken(node.BaseTypes.GetSeparator(baseTypesIndex));
-                }
-            }
-        }
-
-        public virtual void VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node)
-        {
             var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "BaseTypes");
             this.Begin(__annot1, node.BaseTypes);
             try
@@ -897,54 +863,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             }
         }
 
-        public virtual void VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node)
-        {
-            if (node.IsInit.GetSymbolKind() != SymbolSyntaxKind.None)
-            {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsInit", values: ImmutableArray.Create<object?>(true));
-                this.Begin(__annot0, node.IsInit);
-                try
-                {
-                    //this.VisitToken(node.IsInit);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
-            }
-        }
-
-        public virtual void VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node)
-        {
-            if (node.IsWeak.GetSymbolKind() != SymbolSyntaxKind.None)
-            {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
-                this.Begin(__annot0, node.IsWeak);
-                try
-                {
-                    //this.VisitToken(node.IsWeak);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
-            }
-            if (node.IsDerived.GetSymbolKind() != SymbolSyntaxKind.None)
-            {
-                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsDerived", values: ImmutableArray.Create<object?>(true));
-                this.Begin(__annot1, node.IsDerived);
-                try
-                {
-                    //this.VisitToken(node.IsDerived);
-                }
-                finally
-                {
-                    this.End(__annot1);
-                }
-            }
-        }
-
-        public virtual void VisitPropertyBlock2(PropertyBlock2Syntax node)
+        public virtual void VisitPropertyBlock1(PropertyBlock1Syntax node)
         {
             var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "DefaultValue");
             this.Begin(__annot0, node.DefaultValue);
@@ -958,7 +877,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             }
         }
 
-        public virtual void VisitPropertyBlock3(PropertyBlock3Syntax node)
+        public virtual void VisitPropertyBlock2(PropertyBlock2Syntax node)
         {
             var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Phase");
             this.Begin(__annot1, node.Phase);

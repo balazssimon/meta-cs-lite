@@ -2,6 +2,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
 using MetaDslx.CodeAnalysis
 using MetaDslx.CodeAnalysis.Symbols
+using MetaDslx.Languages.MetaCompiler.Model
 
 symbol Symbol
 {
@@ -32,6 +33,9 @@ symbol Declaration
     Type[] GetTypeMembers(string name, string metadataName)
         cache if "MemberNames.Contains(name)"
 }
+
+symbol Type : Declaration {}
+symbol Import {}
 
 symbol Annotation : Attribute
 {

@@ -42,6 +42,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KUsing:
                 case SymbolSyntaxKind.KAbstract:
                 case SymbolSyntaxKind.KSymbol:
+                case SymbolSyntaxKind.KWeak:
+                case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.KPhase:
                 case SymbolSyntaxKind.KCache:
                 case SymbolSyntaxKind.KObject:
@@ -61,9 +63,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KDecimal:
                 case SymbolSyntaxKind.KType:
                 case SymbolSyntaxKind.KVoid:
-                case SymbolSyntaxKind.KInit:
-                case SymbolSyntaxKind.KWeak:
-                case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.KIf:
                 return TK_Keyword;
                 case SymbolSyntaxKind.TComma:
@@ -111,6 +110,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KUsing:
                 case SymbolSyntaxKind.KAbstract:
                 case SymbolSyntaxKind.KSymbol:
+                case SymbolSyntaxKind.KWeak:
+                case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.KPhase:
                 case SymbolSyntaxKind.TLParen:
                 case SymbolSyntaxKind.TRParen:
@@ -135,9 +136,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.TColon:
                 case SymbolSyntaxKind.TLBrace:
                 case SymbolSyntaxKind.TRBrace:
-                case SymbolSyntaxKind.KInit:
-                case SymbolSyntaxKind.KWeak:
-                case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.TEq:
                 case SymbolSyntaxKind.KIf:
                 case SymbolSyntaxKind.TQuestion:
@@ -178,6 +176,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KUsing:
                 case SymbolSyntaxKind.KAbstract:
                 case SymbolSyntaxKind.KSymbol:
+                case SymbolSyntaxKind.KWeak:
+                case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.KPhase:
                 case SymbolSyntaxKind.TLParen:
                 case SymbolSyntaxKind.TRParen:
@@ -202,9 +202,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.TColon:
                 case SymbolSyntaxKind.TLBrace:
                 case SymbolSyntaxKind.TRBrace:
-                case SymbolSyntaxKind.KInit:
-                case SymbolSyntaxKind.KWeak:
-                case SymbolSyntaxKind.KDerived:
                 case SymbolSyntaxKind.TEq:
                 case SymbolSyntaxKind.KIf:
                 case SymbolSyntaxKind.TQuestion:
@@ -244,6 +241,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return SymbolSyntaxKind.KAbstract;
                 case "symbol": 
                     return SymbolSyntaxKind.KSymbol;
+                case "weak": 
+                    return SymbolSyntaxKind.KWeak;
+                case "derived": 
+                    return SymbolSyntaxKind.KDerived;
                 case "phase": 
                     return SymbolSyntaxKind.KPhase;
                 case "(": 
@@ -292,12 +293,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return SymbolSyntaxKind.TLBrace;
                 case "}": 
                     return SymbolSyntaxKind.TRBrace;
-                case "init": 
-                    return SymbolSyntaxKind.KInit;
-                case "weak": 
-                    return SymbolSyntaxKind.KWeak;
-                case "derived": 
-                    return SymbolSyntaxKind.KDerived;
                 case "=": 
                     return SymbolSyntaxKind.TEq;
                 case "if": 
@@ -367,6 +362,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "KAbstract";
                 case SymbolSyntaxKind.KSymbol: 
                     return "KSymbol";
+                case SymbolSyntaxKind.KWeak: 
+                    return "KWeak";
+                case SymbolSyntaxKind.KDerived: 
+                    return "KDerived";
                 case SymbolSyntaxKind.KPhase: 
                     return "KPhase";
                 case SymbolSyntaxKind.TLParen: 
@@ -415,12 +414,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "TLBrace";
                 case SymbolSyntaxKind.TRBrace: 
                     return "TRBrace";
-                case SymbolSyntaxKind.KInit: 
-                    return "KInit";
-                case SymbolSyntaxKind.KWeak: 
-                    return "KWeak";
-                case SymbolSyntaxKind.KDerived: 
-                    return "KDerived";
                 case SymbolSyntaxKind.TEq: 
                     return "TEq";
                 case SymbolSyntaxKind.KIf: 
@@ -501,22 +494,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "MainBlock1";
                 case SymbolSyntaxKind.SymbolBlock1: 
                     return "SymbolBlock1";
-                case SymbolSyntaxKind.SymbolBlock1baseTypesBlock: 
-                    return "SymbolBlock1baseTypesBlock";
                 case SymbolSyntaxKind.SymbolBlock2: 
                     return "SymbolBlock2";
                 case SymbolSyntaxKind.SymbolBlock2Block1Alt1: 
                     return "SymbolBlock2Block1Alt1";
                 case SymbolSyntaxKind.SymbolBlock2Block1Alt2: 
                     return "SymbolBlock2Block1Alt2";
-                case SymbolSyntaxKind.PropertyBlock1Alt1: 
-                    return "PropertyBlock1Alt1";
-                case SymbolSyntaxKind.PropertyBlock1Alt2: 
-                    return "PropertyBlock1Alt2";
+                case SymbolSyntaxKind.PropertyBlock1: 
+                    return "PropertyBlock1";
                 case SymbolSyntaxKind.PropertyBlock2: 
                     return "PropertyBlock2";
-                case SymbolSyntaxKind.PropertyBlock3: 
-                    return "PropertyBlock3";
                 case SymbolSyntaxKind.OperationAlt2Block1: 
                     return "OperationAlt2Block1";
                 case SymbolSyntaxKind.OperationAlt2Block1parametersBlock: 
@@ -561,6 +548,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "abstract";
                 case SymbolSyntaxKind.KSymbol: 
                     return "symbol";
+                case SymbolSyntaxKind.KWeak: 
+                    return "weak";
+                case SymbolSyntaxKind.KDerived: 
+                    return "derived";
                 case SymbolSyntaxKind.KPhase: 
                     return "phase";
                 case SymbolSyntaxKind.TLParen: 
@@ -609,12 +600,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "{";
                 case SymbolSyntaxKind.TRBrace: 
                     return "}";
-                case SymbolSyntaxKind.KInit: 
-                    return "init";
-                case SymbolSyntaxKind.KWeak: 
-                    return "weak";
-                case SymbolSyntaxKind.KDerived: 
-                    return "derived";
                 case SymbolSyntaxKind.TEq: 
                     return "=";
                 case SymbolSyntaxKind.KIf: 
@@ -669,6 +654,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KUsing: 
                 case SymbolSyntaxKind.KAbstract: 
                 case SymbolSyntaxKind.KSymbol: 
+                case SymbolSyntaxKind.KWeak: 
+                case SymbolSyntaxKind.KDerived: 
                 case SymbolSyntaxKind.KPhase: 
                 case SymbolSyntaxKind.KCache: 
                 case SymbolSyntaxKind.KObject: 
@@ -688,9 +675,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.KDecimal: 
                 case SymbolSyntaxKind.KType: 
                 case SymbolSyntaxKind.KVoid: 
-                case SymbolSyntaxKind.KInit: 
-                case SymbolSyntaxKind.KWeak: 
-                case SymbolSyntaxKind.KDerived: 
                 case SymbolSyntaxKind.KIf: 
                     return true;
                 default:
@@ -712,6 +696,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             yield return SymbolSyntaxKind.KUsing;
             yield return SymbolSyntaxKind.KAbstract;
             yield return SymbolSyntaxKind.KSymbol;
+            yield return SymbolSyntaxKind.KWeak;
+            yield return SymbolSyntaxKind.KDerived;
             yield return SymbolSyntaxKind.KPhase;
             yield return SymbolSyntaxKind.KCache;
             yield return SymbolSyntaxKind.KObject;
@@ -731,9 +717,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             yield return SymbolSyntaxKind.KDecimal;
             yield return SymbolSyntaxKind.KType;
             yield return SymbolSyntaxKind.KVoid;
-            yield return SymbolSyntaxKind.KInit;
-            yield return SymbolSyntaxKind.KWeak;
-            yield return SymbolSyntaxKind.KDerived;
             yield return SymbolSyntaxKind.KIf;
             yield break;
         }
@@ -761,6 +744,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return SymbolSyntaxKind.KAbstract;
                 case "symbol": 
                     return SymbolSyntaxKind.KSymbol;
+                case "weak": 
+                    return SymbolSyntaxKind.KWeak;
+                case "derived": 
+                    return SymbolSyntaxKind.KDerived;
                 case "phase": 
                     return SymbolSyntaxKind.KPhase;
                 case "cache": 
@@ -799,12 +786,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return SymbolSyntaxKind.KType;
                 case "void": 
                     return SymbolSyntaxKind.KVoid;
-                case "init": 
-                    return SymbolSyntaxKind.KInit;
-                case "weak": 
-                    return SymbolSyntaxKind.KWeak;
-                case "derived": 
-                    return SymbolSyntaxKind.KDerived;
                 case "if": 
                     return SymbolSyntaxKind.KIf;
                 default:

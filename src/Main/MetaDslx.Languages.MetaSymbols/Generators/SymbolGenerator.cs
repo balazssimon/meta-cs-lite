@@ -19,7 +19,6 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
 
         private Dictionary<Symbol, ImmutableArray<Symbol>> _baseTypes = new Dictionary<Symbol, ImmutableArray<Symbol>>();
         private Dictionary<Symbol, ImmutableArray<string>> _phases = new Dictionary<Symbol, ImmutableArray<string>>();
-        private Dictionary<Symbol, ImmutableArray<string>> _derivedPhases = new Dictionary<Symbol, ImmutableArray<string>>();
         private Dictionary<Symbol, ImmutableArray<Property>> _properties = new Dictionary<Symbol, ImmutableArray<Property>>();
         private Dictionary<Symbol, ImmutableArray<Operation>> _operations = new Dictionary<Symbol, ImmutableArray<Operation>>();
         private Dictionary<Operation, string> _operationUniqueNames = new Dictionary<Operation, string>();
@@ -49,8 +48,8 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
 
         public string GetBaseName(Symbol context, Symbol type)
         {
-            if (type.Parent == context.Parent) return $"{type.Name}SymbolBase";
-            else return $"global::{type.FullName}SymbolBase";
+            if (type.Parent == context.Parent) return $"Impl.{type.Name}SymbolImpl";
+            else return $"global::{type.Parent?.FullName}.Impl.{type.Name}SymbolImpl";
         }
 
         public string GetImplName(Symbol context, Symbol type)
@@ -222,32 +221,10 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             _baseTypes.Add(symbol, baseTypes.ToImmutableAndFree());
         }
 
-        public IEnumerable<string> GetAllPhases(Symbol? symbol)
-        {
-            if (symbol is null) yield break;
-            foreach (var phase in GetPhases(symbol))
-            {
-                yield return phase;
-            }
-            foreach (var phase in GetDerivedPhases(symbol))
-            {
-                yield return phase;
-            }
-        }
-
-        public ImmutableArray<string> GetPhases(Symbol? symbol)
+        public ImmutableArray<string> GetAllPhases(Symbol? symbol)
         {
             if (symbol is null) return ImmutableArray<string>.Empty;
-            if (_phases.TryGetValue(symbol, out var phases)) return phases;
             var phs = ArrayBuilder<string>.GetInstance();
-            foreach (var prop in symbol.Properties.Where(p => !p.IsInit && !p.IsDerived))
-            {
-                if (prop.Phase is null) phs.Add(prop.Name);
-            }
-            /*foreach (var op in symbol.Operations)
-            {
-                if (op.IsPhase) phs.Add(op.Name);
-            }*/
             foreach (var bs in GetBaseTypes(symbol))
             {
                 foreach (var phase in GetPhases(bs))
@@ -258,36 +235,35 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                     }
                 }
             }
-            var result = phs.ToImmutableAndFree();
-            _phases.Add(symbol, result);
-            return result;
-        }
-
-        public ImmutableArray<string> GetDerivedPhases(Symbol? symbol)
-        {
-            if (symbol is null) return ImmutableArray<string>.Empty;
-            if (_derivedPhases.TryGetValue(symbol, out var phases)) return phases;
-            var phs = ArrayBuilder<string>.GetInstance();
-            foreach (var prop in symbol.Properties.Where(p => !p.IsInit && p.IsDerived))
+            foreach (var phase in GetPhases(symbol))
             {
-                if (prop.Phase is null) phs.Add(prop.Name);
-            }
-            /*foreach (var op in symbol.Operations)
-            {
-                if (op.IsPhase) phs.Add(op.Name);
-            }*/
-            foreach (var bs in GetBaseTypes(symbol))
-            {
-                foreach (var phase in GetDerivedPhases(bs))
+                if (!phs.Contains(phase))
                 {
-                    if (!phs.Contains(phase))
-                    {
-                        phs.Add(phase);
-                    }
+                    phs.Add(phase);
                 }
             }
             var result = phs.ToImmutableAndFree();
-            _derivedPhases.Add(symbol, result);
+            return result;
+        }
+
+        public ImmutableArray<string> GetPhases(Symbol? symbol)
+        {
+            if (symbol is null) return ImmutableArray<string>.Empty;
+            if (_phases.TryGetValue(symbol, out var phases)) return phases;
+            var phs = ArrayBuilder<string>.GetInstance();
+            foreach (var decl in symbol.Declarations)
+            {
+                if (decl is Property prop)
+                {
+                    if (prop.Phase is null) phs.Add(prop.Name);
+                }
+                if (decl is Operation op)
+                {
+                    if (op.IsPhase) phs.Add(op.Name);
+                }
+            }
+            var result = phs.ToImmutableAndFree();
+            _phases.Add(symbol, result);
             return result;
         }
 

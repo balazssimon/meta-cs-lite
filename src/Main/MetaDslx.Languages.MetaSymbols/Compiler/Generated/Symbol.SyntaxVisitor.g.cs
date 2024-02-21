@@ -41,14 +41,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         void VisitTBoolean(TBooleanSyntax node);
         void VisitMainBlock1(MainBlock1Syntax node);
         void VisitSymbolBlock1(SymbolBlock1Syntax node);
-        void VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node);
         void VisitSymbolBlock2(SymbolBlock2Syntax node);
         void VisitSymbolBlock2Block1Alt1(SymbolBlock2Block1Alt1Syntax node);
         void VisitSymbolBlock2Block1Alt2(SymbolBlock2Block1Alt2Syntax node);
-        void VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node);
-        void VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node);
+        void VisitPropertyBlock1(PropertyBlock1Syntax node);
         void VisitPropertyBlock2(PropertyBlock2Syntax node);
-        void VisitPropertyBlock3(PropertyBlock3Syntax node);
         void VisitOperationAlt2Block1(OperationAlt2Block1Syntax node);
         void VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node);
         void VisitOperationAlt2Block2(OperationAlt2Block2Syntax node);
@@ -184,11 +181,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node)
-        {
-            this.DefaultVisit(node);
-        }
-
         public virtual void VisitSymbolBlock2(SymbolBlock2Syntax node)
         {
             this.DefaultVisit(node);
@@ -204,22 +196,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node)
-        {
-            this.DefaultVisit(node);
-        }
-
-        public virtual void VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node)
+        public virtual void VisitPropertyBlock1(PropertyBlock1Syntax node)
         {
             this.DefaultVisit(node);
         }
 
         public virtual void VisitPropertyBlock2(PropertyBlock2Syntax node)
-        {
-            this.DefaultVisit(node);
-        }
-
-        public virtual void VisitPropertyBlock3(PropertyBlock3Syntax node)
         {
             this.DefaultVisit(node);
         }
@@ -283,14 +265,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitTBoolean(TBooleanSyntax node);
         TResult VisitMainBlock1(MainBlock1Syntax node);
         TResult VisitSymbolBlock1(SymbolBlock1Syntax node);
-        TResult VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node);
         TResult VisitSymbolBlock2(SymbolBlock2Syntax node);
         TResult VisitSymbolBlock2Block1Alt1(SymbolBlock2Block1Alt1Syntax node);
         TResult VisitSymbolBlock2Block1Alt2(SymbolBlock2Block1Alt2Syntax node);
-        TResult VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node);
-        TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node);
+        TResult VisitPropertyBlock1(PropertyBlock1Syntax node);
         TResult VisitPropertyBlock2(PropertyBlock2Syntax node);
-        TResult VisitPropertyBlock3(PropertyBlock3Syntax node);
         TResult VisitOperationAlt2Block1(OperationAlt2Block1Syntax node);
         TResult VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node);
         TResult VisitOperationAlt2Block2(OperationAlt2Block2Syntax node);
@@ -426,11 +405,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node)
-        {
-            return this.DefaultVisit(node);
-        }
-
         public virtual TResult VisitSymbolBlock2(SymbolBlock2Syntax node)
         {
             return this.DefaultVisit(node);
@@ -446,22 +420,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node)
-        {
-            return this.DefaultVisit(node);
-        }
-
-        public virtual TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node)
+        public virtual TResult VisitPropertyBlock1(PropertyBlock1Syntax node)
         {
             return this.DefaultVisit(node);
         }
 
         public virtual TResult VisitPropertyBlock2(PropertyBlock2Syntax node)
-        {
-            return this.DefaultVisit(node);
-        }
-
-        public virtual TResult VisitPropertyBlock3(PropertyBlock3Syntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -525,14 +489,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TResult VisitTBoolean(TBooleanSyntax node, TArg argument);
         TResult VisitMainBlock1(MainBlock1Syntax node, TArg argument);
         TResult VisitSymbolBlock1(SymbolBlock1Syntax node, TArg argument);
-        TResult VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node, TArg argument);
         TResult VisitSymbolBlock2(SymbolBlock2Syntax node, TArg argument);
         TResult VisitSymbolBlock2Block1Alt1(SymbolBlock2Block1Alt1Syntax node, TArg argument);
         TResult VisitSymbolBlock2Block1Alt2(SymbolBlock2Block1Alt2Syntax node, TArg argument);
-        TResult VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node, TArg argument);
-        TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node, TArg argument);
+        TResult VisitPropertyBlock1(PropertyBlock1Syntax node, TArg argument);
         TResult VisitPropertyBlock2(PropertyBlock2Syntax node, TArg argument);
-        TResult VisitPropertyBlock3(PropertyBlock3Syntax node, TArg argument);
         TResult VisitOperationAlt2Block1(OperationAlt2Block1Syntax node, TArg argument);
         TResult VisitOperationAlt2Block1parametersBlock(OperationAlt2Block1parametersBlockSyntax node, TArg argument);
         TResult VisitOperationAlt2Block2(OperationAlt2Block2Syntax node, TArg argument);
@@ -668,11 +629,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node, TArg argument)
-        {
-            return this.DefaultVisit(node, argument);
-        }
-
         public virtual TResult VisitSymbolBlock2(SymbolBlock2Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
@@ -688,22 +644,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node, TArg argument)
-        {
-            return this.DefaultVisit(node, argument);
-        }
-
-        public virtual TResult VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node, TArg argument)
+        public virtual TResult VisitPropertyBlock1(PropertyBlock1Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
 
         public virtual TResult VisitPropertyBlock2(PropertyBlock2Syntax node, TArg argument)
-        {
-            return this.DefaultVisit(node, argument);
-        }
-
-        public virtual TResult VisitPropertyBlock3(PropertyBlock3Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -782,12 +728,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
 
         public virtual SyntaxNode VisitProperty(PropertySyntax node)
         {
-            var block1 = (PropertyBlock1Syntax)this.Visit(node.Block1);
+            var isWeak = this.VisitToken(node.IsWeak);
+            var isDerived = this.VisitToken(node.IsDerived);
             var type = (TypeReferenceSyntax)this.Visit(node.Type);
             var name = (NameSyntax)this.Visit(node.Name);
+            var block1 = (PropertyBlock1Syntax)this.Visit(node.Block1);
             var block2 = (PropertyBlock2Syntax)this.Visit(node.Block2);
-            var block3 = (PropertyBlock3Syntax)this.Visit(node.Block3);
-            return node.Update(block1, type, name, block2, block3);
+            return node.Update(isWeak, isDerived, type, name, block1, block2);
         }
 
         public virtual SyntaxNode VisitOperationAlt1(OperationAlt1Syntax node)
@@ -919,15 +866,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         public virtual SyntaxNode VisitSymbolBlock1(SymbolBlock1Syntax node)
         {
             var tColon = this.VisitToken(node.TColon);
-            var baseTypes = this.VisitList(node.BaseTypes);
-            return node.Update(tColon, baseTypes);
-        }
-
-        public virtual SyntaxNode VisitSymbolBlock1baseTypesBlock(SymbolBlock1baseTypesBlockSyntax node)
-        {
-            var tComma = this.VisitToken(node.TComma);
             var baseTypes = (QualifierSyntax)this.Visit(node.BaseTypes);
-            return node.Update(tComma, baseTypes);
+            return node.Update(tColon, baseTypes);
         }
 
         public virtual SyntaxNode VisitSymbolBlock2(SymbolBlock2Syntax node)
@@ -950,27 +890,14 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return node.Update(operations);
         }
 
-        public virtual SyntaxNode VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node)
-        {
-            var isInit = this.VisitToken(node.IsInit);
-            return node.Update(isInit);
-        }
-
-        public virtual SyntaxNode VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node)
-        {
-            var isWeak = this.VisitToken(node.IsWeak);
-            var isDerived = this.VisitToken(node.IsDerived);
-            return node.Update(isWeak, isDerived);
-        }
-
-        public virtual SyntaxNode VisitPropertyBlock2(PropertyBlock2Syntax node)
+        public virtual SyntaxNode VisitPropertyBlock1(PropertyBlock1Syntax node)
         {
             var tEq = this.VisitToken(node.TEq);
             var defaultValue = (ValueSyntax)this.Visit(node.DefaultValue);
             return node.Update(tEq, defaultValue);
         }
 
-        public virtual SyntaxNode VisitPropertyBlock3(PropertyBlock3Syntax node)
+        public virtual SyntaxNode VisitPropertyBlock2(PropertyBlock2Syntax node)
         {
             var kPhase = this.VisitToken(node.KPhase);
             var phase = (IdentifierSyntax)this.Visit(node.Phase);

@@ -23,7 +23,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler
             var symbolBinder = Compilation.GetBinder(symbolSyntax);
             if (symbolBinder is null) return;
             var symbol = symbolBinder.Bind(context.CancellationToken).FirstOrDefault() as DeclarationSymbol;
-            if (symbol is not null && symbol.IsCSharpSymbol)
+            if (symbol is ICSharpSymbol)
             {
                 context.Qualifier = symbol;
             }
@@ -31,7 +31,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler
 
         protected override bool IsViable(LookupContext context, DeclarationSymbol symbol)
         {
-            return symbol.IsCSharpSymbol;
+            return symbol is ICSharpSymbol;
         }
     }
 }

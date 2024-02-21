@@ -36,7 +36,6 @@ class TypeReference $Type
 class Property : Declaration
 {
 	TypeReference Type
-	bool IsInit
 	bool IsWeak
 	bool IsDerived
 	object? DefaultValue

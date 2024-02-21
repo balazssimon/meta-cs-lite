@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    internal sealed class RootNamespaceSymbol : __Impl.NamespaceSymbolInst
+    internal sealed class RootNamespaceSymbol : Impl.NamespaceSymbolImpl
     {
         private readonly MetaDslx.Modeling.Model _model;
 
@@ -24,7 +24,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             if (MergedDeclaration is null)
             {
-                return ContainingModule.SymbolFactory.CreateSymbols<Symbol>(this, _model.RootObjects, diagnostics, cancellationToken);
+                return ContainingModule!.SymbolFactory.CreateSymbols<Symbol>(this, _model.RootObjects, diagnostics, cancellationToken);
             }
             else
             {

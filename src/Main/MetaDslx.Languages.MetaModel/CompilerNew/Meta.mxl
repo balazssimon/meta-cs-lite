@@ -1,0 +1,74 @@
+namespace MetaDslx.Languages.MetaModel.Compiler;
+
+using System;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Annotations;
+using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Languages.MetaModel.Model;
+using MetaDslx.Languages.MetaModel.Compiler;
+
+language Meta : Common;
+
+Main returns MetaNamespace:
+	'namespace' [Name(qualifierProperty:Declarations)]Qualifier
+	Using*
+	[Scope](declarations+=MetaModel declarations+=MetaDeclaration*)
+	eof;
+
+Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol;
+
+MetaModel: 'metamodel' Name ('=' uri=TString)?;
+
+MetaDeclaration: MetaConstant | MetaEnum | MetaClass;
+
+MetaConstant: 'const' @type=MetaTypeReference Name;
+
+MetaEnum: 'enum' Name [Scope]('{' literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* '}');
+MetaEnumLiteral: Name;
+
+MetaClass: 
+	isAbstract?='abstract'? 'class' [Name](Identifier? '$' symbolType=[Use(types: Symbol, suffixes: "Symbol")]Identifier | Identifier) 
+	(':' baseTypes+=#MetaClass (',' baseTypes+=#MetaClass)*)?
+	[Scope]('{' (properties+=MetaProperty | operations+=MetaOperation)* '}');
+
+MetaProperty: 
+	(isContainment?='contains' | isDerived?='derived' | isUnion?='union' | isReadOnly?='readonly')? @type=MetaTypeReference [Name](Identifier? '$' symbolProperty=[SymbolProperty]Identifier | Identifier) ('=' defaultValue=Value)?
+	(   'opposite' oppositeProperties+=#MetaProperty (',' oppositeProperties+=#MetaProperty)* 
+	|	'subsets' subsettedProperties+=#MetaProperty (',' subsettedProperties+=#MetaProperty)* 
+	|	'redefines' redefinedProperties+=#MetaProperty (',' redefinedProperties+=#MetaProperty)*
+	)*;
+
+MetaOperation: returnType=MetaTypeReference Name '(' (parameters+=MetaParameter (',' parameters+=MetaParameter)*)? ')';
+MetaParameter: @type=MetaTypeReference Name;
+
+MetaTypeReference returns type
+	: alt SimpleTypeReference returns type: TypeReference 
+	| alt MetaArrayType: itemType=MetaTypeReference '[' ']'
+	| alt MetaNullableType: innerType=MetaTypeReference '?';
+
+TypeReference returns type: PrimitiveType | #type;
+
+PrimitiveType returns type
+	: 'object'
+	| 'bool'
+	| 'char'
+	| 'string'
+	| 'byte'
+	| 'sbyte'
+	| 'short'
+	| 'ushort'
+	| 'int'
+	| 'uint'
+	| 'long'
+	| 'ulong'
+	| 'float'
+	| 'double'
+	| 'decimal'
+	| 'type'
+	| 'symbol'
+	| 'void'
+	;
+
+Value returns symbol: TString | TInteger | TDecimal | TBoolean | KNull | #MetaEnumLiteral; 

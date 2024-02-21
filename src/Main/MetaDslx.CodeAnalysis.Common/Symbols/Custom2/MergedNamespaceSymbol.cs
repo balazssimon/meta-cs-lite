@@ -28,7 +28,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     /// namespaces and namespaces that are used in multiple referenced modules. (Microsoft, System,
     /// System.Xml, System.Diagnostics, System.Threading, ...)
     /// </summary>
-    internal sealed class MergedNamespaceSymbol : __Impl.NamespaceSymbolInst
+    internal sealed class MergedNamespaceSymbol : Impl.NamespaceSymbolImpl
     {
         private readonly ImmutableArray<NamespaceSymbol> _namespacesToMerge;
 

@@ -22,8 +22,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public void AddSymbol(Symbol symbol)
         {
-            if (symbol is SymbolInst si) _symbols.Add(si._underlyingObject, symbol);
-            else if (symbol is SymbolImpl sim) _symbols.Add(sim.__Wrapped._underlyingObject, symbol);
+            _symbols.Add(symbol._underlyingObject, symbol);
         }
 
         public Symbol? CreateSymbol(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -145,15 +144,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             return CreateSymbol(container, (T)underlyingObject, diagnostics, cancellationToken);
         }
-        
-        TSymbol? ISymbolFactory.CreateSymbol<TSymbol>(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken) 
-            where TSymbol : default
+
+        TSymbol? ISymbolFactory.CreateSymbol<TSymbol>(Symbol container, object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+            where TSymbol : class
         {
             return CreateSymbol<TSymbol>(container, (T)underlyingObject, diagnostics, cancellationToken);
         }
 
         ImmutableArray<TSymbol> ISymbolFactory.CreateSymbols<TSymbol>(Symbol container, IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-            where TSymbol : default
         {
             return CreateSymbols<TSymbol>(container, underlyingObjects.Select(uo => (T)uo), diagnostics, cancellationToken);
         }
@@ -164,13 +162,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         TSymbol? ISymbolFactory.GetSymbol<TSymbol>(object underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-            where TSymbol : default
+            where TSymbol : class
         {
             return GetSymbol<TSymbol>((T)underlyingObject, diagnostics, cancellationToken);
         }
 
         ImmutableArray<TSymbol> ISymbolFactory.GetSymbols<TSymbol>(IEnumerable<object> underlyingObjects, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-            where TSymbol : default
         {
             return GetSymbols<TSymbol>(underlyingObjects.Select(uo => (T)uo), diagnostics, cancellationToken);
         }
@@ -193,6 +190,5 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public abstract void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         protected abstract T? GetParentCore(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         protected abstract Symbol? CreateSymbolCore(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
-
     }
 }

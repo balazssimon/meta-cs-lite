@@ -187,12 +187,6 @@ public interface ISymbolParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_SymbolBlock1([NotNull] SymbolParser.Pr_SymbolBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SymbolParser.pr_SymbolBlock1baseTypesBlock"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_SymbolBlock1baseTypesBlock([NotNull] SymbolParser.Pr_SymbolBlock1baseTypesBlockContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="SymbolParser.pr_SymbolBlock2"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -213,31 +207,17 @@ public interface ISymbolParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_SymbolBlock2Block1Alt2([NotNull] SymbolParser.Pr_SymbolBlock2Block1Alt2Context context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PropertyBlock1Alt1</c>
-	/// labeled alternative in <see cref="SymbolParser.pr_PropertyBlock1"/>.
+	/// Visit a parse tree produced by <see cref="SymbolParser.pr_PropertyBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PropertyBlock1Alt1([NotNull] SymbolParser.Pr_PropertyBlock1Alt1Context context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PropertyBlock1Alt2</c>
-	/// labeled alternative in <see cref="SymbolParser.pr_PropertyBlock1"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_PropertyBlock1Alt2([NotNull] SymbolParser.Pr_PropertyBlock1Alt2Context context);
+	Result VisitPr_PropertyBlock1([NotNull] SymbolParser.Pr_PropertyBlock1Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SymbolParser.pr_PropertyBlock2"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_PropertyBlock2([NotNull] SymbolParser.Pr_PropertyBlock2Context context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="SymbolParser.pr_PropertyBlock3"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_PropertyBlock3([NotNull] SymbolParser.Pr_PropertyBlock3Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SymbolParser.pr_OperationAlt2Block1"/>.
 	/// </summary>

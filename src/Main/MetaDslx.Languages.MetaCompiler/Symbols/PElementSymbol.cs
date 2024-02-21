@@ -54,14 +54,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private enum ExpectedTypeKind
-        {
-            None,
-            Simple,
-            Bool,
-            Collection
-        }
-
         private MetaSymbol _value;
         private Assignment _assignment;
         private MetaType _expectedType;

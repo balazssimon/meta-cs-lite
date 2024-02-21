@@ -3,6 +3,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<MetaDslxBootstrap>true</MetaDslxBootstrap>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -17,4 +18,15 @@
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Parsers.Antlr\MetaDslx.CodeAnalysis.Parsers.Antlr.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Compile Remove="Compiler\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Compiler\**" Condition="!$(MetaDslxBootstrap)" />
+		<Compile Remove="Generators\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Generators\**" Condition="!$(MetaDslxBootstrap)" />
+
+		<Compile Remove="CompilerNew\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="CompilerNew\**" Condition="$(MetaDslxBootstrap)" />
+		<Compile Remove="GeneratorsNew\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="GeneratorsNew\**" Condition="$(MetaDslxBootstrap)" />
+	</ItemGroup>
 </Project>

@@ -531,11 +531,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     }
     public sealed class PropertySyntax : SymbolSyntaxNode
     {
-        private PropertyBlock1Syntax _block1;
         private TypeReferenceSyntax _type;
         private NameSyntax _name;
+        private PropertyBlock1Syntax _block1;
         private PropertyBlock2Syntax _block2;
-        private PropertyBlock3Syntax _block3;
     
         public PropertySyntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -547,19 +546,29 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         {
         }
     
-        public PropertyBlock1Syntax Block1 
+        public __SyntaxToken IsWeak 
         { 
             get
             {
-            var red = this.GetRed(ref this._block1, 0);
-            return red;
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyGreen)this.Green;
+            var greenToken = green.IsWeak;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+        public __SyntaxToken IsDerived 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyGreen)this.Green;
+            var greenToken = green.IsDerived;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
         }
         public TypeReferenceSyntax Type 
         { 
             get
             {
-            var red = this.GetRed(ref this._type, 1);
+            var red = this.GetRed(ref this._type, 2);
             return red;
             } 
         }
@@ -567,7 +576,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         { 
             get
             {
-            var red = this.GetRed(ref this._name, 2);
+            var red = this.GetRed(ref this._name, 3);
+            return red;
+            } 
+        }
+        public PropertyBlock1Syntax Block1 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._block1, 4);
             return red;
             } 
         }
@@ -575,15 +592,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         { 
             get
             {
-            var red = this.GetRed(ref this._block2, 3);
-            return red;
-            } 
-        }
-        public PropertyBlock3Syntax Block3 
-        { 
-            get
-            {
-            var red = this.GetRed(ref this._block3, 4);
+            var red = this.GetRed(ref this._block2, 5);
             return red;
             } 
         }
@@ -592,11 +601,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this.GetRed(ref this._block1, 0);
-                case 1: return this.GetRed(ref this._type, 1);
-                case 2: return this.GetRed(ref this._name, 2);
-                case 3: return this.GetRed(ref this._block2, 3);
-                case 4: return this.GetRed(ref this._block3, 4);
+                case 2: return this.GetRed(ref this._type, 2);
+                case 3: return this.GetRed(ref this._name, 3);
+                case 4: return this.GetRed(ref this._block1, 4);
+                case 5: return this.GetRed(ref this._block2, 5);
                 default: return null;
             }
         }
@@ -605,46 +613,50 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this._block1;
-                case 1: return this._type;
-                case 2: return this._name;
-                case 3: return this._block2;
-                case 4: return this._block3;
+                case 2: return this._type;
+                case 3: return this._name;
+                case 4: return this._block1;
+                case 5: return this._block2;
                 default: return null;
             }
         }
     
-        public PropertySyntax WithBlock1(PropertyBlock1Syntax block1)
+        public PropertySyntax WithIsWeak(__SyntaxToken isWeak)
         {
-            return this.Update(block1, this.Type, this.Name, this.Block2, this.Block3);
+            return this.Update(isWeak, this.IsDerived, this.Type, this.Name, this.Block1, this.Block2);
+        }
+    
+        public PropertySyntax WithIsDerived(__SyntaxToken isDerived)
+        {
+            return this.Update(this.IsWeak, isDerived, this.Type, this.Name, this.Block1, this.Block2);
         }
     
         public PropertySyntax WithType(TypeReferenceSyntax type)
         {
-            return this.Update(this.Block1, type, this.Name, this.Block2, this.Block3);
+            return this.Update(this.IsWeak, this.IsDerived, type, this.Name, this.Block1, this.Block2);
         }
     
         public PropertySyntax WithName(NameSyntax name)
         {
-            return this.Update(this.Block1, this.Type, name, this.Block2, this.Block3);
+            return this.Update(this.IsWeak, this.IsDerived, this.Type, name, this.Block1, this.Block2);
+        }
+    
+        public PropertySyntax WithBlock1(PropertyBlock1Syntax block1)
+        {
+            return this.Update(this.IsWeak, this.IsDerived, this.Type, this.Name, block1, this.Block2);
         }
     
         public PropertySyntax WithBlock2(PropertyBlock2Syntax block2)
         {
-            return this.Update(this.Block1, this.Type, this.Name, block2, this.Block3);
-        }
-    
-        public PropertySyntax WithBlock3(PropertyBlock3Syntax block3)
-        {
-            return this.Update(this.Block1, this.Type, this.Name, this.Block2, block3);
+            return this.Update(this.IsWeak, this.IsDerived, this.Type, this.Name, this.Block1, block2);
         }
     
     
-        public PropertySyntax Update(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3)
+        public PropertySyntax Update(__SyntaxToken isWeak, __SyntaxToken isDerived, TypeReferenceSyntax type, NameSyntax name, PropertyBlock1Syntax block1, PropertyBlock2Syntax block2)
         {
-            if (this.Block1 != block1 || this.Type != type || this.Name != name || this.Block2 != block2 || this.Block3 != block3)
+            if (this.IsWeak != isWeak || this.IsDerived != isDerived || this.Type != type || this.Name != name || this.Block1 != block1 || this.Block2 != block2)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.Property(block1, type, name, block2, block3);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.Property(isWeak, isDerived, type, name, block1, block2);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -2332,7 +2344,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     }
     public sealed class SymbolBlock1Syntax : SymbolSyntaxNode
     {
-        private __SyntaxNode _baseTypes;
+        private QualifierSyntax _baseTypes;
     
         public SymbolBlock1Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -2350,101 +2362,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             {
             var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.SymbolBlock1Green)this.Green;
             var greenToken = green.TColon;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-            } 
-        }
-        public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> BaseTypes 
-        { 
-            get
-            {
-            var red = this.GetRed(ref this._baseTypes, 1);
-            return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax>(red, this.GetChildIndex(1), reversed: false);
-            } 
-        }
-    
-        protected override __SyntaxNode GetNodeSlot(int index)
-        {
-            switch (index)
-            {
-                case 1: return this.GetRed(ref this._baseTypes, 1);
-                default: return null;
-            }
-        }
-    
-        protected override __SyntaxNode GetCachedSlot(int index)
-        {
-            switch (index)
-            {
-                case 1: return this._baseTypes;
-                default: return null;
-            }
-        }
-    
-        public SymbolBlock1Syntax WithTColon(__SyntaxToken tColon)
-        {
-            return this.Update(tColon, this.BaseTypes);
-        }
-    
-        public SymbolBlock1Syntax WithBaseTypes(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseTypes)
-        {
-            return this.Update(this.TColon, baseTypes);
-        }
-    
-        public SymbolBlock1Syntax AddBaseTypes(params QualifierSyntax[] baseTypes)
-        {
-            return this.WithBaseTypes(this.BaseTypes.AddRange(baseTypes));
-        }
-    
-    
-        public SymbolBlock1Syntax Update(__SyntaxToken tColon, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseTypes)
-        {
-            if (this.TColon != tColon || this.BaseTypes != baseTypes)
-            {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.SymbolBlock1(tColon, baseTypes);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (SymbolBlock1Syntax)newNode;
-            }
-            return this;
-        }
-    
-        public override TResult Accept<TArg, TResult>(ISymbolSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-        {
-            return visitor.VisitSymbolBlock1(this, argument);
-        }
-    
-        public override TResult Accept<TResult>(ISymbolSyntaxVisitor<TResult> visitor)
-        {
-            return visitor.VisitSymbolBlock1(this);
-        }
-    
-        public override void Accept(ISymbolSyntaxVisitor visitor)
-        {
-            visitor.VisitSymbolBlock1(this);
-        }
-    
-    }
-    public sealed class SymbolBlock1baseTypesBlockSyntax : SymbolSyntaxNode
-    {
-        private QualifierSyntax _baseTypes;
-    
-        public SymbolBlock1baseTypesBlockSyntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
-            : base(green, syntaxTree, position)
-        {
-        }
-    
-        public SymbolBlock1baseTypesBlockSyntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
-            : base(green, parent, position)
-        {
-        }
-    
-        public __SyntaxToken TComma 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.SymbolBlock1baseTypesBlockGreen)this.Green;
-            var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
         }
@@ -2475,43 +2392,43 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             }
         }
     
-        public SymbolBlock1baseTypesBlockSyntax WithTComma(__SyntaxToken tComma)
+        public SymbolBlock1Syntax WithTColon(__SyntaxToken tColon)
         {
-            return this.Update(tComma, this.BaseTypes);
+            return this.Update(tColon, this.BaseTypes);
         }
     
-        public SymbolBlock1baseTypesBlockSyntax WithBaseTypes(QualifierSyntax baseTypes)
+        public SymbolBlock1Syntax WithBaseTypes(QualifierSyntax baseTypes)
         {
-            return this.Update(this.TComma, baseTypes);
+            return this.Update(this.TColon, baseTypes);
         }
     
     
-        public SymbolBlock1baseTypesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax baseTypes)
+        public SymbolBlock1Syntax Update(__SyntaxToken tColon, QualifierSyntax baseTypes)
         {
-            if (this.TComma != tComma || this.BaseTypes != baseTypes)
+            if (this.TColon != tColon || this.BaseTypes != baseTypes)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.SymbolBlock1baseTypesBlock(tComma, baseTypes);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.SymbolBlock1(tColon, baseTypes);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (SymbolBlock1baseTypesBlockSyntax)newNode;
+                return (SymbolBlock1Syntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(ISymbolSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitSymbolBlock1baseTypesBlock(this, argument);
+            return visitor.VisitSymbolBlock1(this, argument);
         }
     
         public override TResult Accept<TResult>(ISymbolSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitSymbolBlock1baseTypesBlock(this);
+            return visitor.VisitSymbolBlock1(this);
         }
     
         public override void Accept(ISymbolSyntaxVisitor visitor)
         {
-            visitor.VisitSymbolBlock1baseTypesBlock(this);
+            visitor.VisitSymbolBlock1(this);
         }
     
     }
@@ -2788,190 +2705,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         }
     
     }
-    public abstract class PropertyBlock1Syntax : SymbolSyntaxNode
-    {
-        protected PropertyBlock1Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
-            : base(green, syntaxTree, position)
-        {
-        }
-    
-        protected PropertyBlock1Syntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
-            : base(green, parent, position)
-        {
-        }
-    }
-    public sealed class PropertyBlock1Alt1Syntax : PropertyBlock1Syntax
-    {
-    
-        public PropertyBlock1Alt1Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
-            : base(green, syntaxTree, position)
-        {
-        }
-    
-        public PropertyBlock1Alt1Syntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
-            : base(green, parent, position)
-        {
-        }
-    
-        public __SyntaxToken IsInit 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyBlock1Alt1Green)this.Green;
-            var greenToken = green.IsInit;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-            } 
-        }
-    
-        protected override __SyntaxNode GetNodeSlot(int index)
-        {
-            switch (index)
-            {
-                default: return null;
-            }
-        }
-    
-        protected override __SyntaxNode GetCachedSlot(int index)
-        {
-            switch (index)
-            {
-                default: return null;
-            }
-        }
-    
-        public PropertyBlock1Alt1Syntax WithIsInit(__SyntaxToken isInit)
-        {
-            return this.Update(isInit);
-        }
-    
-    
-        public PropertyBlock1Alt1Syntax Update(__SyntaxToken isInit)
-        {
-            if (this.IsInit != isInit)
-            {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.PropertyBlock1Alt1(isInit);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (PropertyBlock1Alt1Syntax)newNode;
-            }
-            return this;
-        }
-    
-        public override TResult Accept<TArg, TResult>(ISymbolSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-        {
-            return visitor.VisitPropertyBlock1Alt1(this, argument);
-        }
-    
-        public override TResult Accept<TResult>(ISymbolSyntaxVisitor<TResult> visitor)
-        {
-            return visitor.VisitPropertyBlock1Alt1(this);
-        }
-    
-        public override void Accept(ISymbolSyntaxVisitor visitor)
-        {
-            visitor.VisitPropertyBlock1Alt1(this);
-        }
-    
-    }
-    public sealed class PropertyBlock1Alt2Syntax : PropertyBlock1Syntax
-    {
-    
-        public PropertyBlock1Alt2Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
-            : base(green, syntaxTree, position)
-        {
-        }
-    
-        public PropertyBlock1Alt2Syntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
-            : base(green, parent, position)
-        {
-        }
-    
-        public __SyntaxToken IsWeak 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyBlock1Alt2Green)this.Green;
-            var greenToken = green.IsWeak;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-            } 
-        }
-        public __SyntaxToken IsDerived 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyBlock1Alt2Green)this.Green;
-            var greenToken = green.IsDerived;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
-            } 
-        }
-    
-        protected override __SyntaxNode GetNodeSlot(int index)
-        {
-            switch (index)
-            {
-                default: return null;
-            }
-        }
-    
-        protected override __SyntaxNode GetCachedSlot(int index)
-        {
-            switch (index)
-            {
-                default: return null;
-            }
-        }
-    
-        public PropertyBlock1Alt2Syntax WithIsWeak(__SyntaxToken isWeak)
-        {
-            return this.Update(isWeak, this.IsDerived);
-        }
-    
-        public PropertyBlock1Alt2Syntax WithIsDerived(__SyntaxToken isDerived)
-        {
-            return this.Update(this.IsWeak, isDerived);
-        }
-    
-    
-        public PropertyBlock1Alt2Syntax Update(__SyntaxToken isWeak, __SyntaxToken isDerived)
-        {
-            if (this.IsWeak != isWeak || this.IsDerived != isDerived)
-            {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.PropertyBlock1Alt2(isWeak, isDerived);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (PropertyBlock1Alt2Syntax)newNode;
-            }
-            return this;
-        }
-    
-        public override TResult Accept<TArg, TResult>(ISymbolSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-        {
-            return visitor.VisitPropertyBlock1Alt2(this, argument);
-        }
-    
-        public override TResult Accept<TResult>(ISymbolSyntaxVisitor<TResult> visitor)
-        {
-            return visitor.VisitPropertyBlock1Alt2(this);
-        }
-    
-        public override void Accept(ISymbolSyntaxVisitor visitor)
-        {
-            visitor.VisitPropertyBlock1Alt2(this);
-        }
-    
-    }
-    public sealed class PropertyBlock2Syntax : SymbolSyntaxNode
+    public sealed class PropertyBlock1Syntax : SymbolSyntaxNode
     {
         private ValueSyntax _defaultValue;
     
-        public PropertyBlock2Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
+        public PropertyBlock1Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public PropertyBlock2Syntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
+        public PropertyBlock1Syntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -2980,7 +2723,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyBlock2Green)this.Green;
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyBlock1Green)this.Green;
             var greenToken = green.TEq;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3012,56 +2755,56 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             }
         }
     
-        public PropertyBlock2Syntax WithTEq(__SyntaxToken tEq)
+        public PropertyBlock1Syntax WithTEq(__SyntaxToken tEq)
         {
             return this.Update(tEq, this.DefaultValue);
         }
     
-        public PropertyBlock2Syntax WithDefaultValue(ValueSyntax defaultValue)
+        public PropertyBlock1Syntax WithDefaultValue(ValueSyntax defaultValue)
         {
             return this.Update(this.TEq, defaultValue);
         }
     
     
-        public PropertyBlock2Syntax Update(__SyntaxToken tEq, ValueSyntax defaultValue)
+        public PropertyBlock1Syntax Update(__SyntaxToken tEq, ValueSyntax defaultValue)
         {
             if (this.TEq != tEq || this.DefaultValue != defaultValue)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.PropertyBlock2(tEq, defaultValue);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.PropertyBlock1(tEq, defaultValue);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (PropertyBlock2Syntax)newNode;
+                return (PropertyBlock1Syntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(ISymbolSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitPropertyBlock2(this, argument);
+            return visitor.VisitPropertyBlock1(this, argument);
         }
     
         public override TResult Accept<TResult>(ISymbolSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitPropertyBlock2(this);
+            return visitor.VisitPropertyBlock1(this);
         }
     
         public override void Accept(ISymbolSyntaxVisitor visitor)
         {
-            visitor.VisitPropertyBlock2(this);
+            visitor.VisitPropertyBlock1(this);
         }
     
     }
-    public sealed class PropertyBlock3Syntax : SymbolSyntaxNode
+    public sealed class PropertyBlock2Syntax : SymbolSyntaxNode
     {
         private IdentifierSyntax _phase;
     
-        public PropertyBlock3Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
+        public PropertyBlock2Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public PropertyBlock3Syntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
+        public PropertyBlock2Syntax(__InternalSyntaxNode green, SymbolSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -3070,7 +2813,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyBlock3Green)this.Green;
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyBlock2Green)this.Green;
             var greenToken = green.KPhase;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3102,43 +2845,43 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             }
         }
     
-        public PropertyBlock3Syntax WithKPhase(__SyntaxToken kPhase)
+        public PropertyBlock2Syntax WithKPhase(__SyntaxToken kPhase)
         {
             return this.Update(kPhase, this.Phase);
         }
     
-        public PropertyBlock3Syntax WithPhase(IdentifierSyntax phase)
+        public PropertyBlock2Syntax WithPhase(IdentifierSyntax phase)
         {
             return this.Update(this.KPhase, phase);
         }
     
     
-        public PropertyBlock3Syntax Update(__SyntaxToken kPhase, IdentifierSyntax phase)
+        public PropertyBlock2Syntax Update(__SyntaxToken kPhase, IdentifierSyntax phase)
         {
             if (this.KPhase != kPhase || this.Phase != phase)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.PropertyBlock3(kPhase, phase);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.PropertyBlock2(kPhase, phase);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (PropertyBlock3Syntax)newNode;
+                return (PropertyBlock2Syntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(ISymbolSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitPropertyBlock3(this, argument);
+            return visitor.VisitPropertyBlock2(this, argument);
         }
     
         public override TResult Accept<TResult>(ISymbolSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitPropertyBlock3(this);
+            return visitor.VisitPropertyBlock2(this);
         }
     
         public override void Accept(ISymbolSyntaxVisitor visitor)
         {
-            visitor.VisitPropertyBlock3(this);
+            visitor.VisitPropertyBlock2(this);
         }
     
     }

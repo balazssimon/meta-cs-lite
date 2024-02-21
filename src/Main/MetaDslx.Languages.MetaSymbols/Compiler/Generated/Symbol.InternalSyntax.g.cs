@@ -1402,20 +1402,26 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     internal class PropertyGreen : GreenSyntaxNode
     {
         internal static new readonly PropertyGreen __Missing = new PropertyGreen();
-        private PropertyBlock1Green _block1;
+        private __InternalSyntaxToken _isWeak;
+        private __InternalSyntaxToken _isDerived;
         private TypeReferenceGreen _type;
         private NameGreen _name;
+        private PropertyBlock1Green _block1;
         private PropertyBlock2Green _block2;
-        private PropertyBlock3Green _block3;
     
-        public PropertyGreen(SymbolSyntaxKind kind, PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
+        public PropertyGreen(SymbolSyntaxKind kind, __InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived, TypeReferenceGreen type, NameGreen name, PropertyBlock1Green block1, PropertyBlock2Green block2)
             : base(kind, null, null)
         {
-            SlotCount = 5;
-            if (block1 != null)
+            SlotCount = 6;
+            if (isWeak != null)
             {
-                AdjustFlagsAndWidth(block1);
-                _block1 = block1;
+                AdjustFlagsAndWidth(isWeak);
+                _isWeak = isWeak;
+            }
+            if (isDerived != null)
+            {
+                AdjustFlagsAndWidth(isDerived);
+                _isDerived = isDerived;
             }
             if (type != null)
             {
@@ -1427,26 +1433,31 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 AdjustFlagsAndWidth(name);
                 _name = name;
             }
+            if (block1 != null)
+            {
+                AdjustFlagsAndWidth(block1);
+                _block1 = block1;
+            }
             if (block2 != null)
             {
                 AdjustFlagsAndWidth(block2);
                 _block2 = block2;
-            }
-            if (block3 != null)
-            {
-                AdjustFlagsAndWidth(block3);
-                _block3 = block3;
             }
         }
     
-        public PropertyGreen(SymbolSyntaxKind kind, PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public PropertyGreen(SymbolSyntaxKind kind, __InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived, TypeReferenceGreen type, NameGreen name, PropertyBlock1Green block1, PropertyBlock2Green block2, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 5;
-            if (block1 != null)
+            SlotCount = 6;
+            if (isWeak != null)
             {
-                AdjustFlagsAndWidth(block1);
-                _block1 = block1;
+                AdjustFlagsAndWidth(isWeak);
+                _isWeak = isWeak;
+            }
+            if (isDerived != null)
+            {
+                AdjustFlagsAndWidth(isDerived);
+                _isDerived = isDerived;
             }
             if (type != null)
             {
@@ -1458,15 +1469,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 AdjustFlagsAndWidth(name);
                 _name = name;
             }
+            if (block1 != null)
+            {
+                AdjustFlagsAndWidth(block1);
+                _block1 = block1;
+            }
             if (block2 != null)
             {
                 AdjustFlagsAndWidth(block2);
                 _block2 = block2;
-            }
-            if (block3 != null)
-            {
-                AdjustFlagsAndWidth(block3);
-                _block3 = block3;
             }
         }
     
@@ -1476,11 +1487,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public PropertyBlock1Green Block1 { get { return _block1; } }
+        public __InternalSyntaxToken IsWeak { get { return _isWeak; } }
+        public __InternalSyntaxToken IsDerived { get { return _isDerived; } }
         public TypeReferenceGreen Type { get { return _type; } }
         public NameGreen Name { get { return _name; } }
+        public PropertyBlock1Green Block1 { get { return _block1; } }
         public PropertyBlock2Green Block2 { get { return _block2; } }
-        public PropertyBlock3Green Block3 { get { return _block3; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1491,11 +1503,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         {
             switch (index)
             {
-                case 0: return _block1;
-                case 1: return _type;
-                case 2: return _name;
-                case 3: return _block2;
-                case 4: return _block3;
+                case 0: return _isWeak;
+                case 1: return _isDerived;
+                case 2: return _type;
+                case 3: return _name;
+                case 4: return _block1;
+                case 5: return _block2;
                 default: return null;
             }
         }
@@ -1506,25 +1519,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, diagnostics, this.GetAnnotations());
+            return new PropertyGreen(this.Kind, _isWeak, _isDerived, _type, _name, _block1, _block2, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, this.GetDiagnostics(), annotations);
+            return new PropertyGreen(this.Kind, _isWeak, _isDerived, _type, _name, _block1, _block2, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, this.GetDiagnostics(), this.GetAnnotations());
+            return new PropertyGreen(this.Kind, _isWeak, _isDerived, _type, _name, _block1, _block2, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public PropertyGreen Update(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
+        public PropertyGreen Update(__InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived, TypeReferenceGreen type, NameGreen name, PropertyBlock1Green block1, PropertyBlock2Green block2)
         {
-            if (_block1 != block1 || _type != type || _name != name || _block2 != block2 || _block3 != block3)
+            if (_isWeak != isWeak || _isDerived != isDerived || _type != type || _name != name || _block1 != block1 || _block2 != block2)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Property(block1, type, name, block2, block3);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Property(isWeak, isDerived, type, name, block1, block2);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -3338,9 +3351,9 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     {
         internal static new readonly SymbolBlock1Green __Missing = new SymbolBlock1Green();
         private __InternalSyntaxToken _tColon;
-        private __GreenNode _baseTypes;
+        private QualifierGreen _baseTypes;
     
-        public SymbolBlock1Green(SymbolSyntaxKind kind, __InternalSyntaxToken tColon, __GreenNode baseTypes)
+        public SymbolBlock1Green(SymbolSyntaxKind kind, __InternalSyntaxToken tColon, QualifierGreen baseTypes)
             : base(kind, null, null)
         {
             SlotCount = 2;
@@ -3356,7 +3369,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public SymbolBlock1Green(SymbolSyntaxKind kind, __InternalSyntaxToken tColon, __GreenNode baseTypes, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public SymbolBlock1Green(SymbolSyntaxKind kind, __InternalSyntaxToken tColon, QualifierGreen baseTypes, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 2;
@@ -3379,7 +3392,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TColon { get { return _tColon; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> BaseTypes { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen>(_baseTypes, reversed: false); } }
+        public QualifierGreen BaseTypes { get { return _baseTypes; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -3416,9 +3429,9 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         }
     
     
-        public SymbolBlock1Green Update(__InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> baseTypes)
+        public SymbolBlock1Green Update(__InternalSyntaxToken tColon, QualifierGreen baseTypes)
         {
-            if (_tColon != tColon || _baseTypes != baseTypes.Node)
+            if (_tColon != tColon || _baseTypes != baseTypes)
             {
                 __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.SymbolBlock1(tColon, baseTypes);
                 var diags = this.GetDiagnostics();
@@ -3428,104 +3441,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
                 return (SymbolBlock1Green)newNode;
-            }
-            return this;
-        }
-    }
-    internal class SymbolBlock1baseTypesBlockGreen : GreenSyntaxNode
-    {
-        internal static new readonly SymbolBlock1baseTypesBlockGreen __Missing = new SymbolBlock1baseTypesBlockGreen();
-        private __InternalSyntaxToken _tComma;
-        private QualifierGreen _baseTypes;
-    
-        public SymbolBlock1baseTypesBlockGreen(SymbolSyntaxKind kind, __InternalSyntaxToken tComma, QualifierGreen baseTypes)
-            : base(kind, null, null)
-        {
-            SlotCount = 2;
-            if (tComma != null)
-            {
-                AdjustFlagsAndWidth(tComma);
-                _tComma = tComma;
-            }
-            if (baseTypes != null)
-            {
-                AdjustFlagsAndWidth(baseTypes);
-                _baseTypes = baseTypes;
-            }
-        }
-    
-        public SymbolBlock1baseTypesBlockGreen(SymbolSyntaxKind kind, __InternalSyntaxToken tComma, QualifierGreen baseTypes, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
-            : base(kind, diagnostics, annotations)
-        {
-            SlotCount = 2;
-            if (tComma != null)
-            {
-                AdjustFlagsAndWidth(tComma);
-                _tComma = tComma;
-            }
-            if (baseTypes != null)
-            {
-                AdjustFlagsAndWidth(baseTypes);
-                _baseTypes = baseTypes;
-            }
-        }
-    
-        private SymbolBlock1baseTypesBlockGreen()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.SymbolBlock1baseTypesBlock, null, null)
-        {
-            this.flags &= ~NodeFlags.IsNotMissing;
-        }
-    
-        public __InternalSyntaxToken TComma { get { return _tComma; } }
-        public QualifierGreen BaseTypes { get { return _baseTypes; } }
-    
-        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
-        {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.SymbolBlock1baseTypesBlockSyntax(this, (SymbolSyntaxNode)parent, position);
-        }
-    
-        protected override __GreenNode GetSlot(int index)
-        {
-            switch (index)
-            {
-                case 0: return _tComma;
-                case 1: return _baseTypes;
-                default: return null;
-            }
-        }
-    
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitSymbolBlock1baseTypesBlockGreen(this);
-    
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitSymbolBlock1baseTypesBlockGreen(this);
-    
-        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
-        {
-            return new SymbolBlock1baseTypesBlockGreen(this.Kind, _tComma, _baseTypes, diagnostics, this.GetAnnotations());
-        }
-    
-        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
-        {
-            return new SymbolBlock1baseTypesBlockGreen(this.Kind, _tComma, _baseTypes, this.GetDiagnostics(), annotations);
-        }
-    
-        public override __GreenNode Clone()
-        {
-            return new SymbolBlock1baseTypesBlockGreen(this.Kind, _tComma, _baseTypes, this.GetDiagnostics(), this.GetAnnotations());
-        }
-    
-    
-        public SymbolBlock1baseTypesBlockGreen Update(__InternalSyntaxToken tComma, QualifierGreen baseTypes)
-        {
-            if (_tComma != tComma || _baseTypes != baseTypes)
-            {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.SymbolBlock1baseTypesBlock(tComma, baseTypes);
-                var diags = this.GetDiagnostics();
-                if (diags != null && diags.Length > 0)
-                    newNode = newNode.WithDiagnostics(diags);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                    newNode = newNode.WithAnnotations(annotations);
-                return (SymbolBlock1baseTypesBlockGreen)newNode;
             }
             return this;
         }
@@ -3820,205 +3735,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
-    internal abstract class PropertyBlock1Green : GreenSyntaxNode
+    internal class PropertyBlock1Green : GreenSyntaxNode
     {
-        internal static readonly PropertyBlock1Green __Missing = PropertyBlock1Alt1Green.__Missing;
-    
-        protected PropertyBlock1Green(SymbolSyntaxKind kind, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
-            : base(kind, diagnostics, annotations)
-        {
-        }
-    }
-    internal class PropertyBlock1Alt1Green : PropertyBlock1Green
-    {
-        internal static new readonly PropertyBlock1Alt1Green __Missing = new PropertyBlock1Alt1Green();
-        private __InternalSyntaxToken _isInit;
-    
-        public PropertyBlock1Alt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isInit)
-            : base(kind, null, null)
-        {
-            SlotCount = 1;
-            if (isInit != null)
-            {
-                AdjustFlagsAndWidth(isInit);
-                _isInit = isInit;
-            }
-        }
-    
-        public PropertyBlock1Alt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isInit, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
-            : base(kind, diagnostics, annotations)
-        {
-            SlotCount = 1;
-            if (isInit != null)
-            {
-                AdjustFlagsAndWidth(isInit);
-                _isInit = isInit;
-            }
-        }
-    
-        private PropertyBlock1Alt1Green()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt1, null, null)
-        {
-            this.flags &= ~NodeFlags.IsNotMissing;
-        }
-    
-        public __InternalSyntaxToken IsInit { get { return _isInit; } }
-    
-        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
-        {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.PropertyBlock1Alt1Syntax(this, (SymbolSyntaxNode)parent, position);
-        }
-    
-        protected override __GreenNode GetSlot(int index)
-        {
-            switch (index)
-            {
-                case 0: return _isInit;
-                default: return null;
-            }
-        }
-    
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyBlock1Alt1Green(this);
-    
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitPropertyBlock1Alt1Green(this);
-    
-        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
-        {
-            return new PropertyBlock1Alt1Green(this.Kind, _isInit, diagnostics, this.GetAnnotations());
-        }
-    
-        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
-        {
-            return new PropertyBlock1Alt1Green(this.Kind, _isInit, this.GetDiagnostics(), annotations);
-        }
-    
-        public override __GreenNode Clone()
-        {
-            return new PropertyBlock1Alt1Green(this.Kind, _isInit, this.GetDiagnostics(), this.GetAnnotations());
-        }
-    
-    
-        public PropertyBlock1Alt1Green Update(__InternalSyntaxToken isInit)
-        {
-            if (_isInit != isInit)
-            {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt1(isInit);
-                var diags = this.GetDiagnostics();
-                if (diags != null && diags.Length > 0)
-                    newNode = newNode.WithDiagnostics(diags);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                    newNode = newNode.WithAnnotations(annotations);
-                return (PropertyBlock1Alt1Green)newNode;
-            }
-            return this;
-        }
-    }
-    internal class PropertyBlock1Alt2Green : PropertyBlock1Green
-    {
-        internal static new readonly PropertyBlock1Alt2Green __Missing = new PropertyBlock1Alt2Green();
-        private __InternalSyntaxToken _isWeak;
-        private __InternalSyntaxToken _isDerived;
-    
-        public PropertyBlock1Alt2Green(SymbolSyntaxKind kind, __InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived)
-            : base(kind, null, null)
-        {
-            SlotCount = 2;
-            if (isWeak != null)
-            {
-                AdjustFlagsAndWidth(isWeak);
-                _isWeak = isWeak;
-            }
-            if (isDerived != null)
-            {
-                AdjustFlagsAndWidth(isDerived);
-                _isDerived = isDerived;
-            }
-        }
-    
-        public PropertyBlock1Alt2Green(SymbolSyntaxKind kind, __InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
-            : base(kind, diagnostics, annotations)
-        {
-            SlotCount = 2;
-            if (isWeak != null)
-            {
-                AdjustFlagsAndWidth(isWeak);
-                _isWeak = isWeak;
-            }
-            if (isDerived != null)
-            {
-                AdjustFlagsAndWidth(isDerived);
-                _isDerived = isDerived;
-            }
-        }
-    
-        private PropertyBlock1Alt2Green()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt2, null, null)
-        {
-            this.flags &= ~NodeFlags.IsNotMissing;
-        }
-    
-        public __InternalSyntaxToken IsWeak { get { return _isWeak; } }
-        public __InternalSyntaxToken IsDerived { get { return _isDerived; } }
-    
-        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
-        {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.PropertyBlock1Alt2Syntax(this, (SymbolSyntaxNode)parent, position);
-        }
-    
-        protected override __GreenNode GetSlot(int index)
-        {
-            switch (index)
-            {
-                case 0: return _isWeak;
-                case 1: return _isDerived;
-                default: return null;
-            }
-        }
-    
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyBlock1Alt2Green(this);
-    
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitPropertyBlock1Alt2Green(this);
-    
-        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
-        {
-            return new PropertyBlock1Alt2Green(this.Kind, _isWeak, _isDerived, diagnostics, this.GetAnnotations());
-        }
-    
-        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
-        {
-            return new PropertyBlock1Alt2Green(this.Kind, _isWeak, _isDerived, this.GetDiagnostics(), annotations);
-        }
-    
-        public override __GreenNode Clone()
-        {
-            return new PropertyBlock1Alt2Green(this.Kind, _isWeak, _isDerived, this.GetDiagnostics(), this.GetAnnotations());
-        }
-    
-    
-        public PropertyBlock1Alt2Green Update(__InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived)
-        {
-            if (_isWeak != isWeak || _isDerived != isDerived)
-            {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt2(isWeak, isDerived);
-                var diags = this.GetDiagnostics();
-                if (diags != null && diags.Length > 0)
-                    newNode = newNode.WithDiagnostics(diags);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                    newNode = newNode.WithAnnotations(annotations);
-                return (PropertyBlock1Alt2Green)newNode;
-            }
-            return this;
-        }
-    }
-    internal class PropertyBlock2Green : GreenSyntaxNode
-    {
-        internal static new readonly PropertyBlock2Green __Missing = new PropertyBlock2Green();
+        internal static new readonly PropertyBlock1Green __Missing = new PropertyBlock1Green();
         private __InternalSyntaxToken _tEq;
         private ValueGreen _defaultValue;
     
-        public PropertyBlock2Green(SymbolSyntaxKind kind, __InternalSyntaxToken tEq, ValueGreen defaultValue)
+        public PropertyBlock1Green(SymbolSyntaxKind kind, __InternalSyntaxToken tEq, ValueGreen defaultValue)
             : base(kind, null, null)
         {
             SlotCount = 2;
@@ -4034,7 +3757,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public PropertyBlock2Green(SymbolSyntaxKind kind, __InternalSyntaxToken tEq, ValueGreen defaultValue, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public PropertyBlock1Green(SymbolSyntaxKind kind, __InternalSyntaxToken tEq, ValueGreen defaultValue, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 2;
@@ -4050,8 +3773,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        private PropertyBlock2Green()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock2, null, null)
+        private PropertyBlock1Green()
+            : base((SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1, null, null)
         {
             this.flags &= ~NodeFlags.IsNotMissing;
         }
@@ -4061,7 +3784,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.PropertyBlock2Syntax(this, (SymbolSyntaxNode)parent, position);
+            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.PropertyBlock1Syntax(this, (SymbolSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4074,49 +3797,49 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyBlock2Green(this);
+        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyBlock1Green(this);
     
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitPropertyBlock2Green(this);
+        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitPropertyBlock1Green(this);
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new PropertyBlock2Green(this.Kind, _tEq, _defaultValue, diagnostics, this.GetAnnotations());
+            return new PropertyBlock1Green(this.Kind, _tEq, _defaultValue, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new PropertyBlock2Green(this.Kind, _tEq, _defaultValue, this.GetDiagnostics(), annotations);
+            return new PropertyBlock1Green(this.Kind, _tEq, _defaultValue, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new PropertyBlock2Green(this.Kind, _tEq, _defaultValue, this.GetDiagnostics(), this.GetAnnotations());
+            return new PropertyBlock1Green(this.Kind, _tEq, _defaultValue, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public PropertyBlock2Green Update(__InternalSyntaxToken tEq, ValueGreen defaultValue)
+        public PropertyBlock1Green Update(__InternalSyntaxToken tEq, ValueGreen defaultValue)
         {
             if (_tEq != tEq || _defaultValue != defaultValue)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock2(tEq, defaultValue);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1(tEq, defaultValue);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
-                return (PropertyBlock2Green)newNode;
+                return (PropertyBlock1Green)newNode;
             }
             return this;
         }
     }
-    internal class PropertyBlock3Green : GreenSyntaxNode
+    internal class PropertyBlock2Green : GreenSyntaxNode
     {
-        internal static new readonly PropertyBlock3Green __Missing = new PropertyBlock3Green();
+        internal static new readonly PropertyBlock2Green __Missing = new PropertyBlock2Green();
         private __InternalSyntaxToken _kPhase;
         private IdentifierGreen _phase;
     
-        public PropertyBlock3Green(SymbolSyntaxKind kind, __InternalSyntaxToken kPhase, IdentifierGreen phase)
+        public PropertyBlock2Green(SymbolSyntaxKind kind, __InternalSyntaxToken kPhase, IdentifierGreen phase)
             : base(kind, null, null)
         {
             SlotCount = 2;
@@ -4132,7 +3855,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public PropertyBlock3Green(SymbolSyntaxKind kind, __InternalSyntaxToken kPhase, IdentifierGreen phase, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public PropertyBlock2Green(SymbolSyntaxKind kind, __InternalSyntaxToken kPhase, IdentifierGreen phase, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 2;
@@ -4148,8 +3871,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        private PropertyBlock3Green()
-            : base((SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock3, null, null)
+        private PropertyBlock2Green()
+            : base((SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock2, null, null)
         {
             this.flags &= ~NodeFlags.IsNotMissing;
         }
@@ -4159,7 +3882,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.PropertyBlock3Syntax(this, (SymbolSyntaxNode)parent, position);
+            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.PropertyBlock2Syntax(this, (SymbolSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4172,38 +3895,38 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyBlock3Green(this);
+        public override TResult Accept<TResult>(SymbolInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyBlock2Green(this);
     
-        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitPropertyBlock3Green(this);
+        public override void Accept(SymbolInternalSyntaxVisitor visitor) => visitor.VisitPropertyBlock2Green(this);
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new PropertyBlock3Green(this.Kind, _kPhase, _phase, diagnostics, this.GetAnnotations());
+            return new PropertyBlock2Green(this.Kind, _kPhase, _phase, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new PropertyBlock3Green(this.Kind, _kPhase, _phase, this.GetDiagnostics(), annotations);
+            return new PropertyBlock2Green(this.Kind, _kPhase, _phase, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new PropertyBlock3Green(this.Kind, _kPhase, _phase, this.GetDiagnostics(), this.GetAnnotations());
+            return new PropertyBlock2Green(this.Kind, _kPhase, _phase, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public PropertyBlock3Green Update(__InternalSyntaxToken kPhase, IdentifierGreen phase)
+        public PropertyBlock2Green Update(__InternalSyntaxToken kPhase, IdentifierGreen phase)
         {
             if (_kPhase != kPhase || _phase != phase)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock3(kPhase, phase);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock2(kPhase, phase);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
-                return (PropertyBlock3Green)newNode;
+                return (PropertyBlock2Green)newNode;
             }
             return this;
         }

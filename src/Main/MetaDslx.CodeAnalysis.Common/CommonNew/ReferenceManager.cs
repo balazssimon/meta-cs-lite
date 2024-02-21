@@ -1,6 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.CodeAnalysis.Symbols.Impl;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using Microsoft.CodeAnalysis;
@@ -213,7 +214,7 @@ namespace MetaDslx.CodeAnalysis
             // If the compilation has a reference from metadata to source assembly we can't share the referenced PE symbols.
             Debug.Assert(!HasCircularReference);
 
-            var assemblySymbol = new AssemblySymbolInst(compilation, _lazyCSharpSymbolFactory, _lazyCSharpCompilation.SourceModule.ContainingAssembly.Name, _lazyCSharpCompilation.SourceModule.Name, _lazyReferencedModules);
+            var assemblySymbol = new AssemblySymbolImpl(compilation, _lazyCSharpSymbolFactory, _lazyCSharpCompilation.SourceModule.ContainingAssembly.Name, _lazyCSharpCompilation.SourceModule.Name, _lazyReferencedModules);
             if ((object)compilation._lazyAssemblySymbol == null)
             {
                 lock (SymbolCacheAndReferenceManagerStateGuard)
@@ -241,19 +242,19 @@ namespace MetaDslx.CodeAnalysis
             else if (csharpReferences.Length > 0) csharpCompilation = csharpCompilation.AddReferences(csharpReferences);
             var csharpSymbolFactory = compilationFactory.CreateCSharpSymbolFactory();
             var referencedModulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
-            var csharpSourceAssembly = new AssemblySymbolInst(csharpSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly);
+            var csharpSourceAssembly = new AssemblySymbolImpl(csharpSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly);
             csharpSymbolFactory.AddSymbol(csharpSourceAssembly);
-            var csharpSourceModule = new ModuleSymbolInst(csharpSourceAssembly, csharpSymbolFactory, csharpCompilation.SourceModule);
+            var csharpSourceModule = new ModuleSymbolImpl(csharpSourceAssembly, csharpSymbolFactory, csharpCompilation.SourceModule);
             csharpSymbolFactory.AddSymbol(csharpSourceModule);
             referencedModulesBuilder.Add(csharpSourceModule);
             foreach (var csharpAssembly in csharpCompilation.SourceModule.ReferencedAssemblySymbols)
             {
-                var assembly = new AssemblySymbolInst(csharpSymbolFactory, csharpAssembly);
+                var assembly = new AssemblySymbolImpl(csharpSymbolFactory, csharpAssembly);
                 csharpSymbolFactory.AddSymbol(assembly);
                 var modulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
                 foreach (var csharpModule in csharpAssembly.Modules)
                 {
-                    var module = new ModuleSymbolInst(assembly, csharpSymbolFactory, csharpModule);
+                    var module = new ModuleSymbolImpl(assembly, csharpSymbolFactory, csharpModule);
                     csharpSymbolFactory.AddSymbol(module);
                     referencedModulesBuilder.Add(module);
                 }
@@ -262,20 +263,20 @@ namespace MetaDslx.CodeAnalysis
             var modelSymbolFactory = compilationFactory.CreateModelSymbolFactory();
             foreach (var reference in compilation.ExternalReferences.OfType<MetaModelReference>())
             {
-                var module = new ModuleSymbolInst(null, modelSymbolFactory, reference.MetaModel.MModel);
+                var module = new ModuleSymbolImpl(null, modelSymbolFactory, reference.MetaModel.MModel);
                 modelSymbolFactory.AddSymbol(module);
                 referencedModulesBuilder.Add(module);
             }
             foreach (var reference in compilation.ExternalReferences.OfType<ModelReference>())
             {
-                var module = new ModuleSymbolInst(null, modelSymbolFactory, reference.Model);
+                var module = new ModuleSymbolImpl(null, modelSymbolFactory, reference.Model);
                 modelSymbolFactory.AddSymbol(module);
                 referencedModulesBuilder.Add(module);
             }
             referencedModulesBuilder.AddRange(CreateModules(compilation));
             var referencedModules = referencedModulesBuilder.ToImmutableAndFree();
             var sourceSymbolFactory = compilationFactory.CreateSourceSymbolFactory();
-            var assemblySymbol = new AssemblySymbolInst(compilation, sourceSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly.Name, csharpCompilation.SourceModule.Name, referencedModules);
+            var assemblySymbol = new AssemblySymbolImpl(compilation, sourceSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly.Name, csharpCompilation.SourceModule.Name, referencedModules);
             sourceSymbolFactory.AddSymbol(assemblySymbol);
             if ((object)compilation._lazyAssemblySymbol == null)
             {

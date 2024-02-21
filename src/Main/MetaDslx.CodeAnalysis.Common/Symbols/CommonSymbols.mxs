@@ -15,17 +15,12 @@ symbol Attribute
 
 symbol Assembly
 {
-    init ISymbolFactory SymbolFactory
-    init Module[] Modules
-
     bool IsCorLibrary
     derived Namespace GlobalNamespace
 }
 
 symbol Module
 {
-    init ISymbolFactory SymbolFactory
-
     derived Namespace GlobalNamespace
     NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
 }

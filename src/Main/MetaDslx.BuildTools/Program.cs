@@ -150,7 +150,7 @@ namespace MetaDslx.BuildTools
                 var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
                 var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
                 var mxsFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxs").ToImmutableArray();
-                /*/
+                //*/
                 foreach (var mxgFile in mxgFiles)
                 {
                     await CompileMetaGenerator(mxgFile);
@@ -290,12 +290,10 @@ namespace MetaDslx.BuildTools
             Directory.CreateDirectory(implDir);
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             Directory.CreateDirectory(outputDir);
-            var intfCode = generator.GenerateInterface(symbol);
+            var intfCode = generator.GenerateSymbol(symbol);
             await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}Symbol.cs"), intfCode);
-            var baseCode = generator.GenerateBase(symbol);
-            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}SymbolBase.cs"), baseCode);
             var implCode = generator.GenerateImplementation(symbol);
-            await AddGeneratedFile(Path.Combine(implDir, $"{symbol.Name}Symbol.cs"), implCode, overwrite: false);
+            await AddGeneratedFile(Path.Combine(implDir, $"{symbol.Name}SymbolImpl.cs"), implCode, overwrite: false);
         }
 
         private static async Task CompileMetaModels(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxmFiles)

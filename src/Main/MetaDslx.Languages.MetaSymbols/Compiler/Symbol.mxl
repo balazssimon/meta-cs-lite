@@ -19,10 +19,10 @@ Using returns MetaDslx.CodeAnalysis.Symbols.ImportSymbol: 'using' namespaces+=#M
 
 Symbol: 
 	isAbstract?='abstract'? 'symbol' Name
-	(':' baseTypes+=#Symbol (',' baseTypes+=#Symbol)*)?
+	(':' baseTypes+=#Symbol)?
 	[Scope]('{' (properties+=Property | operations+=Operation)* '}');
 
-Property: (isInit?='init'? | isWeak?='weak'? isDerived?='derived'?) @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
+Property: isWeak?='weak'? isDerived?='derived'? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
 
 Operation
 	: isPhase?='phase' Name '(' ')' 
