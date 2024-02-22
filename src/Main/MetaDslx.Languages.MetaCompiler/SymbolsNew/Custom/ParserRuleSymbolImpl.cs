@@ -16,9 +16,34 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Impl
     public class ParserRuleSymbolImpl : ParserRuleSymbol
     {
         public ParserRuleSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.MetaType returnType = default, global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> alternatives = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
         {
         }
 
+        protected override MetaType Compute_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var returnType = base.Compute_ReturnType(diagnostics, cancellationToken);
+            if (returnType.IsDefaultOrNull)
+            {
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Could not determine the return type of the rule '{Name}'"));
+            }
+            return returnType;
+        }
+
+        protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            base.CompletePart_Validate(diagnostics, cancellationToken);
+            var returnType = this.ReturnType;
+            if (!returnType.IsDefaultOrNull)
+            {
+                foreach (var alt in this.Alternatives)
+                {
+                    if (!returnType.IsAssignableFrom(alt.ReturnType) && returnType.SpecialType != SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
+                    {
+                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnType, alt.Location, alt.ReturnType, alt.Name, this.ReturnType, this.Name));
+                    }
+                }
+            }
+        }
     }
 }

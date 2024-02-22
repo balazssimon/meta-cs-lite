@@ -348,7 +348,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         private bool IsMetaModelSymbol(Symbol? symbol)
         {
-            if (symbol is IModelSymbol ms && ms.ModelObjectType == typeof(MetaDslx.Languages.MetaModel.Model.MetaModel))
+            if (symbol.ModelObjectType == typeof(MetaDslx.Languages.MetaModel.Model.MetaModel))
             {
                 return true;
             }

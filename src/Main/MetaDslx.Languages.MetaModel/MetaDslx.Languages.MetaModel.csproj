@@ -3,7 +3,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
-		<MetaDslxBootstrap>true</MetaDslxBootstrap>
+		<MetaDslxBootstrap>false</MetaDslxBootstrap>
 	</PropertyGroup>
 
 	<ItemGroup>

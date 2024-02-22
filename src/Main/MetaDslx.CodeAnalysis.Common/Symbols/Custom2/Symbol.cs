@@ -14,14 +14,13 @@ using System;
 using MetaDslx.CodeAnalysis.Text;
 using System.Xml.Linq;
 using MetaDslx.Modeling;
-using Microsoft.CodeAnalysis;
 using System.Collections.Concurrent;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Drawing;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
 
     public abstract class Symbol
     {
@@ -43,6 +42,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         internal static readonly ConditionalWeakTable<Symbol, object> s_attributes = new ConditionalWeakTable<Symbol, object>();
         internal static readonly ConditionalWeakTable<Symbol, MergedDeclaration> s_declarations = new ConditionalWeakTable<Symbol, MergedDeclaration>();
         internal static readonly ConditionalWeakTable<Symbol, Compilation> s_compilations = new ConditionalWeakTable<Symbol, Compilation>();
+        internal static readonly ConditionalWeakTable<Symbol, object> s_csharpToModelObjects = new ConditionalWeakTable<Symbol, object>();
 
         /// <summary>
         /// This field keeps track of the <see cref="CompletionPart"/>s for which we already retrieved
@@ -61,11 +61,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         internal readonly object? _underlyingObject;
 
-        public Symbol(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, MetaDslx.Modeling.Model? model = null, IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default)
+        public Symbol(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, MetaDslx.Modeling.Model? model = null, IModelObject? modelObject = null, ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default)
         {
             _completeParts = -1;
             _container = container;
-            _underlyingObject = errorInfo ?? modelObject ?? model ?? (object)csharpSymbol;
+            _underlyingObject = errorInfo ?? (object)csharpSymbol ?? (object)modelObject ?? model;
+            if (csharpSymbol is not null && (modelObject is not null || model is not null)) s_csharpToModelObjects.Add(this, (object)modelObject ?? model);
             if (declaration is not null) s_declarations.Add(this, declaration);
             if (compilation is not null) s_compilations.Add(this, compilation);
             if (fixedSymbol)
@@ -79,11 +80,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
         public bool IsSourceSymbol => s_declarations.TryGetValue(this, out _) || s_compilations.TryGetValue(this, out _);
-        public bool IsModelSymbol => _underlyingObject is MetaDslx.Modeling.Model;
-        public bool IsModelObjectSymbol => _underlyingObject is IModelObject;
-        public bool IsCSharpSymbol => _underlyingObject is __ISymbol;
-
-        public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _);
+        public bool IsModelSymbol => _underlyingObject is MetaDslx.Modeling.Model || s_csharpToModelObjects.TryGetValue(this, out var model) && model is MetaDslx.Modeling.Model;
+        public bool IsModelObjectSymbol => _underlyingObject is IModelObject || s_csharpToModelObjects.TryGetValue(this, out var mobj) && mobj is IModelObject;
+        public bool IsCSharpSymbol => _underlyingObject is ISymbol;
+        public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _) && !s_declarations.TryGetValue(this, out _);
 
         public Symbol ContainingSymbol => _container;
 
@@ -294,6 +294,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        public SyntaxNodeOrToken DeclaringSyntaxReference => DeclaringSyntaxReferences.FirstOrDefault();
+
         public virtual ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences
         {
             get
@@ -301,6 +303,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return MergedDeclaration?.SyntaxReferences ?? ImmutableArray<SyntaxNodeOrToken>.Empty;
             }
         }
+
+        public Location Location => Locations.FirstOrDefault() ?? Location.None;
 
         public virtual ImmutableArray<Location> Locations
         {
@@ -310,11 +314,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public Location Location => Locations.FirstOrDefault() ?? Location.None;
+        public MetaDslx.Modeling.Model Model => _underlyingObject is MetaDslx.Modeling.Model model ? model : s_csharpToModelObjects.TryGetValue(this, out var csharpObj) && csharpObj is MetaDslx.Modeling.Model csharpModel ? csharpModel : ModelObject?.MModel;
 
-        public MetaDslx.Modeling.Model Model => _underlyingObject is MetaDslx.Modeling.Model model ? model : ModelObject?.MModel;
-
-        public IModelObject? ModelObject => _underlyingObject as IModelObject;
+        public IModelObject? ModelObject => _underlyingObject is IModelObject mobj ? mobj : s_csharpToModelObjects.TryGetValue(this, out var csharpObj) && csharpObj is IModelObject csharpMObj ? csharpMObj : null;
 
         public Type? ModelObjectType
         {
@@ -322,12 +324,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 var decl = MergedDeclaration;
                 if (decl is not null) return decl.ModelObjectType;
-                if (_underlyingObject is IModelObject mobj) return mobj.MInfo.MetaType.AsType();
-                return null;
+                return ModelObject?.MInfo.MetaType.AsType();
             }
         }
 
-        public __ISymbol? CSharpSymbol => _underlyingObject as __ISymbol;
+        public ISymbol? CSharpSymbol => _underlyingObject as ISymbol;
 
         public ErrorSymbolInfo? ErrorInfo => _underlyingObject as ErrorSymbolInfo;
 
@@ -519,7 +520,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Returns a string representation of this symbol, suitable for debugging purposes, or
         /// for placing in an error message.
         /// </summary>
-        public string ToString()
+        public override string ToString()
         {
             return SymbolDisplayFormat.Default.ToString(this);
         }

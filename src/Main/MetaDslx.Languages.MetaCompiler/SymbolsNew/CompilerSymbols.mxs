@@ -4,6 +4,9 @@ using MetaDslx.CodeAnalysis
 using MetaDslx.CodeAnalysis.Symbols
 using MetaDslx.Languages.MetaCompiler.Model
 
+symbol Attribute {}
+symbol Declaration {}
+
 symbol Annotation : Attribute
 {
     AnnotationArgument[] Arguments
@@ -17,7 +20,7 @@ symbol AnnotationArgument
 {
     derived Annotation? AnnotationSymbol
     derived bool IsNamedArgument
-    MetaSymbol NamedParameter
+    MetaSymbol[] NamedParameter
     derived Declaration Parameter
     derived MetaType ParameterType phase Parameter
     Expression Value
@@ -40,7 +43,7 @@ symbol PAlternative : Declaration
     Expression? ReturnValue
     derived MetaType ReturnType
     derived MetaType ExpectedType
-    derived PElement AllSimpleElements
+    derived PElement[] AllSimpleElements
 }
 
 symbol ParserRule : Declaration
