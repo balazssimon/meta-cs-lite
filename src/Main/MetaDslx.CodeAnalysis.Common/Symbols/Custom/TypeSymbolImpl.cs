@@ -21,7 +21,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         {
         }
 
-        protected override ImmutableArray<TypeSymbol> Complete_AllBaseTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<TypeSymbol> Compute_AllBaseTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return BaseTypes; // TODO
         }

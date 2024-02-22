@@ -304,7 +304,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
                 _uniqueCounter[op.Name] = uniqueId;
                 var uniqueName = $"{op.Name}{uniqueId}";
                 _operationUniqueNames.Add(op, uniqueName);
-                if (op.CacheResult)
+                if (op.IsCached)
                 {
                     if (op.ReturnType.Type.SpecialType == SpecialType.System_Void)
                     {

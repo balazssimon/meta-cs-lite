@@ -1,6 +1,9 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -25,31 +28,29 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
+    public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
-        public static new class CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts
         {
-            public static readonly CompletionPart Start_Files = new CompletionPart(nameof(Start_Files));
-            public static readonly CompletionPart Finish_Files = new CompletionPart(nameof(Finish_Files));
-            public static readonly CompletionPart Start_Aliases = new CompletionPart(nameof(Start_Aliases));
-            public static readonly CompletionPart Finish_Aliases = new CompletionPart(nameof(Finish_Aliases));
-            public static readonly CompletionPart Start_Namespaces = new CompletionPart(nameof(Start_Namespaces));
-            public static readonly CompletionPart Finish_Namespaces = new CompletionPart(nameof(Finish_Namespaces));
-            public static readonly CompletionPart Start_Symbols = new CompletionPart(nameof(Start_Symbols));
-            public static readonly CompletionPart Finish_Symbols = new CompletionPart(nameof(Finish_Symbols));
-            public static readonly CompletionPart Start_ImportedSymbols = new CompletionPart(nameof(Start_ImportedSymbols));
-            public static readonly CompletionPart Finish_ImportedSymbols = new CompletionPart(nameof(Finish_ImportedSymbols));
-            public static readonly CompletionPart Start_Attributes = new CompletionPart(nameof(Start_Attributes));
-            public static readonly CompletionPart Finish_Attributes = new CompletionPart(nameof(Finish_Attributes));
+            public static readonly __CompletionPart Start_Files = new __CompletionPart(nameof(Start_Files));
+            public static readonly __CompletionPart Finish_Files = new __CompletionPart(nameof(Finish_Files));
+            public static readonly __CompletionPart Start_Aliases = new __CompletionPart(nameof(Start_Aliases));
+            public static readonly __CompletionPart Finish_Aliases = new __CompletionPart(nameof(Finish_Aliases));
+            public static readonly __CompletionPart Start_Namespaces = new __CompletionPart(nameof(Start_Namespaces));
+            public static readonly __CompletionPart Finish_Namespaces = new __CompletionPart(nameof(Finish_Namespaces));
+            public static readonly __CompletionPart Start_Symbols = new __CompletionPart(nameof(Start_Symbols));
+            public static readonly __CompletionPart Finish_Symbols = new __CompletionPart(nameof(Finish_Symbols));
+            public static readonly __CompletionPart Start_ImportedSymbols = new __CompletionPart(nameof(Start_ImportedSymbols));
+            public static readonly __CompletionPart Finish_ImportedSymbols = new __CompletionPart(nameof(Finish_ImportedSymbols));
 
-            public static readonly CompletionGraph CompletionGraph = 
-                CompletionGraph.CreateFromParts(
-                    Start_Files, Finish_Files,
-                    Start_Aliases, Finish_Aliases,
-                    Start_Namespaces, Finish_Namespaces,
-                    Start_Symbols, Finish_Symbols,
-                    Start_ImportedSymbols, Finish_ImportedSymbols,
-                    Start_Attributes, Finish_Attributes
+            public static readonly __CompletionGraph CompletionGraph = 
+                __CompletionGraph.CreateFromParts(
+                    global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts.CompletionGraph
+                    , Start_Files, Finish_Files
+                    , Start_Aliases, Finish_Aliases
+                    , Start_Namespaces, Finish_Namespaces
+                    , Start_Symbols, Finish_Symbols
+                    , Start_ImportedSymbols, Finish_ImportedSymbols
                 );
         }
 
@@ -72,6 +73,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
         }
 
         [__ModelProperty]
+[__Phase]
         public global::System.Collections.Immutable.ImmutableArray<string> Files
         {
             get
@@ -81,6 +83,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
             }
         }
         [__ModelProperty]
+[__Phase]
         public global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Aliases
         {
             get
@@ -90,6 +93,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
             }
         }
         [__ModelProperty]
+[__Phase]
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Namespaces
         {
             get
@@ -99,6 +103,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
             }
         }
         [__ModelProperty]
+[__Phase]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Symbols
         {
             get
@@ -107,6 +112,8 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
                 return _symbols;
             }
         }
+[__Phase]
+[__Derived]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> ImportedSymbols
         {
             get
@@ -124,7 +131,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
                 if (NotePartComplete(CompletionParts.Start_Files))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_Files(diagnostics, cancellationToken);
+                    var result = Compute_Files(diagnostics, cancellationToken);
                     _files = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -137,7 +144,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
                 if (NotePartComplete(CompletionParts.Start_Aliases))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_Aliases(diagnostics, cancellationToken);
+                    var result = Compute_Aliases(diagnostics, cancellationToken);
                     _aliases = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -150,7 +157,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
                 if (NotePartComplete(CompletionParts.Start_Namespaces))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_Namespaces(diagnostics, cancellationToken);
+                    var result = Compute_Namespaces(diagnostics, cancellationToken);
                     _namespaces = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -163,7 +170,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
                 if (NotePartComplete(CompletionParts.Start_Symbols))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_Symbols(diagnostics, cancellationToken);
+                    var result = Compute_Symbols(diagnostics, cancellationToken);
                     _symbols = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -176,7 +183,7 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
                 if (NotePartComplete(CompletionParts.Start_ImportedSymbols))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_ImportedSymbols(diagnostics, cancellationToken);
+                    var result = Compute_ImportedSymbols(diagnostics, cancellationToken);
                     _importedSymbols = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -191,26 +198,26 @@ public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbol
         }
 
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<string> Complete_Files(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<string> Compute_Files(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Complete_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Compute_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Complete_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Compute_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_ImportedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_ImportedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

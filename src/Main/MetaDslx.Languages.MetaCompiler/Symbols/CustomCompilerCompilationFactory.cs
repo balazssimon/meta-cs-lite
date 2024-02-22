@@ -11,11 +11,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
 {
     internal class CustomCompilerCompilationFactory : CompilationFactory
     {
-        /*public override SourceSymbolFactory CreateSourceSymbolFactory()
-        {
-            return new CustomCompilerSourceSymbolFactory();
-        }*/
-
         public override SourceSymbolFactory CreateSourceSymbolFactory(Compilation compilation, SourceModuleSymbol sourceModule)
         {
             return new CustomCompilerSourceSymbolFactory(sourceModule);

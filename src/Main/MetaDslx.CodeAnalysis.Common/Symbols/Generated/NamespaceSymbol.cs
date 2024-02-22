@@ -1,6 +1,9 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -25,58 +28,32 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
+    public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
     {
-        public static new class CompletionParts
+        public new class CompletionParts : Impl.DeclarationSymbolImpl.CompletionParts
         {
-            public static readonly CompletionPart Start_DeclaredAccessibility = new CompletionPart(nameof(Start_DeclaredAccessibility));
-            public static readonly CompletionPart Finish_DeclaredAccessibility = new CompletionPart(nameof(Finish_DeclaredAccessibility));
-            public static readonly CompletionPart Start_IsStatic = new CompletionPart(nameof(Start_IsStatic));
-            public static readonly CompletionPart Finish_IsStatic = new CompletionPart(nameof(Finish_IsStatic));
-            public static readonly CompletionPart Start_IsExtern = new CompletionPart(nameof(Start_IsExtern));
-            public static readonly CompletionPart Finish_IsExtern = new CompletionPart(nameof(Finish_IsExtern));
-            public static readonly CompletionPart Start_TypeArguments = new CompletionPart(nameof(Start_TypeArguments));
-            public static readonly CompletionPart Finish_TypeArguments = new CompletionPart(nameof(Finish_TypeArguments));
-            public static readonly CompletionPart Start_Imports = new CompletionPart(nameof(Start_Imports));
-            public static readonly CompletionPart Finish_Imports = new CompletionPart(nameof(Finish_Imports));
-            public static readonly CompletionPart Start_MemberNames = new CompletionPart(nameof(Start_MemberNames));
-            public static readonly CompletionPart Finish_MemberNames = new CompletionPart(nameof(Finish_MemberNames));
-            public static readonly CompletionPart Start_Members = new CompletionPart(nameof(Start_Members));
-            public static readonly CompletionPart Finish_Members = new CompletionPart(nameof(Finish_Members));
-            public static readonly CompletionPart Start_TypeMembers = new CompletionPart(nameof(Start_TypeMembers));
-            public static readonly CompletionPart Finish_TypeMembers = new CompletionPart(nameof(Finish_TypeMembers));
-            public static readonly CompletionPart Start_Extent = new CompletionPart(nameof(Start_Extent));
-            public static readonly CompletionPart Finish_Extent = new CompletionPart(nameof(Finish_Extent));
-            public static readonly CompletionPart Start_IsGlobalNamespace = new CompletionPart(nameof(Start_IsGlobalNamespace));
-            public static readonly CompletionPart Finish_IsGlobalNamespace = new CompletionPart(nameof(Finish_IsGlobalNamespace));
-            public static readonly CompletionPart Start_NamespaceKind = new CompletionPart(nameof(Start_NamespaceKind));
-            public static readonly CompletionPart Finish_NamespaceKind = new CompletionPart(nameof(Finish_NamespaceKind));
-            public static readonly CompletionPart Start_ContainingCompilation = new CompletionPart(nameof(Start_ContainingCompilation));
-            public static readonly CompletionPart Finish_ContainingCompilation = new CompletionPart(nameof(Finish_ContainingCompilation));
-            public static readonly CompletionPart Start_ConstituentNamespaces = new CompletionPart(nameof(Start_ConstituentNamespaces));
-            public static readonly CompletionPart Finish_ConstituentNamespaces = new CompletionPart(nameof(Finish_ConstituentNamespaces));
-            public static readonly CompletionPart Start_NamespaceMembers = new CompletionPart(nameof(Start_NamespaceMembers));
-            public static readonly CompletionPart Finish_NamespaceMembers = new CompletionPart(nameof(Finish_NamespaceMembers));
-            public static readonly CompletionPart Start_Attributes = new CompletionPart(nameof(Start_Attributes));
-            public static readonly CompletionPart Finish_Attributes = new CompletionPart(nameof(Finish_Attributes));
+            public static readonly __CompletionPart Start_Extent = new __CompletionPart(nameof(Start_Extent));
+            public static readonly __CompletionPart Finish_Extent = new __CompletionPart(nameof(Finish_Extent));
+            public static readonly __CompletionPart Start_IsGlobalNamespace = new __CompletionPart(nameof(Start_IsGlobalNamespace));
+            public static readonly __CompletionPart Finish_IsGlobalNamespace = new __CompletionPart(nameof(Finish_IsGlobalNamespace));
+            public static readonly __CompletionPart Start_NamespaceKind = new __CompletionPart(nameof(Start_NamespaceKind));
+            public static readonly __CompletionPart Finish_NamespaceKind = new __CompletionPart(nameof(Finish_NamespaceKind));
+            public static readonly __CompletionPart Start_ContainingCompilation = new __CompletionPart(nameof(Start_ContainingCompilation));
+            public static readonly __CompletionPart Finish_ContainingCompilation = new __CompletionPart(nameof(Finish_ContainingCompilation));
+            public static readonly __CompletionPart Start_ConstituentNamespaces = new __CompletionPart(nameof(Start_ConstituentNamespaces));
+            public static readonly __CompletionPart Finish_ConstituentNamespaces = new __CompletionPart(nameof(Finish_ConstituentNamespaces));
+            public static readonly __CompletionPart Start_NamespaceMembers = new __CompletionPart(nameof(Start_NamespaceMembers));
+            public static readonly __CompletionPart Finish_NamespaceMembers = new __CompletionPart(nameof(Finish_NamespaceMembers));
 
-            public static readonly CompletionGraph CompletionGraph = 
-                CompletionGraph.CreateFromParts(
-                    Start_DeclaredAccessibility, Finish_DeclaredAccessibility,
-                    Start_IsStatic, Finish_IsStatic,
-                    Start_IsExtern, Finish_IsExtern,
-                    Start_TypeArguments, Finish_TypeArguments,
-                    Start_Imports, Finish_Imports,
-                    Start_MemberNames, Finish_MemberNames,
-                    Start_Members, Finish_Members,
-                    Start_TypeMembers, Finish_TypeMembers,
-                    Start_Extent, Finish_Extent,
-                    Start_IsGlobalNamespace, Finish_IsGlobalNamespace,
-                    Start_NamespaceKind, Finish_NamespaceKind,
-                    Start_ContainingCompilation, Finish_ContainingCompilation,
-                    Start_ConstituentNamespaces, Finish_ConstituentNamespaces,
-                    Start_NamespaceMembers, Finish_NamespaceMembers,
-                    Start_Attributes, Finish_Attributes
+            public static readonly __CompletionGraph CompletionGraph = 
+                __CompletionGraph.CreateFromParts(
+                    Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    , Start_Extent, Finish_Extent
+                    , Start_IsGlobalNamespace, Finish_IsGlobalNamespace
+                    , Start_NamespaceKind, Finish_NamespaceKind
+                    , Start_ContainingCompilation, Finish_ContainingCompilation
+                    , Start_ConstituentNamespaces, Finish_ConstituentNamespaces
+                    , Start_NamespaceMembers, Finish_NamespaceMembers
                 );
         }
 
@@ -97,6 +74,7 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
         }
 
         [__ModelProperty]
+[__Phase]
         public global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent Extent
         {
             get
@@ -105,6 +83,8 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 return _extent;
             }
         }
+[__Phase]
+[__Derived]
         public bool IsGlobalNamespace
         {
             get
@@ -113,6 +93,8 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 return _isGlobalNamespace;
             }
         }
+[__Phase]
+[__Derived]
         public global::MetaDslx.CodeAnalysis.NamespaceKind NamespaceKind
         {
             get
@@ -121,6 +103,8 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 return _namespaceKind;
             }
         }
+[__Phase]
+[__Derived]
         public global::MetaDslx.CodeAnalysis.Compilation? ContainingCompilation
         {
             get
@@ -129,6 +113,8 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 return _containingCompilation;
             }
         }
+[__Phase]
+[__Derived]
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> ConstituentNamespaces
         {
             get
@@ -137,6 +123,8 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 return _constituentNamespaces;
             }
         }
+[__Phase]
+[__Derived]
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> NamespaceMembers
         {
             get
@@ -158,7 +146,7 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_Extent))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_Extent(diagnostics, cancellationToken);
+                    var result = Compute_Extent(diagnostics, cancellationToken);
                     _extent = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -171,7 +159,7 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_IsGlobalNamespace))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_IsGlobalNamespace(diagnostics, cancellationToken);
+                    var result = Compute_IsGlobalNamespace(diagnostics, cancellationToken);
                     _isGlobalNamespace = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -184,7 +172,7 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_NamespaceKind))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_NamespaceKind(diagnostics, cancellationToken);
+                    var result = Compute_NamespaceKind(diagnostics, cancellationToken);
                     _namespaceKind = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -197,7 +185,7 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_ContainingCompilation))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_ContainingCompilation(diagnostics, cancellationToken);
+                    var result = Compute_ContainingCompilation(diagnostics, cancellationToken);
                     _containingCompilation = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -210,7 +198,7 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_ConstituentNamespaces))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_ConstituentNamespaces(diagnostics, cancellationToken);
+                    var result = Compute_ConstituentNamespaces(diagnostics, cancellationToken);
                     _constituentNamespaces = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -223,7 +211,7 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_NamespaceMembers))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_NamespaceMembers(diagnostics, cancellationToken);
+                    var result = Compute_NamespaceMembers(diagnostics, cancellationToken);
                     _namespaceMembers = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -238,19 +226,19 @@ public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
         }
 
 
-        protected virtual global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent Complete_Extent(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent Compute_Extent(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent>(this, nameof(Extent), diagnostics, cancellationToken);
         }
 
-        protected abstract bool Complete_IsGlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract bool Compute_IsGlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::MetaDslx.CodeAnalysis.NamespaceKind Complete_NamespaceKind(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.CodeAnalysis.NamespaceKind Compute_NamespaceKind(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::MetaDslx.CodeAnalysis.Compilation? Complete_ContainingCompilation(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.CodeAnalysis.Compilation? Compute_ContainingCompilation(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Complete_ConstituentNamespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Compute_ConstituentNamespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Complete_NamespaceMembers(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Compute_NamespaceMembers(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

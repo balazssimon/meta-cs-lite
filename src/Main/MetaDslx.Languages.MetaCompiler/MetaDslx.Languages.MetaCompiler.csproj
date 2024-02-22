@@ -5,6 +5,7 @@
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 		<!--CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath-->
+		<MetaDslxBootstrap>true</MetaDslxBootstrap>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<NoWarn>$(NoWarn);nullable</NoWarn>
@@ -29,13 +30,11 @@
 		<AdditionalFiles Include="Generators\*.mxg" />
 		<AdditionalFiles Include="Model\*.mxm" />
 		<AdditionalFiles Include="Compiler\*.mxl" />
+		<AdditionalFiles Include="SymbolsNew\*.mxs" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Symbols\CompilerSymbols.mxs" />
 		<None Remove="tools\antlr-4.13.0-complete.jar" />
-	</ItemGroup>
-	<ItemGroup>
-	  <AdditionalFiles Include="Symbols\CompilerSymbols.mxs" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="tools\antlr-4.13.0-complete.jar">
@@ -43,4 +42,11 @@
 		</Content>
 	</ItemGroup>
 
+	<ItemGroup>
+		<Compile Remove="Symbols\**" Condition="!$(MetaDslxBootstrap)" />
+		<None Remove="Symbols\**" Condition="!$(MetaDslxBootstrap)" />
+
+		<Compile Remove="SymbolsNew\**" Condition="$(MetaDslxBootstrap)" />
+		<None Remove="SymbolsNew\**" Condition="$(MetaDslxBootstrap)" />
+	</ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 namespace MetaDslx.Languages.MetaSymbols.Generators
 
 using System.Linq
+using Roslyn.Utilities
 using MetaDslx.CodeAnalysis
 using MetaDslx.Languages.MetaSymbols.Model
 
@@ -10,6 +11,9 @@ template GenerateSymbol(Symbol symbol)
 namespace [symbol.NamespaceName]
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -36,23 +40,22 @@ namespace [symbol.NamespaceName]
 
     [var baseTypes = symbol.BaseTypes]
     [var baseSymbol = baseTypes.Count == 1 ? baseTypes[0] : null]
-    public abstract partial class [GetIntfName(symbol, symbol)]: [if (baseSymbol is null)]global::MetaDslx.CodeAnalysis.Symbols.Symbol[else][GetBaseName(symbol, baseSymbol)][end if]
+    [var baseName = baseSymbol is null ? "global::MetaDslx.CodeAnalysis.Symbols.Symbol" : GetBaseName(symbol, baseSymbol)]
+    public abstract partial class [GetIntfName(symbol, symbol)]: [baseName]
     {
-        public static new class CompletionParts
+        public new class CompletionParts : [baseName].CompletionParts
         {
-            [foreach (var phase in GetAllPhases(symbol))]
-                public static readonly CompletionPart Start_[phase] = new CompletionPart(nameof(Start_[phase]));
-                public static readonly CompletionPart Finish_[phase] = new CompletionPart(nameof(Finish_[phase]));
+            [foreach (var phase in GetPhases(symbol))]
+                public static readonly __CompletionPart Start_[phase] = new __CompletionPart(nameof(Start_[phase]));
+                public static readonly __CompletionPart Finish_[phase] = new __CompletionPart(nameof(Finish_[phase]));
             [end foreach]
-            public static readonly CompletionPart Start_Attributes = new CompletionPart(nameof(Start_Attributes));
-            public static readonly CompletionPart Finish_Attributes = new CompletionPart(nameof(Finish_Attributes));
 
-            public static readonly CompletionGraph CompletionGraph = 
-                CompletionGraph.CreateFromParts(
-                    [foreach (var phase in GetAllPhases(symbol))]
-                        Start_[phase], Finish_[phase],
+            public static readonly __CompletionGraph CompletionGraph = 
+                __CompletionGraph.CreateFromParts(
+                    [baseName].CompletionParts.CompletionGraph
+                    [foreach (var phase in GetPhases(symbol))]
+                        , Start_[phase], Finish_[phase]
                     [end foreach]
-                    Start_Attributes, Finish_Attributes
                 );
         }
 
@@ -63,7 +66,7 @@ namespace [symbol.NamespaceName]
                 private [GetFieldType(symbol, prop)] [GetFieldName(prop)];
             [end if]
         [end foreach]
-        [foreach (var op in symbol.Operations.Where(o => o.CacheResult))]
+        [foreach (var op in symbol.Operations.Where(o => o.IsCached))]
             private static [GetFieldType(symbol, op)] [GetFieldName(op)] = new [GetFieldType(symbol, op)]();
         [end foreach]
 
@@ -82,18 +85,47 @@ namespace [symbol.NamespaceName]
             [if (!prop.IsDerived)]
                 ["["]__ModelProperty["]"]
             [end if]
+            [if (!prop.IsPlain)]["["]__Phase[if (prop.Phase is not null)](nameof([prop.Phase.Name]))[end if]["]"][end if]
+            [if (prop.IsDerived)]["["]__Derived[if (prop.IsCached)](Cached=true)[end if]["]"][end if]
+            [if (prop.IsWeak)]["["]__Weak["]"][end if]
             public [GetTypeName(symbol, prop.Type)] [prop.Name]
             {
-                get
-                {
-                    this.ForceComplete(CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name], null, default);
-                    [if (prop.IsWeak)]
-                        if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
-                        else return [GetDefaultValue(symbol, prop)];
+                [if (prop.IsPlain)]
+                    [if (prop.IsDerived)]
+                        [if (prop.IsCached)]
+                            // TODO: cache result
+                            get => Compute_[prop.Name]();
+                        [else]
+                            get => Compute_[prop.Name]();
+                        [end if]
                     [else]
-                        return [GetFieldName(prop)];
+                        [if (prop.IsWeak)]
+                            get
+                            {
+                                if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
+                                else return [GetDefaultValue(symbol, prop)];
+                            }
+                            protected set
+                            {
+                                [AssignProperty(symbol, prop, "value")]
+                            }
+                        [else]
+                            get => [GetFieldName(prop)];
+                            protected set => [GetFieldName(prop)] = value;
+                        [end if]
                     [end if]
-                }
+                [else]
+                    get
+                    {
+                        this.ForceComplete(CompletionParts.Finish_[prop.Phase?.Name ?? prop.Name], null, default);
+                        [if (prop.IsWeak)]
+                            if ([GetFieldName(prop)].TryGetValue(this, out var result)) return ([GetTypeName(symbol, prop.Type)])result;
+                            else return [GetDefaultValue(symbol, prop)];
+                        [else]
+                            return [GetFieldName(prop)];
+                        [end if]
+                    }
+                [end if]
             }
         [end foreach]
 
@@ -103,8 +135,10 @@ namespace [symbol.NamespaceName]
             [var returnType = GetTypeName(symbol, op.ReturnType)]
 
             [if (op.IsPhase)]
+                ["["]__Phase["]"]
                 protected abstract void [op.Name](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
-            [else if (op.CacheResult)]
+            [else if (op.IsCached)]
+                ["["]__Derived[if (op.IsCached)](Cached=true[if (!string.IsNullOrEmpty(op.CacheCondition))], Condition=[op.CacheCondition.EncodeString()][end if])[end if]["]"]
                 public [returnType] [op.Name]([from p in op.Parameters select GetTypeName(symbol, p.Type)+" "+p.Name separator ", "])
                 {
                     [if (!string.IsNullOrEmpty(op.CacheCondition))]
@@ -138,12 +172,12 @@ namespace [symbol.NamespaceName]
                     {
                         var diagnostics = __DiagnosticBag.GetInstance();
                         [if (props.Length >= 2)]
-                            var result = Complete_[phase](diagnostics, cancellationToken);
+                            var result = Compute_[phase](diagnostics, cancellationToken);
                             [foreach (var prop in props)]
                                 [AssignProperty(symbol, prop, "result."+prop.Name)]
                             [end foreach]
                         [else if (props.Length == 1)]
-                            var result = Complete_[phase](diagnostics, cancellationToken);
+                            var result = Compute_[phase](diagnostics, cancellationToken);
                             [AssignProperty(symbol, props[0], "result")]
                         [else]
                             [phase](diagnostics, cancellationToken);
@@ -171,9 +205,9 @@ namespace [symbol.NamespaceName]
             [if (props.Length >= 2)]
                 [var returnType = "("+string.Join(", ", props.Select(p => GetTypeName(symbol, p.Type)+" "+p.Name))+")"]
                 [if (props.Where(p => p.IsDerived).Any())]
-                    protected abstract [returnType] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+                    protected abstract [returnType] Compute_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
                 [else]
-                    protected virtual [returnType] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                    protected virtual [returnType] Compute_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                     {
                         [-]
                         return (
@@ -188,9 +222,9 @@ namespace [symbol.NamespaceName]
                 [var prop = props[0]]
                 [var returnType = GetTypeName(symbol, prop.Type)]
                 [if (prop.IsDerived)]
-                    protected abstract [returnType] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+                    protected abstract [returnType] Compute_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
                 [else]
-                    protected virtual [returnType] Complete_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+                    protected virtual [returnType] Compute_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                     {
                         return ContainingModule!.SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
                     }

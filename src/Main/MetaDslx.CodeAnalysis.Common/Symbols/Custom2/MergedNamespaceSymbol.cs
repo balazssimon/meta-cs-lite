@@ -88,12 +88,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public override ImmutableArray<Location> Locations => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Locations).AsImmutable();
 
-        protected override Compilation? Complete_ContainingCompilation(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override Compilation? Compute_ContainingCompilation(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return Extent.Compilation;
         }
 
-        protected override ImmutableArray<NamespaceSymbol> Complete_ConstituentNamespaces(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<NamespaceSymbol> Compute_ConstituentNamespaces(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return _namespacesToMerge;
         }
@@ -211,7 +211,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return containedSymbols.ToImmutableAndFree();
         }
 
-        protected override ImmutableArray<DeclarationSymbol> Complete_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> Compute_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var memberNames = new HashSet<string>();
             // Accumulate all the child namespace and type names.

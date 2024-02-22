@@ -294,15 +294,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             #endif
             return new SymbolGreen(SymbolSyntaxKind.Symbol, isAbstract, kSymbol, name, block1, block2);
         }
-        internal PropertyGreen Property(__InternalSyntaxToken isWeak, __InternalSyntaxToken isDerived, TypeReferenceGreen type, NameGreen name, PropertyBlock1Green block1, PropertyBlock2Green block2)
+        internal PropertyGreen Property(__InternalSyntaxToken isPlain, PropertyBlock1Green block1, __InternalSyntaxToken isWeak, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
         {
             #if DEBUG
+                if (isPlain is not null && (isPlain.RawKind != (int)SymbolSyntaxKind.KPlain)) throw new __ArgumentException(nameof(isPlain));
                 if (isWeak is not null && (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak)) throw new __ArgumentException(nameof(isWeak));
-                if (isDerived is not null && (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived)) throw new __ArgumentException(nameof(isDerived));
                 if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
             #endif
-            return new PropertyGreen(SymbolSyntaxKind.Property, isWeak, isDerived, type, name, block1, block2);
+            return new PropertyGreen(SymbolSyntaxKind.Property, isPlain, block1, isWeak, type, name, block2, block3);
         }
         internal OperationAlt1Green OperationAlt1(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
         {
@@ -317,18 +317,18 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             #endif
             return new OperationAlt1Green(SymbolSyntaxKind.OperationAlt1, isPhase, name, tLParen, tRParen);
         }
-        internal OperationAlt2Green OperationAlt2(TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, __InternalSyntaxToken cacheResult, OperationAlt2Block2Green block2)
+        internal OperationAlt2Green OperationAlt2(__InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2)
         {
             #if DEBUG
+                if (isCached is not null && (isCached.RawKind != (int)SymbolSyntaxKind.KCached)) throw new __ArgumentException(nameof(isCached));
                 if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
                 if (tLParen is null) throw new __ArgumentNullException(nameof(tLParen));
                 if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
                 if (tRParen is null) throw new __ArgumentNullException(nameof(tRParen));
                 if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-                if (cacheResult is not null && (cacheResult.RawKind != (int)SymbolSyntaxKind.KCache)) throw new __ArgumentException(nameof(cacheResult));
             #endif
-            return new OperationAlt2Green(SymbolSyntaxKind.OperationAlt2, returnType, name, tLParen, block1, tRParen, cacheResult, block2);
+            return new OperationAlt2Green(SymbolSyntaxKind.OperationAlt2, isCached, returnType, name, tLParen, block1, tRParen, block2);
         }
         internal ParameterGreen Parameter(TypeReferenceGreen type, NameGreen name)
         {
@@ -698,18 +698,18 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal PropertyBlock1Green PropertyBlock1(__InternalSyntaxToken tEq, ValueGreen defaultValue)
+        internal PropertyBlock1Green PropertyBlock1(__InternalSyntaxToken isDerived, __InternalSyntaxToken isCached)
         {
             #if DEBUG
-                if (tEq is null) throw new __ArgumentNullException(nameof(tEq));
-                if (tEq.RawKind != (int)SymbolSyntaxKind.TEq) throw new __ArgumentException(nameof(tEq));
-                if (defaultValue is null) throw new __ArgumentNullException(nameof(defaultValue));
+                if (isDerived is null) throw new __ArgumentNullException(nameof(isDerived));
+                if (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived) throw new __ArgumentException(nameof(isDerived));
+                if (isCached is not null && (isCached.RawKind != (int)SymbolSyntaxKind.KCached)) throw new __ArgumentException(nameof(isCached));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1, tEq, defaultValue, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1, isDerived, isCached, out hash);
             if (cached != null) return (PropertyBlock1Green)cached;
         
-            var result = new PropertyBlock1Green(SymbolSyntaxKind.PropertyBlock1, tEq, defaultValue);
+            var result = new PropertyBlock1Green(SymbolSyntaxKind.PropertyBlock1, isDerived, isCached);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -717,7 +717,26 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal PropertyBlock2Green PropertyBlock2(__InternalSyntaxToken kPhase, IdentifierGreen phase)
+        internal PropertyBlock2Green PropertyBlock2(__InternalSyntaxToken tEq, ValueGreen defaultValue)
+        {
+            #if DEBUG
+                if (tEq is null) throw new __ArgumentNullException(nameof(tEq));
+                if (tEq.RawKind != (int)SymbolSyntaxKind.TEq) throw new __ArgumentException(nameof(tEq));
+                if (defaultValue is null) throw new __ArgumentNullException(nameof(defaultValue));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock2, tEq, defaultValue, out hash);
+            if (cached != null) return (PropertyBlock2Green)cached;
+        
+            var result = new PropertyBlock2Green(SymbolSyntaxKind.PropertyBlock2, tEq, defaultValue);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        internal PropertyBlock3Green PropertyBlock3(__InternalSyntaxToken kPhase, IdentifierGreen phase)
         {
             #if DEBUG
                 if (kPhase is null) throw new __ArgumentNullException(nameof(kPhase));
@@ -725,10 +744,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 if (phase is null) throw new __ArgumentNullException(nameof(phase));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock2, kPhase, phase, out hash);
-            if (cached != null) return (PropertyBlock2Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock3, kPhase, phase, out hash);
+            if (cached != null) return (PropertyBlock3Green)cached;
         
-            var result = new PropertyBlock2Green(SymbolSyntaxKind.PropertyBlock2, kPhase, phase);
+            var result = new PropertyBlock3Green(SymbolSyntaxKind.PropertyBlock3, kPhase, phase);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

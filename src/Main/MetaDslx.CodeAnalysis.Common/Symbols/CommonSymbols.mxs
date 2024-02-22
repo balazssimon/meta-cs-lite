@@ -15,12 +15,16 @@ symbol Attribute
 
 symbol Assembly
 {
+    plain ISymbolFactory SymbolFactory
+    plain Module? SourceModule
+    plain Module[] Modules
     bool IsCorLibrary
     derived Namespace GlobalNamespace
 }
 
 symbol Module
 {
+    plain ISymbolFactory SymbolFactory
     derived Namespace GlobalNamespace
     NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
 }
@@ -32,17 +36,17 @@ symbol Declaration
     bool IsExtern
     weak Type[] TypeArguments
     weak Import[] Imports
-    weak derived string[] MemberNames
-    weak derived Declaration[] Members
-    weak derived Type[] TypeMembers
-    Declaration[] GetMembers(string name)
-        cache if "MemberNames.Contains(name)"
-    Declaration[] GetMembers(string name, string metadataName)
-        cache if "MemberNames.Contains(name)"
-    Type[] GetTypeMembers(string name)
-        cache if "MemberNames.Contains(name)"
-    Type[] GetTypeMembers(string name, string metadataName)
-        cache if "MemberNames.Contains(name)"
+    derived weak string[] MemberNames
+    derived weak Declaration[] Members
+    derived weak Type[] TypeMembers
+    cached Declaration[] GetMembers(string name)
+        if "MemberNames.Contains(name)"
+    cached Declaration[] GetMembers(string name, string metadataName)
+        if "MemberNames.Contains(name)"
+    cached Type[] GetTypeMembers(string name)
+        if "MemberNames.Contains(name)"
+    cached Type[] GetTypeMembers(string name, string metadataName)
+        if "MemberNames.Contains(name)"
 }
 
 symbol Import

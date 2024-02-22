@@ -1,6 +1,9 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -25,55 +28,29 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
+    public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
     {
-        public static new class CompletionParts
+        public new class CompletionParts : Impl.DeclarationSymbolImpl.CompletionParts
         {
-            public static readonly CompletionPart Start_DeclaredAccessibility = new CompletionPart(nameof(Start_DeclaredAccessibility));
-            public static readonly CompletionPart Finish_DeclaredAccessibility = new CompletionPart(nameof(Finish_DeclaredAccessibility));
-            public static readonly CompletionPart Start_IsStatic = new CompletionPart(nameof(Start_IsStatic));
-            public static readonly CompletionPart Finish_IsStatic = new CompletionPart(nameof(Finish_IsStatic));
-            public static readonly CompletionPart Start_IsExtern = new CompletionPart(nameof(Start_IsExtern));
-            public static readonly CompletionPart Finish_IsExtern = new CompletionPart(nameof(Finish_IsExtern));
-            public static readonly CompletionPart Start_TypeArguments = new CompletionPart(nameof(Start_TypeArguments));
-            public static readonly CompletionPart Finish_TypeArguments = new CompletionPart(nameof(Finish_TypeArguments));
-            public static readonly CompletionPart Start_Imports = new CompletionPart(nameof(Start_Imports));
-            public static readonly CompletionPart Finish_Imports = new CompletionPart(nameof(Finish_Imports));
-            public static readonly CompletionPart Start_MemberNames = new CompletionPart(nameof(Start_MemberNames));
-            public static readonly CompletionPart Finish_MemberNames = new CompletionPart(nameof(Finish_MemberNames));
-            public static readonly CompletionPart Start_Members = new CompletionPart(nameof(Start_Members));
-            public static readonly CompletionPart Finish_Members = new CompletionPart(nameof(Finish_Members));
-            public static readonly CompletionPart Start_TypeMembers = new CompletionPart(nameof(Start_TypeMembers));
-            public static readonly CompletionPart Finish_TypeMembers = new CompletionPart(nameof(Finish_TypeMembers));
-            public static readonly CompletionPart Start_IsReferenceType = new CompletionPart(nameof(Start_IsReferenceType));
-            public static readonly CompletionPart Finish_IsReferenceType = new CompletionPart(nameof(Finish_IsReferenceType));
-            public static readonly CompletionPart Start_IsValueType = new CompletionPart(nameof(Start_IsValueType));
-            public static readonly CompletionPart Finish_IsValueType = new CompletionPart(nameof(Finish_IsValueType));
-            public static readonly CompletionPart Start_TypeParameters = new CompletionPart(nameof(Start_TypeParameters));
-            public static readonly CompletionPart Finish_TypeParameters = new CompletionPart(nameof(Finish_TypeParameters));
-            public static readonly CompletionPart Start_BaseTypes = new CompletionPart(nameof(Start_BaseTypes));
-            public static readonly CompletionPart Finish_BaseTypes = new CompletionPart(nameof(Finish_BaseTypes));
-            public static readonly CompletionPart Start_AllBaseTypes = new CompletionPart(nameof(Start_AllBaseTypes));
-            public static readonly CompletionPart Finish_AllBaseTypes = new CompletionPart(nameof(Finish_AllBaseTypes));
-            public static readonly CompletionPart Start_Attributes = new CompletionPart(nameof(Start_Attributes));
-            public static readonly CompletionPart Finish_Attributes = new CompletionPart(nameof(Finish_Attributes));
+            public static readonly __CompletionPart Start_IsReferenceType = new __CompletionPart(nameof(Start_IsReferenceType));
+            public static readonly __CompletionPart Finish_IsReferenceType = new __CompletionPart(nameof(Finish_IsReferenceType));
+            public static readonly __CompletionPart Start_IsValueType = new __CompletionPart(nameof(Start_IsValueType));
+            public static readonly __CompletionPart Finish_IsValueType = new __CompletionPart(nameof(Finish_IsValueType));
+            public static readonly __CompletionPart Start_TypeParameters = new __CompletionPart(nameof(Start_TypeParameters));
+            public static readonly __CompletionPart Finish_TypeParameters = new __CompletionPart(nameof(Finish_TypeParameters));
+            public static readonly __CompletionPart Start_BaseTypes = new __CompletionPart(nameof(Start_BaseTypes));
+            public static readonly __CompletionPart Finish_BaseTypes = new __CompletionPart(nameof(Finish_BaseTypes));
+            public static readonly __CompletionPart Start_AllBaseTypes = new __CompletionPart(nameof(Start_AllBaseTypes));
+            public static readonly __CompletionPart Finish_AllBaseTypes = new __CompletionPart(nameof(Finish_AllBaseTypes));
 
-            public static readonly CompletionGraph CompletionGraph = 
-                CompletionGraph.CreateFromParts(
-                    Start_DeclaredAccessibility, Finish_DeclaredAccessibility,
-                    Start_IsStatic, Finish_IsStatic,
-                    Start_IsExtern, Finish_IsExtern,
-                    Start_TypeArguments, Finish_TypeArguments,
-                    Start_Imports, Finish_Imports,
-                    Start_MemberNames, Finish_MemberNames,
-                    Start_Members, Finish_Members,
-                    Start_TypeMembers, Finish_TypeMembers,
-                    Start_IsReferenceType, Finish_IsReferenceType,
-                    Start_IsValueType, Finish_IsValueType,
-                    Start_TypeParameters, Finish_TypeParameters,
-                    Start_BaseTypes, Finish_BaseTypes,
-                    Start_AllBaseTypes, Finish_AllBaseTypes,
-                    Start_Attributes, Finish_Attributes
+            public static readonly __CompletionGraph CompletionGraph = 
+                __CompletionGraph.CreateFromParts(
+                    Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    , Start_IsReferenceType, Finish_IsReferenceType
+                    , Start_IsValueType, Finish_IsValueType
+                    , Start_TypeParameters, Finish_TypeParameters
+                    , Start_BaseTypes, Finish_BaseTypes
+                    , Start_AllBaseTypes, Finish_AllBaseTypes
                 );
         }
 
@@ -102,6 +79,7 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
         }
 
         [__ModelProperty]
+[__Phase]
         public bool IsReferenceType
         {
             get
@@ -111,6 +89,7 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
             }
         }
         [__ModelProperty]
+[__Phase]
         public bool IsValueType
         {
             get
@@ -120,6 +99,8 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
             }
         }
         [__ModelProperty]
+[__Phase]
+[__Weak]
         public global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> TypeParameters
         {
             get
@@ -130,6 +111,8 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
             }
         }
         [__ModelProperty]
+[__Phase]
+[__Weak]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes
         {
             get
@@ -139,6 +122,8 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
                 else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
             }
         }
+[__Phase]
+[__Derived]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes
         {
             get
@@ -160,7 +145,7 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_IsReferenceType))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_IsReferenceType(diagnostics, cancellationToken);
+                    var result = Compute_IsReferenceType(diagnostics, cancellationToken);
                     _isReferenceType = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -173,7 +158,7 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_IsValueType))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_IsValueType(diagnostics, cancellationToken);
+                    var result = Compute_IsValueType(diagnostics, cancellationToken);
                     _isValueType = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -186,7 +171,7 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_TypeParameters))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_TypeParameters(diagnostics, cancellationToken);
+                    var result = Compute_TypeParameters(diagnostics, cancellationToken);
                     if (!result.IsDefaultOrEmpty)
                     {
                         s_TypeParameters.Add(this, result);
@@ -202,7 +187,7 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_BaseTypes))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_BaseTypes(diagnostics, cancellationToken);
+                    var result = Compute_BaseTypes(diagnostics, cancellationToken);
                     if (!result.IsDefaultOrEmpty)
                     {
                         s_BaseTypes.Add(this, result);
@@ -218,7 +203,7 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
                 if (NotePartComplete(CompletionParts.Start_AllBaseTypes))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_AllBaseTypes(diagnostics, cancellationToken);
+                    var result = Compute_AllBaseTypes(diagnostics, cancellationToken);
                     _allBaseTypes = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -233,26 +218,26 @@ public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
         }
 
 
-        protected virtual bool Complete_IsReferenceType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual bool Compute_IsReferenceType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsReferenceType), diagnostics, cancellationToken);
         }
 
-        protected virtual bool Complete_IsValueType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual bool Compute_IsValueType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsValueType), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> Complete_TypeParameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> Compute_TypeParameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<TypeParameterSymbol>(this, nameof(TypeParameters), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(this, nameof(BaseTypes), diagnostics, cancellationToken);
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_AllBaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_AllBaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

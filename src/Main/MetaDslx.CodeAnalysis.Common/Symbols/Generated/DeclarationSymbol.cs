@@ -1,6 +1,9 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -25,40 +28,38 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
+    public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
-        public static new class CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts
         {
-            public static readonly CompletionPart Start_DeclaredAccessibility = new CompletionPart(nameof(Start_DeclaredAccessibility));
-            public static readonly CompletionPart Finish_DeclaredAccessibility = new CompletionPart(nameof(Finish_DeclaredAccessibility));
-            public static readonly CompletionPart Start_IsStatic = new CompletionPart(nameof(Start_IsStatic));
-            public static readonly CompletionPart Finish_IsStatic = new CompletionPart(nameof(Finish_IsStatic));
-            public static readonly CompletionPart Start_IsExtern = new CompletionPart(nameof(Start_IsExtern));
-            public static readonly CompletionPart Finish_IsExtern = new CompletionPart(nameof(Finish_IsExtern));
-            public static readonly CompletionPart Start_TypeArguments = new CompletionPart(nameof(Start_TypeArguments));
-            public static readonly CompletionPart Finish_TypeArguments = new CompletionPart(nameof(Finish_TypeArguments));
-            public static readonly CompletionPart Start_Imports = new CompletionPart(nameof(Start_Imports));
-            public static readonly CompletionPart Finish_Imports = new CompletionPart(nameof(Finish_Imports));
-            public static readonly CompletionPart Start_MemberNames = new CompletionPart(nameof(Start_MemberNames));
-            public static readonly CompletionPart Finish_MemberNames = new CompletionPart(nameof(Finish_MemberNames));
-            public static readonly CompletionPart Start_Members = new CompletionPart(nameof(Start_Members));
-            public static readonly CompletionPart Finish_Members = new CompletionPart(nameof(Finish_Members));
-            public static readonly CompletionPart Start_TypeMembers = new CompletionPart(nameof(Start_TypeMembers));
-            public static readonly CompletionPart Finish_TypeMembers = new CompletionPart(nameof(Finish_TypeMembers));
-            public static readonly CompletionPart Start_Attributes = new CompletionPart(nameof(Start_Attributes));
-            public static readonly CompletionPart Finish_Attributes = new CompletionPart(nameof(Finish_Attributes));
+            public static readonly __CompletionPart Start_DeclaredAccessibility = new __CompletionPart(nameof(Start_DeclaredAccessibility));
+            public static readonly __CompletionPart Finish_DeclaredAccessibility = new __CompletionPart(nameof(Finish_DeclaredAccessibility));
+            public static readonly __CompletionPart Start_IsStatic = new __CompletionPart(nameof(Start_IsStatic));
+            public static readonly __CompletionPart Finish_IsStatic = new __CompletionPart(nameof(Finish_IsStatic));
+            public static readonly __CompletionPart Start_IsExtern = new __CompletionPart(nameof(Start_IsExtern));
+            public static readonly __CompletionPart Finish_IsExtern = new __CompletionPart(nameof(Finish_IsExtern));
+            public static readonly __CompletionPart Start_TypeArguments = new __CompletionPart(nameof(Start_TypeArguments));
+            public static readonly __CompletionPart Finish_TypeArguments = new __CompletionPart(nameof(Finish_TypeArguments));
+            public static readonly __CompletionPart Start_Imports = new __CompletionPart(nameof(Start_Imports));
+            public static readonly __CompletionPart Finish_Imports = new __CompletionPart(nameof(Finish_Imports));
+            public static readonly __CompletionPart Start_MemberNames = new __CompletionPart(nameof(Start_MemberNames));
+            public static readonly __CompletionPart Finish_MemberNames = new __CompletionPart(nameof(Finish_MemberNames));
+            public static readonly __CompletionPart Start_Members = new __CompletionPart(nameof(Start_Members));
+            public static readonly __CompletionPart Finish_Members = new __CompletionPart(nameof(Finish_Members));
+            public static readonly __CompletionPart Start_TypeMembers = new __CompletionPart(nameof(Start_TypeMembers));
+            public static readonly __CompletionPart Finish_TypeMembers = new __CompletionPart(nameof(Finish_TypeMembers));
 
-            public static readonly CompletionGraph CompletionGraph = 
-                CompletionGraph.CreateFromParts(
-                    Start_DeclaredAccessibility, Finish_DeclaredAccessibility,
-                    Start_IsStatic, Finish_IsStatic,
-                    Start_IsExtern, Finish_IsExtern,
-                    Start_TypeArguments, Finish_TypeArguments,
-                    Start_Imports, Finish_Imports,
-                    Start_MemberNames, Finish_MemberNames,
-                    Start_Members, Finish_Members,
-                    Start_TypeMembers, Finish_TypeMembers,
-                    Start_Attributes, Finish_Attributes
+            public static readonly __CompletionGraph CompletionGraph = 
+                __CompletionGraph.CreateFromParts(
+                    global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts.CompletionGraph
+                    , Start_DeclaredAccessibility, Finish_DeclaredAccessibility
+                    , Start_IsStatic, Finish_IsStatic
+                    , Start_IsExtern, Finish_IsExtern
+                    , Start_TypeArguments, Finish_TypeArguments
+                    , Start_Imports, Finish_Imports
+                    , Start_MemberNames, Finish_MemberNames
+                    , Start_Members, Finish_Members
+                    , Start_TypeMembers, Finish_TypeMembers
                 );
         }
 
@@ -98,6 +99,8 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
         }
 
         [__ModelProperty]
+[__Phase]
+[__Weak]
         public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility
         {
             get
@@ -108,6 +111,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
             }
         }
         [__ModelProperty]
+[__Phase]
         public bool IsStatic
         {
             get
@@ -117,6 +121,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
             }
         }
         [__ModelProperty]
+[__Phase]
         public bool IsExtern
         {
             get
@@ -126,6 +131,8 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
             }
         }
         [__ModelProperty]
+[__Phase]
+[__Weak]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments
         {
             get
@@ -136,6 +143,8 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
             }
         }
         [__ModelProperty]
+[__Phase]
+[__Weak]
         public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports
         {
             get
@@ -145,6 +154,9 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 else return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
             }
         }
+[__Phase]
+[__Derived]
+[__Weak]
         public global::System.Collections.Immutable.ImmutableArray<string> MemberNames
         {
             get
@@ -154,6 +166,9 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 else return global::System.Collections.Immutable.ImmutableArray<string>.Empty;
             }
         }
+[__Phase]
+[__Derived]
+[__Weak]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members
         {
             get
@@ -163,6 +178,9 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 else return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
             }
         }
+[__Phase]
+[__Derived]
+[__Weak]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeMembers
         {
             get
@@ -174,6 +192,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
         }
 
 
+        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> GetMembers(string name)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
@@ -183,6 +202,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_GetMembers(string name);
 
+        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> GetMembers(string name, string metadataName)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
@@ -192,6 +212,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_GetMembers(string name, string metadataName);
 
+        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
@@ -201,6 +222,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_GetTypeMembers(string name);
 
+        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name, string metadataName)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
@@ -217,7 +239,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_DeclaredAccessibility))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_DeclaredAccessibility(diagnostics, cancellationToken);
+                    var result = Compute_DeclaredAccessibility(diagnostics, cancellationToken);
                     if (result != default)
                     {
                         s_DeclaredAccessibility.Add(this, result);
@@ -233,7 +255,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_IsStatic))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_IsStatic(diagnostics, cancellationToken);
+                    var result = Compute_IsStatic(diagnostics, cancellationToken);
                     _isStatic = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -246,7 +268,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_IsExtern))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_IsExtern(diagnostics, cancellationToken);
+                    var result = Compute_IsExtern(diagnostics, cancellationToken);
                     _isExtern = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -259,7 +281,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_TypeArguments))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_TypeArguments(diagnostics, cancellationToken);
+                    var result = Compute_TypeArguments(diagnostics, cancellationToken);
                     if (!result.IsDefaultOrEmpty)
                     {
                         s_TypeArguments.Add(this, result);
@@ -275,7 +297,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_Imports))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_Imports(diagnostics, cancellationToken);
+                    var result = Compute_Imports(diagnostics, cancellationToken);
                     if (!result.IsDefaultOrEmpty)
                     {
                         s_Imports.Add(this, result);
@@ -291,7 +313,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_MemberNames))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_MemberNames(diagnostics, cancellationToken);
+                    var result = Compute_MemberNames(diagnostics, cancellationToken);
                     if (!result.IsDefaultOrEmpty)
                     {
                         s_MemberNames.Add(this, result);
@@ -307,7 +329,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_Members))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_Members(diagnostics, cancellationToken);
+                    var result = Compute_Members(diagnostics, cancellationToken);
                     if (!result.IsDefaultOrEmpty)
                     {
                         s_Members.Add(this, result);
@@ -323,7 +345,7 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
                 if (NotePartComplete(CompletionParts.Start_TypeMembers))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_TypeMembers(diagnostics, cancellationToken);
+                    var result = Compute_TypeMembers(diagnostics, cancellationToken);
                     if (!result.IsDefaultOrEmpty)
                     {
                         s_TypeMembers.Add(this, result);
@@ -341,35 +363,35 @@ public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.S
         }
 
 
-        protected virtual global::MetaDslx.CodeAnalysis.Accessibility Complete_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.CodeAnalysis.Accessibility Compute_DeclaredAccessibility(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.Accessibility>(this, nameof(DeclaredAccessibility), diagnostics, cancellationToken);
         }
 
-        protected virtual bool Complete_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual bool Compute_IsStatic(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsStatic), diagnostics, cancellationToken);
         }
 
-        protected virtual bool Complete_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual bool Compute_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsExtern), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(this, nameof(TypeArguments), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Complete_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Compute_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<ImportSymbol>(this, nameof(Imports), diagnostics, cancellationToken);
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<string> Complete_MemberNames(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<string> Compute_MemberNames(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Complete_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Complete_TypeMembers(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_TypeMembers(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

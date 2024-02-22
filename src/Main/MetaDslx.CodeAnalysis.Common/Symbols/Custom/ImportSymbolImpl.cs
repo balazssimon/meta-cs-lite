@@ -22,7 +22,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         {
         }
 
-        protected override ImmutableArray<DeclarationSymbol> Complete_ImportedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> Compute_ImportedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var symbolsBuilder = ArrayBuilder<DeclarationSymbol>.GetInstance();
             symbolsBuilder.AddRange(Aliases);

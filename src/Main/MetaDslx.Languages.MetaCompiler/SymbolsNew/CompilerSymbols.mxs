@@ -4,39 +4,6 @@ using MetaDslx.CodeAnalysis
 using MetaDslx.CodeAnalysis.Symbols
 using MetaDslx.Languages.MetaCompiler.Model
 
-symbol Symbol
-{
-    weak Attribute[] Attributes
-}
-
-symbol Attribute
-{
-    Type AttributeClass
-}
-
-symbol Declaration
-{
-    weak Accessibility DeclaredAccessibility
-    bool IsStatic
-    bool IsExtern
-    weak Type[] TypeArguments
-    weak Import[] Imports
-    weak derived string[] MemberNames
-    weak derived Declaration[] Members
-    weak derived Type[] TypeMembers
-    Declaration[] GetMembers(string name)
-        cache if "MemberNames.Contains(name)"
-    Declaration[] GetMembers(string name, string metadataName)
-        cache if "MemberNames.Contains(name)"
-    Type[] GetTypeMembers(string name)
-        cache if "MemberNames.Contains(name)"
-    Type[] GetTypeMembers(string name, string metadataName)
-        cache if "MemberNames.Contains(name)"
-}
-
-symbol Type : Declaration {}
-symbol Import {}
-
 symbol Annotation : Attribute
 {
     AnnotationArgument[] Arguments

@@ -20,17 +20,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         {
         }
 
-        protected override ImmutableArray<string> Complete_MemberNames(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<string> Compute_MemberNames(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return this.ContainedSymbols.OfType<DeclarationSymbol>().Where(m => !string.IsNullOrEmpty(m.Name)).Select(m => m.Name).Distinct().ToImmutableArray();
         }
 
-        protected override ImmutableArray<DeclarationSymbol> Complete_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> Compute_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return this.ContainedSymbols.OfType<DeclarationSymbol>().ToImmutableArray();
         }
 
-        protected override ImmutableArray<TypeSymbol> Complete_TypeMembers(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<TypeSymbol> Compute_TypeMembers(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return this.ContainedSymbols.OfType<TypeSymbol>().ToImmutableArray();
         }

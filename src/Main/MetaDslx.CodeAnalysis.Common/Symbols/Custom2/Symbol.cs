@@ -25,7 +25,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
     public abstract class Symbol
     {
-        public static new class CompletionParts
+        public new class CompletionParts
         {
             public static readonly CompletionPart Start_Attributes = new CompletionPart(nameof(Start_Attributes));
             public static readonly CompletionPart Finish_Attributes = new CompletionPart(nameof(Finish_Attributes));
@@ -568,8 +568,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     {
                         var diagnostics = DiagnosticBag.GetInstance();
                         CompletePart_Initialize(diagnostics, cancellationToken);
-                        var name = Complete_Name(diagnostics, cancellationToken);
-                        var metadataName = Complete_MetadataName(diagnostics, cancellationToken);
+                        var name = Compute_Name(diagnostics, cancellationToken);
+                        var metadataName = Compute_MetadataName(diagnostics, cancellationToken);
                         if (!string.IsNullOrEmpty(name))
                         {
                             s_names.Add(this, name);
@@ -773,7 +773,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (NotePartComplete(CompletionParts.Start_Attributes))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    var attributes = Complete_Attributes(diagnostics, cancellationToken);
+                    var attributes = Compute_Attributes(diagnostics, cancellationToken);
                     if (!attributes.IsDefaultOrEmpty)
                     {
                         s_attributes.Add(this, attributes);
@@ -849,12 +849,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
-        protected virtual string? Complete_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual string? Compute_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetName(_underlyingObject, diagnostics, cancellationToken);
         }
 
-        protected virtual string? Complete_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual string? Compute_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetMetadataName(_underlyingObject, diagnostics, cancellationToken);
         }
@@ -864,7 +864,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return ContainingModule!.SymbolFactory.CreateContainedSymbols(this, diagnostics, cancellationToken);
         }
 
-        protected virtual ImmutableArray<AttributeSymbol> Complete_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual ImmutableArray<AttributeSymbol> Compute_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
         }

@@ -15,11 +15,11 @@ pr_Symbol
     :  E_isAbstract=LR_KAbstract?  E_KSymbol=LR_KSymbol  E_Name=pr_Name  E_Block=pr_SymbolBlock1?  E_Block1=pr_SymbolBlock2
     ;
 pr_Property
-    :  E_isWeak=LR_KWeak?  E_isDerived=LR_KDerived?  E_type=pr_TypeReference  E_Name=pr_Name  E_Block=pr_PropertyBlock1?  E_Block1=pr_PropertyBlock2?
+    :  E_isPlain=LR_KPlain?  E_Block=pr_PropertyBlock1?  E_isWeak=LR_KWeak?  E_type=pr_TypeReference  E_Name=pr_Name  E_Block1=pr_PropertyBlock2?  E_Block2=pr_PropertyBlock3?
     ;
 pr_Operation
     :  E_isPhase=LR_KPhase  E_Name=pr_Name  E_TLParen=LR_TLParen  E_TRParen=LR_TRParen #pr_OperationAlt1
-    |  E_returnType=pr_TypeReference  E_Name1=pr_Name  E_TLParen1=LR_TLParen  E_Block=pr_OperationAlt2Block1?  E_TRParen1=LR_TRParen  E_cacheResult=LR_KCache?  E_Block1=pr_OperationAlt2Block2? #pr_OperationAlt2
+    |  E_isCached=LR_KCached?  E_returnType=pr_TypeReference  E_Name1=pr_Name  E_TLParen1=LR_TLParen  E_Block=pr_OperationAlt2Block1?  E_TRParen1=LR_TRParen  E_Block1=pr_OperationAlt2Block2? #pr_OperationAlt2
     ;
 pr_Parameter
     :  E_type=pr_TypeReference  E_Name=pr_Name
@@ -71,9 +71,12 @@ pr_SymbolBlock2Block1
     |  E_operations=pr_Operation #pr_SymbolBlock2Block1Alt2
     ;
 pr_PropertyBlock1
-    :  E_TEq=LR_TEq  E_defaultValue=pr_Value
+    :  E_isDerived=LR_KDerived  E_isCached=LR_KCached?
     ;
 pr_PropertyBlock2
+    :  E_TEq=LR_TEq  E_defaultValue=pr_Value
+    ;
+pr_PropertyBlock3
     :  E_KPhase=LR_KPhase  E_phase=pr_Identifier
     ;
 pr_OperationAlt2Block1

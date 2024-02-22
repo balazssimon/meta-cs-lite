@@ -26,7 +26,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
     public interface Operation : global::MetaDslx.Languages.MetaSymbols.Model.Declaration
     {
         string CacheCondition { get; set; }
-        bool CacheResult { get; set; }
+        bool IsCached { get; set; }
         bool IsPhase { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Parameter> Parameters { get; }
         TypeReference ReturnType { get; set; }

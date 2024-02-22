@@ -22,11 +22,11 @@ Symbol:
 	(':' baseTypes+=#Symbol)?
 	[Scope]('{' (properties+=Property | operations+=Operation)* '}');
 
-Property: isWeak?='weak'? isDerived?='derived'? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
+Property: isPlain?='plain'? (isDerived?='derived' isCached='cached'?)? isWeak?='weak'? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
 
 Operation
 	: isPhase?='phase' Name '(' ')' 
-	| returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')' cacheResult?='cache'? ('if' cacheCondition=TString)?
+	| isCached?='cached'? returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')' ('if' cacheCondition=TString)?
 	;
 Parameter: @type=TypeReference Name;
 

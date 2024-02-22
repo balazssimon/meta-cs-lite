@@ -23,32 +23,32 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
 
         public override ModuleSymbol? ContainingModule => this.NamespaceKind == NamespaceKind.Module ? this.Extent.Module : null;
 
-        protected override NamespaceExtent Complete_Extent(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override NamespaceExtent Compute_Extent(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return base.Complete_Extent(diagnostics, cancellationToken);
+            return base.Compute_Extent(diagnostics, cancellationToken);
         }
 
-        protected override ImmutableArray<NamespaceSymbol> Complete_ConstituentNamespaces(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<NamespaceSymbol> Compute_ConstituentNamespaces(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ImmutableArray.Create<NamespaceSymbol>(this);
         }
 
-        protected override Compilation? Complete_ContainingCompilation(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override Compilation? Compute_ContainingCompilation(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return this.NamespaceKind == NamespaceKind.Compilation ? this.Extent.Compilation : null;
         }
 
-        protected override bool Complete_IsGlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override bool Compute_IsGlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ContainingNamespace is null;
         }
 
-        protected override NamespaceKind Complete_NamespaceKind(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override NamespaceKind Compute_NamespaceKind(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return this.Extent.Kind;
         }
 
-        protected override ImmutableArray<NamespaceSymbol> Complete_NamespaceMembers(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<NamespaceSymbol> Compute_NamespaceMembers(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return Members.OfType<NamespaceSymbol>().ToImmutableArray();
         }

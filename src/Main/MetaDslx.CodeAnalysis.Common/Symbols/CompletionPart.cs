@@ -57,5 +57,15 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public static readonly CompletionPart ContainedSymbolsCompleted = new CompletionPart(nameof(ContainedSymbolsCompleted));
         public static readonly CompletionPart StartValidating = new CompletionPart(nameof(StartValidating));
         public static readonly CompletionPart FinishValidating = new CompletionPart(nameof(FinishValidating));
+
+        public static readonly ImmutableArray<CompletionPart> WellKnownParts = ImmutableArray.Create<CompletionPart>(
+            StartInitializing, FinishInitializing,
+            StartCreatingContainedSymbols, FinishCreatingContainedSymbols,
+            StartComputingNonSymbolProperties, FinishComputingNonSymbolProperties,
+            ContainedSymbolsFinalized,
+            StartFinalizing, FinishFinalizing,
+            ContainedSymbolsCompleted,
+            StartValidating, FinishValidating
+            );
     }
 }

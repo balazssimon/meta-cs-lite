@@ -1,6 +1,9 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
+    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -25,19 +28,17 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-public abstract partial class AttributeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
+    public abstract partial class AttributeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
-        public static new class CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts
         {
-            public static readonly CompletionPart Start_AttributeClass = new CompletionPart(nameof(Start_AttributeClass));
-            public static readonly CompletionPart Finish_AttributeClass = new CompletionPart(nameof(Finish_AttributeClass));
-            public static readonly CompletionPart Start_Attributes = new CompletionPart(nameof(Start_Attributes));
-            public static readonly CompletionPart Finish_Attributes = new CompletionPart(nameof(Finish_Attributes));
+            public static readonly __CompletionPart Start_AttributeClass = new __CompletionPart(nameof(Start_AttributeClass));
+            public static readonly __CompletionPart Finish_AttributeClass = new __CompletionPart(nameof(Finish_AttributeClass));
 
-            public static readonly CompletionGraph CompletionGraph = 
-                CompletionGraph.CreateFromParts(
-                    Start_AttributeClass, Finish_AttributeClass,
-                    Start_Attributes, Finish_Attributes
+            public static readonly __CompletionGraph CompletionGraph = 
+                __CompletionGraph.CreateFromParts(
+                    global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts.CompletionGraph
+                    , Start_AttributeClass, Finish_AttributeClass
                 );
         }
 
@@ -53,6 +54,7 @@ public abstract partial class AttributeSymbol: global::MetaDslx.CodeAnalysis.Sym
         }
 
         [__ModelProperty]
+[__Phase]
         public TypeSymbol AttributeClass
         {
             get
@@ -70,7 +72,7 @@ public abstract partial class AttributeSymbol: global::MetaDslx.CodeAnalysis.Sym
                 if (NotePartComplete(CompletionParts.Start_AttributeClass))
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Complete_AttributeClass(diagnostics, cancellationToken);
+                    var result = Compute_AttributeClass(diagnostics, cancellationToken);
                     _attributeClass = result;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -85,7 +87,7 @@ public abstract partial class AttributeSymbol: global::MetaDslx.CodeAnalysis.Sym
         }
 
 
-        protected virtual TypeSymbol Complete_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual TypeSymbol Compute_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<TypeSymbol>(this, nameof(AttributeClass), diagnostics, cancellationToken);
         }

@@ -24,6 +24,32 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _allPartsBeforeContainedSymbolsCompleted = ImmutableHashSet.CreateRange(_allParts.Where(p => p != ContainedSymbolsCompleted && p != StartValidating && p != FinishValidating));
         }
 
+        public static CompletionGraph CreateFromParts(CompletionGraph baseGraph, params CompletionPart[] parts)
+        {
+            var allParts = ArrayBuilder<CompletionPart>.GetInstance();
+            allParts.Add(StartInitializing);
+            allParts.Add(FinishInitializing);
+            allParts.Add(StartCreatingContainedSymbols);
+            allParts.Add(FinishCreatingContainedSymbols);
+            foreach (var part in baseGraph.Parts)
+            {
+                if (!WellKnownParts.Contains(part))
+                {
+                    allParts.Add(part);
+                }
+            }
+            allParts.AddRange(parts);
+            allParts.Add(StartComputingNonSymbolProperties);
+            allParts.Add(FinishComputingNonSymbolProperties);
+            allParts.Add(ContainedSymbolsFinalized);
+            allParts.Add(StartFinalizing);
+            allParts.Add(FinishFinalizing);
+            allParts.Add(ContainedSymbolsCompleted);
+            allParts.Add(StartValidating);
+            allParts.Add(FinishValidating);
+            return new CompletionGraph(allParts);
+        }
+
         public static CompletionGraph CreateFromParts(params CompletionPart[] parts)
         {
             var allParts = ArrayBuilder<CompletionPart>.GetInstance();

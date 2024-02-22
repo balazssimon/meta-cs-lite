@@ -20,7 +20,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         {
         }
 
-        protected override ImmutableArray<Modeling.MetaModel> Complete_MetaModels(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<Modeling.MetaModel> Compute_MetaModels(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
