@@ -63,8 +63,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public Symbol(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, MetaDslx.Modeling.Model? model = null, IModelObject? modelObject = null, ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default)
         {
             _container = container;
-            _underlyingObject = errorInfo ?? declaration ?? (object)csharpSymbol ?? (object)modelObject ?? model;
-            if (modelObject is not null || model is not null) s_modelObjects.Add(this, (object)modelObject ?? model);
+            _underlyingObject = errorInfo ?? declaration ?? (object)csharpSymbol ?? modelObject;
+            if (modelObject is not null && !object.ReferenceEquals(_underlyingObject, modelObject)) s_modelObjects.Add(this, modelObject);
             if (compilation is not null) s_compilations.Add(this, compilation);
             if (fixedSymbol)
             {
@@ -79,7 +79,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
         public bool IsSourceSymbol => _underlyingObject is MergedDeclaration || s_compilations.TryGetValue(this, out _);
-        public bool IsModelSymbol => _underlyingObject is MetaDslx.Modeling.Model || s_modelObjects.TryGetValue(this, out var model) && model is MetaDslx.Modeling.Model;
+        public bool IsModelSymbol => Model is not null;
         public bool IsModelObjectSymbol => _underlyingObject is IModelObject || s_modelObjects.TryGetValue(this, out var mobj) && mobj is IModelObject;
         public bool IsCSharpSymbol => _underlyingObject is ISymbol;
         public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _) && !(_underlyingObject is MergedDeclaration);
@@ -306,9 +306,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public virtual MetaDslx.Modeling.Model Model => _underlyingObject is MetaDslx.Modeling.Model model ? model : s_modelObjects.TryGetValue(this, out var csharpObj) && csharpObj is MetaDslx.Modeling.Model csharpModel ? csharpModel : ModelObject?.MModel;
+        public virtual MetaDslx.Modeling.Model Model => s_modelObjects.TryGetValue(this, out var smobj) ? (smobj as IModelObject)?.MModel : null;
 
-        public IModelObject? ModelObject => _underlyingObject is IModelObject mobj ? mobj : s_modelObjects.TryGetValue(this, out var csharpObj) && csharpObj is IModelObject csharpMObj ? csharpMObj : null;
+        public IModelObject? ModelObject => _underlyingObject is IModelObject mobj ? mobj : s_modelObjects.TryGetValue(this, out var smobj) ? smobj as IModelObject : null;
 
         public Type? ModelObjectType
         {

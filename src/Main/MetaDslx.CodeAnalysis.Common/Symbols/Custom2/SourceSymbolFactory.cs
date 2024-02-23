@@ -16,7 +16,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
     public class SourceSymbolFactory : SymbolFactory<MergedDeclaration>
     {
-        private static readonly ConditionalWeakTable<Type, SourceSymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SourceSymbolConstructor>();
+        private static readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
 
         public SourceSymbolFactory()
         {
@@ -59,7 +59,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return symbolConstructor.Invoke(container, underlyingObject);
         }
 
-        private SourceSymbolConstructor? GetConstructor(Symbol container, MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private SymbolConstructor? GetConstructor(Symbol container, MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var mobjType = underlyingObject.ModelObjectType;
             if (mobjType is null)
@@ -110,7 +110,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 }
                 if (containerIndex >= 0 && declarationIndex >= 0 && modelObjectIndex >= 0)
                 {
-                    symbolConstructor = s_constructors.GetValue(mobjType, t => new SourceSymbolConstructor(ctr, mobjInfo, parameters.Length, containerIndex, declarationIndex, modelObjectIndex));
+                    symbolConstructor = s_constructors.GetValue(mobjType, t => new SymbolConstructor(this, ctr, mobjInfo, parameters.Length, containerIndex, declarationIndex, modelObjectIndex));
                     break;
                 }
             }
@@ -122,12 +122,30 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return symbolConstructor;
         }
 
-        public ModelClassInfo? GetModelObjectInfo(Symbol container, Type mobjType)
+        protected override MergedDeclaration? GetParentCore(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (mobjType is null) return null;
-            var modelFactory = container.ContainingModule.ModelFactory;
-            if (modelFactory is null) return null;
-            return modelFactory.GetInfo(mobjType);
+            return null;
+        }
+
+        protected virtual IModelObject? CreateModelObject(Symbol container, MergedDeclaration declaration, ModelClassInfo info)
+        {
+            if (info is null) return null;
+            var mobj = info.Create(container.Model);
+            if (mobj is not null)
+            {
+                mobj.MName = declaration.Name;
+                if (container.ModelObject is not null)
+                {
+                    container.ModelObject.MChildren.Add(mobj);
+                    if (declaration.QualifierProperty is not null)
+                    {
+                        var qslot = container.ModelObject.MGetSlot(declaration.QualifierProperty);
+                        var box = qslot?.Add(mobj);
+                        box.Syntax = declaration.SyntaxReferences.FirstOrDefault();
+                    }
+                }
+            }
+            return mobj;
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -140,13 +158,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             throw new NotImplementedException();
         }
 
-        protected override MergedDeclaration? GetParentCore(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private class SymbolConstructor
         {
-            return null;
-        }
-
-        private class SourceSymbolConstructor
-        {
+            private readonly SourceSymbolFactory _factory;
             private readonly ConstructorInfo _constructorInfo;
             private readonly ModelClassInfo? _modelClassInfo;
             private readonly int _paramCount;
@@ -154,8 +168,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             private readonly int _declarationIndex;
             private readonly int _modelObjectIndex;
 
-            public SourceSymbolConstructor(ConstructorInfo constructorInfo, ModelClassInfo? modelClassInfo, int paramCount, int containerIndex, int declarationIndex, int modelObjectIndex) 
+            public SymbolConstructor(SourceSymbolFactory factory, ConstructorInfo constructorInfo, ModelClassInfo? modelClassInfo, int paramCount, int containerIndex, int declarationIndex, int modelObjectIndex) 
             {
+                _factory = factory;
                 _constructorInfo = constructorInfo;
                 _modelClassInfo = modelClassInfo;
                 _paramCount = paramCount;
@@ -169,33 +184,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 var args = new object[_paramCount];
                 args[_containerIndex] = container;
                 args[_declarationIndex] = declaration;
-                var mobj = CreateModelObject(container, declaration);
+                var mobj = _factory.CreateModelObject(container, declaration, _modelClassInfo);
                 args[_modelObjectIndex] = mobj;
-                //var symbol = (Symbol)_constructorInfo.Invoke(container, args);
                 var symbol = (Symbol)Activator.CreateInstance(_constructorInfo.DeclaringType, args);
                 if (mobj is not null) mobj.MSymbol = symbol;
                 return symbol;
-            }
-
-            private IModelObject? CreateModelObject(Symbol container, MergedDeclaration declaration)
-            {
-                if (_modelClassInfo is null) return null;
-                var mobj = _modelClassInfo.Create(container.Model);
-                if (mobj is not null)
-                {
-                    mobj.MName = declaration.Name;
-                    if (container.ModelObject is not null)
-                    {
-                        container.ModelObject.MChildren.Add(mobj);
-                        if (declaration.QualifierProperty is not null)
-                        {
-                            var qslot = container.ModelObject.MGetSlot(declaration.QualifierProperty);
-                            var box = qslot?.Add(mobj);
-                            box.Syntax = declaration.SyntaxReferences.FirstOrDefault();
-                        }
-                    }
-                }
-                return mobj;
             }
         }
     }

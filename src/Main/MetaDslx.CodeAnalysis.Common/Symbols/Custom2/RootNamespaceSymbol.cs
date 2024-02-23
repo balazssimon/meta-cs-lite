@@ -10,12 +10,20 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
+
     internal sealed class RootNamespaceSymbol : Impl.NamespaceSymbolImpl
     {
         private readonly MetaDslx.Modeling.Model _model;
 
         public RootNamespaceSymbol(ModuleSymbol container, MergedDeclaration declaration, MetaDslx.Modeling.Model model)
             : base(container, container.DeclaringCompilation, declaration: declaration, extent: new NamespaceExtent(container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule))
+        {
+            _model = model;
+        }
+
+        public RootNamespaceSymbol(ModuleSymbol container, INamespaceSymbol csharpSymbol, MetaDslx.Modeling.Model model)
+            : base(container, container.DeclaringCompilation, csharpSymbol: csharpSymbol, extent: new NamespaceExtent(container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule))
         {
             _model = model;
         }

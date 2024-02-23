@@ -63,7 +63,7 @@ namespace MetaDslx.CodeAnalysis
             return new ModelGroup();
         }
 
-        public virtual Model CreateSourceModel()
+        public virtual Model CreateModel(ModuleSymbol moduleSymbol)
         {
             return new Model();
         }

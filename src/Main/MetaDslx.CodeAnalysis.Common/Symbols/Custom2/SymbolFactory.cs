@@ -22,7 +22,18 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public void AddSymbol(Symbol symbol)
         {
-            _symbols.Add(symbol._underlyingObject, symbol);
+            if (symbol._underlyingObject is not null)
+            {
+                _symbols.Add(symbol._underlyingObject, symbol);
+            }
+            else if (symbol is ModuleSymbol)
+            {
+                if (symbol.Model is not null) _symbols.Add(symbol.Model, symbol);
+            }
+            else
+            {
+                throw new ArgumentException("Underlying object of the symbol is missing.", nameof(symbol));
+            }
         }
 
         public Symbol? CreateSymbol(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
