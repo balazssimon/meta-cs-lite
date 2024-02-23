@@ -20,7 +20,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
     public class CSharpSymbolFactory : SymbolFactory<ISymbol>
     {
-        private static readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
+        private readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
 
         public CSharpSymbolFactory() 
         {
@@ -148,12 +148,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return ImmutableArray<TValue>.Empty;
         }
 
         public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            // nop
         }
 
         private class SymbolConstructor

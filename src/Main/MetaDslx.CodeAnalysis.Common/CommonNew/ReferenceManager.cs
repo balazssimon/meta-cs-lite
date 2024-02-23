@@ -260,7 +260,7 @@ namespace MetaDslx.CodeAnalysis
                 }
                 assembly.DangerousSetModules(modulesBuilder.ToImmutableAndFree());
             }
-            var modelSymbolFactory = compilationFactory.CreateModelSymbolFactory();
+            var modelSymbolFactory = compilationFactory.CreateModelSymbolFactory(compilation);
             foreach (var reference in compilation.ExternalReferences.OfType<MetaModelReference>())
             {
                 var module = new ModuleSymbolImpl(null, modelSymbolFactory, reference.MetaModel.MModel);
@@ -275,7 +275,7 @@ namespace MetaDslx.CodeAnalysis
             }
             referencedModulesBuilder.AddRange(CreateModules(compilation));
             var referencedModules = referencedModulesBuilder.ToImmutableAndFree();
-            var sourceSymbolFactory = compilationFactory.CreateSourceSymbolFactory();
+            var sourceSymbolFactory = compilationFactory.CreateSourceSymbolFactory(compilation);
             var assemblySymbol = new AssemblySymbolImpl(compilation, sourceSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly.Name, csharpCompilation.SourceModule.Name, referencedModules);
             //sourceSymbolFactory.AddSymbol(assemblySymbol);
             if ((object)compilation._lazyAssemblySymbol == null)

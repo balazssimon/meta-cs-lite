@@ -1,12 +1,11 @@
-﻿using MetaDslx.CodeAnalysis.Declarations;
+﻿using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling;
-using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -14,13 +13,19 @@ using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
+    using ConstructorInfo = System.Reflection.ConstructorInfo;
+
     public class SourceSymbolFactory : SymbolFactory<MergedDeclaration>
     {
-        private static readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
+        private readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
+        private readonly Compilation _compilation;
 
-        public SourceSymbolFactory()
+        public SourceSymbolFactory(Compilation compilation)
         {
+            _compilation = compilation;
         }
+
+        public Compilation Compilation => _compilation;
 
         public override string? GetName(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
@@ -150,12 +155,181 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (symbol is null) return ImmutableArray<TValue>.Empty;
+            if (symbol.IsModelSymbol) return GetModelSymbolPropertyValues<TValue>(symbol, symbolProperty, diagnostics, cancellationToken);
+            else return GetNonModelSymbolPropertyValues<TValue>(symbol, symbolProperty, diagnostics, cancellationToken);
         }
 
-        public override void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private ImmutableArray<TValue> GetModelSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (symbol is null) return ImmutableArray<TValue>.Empty;
+            var modelObject = symbol.ModelObject;
+            if (modelObject is null) return ImmutableArray<TValue>.Empty;
+            var converter = Compilation.SymbolValueConverter;
+            if (converter is null) return ImmutableArray<TValue>.Empty;
+            var builder = ArrayBuilder<TValue>.GetInstance();
+            foreach (var prop in modelObject.MInfo.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
+            {
+                var slot = modelObject.MGetSlot(prop);
+                if (slot is null) continue;
+                foreach (var decl in symbol.DeclaringSyntaxReferences)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    if (decl.IsNull) continue;
+                    if (TryGetDeclarationBinder(symbol, decl, out var declBinder, out var isNesting))
+                    {
+                        var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
+                        foreach (var propBinder in propBinders)
+                        {
+                            var valueBinders = propBinder.GetValueBinders(cancellationToken);
+                            foreach (var valueBinder in valueBinders)
+                            {
+                                var values = ((Binder)valueBinder).Bind(cancellationToken);
+                                foreach (var value in values)
+                                {
+                                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol) continue;
+                                    var symbolValueSuccess = converter.TryConvertTo(value, typeof(TValue), out var symbolValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                    var mobjValueSuccess = converter.TryConvertTo(value, slot.Property.SlotProperty.Type, out var mobjValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                    if (symbolValueSuccess && mobjValueSuccess)
+                                    {
+                                        builder.Add((TValue)symbolValue);
+                                        try
+                                        {
+                                            var box = slot.Add(mobjValue);
+                                            if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not assign value {mobjValue} to {slot} in SourceSymbolFactory: {ex.ToString()}"));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (!isNesting)
+                    {
+                        diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.MergedDeclaration.Name}' in SourceSymbolFactory."));
+                    }
+                }
+            }
+            return builder.ToImmutableAndFree();
+        }
+
+        public override void ComputeNonSymbolProperties(Symbol? symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (symbol is null) return;
+            var modelObject = symbol.ModelObject;
+            if (modelObject is null) return;
+            var converter = Compilation.SymbolValueConverter;
+            if (converter is null) return;
+            foreach (var decl in symbol.DeclaringSyntaxReferences)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (decl.IsNull) continue;
+                if (TryGetDeclarationBinder(symbol, decl, out var declBinder, out var isNesting))
+                {
+                    var propBinders = declBinder.GetPropertyBinders(propertyName: null, cancellationToken);
+                    foreach (var propBinder in propBinders)
+                    {
+                        var prop = modelObject.MInfo.GetProperty(propBinder.Name);
+                        if (prop is not null && prop.SymbolProperty is null)
+                        {
+                            var slot = modelObject.MGetSlot(prop);
+                            if (slot is null) continue;
+                            var valueBinders = propBinder.GetValueBinders(cancellationToken);
+                            foreach (var valueBinder in valueBinders)
+                            {
+                                var values = ((Binder)valueBinder).Bind(cancellationToken);
+                                foreach (var value in values)
+                                {
+                                    if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol) continue;
+                                    var mobjValueSuccess = converter.TryConvertTo(value, slot.Property.SlotProperty.Type, out var mobjValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                    if (mobjValueSuccess)
+                                    {
+                                        try
+                                        {
+                                            var box = slot.Add(mobjValue);
+                                            if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not assign value {mobjValue} to {slot} in SourceSymbolFactory: {ex.ToString()}"));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (!isNesting)
+                {
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.MergedDeclaration.Name}' in SourceSymbolFactory."));
+                }
+            }
+        }
+
+        private ImmutableArray<TValue> GetNonModelSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var converter = Compilation.SymbolValueConverter;
+            if (converter is null) return ImmutableArray<TValue>.Empty;
+            var builder = ArrayBuilder<TValue>.GetInstance();
+            foreach (var decl in symbol.DeclaringSyntaxReferences)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (decl.IsNull) continue;
+                if (TryGetDeclarationBinder(symbol, decl, out var declBinder, out var isNesting))
+                {
+                    var propBinders = declBinder.GetPropertyBinders(symbolProperty, cancellationToken);
+                    foreach (var propBinder in propBinders)
+                    {
+                        var valueBinders = propBinder.GetValueBinders(cancellationToken);
+                        foreach (var valueBinder in valueBinders)
+                        {
+                            var values = ((Binder)valueBinder).Bind(cancellationToken);
+                            foreach (var value in values)
+                            {
+                                if (value is Symbol valueSymbol && valueSymbol.IsErrorSymbol) continue;
+                                var symbolValueSuccess = converter.TryConvertTo(value, typeof(TValue), out var symbolValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                if (symbolValueSuccess)
+                                {
+                                    builder.Add((TValue)symbolValue);
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (!isNesting)
+                {
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.MergedDeclaration.Name}' in SourceSymbolFactory."));
+                }
+            }
+            return builder.ToImmutableAndFree();
+        }
+
+        protected bool TryGetDeclarationBinder(Symbol symbol, SyntaxNodeOrToken declaration, out IDefineBinder? binder, out bool isNesting)
+        {
+            binder = null;
+            var declBinder = Compilation.GetBinder(declaration);
+            isNesting = false;
+            while (declBinder is not null)
+            {
+                if (declBinder is IDefineBinder defineBinder)
+                {
+                    if (defineBinder.DefinedSymbols.Contains(symbol))
+                    {
+                        binder = defineBinder;
+                        return true;
+                    }
+                    else if (defineBinder.NestingSymbols.Contains(symbol))
+                    {
+                        isNesting = true;
+                    }
+                    return false;
+                }
+                declBinder = declBinder.ParentBinder;
+            }
+            return false;
         }
 
         private class SymbolConstructor

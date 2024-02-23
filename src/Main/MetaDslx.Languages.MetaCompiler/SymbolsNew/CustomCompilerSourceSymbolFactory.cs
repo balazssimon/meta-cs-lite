@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Symbols.Source;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols.Source;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
     internal class CustomCompilerSourceSymbolFactory : SourceSymbolFactory
     {
-        public CustomCompilerSourceSymbolFactory() 
+        public CustomCompilerSourceSymbolFactory(Compilation compilation) 
+            : base(compilation) 
         {
             /*Register((s, d, mo) => new AnnotationSymbol(s, d, mo));
             Register((s, d, mo) => new AnnotationArgumentSymbol(s, d, mo));
