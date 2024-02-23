@@ -35,14 +35,13 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 );
         }
 
-        internal static readonly ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
-        internal static readonly ConditionalWeakTable<Symbol, DiagnosticBag> s_useSiteDiagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
-        internal static readonly ConditionalWeakTable<Symbol, string> s_names = new ConditionalWeakTable<Symbol, string>();
-        internal static readonly ConditionalWeakTable<Symbol, string> s_metadataNames = new ConditionalWeakTable<Symbol, string>();
-        internal static readonly ConditionalWeakTable<Symbol, object> s_attributes = new ConditionalWeakTable<Symbol, object>();
-        internal static readonly ConditionalWeakTable<Symbol, MergedDeclaration> s_declarations = new ConditionalWeakTable<Symbol, MergedDeclaration>();
-        internal static readonly ConditionalWeakTable<Symbol, Compilation> s_compilations = new ConditionalWeakTable<Symbol, Compilation>();
-        internal static readonly ConditionalWeakTable<Symbol, object> s_csharpToModelObjects = new ConditionalWeakTable<Symbol, object>();
+        private static readonly ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
+        private static readonly ConditionalWeakTable<Symbol, DiagnosticBag> s_useSiteDiagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
+        private static readonly ConditionalWeakTable<Symbol, string> s_names = new ConditionalWeakTable<Symbol, string>();
+        private static readonly ConditionalWeakTable<Symbol, string> s_metadataNames = new ConditionalWeakTable<Symbol, string>();
+        private static readonly ConditionalWeakTable<Symbol, object> s_attributes = new ConditionalWeakTable<Symbol, object>();
+        private static readonly ConditionalWeakTable<Symbol, Compilation> s_compilations = new ConditionalWeakTable<Symbol, Compilation>();
+        private static readonly ConditionalWeakTable<Symbol, object> s_modelObjects = new ConditionalWeakTable<Symbol, object>();
 
         /// <summary>
         /// This field keeps track of the <see cref="CompletionPart"/>s for which we already retrieved
@@ -63,11 +62,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public Symbol(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, MetaDslx.Modeling.Model? model = null, IModelObject? modelObject = null, ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default)
         {
-            _completeParts = -1;
             _container = container;
-            _underlyingObject = errorInfo ?? (object)csharpSymbol ?? (object)modelObject ?? model;
-            if (csharpSymbol is not null && (modelObject is not null || model is not null)) s_csharpToModelObjects.Add(this, (object)modelObject ?? model);
-            if (declaration is not null) s_declarations.Add(this, declaration);
+            _underlyingObject = errorInfo ?? declaration ?? (object)csharpSymbol ?? (object)modelObject ?? model;
+            if (modelObject is not null || model is not null) s_modelObjects.Add(this, (object)modelObject ?? model);
             if (compilation is not null) s_compilations.Add(this, compilation);
             if (fixedSymbol)
             {
@@ -78,12 +75,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        
+
         public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
-        public bool IsSourceSymbol => s_declarations.TryGetValue(this, out _) || s_compilations.TryGetValue(this, out _);
-        public bool IsModelSymbol => _underlyingObject is MetaDslx.Modeling.Model || s_csharpToModelObjects.TryGetValue(this, out var model) && model is MetaDslx.Modeling.Model;
-        public bool IsModelObjectSymbol => _underlyingObject is IModelObject || s_csharpToModelObjects.TryGetValue(this, out var mobj) && mobj is IModelObject;
+        public bool IsSourceSymbol => _underlyingObject is MergedDeclaration || s_compilations.TryGetValue(this, out _);
+        public bool IsModelSymbol => _underlyingObject is MetaDslx.Modeling.Model || s_modelObjects.TryGetValue(this, out var model) && model is MetaDslx.Modeling.Model;
+        public bool IsModelObjectSymbol => _underlyingObject is IModelObject || s_modelObjects.TryGetValue(this, out var mobj) && mobj is IModelObject;
         public bool IsCSharpSymbol => _underlyingObject is ISymbol;
-        public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _) && !s_declarations.TryGetValue(this, out _);
+        public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _) && !(_underlyingObject is MergedDeclaration);
 
         public Symbol ContainingSymbol => _container;
 
@@ -285,14 +284,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        public MergedDeclaration? MergedDeclaration
-        {
-            get
-            {
-                if (s_declarations.TryGetValue(this, out var decl)) return decl;
-                else return null;
-            }
-        }
+        public MergedDeclaration? MergedDeclaration => _underlyingObject as MergedDeclaration;
 
         public SyntaxNodeOrToken DeclaringSyntaxReference => DeclaringSyntaxReferences.FirstOrDefault();
 
@@ -314,9 +306,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public MetaDslx.Modeling.Model Model => _underlyingObject is MetaDslx.Modeling.Model model ? model : s_csharpToModelObjects.TryGetValue(this, out var csharpObj) && csharpObj is MetaDslx.Modeling.Model csharpModel ? csharpModel : ModelObject?.MModel;
+        public virtual MetaDslx.Modeling.Model Model => _underlyingObject is MetaDslx.Modeling.Model model ? model : s_modelObjects.TryGetValue(this, out var csharpObj) && csharpObj is MetaDslx.Modeling.Model csharpModel ? csharpModel : ModelObject?.MModel;
 
-        public IModelObject? ModelObject => _underlyingObject is IModelObject mobj ? mobj : s_csharpToModelObjects.TryGetValue(this, out var csharpObj) && csharpObj is IModelObject csharpMObj ? csharpMObj : null;
+        public IModelObject? ModelObject => _underlyingObject is IModelObject mobj ? mobj : s_modelObjects.TryGetValue(this, out var csharpObj) && csharpObj is IModelObject csharpMObj ? csharpMObj : null;
 
         public Type? ModelObjectType
         {

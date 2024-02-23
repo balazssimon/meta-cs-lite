@@ -54,160 +54,23 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 );
         }
 
-        private global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory _symbolFactory;
-        private ModuleSymbol? _sourceModule;
-        private global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> _modules;
-        private bool _isCorLibrary;
-        private NamespaceSymbol _globalNamespace;
-
-        public AssemblySymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory symbolFactory = default, ModuleSymbol? sourceModule = default, global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> modules = default, bool isCorLibrary = default) 
+        public AssemblySymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
         {
-            if (fixedSymbol)
-            {
-                _symbolFactory = symbolFactory;
-                _sourceModule = sourceModule;
-                _modules = modules;
-                _isCorLibrary = isCorLibrary;
-            }
         }
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        [__ModelProperty]
-        public global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory
-        {
-            get => _symbolFactory;
-            protected set => _symbolFactory = value;
-        }
-        [__ModelProperty]
-        public ModuleSymbol? SourceModule
-        {
-            get => _sourceModule;
-            protected set => _sourceModule = value;
-        }
-        [__ModelProperty]
-        public global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules
-        {
-            get => _modules;
-            protected set => _modules = value;
-        }
-        [__ModelProperty]
-[__Phase]
-        public bool IsCorLibrary
-        {
-            get
-            {
-                this.ForceComplete(CompletionParts.Finish_IsCorLibrary, null, default);
-                return _isCorLibrary;
-            }
-        }
-[__Phase]
-[__Derived]
-        public NamespaceSymbol GlobalNamespace
-        {
-            get
-            {
-                this.ForceComplete(CompletionParts.Finish_GlobalNamespace, null, default);
-                return _globalNamespace;
-            }
-        }
-
+        public abstract global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory { get; }
+        public abstract ModuleSymbol? SourceModule { get; }
+        public abstract global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules { get; }
+        public abstract bool IsCorLibrary { get; }
+        public abstract NamespaceSymbol GlobalNamespace { get; }
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
-            if (incompletePart == CompletionParts.Start_SymbolFactory || incompletePart == CompletionParts.Finish_SymbolFactory)
-            {
-                if (NotePartComplete(CompletionParts.Start_SymbolFactory))
-                {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_SymbolFactory(diagnostics, cancellationToken);
-                    _symbolFactory = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.Finish_SymbolFactory);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.Start_SourceModule || incompletePart == CompletionParts.Finish_SourceModule)
-            {
-                if (NotePartComplete(CompletionParts.Start_SourceModule))
-                {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_SourceModule(diagnostics, cancellationToken);
-                    _sourceModule = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.Finish_SourceModule);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.Start_Modules || incompletePart == CompletionParts.Finish_Modules)
-            {
-                if (NotePartComplete(CompletionParts.Start_Modules))
-                {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_Modules(diagnostics, cancellationToken);
-                    _modules = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.Finish_Modules);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.Start_IsCorLibrary || incompletePart == CompletionParts.Finish_IsCorLibrary)
-            {
-                if (NotePartComplete(CompletionParts.Start_IsCorLibrary))
-                {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_IsCorLibrary(diagnostics, cancellationToken);
-                    _isCorLibrary = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.Finish_IsCorLibrary);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.Start_GlobalNamespace || incompletePart == CompletionParts.Finish_GlobalNamespace)
-            {
-                if (NotePartComplete(CompletionParts.Start_GlobalNamespace))
-                {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_GlobalNamespace(diagnostics, cancellationToken);
-                    _globalNamespace = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.Finish_GlobalNamespace);
-                }
-                return true;
-            }
-            else 
-            {
-                return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
-            }
+            return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
         }
 
-
-        protected virtual global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory Compute_SymbolFactory(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory>(this, nameof(SymbolFactory), diagnostics, cancellationToken);
-        }
-
-        protected virtual ModuleSymbol? Compute_SourceModule(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<ModuleSymbol>(this, nameof(SourceModule), diagnostics, cancellationToken);
-        }
-
-        protected virtual global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Compute_Modules(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<ModuleSymbol>(this, nameof(Modules), diagnostics, cancellationToken);
-        }
-
-        protected virtual bool Compute_IsCorLibrary(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
-        {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsCorLibrary), diagnostics, cancellationToken);
-        }
-
-        protected abstract NamespaceSymbol Compute_GlobalNamespace(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

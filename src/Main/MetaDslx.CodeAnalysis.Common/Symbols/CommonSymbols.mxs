@@ -25,6 +25,7 @@ symbol Assembly
 symbol Module
 {
     plain ISymbolFactory SymbolFactory
+    plain MetaDslx.Modeling.MultiModelFactory ModelFactory
     plain Namespace GlobalNamespace
     NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
 }

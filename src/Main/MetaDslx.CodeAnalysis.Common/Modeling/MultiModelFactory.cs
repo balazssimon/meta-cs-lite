@@ -25,18 +25,18 @@ namespace MetaDslx.Modeling
         public IModelObject? Create(Model model, Type? modelObjectType, string? id = null)
         {
             if (modelObjectType is null) return null;
-            var info = infosByType.GetValue(modelObjectType, CreateInfo);
+            var info = infosByType.GetValue(modelObjectType, GetInfo);
             return info?.Create(model, id);
         }
 
         public IModelObject? Create(Model model, string? modelObjectTypeName, string? id = null)
         {
             if (modelObjectTypeName is null) return null;
-            var info = infosByName.GetValue(modelObjectTypeName, CreateInfo);
+            var info = infosByName.GetValue(modelObjectTypeName, GetInfo);
             return info?.Create(model, id);
         }
 
-        private ModelClassInfo? CreateInfo(Type modelObjectType)
+        public ModelClassInfo? GetInfo(Type modelObjectType)
         {
             foreach (var metaModel in _metaModels)
             {
@@ -48,7 +48,7 @@ namespace MetaDslx.Modeling
             return null;
         }
 
-        private ModelClassInfo? CreateInfo(string modelObjectTypeName)
+        public ModelClassInfo? GetInfo(string modelObjectTypeName)
         {
             foreach (var metaModel in _metaModels)
             {

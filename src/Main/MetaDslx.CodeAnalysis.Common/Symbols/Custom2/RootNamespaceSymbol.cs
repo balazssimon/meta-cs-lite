@@ -20,6 +20,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _model = model;
         }
 
+        public override Modeling.Model Model => _model;
+
         protected override string? Compute_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return string.Empty;

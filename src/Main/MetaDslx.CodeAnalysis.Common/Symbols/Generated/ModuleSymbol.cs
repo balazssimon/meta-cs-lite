@@ -27,6 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
+    using MetaDslx.Modeling;
 
     public abstract partial class ModuleSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
@@ -46,6 +47,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         public abstract global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory { get; }
+
+        public abstract MultiModelFactory? ModelFactory { get; }
 
         public abstract NamespaceSymbol GlobalNamespace { get; }
 

@@ -30,6 +30,8 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public ImmutableArray<SingleDeclaration> Declarations => _declarations;
 
+        public SourceLocation FirstLocation => NameLocations.FirstOrDefault() ?? _declarations[0].SyntaxReference.GetLocation() as SourceLocation;
+
         public ImmutableArray<SyntaxNodeOrToken> SyntaxReferences => _declarations.SelectAsArray(decl => decl.SyntaxReference);
 
         public ImmutableArray<SourceLocation> NameLocations => _declarations.Where(decl => decl.NameLocation is not null).Select(decl => decl.NameLocation).ToImmutableArray();

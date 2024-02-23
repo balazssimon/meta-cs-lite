@@ -88,7 +88,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             int index = _parts.IndexOf(part);
             Debug.Assert(index >= 0);
-            return index;
+            return index + 1;
         }
 
         public bool HasComplete(CompletionPart part, int completeParts)
@@ -100,17 +100,17 @@ namespace MetaDslx.CodeAnalysis.Symbols
             int index = _parts.IndexOf(part);
             Debug.Assert(index >= 0);
             if (index < 0) return false;
-            return index <= completeParts;
+            return index + 1 <= completeParts;
         }
 
         public IEnumerable<CompletionPart> IncompleteParts(int completeParts)
         {
-            return _parts.Skip(completeParts);
+            return _parts.Skip(completeParts - 1);
         }
 
         public CompletionPart NextIncompletePart(int completeParts)
         {
-            if (completeParts + 1 < _parts.Length) return _parts[completeParts + 1];
+            if (completeParts < _parts.Length) return _parts[completeParts];
             else return null;
         }
     }

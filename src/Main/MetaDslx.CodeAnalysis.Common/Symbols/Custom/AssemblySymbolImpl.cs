@@ -15,21 +15,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
     public class AssemblySymbolImpl : AssemblySymbol
     {
         private readonly Compilation _compilation;
+        private readonly ISymbolFactory _symbolFactory;
         private readonly string _assemblySimpleName;
         private readonly ModelGroup _modelGroup;
+        private readonly ModuleSymbol _sourceModule;
+        private ImmutableArray<ModuleSymbol> _modules;
         private NamespaceSymbol _globalNamespace;
 
         public AssemblySymbolImpl(Compilation compilation, ISymbolFactory symbolFactory, string assemblySimpleName, string moduleName, ImmutableArray<ModuleSymbol> referencedModules)
             : base(container: null)
         {
             _compilation = compilation;
-            SymbolFactory = symbolFactory;
+            _symbolFactory = symbolFactory;
             _assemblySimpleName = assemblySimpleName;
 
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
             _modelGroup = compilationFactory.CreateModelGroup();
 
-            SourceModule = new ModuleSymbolImpl(this, symbolFactory, moduleName, compilation.DeclarationTable);
+            _sourceModule = new ModuleSymbolImpl(this, symbolFactory, moduleName, compilation.DeclarationTable);
             SymbolFactory.AddSymbol(SourceModule);
 
             ArrayBuilder<ModuleSymbol> moduleBuilder = new ArrayBuilder<ModuleSymbol>(1 + referencedModules.Length);
@@ -43,15 +46,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
                     _modelGroup.AddReference(reference.Model);
                 }
             }
-            Modules = moduleBuilder.ToImmutable();
+            _modules = moduleBuilder.ToImmutable();
         }
 
         public AssemblySymbolImpl(ISymbolFactory symbolFactory, IAssemblySymbol csharpAssemblySymbol)
             : base(container: null, csharpSymbol: csharpAssemblySymbol)
         {
-            SymbolFactory = symbolFactory;
+            _symbolFactory = symbolFactory;
         }
 
+        public override ISymbolFactory SymbolFactory => _symbolFactory;
+        public override ModuleSymbol? SourceModule => _sourceModule;
+        public override ImmutableArray<ModuleSymbol> Modules => _modules;
         public ModelGroup ModelGroup => _modelGroup;
 
         public override AssemblySymbol? ContainingAssembly => null;
@@ -60,13 +66,38 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
 
         public override ImmutableArray<Location> Locations => Modules.SelectMany(m => m.Locations).AsImmutable();
 
+        public override bool IsCorLibrary
+        {
+            get
+            {
+                var systemObject = ((IAssemblySymbol)CSharpSymbol).GetTypeByMetadataName("System.Object");
+                if (systemObject is null) return false;
+                return systemObject.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public &&
+                    systemObject.TypeKind == TypeKind.Class;
+            }
+        }
+
+        public override NamespaceSymbol GlobalNamespace
+        {
+            get
+            {
+                if (_globalNamespace is null)
+                {
+                    var moduleGlobalNamespaces = Modules.Select(m => m.GlobalNamespace).Where(ns => ns is not null).ToImmutableArray();
+                    var mergedGlobalNamespace = MergedNamespaceSymbol.Create(new NamespaceExtent(this), null, moduleGlobalNamespaces);
+                    Interlocked.CompareExchange(ref _globalNamespace, mergedGlobalNamespace, null);
+                }
+                return _globalNamespace;
+            }
+        }
+
         /// <summary>
         /// A list of modules the assembly consists of. 
         /// The first (index=0) module is a SourceModuleSymbol, which is a primary module, the rest are net-modules.
         /// </summary>
         internal void DangerousSetModules(ImmutableArray<ModuleSymbol> modules)
         {
-            Modules = modules;
+            _modules = modules;
         }
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -79,19 +110,19 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
             return _assemblySimpleName;
         }
 
-        protected override NamespaceSymbol Compute_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override string? Compute_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var moduleGlobalNamespaces = Modules.Select(m => m.GlobalNamespace).Where(ns => ns is not null).ToImmutableArray();
-            var mergedGlobalNamespace = MergedNamespaceSymbol.Create(new NamespaceExtent(this), null, moduleGlobalNamespaces);
-            return mergedGlobalNamespace;
+            return _assemblySimpleName;
         }
 
-        protected override bool Compute_IsCorLibrary(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<AttributeSymbol> Compute_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var systemObject = ((IAssemblySymbol)CSharpSymbol).GetTypeByMetadataName("System.Object");
-            if (systemObject is null) return false;
-            return systemObject.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public &&
-                systemObject.TypeKind == TypeKind.Class;
+            return ImmutableArray<AttributeSymbol>.Empty;
+        }
+
+        protected override void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            // nop
         }
 
     }

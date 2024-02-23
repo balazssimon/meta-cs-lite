@@ -51,7 +51,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         }
 
         public override ISymbolFactory SymbolFactory => _symbolFactory;
-        public MultiModelFactory ModelFactory => _modelFactory;
+        public override MultiModelFactory? ModelFactory => _modelFactory;
 
         public override AssemblySymbol? ContainingAssembly => this.ContainingSymbol as AssemblySymbol;
         public override ModuleSymbol? ContainingModule => null;
