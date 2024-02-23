@@ -277,7 +277,7 @@ namespace MetaDslx.CodeAnalysis
             var referencedModules = referencedModulesBuilder.ToImmutableAndFree();
             var sourceSymbolFactory = compilationFactory.CreateSourceSymbolFactory();
             var assemblySymbol = new AssemblySymbolImpl(compilation, sourceSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly.Name, csharpCompilation.SourceModule.Name, referencedModules);
-            sourceSymbolFactory.AddSymbol(assemblySymbol);
+            //sourceSymbolFactory.AddSymbol(assemblySymbol);
             if ((object)compilation._lazyAssemblySymbol == null)
             {
                 lock (SymbolCacheAndReferenceManagerStateGuard)

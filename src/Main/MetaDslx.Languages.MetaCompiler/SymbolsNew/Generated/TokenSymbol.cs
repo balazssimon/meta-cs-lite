@@ -58,6 +58,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         [__ModelProperty]
 [__Phase]
         public global::MetaDslx.CodeAnalysis.MetaType ReturnType

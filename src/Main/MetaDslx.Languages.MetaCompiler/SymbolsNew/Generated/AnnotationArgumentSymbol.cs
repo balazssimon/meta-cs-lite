@@ -72,8 +72,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
-[__Phase]
-[__Derived]
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
+        [__Phase]
+        [__Derived]
         public AnnotationSymbol? AnnotationSymbol
         {
             get

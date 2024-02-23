@@ -18,14 +18,14 @@ symbol Assembly
     plain ISymbolFactory SymbolFactory
     plain Module? SourceModule
     plain Module[] Modules
-    bool IsCorLibrary
-    derived Namespace GlobalNamespace
+    plain Namespace GlobalNamespace
+    plain bool IsCorLibrary
 }
 
 symbol Module
 {
     plain ISymbolFactory SymbolFactory
-    derived Namespace GlobalNamespace
+    plain Namespace GlobalNamespace
     NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
 }
 
@@ -72,11 +72,11 @@ symbol Alias : Declaration
 
 symbol Namespace : Declaration
 {
-    NamespaceExtent Extent
+    plain NamespaceExtent Extent
+    plain bool IsGlobalNamespace
+    plain NamespaceKind NamespaceKind
+    plain Compilation? ContainingCompilation
 
-    derived bool IsGlobalNamespace
-    derived NamespaceKind NamespaceKind
-    derived Compilation? ContainingCompilation
     derived Namespace[] ConstituentNamespaces
     derived Namespace[] NamespaceMembers
     Namespace? LookupNestedNamespace(string[] names)

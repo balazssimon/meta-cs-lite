@@ -81,6 +81,8 @@ namespace [symbol.NamespaceName]
             }
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         [foreach (var prop in symbol.Properties)]
             [if (!prop.IsDerived)]
                 ["["]__ModelProperty["]"]

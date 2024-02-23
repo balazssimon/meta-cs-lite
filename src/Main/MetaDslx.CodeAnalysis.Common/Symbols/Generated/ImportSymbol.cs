@@ -72,6 +72,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         [__ModelProperty]
 [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<string> Files

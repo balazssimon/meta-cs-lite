@@ -58,12 +58,12 @@ namespace MetaDslx.CodeAnalysis
             return new MultiModelFactory(metaModels);
         }
 
-        public virtual ModelGroup CreateModelGroup(Compilation compilation)
+        public virtual ModelGroup CreateModelGroup()
         {
             return new ModelGroup();
         }
 
-        public virtual Model CreateSourceModel(Compilation compilation)
+        public virtual Model CreateSourceModel()
         {
             return new Model();
         }

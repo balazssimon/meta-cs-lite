@@ -20,6 +20,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
             _model = model;
         }
 
+        protected override string? Compute_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return string.Empty;
+        }
+
+        protected override string? Compute_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return string.Empty;
+        }
+
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (MergedDeclaration is null)

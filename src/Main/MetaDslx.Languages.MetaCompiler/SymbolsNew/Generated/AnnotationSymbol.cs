@@ -67,6 +67,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         [__ModelProperty]
 [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Arguments

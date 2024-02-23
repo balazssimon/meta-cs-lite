@@ -27,7 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
             _assemblySimpleName = assemblySimpleName;
 
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
-            _modelGroup = compilationFactory.CreateModelGroup(compilation);
+            _modelGroup = compilationFactory.CreateModelGroup();
 
             SourceModule = new ModuleSymbolImpl(this, symbolFactory, moduleName, compilation.DeclarationTable);
             SymbolFactory.AddSymbol(SourceModule);

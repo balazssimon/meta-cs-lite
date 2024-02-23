@@ -48,6 +48,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
 
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)

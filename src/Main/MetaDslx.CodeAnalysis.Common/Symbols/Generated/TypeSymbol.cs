@@ -78,6 +78,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         [__ModelProperty]
 [__Phase]
         public bool IsReferenceType

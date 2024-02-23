@@ -84,14 +84,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 : new MergedNamespaceSymbol(extent, containingNamespace, namespacesToMerge, nameOpt);
         }
 
+        public override Compilation? ContainingCompilation => Extent.Compilation;
+
         public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.DeclaringSyntaxReferences).AsImmutable();
 
         public override ImmutableArray<Location> Locations => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Locations).AsImmutable();
-
-        protected override Compilation? Compute_ContainingCompilation(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return Extent.Compilation;
-        }
 
         protected override ImmutableArray<NamespaceSymbol> Compute_ConstituentNamespaces(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

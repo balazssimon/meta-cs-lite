@@ -19,50 +19,72 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
 
     public class ModuleSymbolImpl : ModuleSymbol
     {
-        private readonly MetaDslx.Modeling.Model _model;
+        private readonly string _moduleName;
+        private readonly ISymbolFactory _symbolFactory;
         private readonly MultiModelFactory _modelFactory;
         private readonly DeclarationTable _declarations;
+        private NamespaceSymbol _globalNamespace;
         private ImmutableArray<NamespaceSymbol> _fileNamespaces;
 
         public ModuleSymbolImpl(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, string moduleName, DeclarationTable? declarations)
-            : base(assemblySymbol, declaration: declarations?.GetMergedRoot(assemblySymbol.DeclaringCompilation), modelObject: null)
+            : base(assemblySymbol, declaration: declarations?.GetMergedRoot(assemblySymbol.DeclaringCompilation), model: assemblySymbol.DeclaringCompilation.MainLanguage.CompilationFactory.CreateSourceModel())
         {
-            SymbolFactory = symbolFactory;
+            _symbolFactory = symbolFactory;
+            _moduleName = moduleName;
             _declarations = declarations;
             var compilation = assemblySymbol.DeclaringCompilation;
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
             _modelFactory = compilationFactory.CreateModelFactory(compilation);
-            _model = compilationFactory.CreateSourceModel(compilation);
-            _model.Name = moduleName;
+            Model.Name = moduleName;
         }
 
         public ModuleSymbolImpl(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, MetaDslx.Modeling.Model model)
             : base(assemblySymbol, model: model)
         {
-            SymbolFactory = symbolFactory;
+            _symbolFactory = symbolFactory;
         }
 
         public ModuleSymbolImpl(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, IModuleSymbol csharpModuleSymbol)
             : base(assemblySymbol, csharpSymbol: csharpModuleSymbol)
         {
-            SymbolFactory = symbolFactory;
+            _symbolFactory = symbolFactory;
         }
 
+        public override ISymbolFactory SymbolFactory => _symbolFactory;
         public MultiModelFactory ModelFactory => _modelFactory;
 
         public override AssemblySymbol? ContainingAssembly => this.ContainingSymbol as AssemblySymbol;
         public override ModuleSymbol? ContainingModule => null;
         public override Compilation? DeclaringCompilation => ContainingAssembly?.DeclaringCompilation;
 
-        protected override NamespaceSymbol Compute_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        public override NamespaceSymbol GlobalNamespace
+        {
+            get
+            {
+                ForceComplete(CompletionGraph.FinishCreatingContainedSymbols, null, default);
+                return _globalNamespace;
+            }
+        }
+
+        protected override string? Compute_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _moduleName;
+        }
+
+        protected override string? Compute_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _moduleName;
+        }
+
+        protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (IsCSharpSymbol)
             {
-                return SymbolFactory.CreateSymbol<NamespaceSymbol>(ContainingAssembly, ((IModuleSymbol)CSharpSymbol).GlobalNamespace, diagnostics, cancellationToken);
+                _globalNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>(this, ((IModuleSymbol)CSharpSymbol).GlobalNamespace, diagnostics, cancellationToken);
             }
             else
             {
-                var globalNamespace = new RootNamespaceSymbol(this, MergedDeclaration, _model);
+                _globalNamespace = new RootNamespaceSymbol(this, MergedDeclaration, Model);
                 if (DeclaringCompilation is not null && !DeclaringCompilation.Options.MergeGlobalNamespace)
                 {
                     var fileNamespaces = ArrayBuilder<NamespaceSymbol>.GetInstance();
@@ -72,18 +94,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
                         Debug.Assert(decl is not null);
                         if (decl is not null)
                         {
-                            var fileNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>(globalNamespace, MergedDeclaration, diagnostics, cancellationToken);
+                            var fileNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>(_globalNamespace, MergedDeclaration, diagnostics, cancellationToken);
                             fileNamespaces.Add(fileNamespace);
                         }
                         else
                         {
-                            fileNamespaces.Add(globalNamespace);
+                            fileNamespaces.Add(_globalNamespace);
                         }
                     }
                     _fileNamespaces = fileNamespaces.ToImmutableAndFree();
                 }
-                return globalNamespace;
             }
+            return ImmutableArray.Create<Symbol>(_globalNamespace);
         }
 
         public override NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
@@ -99,5 +121,14 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
             return globalNamespace;
         }
 
+        protected override ImmutableArray<AttributeSymbol> Compute_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return ImmutableArray<AttributeSymbol>.Empty;
+        }
+
+        protected override void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            // nop
+        }
     }
 }

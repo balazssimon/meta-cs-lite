@@ -72,7 +72,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
-[__Phase]
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
+        [__Phase]
 [__Derived]
         public bool IsNamedElement
         {

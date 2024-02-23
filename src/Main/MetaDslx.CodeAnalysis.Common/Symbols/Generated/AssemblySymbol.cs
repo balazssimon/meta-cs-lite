@@ -72,6 +72,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         [__ModelProperty]
         public global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory
         {

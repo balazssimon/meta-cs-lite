@@ -16,36 +16,23 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
 
     public class NamespaceSymbolImpl : NamespaceSymbol
     {
-        public NamespaceSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent extent = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+        private readonly NamespaceExtent _extent;
+
+        public NamespaceSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, NamespaceExtent extent = default, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
         {
+            _extent = extent;
         }
 
+        public override NamespaceExtent Extent => _extent;
         public override ModuleSymbol? ContainingModule => this.NamespaceKind == NamespaceKind.Module ? this.Extent.Module : null;
-
-        protected override NamespaceExtent Compute_Extent(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return base.Compute_Extent(diagnostics, cancellationToken);
-        }
+        public override Compilation? ContainingCompilation => this.NamespaceKind == NamespaceKind.Compilation ? this.Extent.Compilation : null;
+        public override bool IsGlobalNamespace => ContainingNamespace is null;
+        public override NamespaceKind NamespaceKind => this.Extent.Kind;
 
         protected override ImmutableArray<NamespaceSymbol> Compute_ConstituentNamespaces(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ImmutableArray.Create<NamespaceSymbol>(this);
-        }
-
-        protected override Compilation? Compute_ContainingCompilation(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return this.NamespaceKind == NamespaceKind.Compilation ? this.Extent.Compilation : null;
-        }
-
-        protected override bool Compute_IsGlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return ContainingNamespace is null;
-        }
-
-        protected override NamespaceKind Compute_NamespaceKind(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return this.Extent.Kind;
         }
 
         protected override ImmutableArray<NamespaceSymbol> Compute_NamespaceMembers(DiagnosticBag diagnostics, CancellationToken cancellationToken)
