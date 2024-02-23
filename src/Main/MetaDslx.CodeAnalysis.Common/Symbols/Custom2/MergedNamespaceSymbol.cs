@@ -31,12 +31,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
     internal sealed class MergedNamespaceSymbol : Impl.NamespaceSymbolImpl
     {
         private readonly ImmutableArray<NamespaceSymbol> _namespacesToMerge;
+        private readonly string? _name;
 
         // Constructor. Use static Create method to create instances.
         private MergedNamespaceSymbol(NamespaceExtent extent, NamespaceSymbol containingNamespace, ImmutableArray<NamespaceSymbol> namespacesToMerge, string nameOpt)
-            : base(container: containingNamespace, compilation: extent.DeclaringCompilation, name: nameOpt ?? namespacesToMerge.FirstOrDefault()?.Name, extent: extent)
+            : base(container: containingNamespace, compilation: extent.DeclaringCompilation, extent: extent)
         {
             _namespacesToMerge = namespacesToMerge;
+            _name = nameOpt ?? namespacesToMerge.FirstOrDefault()?.Name;
 
 #if DEBUG
             // We shouldn't merged namespaces that are already merged.
@@ -160,6 +162,46 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 part.ForceComplete(completionPart, locationOpt, cancellationToken);
             }
             base.ForceCompleteCore(completionPart, locationOpt, cancellationToken);
+        }
+
+        protected override string? Compute_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _name;
+        }
+
+        protected override string? Compute_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _name;
+        }
+
+        protected override ImmutableArray<AttributeSymbol> Compute_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return ImmutableArray<AttributeSymbol>.Empty;
+        }
+
+        protected override bool Compute_IsExtern(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return false;
+        }
+
+        protected override bool Compute_IsStatic(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return true;
+        }
+
+        protected override Accessibility Compute_DeclaredAccessibility(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return Accessibility.NotApplicable;
+        }
+
+        protected override ImmutableArray<ImportSymbol> Compute_Imports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return ImmutableArray<ImportSymbol>.Empty;
+        }
+
+        protected override ImmutableArray<TypeSymbol> Compute_TypeArguments(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return ImmutableArray<TypeSymbol>.Empty;
         }
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)

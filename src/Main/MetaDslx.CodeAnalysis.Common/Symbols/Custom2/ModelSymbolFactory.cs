@@ -58,7 +58,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             if (container is null) throw new ArgumentNullException(nameof(container));
             if (container is ModuleSymbol) throw new ArgumentException("ModuleSymbol is unexpected here.", nameof(container));
             if (container is AssemblySymbol) throw new ArgumentException("AssemblySymbol is unexpected here.", nameof(container));
-            if (container.Model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
+            //if (container.Model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
             var containingModule = container.ContainingModule;
             if (containingModule is null) throw new ArgumentException("Containing module of the container symbol must not be null.", nameof(container));
             //if (containingModule.ModelFactory is null) throw new ArgumentException("Model factory of the containing module of the container symbol must not be null.", nameof(container));
@@ -199,7 +199,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
                 args[_containerIndex] = container;
                 args[_modelObjectIndex] = mobj;
                 var symbol = (Symbol)Activator.CreateInstance(_constructorInfo.DeclaringType, args);
-                if (mobj is not null) mobj.MSymbol = symbol;
+                //if (mobj is not null) mobj.MSymbol = symbol;
                 return symbol;
             }
         }
