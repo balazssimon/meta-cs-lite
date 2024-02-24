@@ -27,6 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
+    using System;
 
     public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
     {
@@ -53,6 +54,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
+        public override Type SymbolType => typeof(NamespaceSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         public abstract global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent Extent { get; }

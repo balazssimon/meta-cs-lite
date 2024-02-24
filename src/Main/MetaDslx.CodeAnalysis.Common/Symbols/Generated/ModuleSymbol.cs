@@ -28,6 +28,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
     using MetaDslx.Modeling;
+    using System;
 
     public abstract partial class ModuleSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
@@ -44,6 +45,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
+        public override Type SymbolType => typeof(ModuleSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         public abstract global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory { get; }

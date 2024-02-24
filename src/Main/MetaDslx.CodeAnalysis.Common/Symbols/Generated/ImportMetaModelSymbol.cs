@@ -27,6 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
+    using System;
 
     public abstract partial class ImportMetaModelSymbol: Impl.ImportSymbolImpl
     {
@@ -57,6 +58,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        public override Type SymbolType => typeof(ImportMetaModelSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
@@ -118,7 +120,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Compute_MetaModelSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(MetaModelSymbols), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(MetaModelSymbols), diagnostics, cancellationToken);
         }
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> Compute_MetaModels(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

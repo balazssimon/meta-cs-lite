@@ -75,7 +75,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        
+        public virtual Type SymbolType => typeof(Symbol);
 
         public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
         public bool IsSourceSymbol => _underlyingObject is MergedDeclaration || s_compilations.TryGetValue(this, out _);
@@ -99,8 +99,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
-                var typeName = this.GetType().Name;
-                if (typeName.EndsWith("SymbolInst") || typeName.EndsWith("SymbolImpl")) typeName = typeName.Substring(0, typeName.Length - 10);
+                var typeName = this.SymbolType.Name;
+                if (typeName.EndsWith("Symbol")) typeName = typeName.Substring(0, typeName.Length - 6);
                 if (string.IsNullOrEmpty(typeName)) return "Symbol";
                 return typeName;
             }
@@ -185,6 +185,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 }
             }
         }
+
+        public virtual ISymbolFactory SymbolFactory => ContainingModule?.SymbolFactory ?? DeclaringCompilation.SourceModule.SymbolFactory;
 
         public virtual AssemblySymbol? ContainingAssembly
         {
@@ -847,27 +849,32 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual string? Compute_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetName(_underlyingObject, diagnostics, cancellationToken);
+            if (IsErrorSymbol) return ErrorInfo.Name;
+            else return SymbolFactory.GetName(_underlyingObject, diagnostics, cancellationToken);
         }
 
         protected virtual string? Compute_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetMetadataName(_underlyingObject, diagnostics, cancellationToken);
+            if (IsErrorSymbol) return ErrorInfo.MetadataName;
+            else return SymbolFactory.GetMetadataName(_underlyingObject, diagnostics, cancellationToken);
         }
 
         protected virtual ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.CreateContainedSymbols(this, diagnostics, cancellationToken);
+            if (IsErrorSymbol) return ImmutableArray<Symbol>.Empty;
+            else return SymbolFactory.CreateContainedSymbols(this, diagnostics, cancellationToken);
         }
 
         protected virtual ImmutableArray<AttributeSymbol> Compute_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
+            if (IsErrorSymbol) return ImmutableArray<AttributeSymbol>.Empty;
+            else return SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
         }
 
         protected virtual void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            ContainingModule!.SymbolFactory.ComputeNonSymbolProperties(this, diagnostics, cancellationToken);
+            if (IsErrorSymbol) return;
+            SymbolFactory.ComputeNonSymbolProperties(this, diagnostics, cancellationToken);
         }
 
         protected virtual void CompletePart_Finalize(DiagnosticBag diagnostics, CancellationToken cancellationToken)

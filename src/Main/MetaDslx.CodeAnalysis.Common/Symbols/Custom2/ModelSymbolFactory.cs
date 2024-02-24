@@ -58,10 +58,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             if (container is null) throw new ArgumentNullException(nameof(container));
             if (container is ModuleSymbol) throw new ArgumentException("ModuleSymbol is unexpected here.", nameof(container));
             if (container is AssemblySymbol) throw new ArgumentException("AssemblySymbol is unexpected here.", nameof(container));
-            //if (container.Model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
-            var containingModule = container.ContainingModule;
-            if (containingModule is null) throw new ArgumentException("Containing module of the container symbol must not be null.", nameof(container));
-            //if (containingModule.ModelFactory is null) throw new ArgumentException("Model factory of the containing module of the container symbol must not be null.", nameof(container));
             var symbolConstructor = GetConstructor(container, underlyingObject, diagnostics, cancellationToken);
             if (symbolConstructor is null) return null;
             return symbolConstructor.Invoke(container, underlyingObject);
@@ -111,7 +107,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             }
             if (symbolConstructor is null)
             {
-                diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.MLocation, $"Could not instantiate source symbol '{symbolType.FullName}', because it's implementation '{symbolImplTypeName}' does not have a constructor with parameters 'container', 'declaration' and 'modelObject'."));
+                diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.MLocation, $"Could not instantiate source symbol '{symbolType.FullName}', because it's implementation '{symbolImplTypeName}' does not have a constructor with parameters 'container' and 'modelObject'."));
                 return s_constructors.GetValue(mobjType, t => null);
             }
             return symbolConstructor;

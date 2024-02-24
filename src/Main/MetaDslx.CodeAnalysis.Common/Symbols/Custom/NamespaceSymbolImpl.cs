@@ -27,6 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         public override NamespaceExtent Extent => _extent;
         public override ModuleSymbol? ContainingModule => this.NamespaceKind == NamespaceKind.Module ? this.Extent.Module : base.ContainingModule;
         public override Compilation? ContainingCompilation => this.NamespaceKind == NamespaceKind.Compilation ? this.Extent.Compilation : null;
+        public override Compilation? DeclaringCompilation => Extent.DeclaringCompilation;
         public override bool IsGlobalNamespace => ContainingNamespace is null;
         public override NamespaceKind NamespaceKind => this.Extent.Kind;
 

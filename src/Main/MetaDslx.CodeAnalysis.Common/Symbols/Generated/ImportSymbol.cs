@@ -27,6 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
+    using System;
 
     public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
@@ -72,6 +73,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        public override Type SymbolType => typeof(ImportSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
@@ -202,22 +204,22 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<string> Compute_Files(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Compute_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Compute_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
         }
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_ImportedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

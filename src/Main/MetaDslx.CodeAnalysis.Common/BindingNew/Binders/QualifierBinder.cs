@@ -143,7 +143,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     var name = _identifiers[i].GetName(cancellationToken);
                     var metadataName = _identifiers[i].GetMetadataName(cancellationToken);
                     var location = ((Binder)_identifiers[i]).Location;
-                    result[i] = Compilation[Language].ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(container, new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")), null, cancellationToken);
+                    result[i] = Compilation[Language].ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(container, new ErrorSymbolInfo(typeof(DeclarationSymbol), name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")), null, cancellationToken);
                 }
             }
             return result.ToImmutableArray();

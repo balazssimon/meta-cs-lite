@@ -133,7 +133,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var name = context.ViableNames.FirstOrDefault();
             if (string.IsNullOrWhiteSpace(name))
             {
-                var errorInfo = new ErrorSymbolInfo(string.Empty, string.Empty, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_SingleNameNotFound, context.Location, name));
+                var errorInfo = new ErrorSymbolInfo(typeof(TypeSymbol), string.Empty, string.Empty, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_SingleNameNotFound, context.Location, name));
                 context.AddDiagnostic(errorInfo.Diagnostic);
                 return context.ErrorSymbolFactory.CreateSymbol<TypeSymbol>(Compilation.GlobalNamespace, errorInfo, null, default);
             }

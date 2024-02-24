@@ -27,6 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
+    using System;
 
     public abstract partial class AliasSymbol: Impl.DeclarationSymbolImpl
     {
@@ -53,6 +54,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        public override Type SymbolType => typeof(AliasSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
@@ -91,7 +93,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual Symbol Compute_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<Symbol>(this, nameof(Target), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<Symbol>(this, nameof(Target), diagnostics, cancellationToken);
         }
     }
 }

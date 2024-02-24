@@ -242,14 +242,14 @@ namespace MetaDslx.CodeAnalysis
             else if (csharpReferences.Length > 0) csharpCompilation = csharpCompilation.AddReferences(csharpReferences);
             var csharpSymbolFactory = compilationFactory.CreateCSharpSymbolFactory();
             var referencedModulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
-            var csharpSourceAssembly = new AssemblySymbolImpl(csharpSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly);
+            var csharpSourceAssembly = new AssemblySymbolImpl(compilation, csharpSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly);
             csharpSymbolFactory.AddSymbol(csharpSourceAssembly);
             var csharpSourceModule = new ModuleSymbolImpl(csharpSourceAssembly, csharpSymbolFactory, csharpCompilation.SourceModule);
             csharpSymbolFactory.AddSymbol(csharpSourceModule);
             referencedModulesBuilder.Add(csharpSourceModule);
             foreach (var csharpAssembly in csharpCompilation.SourceModule.ReferencedAssemblySymbols)
             {
-                var assembly = new AssemblySymbolImpl(csharpSymbolFactory, csharpAssembly);
+                var assembly = new AssemblySymbolImpl(compilation, csharpSymbolFactory, csharpAssembly);
                 csharpSymbolFactory.AddSymbol(assembly);
                 var modulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
                 foreach (var csharpModule in csharpAssembly.Modules)

@@ -10,6 +10,7 @@ generator SymbolGenerator
 template GenerateSymbol(Symbol symbol)
 namespace [symbol.NamespaceName]
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -81,6 +82,7 @@ namespace [symbol.NamespaceName]
             }
         }
 
+        public override __Type SymbolType => typeof([GetIntfName(symbol, symbol)]);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [foreach (var prop in symbol.Properties)]
@@ -214,7 +216,7 @@ namespace [symbol.NamespaceName]
                         [-]
                         return (
                             [foreach (var prop in props) separator ", "]
-                                ContainingModule!.SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
+                                SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
                             [end foreach]
                         );
                         [=]
@@ -228,7 +230,7 @@ namespace [symbol.NamespaceName]
                 [else]
                     protected virtual [returnType] Compute_[phase](__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
                     {
-                        return ContainingModule!.SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
+                        return SymbolFactory.GetSymbolPropertyValue[if (prop.Type.Dimensions > 0)]s[end if]<[GetTypeName(symbol, prop.Type.Type)]>(this, nameof([prop.Name]), diagnostics, cancellationToken);
                     }
                 [end if]
             [end if]

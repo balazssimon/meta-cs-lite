@@ -49,9 +49,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
             _modules = moduleBuilder.ToImmutable();
         }
 
-        public AssemblySymbolImpl(ISymbolFactory symbolFactory, IAssemblySymbol csharpAssemblySymbol)
+        public AssemblySymbolImpl(Compilation compilation, ISymbolFactory symbolFactory, IAssemblySymbol csharpAssemblySymbol)
             : base(container: null, csharpSymbol: csharpAssemblySymbol)
         {
+            _compilation = compilation;
             _symbolFactory = symbolFactory;
         }
 
