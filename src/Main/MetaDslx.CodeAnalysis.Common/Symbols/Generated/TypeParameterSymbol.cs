@@ -1,5 +1,6 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,7 +28,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using System;
 
     public abstract partial class TypeParameterSymbol: Impl.TypeSymbolImpl
     {
@@ -49,7 +49,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override Type SymbolType => typeof(TypeParameterSymbol);
+        public override __Type SymbolType => typeof(TypeParameterSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
 

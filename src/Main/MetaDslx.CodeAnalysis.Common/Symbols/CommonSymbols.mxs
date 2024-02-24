@@ -15,18 +15,16 @@ symbol Attribute
 
 symbol Assembly
 {
-    plain ISymbolFactory SymbolFactory
-    plain Module? SourceModule
-    plain Module[] Modules
-    plain Namespace GlobalNamespace
-    plain bool IsCorLibrary
+    plain abstract Module? SourceModule
+    plain abstract Module[] Modules
+    plain abstract Namespace GlobalNamespace
+    plain abstract bool IsCorLibrary
 }
 
 symbol Module
 {
-    plain ISymbolFactory SymbolFactory
-    plain MetaDslx.Modeling.MultiModelFactory ModelFactory
-    plain Namespace GlobalNamespace
+    plain abstract MetaDslx.Modeling.MultiModelFactory ModelFactory
+    plain abstract Namespace GlobalNamespace
     NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
 }
 
@@ -73,10 +71,10 @@ symbol Alias : Declaration
 
 symbol Namespace : Declaration
 {
-    plain NamespaceExtent Extent
-    plain bool IsGlobalNamespace
-    plain NamespaceKind NamespaceKind
-    plain Compilation? ContainingCompilation
+    plain abstract NamespaceExtent Extent
+    plain abstract bool IsGlobalNamespace
+    plain abstract NamespaceKind NamespaceKind
+    plain abstract Compilation? ContainingCompilation
 
     derived Namespace[] ConstituentNamespaces
     derived Namespace[] NamespaceMembers

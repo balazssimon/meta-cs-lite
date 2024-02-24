@@ -293,18 +293,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.Symbol(default, this.Token(SymbolSyntaxKind.KSymbol), name, default, block2);
         }
 
-        public PropertySyntax Property(__SyntaxToken isPlain, PropertyBlock1Syntax block1, __SyntaxToken isWeak, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3)
+        public PropertySyntax Property(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3)
         {
-            if (isPlain.RawKind != (int)__InternalSyntaxKind.None && (isPlain.RawKind != (int)SymbolSyntaxKind.KPlain)) throw new __ArgumentException(nameof(isPlain));
-            if (isWeak.RawKind != (int)__InternalSyntaxKind.None && (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak)) throw new __ArgumentException(nameof(isWeak));
             if (type is null) throw new __ArgumentNullException(nameof(type));
             if (name is null) throw new __ArgumentNullException(nameof(name));
-            return (PropertySyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Property((__InternalSyntaxToken)isPlain.Node, (InternalSyntax.PropertyBlock1Green)block1.Green, (__InternalSyntaxToken)isWeak.Node, (InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.PropertyBlock2Green)block2.Green, (InternalSyntax.PropertyBlock3Green)block3.Green).CreateRed();
+            return (PropertySyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Property((InternalSyntax.PropertyBlock1Green)block1.Green, (InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.PropertyBlock2Green)block2.Green, (InternalSyntax.PropertyBlock3Green)block3.Green).CreateRed();
         }
         
         public PropertySyntax Property(TypeReferenceSyntax type, NameSyntax name)
         {
-            return this.Property(default, default, default, type, name, default, default);
+            return this.Property(default, type, name, default, default);
         }
 
         public OperationAlt1Syntax OperationAlt1(__SyntaxToken isPhase, NameSyntax name, __SyntaxToken tLParen, __SyntaxToken tRParen)
@@ -498,17 +496,66 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return (SymbolBlock2Block1Alt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.SymbolBlock2Block1Alt2((InternalSyntax.OperationGreen)operations.Green).CreateRed();
         }
 
-        public PropertyBlock1Syntax PropertyBlock1(__SyntaxToken isDerived, __SyntaxToken isCached)
+        public PropertyBlock1Alt1Syntax PropertyBlock1Alt1(__SyntaxToken isPlain, PropertyBlock1Alt1Block1Syntax block)
+        {
+            if (isPlain.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isPlain));
+            if (isPlain.RawKind != (int)SymbolSyntaxKind.KPlain) throw new __ArgumentException(nameof(isPlain));
+            return (PropertyBlock1Alt1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt1((__InternalSyntaxToken)isPlain.Node, (InternalSyntax.PropertyBlock1Alt1Block1Green)block.Green).CreateRed();
+        }
+        
+        public PropertyBlock1Alt1Syntax PropertyBlock1Alt1()
+        {
+            return this.PropertyBlock1Alt1(this.Token(SymbolSyntaxKind.KPlain), default);
+        }
+
+        public PropertyBlock1Alt2Syntax PropertyBlock1Alt2(__SyntaxToken isDerived, __SyntaxToken isCached, __SyntaxToken isWeak)
         {
             if (isDerived.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isDerived));
             if (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived) throw new __ArgumentException(nameof(isDerived));
             if (isCached.RawKind != (int)__InternalSyntaxKind.None && (isCached.RawKind != (int)SymbolSyntaxKind.KCached)) throw new __ArgumentException(nameof(isCached));
-            return (PropertyBlock1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1((__InternalSyntaxToken)isDerived.Node, (__InternalSyntaxToken)isCached.Node).CreateRed();
+            if (isWeak.RawKind != (int)__InternalSyntaxKind.None && (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak)) throw new __ArgumentException(nameof(isWeak));
+            return (PropertyBlock1Alt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt2((__InternalSyntaxToken)isDerived.Node, (__InternalSyntaxToken)isCached.Node, (__InternalSyntaxToken)isWeak.Node).CreateRed();
         }
         
-        public PropertyBlock1Syntax PropertyBlock1()
+        public PropertyBlock1Alt2Syntax PropertyBlock1Alt2()
         {
-            return this.PropertyBlock1(this.Token(SymbolSyntaxKind.KDerived), default);
+            return this.PropertyBlock1Alt2(this.Token(SymbolSyntaxKind.KDerived), default, default);
+        }
+
+        public PropertyBlock1Alt3Syntax PropertyBlock1Alt3(__SyntaxToken isWeak)
+        {
+            if (isWeak.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isWeak));
+            if (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak) throw new __ArgumentException(nameof(isWeak));
+            return (PropertyBlock1Alt3Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt3((__InternalSyntaxToken)isWeak.Node).CreateRed();
+        }
+        
+        public PropertyBlock1Alt3Syntax PropertyBlock1Alt3()
+        {
+            return this.PropertyBlock1Alt3(this.Token(SymbolSyntaxKind.KWeak));
+        }
+
+        public PropertyBlock1Alt1Block1Alt1Syntax PropertyBlock1Alt1Block1Alt1(__SyntaxToken isAbstract)
+        {
+            if (isAbstract.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isAbstract));
+            if (isAbstract.RawKind != (int)SymbolSyntaxKind.KAbstract) throw new __ArgumentException(nameof(isAbstract));
+            return (PropertyBlock1Alt1Block1Alt1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt1Block1Alt1((__InternalSyntaxToken)isAbstract.Node).CreateRed();
+        }
+        
+        public PropertyBlock1Alt1Block1Alt1Syntax PropertyBlock1Alt1Block1Alt1()
+        {
+            return this.PropertyBlock1Alt1Block1Alt1(this.Token(SymbolSyntaxKind.KAbstract));
+        }
+
+        public PropertyBlock1Alt1Block1Alt2Syntax PropertyBlock1Alt1Block1Alt2(__SyntaxToken isWeak)
+        {
+            if (isWeak.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isWeak));
+            if (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak) throw new __ArgumentException(nameof(isWeak));
+            return (PropertyBlock1Alt1Block1Alt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.PropertyBlock1Alt1Block1Alt2((__InternalSyntaxToken)isWeak.Node).CreateRed();
+        }
+        
+        public PropertyBlock1Alt1Block1Alt2Syntax PropertyBlock1Alt1Block1Alt2()
+        {
+            return this.PropertyBlock1Alt1Block1Alt2(this.Token(SymbolSyntaxKind.KWeak));
         }
 
         public PropertyBlock2Syntax PropertyBlock2(__SyntaxToken tEq, ValueSyntax defaultValue)
@@ -638,7 +685,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 typeof(SymbolBlock2Syntax),
                 typeof(SymbolBlock2Block1Alt1Syntax),
                 typeof(SymbolBlock2Block1Alt2Syntax),
-                typeof(PropertyBlock1Syntax),
+                typeof(PropertyBlock1Alt1Syntax),
+                typeof(PropertyBlock1Alt2Syntax),
+                typeof(PropertyBlock1Alt3Syntax),
+                typeof(PropertyBlock1Alt1Block1Alt1Syntax),
+                typeof(PropertyBlock1Alt1Block1Alt2Syntax),
                 typeof(PropertyBlock2Syntax),
                 typeof(PropertyBlock3Syntax),
                 typeof(OperationAlt2Block1Syntax),

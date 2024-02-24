@@ -294,15 +294,13 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             #endif
             return new SymbolGreen(SymbolSyntaxKind.Symbol, isAbstract, kSymbol, name, block1, block2);
         }
-        internal PropertyGreen Property(__InternalSyntaxToken isPlain, PropertyBlock1Green block1, __InternalSyntaxToken isWeak, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
+        internal PropertyGreen Property(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
         {
             #if DEBUG
-                if (isPlain is not null && (isPlain.RawKind != (int)SymbolSyntaxKind.KPlain)) throw new __ArgumentException(nameof(isPlain));
-                if (isWeak is not null && (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak)) throw new __ArgumentException(nameof(isWeak));
                 if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
             #endif
-            return new PropertyGreen(SymbolSyntaxKind.Property, isPlain, block1, isWeak, type, name, block2, block3);
+            return new PropertyGreen(SymbolSyntaxKind.Property, block1, type, name, block2, block3);
         }
         internal OperationAlt1Green OperationAlt1(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
         {
@@ -698,18 +696,91 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal PropertyBlock1Green PropertyBlock1(__InternalSyntaxToken isDerived, __InternalSyntaxToken isCached)
+        internal PropertyBlock1Alt1Green PropertyBlock1Alt1(__InternalSyntaxToken isPlain, PropertyBlock1Alt1Block1Green block)
+        {
+            #if DEBUG
+                if (isPlain is null) throw new __ArgumentNullException(nameof(isPlain));
+                if (isPlain.RawKind != (int)SymbolSyntaxKind.KPlain) throw new __ArgumentException(nameof(isPlain));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt1, isPlain, block, out hash);
+            if (cached != null) return (PropertyBlock1Alt1Green)cached;
+        
+            var result = new PropertyBlock1Alt1Green(SymbolSyntaxKind.PropertyBlock1Alt1, isPlain, block);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        internal PropertyBlock1Alt2Green PropertyBlock1Alt2(__InternalSyntaxToken isDerived, __InternalSyntaxToken isCached, __InternalSyntaxToken isWeak)
         {
             #if DEBUG
                 if (isDerived is null) throw new __ArgumentNullException(nameof(isDerived));
                 if (isDerived.RawKind != (int)SymbolSyntaxKind.KDerived) throw new __ArgumentException(nameof(isDerived));
                 if (isCached is not null && (isCached.RawKind != (int)SymbolSyntaxKind.KCached)) throw new __ArgumentException(nameof(isCached));
+                if (isWeak is not null && (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak)) throw new __ArgumentException(nameof(isWeak));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1, isDerived, isCached, out hash);
-            if (cached != null) return (PropertyBlock1Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt2, isDerived, isCached, isWeak, out hash);
+            if (cached != null) return (PropertyBlock1Alt2Green)cached;
         
-            var result = new PropertyBlock1Green(SymbolSyntaxKind.PropertyBlock1, isDerived, isCached);
+            var result = new PropertyBlock1Alt2Green(SymbolSyntaxKind.PropertyBlock1Alt2, isDerived, isCached, isWeak);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        internal PropertyBlock1Alt3Green PropertyBlock1Alt3(__InternalSyntaxToken isWeak)
+        {
+            #if DEBUG
+                if (isWeak is null) throw new __ArgumentNullException(nameof(isWeak));
+                if (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak) throw new __ArgumentException(nameof(isWeak));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt3, isWeak, out hash);
+            if (cached != null) return (PropertyBlock1Alt3Green)cached;
+        
+            var result = new PropertyBlock1Alt3Green(SymbolSyntaxKind.PropertyBlock1Alt3, isWeak);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        internal PropertyBlock1Alt1Block1Alt1Green PropertyBlock1Alt1Block1Alt1(__InternalSyntaxToken isAbstract)
+        {
+            #if DEBUG
+                if (isAbstract is null) throw new __ArgumentNullException(nameof(isAbstract));
+                if (isAbstract.RawKind != (int)SymbolSyntaxKind.KAbstract) throw new __ArgumentException(nameof(isAbstract));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt1Block1Alt1, isAbstract, out hash);
+            if (cached != null) return (PropertyBlock1Alt1Block1Alt1Green)cached;
+        
+            var result = new PropertyBlock1Alt1Block1Alt1Green(SymbolSyntaxKind.PropertyBlock1Alt1Block1Alt1, isAbstract);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        internal PropertyBlock1Alt1Block1Alt2Green PropertyBlock1Alt1Block1Alt2(__InternalSyntaxToken isWeak)
+        {
+            #if DEBUG
+                if (isWeak is null) throw new __ArgumentNullException(nameof(isWeak));
+                if (isWeak.RawKind != (int)SymbolSyntaxKind.KWeak) throw new __ArgumentException(nameof(isWeak));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.PropertyBlock1Alt1Block1Alt2, isWeak, out hash);
+            if (cached != null) return (PropertyBlock1Alt1Block1Alt2Green)cached;
+        
+            var result = new PropertyBlock1Alt1Block1Alt2Green(SymbolSyntaxKind.PropertyBlock1Alt1Block1Alt2, isWeak);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

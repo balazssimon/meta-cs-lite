@@ -37,6 +37,7 @@ class Property : Declaration
 {
 	TypeReference Type
 	bool IsPlain
+	bool IsAbstract
 	bool IsDerived
 	bool IsCached
 	bool IsWeak
@@ -46,6 +47,7 @@ class Property : Declaration
 
 class Operation: Declaration
 {
+	bool IsAbstract
 	bool IsPhase
 	bool IsCached
 	string CacheCondition

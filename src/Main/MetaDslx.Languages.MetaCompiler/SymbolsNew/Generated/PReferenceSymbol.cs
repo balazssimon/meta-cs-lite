@@ -1,5 +1,7 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
+    using global::MetaDslx.CodeAnalysis.Symbols;
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,11 +29,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using MetaDslx.CodeAnalysis.Symbols;
 
-    public abstract partial class PReferenceSymbol: MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
+    public abstract partial class PReferenceSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
     {
-        public new class CompletionParts : MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_Rule = new __CompletionPart(nameof(Start_Rule));
             public static readonly __CompletionPart Finish_Rule = new __CompletionPart(nameof(Finish_Rule));
@@ -40,7 +41,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_Rule, Finish_Rule
                     , Start_ReferencedTypes, Finish_ReferencedTypes
                 );
@@ -59,10 +60,11 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
+        public override __Type SymbolType => typeof(PReferenceSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::MetaDslx.CodeAnalysis.MetaSymbol Rule
         {
             get
@@ -72,7 +74,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> ReferencedTypes
         {
             get
@@ -120,12 +122,12 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Compute_Rule(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(Rule), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(Rule), diagnostics, cancellationToken);
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> Compute_ReferencedTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.MetaType>(this, nameof(ReferencedTypes), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.MetaType>(this, nameof(ReferencedTypes), diagnostics, cancellationToken);
         }
     }
 }

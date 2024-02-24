@@ -1,5 +1,7 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
+    using global::MetaDslx.CodeAnalysis.Symbols;
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,12 +29,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using MetaDslx.CodeAnalysis.Symbols;
-    using System.Collections.Immutable;
 
-    public abstract partial class PAlternativeSymbol: MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
+    public abstract partial class PAlternativeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
     {
-        public new class CompletionParts : MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_ContainingParserRuleSymbol = new __CompletionPart(nameof(Start_ContainingParserRuleSymbol));
             public static readonly __CompletionPart Finish_ContainingParserRuleSymbol = new __CompletionPart(nameof(Finish_ContainingParserRuleSymbol));
@@ -51,7 +51,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_ContainingParserRuleSymbol, Finish_ContainingParserRuleSymbol
                     , Start_ContainingPBlockSymbol, Finish_ContainingPBlockSymbol
                     , Start_Elements, Finish_Elements
@@ -80,10 +80,11 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
+        public override __Type SymbolType => typeof(PAlternativeSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__Phase]
-[__Derived]
+        [__Derived]
         public ParserRuleSymbol? ContainingParserRuleSymbol
         {
             get
@@ -92,8 +93,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _containingParserRuleSymbol;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public PBlockSymbol? ContainingPBlockSymbol
         {
             get
@@ -103,7 +104,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<PElementSymbol> Elements
         {
             get
@@ -113,7 +114,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public ExpressionSymbol? ReturnValue
         {
             get
@@ -122,8 +123,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _returnValue;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::MetaDslx.CodeAnalysis.MetaType ReturnType
         {
             get
@@ -132,8 +133,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _returnType;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
         {
             get
@@ -142,8 +143,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _expectedType;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<PElementSymbol> AllSimpleElements
         {
             get
@@ -260,18 +261,18 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<PElementSymbol> Compute_Elements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
         }
 
         protected virtual ExpressionSymbol? Compute_ReturnValue(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(ReturnValue), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(ReturnValue), diagnostics, cancellationToken);
         }
 
         protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ReturnType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
         protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract ImmutableArray<PElementSymbol> Compute_AllSimpleElements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<PElementSymbol> Compute_AllSimpleElements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

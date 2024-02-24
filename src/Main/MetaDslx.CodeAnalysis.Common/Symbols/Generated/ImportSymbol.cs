@@ -1,5 +1,6 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,7 +28,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using System;
 
     public abstract partial class ImportSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
@@ -73,11 +73,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override Type SymbolType => typeof(ImportSymbol);
+        public override __Type SymbolType => typeof(ImportSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<string> Files
         {
             get
@@ -87,7 +87,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Aliases
         {
             get
@@ -97,7 +97,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Namespaces
         {
             get
@@ -107,7 +107,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Symbols
         {
             get
@@ -116,8 +116,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _symbols;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> ImportedSymbols
         {
             get

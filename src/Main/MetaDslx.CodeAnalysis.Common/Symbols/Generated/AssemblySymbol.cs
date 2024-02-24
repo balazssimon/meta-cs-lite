@@ -1,5 +1,6 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,47 +28,47 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using System;
 
     public abstract partial class AssemblySymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
         public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts
         {
-            public static readonly __CompletionPart Start_SymbolFactory = new __CompletionPart(nameof(Start_SymbolFactory));
-            public static readonly __CompletionPart Finish_SymbolFactory = new __CompletionPart(nameof(Finish_SymbolFactory));
-            public static readonly __CompletionPart Start_SourceModule = new __CompletionPart(nameof(Start_SourceModule));
-            public static readonly __CompletionPart Finish_SourceModule = new __CompletionPart(nameof(Finish_SourceModule));
-            public static readonly __CompletionPart Start_Modules = new __CompletionPart(nameof(Start_Modules));
-            public static readonly __CompletionPart Finish_Modules = new __CompletionPart(nameof(Finish_Modules));
-            public static readonly __CompletionPart Start_IsCorLibrary = new __CompletionPart(nameof(Start_IsCorLibrary));
-            public static readonly __CompletionPart Finish_IsCorLibrary = new __CompletionPart(nameof(Finish_IsCorLibrary));
-            public static readonly __CompletionPart Start_GlobalNamespace = new __CompletionPart(nameof(Start_GlobalNamespace));
-            public static readonly __CompletionPart Finish_GlobalNamespace = new __CompletionPart(nameof(Finish_GlobalNamespace));
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
                     global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts.CompletionGraph
-                    , Start_SymbolFactory, Finish_SymbolFactory
-                    , Start_SourceModule, Finish_SourceModule
-                    , Start_Modules, Finish_Modules
-                    , Start_IsCorLibrary, Finish_IsCorLibrary
-                    , Start_GlobalNamespace, Finish_GlobalNamespace
                 );
         }
+
 
         public AssemblySymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
         {
+            if (fixedSymbol)
+            {
+            }
         }
 
-        public override Type SymbolType => typeof(AssemblySymbol);
+        public override __Type SymbolType => typeof(AssemblySymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public abstract global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory { get; }
-        public abstract ModuleSymbol? SourceModule { get; }
-        public abstract global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules { get; }
-        public abstract bool IsCorLibrary { get; }
-        public abstract NamespaceSymbol GlobalNamespace { get; }
+        public abstract ModuleSymbol? SourceModule
+        {
+            get;
+        }
+        public abstract global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules
+        {
+            get;
+        }
+        public abstract NamespaceSymbol GlobalNamespace
+        {
+            get;
+        }
+        public abstract bool IsCorLibrary
+        {
+            get;
+        }
+
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {

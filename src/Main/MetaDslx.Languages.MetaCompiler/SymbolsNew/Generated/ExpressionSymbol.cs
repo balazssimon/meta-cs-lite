@@ -1,5 +1,7 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
+    using global::MetaDslx.CodeAnalysis.Symbols;
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,7 +29,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using MetaDslx.CodeAnalysis.Symbols;
 
     public abstract partial class ExpressionSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
@@ -66,10 +67,11 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
+        public override __Type SymbolType => typeof(ExpressionSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__Phase]
-[__Derived]
+        [__Derived]
         public PAlternativeSymbol? ContainingPAlternativeSymbol
         {
             get
@@ -78,8 +80,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _containingPAlternativeSymbol;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public AnnotationArgumentSymbol? ContainingAnnotationArgumentSymbol
         {
             get
@@ -88,8 +90,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _containingAnnotationArgumentSymbol;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
         {
             get
@@ -98,8 +100,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _expectedType;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::MetaDslx.CodeAnalysis.MetaSymbol Value
         {
             get
@@ -108,8 +110,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _value;
             }
         }
-[__Phase(nameof(Value))]
-[__Derived]
+        [__Phase(nameof(Value))]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> Values
         {
             get

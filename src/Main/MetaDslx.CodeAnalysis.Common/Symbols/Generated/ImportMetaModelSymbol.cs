@@ -1,5 +1,6 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,7 +28,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using System;
 
     public abstract partial class ImportMetaModelSymbol: Impl.ImportSymbolImpl
     {
@@ -58,11 +58,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override Type SymbolType => typeof(ImportMetaModelSymbol);
+        public override __Type SymbolType => typeof(ImportMetaModelSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::MetaDslx.CodeAnalysis.MetaSymbol MetaModelSymbols
         {
             get
@@ -71,8 +71,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _metaModelSymbols;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> MetaModels
         {
             get

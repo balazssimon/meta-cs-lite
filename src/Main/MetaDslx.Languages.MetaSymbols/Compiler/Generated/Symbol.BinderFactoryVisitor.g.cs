@@ -129,49 +129,23 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitProperty(PropertySyntax node)
         {
-            var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Property));
-            this.Begin(__annot3, node);
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Property));
+            this.Begin(__annot1, node);
             try
             {
-                if (node.IsPlain.GetSymbolKind() != SymbolSyntaxKind.None)
-                {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsPlain", values: ImmutableArray.Create<object?>(true));
-                    this.Begin(__annot0, node.IsPlain);
-                    try
-                    {
-                        //this.VisitToken(node.IsPlain);
-                    }
-                    finally
-                    {
-                        this.End(__annot0);
-                    }
-                }
                 if (node.Block1 != null)
                 {
                     this.Visit(node.Block1);
                 }
-                if (node.IsWeak.GetSymbolKind() != SymbolSyntaxKind.None)
-                {
-                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
-                    this.Begin(__annot1, node.IsWeak);
-                    try
-                    {
-                        //this.VisitToken(node.IsWeak);
-                    }
-                    finally
-                    {
-                        this.End(__annot1);
-                    }
-                }
-                var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Type");
-                this.Begin(__annot2, node.Type);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Type");
+                this.Begin(__annot0, node.Type);
                 try
                 {
                     this.Visit(node.Type);
                 }
                 finally
                 {
-                    this.End(__annot2);
+                    this.End(__annot0);
                 }
                 this.Visit(node.Name);
                 if (node.Block2 != null)
@@ -185,7 +159,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             }
             finally
             {
-                this.End(__annot3);
+                this.End(__annot1);
             }
         }
 
@@ -867,7 +841,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             }
         }
 
-        public virtual void VisitPropertyBlock1(PropertyBlock1Syntax node)
+        public virtual void VisitPropertyBlock1Alt1(PropertyBlock1Alt1Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsPlain", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsPlain);
+            try
+            {
+                //this.VisitToken(node.IsPlain);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+            if (node.Block != null)
+            {
+                this.Visit(node.Block);
+            }
+        }
+
+        public virtual void VisitPropertyBlock1Alt2(PropertyBlock1Alt2Syntax node)
         {
             var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsDerived", values: ImmutableArray.Create<object?>(true));
             this.Begin(__annot0, node.IsDerived);
@@ -891,6 +883,61 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
                 {
                     this.End(__annot1);
                 }
+            }
+            if (node.IsWeak.GetSymbolKind() != SymbolSyntaxKind.None)
+            {
+                var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
+                this.Begin(__annot2, node.IsWeak);
+                try
+                {
+                    //this.VisitToken(node.IsWeak);
+                }
+                finally
+                {
+                    this.End(__annot2);
+                }
+            }
+        }
+
+        public virtual void VisitPropertyBlock1Alt3(PropertyBlock1Alt3Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsWeak);
+            try
+            {
+                //this.VisitToken(node.IsWeak);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+        }
+
+        public virtual void VisitPropertyBlock1Alt1Block1Alt1(PropertyBlock1Alt1Block1Alt1Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsAbstract", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsAbstract);
+            try
+            {
+                //this.VisitToken(node.IsAbstract);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+        }
+
+        public virtual void VisitPropertyBlock1Alt1Block1Alt2(PropertyBlock1Alt1Block1Alt2Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsWeak", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsWeak);
+            try
+            {
+                //this.VisitToken(node.IsWeak);
+            }
+            finally
+            {
+                this.End(__annot0);
             }
         }
 

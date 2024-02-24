@@ -22,7 +22,7 @@ Symbol:
 	(':' baseTypes+=#Symbol)?
 	[Scope]('{' (properties+=Property | operations+=Operation)* '}');
 
-Property: isPlain?='plain'? (isDerived?='derived' isCached='cached'?)? isWeak?='weak'? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
+Property: (isPlain?='plain' (isAbstract?='abstract' | isWeak?='weak')? | isDerived?='derived' isCached='cached'? isWeak?='weak'? | isWeak?='weak')? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
 
 Operation
 	: isPhase?='phase' Name '(' ')' 

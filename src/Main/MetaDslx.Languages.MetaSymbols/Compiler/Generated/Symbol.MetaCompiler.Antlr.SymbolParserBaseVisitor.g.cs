@@ -318,7 +318,8 @@ public partial class SymbolParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_SymbolBlock2Block1Alt2([NotNull] SymbolParser.Pr_SymbolBlock2Block1Alt2Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SymbolParser.pr_PropertyBlock1"/>.
+	/// Visit a parse tree produced by the <c>pr_PropertyBlock1Alt1</c>
+	/// labeled alternative in <see cref="SymbolParser.pr_PropertyBlock1"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -326,7 +327,51 @@ public partial class SymbolParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_PropertyBlock1([NotNull] SymbolParser.Pr_PropertyBlock1Context context) { return VisitChildren(context); }
+	public virtual Result VisitPr_PropertyBlock1Alt1([NotNull] SymbolParser.Pr_PropertyBlock1Alt1Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_PropertyBlock1Alt2</c>
+	/// labeled alternative in <see cref="SymbolParser.pr_PropertyBlock1"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_PropertyBlock1Alt2([NotNull] SymbolParser.Pr_PropertyBlock1Alt2Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_PropertyBlock1Alt3</c>
+	/// labeled alternative in <see cref="SymbolParser.pr_PropertyBlock1"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_PropertyBlock1Alt3([NotNull] SymbolParser.Pr_PropertyBlock1Alt3Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_PropertyBlock1Alt1Block1Alt1</c>
+	/// labeled alternative in <see cref="SymbolParser.pr_PropertyBlock1Alt1Block1"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_PropertyBlock1Alt1Block1Alt1([NotNull] SymbolParser.Pr_PropertyBlock1Alt1Block1Alt1Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_PropertyBlock1Alt1Block1Alt2</c>
+	/// labeled alternative in <see cref="SymbolParser.pr_PropertyBlock1Alt1Block1"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_PropertyBlock1Alt1Block1Alt2([NotNull] SymbolParser.Pr_PropertyBlock1Alt1Block1Alt2Context context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SymbolParser.pr_PropertyBlock2"/>.
 	/// <para>

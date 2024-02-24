@@ -1,5 +1,7 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
+    using global::MetaDslx.CodeAnalysis.Symbols;
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,7 +29,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using MetaDslx.CodeAnalysis.Symbols;
 
     public abstract partial class AnnotationArgumentSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
@@ -57,12 +58,12 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         private AnnotationSymbol? _annotationSymbol;
         private bool _isNamedArgument;
-        private System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _namedParameter;
-        private DeclarationSymbol _parameter;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _namedParameter;
+        private global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol _parameter;
         private global::MetaDslx.CodeAnalysis.MetaType _parameterType;
         private ExpressionSymbol _value;
 
-        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> namedParameter = default, ExpressionSymbol value = default) 
+        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol> attributes = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> namedParameter = default, ExpressionSymbol value = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
         {
             if (fixedSymbol)
@@ -72,7 +73,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
-        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+        public override __Type SymbolType => typeof(AnnotationArgumentSymbol);
+        protected override global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__Phase]
         [__Derived]
@@ -84,8 +86,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _annotationSymbol;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public bool IsNamedArgument
         {
             get
@@ -95,8 +97,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
-        public System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter
+        [__Phase]
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter
         {
             get
             {
@@ -104,9 +106,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _namedParameter;
             }
         }
-[__Phase]
-[__Derived]
-        public DeclarationSymbol Parameter
+        [__Phase]
+        [__Derived]
+        public global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter
         {
             get
             {
@@ -114,8 +116,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _parameter;
             }
         }
-[__Phase(nameof(Parameter))]
-[__Derived]
+        [__Phase(nameof(Parameter))]
+        [__Derived]
         public global::MetaDslx.CodeAnalysis.MetaType ParameterType
         {
             get
@@ -125,7 +127,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public ExpressionSymbol Value
         {
             get
@@ -215,16 +217,16 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected abstract bool Compute_IsNamedArgument(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected virtual System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> Compute_NamedParameter(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> Compute_NamedParameter(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(NamedParameter), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(NamedParameter), diagnostics, cancellationToken);
         }
 
         protected abstract (DeclarationSymbol Parameter, global::MetaDslx.CodeAnalysis.MetaType ParameterType) Compute_Parameter(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
         protected virtual ExpressionSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(Value), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(Value), diagnostics, cancellationToken);
         }
     }
 }

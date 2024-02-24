@@ -150,10 +150,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             public override GreenNode? VisitPr_Property(SymbolParser.Pr_PropertyContext? context)
             {
                 if (context == null) return PropertyGreen.__Missing;
-                var isPlain = (InternalSyntaxToken?)this.VisitTerminal(context.E_isPlain);
                 PropertyBlock1Green? block1 = null;
                 if (context.E_Block is not null) block1 = (PropertyBlock1Green?)this.Visit(context.E_Block);
-                var isWeak = (InternalSyntaxToken?)this.VisitTerminal(context.E_isWeak);
                 TypeReferenceGreen? type = null;
                 if (context.E_type is not null) type = (TypeReferenceGreen?)this.Visit(context.E_type) ?? TypeReferenceGreen.__Missing;
                 else type = TypeReferenceGreen.__Missing;
@@ -164,7 +162,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.E_Block1 is not null) block2 = (PropertyBlock2Green?)this.Visit(context.E_Block1);
                 PropertyBlock3Green? block3 = null;
                 if (context.E_Block2 is not null) block3 = (PropertyBlock3Green?)this.Visit(context.E_Block2);
-                return _factory.Property(isPlain, block1, isWeak, type, name, block2, block3);
+                return _factory.Property(block1, type, name, block2, block3);
             }
             
             public override GreenNode? VisitPr_OperationAlt1(SymbolParser.Pr_OperationAlt1Context? context)
@@ -447,12 +445,43 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 return _factory.SymbolBlock2Block1Alt2(operations);
             }
             
-            public override GreenNode? VisitPr_PropertyBlock1(SymbolParser.Pr_PropertyBlock1Context? context)
+            public override GreenNode? VisitPr_PropertyBlock1Alt1(SymbolParser.Pr_PropertyBlock1Alt1Context? context)
             {
-                if (context == null) return PropertyBlock1Green.__Missing;
+                if (context == null) return PropertyBlock1Alt1Green.__Missing;
+                var isPlain = (InternalSyntaxToken?)this.VisitTerminal(context.E_isPlain, SymbolSyntaxKind.KPlain);
+                PropertyBlock1Alt1Block1Green? block = null;
+                if (context.E_Block is not null) block = (PropertyBlock1Alt1Block1Green?)this.Visit(context.E_Block);
+                return _factory.PropertyBlock1Alt1(isPlain, block);
+            }
+            
+            public override GreenNode? VisitPr_PropertyBlock1Alt2(SymbolParser.Pr_PropertyBlock1Alt2Context? context)
+            {
+                if (context == null) return PropertyBlock1Alt2Green.__Missing;
                 var isDerived = (InternalSyntaxToken?)this.VisitTerminal(context.E_isDerived, SymbolSyntaxKind.KDerived);
                 var isCached = (InternalSyntaxToken?)this.VisitTerminal(context.E_isCached);
-                return _factory.PropertyBlock1(isDerived, isCached);
+                var isWeak = (InternalSyntaxToken?)this.VisitTerminal(context.E_isWeak);
+                return _factory.PropertyBlock1Alt2(isDerived, isCached, isWeak);
+            }
+            
+            public override GreenNode? VisitPr_PropertyBlock1Alt3(SymbolParser.Pr_PropertyBlock1Alt3Context? context)
+            {
+                if (context == null) return PropertyBlock1Alt3Green.__Missing;
+                var isWeak = (InternalSyntaxToken?)this.VisitTerminal(context.E_isWeak1, SymbolSyntaxKind.KWeak);
+                return _factory.PropertyBlock1Alt3(isWeak);
+            }
+            
+            public override GreenNode? VisitPr_PropertyBlock1Alt1Block1Alt1(SymbolParser.Pr_PropertyBlock1Alt1Block1Alt1Context? context)
+            {
+                if (context == null) return PropertyBlock1Alt1Block1Alt1Green.__Missing;
+                var isAbstract = (InternalSyntaxToken?)this.VisitTerminal(context.E_isAbstract, SymbolSyntaxKind.KAbstract);
+                return _factory.PropertyBlock1Alt1Block1Alt1(isAbstract);
+            }
+            
+            public override GreenNode? VisitPr_PropertyBlock1Alt1Block1Alt2(SymbolParser.Pr_PropertyBlock1Alt1Block1Alt2Context? context)
+            {
+                if (context == null) return PropertyBlock1Alt1Block1Alt2Green.__Missing;
+                var isWeak = (InternalSyntaxToken?)this.VisitTerminal(context.E_isWeak, SymbolSyntaxKind.KWeak);
+                return _factory.PropertyBlock1Alt1Block1Alt2(isWeak);
             }
             
             public override GreenNode? VisitPr_PropertyBlock2(SymbolParser.Pr_PropertyBlock2Context? context)

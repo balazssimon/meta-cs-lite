@@ -1,5 +1,7 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
+    using global::MetaDslx.CodeAnalysis.Symbols;
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,11 +29,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using MetaDslx.CodeAnalysis.Symbols;
 
-    public abstract partial class AnnotationSymbol: MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl
+    public abstract partial class AnnotationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl
     {
-        public new class CompletionParts : MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_Arguments = new __CompletionPart(nameof(Start_Arguments));
             public static readonly __CompletionPart Finish_Arguments = new __CompletionPart(nameof(Finish_Arguments));
@@ -44,7 +45,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl.CompletionParts.CompletionGraph
                     , Start_Arguments, Finish_Arguments
                     , Start_Constructors, Finish_Constructors
                     , Start_Parameters, Finish_Parameters
@@ -67,10 +68,11 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
+        public override __Type SymbolType => typeof(AnnotationSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Arguments
         {
             get
@@ -79,8 +81,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _arguments;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Constructors
         {
             get
@@ -89,8 +91,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _constructors;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>> Parameters
         {
             get
@@ -99,8 +101,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _parameters;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public DeclarationSymbol SelectedConstructor
         {
             get
@@ -109,8 +111,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _selectedConstructor;
             }
         }
-[__Phase(nameof(SelectedConstructor))]
-[__Derived]
+        [__Phase(nameof(SelectedConstructor))]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> SelectedParameters
         {
             get
@@ -185,7 +187,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Compute_Arguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValues<AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
         }
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_Constructors(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

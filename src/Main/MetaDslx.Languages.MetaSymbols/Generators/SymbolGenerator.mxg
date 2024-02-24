@@ -60,7 +60,7 @@ namespace [symbol.NamespaceName]
                 );
         }
 
-        [foreach (var prop in symbol.Properties)]
+        [foreach (var prop in symbol.Properties.Where(p => !p.IsAbstract))]
             [if (prop.IsWeak)]
                 private static [GetFieldType(symbol, prop)] [GetFieldName(prop)] = new [GetFieldType(symbol, prop)]();
             [else]
@@ -71,12 +71,12 @@ namespace [symbol.NamespaceName]
             private static [GetFieldType(symbol, op)] [GetFieldName(op)] = new [GetFieldType(symbol, op)]();
         [end foreach]
 
-        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
+        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsAbstract && !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsAbstract && !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
         {
             if (fixedSymbol)
             {
-                [foreach (var prop in symbol.Properties.Where(p => !p.IsDerived))]
+                [foreach (var prop in symbol.Properties.Where(p => !p.IsAbstract && !p.IsDerived))]
                     [AssignProperty(symbol, prop, GetParamName(prop))]
                 [end foreach]
             }
@@ -86,22 +86,23 @@ namespace [symbol.NamespaceName]
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [foreach (var prop in symbol.Properties)]
-            [if (!prop.IsDerived)]
+            [if (!prop.IsDerived && !prop.IsPlain)]
                 ["["]__ModelProperty["]"]
             [end if]
-            [if (!prop.IsPlain)]["["]__Phase[if (prop.Phase is not null)](nameof([prop.Phase.Name]))[end if]["]"][end if]
-            [if (prop.IsDerived)]["["]__Derived[if (prop.IsCached)](Cached=true)[end if]["]"][end if]
-            [if (prop.IsWeak)]["["]__Weak["]"][end if]
-            public [GetTypeName(symbol, prop.Type)] [prop.Name]
+            [if (!prop.IsPlain)]
+                ["["]__Phase[if (prop.Phase is not null)](nameof([prop.Phase.Name]))[end if]["]"]
+            [end if]
+            [if (prop.IsDerived)]
+                ["["]__Derived[if (prop.IsCached)](Cached=true)[end if]["]"]
+            [end if]
+            [if (prop.IsWeak)]
+                ["["]__Weak["]"]
+            [end if]
+            public [if (prop.IsAbstract)]abstract [end if][GetTypeName(symbol, prop.Type)] [prop.Name]
             {
                 [if (prop.IsPlain)]
-                    [if (prop.IsDerived)]
-                        [if (prop.IsCached)]
-                            // TODO: cache result
-                            get => Compute_[prop.Name]();
-                        [else]
-                            get => Compute_[prop.Name]();
-                        [end if]
+                    [if (prop.IsAbstract)]
+                        get;
                     [else]
                         [if (prop.IsWeak)]
                             get

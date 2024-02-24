@@ -1,5 +1,6 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,7 +28,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using System;
 
     public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
     {
@@ -52,19 +52,32 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public NamespaceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
         {
+            if (fixedSymbol)
+            {
+            }
         }
 
-        public override Type SymbolType => typeof(NamespaceSymbol);
+        public override __Type SymbolType => typeof(NamespaceSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public abstract global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent Extent { get; }
-        public abstract bool IsGlobalNamespace { get; }
-        public abstract global::MetaDslx.CodeAnalysis.NamespaceKind NamespaceKind { get; }
-        public abstract global::MetaDslx.CodeAnalysis.Compilation? ContainingCompilation { get; }
-
-
-[__Phase]
-[__Derived]
+        public abstract global::MetaDslx.CodeAnalysis.Symbols.NamespaceExtent Extent
+        {
+            get;
+        }
+        public abstract bool IsGlobalNamespace
+        {
+            get;
+        }
+        public abstract global::MetaDslx.CodeAnalysis.NamespaceKind NamespaceKind
+        {
+            get;
+        }
+        public abstract global::MetaDslx.CodeAnalysis.Compilation? ContainingCompilation
+        {
+            get;
+        }
+        [__Phase]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> ConstituentNamespaces
         {
             get
@@ -73,8 +86,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _constituentNamespaces;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> NamespaceMembers
         {
             get
@@ -122,6 +135,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
             }
         }
+
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Compute_ConstituentNamespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 

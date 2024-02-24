@@ -1,5 +1,7 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
+    using global::MetaDslx.CodeAnalysis.Symbols;
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,11 +29,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using MetaDslx.CodeAnalysis.Symbols;
 
-    public abstract partial class PElementSymbol: MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
+    public abstract partial class PElementSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
     {
-        public new class CompletionParts : MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_IsNamedElement = new __CompletionPart(nameof(Start_IsNamedElement));
             public static readonly __CompletionPart Finish_IsNamedElement = new __CompletionPart(nameof(Finish_IsNamedElement));
@@ -46,7 +47,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_IsNamedElement, Finish_IsNamedElement
                     , Start_ContainingPAlternativeSymbol, Finish_ContainingPAlternativeSymbol
                     , Start_Value, Finish_Value
@@ -72,10 +73,11 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
 
+        public override __Type SymbolType => typeof(PElementSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__Phase]
-[__Derived]
+        [__Derived]
         public bool IsNamedElement
         {
             get
@@ -84,8 +86,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _isNamedElement;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public PAlternativeSymbol? ContainingPAlternativeSymbol
         {
             get
@@ -95,7 +97,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::MetaDslx.CodeAnalysis.MetaSymbol Value
         {
             get
@@ -105,7 +107,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public global::MetaDslx.Languages.MetaCompiler.Model.Assignment Assignment
         {
             get
@@ -114,8 +116,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _assignment;
             }
         }
-[__Phase]
-[__Derived]
+        [__Phase]
+        [__Derived]
         public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
         {
             get
@@ -124,8 +126,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _expectedType;
             }
         }
-[__Phase(nameof(ExpectedType))]
-[__Derived]
+        [__Phase(nameof(ExpectedType))]
+        [__Derived]
         public global::MetaDslx.Languages.MetaCompiler.Model.ExpectedTypeKind ExpectedKind
         {
             get
@@ -217,12 +219,12 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
         }
 
         protected virtual global::MetaDslx.Languages.MetaCompiler.Model.Assignment Compute_Assignment(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return ContainingModule!.SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.Languages.MetaCompiler.Model.Assignment>(this, nameof(Assignment), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.Languages.MetaCompiler.Model.Assignment>(this, nameof(Assignment), diagnostics, cancellationToken);
         }
 
         protected abstract (global::MetaDslx.CodeAnalysis.MetaType ExpectedType, global::MetaDslx.Languages.MetaCompiler.Model.ExpectedTypeKind ExpectedKind) Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

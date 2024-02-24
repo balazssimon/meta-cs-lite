@@ -26,6 +26,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
     public interface Property : global::MetaDslx.Languages.MetaSymbols.Model.Declaration
     {
         object? DefaultValue { get; set; }
+        bool IsAbstract { get; set; }
         bool IsCached { get; set; }
         bool IsDerived { get; set; }
         bool IsPlain { get; set; }

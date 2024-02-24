@@ -1,5 +1,6 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,7 +28,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using System;
 
     public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
@@ -99,12 +99,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public override Type SymbolType => typeof(DeclarationSymbol);
+        public override __Type SymbolType => typeof(DeclarationSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [__ModelProperty]
-[__Phase]
-[__Weak]
+        [__Phase]
+        [__Weak]
         public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility
         {
             get
@@ -115,7 +115,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public bool IsStatic
         {
             get
@@ -125,7 +125,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
+        [__Phase]
         public bool IsExtern
         {
             get
@@ -135,8 +135,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
-[__Weak]
+        [__Phase]
+        [__Weak]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments
         {
             get
@@ -147,8 +147,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
         [__ModelProperty]
-[__Phase]
-[__Weak]
+        [__Phase]
+        [__Weak]
         public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports
         {
             get
@@ -158,9 +158,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
             }
         }
-[__Phase]
-[__Derived]
-[__Weak]
+        [__Phase]
+        [__Derived]
+        [__Weak]
         public global::System.Collections.Immutable.ImmutableArray<string> MemberNames
         {
             get
@@ -170,9 +170,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<string>.Empty;
             }
         }
-[__Phase]
-[__Derived]
-[__Weak]
+        [__Phase]
+        [__Derived]
+        [__Weak]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members
         {
             get
@@ -182,9 +182,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
             }
         }
-[__Phase]
-[__Derived]
-[__Weak]
+        [__Phase]
+        [__Derived]
+        [__Weak]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeMembers
         {
             get

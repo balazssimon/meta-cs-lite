@@ -253,7 +253,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             var phs = ArrayBuilder<string>.GetInstance();
             foreach (var decl in symbol.Declarations)
             {
-                if (decl is Property prop)
+                if (decl is Property prop && !prop.IsPlain)
                 {
                     if (prop.Phase is null) phs.Add(prop.Name);
                 }

@@ -1,5 +1,6 @@
 namespace MetaDslx.CodeAnalysis.Symbols
 {
+    using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
     using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
     using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
@@ -27,32 +28,39 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
-    using MetaDslx.Modeling;
-    using System;
 
     public abstract partial class ModuleSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
         public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts
         {
+
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
                     global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts.CompletionGraph
                 );
         }
 
+
         public ModuleSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
         {
+            if (fixedSymbol)
+            {
+            }
         }
 
-        public override Type SymbolType => typeof(ModuleSymbol);
+        public override __Type SymbolType => typeof(ModuleSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public abstract global::MetaDslx.CodeAnalysis.Symbols.ISymbolFactory SymbolFactory { get; }
+        public abstract global::MetaDslx.Modeling.MultiModelFactory ModelFactory
+        {
+            get;
+        }
+        public abstract NamespaceSymbol GlobalNamespace
+        {
+            get;
+        }
 
-        public abstract MultiModelFactory? ModelFactory { get; }
-
-        public abstract NamespaceSymbol GlobalNamespace { get; }
 
         public abstract global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol? GetRootNamespace(global::MetaDslx.CodeAnalysis.SyntaxTree syntaxTree);
 
@@ -60,5 +68,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             return base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken);
         }
+
     }
 }

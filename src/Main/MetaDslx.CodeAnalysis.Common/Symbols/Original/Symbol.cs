@@ -52,7 +52,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public Symbol(Symbol container)
         {
-            _completeParts = -1;
+            _completeParts = 0;
             _container = container;
         }
 
