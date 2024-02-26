@@ -8,6 +8,7 @@ using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Languages.MetaCompiler.Compiler.Syntax;
 using MetaDslx.Languages.MetaCompiler.Model;
+using Roslyn.Utilities;
 
 namespace MetaDslx.Languages.MetaCompiler.Symbols.Impl
 {
@@ -51,7 +52,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Impl
             else if (qualifier.IsType)
             {
                 var qualifierType = qualifier.OriginalType!;
-                var prop = qualifierType.GetProperty(Name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.IgnoreCase);
+                var prop = qualifierType.GetAllProperties(Name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.IgnoreCase);
                 if (prop is null)
                 {
                     diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInAgg, Location, Name, qualifier));

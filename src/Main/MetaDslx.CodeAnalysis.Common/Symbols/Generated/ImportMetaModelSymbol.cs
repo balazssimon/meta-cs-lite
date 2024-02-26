@@ -28,6 +28,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __NotImplementedException = global::System.NotImplementedException;
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
+    using System.Collections.Immutable;
 
     public abstract partial class ImportMetaModelSymbol: Impl.ImportSymbolImpl
     {
@@ -46,10 +47,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 );
         }
 
-        private global::MetaDslx.CodeAnalysis.MetaSymbol _metaModelSymbols;
+        private ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _metaModelSymbols;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> _metaModels;
 
-        public ImportMetaModelSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
+        public ImportMetaModelSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
         {
             if (fixedSymbol)
@@ -63,7 +64,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         [__ModelProperty]
         [__Phase]
-        public global::MetaDslx.CodeAnalysis.MetaSymbol MetaModelSymbols
+        public ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> MetaModelSymbols
         {
             get
             {
@@ -118,9 +119,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Compute_MetaModelSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> Compute_MetaModelSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(MetaModelSymbols), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(MetaModelSymbols), diagnostics, cancellationToken);
         }
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> Compute_MetaModels(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

@@ -584,7 +584,7 @@ namespace MetaDslx.CodeAnalysis
             {
                 var type = AsType();
                 if (type is not null) return type.IsEnum;
-                var csts = OriginalTypeSymbol.CSharpSymbol as ITypeSymbol;
+                var csts = OriginalTypeSymbol?.CSharpSymbol as ITypeSymbol;
                 if (csts is not null) return csts.TypeKind == Microsoft.CodeAnalysis.TypeKind.Enum || csts.BaseType?.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat) == EnumFullName;
                 return false;
             }
@@ -606,7 +606,7 @@ namespace MetaDslx.CodeAnalysis
                     return false;
                 }
             }
-            var csts = OriginalTypeSymbol.CSharpSymbol as ITypeSymbol;
+            var csts = OriginalTypeSymbol?.CSharpSymbol as ITypeSymbol;
             if (csts is not null && (csts.TypeKind == TypeKind.Enum || csts.BaseType?.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat) == EnumFullName))
             {
                 var literal = csts.GetMembers(name).FirstOrDefault();
@@ -630,7 +630,7 @@ namespace MetaDslx.CodeAnalysis
             {
                 var type = AsType();
                 if (type is not null) return type.IsValueType;
-                var csts = OriginalTypeSymbol.CSharpSymbol as ITypeSymbol;
+                var csts = OriginalTypeSymbol?.CSharpSymbol as ITypeSymbol;
                 if (csts is not null) return csts.IsValueType;
                 return false;
             }
@@ -652,7 +652,7 @@ namespace MetaDslx.CodeAnalysis
                         return true;
                     }
                 }
-                var csts = OriginalTypeSymbol.CSharpSymbol as ITypeSymbol;
+                var csts = OriginalTypeSymbol?.CSharpSymbol as ITypeSymbol;
                 if (csts is not null && csts.NullableAnnotation == NullableAnnotation.Annotated)
                 {
                     if (csts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1 && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(OriginalTypeSymbol) == "System.Nullable")
@@ -680,7 +680,7 @@ namespace MetaDslx.CodeAnalysis
                     return true;
                 }
             }
-            var csts = OriginalTypeSymbol.CSharpSymbol as ITypeSymbol;
+            var csts = OriginalTypeSymbol?.CSharpSymbol as ITypeSymbol;
             if (csts is not null && csts.NullableAnnotation == NullableAnnotation.Annotated)
             {
                 if (csts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1 && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(OriginalTypeSymbol) == "System.Nullable")
@@ -726,21 +726,14 @@ namespace MetaDslx.CodeAnalysis
                         {
                             return true;
                         }
-                        else if (type.GetInterfaces().Any(intf => intf == typeof(IList<>)))
-                        {
-                            return true;
-                        }
-                        else if (type.GetInterfaces().Any(intf => intf == typeof(ISet<>)))
-                        {
-                            return true;
-                        }
-                        else if (type.GetInterfaces().Any(intf => intf == typeof(ICollection<>)))
-                        {
+                        var interfaces = type.GetInterfaces();
+                        if (interfaces.Any(intf => intf.Namespace == "System.Collections.Generic"))
+                        { 
                             return true;
                         }
                     }
                 }
-                var csts = OriginalTypeSymbol.CSharpSymbol as INamedTypeSymbol;
+                var csts = OriginalTypeSymbol?.CSharpSymbol as INamedTypeSymbol;
                 if (csts is not null && csts.IsGenericType && csts.TypeArguments.Length == 1)
                 {
                     if (SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(OriginalTypeSymbol) == "System.Nullable") return false;
@@ -767,24 +760,15 @@ namespace MetaDslx.CodeAnalysis
                         itemType = type.GenericTypeArguments[0];
                         return true;
                     }
-                    else if (type.GetInterfaces().Any(intf => intf == typeof(IList<>)))
-                    {
-                        itemType = type.GenericTypeArguments[0];
-                        return true;
-                    }
-                    else if (type.GetInterfaces().Any(intf => intf == typeof(ISet<>)))
-                    {
-                        itemType = type.GenericTypeArguments[0];
-                        return true;
-                    }
-                    else if (type.GetInterfaces().Any(intf => intf == typeof(ICollection<>)))
+                    var interfaces = type.GetInterfaces();
+                    if (interfaces.Any(intf => intf.Namespace == "System.Collections.Generic"))
                     {
                         itemType = type.GenericTypeArguments[0];
                         return true;
                     }
                 }
             }
-            var csts = OriginalTypeSymbol.CSharpSymbol as INamedTypeSymbol;
+            var csts = OriginalTypeSymbol?.CSharpSymbol as INamedTypeSymbol;
             if (csts is not null && csts.IsGenericType && csts.TypeArguments.Length == 1)
             {
                 bool freeDiagnostics = diagnostics is null;

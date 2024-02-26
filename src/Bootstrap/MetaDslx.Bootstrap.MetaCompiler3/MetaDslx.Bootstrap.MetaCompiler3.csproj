@@ -31,7 +31,8 @@
 
     <ItemGroup>
         <AdditionalFiles Include="Model\*.mxm" />
-        <AdditionalFiles Include="Language\*.mxl" />
+        <AdditionalFiles Include="Compiler\*.mxl" />
         <AdditionalFiles Include="Generators\*.mxg" />
-    </ItemGroup>
+		<AdditionalFiles Include="Symbols\*.mxs" />
+	</ItemGroup>
 </Project>

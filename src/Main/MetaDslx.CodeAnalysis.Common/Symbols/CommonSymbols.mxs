@@ -59,7 +59,7 @@ symbol Import
 
 symbol ImportMetaModel : Import
 {
-    MetaSymbol MetaModelSymbols
+    MetaSymbol[] MetaModelSymbols
     derived MetaDslx.Modeling.MetaModel[] MetaModels
 }
 

@@ -7,6 +7,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Languages.MetaCompiler.Model;
 
 namespace MetaDslx.Languages.MetaCompiler.Symbols.Impl
 {
@@ -69,7 +70,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Impl
 
         protected override MetaType Compute_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var returnType = this.ContainingModule.SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+            var returnType = this.SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
             if (returnType.IsDefaultOrNull)
             {
                 if (this.Elements.Length == 1)
@@ -89,6 +90,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Impl
                     returnType = rule.ReturnType;
                 }
             }
+            var alt = ModelObject as Alternative;
+            if (alt is not null) alt.ReturnType = returnType;
             return returnType;
         }
     }
