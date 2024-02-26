@@ -150,7 +150,7 @@ namespace MetaDslx.BuildTools
                 var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
                 var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
                 var mxsFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxs").ToImmutableArray();
-                //*/
+                /*/
                 foreach (var mxgFile in mxgFiles)
                 {
                     await CompileMetaGenerator(mxgFile);
@@ -160,9 +160,9 @@ namespace MetaDslx.BuildTools
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
-                    //await CompileMetaSymbols(compilation, mxsFiles);
-                    await CompileMetaModels(compilation, mxmFiles);
-                    await CompileMetaLanguages(compilation, mxlFiles);
+                    await CompileMetaSymbols(compilation, mxsFiles);
+                    //await CompileMetaModels(compilation, mxmFiles);
+                    //await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
                 // Perform analysis...
