@@ -171,7 +171,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var module = Compilation.SourceModule;
             var symbolFactory = module.SymbolFactory;
             MetaType propertyType = default;
-            var property = modelObjectType.GetProperty(this.Name, BindingFlags.Public | BindingFlags.Instance);
+            var property = GetProperty(modelObjectType, this.Name);
             if (property is not null)
             {
                 propertyType = property.PropertyType;
@@ -185,6 +185,21 @@ namespace MetaDslx.CodeAnalysis.Binding
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of '{modelObjectType.FullName}' does not exist."));
             }
             return propertyType;
+        }
+
+        private PropertyInfo? GetProperty(Type type, string name)
+        {
+            var propInfo = type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+            if (propInfo is not null) return propInfo;
+            if (type.IsInterface)
+            {
+                foreach (var intf in type.GetInterfaces())
+                {
+                    propInfo = intf.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+                    if (propInfo is not null) return propInfo;
+                }
+            }
+            return null;
         }
 
         public override string ToString()
