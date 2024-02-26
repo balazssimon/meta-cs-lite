@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Roslyn.Utilities;
 using System.Xml.Linq;
 using MetaDslx.CodeAnalysis.Symbols.Model;
+using System.Threading;
 
 namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 {
@@ -347,7 +348,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
         private bool IsMetaModelSymbol(Symbol? symbol)
         {
-            if (symbol is IModelSymbol ms && ms.ModelObjectType == typeof(MetaDslx.Languages.MetaModel.Model.MetaModel))
+            if (symbol.ModelObjectType == typeof(MetaDslx.Languages.MetaModel.Model.MetaModel))
+            //if (symbol is IModelSymbol ms && ms.ModelObjectType == typeof(MetaDslx.Languages.MetaModel.Model.MetaModel))
             {
                 return true;
             }

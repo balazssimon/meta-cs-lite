@@ -2,6 +2,7 @@
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -19,6 +20,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     {
         private readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
         private readonly Compilation _compilation;
+        private MultiModelFactory _modelFactory;
 
         public SourceSymbolFactory(Compilation compilation)
         {
@@ -26,6 +28,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         }
 
         public Compilation Compilation => _compilation;
+
+        public MultiModelFactory ModelFactory
+        {
+            get
+            {
+                if (_modelFactory is null)
+                {
+                    Interlocked.CompareExchange(ref _modelFactory, CreateModelFactory(), null);
+                }
+                return _modelFactory;
+            }
+        }
+
+        protected virtual MultiModelFactory CreateModelFactory()
+        {
+            var compilationFactory = _compilation.MainLanguage.CompilationFactory;
+            return compilationFactory.CreateModelFactory(_compilation);
+        }
 
         public override string? GetName(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
@@ -56,9 +76,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             if (container is ModuleSymbol) throw new ArgumentException("ModuleSymbol is unexpected here.", nameof(container));
             if (container is AssemblySymbol) throw new ArgumentException("AssemblySymbol is unexpected here.", nameof(container));
             if (container.Model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
-            var containingModule = container.ContainingModule;
-            if (containingModule is null) throw new ArgumentException("Containing module of the container symbol must not be null.", nameof(container));
-            if (containingModule.ModelFactory is null) throw new ArgumentException("Model factory of the containing module of the container symbol must not be null.", nameof(container));
             var symbolConstructor = GetConstructor(container, underlyingObject, diagnostics, cancellationToken);
             if (symbolConstructor is null) return null;
             return symbolConstructor.Invoke(container, underlyingObject);
@@ -78,15 +95,19 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             }
             var symbolType = mobjType;
             ModelClassInfo? mobjInfo = null;
-            if (!typeof(Symbol).IsAssignableFrom(mobjType))
+            if (typeof(Symbol).IsAssignableFrom(mobjType))
             {
-                mobjInfo = container.ContainingModule.ModelFactory.GetInfo(mobjType);
+                symbolType = GetSymbolType(container, underlyingObject, mobjInfo, diagnostics, cancellationToken);
+            }
+            else
+            {
+                mobjInfo = GetModelClassInfo(container, underlyingObject, diagnostics, cancellationToken);
                 if (mobjInfo is null)
                 {
                     diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.FirstLocation, $"Could not instantiate model object '{mobjType.FullName}', because it's ModelClassInfo could not be retrieved."));
                     return s_constructors.GetValue(mobjType, t => null);
                 }
-                symbolType = mobjInfo?.SymbolType.AsType();
+                symbolType = GetSymbolType(container, underlyingObject, mobjInfo, diagnostics, cancellationToken);
                 if (symbolType is null)
                 {
                     diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.FirstLocation, $"Could not instantiate model object '{mobjType.FullName}', because it's SymbolType is missing."));
@@ -130,6 +151,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         protected override MergedDeclaration? GetParentCore(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return null;
+        }
+
+        protected virtual ModelClassInfo? GetModelClassInfo(Symbol container, MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return ModelFactory.GetInfo(underlyingObject.ModelObjectType);
+        }
+
+        protected virtual Type? GetSymbolType(Symbol container, MergedDeclaration underlyingObject, ModelClassInfo? modelClassInfo, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var mobjType = underlyingObject.ModelObjectType;
+            if (typeof(Symbol).IsAssignableFrom(mobjType)) return mobjType;
+            else return modelClassInfo?.SymbolType.AsType();
         }
 
         protected virtual IModelObject? CreateModelObject(Symbol container, MergedDeclaration declaration, ModelClassInfo info)

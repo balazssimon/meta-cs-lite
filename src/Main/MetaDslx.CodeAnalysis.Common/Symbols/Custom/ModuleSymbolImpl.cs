@@ -21,8 +21,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
     {
         private readonly string _moduleName;
         private readonly ISymbolFactory _symbolFactory;
-        private readonly MultiModelFactory _modelFactory;
-        private readonly DeclarationTable _declarations;
         private MetaDslx.Modeling.Model _model;
         private NamespaceSymbol _globalNamespace;
         private ImmutableArray<NamespaceSymbol> _fileNamespaces;
@@ -32,10 +30,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         {
             _symbolFactory = symbolFactory;
             _moduleName = moduleName;
-            _declarations = declarations;
-            var compilation = assemblySymbol.DeclaringCompilation;
-            var compilationFactory = compilation.MainLanguage.CompilationFactory;
-            _modelFactory = compilationFactory.CreateModelFactory(compilation);
         }
 
         public ModuleSymbolImpl(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, MetaDslx.Modeling.Model model)
@@ -52,7 +46,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         }
 
         public override ISymbolFactory SymbolFactory => _symbolFactory;
-        public override MultiModelFactory? ModelFactory => _modelFactory;
 
         public override __Model Model
         {

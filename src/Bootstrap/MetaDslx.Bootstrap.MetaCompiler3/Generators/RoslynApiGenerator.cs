@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.IO;
 
 namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 {
@@ -36,6 +38,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
         public IList<Token> Tokens => Grammar.Tokens;
         public IList<Rule> Rules => Grammar.Rules;
         public IList<Block> Blocks => Grammar.Blocks;
+
+        public IList<TokenKind> TokenKinds => Grammar.TokenKinds;
+
         public IList<Rule> RulesAndBlocks
         {
             get

@@ -52,10 +52,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public override __Type SymbolType => typeof(ModuleSymbol);
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public abstract global::MetaDslx.Modeling.MultiModelFactory ModelFactory
-        {
-            get;
-        }
         public abstract NamespaceSymbol GlobalNamespace
         {
             get;

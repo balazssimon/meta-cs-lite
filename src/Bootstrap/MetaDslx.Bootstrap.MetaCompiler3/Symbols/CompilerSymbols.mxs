@@ -1,0 +1,81 @@
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
+
+using MetaDslx.CodeAnalysis
+using MetaDslx.CodeAnalysis.Symbols
+using MetaDslx.Bootstrap.MetaCompiler3.Model
+
+symbol Attribute {}
+symbol Declaration {}
+
+symbol Annotation : Attribute
+{
+    AnnotationArgument[] Arguments
+    derived Declaration[] Constructors
+    derived Declaration[][] Parameters
+    derived Declaration SelectedConstructor
+    derived Declaration[] SelectedParameters phase SelectedConstructor
+}
+
+symbol AnnotationArgument
+{
+    derived Annotation? AnnotationSymbol
+    derived bool IsNamedArgument
+    MetaSymbol[] NamedParameter
+    derived Declaration Parameter
+    derived MetaType ParameterType phase Parameter
+    Expression Value
+}
+
+symbol Expression
+{
+    derived PAlternative? ContainingPAlternativeSymbol
+    derived AnnotationArgument? ContainingAnnotationArgumentSymbol
+    derived MetaType ExpectedType
+    derived MetaSymbol Value
+    derived MetaSymbol[] Values phase Value
+}
+
+symbol PAlternative : Declaration
+{
+    derived ParserRule? ContainingParserRuleSymbol
+    derived PBlock? ContainingPBlockSymbol
+    PElement[] Elements
+    Expression? ReturnValue
+    derived MetaType ReturnType
+    derived MetaType ExpectedType
+    derived PElement[] AllSimpleElements
+}
+
+symbol ParserRule : Declaration
+{
+    MetaType ReturnType
+    PAlternative[] Alternatives
+}
+
+symbol PBlock : Declaration
+{
+    derived MetaType ExpectedType
+    PAlternative[] Alternatives
+}
+
+symbol PElement : Declaration
+{
+    derived bool IsNamedElement
+    derived PAlternative? ContainingPAlternativeSymbol
+    MetaSymbol Value
+    Assignment Assignment
+    derived MetaType ExpectedType
+    derived ExpectedTypeKind ExpectedKind phase ExpectedType
+}
+
+symbol PReference : Declaration
+{
+    MetaSymbol Rule
+    MetaType[] ReferencedTypes
+}
+
+symbol Token : Declaration
+{
+    MetaType ReturnType
+    derived MetaType ExpectedType
+}

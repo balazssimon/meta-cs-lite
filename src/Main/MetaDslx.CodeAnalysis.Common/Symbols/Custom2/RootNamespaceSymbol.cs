@@ -42,7 +42,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (MergedDeclaration is null)
+            if (IsModelSymbol && !IsSourceSymbol && !IsCSharpSymbol)
             {
                 return ContainingModule!.SymbolFactory.CreateSymbols<Symbol>(this, _model.RootObjects, diagnostics, cancellationToken);
             }

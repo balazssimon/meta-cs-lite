@@ -65,7 +65,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         private SymbolConstructor? GetConstructor(Symbol container, IModelObject underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var mobjType = underlyingObject.MInfo.MetaType.AsType();
+            var mobjType = underlyingObject?.MInfo.MetaType.AsType();
             if (mobjType is null)
             {
                 diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.MLocation, $"Model object '{underlyingObject.MName}' has no MetaType."));
@@ -75,7 +75,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             {
                 return symbolConstructor;
             }
-            var symbolType = underlyingObject.MInfo.SymbolType.AsType();
+            var symbolType = GetSymbolType(container, underlyingObject, diagnostics, cancellationToken);
             if (symbolType is null)
             {
                 diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.MLocation, $"Model object '{underlyingObject.MName}' has no SymbolType."));
@@ -174,6 +174,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         {
             // nop
         }
+
+        protected virtual Type? GetSymbolType(Symbol container, IModelObject underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return underlyingObject.MInfo.SymbolType.AsType();
+        }
+
         private class SymbolConstructor
         {
             private readonly ConstructorInfo _constructorInfo;

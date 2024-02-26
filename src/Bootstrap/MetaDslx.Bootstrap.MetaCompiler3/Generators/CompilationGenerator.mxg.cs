@@ -1,4 +1,4 @@
-#line (1,10)-(1,54) 10 "CompilationGenerator.mxg"
+#line (1,10)-(1,53) 10 "CompilationGenerator.mxg"
 namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 #line hidden
 
@@ -7,7 +7,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
     using
     #line hidden
     global::
-    #line (3,7)-(3,45) 13 "CompilationGenerator.mxg"
+    #line (3,7)-(3,44) 13 "CompilationGenerator.mxg"
     MetaDslx.Bootstrap.MetaCompiler3.Model;
     #line hidden
     #line (4,1)-(4,6) 5 "CompilationGenerator.mxg"
@@ -51,7 +51,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (12,11)-(12,18) 25 "CompilationGenerator.mxg"
             __cb.Write("System;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (13,5)-(13,10) 25 "CompilationGenerator.mxg"
@@ -63,7 +63,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (13,11)-(13,33) 25 "CompilationGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (14,5)-(14,10) 25 "CompilationGenerator.mxg"
@@ -75,7 +75,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (14,11)-(14,46) 25 "CompilationGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Declarations;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (15,5)-(15,10) 25 "CompilationGenerator.mxg"
@@ -87,7 +87,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (15,11)-(15,41) 25 "CompilationGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Binding;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -101,7 +101,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (17,15)-(17,21) 25 "CompilationGenerator.mxg"
             __cb.Write("enable");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -115,13 +115,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (19,16)-(19,25) 24 "CompilationGenerator.mxg"
             __cb.Write(Namespace);
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (20,5)-(20,6) 25 "CompilationGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (21,9)-(21,15) 25 "CompilationGenerator.mxg"
@@ -154,13 +154,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (21,49)-(21,67) 25 "CompilationGenerator.mxg"
             __cb.Write("CompilationFactory");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (22,9)-(22,10) 25 "CompilationGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -168,13 +168,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (24,9)-(24,10) 25 "CompilationGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (25,5)-(25,6) 25 "CompilationGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             return __cb.ToStringAndFree();
         }
@@ -194,7 +194,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (30,11)-(30,18) 25 "CompilationGenerator.mxg"
             __cb.Write("System;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (31,5)-(31,10) 25 "CompilationGenerator.mxg"
@@ -206,7 +206,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (31,11)-(31,33) 25 "CompilationGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (32,5)-(32,10) 25 "CompilationGenerator.mxg"
@@ -218,7 +218,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (32,11)-(32,46) 25 "CompilationGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Declarations;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (33,5)-(33,10) 25 "CompilationGenerator.mxg"
@@ -230,7 +230,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (33,11)-(33,41) 25 "CompilationGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Binding;");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -244,7 +244,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (35,15)-(35,21) 25 "CompilationGenerator.mxg"
             __cb.Write("enable");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -258,13 +258,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (37,16)-(37,25) 24 "CompilationGenerator.mxg"
             __cb.Write(Namespace);
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (38,5)-(38,6) 25 "CompilationGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (39,9)-(39,15) 25 "CompilationGenerator.mxg"
@@ -297,13 +297,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (39,42)-(39,53) 25 "CompilationGenerator.mxg"
             __cb.Write("Compilation");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (40,9)-(40,10) 25 "CompilationGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (41,13)-(41,22) 25 "CompilationGenerator.mxg"
@@ -318,7 +318,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (41,29)-(41,41) 25 "CompilationGenerator.mxg"
             __cb.Write("Compilation(");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (42,17)-(42,24) 25 "CompilationGenerator.mxg"
@@ -330,7 +330,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (42,25)-(42,38) 25 "CompilationGenerator.mxg"
             __cb.Write("assemblyName,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (43,17)-(43,35) 25 "CompilationGenerator.mxg"
@@ -342,7 +342,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (43,36)-(43,44) 25 "CompilationGenerator.mxg"
             __cb.Write("options,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (44,17)-(44,50) 25 "CompilationGenerator.mxg"
@@ -354,7 +354,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (44,51)-(44,62) 25 "CompilationGenerator.mxg"
             __cb.Write("references,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (45,17)-(45,39) 25 "CompilationGenerator.mxg"
@@ -366,7 +366,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (45,40)-(45,62) 25 "CompilationGenerator.mxg"
             __cb.Write("scriptCompilationInfo,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (46,17)-(46,34) 25 "CompilationGenerator.mxg"
@@ -381,7 +381,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (46,52)-(46,53) 25 "CompilationGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (47,17)-(47,21) 25 "CompilationGenerator.mxg"
@@ -393,7 +393,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (47,22)-(47,44) 25 "CompilationGenerator.mxg"
             __cb.Write("reuseReferenceManager,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (48,17)-(48,44) 25 "CompilationGenerator.mxg"
@@ -405,7 +405,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (48,45)-(48,67) 25 "CompilationGenerator.mxg"
             __cb.Write("syntaxAndDeclarations)");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (49,17)-(49,18) 25 "CompilationGenerator.mxg"
@@ -462,13 +462,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (49,148)-(49,170) 25 "CompilationGenerator.mxg"
             __cb.Write("syntaxAndDeclarations)");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (50,13)-(50,14) 25 "CompilationGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -476,7 +476,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (52,13)-(52,14) 25 "CompilationGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -511,7 +511,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (54,49)-(54,56) 25 "CompilationGenerator.mxg"
             __cb.Write("Create(");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (55,17)-(55,24) 25 "CompilationGenerator.mxg"
@@ -538,7 +538,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (55,45)-(55,46) 25 "CompilationGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (56,17)-(56,41) 25 "CompilationGenerator.mxg"
@@ -565,7 +565,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (56,61)-(56,62) 25 "CompilationGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (57,17)-(57,48) 25 "CompilationGenerator.mxg"
@@ -592,7 +592,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (57,67)-(57,68) 25 "CompilationGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (58,17)-(58,36) 25 "CompilationGenerator.mxg"
@@ -616,13 +616,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (58,47)-(58,52) 25 "CompilationGenerator.mxg"
             __cb.Write("null)");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (59,13)-(59,14) 25 "CompilationGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (60,17)-(60,23) 25 "CompilationGenerator.mxg"
@@ -667,13 +667,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (60,126)-(60,135) 25 "CompilationGenerator.mxg"
             __cb.Write("options);");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (61,13)-(61,14) 25 "CompilationGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
@@ -708,7 +708,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (63,49)-(63,73) 25 "CompilationGenerator.mxg"
             __cb.Write("CreateScriptCompilation(");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (64,17)-(64,23) 25 "CompilationGenerator.mxg"
@@ -720,7 +720,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (64,24)-(64,37) 25 "CompilationGenerator.mxg"
             __cb.Write("assemblyName,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (65,17)-(65,28) 25 "CompilationGenerator.mxg"
@@ -744,7 +744,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (65,42)-(65,47) 25 "CompilationGenerator.mxg"
             __cb.Write("null,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (66,17)-(66,48) 25 "CompilationGenerator.mxg"
@@ -768,7 +768,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (66,62)-(66,67) 25 "CompilationGenerator.mxg"
             __cb.Write("null,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (67,17)-(67,36) 25 "CompilationGenerator.mxg"
@@ -792,7 +792,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (67,47)-(67,52) 25 "CompilationGenerator.mxg"
             __cb.Write("null,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (68,17)-(68,29) 25 "CompilationGenerator.mxg"
@@ -816,7 +816,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (68,58)-(68,63) 25 "CompilationGenerator.mxg"
             __cb.Write("null,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (69,17)-(69,22) 25 "CompilationGenerator.mxg"
@@ -840,7 +840,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (69,36)-(69,41) 25 "CompilationGenerator.mxg"
             __cb.Write("null,");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (70,17)-(70,22) 25 "CompilationGenerator.mxg"
@@ -864,13 +864,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (70,37)-(70,42) 25 "CompilationGenerator.mxg"
             __cb.Write("null)");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (71,13)-(71,14) 25 "CompilationGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
             #line (72,17)-(72,23) 25 "CompilationGenerator.mxg"
@@ -933,25 +933,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
             #line (72,190)-(72,203) 25 "CompilationGenerator.mxg"
             __cb.Write("globalsType);");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (73,13)-(73,14) 25 "CompilationGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
             #line (74,9)-(74,10) 25 "CompilationGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
             #line (75,5)-(75,6) 25 "CompilationGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            __cb.WriteLine();
+            __cb.AppendLine();
             __cb.Pop();
             return __cb.ToStringAndFree();
         }

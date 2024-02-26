@@ -23,7 +23,6 @@ symbol Assembly
 
 symbol Module
 {
-    plain abstract MetaDslx.Modeling.MultiModelFactory ModelFactory
     plain abstract Namespace GlobalNamespace
     NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
 }
