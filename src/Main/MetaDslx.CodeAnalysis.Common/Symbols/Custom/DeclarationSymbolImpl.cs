@@ -20,6 +20,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         {
         }
 
+        protected override ImmutableArray<ImportSymbol> Compute_Imports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return this.ContainedSymbols.OfType<ImportSymbol>().ToImmutableArray();
+        }
+
         protected override ImmutableArray<string> Compute_MemberNames(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return this.ContainedSymbols.OfType<DeclarationSymbol>().Where(m => !string.IsNullOrEmpty(m.Name)).Select(m => m.Name).Distinct().ToImmutableArray();
