@@ -73,7 +73,7 @@ namespace [symbol.NamespaceName]
             private static [GetFieldType(symbol, op)] [GetFieldName(op)] = new [GetFieldType(symbol, op)]();
         [end foreach]
 
-        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsAbstract && !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
+        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsAbstract && !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsAbstract && !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
         {
             if (fixedSymbol)
@@ -85,7 +85,7 @@ namespace [symbol.NamespaceName]
         }
 
         public override __Type SymbolType => typeof([GetIntfName(symbol, symbol)]);
-        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+        protected override __CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [foreach (var prop in symbol.Properties)]
             [if (!prop.IsDerived && !prop.IsPlain)]

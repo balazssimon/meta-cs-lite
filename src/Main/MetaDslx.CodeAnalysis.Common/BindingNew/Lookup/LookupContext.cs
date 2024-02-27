@@ -250,7 +250,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (_namePrefixes.Count == 0 && !prefixes.Any()) return;
             _namePrefixes.Clear();
-            _namePrefixes.UnionWith(prefixes.Where(p => !string.IsNullOrWhiteSpace(p)));
+            _namePrefixes.UnionWith(prefixes);
             ComputeViableNames();
         }
 
@@ -258,7 +258,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (_nameSuffixes.Count == 0 && !suffixes.Any()) return;
             _nameSuffixes.Clear();
-            _nameSuffixes.UnionWith(suffixes.Where(s => !string.IsNullOrWhiteSpace(s)));
+            _nameSuffixes.UnionWith(suffixes);
             ComputeViableNames();
         }
 

@@ -125,7 +125,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         protected virtual IModelObject? CreateModelObject(Symbol container, ISymbol csharpSymbol)
         {
-            if (container is NamespaceSymbol) return null;
+            if (csharpSymbol is INamespaceSymbol) return null;
             var model = container.Model;
             if (model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
             foreach (var f in _modelFactories)
@@ -133,7 +133,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
                 var mobj = f.Create(model, csharpSymbol);
                 if (mobj is not null)
                 {
-                    mobj.MName = csharpSymbol.Name;
                     if (container.ModelObject is not null)
                     {
                         container.ModelObject.MChildren.Add(mobj);

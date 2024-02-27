@@ -14,6 +14,7 @@ namespace MetaDslx.Modeling
     public abstract class ModelObject : IModelObject, IReferenceableModelObject
     {
         private static readonly ConditionalWeakTable<ModelObject, ValueInfo> s_valueInfos = new ConditionalWeakTable<ModelObject, ValueInfo>();
+        private static readonly ConditionalWeakTable<ModelObject, string> s_rootNamespaces = new ConditionalWeakTable<ModelObject, string>();
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string? _id;
@@ -359,6 +360,23 @@ namespace MetaDslx.Modeling
                 var info = TryGetValueInfo();
                 if (info is not null) info.Tag = value;
                 else if (value is not null) GetValueInfo().Tag = value;
+            }
+        }
+
+        public string? MRootNamespace 
+        { 
+            get
+            {
+                if (s_rootNamespaces.TryGetValue(this, out var value)) return value;
+                else return null;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    s_rootNamespaces.Remove(this);
+                    s_rootNamespaces.Add(this, value);
+                }
             }
         }
 

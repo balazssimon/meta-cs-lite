@@ -119,7 +119,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (sameSymbols && IsFromCompilation(info.BestLocation) && !IsFromCompilation(info.SecondLocation))
             {
                 // The {1} in '{0}' conflicts with the imported {3} in '{2}'. Using the symbol defined in '{0}'.
-                var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.WRN_SameFullNameThisAggAgg, location, bestLocation, best, GetContainingAssembly(second), second));
+                var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.WRN_SameFullNameThisAggAgg, location, bestLocation, SymbolDisplayFormat.FullyQualifiedFormat.ToString(best), GetContainingAssembly(second), SymbolDisplayFormat.FullyQualifiedFormat.ToString(second)));
                 context.AddDiagnostic(errorInfo.Diagnostic);
                 resultSymbol = best;
                 return errorInfo;
@@ -130,7 +130,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 // since an error has already been reported from the declaration
                 var reportError = !(info.BestLocation == AmbiguousSymbolLocation.FromSourceModule && info.SecondLocation == AmbiguousSymbolLocation.FromSourceModule);
                 // '{0}' is an ambiguous reference between '{1}' and '{2}'
-                var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.ERR_AmbigContext, location, best.Name, best, second));
+                var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.ERR_AmbigContext, location, best.Name, SymbolDisplayFormat.FullyQualifiedFormat.ToString(best), SymbolDisplayFormat.FullyQualifiedFormat.ToString(second)));
                 if (reportError)
                 {
                     context.AddDiagnostic(errorInfo.Diagnostic);

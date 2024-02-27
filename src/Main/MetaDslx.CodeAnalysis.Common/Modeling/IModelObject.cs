@@ -15,6 +15,7 @@ namespace MetaDslx.Modeling
         Model? MModel { get; set; }
 
         string? MName { get; set; }
+        string? MRootNamespace { get; set; }
         IModelObject? MParent { get; set; }
         IList<IModelObject> MChildren { get; }
         IEnumerable<Box> MReferences { get; }

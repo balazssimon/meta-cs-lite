@@ -313,7 +313,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitSimpleTypeReferenceAlt2(SimpleTypeReferenceAlt2Syntax node)
         {
-            var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)));
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)), suffixes: ImmutableArray.Create("", "Symbol"));
             this.Begin(__annot0, node.Qualifier);
             try
             {
@@ -778,7 +778,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
             this.Begin(__annot1, node.BaseTypes);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Languages.MetaSymbols.Model.Symbol)));
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Languages.MetaSymbols.Model.Symbol)), suffixes: ImmutableArray.Create("", "Symbol"));
                 this.Begin(__annot0, node.BaseTypes);
                 try
                 {

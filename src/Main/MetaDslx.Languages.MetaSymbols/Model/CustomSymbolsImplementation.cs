@@ -9,7 +9,11 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         public override string? Declaration_FullName(Declaration _this)
         {
             var parent = _this.Parent;
-            if (parent is null || string.IsNullOrEmpty(parent.Name)) return _this.Name;
+            if (parent is null || string.IsNullOrEmpty(parent.Name))
+            {
+                if (_this.MRootNamespace is not null) return $"{_this.MRootNamespace}.{_this.Name}";
+                else return _this.Name;
+            }
             else return $"{parent.FullName}.{_this.Name}";
         }
 

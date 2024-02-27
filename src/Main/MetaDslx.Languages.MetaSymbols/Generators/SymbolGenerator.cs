@@ -49,7 +49,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
         public string GetBaseName(Symbol context, Symbol type)
         {
             if (type.Parent == context.Parent) return $"Impl.{type.Name}SymbolImpl";
-            else return $"global::{type.Parent?.FullName}.Impl.{type.Name}SymbolImpl";
+            else return $"global::{type.Parent?.FullName ?? type.MRootNamespace}.Impl.{type.Name}SymbolImpl";
         }
 
         public string GetImplName(Symbol context, Symbol type)
