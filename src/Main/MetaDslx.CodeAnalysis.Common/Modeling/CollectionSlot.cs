@@ -10,6 +10,423 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
+    public sealed class CollectionSlot<T> : Slot<T>, ICollectionSlot<T>, ISlot
+    {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private List<Box> _boxes;
+
+        public CollectionSlot(IModelObject owner, ModelPropertySlot property)
+            : base(owner, property)
+        {
+            _boxes = new List<Box>();
+        }
+
+        public override IEnumerable<Box> Boxes => _boxes;
+
+        public override IEnumerable<T> Values => _boxes.Select(b => (T)b.Value);
+
+        public override SlotKind Kind => SlotKind.Collection;
+
+        public override bool IsDefault => _boxes.Count == 0;
+
+        public bool IsUnordered => Property.IsUnordered;
+
+        public bool IsNonUnique => Property.IsNonUnique;
+
+        public int Count => _boxes.Count;
+
+        IEnumerable<object?> ISlot.Values => this.Values.Select(v => v as object);
+
+        public T this[int index]
+        {
+            get => (T)_boxes[index].Value;
+            set => ReplaceAtCore(index, value, null);
+        }
+
+        public override void Clear()
+        {
+            while (_boxes.Count > 0)
+            {
+                RemoveAtCore(_boxes.Count - 1, null);
+            }
+        }
+
+        public override bool Contains(T item)
+        {
+            return _boxes.Any(b => b.HasValue(item));
+        }
+
+        protected override Box? AddCore(T item, Box? oppositeBox)
+        {
+            return InsertAtCore(_boxes.Count, item, oppositeBox);
+        }
+
+        private Box? InsertAtCore(int index, T item, Box? oppositeBox)
+        {
+            if (oppositeBox is null) CheckReadOnly(GetInsertMessage(Property.SlotProperty, item));
+            CheckValueType(item, mp => GetInsertMessage(mp, item));
+            var valueAdded = false;
+            try
+            {
+                if (IsNonUnique || !_boxes.Any(b => b.HasValue(item)))
+                {
+                    if (Property.IsSingle && _boxes.Count >= 1)
+                    {
+                        Property.ThrowModelException(mp => mp.IsSingle, mp => $"{GetInsertMessage(mp, item)}: this collection can only contain a single item.");
+                    }
+                    var box = new Box(this);
+                    box.Value = item;
+                    _boxes.Insert(index, box);
+                    valueAdded = true;
+                    ValueAdded(box, oppositeBox);
+                    return box;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                if (valueAdded) _boxes.RemoveAt(index);
+                if (Owner.MModel.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetInsertMessage(Property.SlotProperty, item), ex);
+                else throw;
+            }
+        }
+
+        protected override Box? RemoveCore(T item, Box? oppositeBox)
+        {
+            Box? result = null;
+            var index = IndexOf(item);
+            while (index >= 0)
+            {
+                var box = RemoveAtCore(index, oppositeBox);
+                if (result is null) result = box;
+                index = IndexOf(item);
+            }
+            return result;
+        }
+
+        private Box? RemoveAtCore(int index, Box? oppositeBox)
+        {
+            var valueRemoved = false;
+            var box = _boxes[index];
+            var oldValue = (T)box.Value;
+            try
+            {
+                _boxes.RemoveAt(index);
+                valueRemoved = true;
+                if (IsNonUnique || !_boxes.Any(b => b.HasValue(oldValue)))
+                {
+                    ValueRemoved(box, oldValue, oppositeBox);
+                    return box;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                if (valueRemoved)
+                {
+                    box.Value = oldValue;
+                    _boxes.Insert(index, box);
+                }
+                if (Owner.MModel.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetRemoveMessage(Property.SlotProperty, box.Value), ex);
+                else throw;
+            }
+        }
+
+        protected override Box? ReplaceCore(T oldItem, T newItem)
+        {
+            if (oldItem is null && newItem is null) return null;
+            if (oldItem is not null && oldItem.Equals(newItem)) return null;
+            if (!IsNonUnique && Contains(newItem))
+            {
+                return RemoveCore(oldItem, null);
+            }
+            Box? result = null;
+            var index = IndexOf(oldItem);
+            while (index >= 0)
+            {
+                var box = ReplaceAtCore(index, newItem, null);
+                if (result is null) result = box;
+                index = IndexOf(oldItem);
+            }
+            return result;
+        }
+
+        private Box? ReplaceAtCore(int index, T item, Box? oppositeBox)
+        {
+            if (oppositeBox is null) CheckReadOnly(GetInsertMessage(Property.SlotProperty, item));
+            CheckValueType(item, mp => GetInsertMessage(mp, item));
+            var valueReplaced = false;
+            var box = _boxes[index];
+            var oldValue = (T)box.Value;
+            try
+            {
+                if (!box.HasValue(item))
+                {
+                    box.Clear();
+                    ValueRemoved(box, oldValue, oppositeBox);
+                    if (IsNonUnique || !_boxes.Any(b => b.HasValue(item)))
+                    {
+                        box.Value = item;
+                        ValueAdded(box, oppositeBox);
+                        return box;
+                    }
+                    else
+                    {
+                        throw new ModelException($"Error assigning '{item}' to '{Property.QualifiedName}[{index}]' in '{Owner}': the item will not be unique in the collection.");
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                if (valueReplaced) box.Value = oldValue;
+                if (Owner.MModel.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetAssignMessage(Property.SlotProperty, item), ex);
+                else throw;
+            }
+        }
+
+        protected string GetAssignMessage(ModelProperty property, object? value)
+        {
+            return $"Error assigning '{value}' to '{property.QualifiedName}' in '{Owner}'";
+        }
+
+        protected string GetInsertMessage(ModelProperty property, object? value)
+        {
+            return $"Error inserting '{value}' to '{property.QualifiedName}' in '{Owner}'";
+        }
+
+        protected string GetRemoveMessage(ModelProperty property, object? value)
+        {
+            return $"Error removing '{value}' from '{property.QualifiedName}' in '{Owner}'";
+        }
+
+        public int IndexOf(T item)
+        {
+            for (int i = 0; i < _boxes.Count; ++i)
+            {
+                if (_boxes[i].HasValue(item)) return i;
+            }
+            return -1;
+        }
+
+        public int LastIndexOf(T item)
+        {
+            for (int i = _boxes.Count - 1; i >= 0; --i)
+            {
+                if (_boxes[i].HasValue(item)) return i;
+            }
+            return -1;
+        }
+
+        public Box BoxAt(int index)
+        {
+            return _boxes[index];
+        }
+
+        public Box? BoxOf(T item)
+        {
+            var index = IndexOf(item);
+            if (index >= 0) return _boxes[index];
+            else return null;
+        }
+
+        public ImmutableArray<Box> AllBoxesOf(T item)
+        {
+            var result = ArrayBuilder<Box>.GetInstance();
+            for (int i = 0; i < _boxes.Count; ++i)
+            {
+                var box = _boxes[i];
+                if (box.HasValue(item)) result.Add(box);
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public Box? Add(T item)
+        {
+            return InsertAtCore(_boxes.Count, item, null);
+        }
+
+        public ImmutableArray<Box> AddRange(IEnumerable<T> items)
+        {
+            var result = ArrayBuilder<Box>.GetInstance();
+            foreach (var item in items)
+            {
+                var box = Add(item);
+                if (box is not null) result.Add(box);
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public Box Insert(int index, T item)
+        {
+            return InsertAtCore(index, item, null);
+        }
+
+        public ImmutableArray<Box> InsertRange(int index, IEnumerable<T> items)
+        {
+            var result = ArrayBuilder<Box>.GetInstance();
+            foreach (var item in items)
+            {
+                var box = InsertAtCore(index, item, null);
+                if (box is not null) result.Add(box);
+                ++index;
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public Box? Remove(T item)
+        {
+            var index = IndexOf(item);
+            if (index >= 0) return RemoveAtCore(index, null);
+            else return null;
+        }
+
+        public ImmutableArray<Box> RemoveAll(T item)
+        {
+            var result = ArrayBuilder<Box>.GetInstance();
+            var index = IndexOf(item);
+            while (index >= 0)
+            {
+                var box = RemoveAtCore(index, null);
+                if (box is not null) result.Add(box);
+                index = IndexOf(item);
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public Box? RemoveAt(int index)
+        {
+            return RemoveAtCore(index, null);
+        }
+
+        public ImmutableArray<Box> RemoveRange(int index, int count)
+        {
+            var result = ArrayBuilder<Box>.GetInstance();
+            for (int i = 0; i < count; ++i)
+            {
+                var box = RemoveAtCore(index, null);
+                if (box is not null) result.Add(box);
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public ImmutableArray<Box> RemoveRange(IEnumerable<T> items)
+        {
+            var result = ArrayBuilder<Box>.GetInstance();
+            var itemSet = PooledHashSet<object>.GetInstance();
+            foreach (var item in items)
+            {
+                itemSet.Add(item);
+            }
+            for (int i = _boxes.Count - 1; i >= 0; --i)
+            {
+                var box = _boxes[i];
+                if (itemSet.Contains(box.Value))
+                {
+                    _boxes.RemoveAt(i);
+                    result.Add(box);
+                }
+            }
+            itemSet.Free();
+            return result.ToImmutableAndFree();
+        }
+
+        public ImmutableArray<Box> RetainRange(IEnumerable<T> items)
+        {
+            var result = ArrayBuilder<Box>.GetInstance();
+            var itemSet = PooledHashSet<object>.GetInstance();
+            foreach (var item in items)
+            {
+                itemSet.Add(item);
+            }
+            for (int i = _boxes.Count - 1; i >= 0; --i)
+            {
+                var box = _boxes[i];
+                if (!itemSet.Contains(box.Value))
+                {
+                    _boxes.RemoveAt(i);
+                    result.Add(box);
+                }
+            }
+            itemSet.Free();
+            return result.ToImmutableAndFree();
+        }
+
+        public void Reverse()
+        {
+            _boxes.Reverse();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            foreach (var box in _boxes)
+            {
+                yield return (T)box.Value;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"Count = {Count}";
+        }
+
+        void IList<T>.Insert(int index, T item)
+        {
+            this.Insert(index, item);
+        }
+
+        void IList<T>.RemoveAt(int index)
+        {
+            this.RemoveAt(index);
+        }
+
+        void ICollection<T>.Add(T item)
+        {
+            this.Add(item);
+        }
+
+        void ICollection<T>.CopyTo(T[] array, int arrayIndex)
+        {
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (arrayIndex < 0) throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+            if (arrayIndex + _boxes.Count > array.Length) throw new ArgumentException("The number of elements in the collection is greater than the available space from arrayIndex to the end of the destination array.");
+            for (int i = 0; i < _boxes.Count; ++i)
+            {
+                array[arrayIndex + i] = (T)_boxes[i].Value;
+            }
+        }
+
+        bool ICollection<T>.Remove(T item)
+        {
+            return this.Remove(item) != null;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        bool ISlot.Contains(object? item)
+        {
+            return Contains((T)item);
+        }
+
+        Box? ISlot.Add(object? item)
+        {
+            return Add((T)item);
+        }
+
+        Box? ISlot.Remove(object? item)
+        {
+            return Remove((T)item);
+        }
+
+        Box? ISlot.Replace(object? oldItem, object? newItem)
+        {
+            return this.ReplaceCore((T)oldItem, (T)newItem);
+        }
+    }
+
     internal class CollectionSlot : Slot, ICollectionSlot
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -368,11 +785,11 @@ namespace MetaDslx.Modeling
         }
     }
 
-    internal class CollectionSlot<T> : ICollectionSlot<T>
+    internal class CollectionSlotWrapper<T> : ICollectionSlot<T>
     {
         private readonly ICollectionSlot _wrappedSlot;
 
-        public CollectionSlot(ICollectionSlot wrappedSlot)
+        public CollectionSlotWrapper(ICollectionSlot wrappedSlot)
         {
             _wrappedSlot = wrappedSlot;
         }

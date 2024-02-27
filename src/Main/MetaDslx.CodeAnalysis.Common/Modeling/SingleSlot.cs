@@ -8,6 +8,170 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Modeling
 {
+    public sealed class SingleSlot<T> : Slot<T>, ISingleSlot<T>, ISlot
+    {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Box _box;
+
+        public SingleSlot(ModelObject owner, ModelPropertySlot property)
+            : base(owner, property)
+        {
+            _box = new Box(this);
+        }
+
+        public override SlotKind Kind => SlotKind.Single;
+        public override bool IsDefault => _box.IsDefault;
+
+        public Box Box => _box;
+
+        public T Value
+        {
+            get => (T)_box.Value;
+            set => AddCore(value, null);
+        }
+
+        public override IEnumerable<T> Values
+        {
+            get
+            {
+                yield return (T)_box.Value;
+            }
+        }
+
+        public override IEnumerable<Box> Boxes
+        {
+            get
+            {
+                yield return _box;
+            }
+        }
+
+        IEnumerable<object?> ISlot.Values => this.Values.Select(v => v as object);
+
+        public override void Clear()
+        {
+            RemoveCore((T)_box.Value, null);
+        }
+
+        public override bool Contains(T item)
+        {
+            return _box.HasValue(item);
+        }
+
+        public Box? Init(T value)
+        {
+            Model.CheckReadOnly($"Error initializing {this} with '{value}'");
+            return AddCore(value, null);
+        }
+
+        protected override Box? AddCore(T item, Box? oppositeBox)
+        {
+            if (oppositeBox is null) CheckReadOnly(GetAssignMessage(Property.SlotProperty, item));
+            CheckValueType(item, mp => GetAssignMessage(mp, item));
+            var oldValue = (T)_box.Value;
+            if (!_box.HasValue(item))
+            {
+                try
+                {
+                    _box.Clear();
+                    ValueRemoved(_box, oldValue, oppositeBox);
+                    _box.Value = item;
+                    ValueAdded(_box, oppositeBox);
+                    return _box;
+                }
+                catch (Exception ex)
+                {
+                    _box.Value = oldValue;
+                    if (Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetAssignMessage(Property.SlotProperty, item)}", ex);
+                    else throw;
+                }
+            }
+            return null;
+        }
+
+        protected override Box? RemoveCore(T item, Box? oppositeBox)
+        {
+            var oldValue = (T)_box.Value;
+            if (_box.HasValue(item))
+            {
+                if (oppositeBox is null) CheckReadOnly(GetRemoveMessage(Property.SlotProperty, item));
+                try
+                {
+                    _box.Clear();
+                    ValueRemoved(_box, oldValue, oppositeBox);
+                    return _box;
+                }
+                catch (Exception ex)
+                {
+                    _box.Value = oldValue;
+                    if (Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetRemoveMessage(Property.SlotProperty, item)}", ex);
+                    else throw;
+                }
+            }
+            return null;
+        }
+
+        protected override Box? ReplaceCore(T oldItem, T newItem)
+        {
+            CheckReadOnly(GetAssignMessage(Property.SlotProperty, newItem));
+            CheckValueType(newItem, mp => GetAssignMessage(mp, newItem));
+            var oldValue = (T)_box.Value;
+            if (_box.HasValue(oldItem) && !_box.HasValue(newItem))
+            {
+                try
+                {
+                    _box.Clear();
+                    ValueRemoved(_box, oldValue, null);
+                    _box.Value = newItem;
+                    ValueAdded(_box, null);
+                    return _box;
+                }
+                catch (Exception ex)
+                {
+                    _box.Value = oldValue;
+                    if (Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetAssignMessage(Property.SlotProperty, newItem)}", ex);
+                    else throw;
+                }
+            }
+            return null;
+        }
+
+        protected string GetAssignMessage(ModelProperty property, object? value)
+        {
+            return $"Error assigning '{value}' to '{property.QualifiedName}' in '{Owner}'";
+        }
+
+        protected string GetRemoveMessage(ModelProperty property, object? value)
+        {
+            return $"Error removing '{value}' from '{property.QualifiedName}' in '{Owner}'";
+        }
+
+        public override string ToString()
+        {
+            return Value?.ToString();
+        }
+
+        bool ISlot.Contains(object? item)
+        {
+            return this.Contains((T)item);
+        }
+
+        Box? ISlot.Add(object? item)
+        {
+            return ((ISlot<T>)this).Add((T)item);
+        }
+
+        Box? ISlot.Remove(object? item)
+        {
+            return ((ISlot<T>)this).Remove((T)item);
+        }
+
+        Box? ISlot.Replace(object? oldItem, object? newItem)
+        {
+            return ((ISlot<T>)this).Replace((T)oldItem, (T)newItem);
+        }
+    }
+
     internal class SingleSlot : Slot, ISingleSlot
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -150,11 +314,11 @@ namespace MetaDslx.Modeling
         }
     }
 
-    internal class SingleSlot<T> : ISingleSlot<T>
+    internal class SingleSlotWrapper<T> : ISingleSlot<T>
     {
         private readonly ISingleSlot _wrappedSlot;
 
-        public SingleSlot(ISingleSlot wrappedSlot)
+        public SingleSlotWrapper(ISingleSlot wrappedSlot)
         {
             _wrappedSlot = wrappedSlot;
         }

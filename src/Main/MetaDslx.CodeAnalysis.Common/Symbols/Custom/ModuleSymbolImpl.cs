@@ -88,6 +88,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
             if (IsCSharpSymbol)
             {
                 _globalNamespace = new RootNamespaceSymbol(this, ((IModuleSymbol)CSharpSymbol).GlobalNamespace, Model);
+                _symbolFactory.AddSymbol(_globalNamespace);
             }
             else
             {

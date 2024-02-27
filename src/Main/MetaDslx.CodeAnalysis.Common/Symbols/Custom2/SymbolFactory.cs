@@ -81,10 +81,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             if (parent is null) return default;
             var container = GetSymbol(parent, diagnostics, cancellationToken);
             if (container is null) return default;
-            symbol = CreateSymbolCore(container, underlyingObject, diagnostics, cancellationToken);
-            if (symbol is not null)
+            container.ForceComplete(CompletionGraph.FinishCreatingContainedSymbols, null, cancellationToken);
+            if (_symbols.TryGetValue(underlyingObject, out symbol))
             {
-                _symbols.Add(underlyingObject, symbol);
                 return symbol;
             }
             return default;

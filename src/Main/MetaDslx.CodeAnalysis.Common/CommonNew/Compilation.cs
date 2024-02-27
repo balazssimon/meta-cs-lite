@@ -979,7 +979,8 @@ namespace MetaDslx.CodeAnalysis
                             rootBinder.CompleteBind(resolveLazy: true, cancellationToken);
                         }
                     }
-                    this.GlobalNamespace.ForceComplete(null, null, cancellationToken);
+                    //this.GlobalNamespace.ForceComplete(null, null, cancellationToken);
+                    SourceModule.GlobalNamespace.ForceComplete(null, null, cancellationToken);
                     AppendDiagnosticsForAllSymbols(builder, cancellationToken);
                     ImmutableInterlocked.InterlockedInitialize(ref _validationDiagnostics, builder.ToReadOnlyAndFree());
                 }

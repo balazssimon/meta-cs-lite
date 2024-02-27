@@ -12,9 +12,10 @@ namespace [symbol.NamespaceName]
 {
     using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
-    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
-    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
+    using __SymbolAttribute = global::MetaDslx.CodeAnalysis.Symbols.SymbolAttribute;
+    using __PhaseAttribute = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __DerivedAttribute = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __WeakAttribute = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -27,7 +28,7 @@ namespace [symbol.NamespaceName]
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
     using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
-    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+    using __ModelPropertyAttribute = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
     using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
     using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
@@ -42,6 +43,7 @@ namespace [symbol.NamespaceName]
     [var baseTypes = symbol.BaseTypes]
     [var baseSymbol = baseTypes.Count == 1 ? baseTypes[0] : null]
     [var baseName = baseSymbol is null ? "global::MetaDslx.CodeAnalysis.Symbols.Symbol" : GetBaseName(symbol, baseSymbol)]
+    ["["]__SymbolAttribute["]"]
     public abstract partial class [GetIntfName(symbol, symbol)]: [baseName]
     {
         public new class CompletionParts : [baseName].CompletionParts
@@ -87,16 +89,16 @@ namespace [symbol.NamespaceName]
 
         [foreach (var prop in symbol.Properties)]
             [if (!prop.IsDerived && !prop.IsPlain)]
-                ["["]__ModelProperty["]"]
+                ["["]__ModelPropertyAttribute["]"]
             [end if]
             [if (!prop.IsPlain)]
-                ["["]__Phase[if (prop.Phase is not null)](nameof([prop.Phase.Name]))[end if]["]"]
+                ["["]__PhaseAttribute[if (prop.Phase is not null)](nameof([prop.Phase.Name]))[end if]["]"]
             [end if]
             [if (prop.IsDerived)]
-                ["["]__Derived[if (prop.IsCached)](Cached=true)[end if]["]"]
+                ["["]__DerivedAttribute[if (prop.IsCached)](Cached=true)[end if]["]"]
             [end if]
             [if (prop.IsWeak)]
-                ["["]__Weak["]"]
+                ["["]__WeakAttribute["]"]
             [end if]
             public [if (prop.IsAbstract)]abstract [end if][GetTypeName(symbol, prop.Type)] [prop.Name]
             {
@@ -140,10 +142,10 @@ namespace [symbol.NamespaceName]
             [var returnType = GetTypeName(symbol, op.ReturnType)]
 
             [if (op.IsPhase)]
-                ["["]__Phase["]"]
+                ["["]__PhaseAttribute["]"]
                 protected abstract void [op.Name](__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
             [else if (op.IsCached)]
-                ["["]__Derived[if (op.IsCached)](Cached=true[if (!string.IsNullOrEmpty(op.CacheCondition))], Condition=[op.CacheCondition.EncodeString()][end if])[end if]["]"]
+                ["["]__DerivedAttribute[if (op.IsCached)](Cached=true[if (!string.IsNullOrEmpty(op.CacheCondition))], Condition=[op.CacheCondition.EncodeString()][end if])[end if]["]"]
                 public [returnType] [op.Name]([from p in op.Parameters select GetTypeName(symbol, p.Type)+" "+p.Name separator ", "])
                 {
                     [if (!string.IsNullOrEmpty(op.CacheCondition))]

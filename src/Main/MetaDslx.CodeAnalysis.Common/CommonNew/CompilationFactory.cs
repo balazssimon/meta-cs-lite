@@ -83,9 +83,9 @@ namespace MetaDslx.CodeAnalysis
             return new ErrorSymbolFactory();
         }
 
-        internal virtual CSharpSymbolFactory CreateCSharpSymbolFactory()
+        public virtual CSharpSymbolFactory CreateCSharpSymbolFactory()
         {
-            return new CSharpSymbolFactory();
+            return new CSharpSymbolFactory(ImmutableArray<CSharpModelFactory>.Empty);
         }
 
         public virtual SymbolValueConverter SymbolValueConverter(Compilation compilation)

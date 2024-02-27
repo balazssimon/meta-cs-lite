@@ -79,8 +79,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public bool IsErrorSymbol => _underlyingObject is ErrorSymbolInfo;
         public bool IsSourceSymbol => _underlyingObject is MergedDeclaration || s_compilations.TryGetValue(this, out _);
-        public bool IsModelSymbol => Model is not null;
-        public bool IsModelObjectSymbol => _underlyingObject is IModelObject || s_modelObjects.TryGetValue(this, out var mobj) && mobj is IModelObject;
+        public bool IsModelSymbol => _underlyingObject is IModelObject || s_modelObjects.TryGetValue(this, out var mobj) && mobj is IModelObject;
         public bool IsCSharpSymbol => _underlyingObject is ISymbol;
         public bool IsImplicitlyDeclared => s_compilations.TryGetValue(this, out _) && !(_underlyingObject is MergedDeclaration);
 
@@ -308,7 +307,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public virtual MetaDslx.Modeling.Model Model => s_modelObjects.TryGetValue(this, out var smobj) ? (smobj as IModelObject)?.MModel : null;
+        public virtual MetaDslx.Modeling.Model Model => s_modelObjects.TryGetValue(this, out var smobj) ? (smobj as IModelObject)?.MModel : this.ContainingModule?.Model;
 
         public IModelObject? ModelObject => _underlyingObject is IModelObject mobj ? mobj : s_modelObjects.TryGetValue(this, out var smobj) ? smobj as IModelObject : null;
 

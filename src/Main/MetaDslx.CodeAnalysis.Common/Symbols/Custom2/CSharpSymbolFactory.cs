@@ -21,9 +21,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
     public class CSharpSymbolFactory : SymbolFactory<ISymbol>
     {
         private readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
+        private readonly ImmutableArray<CSharpModelFactory> _modelFactories;
 
-        public CSharpSymbolFactory() 
+        public CSharpSymbolFactory(IEnumerable<CSharpModelFactory> modelFactories) 
         {
+            _modelFactories = modelFactories.ToImmutableArrayOrEmpty();
         }
 
         public override string? GetName(ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -96,8 +98,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
                 }
                 if (containerIndex >= 0 && csharpIndex >= 0 && modelObjectIndex >= 0)
                 {
-                    var mobjInfo = GetModelClassInfo(container, underlyingObject, diagnostics, cancellationToken);
-                    symbolConstructor = s_constructors.GetValue(csType, t => new SymbolConstructor(this, ctr, mobjInfo, parameters.Length, containerIndex, csharpIndex, modelObjectIndex));
+                    symbolConstructor = s_constructors.GetValue(csType, t => new SymbolConstructor(this, ctr, parameters.Length, containerIndex, csharpIndex, modelObjectIndex));
                     break;
                 }
             }
@@ -122,25 +123,25 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             return symbolType;
         }
 
-        protected virtual ModelClassInfo? GetModelClassInfo(Symbol container, ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual IModelObject? CreateModelObject(Symbol container, ISymbol csharpSymbol)
         {
-            return null;
-        }
-
-        protected virtual IModelObject? CreateModelObject(Symbol container, ISymbol csharpSymbol, ModelClassInfo info)
-        {
-            if (info is null) return null;
-            if (container.Model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
-            var mobj = info.Create(container.Model);
-            if (mobj is not null)
+            if (container is NamespaceSymbol) return null;
+            var model = container.Model;
+            if (model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
+            foreach (var f in _modelFactories)
             {
-                mobj.MName = csharpSymbol.Name;
-                if (container.ModelObject is not null)
+                var mobj = f.Create(model, csharpSymbol);
+                if (mobj is not null)
                 {
-                    container.ModelObject.MChildren.Add(mobj);
+                    mobj.MName = csharpSymbol.Name;
+                    if (container.ModelObject is not null)
+                    {
+                        container.ModelObject.MChildren.Add(mobj);
+                    }
+                    return mobj;
                 }
             }
-            return mobj;
+            return null;
         }
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -157,17 +158,15 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         {
             private readonly CSharpSymbolFactory _factory;
             private readonly ConstructorInfo _constructorInfo;
-            private readonly ModelClassInfo? _modelClassInfo;
             private readonly int _paramCount;
             private readonly int _containerIndex;
             private readonly int _csharpIndex;
             private readonly int _modelObjectIndex;
 
-            public SymbolConstructor(CSharpSymbolFactory factory, ConstructorInfo constructorInfo, ModelClassInfo? modelClassInfo, int paramCount, int containerIndex, int csharpIndex, int modelObjectIndex)
+            public SymbolConstructor(CSharpSymbolFactory factory, ConstructorInfo constructorInfo, int paramCount, int containerIndex, int csharpIndex, int modelObjectIndex)
             {
                 _factory = factory;
                 _constructorInfo = constructorInfo;
-                _modelClassInfo = modelClassInfo;
                 _paramCount = paramCount;
                 _containerIndex = containerIndex;
                 _csharpIndex = csharpIndex;
@@ -179,7 +178,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
                 var args = new object[_paramCount];
                 args[_containerIndex] = container;
                 args[_csharpIndex] = csharpSymbol;
-                var mobj = _factory.CreateModelObject(container, csharpSymbol, _modelClassInfo);
+                var mobj = _factory.CreateModelObject(container, csharpSymbol);
                 args[_modelObjectIndex] = mobj;
                 var symbol = (Symbol)Activator.CreateInstance(_constructorInfo.DeclaringType, args);
                 if (mobj is not null) mobj.MSymbol = symbol;

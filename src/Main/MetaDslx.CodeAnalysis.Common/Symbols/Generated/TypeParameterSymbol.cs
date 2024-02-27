@@ -29,6 +29,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
+    [SymbolAttribute]
     public abstract partial class TypeParameterSymbol: Impl.TypeSymbolImpl
     {
         public new class CompletionParts : Impl.TypeSymbolImpl.CompletionParts

@@ -30,6 +30,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
     using System.Collections.Immutable;
 
+    [SymbolAttribute]
     public abstract partial class ImportMetaModelSymbol: Impl.ImportSymbolImpl
     {
         public new class CompletionParts : Impl.ImportSymbolImpl.CompletionParts

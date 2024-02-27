@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Syntax;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.Languages.MetaSymbols.Compiler;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
         partial void RegisterServices()
         {
             RegisterGlobal<SyntaxFacts, CustomSymbolSyntaxFacts>();
+            RegisterGlobal<CompilationFactory, CustomSymbolCompilationFactory>();
         }
     }
 }
