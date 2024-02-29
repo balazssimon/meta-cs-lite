@@ -7,6 +7,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Bootstrap.MetaCompiler3.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols.Impl
 {
@@ -16,8 +17,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols.Impl
 
     public class PAlternativeSymbolImpl : PAlternativeSymbol
     {
-        public PAlternativeSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::System.Collections.Immutable.ImmutableArray<PElementSymbol> elements = default, ExpressionSymbol? returnValue = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
+        public PAlternativeSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -69,7 +70,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols.Impl
 
         protected override MetaType Compute_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var returnType = this.ContainingModule.SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+            var returnType = this.SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
             if (returnType.IsDefaultOrNull)
             {
                 if (this.Elements.Length == 1)
@@ -89,6 +90,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols.Impl
                     returnType = rule.ReturnType;
                 }
             }
+            var alt = ModelObject as Alternative;
+            if (alt is not null) alt.ReturnType = returnType;
             return returnType;
         }
     }

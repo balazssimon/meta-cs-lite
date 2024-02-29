@@ -59,12 +59,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         private global::MetaDslx.CodeAnalysis.MetaSymbol _value;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _values;
 
-        public ExpressionSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
+        public ExpressionSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-            }
+
         }
 
         public override __Type SymbolType => typeof(ExpressionSymbol);

@@ -51,13 +51,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         private global::MetaDslx.CodeAnalysis.MetaType _returnType;
         private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
 
-        public TokenSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.MetaType returnType = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol originalDefinition = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol?> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, originalDefinition: originalDefinition, typeArguments: typeArguments, imports: imports)
+        public TokenSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _returnType = returnType;
-            }
         }
 
         public override __Type SymbolType => typeof(TokenSymbol);
@@ -72,6 +68,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_ReturnType, null, default);
                 return _returnType;
             }
+            protected set
+            {
+                _returnType = value;
+            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -82,6 +82,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_ExpectedType, null, default);
                 return _expectedType;
             }
+            protected set
+            {
+                _expectedType = value;
+            }
         }
 
 
@@ -91,11 +95,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ReturnType))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_ReturnType(diagnostics, cancellationToken);
-                    _returnType = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_returnType == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_ReturnType(diagnostics, cancellationToken);
+                        _returnType = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_ReturnType);
                 }
                 return true;
@@ -104,11 +111,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ExpectedType))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_ExpectedType(diagnostics, cancellationToken);
-                    _expectedType = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_expectedType == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_ExpectedType(diagnostics, cancellationToken);
+                        _expectedType = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_ExpectedType);
                 }
                 return true;

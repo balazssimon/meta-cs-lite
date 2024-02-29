@@ -59,13 +59,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         private DeclarationSymbol _selectedConstructor;
         private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _selectedParameters;
 
-        public AnnotationSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> arguments = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
+        public AnnotationSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _arguments = arguments;
-            }
         }
 
         public override __Type SymbolType => typeof(AnnotationSymbol);

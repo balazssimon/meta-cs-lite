@@ -8,6 +8,7 @@ using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
 using MetaDslx.Bootstrap.MetaCompiler3.Model;
+using Roslyn.Utilities;
 
 namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols.Impl
 {
@@ -19,8 +20,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols.Impl
 
     public class PElementSymbolImpl : PElementSymbol
     {
-        public PElementSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol value = default, global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment assignment = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
+        public PElementSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
         }
         
@@ -51,7 +52,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols.Impl
             else if (qualifier.IsType)
             {
                 var qualifierType = qualifier.OriginalType!;
-                var prop = qualifierType.GetProperty(Name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.IgnoreCase);
+                var prop = qualifierType.GetAllProperties(Name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.IgnoreCase);
                 if (prop is null)
                 {
                     diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInAgg, Location, Name, qualifier));

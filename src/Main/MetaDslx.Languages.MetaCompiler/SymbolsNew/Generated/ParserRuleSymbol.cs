@@ -50,14 +50,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         private global::MetaDslx.CodeAnalysis.MetaType _returnType;
         private global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> _alternatives;
 
-        public ParserRuleSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.MetaType returnType = default, global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> alternatives = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
+        public ParserRuleSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _returnType = returnType;
-                _alternatives = alternatives;
-            }
         }
 
         public override __Type SymbolType => typeof(ParserRuleSymbol);

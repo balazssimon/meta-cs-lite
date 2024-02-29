@@ -73,15 +73,9 @@ namespace [symbol.NamespaceName]
             private static [GetFieldType(symbol, op)] [GetFieldName(op)] = new [GetFieldType(symbol, op)]();
         [end foreach]
 
-        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsAbstract && !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsAbstract && !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
+        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                [foreach (var prop in symbol.Properties.Where(p => !p.IsAbstract && !p.IsDerived))]
-                    [AssignProperty(symbol, prop, GetParamName(prop))]
-                [end foreach]
-            }
         }
 
         public override __Type SymbolType => typeof([GetIntfName(symbol, symbol)]);
@@ -132,6 +126,10 @@ namespace [symbol.NamespaceName]
                             return [GetFieldName(prop)];
                         [end if]
                     }
+                    protected set
+                    {
+                        [AssignProperty(symbol, prop, "value")]
+                    }
                 [end if]
             }
         [end foreach]
@@ -177,20 +175,33 @@ namespace [symbol.NamespaceName]
                 {
                     if (NotePartComplete(CompletionParts.Start_[phase]))
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
                         [if (props.Length >= 2)]
+                            var diagnostics = __DiagnosticBag.GetInstance();
                             var result = Compute_[phase](diagnostics, cancellationToken);
                             [foreach (var prop in props)]
-                                [AssignProperty(symbol, prop, "result."+prop.Name)]
+                                if ([if (prop.IsWeak)]![GetFieldName(prop)].TryGetValue(this, out var _)[else][GetFieldName(prop)] == default[end if])
+                                {
+                                    [AssignProperty(symbol, prop, "result."+prop.Name)]
+                                }
                             [end foreach]
+                            AddSymbolDiagnostics(diagnostics);
+                            diagnostics.Free();
                         [else if (props.Length == 1)]
-                            var result = Compute_[phase](diagnostics, cancellationToken);
-                            [AssignProperty(symbol, props[0], "result")]
+                            [var prop = props[0]]
+                            if ([if (prop.IsWeak)]![GetFieldName(prop)].TryGetValue(this, out var _)[else][GetFieldName(prop)] == default[end if])
+                            {
+                                var diagnostics = __DiagnosticBag.GetInstance();
+                                var result = Compute_[phase](diagnostics, cancellationToken);
+                                [AssignProperty(symbol, prop, "result")]
+                                AddSymbolDiagnostics(diagnostics);
+                                diagnostics.Free();
+                            }
                         [else]
+                            var diagnostics = __DiagnosticBag.GetInstance();
                             [phase](diagnostics, cancellationToken);
+                            AddSymbolDiagnostics(diagnostics);
+                            diagnostics.Free();
                         [end if]
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
                         NotePartComplete(CompletionParts.Finish_[phase]);
                     }
                     return true;
@@ -262,8 +273,8 @@ namespace [symbol.NamespaceName].Impl
 
     public class [GetImplName(symbol, symbol)] : [GetIntfName(symbol, symbol)]
     {
-        public [GetImplName(symbol, symbol)](Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default[foreach (var prop in GetProperties(symbol).Where(p => !p.IsDerived))], [GetTypeName(symbol, prop.Type)] [GetParamName(prop)] = [GetConstDefaultValue(symbol, prop)][end foreach]) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes[foreach (var prop in GetProperties(baseSymbol).Where(p => !p.IsDerived))], [GetParamName(prop)]: [GetParamName(prop)][end foreach])
+        public [GetImplName(symbol, symbol)](Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
         }
 

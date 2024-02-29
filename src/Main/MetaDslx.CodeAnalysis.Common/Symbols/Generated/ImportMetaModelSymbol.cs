@@ -51,13 +51,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _metaModelSymbols;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.MetaModel> _metaModels;
 
-        public ImportMetaModelSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> metaModelSymbols = default, global::System.Collections.Immutable.ImmutableArray<string> files = default, global::System.Collections.Immutable.ImmutableArray<AliasSymbol> aliases = default, global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> namespaces = default, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> symbols = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, files: files, aliases: aliases, namespaces: namespaces, symbols: symbols)
+        public ImportMetaModelSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _metaModelSymbols = metaModelSymbols;
-            }
         }
 
         public override __Type SymbolType => typeof(ImportMetaModelSymbol);
@@ -72,6 +68,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_MetaModelSymbols, null, default);
                 return _metaModelSymbols;
             }
+            protected set
+            {
+                _metaModelSymbols = value;
+            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -82,6 +82,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_MetaModels, null, default);
                 return _metaModels;
             }
+            protected set
+            {
+                _metaModels = value;
+            }
         }
 
 
@@ -91,11 +95,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_MetaModelSymbols))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_MetaModelSymbols(diagnostics, cancellationToken);
-                    _metaModelSymbols = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_metaModelSymbols == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_MetaModelSymbols(diagnostics, cancellationToken);
+                        _metaModelSymbols = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_MetaModelSymbols);
                 }
                 return true;
@@ -104,11 +111,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_MetaModels))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_MetaModels(diagnostics, cancellationToken);
-                    _metaModels = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_metaModels == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_MetaModels(diagnostics, cancellationToken);
+                        _metaModels = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_MetaModels);
                 }
                 return true;

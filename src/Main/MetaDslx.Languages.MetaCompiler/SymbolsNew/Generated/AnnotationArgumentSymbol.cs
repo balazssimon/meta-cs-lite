@@ -63,14 +63,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         private global::MetaDslx.CodeAnalysis.MetaType _parameterType;
         private ExpressionSymbol _value;
 
-        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol> attributes = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> namedParameter = default, ExpressionSymbol value = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
+        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _namedParameter = namedParameter;
-                _value = value;
-            }
         }
 
         public override __Type SymbolType => typeof(AnnotationArgumentSymbol);

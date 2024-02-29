@@ -51,14 +51,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         private global::MetaDslx.CodeAnalysis.MetaSymbol _rule;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> _referencedTypes;
 
-        public PReferenceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.MetaSymbol rule = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> referencedTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol originalDefinition = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol?> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, originalDefinition: originalDefinition, typeArguments: typeArguments, imports: imports)
+        public PReferenceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _rule = rule;
-                _referencedTypes = referencedTypes;
-            }
         }
 
         public override __Type SymbolType => typeof(PReferenceSymbol);
@@ -73,6 +68,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_Rule, null, default);
                 return _rule;
             }
+            protected set
+            {
+                _rule = value;
+            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -83,6 +82,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_ReferencedTypes, null, default);
                 return _referencedTypes;
             }
+            protected set
+            {
+                _referencedTypes = value;
+            }
         }
 
 
@@ -92,11 +95,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Rule))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_Rule(diagnostics, cancellationToken);
-                    _rule = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_rule == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_Rule(diagnostics, cancellationToken);
+                        _rule = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_Rule);
                 }
                 return true;
@@ -105,11 +111,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ReferencedTypes))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_ReferencedTypes(diagnostics, cancellationToken);
-                    _referencedTypes = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_referencedTypes == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_ReferencedTypes(diagnostics, cancellationToken);
+                        _referencedTypes = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_ReferencedTypes);
                 }
                 return true;

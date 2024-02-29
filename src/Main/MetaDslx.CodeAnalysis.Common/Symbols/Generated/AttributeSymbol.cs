@@ -47,13 +47,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         private TypeSymbol _attributeClass;
 
-        public AttributeSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, TypeSymbol attributeClass = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
+        public AttributeSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _attributeClass = attributeClass;
-            }
         }
 
         public override __Type SymbolType => typeof(AttributeSymbol);
@@ -68,6 +64,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_AttributeClass, null, default);
                 return _attributeClass;
             }
+            protected set
+            {
+                _attributeClass = value;
+            }
         }
 
 
@@ -77,11 +77,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_AttributeClass))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_AttributeClass(diagnostics, cancellationToken);
-                    _attributeClass = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_attributeClass == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_AttributeClass(diagnostics, cancellationToken);
+                        _attributeClass = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_AttributeClass);
                 }
                 return true;

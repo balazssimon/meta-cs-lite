@@ -47,13 +47,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         private Symbol _target;
 
-        public AliasSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, Symbol target = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, DeclarationSymbol originalDefinition = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, originalDefinition: originalDefinition, typeArguments: typeArguments, imports: imports)
+        public AliasSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-                _target = target;
-            }
         }
 
         public override __Type SymbolType => typeof(AliasSymbol);
@@ -68,6 +64,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_Target, null, default);
                 return _target;
             }
+            protected set
+            {
+                _target = value;
+            }
         }
 
 
@@ -77,11 +77,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Target))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_Target(diagnostics, cancellationToken);
-                    _target = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_target == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_Target(diagnostics, cancellationToken);
+                        _target = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_Target);
                 }
                 return true;

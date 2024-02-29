@@ -51,12 +51,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> _constituentNamespaces;
         private global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> _namespaceMembers;
 
-        public NamespaceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, DeclarationSymbol originalDefinition = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, originalDefinition: originalDefinition, typeArguments: typeArguments, imports: imports)
+        public NamespaceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
-            if (fixedSymbol)
-            {
-            }
         }
 
         public override __Type SymbolType => typeof(NamespaceSymbol);
@@ -87,6 +84,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_ConstituentNamespaces, null, default);
                 return _constituentNamespaces;
             }
+            protected set
+            {
+                _constituentNamespaces = value;
+            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -96,6 +97,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_NamespaceMembers, null, default);
                 return _namespaceMembers;
+            }
+            protected set
+            {
+                _namespaceMembers = value;
             }
         }
 
@@ -110,11 +115,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ConstituentNamespaces))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_ConstituentNamespaces(diagnostics, cancellationToken);
-                    _constituentNamespaces = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_constituentNamespaces == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_ConstituentNamespaces(diagnostics, cancellationToken);
+                        _constituentNamespaces = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_ConstituentNamespaces);
                 }
                 return true;
@@ -123,11 +131,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_NamespaceMembers))
                 {
-                    var diagnostics = __DiagnosticBag.GetInstance();
-                    var result = Compute_NamespaceMembers(diagnostics, cancellationToken);
-                    _namespaceMembers = result;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
+                    if (_namespaceMembers == default)
+                    {
+                        var diagnostics = __DiagnosticBag.GetInstance();
+                        var result = Compute_NamespaceMembers(diagnostics, cancellationToken);
+                        _namespaceMembers = result;
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
                     NotePartComplete(CompletionParts.Finish_NamespaceMembers);
                 }
                 return true;
