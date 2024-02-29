@@ -334,7 +334,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 }
                 else if (!isNesting)
                 {
-                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.MergedDeclaration.Name}' in SourceSymbolFactory."));
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.MergedDeclaration?.Name}' in SourceSymbolFactory."));
                 }
             }
             return builder.ToImmutableAndFree();

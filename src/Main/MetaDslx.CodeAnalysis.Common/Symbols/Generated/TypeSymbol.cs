@@ -2,9 +2,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
-    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
-    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
+    using __SymbolAttribute = global::MetaDslx.CodeAnalysis.Symbols.SymbolAttribute;
+    using __PhaseAttribute = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __DerivedAttribute = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __WeakAttribute = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -17,7 +18,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
     using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
-    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+    using __ModelPropertyAttribute = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
     using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
     using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
@@ -29,7 +30,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-    [SymbolAttribute]
+    [__SymbolAttribute]
     public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
     {
         public new class CompletionParts : Impl.DeclarationSymbolImpl.CompletionParts
@@ -62,8 +63,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_BaseTypes = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private global::System.Collections.Immutable.ImmutableArray<TypeSymbol> _allBaseTypes;
 
-        public TypeSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, bool isReferenceType = default, bool isValueType = default, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, typeArguments: typeArguments, imports: imports)
+        public TypeSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, bool isReferenceType = default, bool isValueType = default, global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> typeParameters = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> baseTypes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, DeclarationSymbol originalDefinition = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes, declaredAccessibility: declaredAccessibility, isStatic: isStatic, isExtern: isExtern, originalDefinition: originalDefinition, typeArguments: typeArguments, imports: imports)
         {
             if (fixedSymbol)
             {
@@ -81,10 +82,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         public override __Type SymbolType => typeof(TypeSymbol);
-        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+        protected override __CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public bool IsReferenceType
         {
             get
@@ -93,8 +94,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _isReferenceType;
             }
         }
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public bool IsValueType
         {
             get
@@ -103,9 +104,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _isValueType;
             }
         }
-        [__ModelProperty]
-        [__Phase]
-        [__Weak]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
+        [__WeakAttribute]
         public global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> TypeParameters
         {
             get
@@ -115,9 +116,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>.Empty;
             }
         }
-        [__ModelProperty]
-        [__Phase]
-        [__Weak]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
+        [__WeakAttribute]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> BaseTypes
         {
             get
@@ -127,8 +128,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
             }
         }
-        [__Phase]
-        [__Derived]
+        [__PhaseAttribute]
+        [__DerivedAttribute]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> AllBaseTypes
         {
             get

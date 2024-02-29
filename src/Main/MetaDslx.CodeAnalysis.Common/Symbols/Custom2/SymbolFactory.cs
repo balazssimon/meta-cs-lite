@@ -2,6 +2,7 @@
 using MetaDslx.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -13,22 +14,24 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     public abstract class SymbolFactory<T> : ISymbolFactory
     {
-        private readonly ConditionalWeakTable<object, Symbol> _symbols;
+        //private readonly ConditionalWeakTable<object, Symbol> _symbols;
+        private readonly ConcurrentDictionary<object, Symbol> _symbols;
 
         public SymbolFactory()
         {
-            _symbols = new ConditionalWeakTable<object, Symbol>();
+            //_symbols = new ConditionalWeakTable<object, Symbol>();
+            _symbols = new ConcurrentDictionary<object, Symbol>();
         }
 
         public void AddSymbol(Symbol symbol)
         {
             if (symbol._underlyingObject is not null)
             {
-                _symbols.Add(symbol._underlyingObject, symbol);
+                _symbols.TryAdd(symbol._underlyingObject, symbol);
             }
             else if (symbol is ModuleSymbol)
             {
-                if (symbol.Model is not null) _symbols.Add(symbol.Model, symbol);
+                if (symbol.Model is not null) _symbols.TryAdd(symbol.Model, symbol);
             }
             else
             {
@@ -45,7 +48,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             symbol = CreateSymbolCore(container, underlyingObject, diagnostics, cancellationToken);
             if (symbol is not null)
             {
-                _symbols.Add(underlyingObject, symbol);
+                _symbols.TryAdd(underlyingObject, symbol);
                 return symbol;
             }
             return default;
@@ -82,11 +85,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             var container = GetSymbol(parent, diagnostics, cancellationToken);
             if (container is null) return default;
             container.ForceComplete(CompletionGraph.FinishCreatingContainedSymbols, null, cancellationToken);
-            if (_symbols.TryGetValue(underlyingObject, out symbol))
-            {
-                return symbol;
-            }
-            return default;
+            return CreateSymbol(container, underlyingObject, diagnostics, cancellationToken);
         }
 
         public TSymbol? GetSymbol<TSymbol>(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)

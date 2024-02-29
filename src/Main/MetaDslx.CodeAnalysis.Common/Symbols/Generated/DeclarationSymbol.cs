@@ -2,9 +2,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
-    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
-    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
+    using __SymbolAttribute = global::MetaDslx.CodeAnalysis.Symbols.SymbolAttribute;
+    using __PhaseAttribute = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __DerivedAttribute = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __WeakAttribute = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -17,7 +18,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
     using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
-    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+    using __ModelPropertyAttribute = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
     using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
     using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
@@ -29,7 +30,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
-    [SymbolAttribute]
+    [__SymbolAttribute]
     public abstract partial class DeclarationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
         public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts
@@ -40,6 +41,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             public static readonly __CompletionPart Finish_IsStatic = new __CompletionPart(nameof(Finish_IsStatic));
             public static readonly __CompletionPart Start_IsExtern = new __CompletionPart(nameof(Start_IsExtern));
             public static readonly __CompletionPart Finish_IsExtern = new __CompletionPart(nameof(Finish_IsExtern));
+            public static readonly __CompletionPart Start_OriginalDefinition = new __CompletionPart(nameof(Start_OriginalDefinition));
+            public static readonly __CompletionPart Finish_OriginalDefinition = new __CompletionPart(nameof(Finish_OriginalDefinition));
             public static readonly __CompletionPart Start_TypeArguments = new __CompletionPart(nameof(Start_TypeArguments));
             public static readonly __CompletionPart Finish_TypeArguments = new __CompletionPart(nameof(Finish_TypeArguments));
             public static readonly __CompletionPart Start_Imports = new __CompletionPart(nameof(Start_Imports));
@@ -57,6 +60,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     , Start_DeclaredAccessibility, Finish_DeclaredAccessibility
                     , Start_IsStatic, Finish_IsStatic
                     , Start_IsExtern, Finish_IsExtern
+                    , Start_OriginalDefinition, Finish_OriginalDefinition
                     , Start_TypeArguments, Finish_TypeArguments
                     , Start_Imports, Finish_Imports
                     , Start_MemberNames, Finish_MemberNames
@@ -68,6 +72,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_DeclaredAccessibility = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private bool _isStatic;
         private bool _isExtern;
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, DeclarationSymbol> s_OriginalDefinition = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, DeclarationSymbol>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_TypeArguments = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_Imports = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_MemberNames = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
@@ -78,7 +83,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers1 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers2 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
 
-        public DeclarationSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
+        public DeclarationSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<__AttributeSymbol> attributes = default, global::MetaDslx.CodeAnalysis.Accessibility declaredAccessibility = default, bool isStatic = default, bool isExtern = default, DeclarationSymbol originalDefinition = default, global::System.Collections.Immutable.ImmutableArray<TypeSymbol> typeArguments = default, global::System.Collections.Immutable.ImmutableArray<ImportSymbol> imports = default) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo, fixedSymbol, name, metadataName, attributes)
         {
             if (fixedSymbol)
@@ -89,6 +94,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 }
                 _isStatic = isStatic;
                 _isExtern = isExtern;
+                if (originalDefinition != default)
+                {
+                    s_OriginalDefinition.Add(this, originalDefinition);
+                }
                 if (!typeArguments.IsDefaultOrEmpty)
                 {
                     s_TypeArguments.Add(this, typeArguments);
@@ -101,11 +110,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         public override __Type SymbolType => typeof(DeclarationSymbol);
-        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+        protected override __CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        [__ModelProperty]
-        [__Phase]
-        [__Weak]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
+        [__WeakAttribute]
         public global::MetaDslx.CodeAnalysis.Accessibility DeclaredAccessibility
         {
             get
@@ -115,8 +124,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return default;
             }
         }
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public bool IsStatic
         {
             get
@@ -125,8 +134,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _isStatic;
             }
         }
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public bool IsExtern
         {
             get
@@ -135,9 +144,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _isExtern;
             }
         }
-        [__ModelProperty]
-        [__Phase]
-        [__Weak]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
+        [__WeakAttribute]
+        public DeclarationSymbol OriginalDefinition
+        {
+            get
+            {
+                this.ForceComplete(CompletionParts.Finish_OriginalDefinition, null, default);
+                if (s_OriginalDefinition.TryGetValue(this, out var result)) return (DeclarationSymbol)result;
+                else return default;
+            }
+        }
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
+        [__WeakAttribute]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments
         {
             get
@@ -147,9 +168,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
             }
         }
-        [__ModelProperty]
-        [__Phase]
-        [__Weak]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
+        [__WeakAttribute]
         public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports
         {
             get
@@ -159,9 +180,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
             }
         }
-        [__Phase]
-        [__Derived]
-        [__Weak]
+        [__PhaseAttribute]
+        [__DerivedAttribute]
+        [__WeakAttribute]
         public global::System.Collections.Immutable.ImmutableArray<string> MemberNames
         {
             get
@@ -171,9 +192,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<string>.Empty;
             }
         }
-        [__Phase]
-        [__Derived]
-        [__Weak]
+        [__PhaseAttribute]
+        [__DerivedAttribute]
+        [__WeakAttribute]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Members
         {
             get
@@ -183,9 +204,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
             }
         }
-        [__Phase]
-        [__Derived]
-        [__Weak]
+        [__PhaseAttribute]
+        [__DerivedAttribute]
+        [__WeakAttribute]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeMembers
         {
             get
@@ -197,7 +218,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
+        [__DerivedAttribute(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> GetMembers(string name)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
@@ -207,7 +228,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_GetMembers(string name);
 
-        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
+        [__DerivedAttribute(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> GetMembers(string name, string metadataName)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
@@ -217,7 +238,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_GetMembers(string name, string metadataName);
 
-        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
+        [__DerivedAttribute(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
@@ -227,7 +248,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_GetTypeMembers(string name);
 
-        [__Derived(Cached=true, Condition="MemberNames.Contains(name)")]
+        [__DerivedAttribute(Cached=true, Condition="MemberNames.Contains(name)")]
         public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name, string metadataName)
         {
             if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
@@ -278,6 +299,22 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_IsExtern);
+                }
+                return true;
+            }
+            else if (incompletePart == CompletionParts.Start_OriginalDefinition || incompletePart == CompletionParts.Finish_OriginalDefinition)
+            {
+                if (NotePartComplete(CompletionParts.Start_OriginalDefinition))
+                {
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_OriginalDefinition(diagnostics, cancellationToken);
+                    if (result != default)
+                    {
+                        s_OriginalDefinition.Add(this, result);
+                    }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.Finish_OriginalDefinition);
                 }
                 return true;
             }
@@ -381,6 +418,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected virtual bool Compute_IsExtern(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsExtern), diagnostics, cancellationToken);
+        }
+
+        protected virtual DeclarationSymbol Compute_OriginalDefinition(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValue<DeclarationSymbol>(this, nameof(OriginalDefinition), diagnostics, cancellationToken);
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)

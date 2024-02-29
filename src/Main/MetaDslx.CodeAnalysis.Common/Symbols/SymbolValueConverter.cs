@@ -78,11 +78,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, valueBinder.Location, $"Could not resolve TypeSymbol for '{value}'."));
                     return false;
                 }
-                else if (valueTypeSymbol.IsErrorSymbol)
+                /*else if (valueTypeSymbol.IsErrorSymbol)
                 {
                     convertedValue = null;
                     return false;
-                }
+                }*/
                 else
                 {
                     if (expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) convertedValue = MetaType.FromTypeSymbol(valueTypeSymbol);

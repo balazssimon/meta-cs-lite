@@ -60,7 +60,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             if (container is AssemblySymbol) throw new ArgumentException("AssemblySymbol is unexpected here.", nameof(container));
             var symbolConstructor = GetConstructor(container, underlyingObject, diagnostics, cancellationToken);
             if (symbolConstructor is null) return null;
-            return symbolConstructor.Invoke(container, underlyingObject);
+            return symbolConstructor.Invoke(container, underlyingObject, diagnostics, cancellationToken);
         }
 
         private SymbolConstructor? GetConstructor(Symbol container, ISymbol underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -120,17 +120,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             var symbolType = typeof(DeclarationSymbol);
             if (underlyingObject is INamespaceSymbol) symbolType = typeof(NamespaceSymbol);
             if (underlyingObject is ITypeSymbol) symbolType = typeof(TypeSymbol);
+            if (underlyingObject is ITypeParameterSymbol) symbolType = typeof(TypeParameterSymbol);
             return symbolType;
         }
 
-        protected virtual IModelObject? CreateModelObject(Symbol container, ISymbol csharpSymbol)
+        protected virtual IModelObject? CreateModelObject(Symbol container, ISymbol csharpSymbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (csharpSymbol is INamespaceSymbol) return null;
             var model = container.Model;
             if (model is null) throw new ArgumentException("Model of the container symbol must not be null.", nameof(container));
             foreach (var f in _modelFactories)
             {
-                var mobj = f.Create(model, csharpSymbol);
+                var mobj = f.Create(container, csharpSymbol, model, diagnostics, cancellationToken);
                 if (mobj is not null)
                 {
                     if (container.ModelObject is not null)
@@ -145,6 +146,41 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         public override ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(Symbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            if (symbol.CSharpSymbol is INamedTypeSymbol nts)
+            {
+                if (symbolProperty == nameof(DeclarationSymbol.OriginalDefinition))
+                {
+                    var original = GetSymbol<TypeSymbol>(nts.OriginalDefinition, diagnostics, cancellationToken);
+                    if (original is not null) return ImmutableArray.Create((TValue)(object)original);
+                    else return ImmutableArray<TValue>.Empty;
+                }
+                else if (symbolProperty == nameof(DeclarationSymbol.TypeArguments) && nts.TypeArguments.Any())
+                {
+                    var result = ArrayBuilder<TValue>.GetInstance();
+                    foreach (var arg in nts.TypeArguments)
+                    {
+                        var argSymbol = GetSymbol<TypeSymbol>(arg, diagnostics, cancellationToken);
+                        if (argSymbol is not null)
+                        {
+                            result.Add((TValue)(object)argSymbol);
+                        }
+                    }
+                    return result.ToImmutableAndFree();
+                }
+                else if (symbolProperty == nameof(TypeSymbol.TypeParameters) && nts.TypeParameters.Any())
+                {
+                    var result = ArrayBuilder<TValue>.GetInstance();
+                    foreach (var param in nts.TypeParameters)
+                    {
+                        var paramSymbol = GetSymbol<TypeParameterSymbol>(param, diagnostics, cancellationToken);
+                        if (paramSymbol is not null)
+                        {
+                            result.Add((TValue)(object)paramSymbol);
+                        }
+                    }
+                    return result.ToImmutableAndFree();
+                }
+            }
             return ImmutableArray<TValue>.Empty;
         }
 
@@ -172,12 +208,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
                 _modelObjectIndex = modelObjectIndex;
             }
 
-            public Symbol Invoke(Symbol container, ISymbol csharpSymbol)
+            public Symbol Invoke(Symbol container, ISymbol csharpSymbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             {
                 var args = new object[_paramCount];
                 args[_containerIndex] = container;
                 args[_csharpIndex] = csharpSymbol;
-                var mobj = _factory.CreateModelObject(container, csharpSymbol);
+                var mobj = _factory.CreateModelObject(container, csharpSymbol, diagnostics, cancellationToken);
                 args[_modelObjectIndex] = mobj;
                 var symbol = (Symbol)Activator.CreateInstance(_constructorInfo.DeclaringType, args);
                 if (mobj is not null) mobj.MSymbol = symbol;

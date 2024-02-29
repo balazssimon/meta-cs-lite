@@ -32,6 +32,7 @@ symbol Declaration
     weak Accessibility DeclaredAccessibility
     bool IsStatic
     bool IsExtern
+    weak Declaration OriginalDefinition
     weak Type[] TypeArguments
     weak Import[] Imports
     derived weak string[] MemberNames
