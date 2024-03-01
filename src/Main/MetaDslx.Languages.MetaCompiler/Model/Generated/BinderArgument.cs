@@ -28,7 +28,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         bool IsArray { get; set; }
         string Name { get; set; }
         string TypeName { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<string?> Values { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<string?> Values { get; }
     
     }
 }

@@ -29,7 +29,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         new string? GreenSyntaxCondition { get; }
         new string GreenType { get; }
         new string RedType { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaType> ReferencedTypes { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaType> ReferencedTypes { get; }
         MetaDslx.Languages.MetaCompiler.Model.Rule? Rule { get; }
         MetaDslx.Languages.MetaCompiler.Model.Token? Token { get; }
     
