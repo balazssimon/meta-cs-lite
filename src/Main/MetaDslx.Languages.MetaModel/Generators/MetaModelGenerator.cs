@@ -41,7 +41,17 @@ namespace MetaDslx.Languages.MetaModel.Generators
             _graph = new MetaMetaGraph(metaClasses);
             _classes = _graph.Compute().Select(c => ((MetaMetaClass)c).UnderlyingClass).ToImmutableArray();
             _enums = _metaModel.Parent.Declarations.OfType<MetaEnum>().OrderBy(e => e.Name).ToImmutableArray();
-            _objects = model.Objects.ToImmutableArray();
+            var objects = ArrayBuilder<IModelObject>.GetInstance();
+            objects.AddRange(metaModel.GetAllContainedObjects<IModelObject>(includeSelf: true));
+            foreach (var cls in _classes)
+            {
+                objects.AddRange(cls.GetAllContainedObjects<IModelObject>(includeSelf: true));
+            }
+            foreach (var enm in _enums)
+            {
+                objects.AddRange(enm.GetAllContainedObjects<IModelObject>(includeSelf: true));
+            }
+            _objects = objects.ToImmutableAndFree();
         }
 
         public bool IsMetaMetaModel => _isMetaMetaModel;

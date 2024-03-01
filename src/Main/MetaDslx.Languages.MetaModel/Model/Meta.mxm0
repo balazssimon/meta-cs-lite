@@ -1,0 +1,72 @@
+namespace MetaDslx.Languages.MetaModel.Model
+
+using MetaDslx.CodeAnalysis.Symbols
+
+metamodel Meta
+
+class MetaDeclaration $Declaration
+{
+	string? $Name
+	derived string? FullName
+}
+
+class MetaModel : MetaDeclaration
+{
+	derived string NamespaceName
+	string Uri
+}
+
+class MetaConstant : MetaDeclaration
+{
+	MetaTypeReference Type
+}
+
+class MetaEnum $Type : MetaDeclaration
+{
+	contains MetaEnumLiteral[] Literals
+}
+
+class MetaEnumLiteral : MetaDeclaration
+{
+}
+
+class MetaClass $Type : MetaDeclaration
+{
+	type? SymbolType
+	bool IsAbstract
+	MetaClass[] $BaseTypes
+	contains MetaProperty[] Properties
+	contains MetaOperation[] Operations
+}
+
+class MetaProperty : MetaDeclaration
+{
+	MetaTypeReference Type
+	symbol? SymbolProperty
+	bool IsContainment
+	bool IsDerived
+	bool IsReadOnly
+	bool IsUnion
+	object? DefaultValue
+	MetaProperty[] OppositeProperties
+	MetaProperty[] SubsettedProperties
+	MetaProperty[] RedefinedProperties
+}
+
+class MetaOperation: MetaDeclaration
+{
+	MetaTypeReference ReturnType
+	contains MetaParameter[] Parameters
+}
+
+class MetaParameter : MetaDeclaration
+{
+	MetaTypeReference Type
+}
+
+class MetaTypeReference $Type
+{
+	bool IsNullable
+	bool IsArray
+	type Type
+}
