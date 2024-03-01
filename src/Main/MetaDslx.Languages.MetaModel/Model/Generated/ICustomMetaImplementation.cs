@@ -30,38 +30,30 @@ namespace MetaDslx.Languages.MetaModel.Model
         /// </summary>
         void Meta(IMeta _this);
     
-        void MetaDeclaration(MetaDeclaration _this);
+        void MetaClass(MetaClass _this);
     
         void MetaConstant(MetaConstant _this);
     
-        void MetaModel(MetaModel _this);
-    
-        void MetaNamespace(MetaNamespace _this);
-    
-        void MetaType(MetaType _this);
-    
-        void MetaArrayType(MetaArrayType _this);
-    
-        void MetaClass(MetaClass _this);
+        void MetaDeclaration(MetaDeclaration _this);
     
         void MetaEnum(MetaEnum _this);
     
         void MetaEnumLiteral(MetaEnumLiteral _this);
     
-        void MetaNullableType(MetaNullableType _this);
+        void MetaModel(MetaModel _this);
     
         void MetaOperation(MetaOperation _this);
     
         void MetaParameter(MetaParameter _this);
     
-        void MetaPrimitiveType(MetaPrimitiveType _this);
-    
         void MetaProperty(MetaProperty _this);
     
+        void MetaTypeReference(MetaTypeReference _this);
+    
+    
+        string MetaDeclaration_Namespace(MetaDeclaration _this);
     
         string? MetaDeclaration_FullName(MetaDeclaration _this);
-    
-        string MetaModel_NamespaceName(MetaModel _this);
     
     
     }

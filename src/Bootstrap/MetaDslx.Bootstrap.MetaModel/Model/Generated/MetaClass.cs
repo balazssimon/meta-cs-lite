@@ -25,11 +25,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
 
     public interface MetaClass : global::MetaDslx.Bootstrap.MetaModel.Model.MetaDeclaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaClass> BaseTypes { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaClass> BaseTypes { get; }
         bool IsAbstract { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaOperation> Operations { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> Properties { get; }
-        __MetaType SymbolType { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaOperation> Operations { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaProperty> Properties { get; }
+        MetaDslx.CodeAnalysis.MetaType SymbolType { get; set; }
     
     }
 }

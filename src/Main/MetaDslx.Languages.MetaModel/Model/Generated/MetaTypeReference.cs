@@ -23,8 +23,11 @@ namespace MetaDslx.Languages.MetaModel.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
-    public interface MetaNamespace : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
+    public interface MetaTypeReference : __IModelObject
     {
+        bool IsArray { get; set; }
+        bool IsNullable { get; set; }
+        MetaDslx.CodeAnalysis.MetaType Type { get; set; }
     
     }
 }

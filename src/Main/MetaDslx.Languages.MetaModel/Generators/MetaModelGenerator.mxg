@@ -147,7 +147,7 @@ end template
 template GenerateMetaModel()
 internal interface I[MetaModel.Name]
 {
-    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+    [foreach (var c in Constants)]
         [ToCSharp(c.Type)] [c.Name] { get; }
     [end foreach]
 }
@@ -162,7 +162,7 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
     private static readonly [MetaModel.Name] _instance;
     public static [MetaModel.Name] MInstance => _instance;
 
-    [foreach (var cls in MetaModel.Parent.Declarations.OfType<MetaClass>())]
+    [foreach (var cls in Classes)]
         [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
         [foreach (var prop in cls.Properties)]
             private static readonly __ModelProperty _[cls.Name]_[prop.Name];
@@ -198,7 +198,7 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
     private readonly global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelClassInfo> _classInfosByType;
     private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelClassInfo> _classInfosByName;
 
-    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+    [foreach (var c in Constants)]
         private readonly [ToCSharp(c.Type)] _[c.Name.ToCamelCase()];
     [end foreach]
 
@@ -231,8 +231,8 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
         _classInfosByName = classInfosByName.ToImmutable();
         _model = new __Model();
         var cf = new [MetaModel.Name]ModelFactory(_model, this);
-        [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
-            _[c.Name.ToCamelCase()] = cf.[c.Type.Name]();
+        [foreach (var c in Constants)]
+            _[c.Name.ToCamelCase()] = cf.[c.Type.Type.Name]();
         [end foreach]
         var f = [if (IsMetaMetaModel)]new __MetaModelFactory(_model, this)[else]new __MetaModelFactory(_model)[end if];
         [foreach (var obj in Objects)]
@@ -276,11 +276,11 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
     public override global::System.Collections.Immutable.ImmutableArray<__MetaType> MClassTypes => _classTypes;
     public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> MClassInfos => _classInfos;
 
-    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+    [foreach (var c in Constants)]
         [ToCSharp(c.Type)] I[MetaModel.Name].[c.Name] => _[c.Name.ToCamelCase()];
     [end foreach]
 
-    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+    [foreach (var c in Constants)]
         [GetDocumentationComment(c)]
         public static [ToCSharp(c.Type)] [c.Name] => ((I[MetaModel.Name])MInstance).[c.Name];
     [end foreach]

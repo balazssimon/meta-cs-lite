@@ -35,9 +35,9 @@ namespace MetaDslx.Languages.MetaModel.Model
         {
         }
     
-        public MetaDeclaration MetaDeclaration(string? id = null)
+        public MetaClass MetaClass(string? id = null)
         {
-            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(base.Model, id)!;
+            return (MetaClass)Meta.MetaClassInfo.Create(base.Model, id)!;
         }
     
         public MetaConstant MetaConstant(string? id = null)
@@ -45,24 +45,9 @@ namespace MetaDslx.Languages.MetaModel.Model
             return (MetaConstant)Meta.MetaConstantInfo.Create(base.Model, id)!;
         }
     
-        public MetaModel MetaModel(string? id = null)
+        public MetaDeclaration MetaDeclaration(string? id = null)
         {
-            return (MetaModel)Meta.MetaModelInfo.Create(base.Model, id)!;
-        }
-    
-        public MetaNamespace MetaNamespace(string? id = null)
-        {
-            return (MetaNamespace)Meta.MetaNamespaceInfo.Create(base.Model, id)!;
-        }
-    
-        public MetaArrayType MetaArrayType(string? id = null)
-        {
-            return (MetaArrayType)Meta.MetaArrayTypeInfo.Create(base.Model, id)!;
-        }
-    
-        public MetaClass MetaClass(string? id = null)
-        {
-            return (MetaClass)Meta.MetaClassInfo.Create(base.Model, id)!;
+            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(base.Model, id)!;
         }
     
         public MetaEnum MetaEnum(string? id = null)
@@ -75,9 +60,9 @@ namespace MetaDslx.Languages.MetaModel.Model
             return (MetaEnumLiteral)Meta.MetaEnumLiteralInfo.Create(base.Model, id)!;
         }
     
-        public MetaNullableType MetaNullableType(string? id = null)
+        public MetaModel MetaModel(string? id = null)
         {
-            return (MetaNullableType)Meta.MetaNullableTypeInfo.Create(base.Model, id)!;
+            return (MetaModel)Meta.MetaModelInfo.Create(base.Model, id)!;
         }
     
         public MetaOperation MetaOperation(string? id = null)
@@ -90,14 +75,14 @@ namespace MetaDslx.Languages.MetaModel.Model
             return (MetaParameter)Meta.MetaParameterInfo.Create(base.Model, id)!;
         }
     
-        public MetaPrimitiveType MetaPrimitiveType(string? id = null)
-        {
-            return (MetaPrimitiveType)Meta.MetaPrimitiveTypeInfo.Create(base.Model, id)!;
-        }
-    
         public MetaProperty MetaProperty(string? id = null)
         {
             return (MetaProperty)Meta.MetaPropertyInfo.Create(base.Model, id)!;
+        }
+    
+        public MetaTypeReference MetaTypeReference(string? id = null)
+        {
+            return (MetaTypeReference)Meta.MetaTypeReferenceInfo.Create(base.Model, id)!;
         }
     
     }
@@ -109,9 +94,9 @@ namespace MetaDslx.Languages.MetaModel.Model
         {
         }
     
-        public MetaDeclaration MetaDeclaration(__Model model, string? id = null)
+        public MetaClass MetaClass(__Model model, string? id = null)
         {
-            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(model, id)!;
+            return (MetaClass)Meta.MetaClassInfo.Create(model, id)!;
         }
     
         public MetaConstant MetaConstant(__Model model, string? id = null)
@@ -119,24 +104,9 @@ namespace MetaDslx.Languages.MetaModel.Model
             return (MetaConstant)Meta.MetaConstantInfo.Create(model, id)!;
         }
     
-        public MetaModel MetaModel(__Model model, string? id = null)
+        public MetaDeclaration MetaDeclaration(__Model model, string? id = null)
         {
-            return (MetaModel)Meta.MetaModelInfo.Create(model, id)!;
-        }
-    
-        public MetaNamespace MetaNamespace(__Model model, string? id = null)
-        {
-            return (MetaNamespace)Meta.MetaNamespaceInfo.Create(model, id)!;
-        }
-    
-        public MetaArrayType MetaArrayType(__Model model, string? id = null)
-        {
-            return (MetaArrayType)Meta.MetaArrayTypeInfo.Create(model, id)!;
-        }
-    
-        public MetaClass MetaClass(__Model model, string? id = null)
-        {
-            return (MetaClass)Meta.MetaClassInfo.Create(model, id)!;
+            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(model, id)!;
         }
     
         public MetaEnum MetaEnum(__Model model, string? id = null)
@@ -149,9 +119,9 @@ namespace MetaDslx.Languages.MetaModel.Model
             return (MetaEnumLiteral)Meta.MetaEnumLiteralInfo.Create(model, id)!;
         }
     
-        public MetaNullableType MetaNullableType(__Model model, string? id = null)
+        public MetaModel MetaModel(__Model model, string? id = null)
         {
-            return (MetaNullableType)Meta.MetaNullableTypeInfo.Create(model, id)!;
+            return (MetaModel)Meta.MetaModelInfo.Create(model, id)!;
         }
     
         public MetaOperation MetaOperation(__Model model, string? id = null)
@@ -164,14 +134,14 @@ namespace MetaDslx.Languages.MetaModel.Model
             return (MetaParameter)Meta.MetaParameterInfo.Create(model, id)!;
         }
     
-        public MetaPrimitiveType MetaPrimitiveType(__Model model, string? id = null)
-        {
-            return (MetaPrimitiveType)Meta.MetaPrimitiveTypeInfo.Create(model, id)!;
-        }
-    
         public MetaProperty MetaProperty(__Model model, string? id = null)
         {
             return (MetaProperty)Meta.MetaPropertyInfo.Create(model, id)!;
+        }
+    
+        public MetaTypeReference MetaTypeReference(__Model model, string? id = null)
+        {
+            return (MetaTypeReference)Meta.MetaTypeReferenceInfo.Create(model, id)!;
         }
     
     }

@@ -32,7 +32,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         {
         }
     
-        public virtual void MetaDeclaration(MetaDeclaration _this)
+        public virtual void MetaClass(MetaClass _this)
         {
         }
     
@@ -40,23 +40,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         {
         }
     
-        public virtual void MetaModel(MetaModel _this)
-        {
-        }
-    
-        public virtual void MetaNamespace(MetaNamespace _this)
-        {
-        }
-    
-        public virtual void MetaType(MetaType _this)
-        {
-        }
-    
-        public virtual void MetaArrayType(MetaArrayType _this)
-        {
-        }
-    
-        public virtual void MetaClass(MetaClass _this)
+        public virtual void MetaDeclaration(MetaDeclaration _this)
         {
         }
     
@@ -68,7 +52,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         {
         }
     
-        public virtual void MetaNullableType(MetaNullableType _this)
+        public virtual void MetaModel(MetaModel _this)
         {
         }
     
@@ -80,18 +64,18 @@ namespace MetaDslx.Languages.MetaModel.Model
         {
         }
     
-        public virtual void MetaPrimitiveType(MetaPrimitiveType _this)
-        {
-        }
-    
         public virtual void MetaProperty(MetaProperty _this)
         {
         }
     
+        public virtual void MetaTypeReference(MetaTypeReference _this)
+        {
+        }
+    
+    
+        public abstract string MetaDeclaration_Namespace(MetaDeclaration _this);
     
         public abstract string? MetaDeclaration_FullName(MetaDeclaration _this);
-    
-        public abstract string MetaModel_NamespaceName(MetaModel _this);
     
     
     }

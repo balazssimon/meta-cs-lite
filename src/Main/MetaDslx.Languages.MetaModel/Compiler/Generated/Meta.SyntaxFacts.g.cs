@@ -113,6 +113,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TComma:
                 case MetaSyntaxKind.TUtf8Bom:
                 case MetaSyntaxKind.KNamespace:
+                case MetaSyntaxKind.TSemicolon:
                 case MetaSyntaxKind.KUsing:
                 case MetaSyntaxKind.KMetamodel:
                 case MetaSyntaxKind.KConst:
@@ -121,9 +122,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KClass:
                 case MetaSyntaxKind.TLParen:
                 case MetaSyntaxKind.TRParen:
-                case MetaSyntaxKind.TLBracket:
-                case MetaSyntaxKind.TRBracket:
-                case MetaSyntaxKind.TQuestion:
                 case MetaSyntaxKind.KObject:
                 case MetaSyntaxKind.KBool:
                 case MetaSyntaxKind.KChar:
@@ -154,6 +152,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
+                case MetaSyntaxKind.TQuestion:
+                case MetaSyntaxKind.TLBracket:
+                case MetaSyntaxKind.TRBracket:
                 case MetaSyntaxKind.TDot:
                 case MetaSyntaxKind.TInteger:
                 case MetaSyntaxKind.TDecimal:
@@ -186,6 +187,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.TComma:
                 case MetaSyntaxKind.TUtf8Bom:
                 case MetaSyntaxKind.KNamespace:
+                case MetaSyntaxKind.TSemicolon:
                 case MetaSyntaxKind.KUsing:
                 case MetaSyntaxKind.KMetamodel:
                 case MetaSyntaxKind.KConst:
@@ -194,9 +196,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KClass:
                 case MetaSyntaxKind.TLParen:
                 case MetaSyntaxKind.TRParen:
-                case MetaSyntaxKind.TLBracket:
-                case MetaSyntaxKind.TRBracket:
-                case MetaSyntaxKind.TQuestion:
                 case MetaSyntaxKind.KObject:
                 case MetaSyntaxKind.KBool:
                 case MetaSyntaxKind.KChar:
@@ -227,6 +226,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
+                case MetaSyntaxKind.TQuestion:
+                case MetaSyntaxKind.TLBracket:
+                case MetaSyntaxKind.TRBracket:
                 case MetaSyntaxKind.TDot:
                     return true;
                 default:
@@ -255,6 +257,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.TUtf8Bom;
                 case "namespace": 
                     return MetaSyntaxKind.KNamespace;
+                case ";": 
+                    return MetaSyntaxKind.TSemicolon;
                 case "using": 
                     return MetaSyntaxKind.KUsing;
                 case "metamodel": 
@@ -271,12 +275,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.TLParen;
                 case ")": 
                     return MetaSyntaxKind.TRParen;
-                case "[": 
-                    return MetaSyntaxKind.TLBracket;
-                case "]": 
-                    return MetaSyntaxKind.TRBracket;
-                case "?": 
-                    return MetaSyntaxKind.TQuestion;
                 case "object": 
                     return MetaSyntaxKind.KObject;
                 case "bool": 
@@ -337,6 +335,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KSubsets;
                 case "redefines": 
                     return MetaSyntaxKind.KRedefines;
+                case "?": 
+                    return MetaSyntaxKind.TQuestion;
+                case "[": 
+                    return MetaSyntaxKind.TLBracket;
+                case "]": 
+                    return MetaSyntaxKind.TRBracket;
                 case ".": 
                     return MetaSyntaxKind.TDot;
                 default:
@@ -390,6 +394,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "TUtf8Bom";
                 case MetaSyntaxKind.KNamespace: 
                     return "KNamespace";
+                case MetaSyntaxKind.TSemicolon: 
+                    return "TSemicolon";
                 case MetaSyntaxKind.KUsing: 
                     return "KUsing";
                 case MetaSyntaxKind.KMetamodel: 
@@ -406,12 +412,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "TLParen";
                 case MetaSyntaxKind.TRParen: 
                     return "TRParen";
-                case MetaSyntaxKind.TLBracket: 
-                    return "TLBracket";
-                case MetaSyntaxKind.TRBracket: 
-                    return "TRBracket";
-                case MetaSyntaxKind.TQuestion: 
-                    return "TQuestion";
                 case MetaSyntaxKind.KObject: 
                     return "KObject";
                 case MetaSyntaxKind.KBool: 
@@ -472,6 +472,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "KSubsets";
                 case MetaSyntaxKind.KRedefines: 
                     return "KRedefines";
+                case MetaSyntaxKind.TQuestion: 
+                    return "TQuestion";
+                case MetaSyntaxKind.TLBracket: 
+                    return "TLBracket";
+                case MetaSyntaxKind.TRBracket: 
+                    return "TRBracket";
                 case MetaSyntaxKind.TDot: 
                     return "TDot";
                 case MetaSyntaxKind.TInteger: 
@@ -520,12 +526,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "MetaOperation";
                 case MetaSyntaxKind.MetaParameter: 
                     return "MetaParameter";
-                case MetaSyntaxKind.SimpleTypeReference: 
-                    return "SimpleTypeReference";
-                case MetaSyntaxKind.MetaArrayType: 
-                    return "MetaArrayType";
-                case MetaSyntaxKind.MetaNullableType: 
-                    return "MetaNullableType";
+                case MetaSyntaxKind.MetaTypeReference: 
+                    return "MetaTypeReference";
                 case MetaSyntaxKind.TypeReferenceAlt1: 
                     return "TypeReferenceAlt1";
                 case MetaSyntaxKind.TypeReferenceAlt2: 
@@ -604,6 +606,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "MetaOperationBlock1";
                 case MetaSyntaxKind.MetaOperationBlock1parametersBlock: 
                     return "MetaOperationBlock1parametersBlock";
+                case MetaSyntaxKind.MetaTypeReferenceBlock1: 
+                    return "MetaTypeReferenceBlock1";
+                case MetaSyntaxKind.MetaTypeReferenceBlock2: 
+                    return "MetaTypeReferenceBlock2";
                 case MetaSyntaxKind.QualifierIdentifierBlock: 
                     return "QualifierIdentifierBlock";
                 default:
@@ -632,6 +638,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "\u00ef\u00bb\u00bf";
                 case MetaSyntaxKind.KNamespace: 
                     return "namespace";
+                case MetaSyntaxKind.TSemicolon: 
+                    return ";";
                 case MetaSyntaxKind.KUsing: 
                     return "using";
                 case MetaSyntaxKind.KMetamodel: 
@@ -648,12 +656,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "(";
                 case MetaSyntaxKind.TRParen: 
                     return ")";
-                case MetaSyntaxKind.TLBracket: 
-                    return "[";
-                case MetaSyntaxKind.TRBracket: 
-                    return "]";
-                case MetaSyntaxKind.TQuestion: 
-                    return "?";
                 case MetaSyntaxKind.KObject: 
                     return "object";
                 case MetaSyntaxKind.KBool: 
@@ -714,6 +716,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "subsets";
                 case MetaSyntaxKind.KRedefines: 
                     return "redefines";
+                case MetaSyntaxKind.TQuestion: 
+                    return "?";
+                case MetaSyntaxKind.TLBracket: 
+                    return "[";
+                case MetaSyntaxKind.TRBracket: 
+                    return "]";
                 case MetaSyntaxKind.TDot: 
                     return ".";
                 default:

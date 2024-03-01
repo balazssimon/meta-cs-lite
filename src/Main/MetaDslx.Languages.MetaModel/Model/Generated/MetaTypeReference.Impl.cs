@@ -21,38 +21,32 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
-    internal class MetaPrimitiveType_Impl : __MetaModelObject, MetaPrimitiveType
+    internal class MetaTypeReference_Impl : __MetaModelObject, MetaTypeReference
     {
-        private MetaPrimitiveType_Impl(string? id)
+        private MetaTypeReference_Impl(string? id)
             : base(id)
         {
-            Meta.__CustomImpl.MetaDeclaration(this);
-            Meta.__CustomImpl.MetaType(this);
-            Meta.__CustomImpl.MetaPrimitiveType(this);
+            Meta.__CustomImpl.MetaTypeReference(this);
         }
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
+        public bool IsArray
         {
-            get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
+            get => MGet<bool>(Meta.MetaTypeReference_IsArray);
+            set => MSet<bool>(Meta.MetaTypeReference_IsArray, value);
         }
     
-        public string? FullName
+        public bool IsNullable
         {
-            get => Meta.__CustomImpl.MetaDeclaration_FullName(this);
+            get => MGet<bool>(Meta.MetaTypeReference_IsNullable);
+            set => MSet<bool>(Meta.MetaTypeReference_IsNullable, value);
         }
     
-        public string? Name
+        public MetaDslx.CodeAnalysis.MetaType Type
         {
-            get => MGet<string?>(Meta.MetaDeclaration_Name);
-            set => MSet<string?>(Meta.MetaDeclaration_Name, value);
-        }
-    
-        public MetaDeclaration? Parent
-        {
-            get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-            set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+            get => MGet<MetaDslx.CodeAnalysis.MetaType>(Meta.MetaTypeReference_Type);
+            set => MSet<MetaDslx.CodeAnalysis.MetaType>(Meta.MetaTypeReference_Type, value);
         }
     
     
@@ -75,22 +69,20 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
     
             private __Info() 
             {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Meta.MetaTypeInfo);
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Meta.MetaTypeInfo, Meta.MetaDeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>();
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaTypeReference_IsArray, Meta.MetaTypeReference_IsNullable, Meta.MetaTypeReference_Type);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaTypeReference_IsArray, Meta.MetaTypeReference_IsNullable, Meta.MetaTypeReference_Type);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaTypeReference_IsArray, Meta.MetaTypeReference_IsNullable, Meta.MetaTypeReference_Type);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("Declarations", Meta.MetaDeclaration_Declarations);
-                publicPropertiesByName.Add("FullName", Meta.MetaDeclaration_FullName);
-                publicPropertiesByName.Add("Name", Meta.MetaDeclaration_Name);
-                publicPropertiesByName.Add("Parent", Meta.MetaDeclaration_Parent);
+                publicPropertiesByName.Add("IsArray", Meta.MetaTypeReference_IsArray);
+                publicPropertiesByName.Add("IsNullable", Meta.MetaTypeReference_IsNullable);
+                publicPropertiesByName.Add("Type", Meta.MetaTypeReference_Type);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Meta.MetaDeclaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Meta.MetaDeclaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_FullName, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_FullName), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Meta.MetaDeclaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_Name, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Name), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Meta.MetaDeclaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_Parent, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Parent), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Meta.MetaTypeReference_IsArray, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaTypeReference_IsArray, __ImmutableArray.Create<__ModelProperty>(Meta.MetaTypeReference_IsArray), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Meta.MetaTypeReference_IsNullable, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaTypeReference_IsNullable, __ImmutableArray.Create<__ModelProperty>(Meta.MetaTypeReference_IsNullable), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Meta.MetaTypeReference_Type, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaTypeReference_Type, __ImmutableArray.Create<__ModelProperty>(Meta.MetaTypeReference_Type), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 _modelPropertyInfos = modelPropertyInfos.ToImmutable();
     
                 _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
@@ -101,10 +93,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
             }
     
             public override __MetaModel MetaModel => Meta.MInstance;
-            public override __MetaType MetaType => typeof(MetaPrimitiveType);
+            public override __MetaType MetaType => typeof(MetaTypeReference);
     
             public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
-            public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
+            public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
@@ -121,14 +113,14 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
     
             public override __IModelObject? Create(__Model? model = null, string? id = null)
             {
-                var result = new MetaPrimitiveType_Impl(id);
+                var result = new MetaTypeReference_Impl(id);
                 if (model is not null) model.AttachObject(result);
                 return result;
             }
     
             public override string ToString()
             {
-                return "Meta.MetaPrimitiveTypeInfo";
+                return "Meta.MetaTypeReferenceInfo";
             }
         }
     }

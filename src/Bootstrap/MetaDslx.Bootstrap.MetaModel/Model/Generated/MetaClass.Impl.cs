@@ -32,7 +32,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<MetaClass> BaseTypes
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaClass> BaseTypes
         {
             get => MGetCollection<MetaClass>(Meta.MetaClass_BaseTypes);
         }
@@ -43,20 +43,20 @@ namespace MetaDslx.Bootstrap.MetaModel.Model.__Impl
             set => MSet<bool>(Meta.MetaClass_IsAbstract, value);
         }
     
-        public global::MetaDslx.Modeling.ICollectionSlot<MetaOperation> Operations
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaOperation> Operations
         {
             get => MGetCollection<MetaOperation>(Meta.MetaClass_Operations);
         }
     
-        public global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> Properties
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaProperty> Properties
         {
             get => MGetCollection<MetaProperty>(Meta.MetaClass_Properties);
         }
     
-        public __MetaType SymbolType
+        public MetaDslx.CodeAnalysis.MetaType SymbolType
         {
-            get => MGet<__MetaType>(Meta.MetaClass_SymbolType);
-            set => MSet<__MetaType>(Meta.MetaClass_SymbolType, value);
+            get => MGet<MetaDslx.CodeAnalysis.MetaType>(Meta.MetaClass_SymbolType);
+            set => MSet<MetaDslx.CodeAnalysis.MetaType>(Meta.MetaClass_SymbolType, value);
         }
     
         public string? FullName

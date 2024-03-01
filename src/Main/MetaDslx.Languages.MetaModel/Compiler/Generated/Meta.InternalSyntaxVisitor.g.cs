@@ -18,9 +18,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         public virtual void VisitMetaPropertyGreen(MetaPropertyGreen node) => this.DefaultVisit(node);
         public virtual void VisitMetaOperationGreen(MetaOperationGreen node) => this.DefaultVisit(node);
         public virtual void VisitMetaParameterGreen(MetaParameterGreen node) => this.DefaultVisit(node);
-        public virtual void VisitSimpleTypeReferenceGreen(SimpleTypeReferenceGreen node) => this.DefaultVisit(node);
-        public virtual void VisitMetaArrayTypeGreen(MetaArrayTypeGreen node) => this.DefaultVisit(node);
-        public virtual void VisitMetaNullableTypeGreen(MetaNullableTypeGreen node) => this.DefaultVisit(node);
+        public virtual void VisitMetaTypeReferenceGreen(MetaTypeReferenceGreen node) => this.DefaultVisit(node);
         public virtual void VisitTypeReferenceAlt1Green(TypeReferenceAlt1Green node) => this.DefaultVisit(node);
         public virtual void VisitTypeReferenceAlt2Green(TypeReferenceAlt2Green node) => this.DefaultVisit(node);
         public virtual void VisitPrimitiveTypeGreen(PrimitiveTypeGreen node) => this.DefaultVisit(node);
@@ -60,6 +58,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         public virtual void VisitMetaPropertyBlock4Alt3redefinedPropertiesBlockGreen(MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen node) => this.DefaultVisit(node);
         public virtual void VisitMetaOperationBlock1Green(MetaOperationBlock1Green node) => this.DefaultVisit(node);
         public virtual void VisitMetaOperationBlock1parametersBlockGreen(MetaOperationBlock1parametersBlockGreen node) => this.DefaultVisit(node);
+        public virtual void VisitMetaTypeReferenceBlock1Green(MetaTypeReferenceBlock1Green node) => this.DefaultVisit(node);
+        public virtual void VisitMetaTypeReferenceBlock2Green(MetaTypeReferenceBlock2Green node) => this.DefaultVisit(node);
         public virtual void VisitQualifierIdentifierBlockGreen(QualifierIdentifierBlockGreen node) => this.DefaultVisit(node);
     }
 
@@ -79,9 +79,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         public virtual TResult VisitMetaPropertyGreen(MetaPropertyGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitMetaOperationGreen(MetaOperationGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitMetaParameterGreen(MetaParameterGreen node) => this.DefaultVisit(node);
-        public virtual TResult VisitSimpleTypeReferenceGreen(SimpleTypeReferenceGreen node) => this.DefaultVisit(node);
-        public virtual TResult VisitMetaArrayTypeGreen(MetaArrayTypeGreen node) => this.DefaultVisit(node);
-        public virtual TResult VisitMetaNullableTypeGreen(MetaNullableTypeGreen node) => this.DefaultVisit(node);
+        public virtual TResult VisitMetaTypeReferenceGreen(MetaTypeReferenceGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitTypeReferenceAlt1Green(TypeReferenceAlt1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitTypeReferenceAlt2Green(TypeReferenceAlt2Green node) => this.DefaultVisit(node);
         public virtual TResult VisitPrimitiveTypeGreen(PrimitiveTypeGreen node) => this.DefaultVisit(node);
@@ -121,6 +119,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         public virtual TResult VisitMetaPropertyBlock4Alt3redefinedPropertiesBlockGreen(MetaPropertyBlock4Alt3redefinedPropertiesBlockGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitMetaOperationBlock1Green(MetaOperationBlock1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitMetaOperationBlock1parametersBlockGreen(MetaOperationBlock1parametersBlockGreen node) => this.DefaultVisit(node);
+        public virtual TResult VisitMetaTypeReferenceBlock1Green(MetaTypeReferenceBlock1Green node) => this.DefaultVisit(node);
+        public virtual TResult VisitMetaTypeReferenceBlock2Green(MetaTypeReferenceBlock2Green node) => this.DefaultVisit(node);
         public virtual TResult VisitQualifierIdentifierBlockGreen(QualifierIdentifierBlockGreen node) => this.DefaultVisit(node);
     }
 }

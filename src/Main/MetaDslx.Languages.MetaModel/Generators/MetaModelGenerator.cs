@@ -27,6 +27,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
         private Modeling.Model _model;
         private Model.MetaModel _metaModel;
         private MetaMetaGraph _graph;
+        private ImmutableArray<MetaConstant> _constants;
         private ImmutableArray<MetaClass> _classes;
         private ImmutableArray<MetaEnum> _enums;
         private ImmutableArray<IModelObject> _objects;
@@ -37,10 +38,11 @@ namespace MetaDslx.Languages.MetaModel.Generators
             _isMetaMetaModel = isMetaMetaModel;
             _model = model;
             _metaModel = metaModel;
-            var metaClasses = metaModel.Parent?.Declarations.OfType<MetaClass>().ToArray() ?? new MetaClass[0];
+            var metaClasses = _model.Objects.OfType<MetaClass>().Where(mc => mc.MRootNamespace == _metaModel.MRootNamespace).ToImmutableArray();
             _graph = new MetaMetaGraph(metaClasses);
-            _classes = _graph.Compute().Select(c => ((MetaMetaClass)c).UnderlyingClass).ToImmutableArray();
-            _enums = _metaModel.Parent.Declarations.OfType<MetaEnum>().OrderBy(e => e.Name).ToImmutableArray();
+            _classes = _graph.Compute().Select(c => ((MetaMetaClass)c).UnderlyingClass).OrderBy(c => c.Name).ToImmutableArray();
+            _enums = _model.Objects.OfType<MetaEnum>().Where(e => e.MRootNamespace == _metaModel.MRootNamespace).OrderBy(e => e.Name).ToImmutableArray();
+            _constants = _model.Objects.OfType<MetaConstant>().Where(c => c.MRootNamespace == _metaModel.MRootNamespace).OrderBy(c => c.Name).ToImmutableArray();
             var objects = ArrayBuilder<IModelObject>.GetInstance();
             objects.AddRange(metaModel.GetAllContainedObjects<IModelObject>(includeSelf: true));
             foreach (var cls in _classes)
@@ -57,9 +59,10 @@ namespace MetaDslx.Languages.MetaModel.Generators
         public bool IsMetaMetaModel => _isMetaMetaModel;
         public Modeling.Model Model => _model;
         public Model.MetaModel MetaModel => _metaModel;
-        public string Namespace => _metaModel.Parent.FullName;
-        public ImmutableArray<MetaClass> Classes => _classes;
+        public string Namespace => _metaModel.MRootNamespace;
+        public ImmutableArray<MetaConstant> Constants => _constants;
         public ImmutableArray<MetaEnum> Enums => _enums;
+        public ImmutableArray<MetaClass> Classes => _classes;
         public ImmutableArray<IModelObject> Objects => _objects;
         public MetaMetaGraph Graph => _graph;
         public ImmutableArray<MetaDslx.CodeAnalysis.Diagnostic> Diagnostics => _graph.Diagnostics;
@@ -68,31 +71,28 @@ namespace MetaDslx.Languages.MetaModel.Generators
         {
             type = ExtractMetaType(type);
             if (type is null) return string.Empty;
-            if (type is MetaPrimitiveType mpt) type = mpt.Name;
+            if (type is MetaTypeReference typeRef)
+            {
+                var result = typeRef.Type.CSharpFullName;
+                if (typeRef.IsNullable &&
+                    typeRef.Type.SpecialType != CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType &&
+                    typeRef.Type.SpecialType != CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
+                {
+                    result += "?";
+                }
+                if (typeRef.IsArray)
+                {
+                    result = $"global::MetaDslx.Modeling.ICollectionSlot<{result}>";
+                }
+                return result;
+            }
             if (type is string stype) return PrimitiveTypeToString(stype);
             if (type is Type t) return $"global::{t.FullName}";
-            if (type is MetaNullableType nt)
-            {
-                if (nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType ||
-                    nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
-                {
-                    return ToCSharp(nt.InnerType);
-                }
-                else
-                {
-                    return $"{ToCSharp(nt.InnerType)}?";
-                }
-            }
-            if (type is MetaArrayType at)
-            {
-                return $"global::MetaDslx.Modeling.ICollectionSlot<{ToCSharp(at.ItemType)}>";
-                //return $"global::System.Collections.Generic.IList<{ToCSharp(at.ItemType)}>";
-            }
             if (type is MetaClass mc && _classes.Contains(mc))
             {
                 return mc.Name;
             }
-            if (type is MetaType mt)
+            if (type is MetaDslx.CodeAnalysis.MetaType mt)
             {
                 return $"global::{mt.FullName}";
             }
@@ -107,30 +107,28 @@ namespace MetaDslx.Languages.MetaModel.Generators
         {
             type = ExtractMetaType(type);
             if (type is null) return string.Empty;
-            if (type is MetaPrimitiveType mpt) type = mpt.Name;
+            if (type is MetaTypeReference typeRef)
+            {
+                var result = typeRef.Type.CSharpFullName;
+                if (typeRef.IsNullable &&
+                    typeRef.Type.SpecialType != CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType &&
+                    typeRef.Type.SpecialType != CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
+                {
+                    result += "?";
+                }
+                if (typeRef.IsArray)
+                {
+                    result = $"global::System.Collections.Generic.IList<{result}>";
+                }
+                return result;
+            }
             if (type is string stype) return PrimitiveTypeToString(stype);
             if (type is Type t) return $"global::{t.FullName}";
-            if (type is MetaNullableType nt)
-            {
-                if (nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType ||
-                    nt.InnerType.SpecialType == CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
-                {
-                    return ToCSharp(nt.InnerType);
-                }
-                else
-                {
-                    return $"{ToCSharp(nt.InnerType)}?";
-                }
-            }
-            if (type is MetaArrayType at)
-            {
-                return $"global::System.Collections.Generic.IList<{ToCSharpOpType(at.ItemType)}>";
-            }
             if (type is MetaClass mc && _classes.Contains(mc))
             {
                 return mc.Name;
             }
-            if (type is MetaType mt)
+            if (type is MetaDslx.CodeAnalysis.MetaType mt)
             {
                 return $"global::{mt.FullName}";
             }
@@ -227,7 +225,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (value is null) return "default";
             if (propertyType == typeof(MetaDslx.CodeAnalysis.MetaType) || propertyType == typeof(Type) || propertyType == typeof(TypeSymbol))
             {
-                if (value is MetaPrimitiveType pt) value = pt.Name;
+                //if (value is MetaPrimitiveType pt) value = pt.Name;
                 if (value is null) return "default";
                 else if (value is string svalue) return $"typeof({PrimitiveTypeToString(svalue)})";
                 else if (value is Type t) return $"typeof(global::{t.FullName})";

@@ -43,7 +43,7 @@ MetaProperty:
 MetaOperation: returnType=MetaTypeReference Name '(' (parameters+=MetaParameter (',' parameters+=MetaParameter)*)? ')' ';';
 MetaParameter: @type=MetaTypeReference Name;
 
-MetaTypeReference: @type=TypeReference (isNullable?='?')? (isArray?='[' ']');
+MetaTypeReference: @type=TypeReference (isNullable?='?')? (isArray?='[' ']')?;
 
 TypeReference returns type: PrimitiveType | #type;
 

@@ -289,8 +289,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 MetaTypeReferenceBlock1Green? block1 = null;
                 if (context.E_Block is not null) block1 = (MetaTypeReferenceBlock1Green?)this.Visit(context.E_Block);
                 MetaTypeReferenceBlock2Green? block2 = null;
-                if (context.E_Block1 is not null) block2 = (MetaTypeReferenceBlock2Green?)this.Visit(context.E_Block1) ?? MetaTypeReferenceBlock2Green.__Missing;
-                else block2 = MetaTypeReferenceBlock2Green.__Missing;
+                if (context.E_Block1 is not null) block2 = (MetaTypeReferenceBlock2Green?)this.Visit(context.E_Block1);
                 return _factory.MetaTypeReference(type, block1, block2);
             }
             

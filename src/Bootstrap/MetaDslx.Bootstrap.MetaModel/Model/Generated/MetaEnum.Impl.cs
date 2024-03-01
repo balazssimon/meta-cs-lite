@@ -32,7 +32,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<MetaEnumLiteral> Literals
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaEnumLiteral> Literals
         {
             get => MGetCollection<MetaEnumLiteral>(Meta.MetaEnum_Literals);
         }

@@ -27,7 +27,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
     {
         bool IsArray { get; set; }
         bool IsNullable { get; set; }
-        __MetaType Type { get; set; }
+        MetaDslx.CodeAnalysis.MetaType Type { get; set; }
     
     }
 }

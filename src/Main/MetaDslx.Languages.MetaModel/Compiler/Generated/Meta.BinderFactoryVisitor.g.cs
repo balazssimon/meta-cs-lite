@@ -18,11 +18,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitMain(MainSyntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaNamespace));
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol));
             this.Begin(__annot2, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: MetaDslx.Languages.MetaModel.Model.Meta.MetaDeclaration_Declarations);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder();
                 this.Begin(__annot0, node.Qualifier);
                 try
                 {
@@ -329,49 +329,29 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             }
         }
 
-        public virtual void VisitSimpleTypeReference(SimpleTypeReferenceSyntax node)
+        public virtual void VisitMetaTypeReference(MetaTypeReferenceSyntax node)
         {
-            this.Visit(node.TypeReference);
-        }
-
-        public virtual void VisitMetaArrayType(MetaArrayTypeSyntax node)
-        {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaArrayType));
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaTypeReference));
             this.Begin(__annot1, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ItemType");
-                this.Begin(__annot0, node.ItemType);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Type");
+                this.Begin(__annot0, node.Type);
                 try
                 {
-                    this.Visit(node.ItemType);
+                    this.Visit(node.Type);
                 }
                 finally
                 {
                     this.End(__annot0);
                 }
-            }
-            finally
-            {
-                this.End(__annot1);
-            }
-        }
-
-        public virtual void VisitMetaNullableType(MetaNullableTypeSyntax node)
-        {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaNullableType));
-            this.Begin(__annot1, node);
-            try
-            {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "InnerType");
-                this.Begin(__annot0, node.InnerType);
-                try
+                if (node.Block1 != null)
                 {
-                    this.Visit(node.InnerType);
+                    this.Visit(node.Block1);
                 }
-                finally
+                if (node.Block2 != null)
                 {
-                    this.End(__annot0);
+                    this.Visit(node.Block2);
                 }
             }
             finally
@@ -825,24 +805,24 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             this.Begin(__annot2, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
-                this.Begin(__annot0, node.Declarations1);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Members");
+                this.Begin(__annot0, node.Members1);
                 try
                 {
-                    this.Visit(node.Declarations1);
+                    this.Visit(node.Members1);
                 }
                 finally
                 {
                     this.End(__annot0);
                 }
-                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
-                this.Begin(__annot1, node.Declarations2.Node);
+                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Members");
+                this.Begin(__annot1, node.Members2.Node);
                 try
                 {
-                    var declarations2List = node.Declarations2;
-                    for (var declarations2Index = 0; declarations2Index < declarations2List.Count; ++declarations2Index)
+                    var members2List = node.Members2;
+                    for (var members2Index = 0; members2Index < members2List.Count; ++members2Index)
                     {
-                        this.Visit(node.Declarations2[declarations2Index]);
+                        this.Visit(node.Members2[members2Index]);
                     }
                 }
                 finally
@@ -1535,6 +1515,34 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             try
             {
                 this.Visit(node.Parameters);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+        }
+
+        public virtual void VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsNullable", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsNullable);
+            try
+            {
+                //this.VisitToken(node.IsNullable);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+        }
+
+        public virtual void VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsArray", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsArray);
+            try
+            {
+                //this.VisitToken(node.IsArray);
             }
             finally
             {

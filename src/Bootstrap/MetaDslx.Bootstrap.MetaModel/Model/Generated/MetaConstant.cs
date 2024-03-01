@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
 
     public interface MetaConstant : global::MetaDslx.Bootstrap.MetaModel.Model.MetaDeclaration
     {
-        MetaTypeReference Type { get; set; }
+        MetaDslx.Bootstrap.MetaModel.Model.MetaTypeReference Type { get; set; }
     
     }
 }

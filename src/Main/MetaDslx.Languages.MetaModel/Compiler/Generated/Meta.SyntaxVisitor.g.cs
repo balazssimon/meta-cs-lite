@@ -30,9 +30,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         void VisitMetaProperty(MetaPropertySyntax node);
         void VisitMetaOperation(MetaOperationSyntax node);
         void VisitMetaParameter(MetaParameterSyntax node);
-        void VisitSimpleTypeReference(SimpleTypeReferenceSyntax node);
-        void VisitMetaArrayType(MetaArrayTypeSyntax node);
-        void VisitMetaNullableType(MetaNullableTypeSyntax node);
+        void VisitMetaTypeReference(MetaTypeReferenceSyntax node);
         void VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node);
         void VisitTypeReferenceAlt2(TypeReferenceAlt2Syntax node);
         void VisitPrimitiveType(PrimitiveTypeSyntax node);
@@ -72,6 +70,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         void VisitMetaPropertyBlock4Alt3redefinedPropertiesBlock(MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax node);
         void VisitMetaOperationBlock1(MetaOperationBlock1Syntax node);
         void VisitMetaOperationBlock1parametersBlock(MetaOperationBlock1parametersBlockSyntax node);
+        void VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node);
+        void VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node);
         void VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node);
     }
 
@@ -147,17 +147,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitSimpleTypeReference(SimpleTypeReferenceSyntax node)
-        {
-            this.DefaultVisit(node);
-        }
-
-        public virtual void VisitMetaArrayType(MetaArrayTypeSyntax node)
-        {
-            this.DefaultVisit(node);
-        }
-
-        public virtual void VisitMetaNullableType(MetaNullableTypeSyntax node)
+        public virtual void VisitMetaTypeReference(MetaTypeReferenceSyntax node)
         {
             this.DefaultVisit(node);
         }
@@ -357,6 +347,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
+        public virtual void VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
         public virtual void VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node)
         {
             this.DefaultVisit(node);
@@ -380,9 +380,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitMetaProperty(MetaPropertySyntax node);
         TResult VisitMetaOperation(MetaOperationSyntax node);
         TResult VisitMetaParameter(MetaParameterSyntax node);
-        TResult VisitSimpleTypeReference(SimpleTypeReferenceSyntax node);
-        TResult VisitMetaArrayType(MetaArrayTypeSyntax node);
-        TResult VisitMetaNullableType(MetaNullableTypeSyntax node);
+        TResult VisitMetaTypeReference(MetaTypeReferenceSyntax node);
         TResult VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node);
         TResult VisitTypeReferenceAlt2(TypeReferenceAlt2Syntax node);
         TResult VisitPrimitiveType(PrimitiveTypeSyntax node);
@@ -422,6 +420,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitMetaPropertyBlock4Alt3redefinedPropertiesBlock(MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax node);
         TResult VisitMetaOperationBlock1(MetaOperationBlock1Syntax node);
         TResult VisitMetaOperationBlock1parametersBlock(MetaOperationBlock1parametersBlockSyntax node);
+        TResult VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node);
+        TResult VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node);
         TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node);
     }
 
@@ -497,17 +497,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitSimpleTypeReference(SimpleTypeReferenceSyntax node)
-        {
-            return this.DefaultVisit(node);
-        }
-
-        public virtual TResult VisitMetaArrayType(MetaArrayTypeSyntax node)
-        {
-            return this.DefaultVisit(node);
-        }
-
-        public virtual TResult VisitMetaNullableType(MetaNullableTypeSyntax node)
+        public virtual TResult VisitMetaTypeReference(MetaTypeReferenceSyntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -707,6 +697,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
+        public virtual TResult VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
         public virtual TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node)
         {
             return this.DefaultVisit(node);
@@ -730,9 +730,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitMetaProperty(MetaPropertySyntax node, TArg argument);
         TResult VisitMetaOperation(MetaOperationSyntax node, TArg argument);
         TResult VisitMetaParameter(MetaParameterSyntax node, TArg argument);
-        TResult VisitSimpleTypeReference(SimpleTypeReferenceSyntax node, TArg argument);
-        TResult VisitMetaArrayType(MetaArrayTypeSyntax node, TArg argument);
-        TResult VisitMetaNullableType(MetaNullableTypeSyntax node, TArg argument);
+        TResult VisitMetaTypeReference(MetaTypeReferenceSyntax node, TArg argument);
         TResult VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node, TArg argument);
         TResult VisitTypeReferenceAlt2(TypeReferenceAlt2Syntax node, TArg argument);
         TResult VisitPrimitiveType(PrimitiveTypeSyntax node, TArg argument);
@@ -772,6 +770,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitMetaPropertyBlock4Alt3redefinedPropertiesBlock(MetaPropertyBlock4Alt3redefinedPropertiesBlockSyntax node, TArg argument);
         TResult VisitMetaOperationBlock1(MetaOperationBlock1Syntax node, TArg argument);
         TResult VisitMetaOperationBlock1parametersBlock(MetaOperationBlock1parametersBlockSyntax node, TArg argument);
+        TResult VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node, TArg argument);
+        TResult VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node, TArg argument);
         TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node, TArg argument);
     }
 
@@ -847,17 +847,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitSimpleTypeReference(SimpleTypeReferenceSyntax node, TArg argument)
-        {
-            return this.DefaultVisit(node, argument);
-        }
-
-        public virtual TResult VisitMetaArrayType(MetaArrayTypeSyntax node, TArg argument)
-        {
-            return this.DefaultVisit(node, argument);
-        }
-
-        public virtual TResult VisitMetaNullableType(MetaNullableTypeSyntax node, TArg argument)
+        public virtual TResult VisitMetaTypeReference(MetaTypeReferenceSyntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -1057,6 +1047,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
+        public virtual TResult VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
         public virtual TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
@@ -1081,17 +1081,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             var kNamespace = this.VisitToken(node.KNamespace);
             var qualifier = (QualifierSyntax)this.Visit(node.Qualifier);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
             var usingList = this.VisitList(node.UsingList);
             var block = (MainBlock1Syntax)this.Visit(node.Block);
             var endOfFileToken = this.VisitToken(node.EndOfFileToken);
-            return node.Update(kNamespace, qualifier, usingList, block, endOfFileToken);
+            return node.Update(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
         }
 
         public virtual SyntaxNode VisitUsing(UsingSyntax node)
         {
             var kUsing = this.VisitToken(node.KUsing);
             var namespaces = (QualifierSyntax)this.Visit(node.Namespaces);
-            return node.Update(kUsing, namespaces);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(kUsing, namespaces, tSemicolon);
         }
 
         public virtual SyntaxNode VisitMetaModel(MetaModelSyntax node)
@@ -1099,7 +1101,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var kMetamodel = this.VisitToken(node.KMetamodel);
             var name = (NameSyntax)this.Visit(node.Name);
             var block = (MetaModelBlock1Syntax)this.Visit(node.Block);
-            return node.Update(kMetamodel, name, block);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(kMetamodel, name, block, tSemicolon);
         }
 
         public virtual SyntaxNode VisitMetaDeclarationAlt1(MetaDeclarationAlt1Syntax node)
@@ -1125,7 +1128,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var kConst = this.VisitToken(node.KConst);
             var type = (MetaTypeReferenceSyntax)this.Visit(node.Type);
             var name = (NameSyntax)this.Visit(node.Name);
-            return node.Update(kConst, type, name);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(kConst, type, name, tSemicolon);
         }
 
         public virtual SyntaxNode VisitMetaEnum(MetaEnumSyntax node)
@@ -1159,7 +1163,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var block2 = (MetaPropertyBlock2Syntax)this.Visit(node.Block2);
             var block3 = (MetaPropertyBlock3Syntax)this.Visit(node.Block3);
             var block4 = this.VisitList(node.Block4);
-            return node.Update(block1, type, block2, block3, block4);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(block1, type, block2, block3, block4, tSemicolon);
         }
 
         public virtual SyntaxNode VisitMetaOperation(MetaOperationSyntax node)
@@ -1169,7 +1174,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var tLParen = this.VisitToken(node.TLParen);
             var block = (MetaOperationBlock1Syntax)this.Visit(node.Block);
             var tRParen = this.VisitToken(node.TRParen);
-            return node.Update(returnType, name, tLParen, block, tRParen);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(returnType, name, tLParen, block, tRParen, tSemicolon);
         }
 
         public virtual SyntaxNode VisitMetaParameter(MetaParameterSyntax node)
@@ -1179,25 +1185,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return node.Update(type, name);
         }
 
-        public virtual SyntaxNode VisitSimpleTypeReference(SimpleTypeReferenceSyntax node)
+        public virtual SyntaxNode VisitMetaTypeReference(MetaTypeReferenceSyntax node)
         {
-            var typeReference = (TypeReferenceSyntax)this.Visit(node.TypeReference);
-            return node.Update(typeReference);
-        }
-
-        public virtual SyntaxNode VisitMetaArrayType(MetaArrayTypeSyntax node)
-        {
-            var itemType = (MetaTypeReferenceSyntax)this.Visit(node.ItemType);
-            var tLBracket = this.VisitToken(node.TLBracket);
-            var tRBracket = this.VisitToken(node.TRBracket);
-            return node.Update(itemType, tLBracket, tRBracket);
-        }
-
-        public virtual SyntaxNode VisitMetaNullableType(MetaNullableTypeSyntax node)
-        {
-            var innerType = (MetaTypeReferenceSyntax)this.Visit(node.InnerType);
-            var tQuestion = this.VisitToken(node.TQuestion);
-            return node.Update(innerType, tQuestion);
+            var type = (TypeReferenceSyntax)this.Visit(node.Type);
+            var block1 = (MetaTypeReferenceBlock1Syntax)this.Visit(node.Block1);
+            var block2 = (MetaTypeReferenceBlock2Syntax)this.Visit(node.Block2);
+            return node.Update(type, block1, block2);
         }
 
         public virtual SyntaxNode VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node)
@@ -1280,9 +1273,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 
         public virtual SyntaxNode VisitMainBlock1(MainBlock1Syntax node)
         {
-            var declarations1 = (MetaModelSyntax)this.Visit(node.Declarations1);
-            var declarations2 = this.VisitList(node.Declarations2);
-            return node.Update(declarations1, declarations2);
+            var members1 = (MetaModelSyntax)this.Visit(node.Members1);
+            var members2 = this.VisitList(node.Members2);
+            return node.Update(members1, members2);
         }
 
         public virtual SyntaxNode VisitMetaModelBlock1(MetaModelBlock1Syntax node)
@@ -1453,6 +1446,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var tComma = this.VisitToken(node.TComma);
             var parameters = (MetaParameterSyntax)this.Visit(node.Parameters);
             return node.Update(tComma, parameters);
+        }
+
+        public virtual SyntaxNode VisitMetaTypeReferenceBlock1(MetaTypeReferenceBlock1Syntax node)
+        {
+            var isNullable = this.VisitToken(node.IsNullable);
+            return node.Update(isNullable);
+        }
+
+        public virtual SyntaxNode VisitMetaTypeReferenceBlock2(MetaTypeReferenceBlock2Syntax node)
+        {
+            var isArray = this.VisitToken(node.IsArray);
+            var tRBracket = this.VisitToken(node.TRBracket);
+            return node.Update(isArray, tRBracket);
         }
 
         public virtual SyntaxNode VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node)

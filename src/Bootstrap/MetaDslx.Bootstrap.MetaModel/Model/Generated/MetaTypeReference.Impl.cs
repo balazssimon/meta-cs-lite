@@ -43,10 +43,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Model.__Impl
             set => MSet<bool>(Meta.MetaTypeReference_IsNullable, value);
         }
     
-        public __MetaType Type
+        public MetaDslx.CodeAnalysis.MetaType Type
         {
-            get => MGet<__MetaType>(Meta.MetaTypeReference_Type);
-            set => MSet<__MetaType>(Meta.MetaTypeReference_Type, value);
+            get => MGet<MetaDslx.CodeAnalysis.MetaType>(Meta.MetaTypeReference_Type);
+            set => MSet<MetaDslx.CodeAnalysis.MetaType>(Meta.MetaTypeReference_Type, value);
         }
     
     

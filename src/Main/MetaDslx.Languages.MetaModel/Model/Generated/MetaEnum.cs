@@ -23,9 +23,9 @@ namespace MetaDslx.Languages.MetaModel.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
-    public interface MetaEnum : global::MetaDslx.Languages.MetaModel.Model.MetaType
+    public interface MetaEnum : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaEnumLiteral> Literals { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaEnumLiteral> Literals { get; }
     
     }
 }

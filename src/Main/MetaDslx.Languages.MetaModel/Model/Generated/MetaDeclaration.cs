@@ -25,10 +25,9 @@ namespace MetaDslx.Languages.MetaModel.Model
 
     public interface MetaDeclaration : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations { get; }
         string? FullName { get; }
         string? Name { get; set; }
-        MetaDeclaration? Parent { get; set; }
+        string Namespace { get; }
     
     }
 }

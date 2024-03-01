@@ -8,14 +8,14 @@ namespace MetaDslx.Languages.MetaModel.Model
     {
         public override string MetaDeclaration_FullName(MetaDeclaration _this)
         {
-            var parent = _this.Parent;
-            if (parent is null || string.IsNullOrEmpty(parent.Name)) return _this.Name;
-            else return $"{parent.FullName}.{_this.Name}";
+            if (string.IsNullOrEmpty(_this.Namespace)) return _this.Name;
+            else return $"{_this.Namespace}.{_this.Name}";
         }
 
-        public override string MetaModel_NamespaceName(MetaModel _this)
+        public override string MetaDeclaration_Namespace(MetaDeclaration _this)
         {
-            return _this?.Parent?.FullName ?? string.Empty;
+            return _this.MRootNamespace ?? string.Empty;
         }
+
     }
 }

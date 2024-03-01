@@ -35,11 +35,6 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
         {
         }
     
-        public MetaDeclaration MetaDeclaration(string? id = null)
-        {
-            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(base.Model, id)!;
-        }
-    
         public MetaClass MetaClass(string? id = null)
         {
             return (MetaClass)Meta.MetaClassInfo.Create(base.Model, id)!;
@@ -48,6 +43,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
         public MetaConstant MetaConstant(string? id = null)
         {
             return (MetaConstant)Meta.MetaConstantInfo.Create(base.Model, id)!;
+        }
+    
+        public MetaDeclaration MetaDeclaration(string? id = null)
+        {
+            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(base.Model, id)!;
         }
     
         public MetaEnum MetaEnum(string? id = null)
@@ -94,11 +94,6 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
         {
         }
     
-        public MetaDeclaration MetaDeclaration(__Model model, string? id = null)
-        {
-            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(model, id)!;
-        }
-    
         public MetaClass MetaClass(__Model model, string? id = null)
         {
             return (MetaClass)Meta.MetaClassInfo.Create(model, id)!;
@@ -107,6 +102,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
         public MetaConstant MetaConstant(__Model model, string? id = null)
         {
             return (MetaConstant)Meta.MetaConstantInfo.Create(model, id)!;
+        }
+    
+        public MetaDeclaration MetaDeclaration(__Model model, string? id = null)
+        {
+            return (MetaDeclaration)Meta.MetaDeclarationInfo.Create(model, id)!;
         }
     
         public MetaEnum MetaEnum(__Model model, string? id = null)

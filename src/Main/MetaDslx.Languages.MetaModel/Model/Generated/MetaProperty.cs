@@ -30,11 +30,11 @@ namespace MetaDslx.Languages.MetaModel.Model
         bool IsDerived { get; set; }
         bool IsReadOnly { get; set; }
         bool IsUnion { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> OppositeProperties { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> RedefinedProperties { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> SubsettedProperties { get; }
-        __MetaSymbol SymbolProperty { get; set; }
-        __MetaType Type { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaProperty> OppositeProperties { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaProperty> RedefinedProperties { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaProperty> SubsettedProperties { get; }
+        MetaDslx.CodeAnalysis.MetaSymbol SymbolProperty { get; set; }
+        MetaDslx.Languages.MetaModel.Model.MetaTypeReference Type { get; set; }
     
     }
 }

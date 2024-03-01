@@ -410,13 +410,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         public MetaTypeReferenceSyntax MetaTypeReference(TypeReferenceSyntax type, MetaTypeReferenceBlock1Syntax block1, MetaTypeReferenceBlock2Syntax block2)
         {
             if (type is null) throw new __ArgumentNullException(nameof(type));
-            if (block2 is null) throw new __ArgumentNullException(nameof(block2));
             return (MetaTypeReferenceSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaTypeReference((InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.MetaTypeReferenceBlock1Green)block1.Green, (InternalSyntax.MetaTypeReferenceBlock2Green)block2.Green).CreateRed();
         }
         
-        public MetaTypeReferenceSyntax MetaTypeReference(TypeReferenceSyntax type, MetaTypeReferenceBlock2Syntax block2)
+        public MetaTypeReferenceSyntax MetaTypeReference(TypeReferenceSyntax type)
         {
-            return this.MetaTypeReference(type, default, block2);
+            return this.MetaTypeReference(type, default, default);
         }
 
         public TypeReferenceAlt1Syntax TypeReferenceAlt1(PrimitiveTypeSyntax primitiveType)

@@ -25,8 +25,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
 
     public interface MetaOperation : global::MetaDslx.Bootstrap.MetaModel.Model.MetaDeclaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaParameter> Parameters { get; }
-        MetaTypeReference ReturnType { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaParameter> Parameters { get; }
+        MetaDslx.Bootstrap.MetaModel.Model.MetaTypeReference ReturnType { get; set; }
     
     }
 }

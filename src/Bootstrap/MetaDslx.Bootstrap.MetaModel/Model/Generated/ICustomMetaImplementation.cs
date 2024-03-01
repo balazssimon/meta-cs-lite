@@ -30,11 +30,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
         /// </summary>
         void Meta(IMeta _this);
     
-        void MetaDeclaration(MetaDeclaration _this);
-    
         void MetaClass(MetaClass _this);
     
         void MetaConstant(MetaConstant _this);
+    
+        void MetaDeclaration(MetaDeclaration _this);
     
         void MetaEnum(MetaEnum _this);
     

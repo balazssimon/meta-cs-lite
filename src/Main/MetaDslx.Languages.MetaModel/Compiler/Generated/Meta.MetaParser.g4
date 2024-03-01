@@ -6,13 +6,13 @@ options
 } 
 
 pr_Main
-    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_UsingList+=pr_Using*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
+    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  E_UsingList+=pr_Using*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
     ;
 pr_Using
-    :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier
+    :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaModel
-    :  E_KMetamodel=LR_KMetamodel  E_Name=pr_Name  E_Block=pr_MetaModelBlock1?
+    :  E_KMetamodel=LR_KMetamodel  E_Name=pr_Name  E_Block=pr_MetaModelBlock1?  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaDeclaration
     :  E_MetaConstant=pr_MetaConstant #pr_MetaDeclarationAlt1
@@ -20,7 +20,7 @@ pr_MetaDeclaration
     |  E_MetaClass=pr_MetaClass #pr_MetaDeclarationAlt3
     ;
 pr_MetaConstant
-    :  E_KConst=LR_KConst  E_type=pr_MetaTypeReference  E_Name=pr_Name
+    :  E_KConst=LR_KConst  E_type=pr_MetaTypeReference  E_Name=pr_Name  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaEnum
     :  E_KEnum=LR_KEnum  E_Name=pr_Name  E_Block=pr_MetaEnumBlock1
@@ -32,18 +32,16 @@ pr_MetaClass
     :  E_isAbstract=LR_KAbstract?  E_KClass=LR_KClass  E_Block=pr_MetaClassBlock1  E_Block1=pr_MetaClassBlock2?  E_Block2=pr_MetaClassBlock3
     ;
 pr_MetaProperty
-    :  E_Block=pr_MetaPropertyBlock1?  E_type=pr_MetaTypeReference  E_Block1=pr_MetaPropertyBlock2  E_Block2=pr_MetaPropertyBlock3?  E_Block3+=pr_MetaPropertyBlock4*
+    :  E_Block=pr_MetaPropertyBlock1?  E_type=pr_MetaTypeReference  E_Block1=pr_MetaPropertyBlock2  E_Block2=pr_MetaPropertyBlock3?  E_Block3+=pr_MetaPropertyBlock4*  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaOperation
-    :  E_returnType=pr_MetaTypeReference  E_Name=pr_Name  E_TLParen=LR_TLParen  E_Block=pr_MetaOperationBlock1?  E_TRParen=LR_TRParen
+    :  E_returnType=pr_MetaTypeReference  E_Name=pr_Name  E_TLParen=LR_TLParen  E_Block=pr_MetaOperationBlock1?  E_TRParen=LR_TRParen  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaParameter
     :  E_type=pr_MetaTypeReference  E_Name=pr_Name
     ;
 pr_MetaTypeReference
-    :  E_TypeReference=pr_TypeReference #pr_SimpleTypeReference
-    |  E_itemType=pr_MetaTypeReference  E_TLBracket=LR_TLBracket  E_TRBracket=LR_TRBracket #pr_MetaArrayType
-    |  E_innerType=pr_MetaTypeReference  E_TQuestion=LR_TQuestion #pr_MetaNullableType
+    :  E_type=pr_TypeReference  E_Block=pr_MetaTypeReferenceBlock1?  E_Block1=pr_MetaTypeReferenceBlock2?
     ;
 pr_TypeReference
     :  E_PrimitiveType=pr_PrimitiveType #pr_TypeReferenceAlt1
@@ -73,7 +71,7 @@ pr_TBoolean
     :  E_Token=(LR_KTrue | LR_KFalse)
     ;
 pr_MainBlock1
-    :  E_declarations=pr_MetaModel  E_declarations1+=pr_MetaDeclaration*
+    :  E_members=pr_MetaModel  E_members1+=pr_MetaDeclaration*
     ;
 pr_MetaModelBlock1
     :  E_TEq=LR_TEq  E_uri=LR_TString
@@ -133,6 +131,12 @@ pr_MetaOperationBlock1
     ;
 pr_MetaOperationBlock1parametersBlock
     :  E_TComma1=LR_TComma  E_parameters2=pr_MetaParameter
+    ;
+pr_MetaTypeReferenceBlock1
+    :  E_isNullable=LR_TQuestion
+    ;
+pr_MetaTypeReferenceBlock2
+    :  E_isArray=LR_TLBracket  E_TRBracket=LR_TRBracket
     ;
 pr_QualifierIdentifierBlock
     :  E_TDot1=LR_TDot  E_Identifier2=pr_Identifier

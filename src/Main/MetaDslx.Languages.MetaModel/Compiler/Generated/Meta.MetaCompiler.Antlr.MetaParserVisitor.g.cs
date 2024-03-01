@@ -114,26 +114,11 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaParameter([NotNull] MetaParser.Pr_MetaParameterContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_SimpleTypeReference</c>
-	/// labeled alternative in <see cref="MetaParser.pr_MetaTypeReference"/>.
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaTypeReference"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_SimpleTypeReference([NotNull] MetaParser.Pr_SimpleTypeReferenceContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_MetaNullableType</c>
-	/// labeled alternative in <see cref="MetaParser.pr_MetaTypeReference"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_MetaNullableType([NotNull] MetaParser.Pr_MetaNullableTypeContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_MetaArrayType</c>
-	/// labeled alternative in <see cref="MetaParser.pr_MetaTypeReference"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_MetaArrayType([NotNull] MetaParser.Pr_MetaArrayTypeContext context);
+	Result VisitPr_MetaTypeReference([NotNull] MetaParser.Pr_MetaTypeReferenceContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_TypeReferenceAlt1</c>
 	/// labeled alternative in <see cref="MetaParser.pr_TypeReference"/>.
@@ -389,6 +374,18 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaOperationBlock1parametersBlock([NotNull] MetaParser.Pr_MetaOperationBlock1parametersBlockContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaTypeReferenceBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_MetaTypeReferenceBlock1([NotNull] MetaParser.Pr_MetaTypeReferenceBlock1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaTypeReferenceBlock2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_MetaTypeReferenceBlock2([NotNull] MetaParser.Pr_MetaTypeReferenceBlock2Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_QualifierIdentifierBlock"/>.
 	/// </summary>

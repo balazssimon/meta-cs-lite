@@ -1,29 +1,29 @@
-namespace MetaDslx.Bootstrap.MetaModel.Model
+namespace MetaDslx.Bootstrap.MetaModel.Model;
 
-using MetaDslx.CodeAnalysis.Symbols
+using MetaDslx.CodeAnalysis.Symbols;
 
-metamodel Meta
+metamodel Meta;
 
 class MetaDeclaration $Declaration
 {
-	string? $Name
-	derived string Namespace
-	derived string? FullName
+	string? $Name;
+	derived string Namespace;
+	derived string? FullName;
 }
 
 class MetaModel : MetaDeclaration
 {
-	string Uri
+	string Uri;
 }
 
 class MetaConstant : MetaDeclaration
 {
-	MetaTypeReference Type
+	MetaTypeReference Type;
 }
 
 class MetaEnum $Type : MetaDeclaration
 {
-	contains MetaEnumLiteral[] Literals
+	contains MetaEnumLiteral[] Literals;
 }
 
 class MetaEnumLiteral : MetaDeclaration
@@ -32,41 +32,41 @@ class MetaEnumLiteral : MetaDeclaration
 
 class MetaClass $Type : MetaDeclaration
 {
-	type? SymbolType
-	bool IsAbstract
-	MetaClass[] $BaseTypes
-	contains MetaProperty[] Properties
-	contains MetaOperation[] Operations
+	type? SymbolType;
+	bool IsAbstract;
+	MetaClass[] $BaseTypes;
+	contains MetaProperty[] Properties;
+	contains MetaOperation[] Operations;
 }
 
 class MetaProperty : MetaDeclaration
 {
-	MetaTypeReference Type
-	symbol? SymbolProperty
-	bool IsContainment
-	bool IsDerived
-	bool IsReadOnly
-	bool IsUnion
-	object? DefaultValue
-	MetaProperty[] OppositeProperties
-	MetaProperty[] SubsettedProperties
-	MetaProperty[] RedefinedProperties
+	MetaTypeReference Type;
+	symbol? SymbolProperty;
+	bool IsContainment;
+	bool IsDerived;
+	bool IsReadOnly;
+	bool IsUnion;
+	object? DefaultValue;
+	MetaProperty[] OppositeProperties;
+	MetaProperty[] SubsettedProperties;
+	MetaProperty[] RedefinedProperties;
 }
 
 class MetaOperation: MetaDeclaration
 {
-	MetaTypeReference ReturnType
-	contains MetaParameter[] Parameters
+	MetaTypeReference ReturnType;
+	contains MetaParameter[] Parameters;
 }
 
 class MetaParameter : MetaDeclaration
 {
-	MetaTypeReference Type
+	MetaTypeReference Type;
 }
 
 class MetaTypeReference $Type
 {
-	bool IsNullable
-	bool IsArray
-	type Type
+	bool IsNullable;
+	bool IsArray;
+	type Type;
 }

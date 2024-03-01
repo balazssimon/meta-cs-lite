@@ -21,10 +21,11 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override bool IsCollectionType(MetaDslx.CodeAnalysis.MetaType type, out MetaDslx.CodeAnalysis.MetaType itemType, out ModelPropertyFlags collectionFlags)
         {
-            if (type.OriginalModelObject is MetaArrayType arrayType)
+            if (type.OriginalModelObject is MetaTypeReference typeRef && typeRef.IsArray)
             {
-                itemType = arrayType.ItemType;
+                itemType = typeRef.Type;
                 collectionFlags = ModelPropertyFlags.None;
+                if (typeRef.IsNullable) collectionFlags |= ModelPropertyFlags.NullableType;
                 return true;
             }
             else
@@ -51,9 +52,9 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override bool IsNullableType(MetaDslx.CodeAnalysis.MetaType type, out MetaDslx.CodeAnalysis.MetaType innerType)
         {
-            if (type.OriginalModelObject is MetaNullableType nullableType)
+            if (type.OriginalModelObject is MetaTypeReference typeRef && typeRef.IsNullable)
             {
-                innerType = nullableType.InnerType;
+                innerType = typeRef.Type;
                 return true;
             }
             else if (type.OriginalModelObject is MetaClass)
@@ -70,7 +71,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override bool IsPrimitiveType(MetaDslx.CodeAnalysis.MetaType type)
         {
-            if (type.OriginalModelObject is MetaPrimitiveType) return true;
+            if (type.OriginalModelObject is MetaTypeReference typeRef && typeRef.Type.MetaKeyword is not null) return true;
             if (type.MetaKeyword is not null) return true;
             return false;
         }

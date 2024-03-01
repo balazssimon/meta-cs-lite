@@ -1,89 +1,72 @@
-namespace MetaDslx.Languages.MetaModel.Model
+namespace MetaDslx.Languages.MetaModel.Model;
 
-using MetaDslx.CodeAnalysis.Symbols
+using MetaDslx.CodeAnalysis.Symbols;
 
-metamodel Meta
+metamodel Meta;
 
 class MetaDeclaration $Declaration
 {
-	string? $Name
-	MetaDeclaration? Parent opposite Declarations
-	contains MetaDeclaration[] Declarations opposite Parent
-	derived string? FullName
-}
-
-class MetaNamespace $Namespace : MetaDeclaration
-{
+	string? $Name;
+	derived string Namespace;
+	derived string? FullName;
 }
 
 class MetaModel : MetaDeclaration
 {
-	derived string NamespaceName
-	string Uri
+	string Uri;
 }
 
 class MetaConstant : MetaDeclaration
 {
-	type Type
+	MetaTypeReference Type;
 }
 
-abstract class MetaType $Type : MetaDeclaration
+class MetaEnum $Type : MetaDeclaration
 {
-}
-
-class MetaPrimitiveType : MetaType
-{
-}
-
-class MetaNullableType : MetaType
-{
-	type InnerType
-}
-
-class MetaArrayType : MetaType
-{
-	type ItemType
-}
-
-class MetaEnum : MetaType
-{
-	contains MetaEnumLiteral[] Literals subsets MetaDeclaration.Declarations
+	contains MetaEnumLiteral[] Literals;
 }
 
 class MetaEnumLiteral : MetaDeclaration
 {
 }
 
-class MetaClass $Type : MetaType
+class MetaClass $Type : MetaDeclaration
 {
-	type? SymbolType
-	bool IsAbstract
-	MetaClass[] $BaseTypes
-	contains MetaProperty[] Properties subsets MetaDeclaration.Declarations
-	contains MetaOperation[] Operations subsets MetaDeclaration.Declarations
+	type? SymbolType;
+	bool IsAbstract;
+	MetaClass[] $BaseTypes;
+	contains MetaProperty[] Properties;
+	contains MetaOperation[] Operations;
 }
 
 class MetaProperty : MetaDeclaration
 {
-	type Type
-	symbol? SymbolProperty
-	bool IsContainment
-	bool IsDerived
-	bool IsReadOnly
-	bool IsUnion
-	object? DefaultValue
-	MetaProperty[] OppositeProperties
-	MetaProperty[] SubsettedProperties
-	MetaProperty[] RedefinedProperties
+	MetaTypeReference Type;
+	symbol? SymbolProperty;
+	bool IsContainment;
+	bool IsDerived;
+	bool IsReadOnly;
+	bool IsUnion;
+	object? DefaultValue;
+	MetaProperty[] OppositeProperties;
+	MetaProperty[] SubsettedProperties;
+	MetaProperty[] RedefinedProperties;
 }
 
 class MetaOperation: MetaDeclaration
 {
-	type ReturnType
-	contains MetaParameter[] Parameters redefines MetaDeclaration.Declarations
+	MetaTypeReference ReturnType;
+	contains MetaParameter[] Parameters;
 }
 
 class MetaParameter : MetaDeclaration
 {
-	type Type
+	MetaTypeReference Type;
+}
+
+class MetaTypeReference $Type
+{
+	bool IsNullable;
+	bool IsArray;
+	type Type;
 }

@@ -25,7 +25,6 @@ namespace MetaDslx.Languages.MetaModel.Model
 
     public interface MetaModel : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
     {
-        string NamespaceName { get; }
         string Uri { get; set; }
     
     }

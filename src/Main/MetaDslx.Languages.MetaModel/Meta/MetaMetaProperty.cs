@@ -38,7 +38,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public override string? SymbolProperty => UnderlyingProperty.SymbolProperty.Name;
 
-        public override MetaDslx.CodeAnalysis.MetaType OriginalType => UnderlyingProperty.Type;
+        public override MetaDslx.CodeAnalysis.MetaType OriginalType => MetaType.FromModelObject(UnderlyingProperty.Type);
 
         public override ModelPropertyFlags OriginalFlags => _originalFlags;
 
@@ -46,7 +46,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
         {
             foreach (var prop in UnderlyingProperty.OppositeProperties)
             {
-                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)prop.Parent), prop.Name);
+                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject(prop.MParent), prop.Name);
             }
         }
 
@@ -54,7 +54,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
         {
             foreach (var prop in UnderlyingProperty.RedefinedProperties)
             {
-                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)prop.Parent), prop.Name);
+                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject(prop.MParent), prop.Name);
             }
         }
 
@@ -62,7 +62,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
         {
             foreach (var prop in UnderlyingProperty.SubsettedProperties)
             {
-                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)prop.Parent), prop.Name);
+                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject(prop.MParent), prop.Name);
             }
         }
     }

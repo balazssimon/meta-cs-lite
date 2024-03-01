@@ -23,13 +23,13 @@ namespace MetaDslx.Languages.MetaModel.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
-    public interface MetaClass : global::MetaDslx.Languages.MetaModel.Model.MetaType
+    public interface MetaClass : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaClass> BaseTypes { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaClass> BaseTypes { get; }
         bool IsAbstract { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaOperation> Operations { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> Properties { get; }
-        __MetaType SymbolType { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaOperation> Operations { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaProperty> Properties { get; }
+        MetaDslx.CodeAnalysis.MetaType SymbolType { get; set; }
     
     }
 }

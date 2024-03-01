@@ -105,6 +105,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 QualifierGreen? qualifier = null;
                 if (context.E_Qualifier is not null) qualifier = (QualifierGreen?)this.Visit(context.E_Qualifier) ?? QualifierGreen.__Missing;
                 else qualifier = QualifierGreen.__Missing;
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, MetaSyntaxKind.TSemicolon);
                 var E_UsingListContext = context._E_UsingList;
                 var usingListBuilder = _pool.Allocate<UsingGreen>();
                 for (int i = 0; i < E_UsingListContext.Count; ++i)
@@ -118,7 +119,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 if (context.E_Block is not null) block = (MainBlock1Green?)this.Visit(context.E_Block) ?? MainBlock1Green.__Missing;
                 else block = MainBlock1Green.__Missing;
                 var endOfFileToken = (InternalSyntaxToken?)this.VisitTerminal(context.E_EndOfFileToken, MetaSyntaxKind.Eof);
-                return _factory.Main(kNamespace, qualifier, usingList, block, endOfFileToken);
+                return _factory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
             }
             
             public override GreenNode? VisitPr_Using(MetaParser.Pr_UsingContext? context)
@@ -128,7 +129,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 QualifierGreen? namespaces = null;
                 if (context.E_namespaces is not null) namespaces = (QualifierGreen?)this.Visit(context.E_namespaces) ?? QualifierGreen.__Missing;
                 else namespaces = QualifierGreen.__Missing;
-                return _factory.Using(kUsing, namespaces);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, MetaSyntaxKind.TSemicolon);
+                return _factory.Using(kUsing, namespaces, tSemicolon);
             }
             
             public override GreenNode? VisitPr_MetaModel(MetaParser.Pr_MetaModelContext? context)
@@ -140,7 +142,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 else name = NameGreen.__Missing;
                 MetaModelBlock1Green? block = null;
                 if (context.E_Block is not null) block = (MetaModelBlock1Green?)this.Visit(context.E_Block);
-                return _factory.MetaModel(kMetamodel, name, block);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, MetaSyntaxKind.TSemicolon);
+                return _factory.MetaModel(kMetamodel, name, block, tSemicolon);
             }
             
             public override GreenNode? VisitPr_MetaDeclarationAlt1(MetaParser.Pr_MetaDeclarationAlt1Context? context)
@@ -180,7 +183,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 NameGreen? name = null;
                 if (context.E_Name is not null) name = (NameGreen?)this.Visit(context.E_Name) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
-                return _factory.MetaConstant(kConst, type, name);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, MetaSyntaxKind.TSemicolon);
+                return _factory.MetaConstant(kConst, type, name, tSemicolon);
             }
             
             public override GreenNode? VisitPr_MetaEnum(MetaParser.Pr_MetaEnumContext? context)
@@ -243,7 +247,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 }
                 var block4 = block4Builder.ToList();
                 _pool.Free(block4Builder);
-                return _factory.MetaProperty(block1, type, block2, block3, block4);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, MetaSyntaxKind.TSemicolon);
+                return _factory.MetaProperty(block1, type, block2, block3, block4, tSemicolon);
             }
             
             public override GreenNode? VisitPr_MetaOperation(MetaParser.Pr_MetaOperationContext? context)
@@ -259,7 +264,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 MetaOperationBlock1Green? block = null;
                 if (context.E_Block is not null) block = (MetaOperationBlock1Green?)this.Visit(context.E_Block);
                 var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRParen, MetaSyntaxKind.TRParen);
-                return _factory.MetaOperation(returnType, name, tLParen, block, tRParen);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, MetaSyntaxKind.TSemicolon);
+                return _factory.MetaOperation(returnType, name, tLParen, block, tRParen, tSemicolon);
             }
             
             public override GreenNode? VisitPr_MetaParameter(MetaParser.Pr_MetaParameterContext? context)
@@ -274,34 +280,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 return _factory.MetaParameter(type, name);
             }
             
-            public override GreenNode? VisitPr_SimpleTypeReference(MetaParser.Pr_SimpleTypeReferenceContext? context)
+            public override GreenNode? VisitPr_MetaTypeReference(MetaParser.Pr_MetaTypeReferenceContext? context)
             {
-                if (context == null) return SimpleTypeReferenceGreen.__Missing;
-                TypeReferenceGreen? typeReference = null;
-                if (context.E_TypeReference is not null) typeReference = (TypeReferenceGreen?)this.Visit(context.E_TypeReference) ?? TypeReferenceGreen.__Missing;
-                else typeReference = TypeReferenceGreen.__Missing;
-                return _factory.SimpleTypeReference(typeReference);
-            }
-            
-            public override GreenNode? VisitPr_MetaArrayType(MetaParser.Pr_MetaArrayTypeContext? context)
-            {
-                if (context == null) return MetaArrayTypeGreen.__Missing;
-                MetaTypeReferenceGreen? itemType = null;
-                if (context.E_itemType is not null) itemType = (MetaTypeReferenceGreen?)this.Visit(context.E_itemType) ?? MetaTypeReferenceGreen.__Missing;
-                else itemType = MetaTypeReferenceGreen.__Missing;
-                var tLBracket = (InternalSyntaxToken?)this.VisitTerminal(context.E_TLBracket, MetaSyntaxKind.TLBracket);
-                var tRBracket = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRBracket, MetaSyntaxKind.TRBracket);
-                return _factory.MetaArrayType(itemType, tLBracket, tRBracket);
-            }
-            
-            public override GreenNode? VisitPr_MetaNullableType(MetaParser.Pr_MetaNullableTypeContext? context)
-            {
-                if (context == null) return MetaNullableTypeGreen.__Missing;
-                MetaTypeReferenceGreen? innerType = null;
-                if (context.E_innerType is not null) innerType = (MetaTypeReferenceGreen?)this.Visit(context.E_innerType) ?? MetaTypeReferenceGreen.__Missing;
-                else innerType = MetaTypeReferenceGreen.__Missing;
-                var tQuestion = (InternalSyntaxToken?)this.VisitTerminal(context.E_TQuestion, MetaSyntaxKind.TQuestion);
-                return _factory.MetaNullableType(innerType, tQuestion);
+                if (context == null) return MetaTypeReferenceGreen.__Missing;
+                TypeReferenceGreen? type = null;
+                if (context.E_type is not null) type = (TypeReferenceGreen?)this.Visit(context.E_type) ?? TypeReferenceGreen.__Missing;
+                else type = TypeReferenceGreen.__Missing;
+                MetaTypeReferenceBlock1Green? block1 = null;
+                if (context.E_Block is not null) block1 = (MetaTypeReferenceBlock1Green?)this.Visit(context.E_Block);
+                MetaTypeReferenceBlock2Green? block2 = null;
+                if (context.E_Block1 is not null) block2 = (MetaTypeReferenceBlock2Green?)this.Visit(context.E_Block1);
+                return _factory.MetaTypeReference(type, block1, block2);
             }
             
             public override GreenNode? VisitPr_TypeReferenceAlt1(MetaParser.Pr_TypeReferenceAlt1Context? context)
@@ -455,19 +444,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             public override GreenNode? VisitPr_MainBlock1(MetaParser.Pr_MainBlock1Context? context)
             {
                 if (context == null) return MainBlock1Green.__Missing;
-                MetaModelGreen? declarations1 = null;
-                if (context.E_declarations is not null) declarations1 = (MetaModelGreen?)this.Visit(context.E_declarations) ?? MetaModelGreen.__Missing;
-                else declarations1 = MetaModelGreen.__Missing;
-                var E_declarations1Context = context._E_declarations1;
-                var declarations2Builder = _pool.Allocate<MetaDeclarationGreen>();
-                for (int i = 0; i < E_declarations1Context.Count; ++i)
+                MetaModelGreen? members1 = null;
+                if (context.E_members is not null) members1 = (MetaModelGreen?)this.Visit(context.E_members) ?? MetaModelGreen.__Missing;
+                else members1 = MetaModelGreen.__Missing;
+                var E_members1Context = context._E_members1;
+                var members2Builder = _pool.Allocate<MetaDeclarationGreen>();
+                for (int i = 0; i < E_members1Context.Count; ++i)
                 {
-                    if (E_declarations1Context[i] is not null) declarations2Builder.Add((MetaDeclarationGreen?)this.Visit(E_declarations1Context[i]) ?? MetaDeclarationGreen.__Missing);
-                    else declarations2Builder.Add(MetaDeclarationGreen.__Missing);
+                    if (E_members1Context[i] is not null) members2Builder.Add((MetaDeclarationGreen?)this.Visit(E_members1Context[i]) ?? MetaDeclarationGreen.__Missing);
+                    else members2Builder.Add(MetaDeclarationGreen.__Missing);
                 }
-                var declarations2 = declarations2Builder.ToList();
-                _pool.Free(declarations2Builder);
-                return _factory.MainBlock1(declarations1, declarations2);
+                var members2 = members2Builder.ToList();
+                _pool.Free(members2Builder);
+                return _factory.MainBlock1(members1, members2);
             }
             
             public override GreenNode? VisitPr_MetaModelBlock1(MetaParser.Pr_MetaModelBlock1Context? context)
@@ -831,6 +820,21 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 if (context.E_parameters2 is not null) parameters = (MetaParameterGreen?)this.Visit(context.E_parameters2) ?? MetaParameterGreen.__Missing;
                 else parameters = MetaParameterGreen.__Missing;
                 return _factory.MetaOperationBlock1parametersBlock(tComma, parameters);
+            }
+            
+            public override GreenNode? VisitPr_MetaTypeReferenceBlock1(MetaParser.Pr_MetaTypeReferenceBlock1Context? context)
+            {
+                if (context == null) return MetaTypeReferenceBlock1Green.__Missing;
+                var isNullable = (InternalSyntaxToken?)this.VisitTerminal(context.E_isNullable, MetaSyntaxKind.TQuestion);
+                return _factory.MetaTypeReferenceBlock1(isNullable);
+            }
+            
+            public override GreenNode? VisitPr_MetaTypeReferenceBlock2(MetaParser.Pr_MetaTypeReferenceBlock2Context? context)
+            {
+                if (context == null) return MetaTypeReferenceBlock2Green.__Missing;
+                var isArray = (InternalSyntaxToken?)this.VisitTerminal(context.E_isArray, MetaSyntaxKind.TLBracket);
+                var tRBracket = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRBracket, MetaSyntaxKind.TRBracket);
+                return _factory.MetaTypeReferenceBlock2(isArray, tRBracket);
             }
             
             public override GreenNode? VisitPr_QualifierIdentifierBlock(MetaParser.Pr_QualifierIdentifierBlockContext? context)

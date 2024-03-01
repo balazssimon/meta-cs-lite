@@ -41,7 +41,7 @@ pr_MetaParameter
     :  E_type=pr_MetaTypeReference  E_Name=pr_Name
     ;
 pr_MetaTypeReference
-    :  E_type=pr_TypeReference  E_Block=pr_MetaTypeReferenceBlock1?  E_Block1=pr_MetaTypeReferenceBlock2
+    :  E_type=pr_TypeReference  E_Block=pr_MetaTypeReferenceBlock1?  E_Block1=pr_MetaTypeReferenceBlock2?
     ;
 pr_TypeReference
     :  E_PrimitiveType=pr_PrimitiveType #pr_TypeReferenceAlt1

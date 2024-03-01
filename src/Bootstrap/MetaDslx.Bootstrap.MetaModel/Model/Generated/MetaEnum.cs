@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
 
     public interface MetaEnum : global::MetaDslx.Bootstrap.MetaModel.Model.MetaDeclaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaEnumLiteral> Literals { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaModel.Model.MetaEnumLiteral> Literals { get; }
     
     }
 }

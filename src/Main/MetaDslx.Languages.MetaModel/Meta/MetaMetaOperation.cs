@@ -19,7 +19,22 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public override string Name => UnderlyingOperation.Name;
 
-        public override string Signature => $"{Name}({string.Join(",", UnderlyingOperation.Parameters.Select(p => p.Type.CSharpFullName))})";
+        public override string Signature => $"{Name}({string.Join(",", UnderlyingOperation.Parameters.Select(p => CSharpFullNameOf(p.Type)))})";
 
+        private static string CSharpFullNameOf(MetaTypeReference typeRef)
+        {
+            var result = typeRef.Type.CSharpFullName;
+            if (typeRef.IsNullable &&
+                typeRef.Type.SpecialType != CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType &&
+                typeRef.Type.SpecialType != CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
+            {
+                result += "?";
+            }
+            if (typeRef.IsArray)
+            {
+                result = $"global::System.Collections.Generic.IList<{result}>";
+            }
+            return result;
+        }
     }
 }

@@ -25,8 +25,8 @@ namespace MetaDslx.Languages.MetaModel.Model
 
     public interface MetaOperation : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaParameter> Parameters { get; }
-        __MetaType ReturnType { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaParameter> Parameters { get; }
+        MetaDslx.Languages.MetaModel.Model.MetaTypeReference ReturnType { get; set; }
     
     }
 }

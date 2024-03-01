@@ -6,10 +6,10 @@ using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Languages.MetaCompiler.Compiler;
 using MetaDslx.Languages.MetaCompiler.Model;
 using MetaDslx.Languages.MetaGenerator.Syntax;
-//using MetaDslx.Languages.MetaModel.Compiler;
-//using MetaDslx.Languages.MetaModel.Generators;
-using MetaDslx.Bootstrap.MetaModel.Compiler;
-using MetaDslx.Bootstrap.MetaModel.Generators;
+using MetaDslx.Languages.MetaModel.Compiler;
+using MetaDslx.Languages.MetaModel.Generators;
+//using MetaDslx.Bootstrap.MetaModel.Compiler;
+//using MetaDslx.Bootstrap.MetaModel.Generators;
 using MetaDslx.Languages.MetaSymbols.Compiler;
 using MetaDslx.Languages.MetaSymbols.Generators;
 using MetaDslx.Modeling;
@@ -156,8 +156,8 @@ namespace MetaDslx.BuildTools
                     compilation = compilation.AddReferences(PackageReferences);
                     //await CompileMeta(compilation, mxFiles);
                     //await CompileMetaSymbols(compilation, mxsFiles);
-                    //await CompileMetaModels(compilation, mxmFiles);
-                    await CompileMetaLanguages(compilation, mxlFiles);
+                    await CompileMetaModels(compilation, mxmFiles);
+                    //await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
             }
@@ -297,13 +297,13 @@ namespace MetaDslx.BuildTools
 
         private static async Task GenerateMetaModels(Model model, ImmutableArray<Diagnostic> mxDiagnostics)
         {
-            var metaModels = model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Model.MetaModel>().ToImmutableArray();
+            var metaModels = model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>().ToImmutableArray();
             foreach (var metaModel in metaModels)
             {
                 var modelFilePath = metaModel.MSourceLocation?.GetLineSpan().Path;
                 if (!mxDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                 {
-                    var isMetaMetaModel = modelFilePath?.Contains("MetaDslx.Bootstrap.MetaModel") ?? false;
+                    var isMetaMetaModel = modelFilePath?.Contains("MetaDslx.Languages.MetaModel") ?? false;
                     var generator = new MetaModelGenerator(isMetaMetaModel, model, metaModel);
                     var genDiagnostics = generator.Diagnostics;
                     if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))

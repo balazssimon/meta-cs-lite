@@ -398,7 +398,14 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 var mobj = _factory.CreateModelObject(container, declaration, _modelClassInfo);
                 args[_modelObjectIndex] = mobj;
                 var symbol = (Symbol)Activator.CreateInstance(_constructorInfo.DeclaringType, args);
-                if (mobj is not null) mobj.MSymbol = symbol;
+                if (mobj is not null)
+                {
+                    mobj.MSymbol = symbol;
+                    if (container.ModelObject is null && container is NamespaceSymbol containerNamespace)
+                    {
+                        mobj.MRootNamespace = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(containerNamespace);
+                    }
+                }
                 return symbol;
             }
         }

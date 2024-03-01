@@ -32,15 +32,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Model
         {
         }
     
-        public virtual void MetaDeclaration(MetaDeclaration _this)
-        {
-        }
-    
         public virtual void MetaClass(MetaClass _this)
         {
         }
     
         public virtual void MetaConstant(MetaConstant _this)
+        {
+        }
+    
+        public virtual void MetaDeclaration(MetaDeclaration _this)
         {
         }
     

@@ -2200,8 +2200,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.AppendLine();
             __cb.Pop();
             var __first5 = true;
-            #line (150,6)-(150,77) 13 "MetaModelGenerator.mxg"
-            foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
+            #line (150,6)-(150,34) 13 "MetaModelGenerator.mxg"
+            foreach (var c in Constants)
             #line hidden
             
             {
@@ -2671,8 +2671,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first6 = true;
-            #line (165,6)-(165,76) 13 "MetaModelGenerator.mxg"
-            foreach (var cls in MetaModel.Parent.Declarations.OfType<MetaClass>())
+            #line (165,6)-(165,34) 13 "MetaModelGenerator.mxg"
+            foreach (var cls in Classes)
             #line hidden
             
             {
@@ -3322,8 +3322,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first13 = true;
-            #line (201,6)-(201,77) 13 "MetaModelGenerator.mxg"
-            foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
+            #line (201,6)-(201,34) 13 "MetaModelGenerator.mxg"
+            foreach (var c in Constants)
             #line hidden
             
             {
@@ -3974,8 +3974,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.AppendLine();
             __cb.Pop();
             var __first22 = true;
-            #line (234,10)-(234,81) 13 "MetaModelGenerator.mxg"
-            foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
+            #line (234,10)-(234,38) 13 "MetaModelGenerator.mxg"
+            foreach (var c in Constants)
             #line hidden
             
             {
@@ -4003,7 +4003,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 __cb.Write("cf.");
                 #line hidden
                 #line (235,43)-(235,54) 28 "MetaModelGenerator.mxg"
-                __cb.Write(c.Type.Name);
+                __cb.Write(c.Type.Type.Name);
                 #line hidden
                 #line (235,55)-(235,58) 29 "MetaModelGenerator.mxg"
                 __cb.Write("();");
@@ -4869,8 +4869,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first31 = true;
-            #line (279,6)-(279,77) 13 "MetaModelGenerator.mxg"
-            foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
+            #line (279,6)-(279,34) 13 "MetaModelGenerator.mxg"
+            foreach (var c in Constants)
             #line hidden
             
             {
@@ -4922,8 +4922,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first32 = true;
-            #line (283,6)-(283,77) 13 "MetaModelGenerator.mxg"
-            foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())
+            #line (283,6)-(283,34) 13 "MetaModelGenerator.mxg"
+            foreach (var c in Constants)
             #line hidden
             
             {

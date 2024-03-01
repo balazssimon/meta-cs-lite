@@ -349,7 +349,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
                 {
                     this.Visit(node.Block1);
                 }
-                this.Visit(node.Block2);
+                if (node.Block2 != null)
+                {
+                    this.Visit(node.Block2);
+                }
             }
             finally
             {

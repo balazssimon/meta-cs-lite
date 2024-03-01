@@ -455,7 +455,6 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
         {
             #if DEBUG
                 if (type is null) throw new __ArgumentNullException(nameof(type));
-                if (block2 is null) throw new __ArgumentNullException(nameof(block2));
             #endif
             int hash;
             var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaTypeReference, type, block1, block2, out hash);

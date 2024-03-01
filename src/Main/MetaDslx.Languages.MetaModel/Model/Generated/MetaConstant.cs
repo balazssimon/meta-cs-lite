@@ -25,7 +25,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 
     public interface MetaConstant : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
     {
-        __MetaType Type { get; set; }
+        MetaDslx.Languages.MetaModel.Model.MetaTypeReference Type { get; set; }
     
     }
 }

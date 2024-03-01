@@ -195,11 +195,20 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+            } 
+        }
         public global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> UsingList 
         { 
             get
             {
-            var red = this.GetRed(ref this._usingList, 2);
+            var red = this.GetRed(ref this._usingList, 3);
             return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax>(red);
             } 
         }
@@ -207,7 +216,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var red = this.GetRed(ref this._block, 3);
+            var red = this.GetRed(ref this._block, 4);
             return red;
             } 
         }
@@ -217,7 +226,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             {
             var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
             var greenToken = green.EndOfFileToken;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
             } 
         }
     
@@ -226,8 +235,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             switch (index)
             {
                 case 1: return this.GetRed(ref this._qualifier, 1);
-                case 2: return this.GetRed(ref this._usingList, 2);
-                case 3: return this.GetRed(ref this._block, 3);
+                case 3: return this.GetRed(ref this._usingList, 3);
+                case 4: return this.GetRed(ref this._block, 4);
                 default: return null;
             }
         }
@@ -237,25 +246,30 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             switch (index)
             {
                 case 1: return this._qualifier;
-                case 2: return this._usingList;
-                case 3: return this._block;
+                case 3: return this._usingList;
+                case 4: return this._block;
                 default: return null;
             }
         }
     
         public MainSyntax WithKNamespace(__SyntaxToken kNamespace)
         {
-            return this.Update(kNamespace, this.Qualifier, this.UsingList, this.Block, this.EndOfFileToken);
+            return this.Update(kNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax WithQualifier(QualifierSyntax qualifier)
         {
-            return this.Update(this.KNamespace, qualifier, this.UsingList, this.Block, this.EndOfFileToken);
+            return this.Update(this.KNamespace, qualifier, this.TSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
+        }
+    
+        public MainSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.KNamespace, this.Qualifier, tSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax WithUsingList(global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList)
         {
-            return this.Update(this.KNamespace, this.Qualifier, usingList, this.Block, this.EndOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, usingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax AddUsingList(params UsingSyntax[] usingList)
@@ -265,20 +279,20 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
         public MainSyntax WithBlock(MainBlock1Syntax block)
         {
-            return this.Update(this.KNamespace, this.Qualifier, this.UsingList, block, this.EndOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, block, this.EndOfFileToken);
         }
     
         public MainSyntax WithEndOfFileToken(__SyntaxToken endOfFileToken)
         {
-            return this.Update(this.KNamespace, this.Qualifier, this.UsingList, this.Block, endOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Block, endOfFileToken);
         }
     
     
-        public MainSyntax Update(__SyntaxToken kNamespace, QualifierSyntax qualifier, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
+        public MainSyntax Update(__SyntaxToken kNamespace, QualifierSyntax qualifier, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
         {
-            if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.UsingList != usingList || this.Block != block || this.EndOfFileToken != endOfFileToken)
+            if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.TSemicolon != tSemicolon || this.UsingList != usingList || this.Block != block || this.EndOfFileToken != endOfFileToken)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, usingList, block, endOfFileToken);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -334,6 +348,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.UsingGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -355,20 +378,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
         public UsingSyntax WithKUsing(__SyntaxToken kUsing)
         {
-            return this.Update(kUsing, this.Namespaces);
+            return this.Update(kUsing, this.Namespaces, this.TSemicolon);
         }
     
         public UsingSyntax WithNamespaces(QualifierSyntax namespaces)
         {
-            return this.Update(this.KUsing, namespaces);
+            return this.Update(this.KUsing, namespaces, this.TSemicolon);
+        }
+    
+        public UsingSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.KUsing, this.Namespaces, tSemicolon);
         }
     
     
-        public UsingSyntax Update(__SyntaxToken kUsing, QualifierSyntax namespaces)
+        public UsingSyntax Update(__SyntaxToken kUsing, QualifierSyntax namespaces, __SyntaxToken tSemicolon)
         {
-            if (this.KUsing != kUsing || this.Namespaces != namespaces)
+            if (this.KUsing != kUsing || this.Namespaces != namespaces || this.TSemicolon != tSemicolon)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.Using(kUsing, namespaces);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.Using(kUsing, namespaces, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -433,6 +461,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaModelGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -456,25 +493,30 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
         public MetaModelSyntax WithKMetamodel(__SyntaxToken kMetamodel)
         {
-            return this.Update(kMetamodel, this.Name, this.Block);
+            return this.Update(kMetamodel, this.Name, this.Block, this.TSemicolon);
         }
     
         public MetaModelSyntax WithName(NameSyntax name)
         {
-            return this.Update(this.KMetamodel, name, this.Block);
+            return this.Update(this.KMetamodel, name, this.Block, this.TSemicolon);
         }
     
         public MetaModelSyntax WithBlock(MetaModelBlock1Syntax block)
         {
-            return this.Update(this.KMetamodel, this.Name, block);
+            return this.Update(this.KMetamodel, this.Name, block, this.TSemicolon);
+        }
+    
+        public MetaModelSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.KMetamodel, this.Name, this.Block, tSemicolon);
         }
     
     
-        public MetaModelSyntax Update(__SyntaxToken kMetamodel, NameSyntax name, MetaModelBlock1Syntax block)
+        public MetaModelSyntax Update(__SyntaxToken kMetamodel, NameSyntax name, MetaModelBlock1Syntax block, __SyntaxToken tSemicolon)
         {
-            if (this.KMetamodel != kMetamodel || this.Name != name || this.Block != block)
+            if (this.KMetamodel != kMetamodel || this.Name != name || this.Block != block || this.TSemicolon != tSemicolon)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaModel(kMetamodel, name, block);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaModel(kMetamodel, name, block, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -779,6 +821,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaConstantGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -802,25 +853,30 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
         public MetaConstantSyntax WithKConst(__SyntaxToken kConst)
         {
-            return this.Update(kConst, this.Type, this.Name);
+            return this.Update(kConst, this.Type, this.Name, this.TSemicolon);
         }
     
         public MetaConstantSyntax WithType(MetaTypeReferenceSyntax type)
         {
-            return this.Update(this.KConst, type, this.Name);
+            return this.Update(this.KConst, type, this.Name, this.TSemicolon);
         }
     
         public MetaConstantSyntax WithName(NameSyntax name)
         {
-            return this.Update(this.KConst, this.Type, name);
+            return this.Update(this.KConst, this.Type, name, this.TSemicolon);
+        }
+    
+        public MetaConstantSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.KConst, this.Type, this.Name, tSemicolon);
         }
     
     
-        public MetaConstantSyntax Update(__SyntaxToken kConst, MetaTypeReferenceSyntax type, NameSyntax name)
+        public MetaConstantSyntax Update(__SyntaxToken kConst, MetaTypeReferenceSyntax type, NameSyntax name, __SyntaxToken tSemicolon)
         {
-            if (this.KConst != kConst || this.Type != type || this.Name != name)
+            if (this.KConst != kConst || this.Type != type || this.Name != name || this.TSemicolon != tSemicolon)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaConstant(kConst, type, name);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaConstant(kConst, type, name, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -1221,6 +1277,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax>(red);
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -1250,27 +1315,27 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
         public MetaPropertySyntax WithBlock1(MetaPropertyBlock1Syntax block1)
         {
-            return this.Update(block1, this.Type, this.Block2, this.Block3, this.Block4);
+            return this.Update(block1, this.Type, this.Block2, this.Block3, this.Block4, this.TSemicolon);
         }
     
         public MetaPropertySyntax WithType(MetaTypeReferenceSyntax type)
         {
-            return this.Update(this.Block1, type, this.Block2, this.Block3, this.Block4);
+            return this.Update(this.Block1, type, this.Block2, this.Block3, this.Block4, this.TSemicolon);
         }
     
         public MetaPropertySyntax WithBlock2(MetaPropertyBlock2Syntax block2)
         {
-            return this.Update(this.Block1, this.Type, block2, this.Block3, this.Block4);
+            return this.Update(this.Block1, this.Type, block2, this.Block3, this.Block4, this.TSemicolon);
         }
     
         public MetaPropertySyntax WithBlock3(MetaPropertyBlock3Syntax block3)
         {
-            return this.Update(this.Block1, this.Type, this.Block2, block3, this.Block4);
+            return this.Update(this.Block1, this.Type, this.Block2, block3, this.Block4, this.TSemicolon);
         }
     
         public MetaPropertySyntax WithBlock4(global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4)
         {
-            return this.Update(this.Block1, this.Type, this.Block2, this.Block3, block4);
+            return this.Update(this.Block1, this.Type, this.Block2, this.Block3, block4, this.TSemicolon);
         }
     
         public MetaPropertySyntax AddBlock4(params MetaPropertyBlock4Syntax[] block4)
@@ -1278,12 +1343,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.WithBlock4(this.Block4.AddRange(block4));
         }
     
-    
-        public MetaPropertySyntax Update(MetaPropertyBlock1Syntax block1, MetaTypeReferenceSyntax type, MetaPropertyBlock2Syntax block2, MetaPropertyBlock3Syntax block3, global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4)
+        public MetaPropertySyntax WithTSemicolon(__SyntaxToken tSemicolon)
         {
-            if (this.Block1 != block1 || this.Type != type || this.Block2 != block2 || this.Block3 != block3 || this.Block4 != block4)
+            return this.Update(this.Block1, this.Type, this.Block2, this.Block3, this.Block4, tSemicolon);
+        }
+    
+    
+        public MetaPropertySyntax Update(MetaPropertyBlock1Syntax block1, MetaTypeReferenceSyntax type, MetaPropertyBlock2Syntax block2, MetaPropertyBlock3Syntax block3, global::MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock4Syntax> block4, __SyntaxToken tSemicolon)
+        {
+            if (this.Block1 != block1 || this.Type != type || this.Block2 != block2 || this.Block3 != block3 || this.Block4 != block4 || this.TSemicolon != tSemicolon)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaProperty(block1, type, block2, block3, block4);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaProperty(block1, type, block2, block3, block4, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -1366,6 +1436,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaOperationGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -1391,35 +1470,40 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
         public MetaOperationSyntax WithReturnType(MetaTypeReferenceSyntax returnType)
         {
-            return this.Update(returnType, this.Name, this.TLParen, this.Block, this.TRParen);
+            return this.Update(returnType, this.Name, this.TLParen, this.Block, this.TRParen, this.TSemicolon);
         }
     
         public MetaOperationSyntax WithName(NameSyntax name)
         {
-            return this.Update(this.ReturnType, name, this.TLParen, this.Block, this.TRParen);
+            return this.Update(this.ReturnType, name, this.TLParen, this.Block, this.TRParen, this.TSemicolon);
         }
     
         public MetaOperationSyntax WithTLParen(__SyntaxToken tLParen)
         {
-            return this.Update(this.ReturnType, this.Name, tLParen, this.Block, this.TRParen);
+            return this.Update(this.ReturnType, this.Name, tLParen, this.Block, this.TRParen, this.TSemicolon);
         }
     
         public MetaOperationSyntax WithBlock(MetaOperationBlock1Syntax block)
         {
-            return this.Update(this.ReturnType, this.Name, this.TLParen, block, this.TRParen);
+            return this.Update(this.ReturnType, this.Name, this.TLParen, block, this.TRParen, this.TSemicolon);
         }
     
         public MetaOperationSyntax WithTRParen(__SyntaxToken tRParen)
         {
-            return this.Update(this.ReturnType, this.Name, this.TLParen, this.Block, tRParen);
+            return this.Update(this.ReturnType, this.Name, this.TLParen, this.Block, tRParen, this.TSemicolon);
+        }
+    
+        public MetaOperationSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.ReturnType, this.Name, this.TLParen, this.Block, this.TRParen, tSemicolon);
         }
     
     
-        public MetaOperationSyntax Update(MetaTypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, MetaOperationBlock1Syntax block, __SyntaxToken tRParen)
+        public MetaOperationSyntax Update(MetaTypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, MetaOperationBlock1Syntax block, __SyntaxToken tRParen, __SyntaxToken tSemicolon)
         {
-            if (this.ReturnType != returnType || this.Name != name || this.TLParen != tLParen || this.Block != block || this.TRParen != tRParen)
+            if (this.ReturnType != returnType || this.Name != name || this.TLParen != tLParen || this.Block != block || this.TRParen != tRParen || this.TSemicolon != tSemicolon)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaOperation(returnType, name, tLParen, block, tRParen);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaOperation(returnType, name, tLParen, block, tRParen, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -1536,37 +1620,43 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
-    public abstract class MetaTypeReferenceSyntax : MetaSyntaxNode
+    public sealed class MetaTypeReferenceSyntax : MetaSyntaxNode
     {
-        protected MetaTypeReferenceSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        private TypeReferenceSyntax _type;
+        private MetaTypeReferenceBlock1Syntax _block1;
+        private MetaTypeReferenceBlock2Syntax _block2;
+    
+        public MetaTypeReferenceSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        protected MetaTypeReferenceSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
-            : base(green, parent, position)
-        {
-        }
-    }
-    public sealed class SimpleTypeReferenceSyntax : MetaTypeReferenceSyntax
-    {
-        private TypeReferenceSyntax _typeReference;
-    
-        public SimpleTypeReferenceSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
-            : base(green, syntaxTree, position)
-        {
-        }
-    
-        public SimpleTypeReferenceSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaTypeReferenceSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
     
-        public TypeReferenceSyntax TypeReference 
+        public TypeReferenceSyntax Type 
         { 
             get
             {
-            var red = this.GetRed(ref this._typeReference, 0);
+            var red = this.GetRed(ref this._type, 0);
+            return red;
+            } 
+        }
+        public MetaTypeReferenceBlock1Syntax Block1 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._block1, 1);
+            return red;
+            } 
+        }
+        public MetaTypeReferenceBlock2Syntax Block2 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._block2, 2);
             return red;
             } 
         }
@@ -1575,7 +1665,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this.GetRed(ref this._typeReference, 0);
+                case 0: return this.GetRed(ref this._type, 0);
+                case 1: return this.GetRed(ref this._block1, 1);
+                case 2: return this.GetRed(ref this._block2, 2);
                 default: return null;
             }
         }
@@ -1584,237 +1676,55 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this._typeReference;
+                case 0: return this._type;
+                case 1: return this._block1;
+                case 2: return this._block2;
                 default: return null;
             }
         }
     
-        public SimpleTypeReferenceSyntax WithTypeReference(TypeReferenceSyntax typeReference)
+        public MetaTypeReferenceSyntax WithType(TypeReferenceSyntax type)
         {
-            return this.Update(typeReference);
+            return this.Update(type, this.Block1, this.Block2);
+        }
+    
+        public MetaTypeReferenceSyntax WithBlock1(MetaTypeReferenceBlock1Syntax block1)
+        {
+            return this.Update(this.Type, block1, this.Block2);
+        }
+    
+        public MetaTypeReferenceSyntax WithBlock2(MetaTypeReferenceBlock2Syntax block2)
+        {
+            return this.Update(this.Type, this.Block1, block2);
         }
     
     
-        public SimpleTypeReferenceSyntax Update(TypeReferenceSyntax typeReference)
+        public MetaTypeReferenceSyntax Update(TypeReferenceSyntax type, MetaTypeReferenceBlock1Syntax block1, MetaTypeReferenceBlock2Syntax block2)
         {
-            if (this.TypeReference != typeReference)
+            if (this.Type != type || this.Block1 != block1 || this.Block2 != block2)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.SimpleTypeReference(typeReference);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaTypeReference(type, block1, block2);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (SimpleTypeReferenceSyntax)newNode;
+                return (MetaTypeReferenceSyntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitSimpleTypeReference(this, argument);
+            return visitor.VisitMetaTypeReference(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitSimpleTypeReference(this);
+            return visitor.VisitMetaTypeReference(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitSimpleTypeReference(this);
-        }
-    
-    }
-    public sealed class MetaArrayTypeSyntax : MetaTypeReferenceSyntax
-    {
-        private MetaTypeReferenceSyntax _itemType;
-    
-        public MetaArrayTypeSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
-            : base(green, syntaxTree, position)
-        {
-        }
-    
-        public MetaArrayTypeSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
-            : base(green, parent, position)
-        {
-        }
-    
-        public MetaTypeReferenceSyntax ItemType 
-        { 
-            get
-            {
-            var red = this.GetRed(ref this._itemType, 0);
-            return red;
-            } 
-        }
-        public __SyntaxToken TLBracket 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaArrayTypeGreen)this.Green;
-            var greenToken = green.TLBracket;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
-            } 
-        }
-        public __SyntaxToken TRBracket 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaArrayTypeGreen)this.Green;
-            var greenToken = green.TRBracket;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
-            } 
-        }
-    
-        protected override __SyntaxNode GetNodeSlot(int index)
-        {
-            switch (index)
-            {
-                case 0: return this.GetRed(ref this._itemType, 0);
-                default: return null;
-            }
-        }
-    
-        protected override __SyntaxNode GetCachedSlot(int index)
-        {
-            switch (index)
-            {
-                case 0: return this._itemType;
-                default: return null;
-            }
-        }
-    
-        public MetaArrayTypeSyntax WithItemType(MetaTypeReferenceSyntax itemType)
-        {
-            return this.Update(itemType, this.TLBracket, this.TRBracket);
-        }
-    
-        public MetaArrayTypeSyntax WithTLBracket(__SyntaxToken tLBracket)
-        {
-            return this.Update(this.ItemType, tLBracket, this.TRBracket);
-        }
-    
-        public MetaArrayTypeSyntax WithTRBracket(__SyntaxToken tRBracket)
-        {
-            return this.Update(this.ItemType, this.TLBracket, tRBracket);
-        }
-    
-    
-        public MetaArrayTypeSyntax Update(MetaTypeReferenceSyntax itemType, __SyntaxToken tLBracket, __SyntaxToken tRBracket)
-        {
-            if (this.ItemType != itemType || this.TLBracket != tLBracket || this.TRBracket != tRBracket)
-            {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaArrayType(itemType, tLBracket, tRBracket);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaArrayTypeSyntax)newNode;
-            }
-            return this;
-        }
-    
-        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-        {
-            return visitor.VisitMetaArrayType(this, argument);
-        }
-    
-        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
-        {
-            return visitor.VisitMetaArrayType(this);
-        }
-    
-        public override void Accept(IMetaSyntaxVisitor visitor)
-        {
-            visitor.VisitMetaArrayType(this);
-        }
-    
-    }
-    public sealed class MetaNullableTypeSyntax : MetaTypeReferenceSyntax
-    {
-        private MetaTypeReferenceSyntax _innerType;
-    
-        public MetaNullableTypeSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
-            : base(green, syntaxTree, position)
-        {
-        }
-    
-        public MetaNullableTypeSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
-            : base(green, parent, position)
-        {
-        }
-    
-        public MetaTypeReferenceSyntax InnerType 
-        { 
-            get
-            {
-            var red = this.GetRed(ref this._innerType, 0);
-            return red;
-            } 
-        }
-        public __SyntaxToken TQuestion 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaNullableTypeGreen)this.Green;
-            var greenToken = green.TQuestion;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
-            } 
-        }
-    
-        protected override __SyntaxNode GetNodeSlot(int index)
-        {
-            switch (index)
-            {
-                case 0: return this.GetRed(ref this._innerType, 0);
-                default: return null;
-            }
-        }
-    
-        protected override __SyntaxNode GetCachedSlot(int index)
-        {
-            switch (index)
-            {
-                case 0: return this._innerType;
-                default: return null;
-            }
-        }
-    
-        public MetaNullableTypeSyntax WithInnerType(MetaTypeReferenceSyntax innerType)
-        {
-            return this.Update(innerType, this.TQuestion);
-        }
-    
-        public MetaNullableTypeSyntax WithTQuestion(__SyntaxToken tQuestion)
-        {
-            return this.Update(this.InnerType, tQuestion);
-        }
-    
-    
-        public MetaNullableTypeSyntax Update(MetaTypeReferenceSyntax innerType, __SyntaxToken tQuestion)
-        {
-            if (this.InnerType != innerType || this.TQuestion != tQuestion)
-            {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaNullableType(innerType, tQuestion);
-                var annotations = this.GetAnnotations();
-                if (annotations != null && annotations.Length > 0)
-                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaNullableTypeSyntax)newNode;
-            }
-            return this;
-        }
-    
-        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-        {
-            return visitor.VisitMetaNullableType(this, argument);
-        }
-    
-        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
-        {
-            return visitor.VisitMetaNullableType(this);
-        }
-    
-        public override void Accept(IMetaSyntaxVisitor visitor)
-        {
-            visitor.VisitMetaNullableType(this);
+            visitor.VisitMetaTypeReference(this);
         }
     
     }
@@ -2823,8 +2733,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     }
     public sealed class MainBlock1Syntax : MetaSyntaxNode
     {
-        private MetaModelSyntax _declarations1;
-        private __SyntaxNode _declarations2;
+        private MetaModelSyntax _members1;
+        private __SyntaxNode _members2;
     
         public MainBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -2836,19 +2746,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     
-        public MetaModelSyntax Declarations1 
+        public MetaModelSyntax Members1 
         { 
             get
             {
-            var red = this.GetRed(ref this._declarations1, 0);
+            var red = this.GetRed(ref this._members1, 0);
             return red;
             } 
         }
-        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> Declarations2 
+        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> Members2 
         { 
             get
             {
-            var red = this.GetRed(ref this._declarations2, 1);
+            var red = this.GetRed(ref this._members2, 1);
             return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax>(red);
             } 
         }
@@ -2857,8 +2767,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this.GetRed(ref this._declarations1, 0);
-                case 1: return this.GetRed(ref this._declarations2, 1);
+                case 0: return this.GetRed(ref this._members1, 0);
+                case 1: return this.GetRed(ref this._members2, 1);
                 default: return null;
             }
         }
@@ -2867,33 +2777,33 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this._declarations1;
-                case 1: return this._declarations2;
+                case 0: return this._members1;
+                case 1: return this._members2;
                 default: return null;
             }
         }
     
-        public MainBlock1Syntax WithDeclarations1(MetaModelSyntax declarations1)
+        public MainBlock1Syntax WithMembers1(MetaModelSyntax members1)
         {
-            return this.Update(declarations1, this.Declarations2);
+            return this.Update(members1, this.Members2);
         }
     
-        public MainBlock1Syntax WithDeclarations2(global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations2)
+        public MainBlock1Syntax WithMembers2(global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> members2)
         {
-            return this.Update(this.Declarations1, declarations2);
+            return this.Update(this.Members1, members2);
         }
     
-        public MainBlock1Syntax AddDeclarations2(params MetaDeclarationSyntax[] declarations2)
+        public MainBlock1Syntax AddMembers2(params MetaDeclarationSyntax[] members2)
         {
-            return this.WithDeclarations2(this.Declarations2.AddRange(declarations2));
+            return this.WithMembers2(this.Members2.AddRange(members2));
         }
     
     
-        public MainBlock1Syntax Update(MetaModelSyntax declarations1, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations2)
+        public MainBlock1Syntax Update(MetaModelSyntax members1, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> members2)
         {
-            if (this.Declarations1 != declarations1 || this.Declarations2 != declarations2)
+            if (this.Members1 != members1 || this.Members2 != members2)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MainBlock1(declarations1, declarations2);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MainBlock1(members1, members2);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -5184,6 +5094,168 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
             visitor.VisitMetaOperationBlock1parametersBlock(this);
+        }
+    
+    }
+    public sealed class MetaTypeReferenceBlock1Syntax : MetaSyntaxNode
+    {
+    
+        public MetaTypeReferenceBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public MetaTypeReferenceBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken IsNullable 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaTypeReferenceBlock1Green)this.Green;
+            var greenToken = green.IsNullable;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public MetaTypeReferenceBlock1Syntax WithIsNullable(__SyntaxToken isNullable)
+        {
+            return this.Update(isNullable);
+        }
+    
+    
+        public MetaTypeReferenceBlock1Syntax Update(__SyntaxToken isNullable)
+        {
+            if (this.IsNullable != isNullable)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaTypeReferenceBlock1(isNullable);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MetaTypeReferenceBlock1Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMetaTypeReferenceBlock1(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMetaTypeReferenceBlock1(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMetaTypeReferenceBlock1(this);
+        }
+    
+    }
+    public sealed class MetaTypeReferenceBlock2Syntax : MetaSyntaxNode
+    {
+    
+        public MetaTypeReferenceBlock2Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public MetaTypeReferenceBlock2Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken IsArray 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaTypeReferenceBlock2Green)this.Green;
+            var greenToken = green.IsArray;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+        public __SyntaxToken TRBracket 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaTypeReferenceBlock2Green)this.Green;
+            var greenToken = green.TRBracket;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public MetaTypeReferenceBlock2Syntax WithIsArray(__SyntaxToken isArray)
+        {
+            return this.Update(isArray, this.TRBracket);
+        }
+    
+        public MetaTypeReferenceBlock2Syntax WithTRBracket(__SyntaxToken tRBracket)
+        {
+            return this.Update(this.IsArray, tRBracket);
+        }
+    
+    
+        public MetaTypeReferenceBlock2Syntax Update(__SyntaxToken isArray, __SyntaxToken tRBracket)
+        {
+            if (this.IsArray != isArray || this.TRBracket != tRBracket)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaTypeReferenceBlock2(isArray, tRBracket);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MetaTypeReferenceBlock2Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMetaTypeReferenceBlock2(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMetaTypeReferenceBlock2(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMetaTypeReferenceBlock2(this);
         }
     
     }
