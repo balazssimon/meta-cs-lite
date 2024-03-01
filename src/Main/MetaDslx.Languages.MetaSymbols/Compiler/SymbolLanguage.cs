@@ -13,7 +13,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
     {
         partial void RegisterServices()
         {
-            RegisterGlobal<SyntaxFacts, CustomSymbolSyntaxFacts>();
+            Register<SyntaxFacts, CustomSymbolSyntaxFacts>();
         }
     }
 }

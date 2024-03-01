@@ -13,7 +13,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
     {
         partial void RegisterServices()
         {
-            RegisterGlobal<SyntaxFacts, CustomCompilerSyntaxFacts>();
+            Register<SyntaxFacts, CustomCompilerSyntaxFacts>();
         }
     }
 }

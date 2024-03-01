@@ -338,7 +338,17 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             }
             else if (type.SpecialType == SpecialType.System_Type || type.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType)
             {
-                return $"typeof({value})";
+                if (value.OriginalSymbol is TypeSymbol ts)
+                {
+                    var mts = MetaType.FromTypeSymbol(ts);
+                    return mts.CSharpFullName;
+                }
+                if (value.OriginalValue is string tstr)
+                {
+                    var mts = MetaType.FromName(tstr);
+                    return mts.CSharpFullName;
+                }
+                return value.ToString();
             }
             else
             {

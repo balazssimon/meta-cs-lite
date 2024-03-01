@@ -46,12 +46,12 @@ namespace MetaDslx.CodeAnalysis
 
         protected abstract void RegisterServicesCore();
 
-        protected void RegisterGlobal<TService, TCustomService>() where TCustomService : class, TService
+        protected void Register<TService, TCustomService>() where TCustomService : class, TService
         {
             _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance();
         }
 
-        protected void TryRegisterGlobal<TService, TCustomService>() where TCustomService : class, TService
+        protected void TryRegister<TService, TCustomService>() where TCustomService : class, TService
         {
             _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance().IfNotRegistered(typeof(TService));
         }
@@ -62,10 +62,10 @@ namespace MetaDslx.CodeAnalysis
 
             protected override void RegisterServicesCore()
             {
-                RegisterGlobal<SyntaxFacts, NoSyntaxFacts>();
-                RegisterGlobal<InternalSyntaxFactory, NoInternalSyntaxFactory>();
-                RegisterGlobal<SyntaxFactory, NoSyntaxFactory>();
-                RegisterGlobal<CompilationFactory, NoCompilationFactory>();
+                Register<SyntaxFacts, NoSyntaxFacts>();
+                Register<InternalSyntaxFactory, NoInternalSyntaxFactory>();
+                Register<SyntaxFactory, NoSyntaxFactory>();
+                Register<CompilationFactory, NoCompilationFactory>();
             }
 
         }

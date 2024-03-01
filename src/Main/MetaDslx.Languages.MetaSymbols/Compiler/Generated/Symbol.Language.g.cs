@@ -27,10 +27,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
         protected override void RegisterServicesCore()
         {
             RegisterServices();
-            TryRegisterGlobal<SyntaxFacts, SymbolSyntaxFacts>();
-            TryRegisterGlobal<InternalSyntaxFactory, SymbolInternalSyntaxFactory>();
-            TryRegisterGlobal<SyntaxFactory, SymbolSyntaxFactory>();
-            TryRegisterGlobal<CompilationFactory, SymbolCompilationFactory>();
+            TryRegister<SyntaxFacts, SymbolSyntaxFacts>();
+            TryRegister<InternalSyntaxFactory, SymbolInternalSyntaxFactory>();
+            TryRegister<SyntaxFactory, SymbolSyntaxFactory>();
+            TryRegister<CompilationFactory, SymbolCompilationFactory>();
         }
 
         partial void RegisterServices();

@@ -27,11 +27,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler
         protected override void RegisterServicesCore()
         {
             RegisterServices();
-            TryRegisterGlobal<SyntaxFacts, MetaSyntaxFacts>();
-            TryRegisterGlobal<InternalSyntaxFactory, MetaInternalSyntaxFactory>();
-            TryRegisterGlobal<SyntaxFactory, MetaSyntaxFactory>();
-            TryRegisterGlobal<CompilationFactory, MetaCompilationFactory>();
-            TryRegisterCompilationScoped<SemanticsFactory, MetaSemanticsFactory>();
+            TryRegister<SyntaxFacts, MetaSyntaxFacts>();
+            TryRegister<InternalSyntaxFactory, MetaInternalSyntaxFactory>();
+            TryRegister<SyntaxFactory, MetaSyntaxFactory>();
+            TryRegister<CompilationFactory, MetaCompilationFactory>();
         }
 
         partial void RegisterServices();

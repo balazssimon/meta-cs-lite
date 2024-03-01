@@ -46,9 +46,9 @@ namespace MetaDslx.BuildTools
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
             //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
-            //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
-            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            @"..\..\..\..\MetaDslx.Languages.MetaSymbols",
+            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
@@ -159,13 +159,13 @@ namespace MetaDslx.BuildTools
                 {
                     await CompileMetaGenerator(mxgFile);
                 }
-                /*/
+                //*/
                 var compilation = await project.GetCompilationAsync() as CSharpCompilation;
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
-                    await CompileMetaSymbols(compilation, mxsFiles);
-                    await CompileMetaModels(compilation, mxmFiles);
+                    //await CompileMetaSymbols(compilation, mxsFiles);
+                    //await CompileMetaModels(compilation, mxmFiles);
                     await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/

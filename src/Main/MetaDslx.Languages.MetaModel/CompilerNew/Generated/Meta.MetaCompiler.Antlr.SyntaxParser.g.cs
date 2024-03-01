@@ -85,7 +85,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             {
                 if (node?.Symbol == null)
                 {
-                    if (kind != MetaSyntaxKind.None) return _factory.MissingToken(kind);
+                    if (kind != MetaSyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
                     else return null;
                 }
                 var green = _tokenStream.ConsumeGreenToken(node.Symbol, _parser);
@@ -324,7 +324,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             
             public override GreenNode? VisitPr_PrimitiveType(MetaParser.Pr_PrimitiveTypeContext? context)
             {
-                if (context == null) return PrimitiveTypeGreen.__Missing;
+                if (context?.E_Token == null) return PrimitiveTypeGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_KObject() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KObject());
                 if (context.LR_KBool() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KBool());
@@ -344,7 +344,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 if (context.LR_KType() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KType());
                 if (context.LR_KSymbol() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KSymbol());
                 if (context.LR_KVoid() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KVoid());
-                if (token is null) token = _factory.None;
+                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, MetaSyntaxKind.KObject);
                 return _factory.PrimitiveType(token);
             }
             
@@ -434,21 +434,21 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             
             public override GreenNode? VisitPr_Identifier(MetaParser.Pr_IdentifierContext? context)
             {
-                if (context == null) return IdentifierGreen.__Missing;
+                if (context?.E_Token == null) return IdentifierGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_TIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TIdentifier());
                 if (context.LR_TVerbatimIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TVerbatimIdentifier());
-                if (token is null) token = _factory.None;
+                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, MetaSyntaxKind.TIdentifier);
                 return _factory.Identifier(token);
             }
             
             public override GreenNode? VisitPr_TBoolean(MetaParser.Pr_TBooleanContext? context)
             {
-                if (context == null) return TBooleanGreen.__Missing;
+                if (context?.E_Token == null) return TBooleanGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_KTrue() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KTrue());
                 if (context.LR_KFalse() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KFalse());
-                if (token is null) token = _factory.None;
+                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, MetaSyntaxKind.KTrue);
                 return _factory.TBoolean(token);
             }
             

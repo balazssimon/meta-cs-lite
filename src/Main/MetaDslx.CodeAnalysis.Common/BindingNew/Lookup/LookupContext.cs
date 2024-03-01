@@ -181,6 +181,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         public void Free()
         {
             this.Clear();
+            _compilation = null;
+            _language = null;
+            _defaultLookupValidator = null;
+            _errorSymbolFactory = null;
             if (_pool != null)
             {
                 _pool.Free(this);
@@ -189,10 +193,6 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public virtual void Clear()
         {
-            _compilation = null;
-            _language = null;
-            _defaultLookupValidator = null;
-            _errorSymbolFactory = null;
             _multiLookupKey = null;
             _originalBinder = null;
             _currentBinder = null;
@@ -224,6 +224,8 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public static LookupContext GetInstance(Compilation compilation, Language language)
         {
+            if (compilation is null) throw new ArgumentNullException(nameof(compilation));
+            if (language is null) throw new ArgumentNullException(nameof(language));
             if (s_lookupContextPool is null)
             {
                 Interlocked.CompareExchange(ref s_lookupContextPool, new ObjectPool<LookupContext>(() => new LookupContext(s_lookupContextPool), 128), null);
