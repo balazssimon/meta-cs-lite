@@ -60,19 +60,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         internal readonly object? _underlyingObject;
 
-        public Symbol(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, MetaDslx.Modeling.Model? model = null, IModelObject? modelObject = null, ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, bool fixedSymbol = false, string? name = default, string? metadataName = default, global::System.Collections.Immutable.ImmutableArray<AttributeSymbol> attributes = default)
+        public Symbol(Symbol? container, Compilation? compilation, MergedDeclaration? declaration, IModelObject? modelObject, ISymbol? csharpSymbol, ErrorSymbolInfo? errorInfo)
         {
             _container = container;
             _underlyingObject = errorInfo ?? declaration ?? (object)csharpSymbol ?? modelObject;
             if (modelObject is not null && !object.ReferenceEquals(_underlyingObject, modelObject)) s_modelObjects.Add(this, modelObject);
             if (compilation is not null) s_compilations.Add(this, compilation);
-            if (fixedSymbol)
-            {
-                if (!attributes.IsDefaultOrEmpty)
-                {
-                    s_attributes.Add(this, attributes);
-                }
-            }
         }
 
         public virtual Type SymbolType => typeof(Symbol);

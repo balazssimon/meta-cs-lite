@@ -47,8 +47,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         private TypeSymbol _attributeClass;
 
-        public AttributeSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public AttributeSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -64,10 +64,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_AttributeClass, null, default);
                 return _attributeClass;
             }
-            protected set
-            {
-                _attributeClass = value;
-            }
         }
 
 
@@ -77,14 +73,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_AttributeClass))
                 {
-                    if (_attributeClass == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_AttributeClass(diagnostics, cancellationToken);
-                        _attributeClass = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_AttributeClass(diagnostics, cancellationToken);
+                    _attributeClass = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_AttributeClass);
                 }
                 return true;

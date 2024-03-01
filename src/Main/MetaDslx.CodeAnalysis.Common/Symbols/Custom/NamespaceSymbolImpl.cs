@@ -18,8 +18,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
     {
         private readonly NamespaceExtent _extent;
 
-        public NamespaceSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null, NamespaceExtent extent = default) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public NamespaceSymbolImpl(NamespaceExtent extent, Symbol? container, Compilation? compilation, MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, ErrorSymbolInfo? errorInfo)
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
             _extent = extent;
         }

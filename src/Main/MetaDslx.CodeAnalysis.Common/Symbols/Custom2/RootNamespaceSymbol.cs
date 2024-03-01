@@ -17,13 +17,13 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private readonly MetaDslx.Modeling.Model _model;
 
         public RootNamespaceSymbol(ModuleSymbol container, MergedDeclaration declaration, MetaDslx.Modeling.Model model)
-            : base(container, container.DeclaringCompilation, declaration: declaration, extent: new NamespaceExtent(container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule))
+            : base(extent: new NamespaceExtent(container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule), container: container, compilation: container.DeclaringCompilation, declaration: declaration, modelObject: null, csharpSymbol: null, errorInfo: null)
         {
             _model = model;
         }
 
         public RootNamespaceSymbol(ModuleSymbol container, INamespaceSymbol csharpSymbol, MetaDslx.Modeling.Model model)
-            : base(container, container.DeclaringCompilation, csharpSymbol: csharpSymbol, extent: new NamespaceExtent(container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule))
+            : base(extent: new NamespaceExtent(container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule), container: container, compilation: container.DeclaringCompilation, declaration: null, modelObject: null, csharpSymbol: csharpSymbol, errorInfo: null)
         {
             _model = model;
         }

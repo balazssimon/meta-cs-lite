@@ -1,11 +1,11 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
-    using global::MetaDslx.CodeAnalysis.Symbols;
     using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
-    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
-    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
+    using __SymbolAttribute = global::MetaDslx.CodeAnalysis.Symbols.SymbolAttribute;
+    using __PhaseAttribute = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __DerivedAttribute = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __WeakAttribute = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -18,7 +18,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
     using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
-    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+    using __ModelPropertyAttribute = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
     using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
     using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
@@ -30,6 +30,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
+    [__SymbolAttribute]
     public abstract partial class PReferenceSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
     {
         public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
@@ -50,16 +51,16 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         private global::MetaDslx.CodeAnalysis.MetaSymbol _rule;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> _referencedTypes;
 
-        public PReferenceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public PReferenceSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
         public override __Type SymbolType => typeof(PReferenceSymbol);
-        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+        protected override __CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public global::MetaDslx.CodeAnalysis.MetaSymbol Rule
         {
             get
@@ -68,8 +69,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _rule;
             }
         }
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> ReferencedTypes
         {
             get

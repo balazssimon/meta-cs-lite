@@ -1,11 +1,11 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
-    using global::MetaDslx.CodeAnalysis.Symbols;
     using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
-    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
-    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
+    using __SymbolAttribute = global::MetaDslx.CodeAnalysis.Symbols.SymbolAttribute;
+    using __PhaseAttribute = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __DerivedAttribute = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __WeakAttribute = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -18,7 +18,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
     using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
-    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+    using __ModelPropertyAttribute = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
     using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
     using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
@@ -30,6 +30,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
+    [__SymbolAttribute]
     public abstract partial class AnnotationArgumentSymbol: global::MetaDslx.CodeAnalysis.Symbols.Symbol
     {
         public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Symbol.CompletionParts
@@ -63,16 +64,16 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         private global::MetaDslx.CodeAnalysis.MetaType _parameterType;
         private ExpressionSymbol _value;
 
-        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
         public override __Type SymbolType => typeof(AnnotationArgumentSymbol);
-        protected override global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+        protected override __CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        [__Phase]
-        [__Derived]
+        [__PhaseAttribute]
+        [__DerivedAttribute]
         public AnnotationSymbol? AnnotationSymbol
         {
             get
@@ -81,8 +82,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _annotationSymbol;
             }
         }
-        [__Phase]
-        [__Derived]
+        [__PhaseAttribute]
+        [__DerivedAttribute]
         public bool IsNamedArgument
         {
             get
@@ -91,8 +92,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _isNamedArgument;
             }
         }
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter
         {
             get
@@ -101,8 +102,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _namedParameter;
             }
         }
-        [__Phase]
-        [__Derived]
+        [__PhaseAttribute]
+        [__DerivedAttribute]
         public global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter
         {
             get
@@ -111,8 +112,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _parameter;
             }
         }
-        [__Phase(nameof(Parameter))]
-        [__Derived]
+        [__PhaseAttribute(nameof(Parameter))]
+        [__DerivedAttribute]
         public global::MetaDslx.CodeAnalysis.MetaType ParameterType
         {
             get
@@ -121,8 +122,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _parameterType;
             }
         }
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public ExpressionSymbol Value
         {
             get
@@ -217,7 +218,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(NamedParameter), diagnostics, cancellationToken);
         }
 
-        protected abstract (DeclarationSymbol Parameter, global::MetaDslx.CodeAnalysis.MetaType ParameterType) Compute_Parameter(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract (global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter, global::MetaDslx.CodeAnalysis.MetaType ParameterType) Compute_Parameter(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
         protected virtual ExpressionSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {

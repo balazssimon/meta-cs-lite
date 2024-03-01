@@ -35,7 +35,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         // Constructor. Use static Create method to create instances.
         private MergedNamespaceSymbol(NamespaceExtent extent, NamespaceSymbol containingNamespace, ImmutableArray<NamespaceSymbol> namespacesToMerge, string nameOpt)
-            : base(container: containingNamespace, compilation: extent.DeclaringCompilation, extent: extent)
+            : base(extent: extent, container: containingNamespace, compilation: extent.DeclaringCompilation, declaration: null, modelObject: null, csharpSymbol: null, errorInfo: null)
         {
             _namespacesToMerge = namespacesToMerge;
             _name = nameOpt ?? namespacesToMerge.FirstOrDefault()?.Name;

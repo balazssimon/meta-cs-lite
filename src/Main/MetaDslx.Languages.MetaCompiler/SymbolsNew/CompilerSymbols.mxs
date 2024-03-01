@@ -2,10 +2,6 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
 using MetaDslx.CodeAnalysis
 using MetaDslx.CodeAnalysis.Symbols
-using MetaDslx.Languages.MetaCompiler.Model
-
-symbol Attribute {}
-symbol Declaration {}
 
 symbol Annotation : Attribute
 {
@@ -63,9 +59,9 @@ symbol PElement : Declaration
     derived bool IsNamedElement
     derived PAlternative? ContainingPAlternativeSymbol
     MetaSymbol Value
-    Assignment Assignment
+    MetaDslx.Languages.MetaCompiler.Model.Assignment Assignment
     derived MetaType ExpectedType
-    derived ExpectedTypeKind ExpectedKind phase ExpectedType
+    derived MetaDslx.Languages.MetaCompiler.Model.ExpectedTypeKind ExpectedKind phase ExpectedType
 }
 
 symbol PReference : Declaration

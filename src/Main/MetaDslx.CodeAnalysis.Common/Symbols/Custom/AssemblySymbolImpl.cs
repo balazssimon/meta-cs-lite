@@ -23,7 +23,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         private NamespaceSymbol _globalNamespace;
 
         public AssemblySymbolImpl(Compilation compilation, ISymbolFactory symbolFactory, string assemblySimpleName, string moduleName, ImmutableArray<ModuleSymbol> referencedModules)
-            : base(container: null)
+            : base(container: null, compilation: compilation, declaration: null, modelObject: null, csharpSymbol: null, errorInfo: null)
         {
             _compilation = compilation;
             _symbolFactory = symbolFactory;
@@ -50,7 +50,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         }
 
         public AssemblySymbolImpl(Compilation compilation, ISymbolFactory symbolFactory, IAssemblySymbol csharpAssemblySymbol)
-            : base(container: null, csharpSymbol: csharpAssemblySymbol)
+            : base(container: null, compilation: null, declaration: null, modelObject: null, csharpSymbol: csharpAssemblySymbol, errorInfo: null)
         {
             _compilation = compilation;
             _symbolFactory = symbolFactory;

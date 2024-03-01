@@ -83,8 +83,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers1 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers2 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
 
-        public DeclarationSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public DeclarationSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -102,13 +102,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (s_DeclaredAccessibility.TryGetValue(this, out var result)) return (global::MetaDslx.CodeAnalysis.Accessibility)result;
                 else return default;
             }
-            protected set
-            {
-                if (value != default)
-                {
-                    s_DeclaredAccessibility.Add(this, value);
-                }
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -119,10 +112,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_IsStatic, null, default);
                 return _isStatic;
             }
-            protected set
-            {
-                _isStatic = value;
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -132,10 +121,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_IsExtern, null, default);
                 return _isExtern;
-            }
-            protected set
-            {
-                _isExtern = value;
             }
         }
         [__ModelPropertyAttribute]
@@ -149,13 +134,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (s_OriginalDefinition.TryGetValue(this, out var result)) return (DeclarationSymbol)result;
                 else return default;
             }
-            protected set
-            {
-                if (value != default)
-                {
-                    s_OriginalDefinition.Add(this, value);
-                }
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -167,13 +145,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_TypeArguments, null, default);
                 if (s_TypeArguments.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<TypeSymbol>)result;
                 else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
-            }
-            protected set
-            {
-                if (!value.IsDefaultOrEmpty)
-                {
-                    s_TypeArguments.Add(this, value);
-                }
             }
         }
         [__ModelPropertyAttribute]
@@ -187,13 +158,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (s_Imports.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<ImportSymbol>)result;
                 else return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
             }
-            protected set
-            {
-                if (!value.IsDefaultOrEmpty)
-                {
-                    s_Imports.Add(this, value);
-                }
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -205,13 +169,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_MemberNames, null, default);
                 if (s_MemberNames.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<string>)result;
                 else return global::System.Collections.Immutable.ImmutableArray<string>.Empty;
-            }
-            protected set
-            {
-                if (!value.IsDefaultOrEmpty)
-                {
-                    s_MemberNames.Add(this, value);
-                }
             }
         }
         [__PhaseAttribute]
@@ -225,13 +182,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (s_Members.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>)result;
                 else return global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>.Empty;
             }
-            protected set
-            {
-                if (!value.IsDefaultOrEmpty)
-                {
-                    s_Members.Add(this, value);
-                }
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -243,13 +193,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_TypeMembers, null, default);
                 if (s_TypeMembers.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<TypeSymbol>)result;
                 else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
-            }
-            protected set
-            {
-                if (!value.IsDefaultOrEmpty)
-                {
-                    s_TypeMembers.Add(this, value);
-                }
             }
         }
 
@@ -300,17 +243,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_DeclaredAccessibility))
                 {
-                    if (!s_DeclaredAccessibility.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_DeclaredAccessibility(diagnostics, cancellationToken);
+                    if (result != default)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_DeclaredAccessibility(diagnostics, cancellationToken);
-                        if (result != default)
-                        {
-                            s_DeclaredAccessibility.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_DeclaredAccessibility.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_DeclaredAccessibility);
                 }
                 return true;
@@ -319,14 +259,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_IsStatic))
                 {
-                    if (_isStatic == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_IsStatic(diagnostics, cancellationToken);
-                        _isStatic = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_IsStatic(diagnostics, cancellationToken);
+                    _isStatic = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_IsStatic);
                 }
                 return true;
@@ -335,14 +272,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_IsExtern))
                 {
-                    if (_isExtern == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_IsExtern(diagnostics, cancellationToken);
-                        _isExtern = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_IsExtern(diagnostics, cancellationToken);
+                    _isExtern = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_IsExtern);
                 }
                 return true;
@@ -351,17 +285,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_OriginalDefinition))
                 {
-                    if (!s_OriginalDefinition.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_OriginalDefinition(diagnostics, cancellationToken);
+                    if (result != default)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_OriginalDefinition(diagnostics, cancellationToken);
-                        if (result != default)
-                        {
-                            s_OriginalDefinition.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_OriginalDefinition.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_OriginalDefinition);
                 }
                 return true;
@@ -370,17 +301,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_TypeArguments))
                 {
-                    if (!s_TypeArguments.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_TypeArguments(diagnostics, cancellationToken);
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_TypeArguments(diagnostics, cancellationToken);
-                        if (!result.IsDefaultOrEmpty)
-                        {
-                            s_TypeArguments.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_TypeArguments.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_TypeArguments);
                 }
                 return true;
@@ -389,17 +317,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Imports))
                 {
-                    if (!s_Imports.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Imports(diagnostics, cancellationToken);
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Imports(diagnostics, cancellationToken);
-                        if (!result.IsDefaultOrEmpty)
-                        {
-                            s_Imports.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_Imports.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Imports);
                 }
                 return true;
@@ -408,17 +333,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_MemberNames))
                 {
-                    if (!s_MemberNames.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_MemberNames(diagnostics, cancellationToken);
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_MemberNames(diagnostics, cancellationToken);
-                        if (!result.IsDefaultOrEmpty)
-                        {
-                            s_MemberNames.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_MemberNames.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_MemberNames);
                 }
                 return true;
@@ -427,17 +349,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Members))
                 {
-                    if (!s_Members.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Members(diagnostics, cancellationToken);
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Members(diagnostics, cancellationToken);
-                        if (!result.IsDefaultOrEmpty)
-                        {
-                            s_Members.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_Members.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Members);
                 }
                 return true;
@@ -446,17 +365,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_TypeMembers))
                 {
-                    if (!s_TypeMembers.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_TypeMembers(diagnostics, cancellationToken);
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_TypeMembers(diagnostics, cancellationToken);
-                        if (!result.IsDefaultOrEmpty)
-                        {
-                            s_TypeMembers.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_TypeMembers.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_TypeMembers);
                 }
                 return true;

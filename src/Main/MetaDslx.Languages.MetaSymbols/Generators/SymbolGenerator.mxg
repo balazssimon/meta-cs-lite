@@ -73,8 +73,8 @@ namespace [symbol.NamespaceName]
             private static [GetFieldType(symbol, op)] [GetFieldName(op)] = new [GetFieldType(symbol, op)]();
         [end foreach]
 
-        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public [GetIntfName(symbol, symbol)](__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -126,10 +126,6 @@ namespace [symbol.NamespaceName]
                             return [GetFieldName(prop)];
                         [end if]
                     }
-                    protected set
-                    {
-                        [AssignProperty(symbol, prop, "value")]
-                    }
                 [end if]
             }
         [end foreach]
@@ -175,33 +171,21 @@ namespace [symbol.NamespaceName]
                 {
                     if (NotePartComplete(CompletionParts.Start_[phase]))
                     {
+                        var diagnostics = __DiagnosticBag.GetInstance();
                         [if (props.Length >= 2)]
-                            var diagnostics = __DiagnosticBag.GetInstance();
                             var result = Compute_[phase](diagnostics, cancellationToken);
                             [foreach (var prop in props)]
-                                if ([if (prop.IsWeak)]![GetFieldName(prop)].TryGetValue(this, out var _)[else][GetFieldName(prop)] == default[end if])
-                                {
-                                    [AssignProperty(symbol, prop, "result."+prop.Name)]
-                                }
+                                [AssignProperty(symbol, prop, "result."+prop.Name)]
                             [end foreach]
-                            AddSymbolDiagnostics(diagnostics);
-                            diagnostics.Free();
                         [else if (props.Length == 1)]
                             [var prop = props[0]]
-                            if ([if (prop.IsWeak)]![GetFieldName(prop)].TryGetValue(this, out var _)[else][GetFieldName(prop)] == default[end if])
-                            {
-                                var diagnostics = __DiagnosticBag.GetInstance();
-                                var result = Compute_[phase](diagnostics, cancellationToken);
-                                [AssignProperty(symbol, prop, "result")]
-                                AddSymbolDiagnostics(diagnostics);
-                                diagnostics.Free();
-                            }
+                            var result = Compute_[phase](diagnostics, cancellationToken);
+                            [AssignProperty(symbol, prop, "result")]
                         [else]
-                            var diagnostics = __DiagnosticBag.GetInstance();
                             [phase](diagnostics, cancellationToken);
-                            AddSymbolDiagnostics(diagnostics);
-                            diagnostics.Free();
                         [end if]
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
                         NotePartComplete(CompletionParts.Finish_[phase]);
                     }
                     return true;
@@ -273,7 +257,7 @@ namespace [symbol.NamespaceName].Impl
 
     public class [GetImplName(symbol, symbol)] : [GetIntfName(symbol, symbol)]
     {
-        public [GetImplName(symbol, symbol)](Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null) 
+        public [GetImplName(symbol, symbol)](Symbol? container, Compilation? compilation, MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
         {
         }

@@ -15,8 +15,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Impl
 
     public class TokenSymbolImpl : TokenSymbol
     {
-        public TokenSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public TokenSymbolImpl(Symbol? container, Compilation? compilation, MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, ErrorSymbolInfo? errorInfo)
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 

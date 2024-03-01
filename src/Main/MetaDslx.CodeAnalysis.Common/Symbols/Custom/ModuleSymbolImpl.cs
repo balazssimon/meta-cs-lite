@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Xml.Linq;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
@@ -26,21 +27,21 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
         private ImmutableArray<NamespaceSymbol> _fileNamespaces;
 
         public ModuleSymbolImpl(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, string moduleName, DeclarationTable? declarations)
-            : base(assemblySymbol, declaration: declarations?.GetMergedRoot(assemblySymbol.DeclaringCompilation))
+            : base(container: assemblySymbol, compilation: null, declaration: declarations?.GetMergedRoot(assemblySymbol.DeclaringCompilation), modelObject: null, csharpSymbol: null, errorInfo: null)
         {
             _symbolFactory = symbolFactory;
             _moduleName = moduleName;
         }
 
         public ModuleSymbolImpl(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, MetaDslx.Modeling.Model model)
-            : base(assemblySymbol)
+            : base(container: assemblySymbol, compilation: null, declaration: null, modelObject: null, csharpSymbol: null, errorInfo: null)
         {
             _symbolFactory = symbolFactory;
             _model = model;
         }
 
         public ModuleSymbolImpl(AssemblySymbol? assemblySymbol, ISymbolFactory symbolFactory, IModuleSymbol csharpModuleSymbol)
-            : base(assemblySymbol, csharpSymbol: csharpModuleSymbol)
+            : base(container: assemblySymbol, compilation: null, declaration: null, modelObject: null, csharpSymbol: csharpModuleSymbol, errorInfo: null)
         {
             _symbolFactory = symbolFactory;
         }

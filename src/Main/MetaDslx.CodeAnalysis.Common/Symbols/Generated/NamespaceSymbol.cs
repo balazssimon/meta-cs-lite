@@ -51,8 +51,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> _constituentNamespaces;
         private global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> _namespaceMembers;
 
-        public NamespaceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public NamespaceSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -84,10 +84,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_ConstituentNamespaces, null, default);
                 return _constituentNamespaces;
             }
-            protected set
-            {
-                _constituentNamespaces = value;
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -97,10 +93,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_NamespaceMembers, null, default);
                 return _namespaceMembers;
-            }
-            protected set
-            {
-                _namespaceMembers = value;
             }
         }
 
@@ -115,14 +107,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ConstituentNamespaces))
                 {
-                    if (_constituentNamespaces == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ConstituentNamespaces(diagnostics, cancellationToken);
-                        _constituentNamespaces = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ConstituentNamespaces(diagnostics, cancellationToken);
+                    _constituentNamespaces = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ConstituentNamespaces);
                 }
                 return true;
@@ -131,14 +120,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_NamespaceMembers))
                 {
-                    if (_namespaceMembers == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_NamespaceMembers(diagnostics, cancellationToken);
-                        _namespaceMembers = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_NamespaceMembers(diagnostics, cancellationToken);
+                    _namespaceMembers = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_NamespaceMembers);
                 }
                 return true;

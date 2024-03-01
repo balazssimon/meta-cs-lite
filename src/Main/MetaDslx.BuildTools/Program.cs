@@ -45,11 +45,11 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
-            //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
+            @"..\..\..\..\MetaDslx.CodeAnalysis.Common",
             //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Emf",
@@ -210,20 +210,6 @@ namespace MetaDslx.BuildTools
                 if (File.Exists(filePath))
                 {
                     filePaths.Add(filePath);
-                    var outputDir = Path.Combine(Path.GetDirectoryName(filePath), "Generated");
-                    Directory.CreateDirectory(outputDir);
-                    if (EraseOutputDirectory)
-                    {
-                        var dirInfo = new DirectoryInfo(outputDir);
-                        foreach (FileInfo file in dirInfo.EnumerateFiles())
-                        {
-                            file.Delete();
-                        }
-                        foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
-                        {
-                            dir.Delete(true);
-                        }
-                    }
                 }
                 else
                 {
@@ -254,6 +240,26 @@ namespace MetaDslx.BuildTools
                 foreach (var diag in mxsDiagnostics)
                 {
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+                }
+                if (!mxsDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                {
+                    foreach (var filePath in filePaths)
+                    {
+                        var outputDir = Path.Combine(Path.GetDirectoryName(filePath), "Generated");
+                        Directory.CreateDirectory(outputDir);
+                        if (EraseOutputDirectory)
+                        {
+                            var dirInfo = new DirectoryInfo(outputDir);
+                            foreach (FileInfo file in dirInfo.EnumerateFiles())
+                            {
+                                file.Delete();
+                            }
+                            foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+                            {
+                                dir.Delete(true);
+                            }
+                        }
+                    }
                 }
                 var model = mxsCompiler.SourceModule.Model;
                 var generator = new SymbolGenerator();

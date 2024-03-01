@@ -63,8 +63,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _symbols;
         private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _importedSymbols;
 
-        public ImportSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public ImportSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -80,10 +80,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_Files, null, default);
                 return _files;
             }
-            protected set
-            {
-                _files = value;
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -93,10 +89,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_Aliases, null, default);
                 return _aliases;
-            }
-            protected set
-            {
-                _aliases = value;
             }
         }
         [__ModelPropertyAttribute]
@@ -108,10 +100,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_Namespaces, null, default);
                 return _namespaces;
             }
-            protected set
-            {
-                _namespaces = value;
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -121,10 +109,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_Symbols, null, default);
                 return _symbols;
-            }
-            protected set
-            {
-                _symbols = value;
             }
         }
         [__PhaseAttribute]
@@ -136,10 +120,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_ImportedSymbols, null, default);
                 return _importedSymbols;
             }
-            protected set
-            {
-                _importedSymbols = value;
-            }
         }
 
 
@@ -149,14 +129,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Files))
                 {
-                    if (_files == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Files(diagnostics, cancellationToken);
-                        _files = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Files(diagnostics, cancellationToken);
+                    _files = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Files);
                 }
                 return true;
@@ -165,14 +142,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Aliases))
                 {
-                    if (_aliases == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Aliases(diagnostics, cancellationToken);
-                        _aliases = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Aliases(diagnostics, cancellationToken);
+                    _aliases = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Aliases);
                 }
                 return true;
@@ -181,14 +155,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Namespaces))
                 {
-                    if (_namespaces == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Namespaces(diagnostics, cancellationToken);
-                        _namespaces = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Namespaces(diagnostics, cancellationToken);
+                    _namespaces = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Namespaces);
                 }
                 return true;
@@ -197,14 +168,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Symbols))
                 {
-                    if (_symbols == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Symbols(diagnostics, cancellationToken);
-                        _symbols = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Symbols(diagnostics, cancellationToken);
+                    _symbols = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Symbols);
                 }
                 return true;
@@ -213,14 +181,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ImportedSymbols))
                 {
-                    if (_importedSymbols == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ImportedSymbols(diagnostics, cancellationToken);
-                        _importedSymbols = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ImportedSymbols(diagnostics, cancellationToken);
+                    _importedSymbols = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ImportedSymbols);
                 }
                 return true;

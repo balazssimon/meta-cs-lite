@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
+using System.Xml.Linq;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Modeling;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Impl
 {
@@ -15,8 +17,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
 
     public class DeclarationSymbolImpl : DeclarationSymbol
     {
-        public DeclarationSymbolImpl(Symbol? container, Compilation? compilation = null, MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public DeclarationSymbolImpl(Symbol? container, Compilation? compilation, MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, ErrorSymbolInfo? errorInfo)
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 

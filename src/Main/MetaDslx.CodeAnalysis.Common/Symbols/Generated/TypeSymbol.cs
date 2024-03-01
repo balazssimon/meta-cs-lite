@@ -63,8 +63,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_BaseTypes = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private global::System.Collections.Immutable.ImmutableArray<TypeSymbol> _allBaseTypes;
 
-        public TypeSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public TypeSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -80,10 +80,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 this.ForceComplete(CompletionParts.Finish_IsReferenceType, null, default);
                 return _isReferenceType;
             }
-            protected set
-            {
-                _isReferenceType = value;
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -93,10 +89,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_IsValueType, null, default);
                 return _isValueType;
-            }
-            protected set
-            {
-                _isValueType = value;
             }
         }
         [__ModelPropertyAttribute]
@@ -110,13 +102,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (s_TypeParameters.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>)result;
                 else return global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>.Empty;
             }
-            protected set
-            {
-                if (!value.IsDefaultOrEmpty)
-                {
-                    s_TypeParameters.Add(this, value);
-                }
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -129,13 +114,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (s_BaseTypes.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<TypeSymbol>)result;
                 else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
             }
-            protected set
-            {
-                if (!value.IsDefaultOrEmpty)
-                {
-                    s_BaseTypes.Add(this, value);
-                }
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -145,10 +123,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_AllBaseTypes, null, default);
                 return _allBaseTypes;
-            }
-            protected set
-            {
-                _allBaseTypes = value;
             }
         }
 
@@ -163,14 +137,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_IsReferenceType))
                 {
-                    if (_isReferenceType == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_IsReferenceType(diagnostics, cancellationToken);
-                        _isReferenceType = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_IsReferenceType(diagnostics, cancellationToken);
+                    _isReferenceType = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_IsReferenceType);
                 }
                 return true;
@@ -179,14 +150,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_IsValueType))
                 {
-                    if (_isValueType == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_IsValueType(diagnostics, cancellationToken);
-                        _isValueType = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_IsValueType(diagnostics, cancellationToken);
+                    _isValueType = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_IsValueType);
                 }
                 return true;
@@ -195,17 +163,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_TypeParameters))
                 {
-                    if (!s_TypeParameters.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_TypeParameters(diagnostics, cancellationToken);
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_TypeParameters(diagnostics, cancellationToken);
-                        if (!result.IsDefaultOrEmpty)
-                        {
-                            s_TypeParameters.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_TypeParameters.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_TypeParameters);
                 }
                 return true;
@@ -214,17 +179,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_BaseTypes))
                 {
-                    if (!s_BaseTypes.TryGetValue(this, out var _))
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_BaseTypes(diagnostics, cancellationToken);
+                    if (!result.IsDefaultOrEmpty)
                     {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_BaseTypes(diagnostics, cancellationToken);
-                        if (!result.IsDefaultOrEmpty)
-                        {
-                            s_BaseTypes.Add(this, result);
-                        }
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
+                        s_BaseTypes.Add(this, result);
                     }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_BaseTypes);
                 }
                 return true;
@@ -233,14 +195,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_AllBaseTypes))
                 {
-                    if (_allBaseTypes == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_AllBaseTypes(diagnostics, cancellationToken);
-                        _allBaseTypes = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_AllBaseTypes(diagnostics, cancellationToken);
+                    _allBaseTypes = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_AllBaseTypes);
                 }
                 return true;

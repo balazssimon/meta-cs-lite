@@ -1,11 +1,11 @@
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {
-    using global::MetaDslx.CodeAnalysis.Symbols;
     using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
-    using __Phase = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
-    using __Derived = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
-    using __Weak = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
+    using __SymbolAttribute = global::MetaDslx.CodeAnalysis.Symbols.SymbolAttribute;
+    using __PhaseAttribute = global::MetaDslx.CodeAnalysis.Symbols.PhaseAttribute;
+    using __DerivedAttribute = global::MetaDslx.CodeAnalysis.Symbols.DerivedAttribute;
+    using __WeakAttribute = global::MetaDslx.CodeAnalysis.Symbols.WeakAttribute;
     using __Symbol = global::MetaDslx.CodeAnalysis.Symbols.Symbol;
     using __AttributeSymbol = global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol;
     using __AssemblySymbol = global::MetaDslx.CodeAnalysis.Symbols.AssemblySymbol;
@@ -18,7 +18,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
     using __Model = global::MetaDslx.Modeling.Model;
     using __ErrorSymbolInfo = global::MetaDslx.CodeAnalysis.Symbols.ErrorSymbolInfo;
-    using __ModelProperty = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
+    using __ModelPropertyAttribute = global::MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute;
     using __CompletionGraph = global::MetaDslx.CodeAnalysis.Symbols.CompletionGraph;
     using __CompletionPart = global::MetaDslx.CodeAnalysis.Symbols.CompletionPart;
     using __MergedDeclaration = global::MetaDslx.CodeAnalysis.Declarations.MergedDeclaration;
@@ -30,6 +30,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
     using __CultureInfo = global::System.Globalization.CultureInfo;
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
+    [__SymbolAttribute]
     public abstract partial class AnnotationSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl
     {
         public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.AttributeSymbolImpl.CompletionParts
@@ -54,21 +55,21 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
 
         private global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> _arguments;
-        private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _constructors;
-        private global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>> _parameters;
-        private DeclarationSymbol _selectedConstructor;
-        private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _selectedParameters;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> _constructors;
+        private global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>> _parameters;
+        private global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol _selectedConstructor;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> _selectedParameters;
 
-        public AnnotationSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public AnnotationSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
         public override __Type SymbolType => typeof(AnnotationSymbol);
-        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+        protected override __CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        [__ModelProperty]
-        [__Phase]
+        [__ModelPropertyAttribute]
+        [__PhaseAttribute]
         public global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Arguments
         {
             get
@@ -77,9 +78,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _arguments;
             }
         }
-        [__Phase]
-        [__Derived]
-        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Constructors
+        [__PhaseAttribute]
+        [__DerivedAttribute]
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Constructors
         {
             get
             {
@@ -87,9 +88,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _constructors;
             }
         }
-        [__Phase]
-        [__Derived]
-        public global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>> Parameters
+        [__PhaseAttribute]
+        [__DerivedAttribute]
+        public global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>> Parameters
         {
             get
             {
@@ -97,9 +98,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _parameters;
             }
         }
-        [__Phase]
-        [__Derived]
-        public DeclarationSymbol SelectedConstructor
+        [__PhaseAttribute]
+        [__DerivedAttribute]
+        public global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol SelectedConstructor
         {
             get
             {
@@ -107,9 +108,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 return _selectedConstructor;
             }
         }
-        [__Phase(nameof(SelectedConstructor))]
-        [__Derived]
-        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> SelectedParameters
+        [__PhaseAttribute(nameof(SelectedConstructor))]
+        [__DerivedAttribute]
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> SelectedParameters
         {
             get
             {
@@ -186,10 +187,10 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_Constructors(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Compute_Constructors(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>> Compute_Parameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>> Compute_Parameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract (DeclarationSymbol SelectedConstructor, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> SelectedParameters) Compute_SelectedConstructor(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract (global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol SelectedConstructor, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> SelectedParameters) Compute_SelectedConstructor(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }
