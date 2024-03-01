@@ -243,9 +243,9 @@ namespace MetaDslx.BuildTools
                 {
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
-                if (!mxDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                foreach (var filePath in filePaths)
                 {
-                    foreach (var filePath in filePaths)
+                    if (!mxDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == filePath))
                     {
                         var outputDir = Path.Combine(Path.GetDirectoryName(filePath), "Generated");
                         Directory.CreateDirectory(outputDir);
@@ -262,11 +262,11 @@ namespace MetaDslx.BuildTools
                             }
                         }
                     }
-                    var model = mxCompiler.SourceModule.Model;
-                    await GenerateMetaSymbols(model, mxDiagnostics);
-                    await GenerateMetaModels(model, mxDiagnostics);
-                    await GenerateMetaLanguages(model, mxDiagnostics);
                 }
+                var model = mxCompiler.SourceModule.Model;
+                await GenerateMetaSymbols(model, mxDiagnostics);
+                await GenerateMetaModels(model, mxDiagnostics);
+                await GenerateMetaLanguages(model, mxDiagnostics);
             }
             catch (Exception ex)
             {

@@ -36,10 +36,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<__MetaSymbol>(Compiler.AnnotationArgument_NamedParameter);
         }
     
-        public global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter
+        public Declaration Parameter
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>(Compiler.AnnotationArgument_Parameter);
-            set => MSet<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>(Compiler.AnnotationArgument_Parameter, value);
+            get => MGet<Declaration>(Compiler.AnnotationArgument_Parameter);
+            set => MSet<Declaration>(Compiler.AnnotationArgument_Parameter, value);
         }
     
         public __MetaType ParameterType
