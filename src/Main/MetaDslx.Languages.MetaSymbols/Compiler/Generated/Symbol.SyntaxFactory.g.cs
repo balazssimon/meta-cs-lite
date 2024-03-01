@@ -27,6 +27,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     using __CancellationToken = global::System.Threading.CancellationToken;
     using __ArgumentNullException = global::System.ArgumentNullException;
     using __ArgumentException = global::System.ArgumentException;
+    using MetaDslx.CodeAnalysis.Binding;
 
     public class SymbolSyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
     {
@@ -653,6 +654,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         public QualifierIdentifierBlockSyntax QualifierIdentifierBlock(IdentifierSyntax identifier)
         {
             return this.QualifierIdentifierBlock(this.Token(SymbolSyntaxKind.TDot), identifier);
+        }
+
+        public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+        {
+            return new global::MetaDslx.Languages.MetaSymbols.Compiler.Binding.SymbolBinderFactoryVisitor(binderFactory);
         }
 
         internal static global::System.Collections.Generic.IEnumerable<__Type> GetNodeTypes()

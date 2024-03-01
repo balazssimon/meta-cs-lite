@@ -21425,133 +21425,140 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
+            __cb.Push("    ");
+            #line (1397,9)-(1397,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1397,14)-(1397,15) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1397,15)-(1397,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__BinderFactory");
+            #line hidden
+            #line (1397,30)-(1397,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1397,31)-(1397,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1397,32)-(1397,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1397,33)-(1397,85) 25 "SyntaxGenerator.mxg"
+            __cb.Write("global::MetaDslx.CodeAnalysis.Binding.BinderFactory;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (1398,9)-(1398,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1398,14)-(1398,15) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1398,15)-(1398,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__BinderFactoryVisitor");
+            #line hidden
+            #line (1398,37)-(1398,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1398,38)-(1398,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1398,39)-(1398,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1398,40)-(1398,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write("global::MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (1398,9)-(1398,15) 25 "SyntaxGenerator.mxg"
+            #line (1400,9)-(1400,15) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1398,15)-(1398,16) 25 "SyntaxGenerator.mxg"
+            #line (1400,15)-(1400,16) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1398,16)-(1398,21) 25 "SyntaxGenerator.mxg"
+            #line (1400,16)-(1400,21) 25 "SyntaxGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (1398,21)-(1398,22) 25 "SyntaxGenerator.mxg"
+            #line (1400,21)-(1400,22) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1398,23)-(1398,27) 24 "SyntaxGenerator.mxg"
+            #line (1400,23)-(1400,27) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1398,28)-(1398,41) 25 "SyntaxGenerator.mxg"
+            #line (1400,28)-(1400,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxFactory");
             #line hidden
-            #line (1398,41)-(1398,42) 25 "SyntaxGenerator.mxg"
+            #line (1400,41)-(1400,42) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1398,42)-(1398,43) 25 "SyntaxGenerator.mxg"
+            #line (1400,42)-(1400,43) 25 "SyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (1398,43)-(1398,44) 25 "SyntaxGenerator.mxg"
+            #line (1400,43)-(1400,44) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1398,44)-(1398,94) 25 "SyntaxGenerator.mxg"
+            #line (1400,44)-(1400,94) 25 "SyntaxGenerator.mxg"
             __cb.Write("global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (1399,9)-(1399,10) 25 "SyntaxGenerator.mxg"
+            #line (1401,9)-(1401,10) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1400,13)-(1400,19) 25 "SyntaxGenerator.mxg"
+            #line (1402,13)-(1402,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1400,19)-(1400,20) 25 "SyntaxGenerator.mxg"
+            #line (1402,19)-(1402,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1400,21)-(1400,25) 24 "SyntaxGenerator.mxg"
+            #line (1402,21)-(1402,25) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1400,26)-(1400,113) 25 "SyntaxGenerator.mxg"
+            #line (1402,26)-(1402,113) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxFactory(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxFactory");
             #line hidden
-            #line (1400,113)-(1400,114) 25 "SyntaxGenerator.mxg"
+            #line (1402,113)-(1402,114) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1400,114)-(1400,136) 25 "SyntaxGenerator.mxg"
+            #line (1402,114)-(1402,136) 25 "SyntaxGenerator.mxg"
             __cb.Write("internalSyntaxFactory)");
             #line hidden
-            #line (1400,136)-(1400,137) 25 "SyntaxGenerator.mxg"
+            #line (1402,136)-(1402,137) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1401,17)-(1401,18) 25 "SyntaxGenerator.mxg"
+            #line (1403,17)-(1403,18) 25 "SyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (1401,18)-(1401,19) 25 "SyntaxGenerator.mxg"
+            #line (1403,18)-(1403,19) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1401,19)-(1401,46) 25 "SyntaxGenerator.mxg"
+            #line (1403,19)-(1403,46) 25 "SyntaxGenerator.mxg"
             __cb.Write("base(internalSyntaxFactory)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1402,13)-(1402,14) 25 "SyntaxGenerator.mxg"
+            #line (1404,13)-(1404,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1403,13)-(1403,14) 25 "SyntaxGenerator.mxg"
+            #line (1405,13)-(1405,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1405,13)-(1405,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1405,19)-(1405,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1405,20)-(1405,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (1405,28)-(1405,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1405,29)-(1405,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__Language");
-            #line hidden
-            #line (1405,39)-(1405,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1405,40)-(1405,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Language");
-            #line hidden
-            #line (1405,48)-(1405,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1405,49)-(1405,51) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=>");
-            #line hidden
-            #line (1405,51)-(1405,52) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1405,53)-(1405,57) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1405,58)-(1405,76) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Language.Instance;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -21570,105 +21577,74 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1407,28)-(1407,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1407,29)-(1407,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__ParseOptions");
+            #line (1407,29)-(1407,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__Language");
             #line hidden
-            #line (1407,43)-(1407,44) 25 "SyntaxGenerator.mxg"
+            #line (1407,39)-(1407,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1407,44)-(1407,63) 25 "SyntaxGenerator.mxg"
-            __cb.Write("DefaultParseOptions");
+            #line (1407,40)-(1407,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Language");
             #line hidden
-            #line (1407,63)-(1407,64) 25 "SyntaxGenerator.mxg"
+            #line (1407,48)-(1407,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1407,64)-(1407,66) 25 "SyntaxGenerator.mxg"
+            #line (1407,49)-(1407,51) 25 "SyntaxGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (1407,66)-(1407,67) 25 "SyntaxGenerator.mxg"
+            #line (1407,51)-(1407,52) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1407,68)-(1407,72) 24 "SyntaxGenerator.mxg"
+            #line (1407,53)-(1407,57) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1407,73)-(1407,94) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions.Default;");
+            #line (1407,58)-(1407,76) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Language.Instance;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1409,13)-(1409,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
+            #line (1409,13)-(1409,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
             #line hidden
-            #line (1409,16)-(1409,17) 25 "SyntaxGenerator.mxg"
+            #line (1409,19)-(1409,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1409,17)-(1409,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
+            #line (1409,20)-(1409,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (1409,28)-(1409,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1409,29)-(1409,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__ParseOptions");
+            #line hidden
+            #line (1409,43)-(1409,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1409,44)-(1409,63) 25 "SyntaxGenerator.mxg"
+            __cb.Write("DefaultParseOptions");
+            #line hidden
+            #line (1409,63)-(1409,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1409,64)-(1409,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=>");
+            #line hidden
+            #line (1409,66)-(1409,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1409,68)-(1409,72) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1409,73)-(1409,94) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions.Default;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            __cb.Push("        ");
-            #line (1410,13)-(1410,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1410,16)-(1410,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,17)-(1410,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Create");
-            #line hidden
-            #line (1410,23)-(1410,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,24)-(1410,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1410,25)-(1410,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,26)-(1410,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write("new");
-            #line hidden
-            #line (1410,29)-(1410,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,30)-(1410,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1410,36)-(1410,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,37)-(1410,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("tree");
-            #line hidden
-            #line (1410,41)-(1410,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,42)-(1410,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write("from");
-            #line hidden
-            #line (1410,46)-(1410,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,47)-(1410,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1410,48)-(1410,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,49)-(1410,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1410,55)-(1410,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1410,56)-(1410,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("node.");
-            #line hidden
-            __cb.AppendLine();
+            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1411,13)-(1411,16) 25 "SyntaxGenerator.mxg"
@@ -21677,249 +21653,249 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1411,16)-(1411,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1411,17)-(1411,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1412,13)-(1412,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1412,19)-(1412,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,21)-(1412,25) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1412,26)-(1412,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxTree");
-            #line hidden
-            #line (1412,36)-(1412,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,37)-(1412,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxTree(__SyntaxNode");
-            #line hidden
-            #line (1412,60)-(1412,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,61)-(1412,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write("root,");
-            #line hidden
-            #line (1412,66)-(1412,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,68)-(1412,72) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1412,73)-(1412,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions?");
-            #line hidden
-            #line (1412,86)-(1412,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,87)-(1412,94) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options");
-            #line hidden
-            #line (1412,94)-(1412,95) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,95)-(1412,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1412,96)-(1412,97) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,97)-(1412,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null,");
-            #line hidden
-            #line (1412,102)-(1412,103) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,103)-(1412,110) 25 "SyntaxGenerator.mxg"
-            __cb.Write("string?");
-            #line hidden
-            #line (1412,110)-(1412,111) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,111)-(1412,115) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path");
-            #line hidden
-            #line (1412,115)-(1412,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,116)-(1412,117) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1412,117)-(1412,118) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,118)-(1412,121) 25 "SyntaxGenerator.mxg"
-            __cb.Write("\"\",");
-            #line hidden
-            #line (1412,121)-(1412,122) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,122)-(1412,133) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__Encoding?");
-            #line hidden
-            #line (1412,133)-(1412,134) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,134)-(1412,142) 25 "SyntaxGenerator.mxg"
-            __cb.Write("encoding");
-            #line hidden
-            #line (1412,142)-(1412,143) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,143)-(1412,144) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1412,144)-(1412,145) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1412,145)-(1412,150) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1413,13)-(1413,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1414,17)-(1414,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1414,23)-(1414,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1414,25)-(1414,29) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1414,30)-(1414,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxTree.Create((");
-            #line hidden
-            #line (1414,50)-(1414,54) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1414,55)-(1414,71) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxNode)root,");
-            #line hidden
-            #line (1414,71)-(1414,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1414,72)-(1414,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__IncrementalParseData.Empty,");
-            #line hidden
-            #line (1414,101)-(1414,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1414,102)-(1414,110) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options,");
-            #line hidden
-            #line (1414,110)-(1414,111) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1414,111)-(1414,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path,");
-            #line hidden
-            #line (1414,116)-(1414,117) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1414,117)-(1414,122) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null,");
-            #line hidden
-            #line (1414,122)-(1414,123) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1414,123)-(1414,133) 25 "SyntaxGenerator.mxg"
-            __cb.Write("encoding);");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1415,13)-(1415,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1417,13)-(1417,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1417,16)-(1417,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1417,17)-(1417,26) 25 "SyntaxGenerator.mxg"
+            #line (1411,17)-(1411,26) 25 "SyntaxGenerator.mxg"
             __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1418,13)-(1418,16) 25 "SyntaxGenerator.mxg"
+            #line (1412,13)-(1412,16) 25 "SyntaxGenerator.mxg"
             __cb.Write("///");
             #line hidden
-            #line (1418,16)-(1418,17) 25 "SyntaxGenerator.mxg"
+            #line (1412,16)-(1412,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,17)-(1418,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Produces");
+            #line (1412,17)-(1412,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Create");
             #line hidden
-            #line (1418,25)-(1418,26) 25 "SyntaxGenerator.mxg"
+            #line (1412,23)-(1412,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,26)-(1418,27) 25 "SyntaxGenerator.mxg"
+            #line (1412,24)-(1412,25) 25 "SyntaxGenerator.mxg"
             __cb.Write("a");
             #line hidden
-            #line (1418,27)-(1418,28) 25 "SyntaxGenerator.mxg"
+            #line (1412,25)-(1412,26) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,28)-(1418,34) 25 "SyntaxGenerator.mxg"
+            #line (1412,26)-(1412,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (1412,29)-(1412,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1412,30)-(1412,36) 25 "SyntaxGenerator.mxg"
             __cb.Write("syntax");
             #line hidden
-            #line (1418,34)-(1418,35) 25 "SyntaxGenerator.mxg"
+            #line (1412,36)-(1412,37) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,35)-(1418,39) 25 "SyntaxGenerator.mxg"
+            #line (1412,37)-(1412,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("tree");
             #line hidden
-            #line (1418,39)-(1418,40) 25 "SyntaxGenerator.mxg"
+            #line (1412,41)-(1412,42) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,40)-(1418,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write("by");
+            #line (1412,42)-(1412,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("from");
             #line hidden
-            #line (1418,42)-(1418,43) 25 "SyntaxGenerator.mxg"
+            #line (1412,46)-(1412,47) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,43)-(1418,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write("parsing");
+            #line (1412,47)-(1412,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
             #line hidden
-            #line (1418,50)-(1418,51) 25 "SyntaxGenerator.mxg"
+            #line (1412,48)-(1412,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,51)-(1418,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1412,49)-(1412,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
             #line hidden
-            #line (1418,54)-(1418,55) 25 "SyntaxGenerator.mxg"
+            #line (1412,55)-(1412,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1418,55)-(1418,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("source");
-            #line hidden
-            #line (1418,61)-(1418,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1418,62)-(1418,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text.");
+            #line (1412,56)-(1412,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("node.");
             #line hidden
             __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1413,13)-(1413,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1413,16)-(1413,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1413,17)-(1413,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1414,13)-(1414,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1414,19)-(1414,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,21)-(1414,25) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1414,26)-(1414,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxTree");
+            #line hidden
+            #line (1414,36)-(1414,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,37)-(1414,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxTree(__SyntaxNode");
+            #line hidden
+            #line (1414,60)-(1414,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,61)-(1414,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("root,");
+            #line hidden
+            #line (1414,66)-(1414,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,68)-(1414,72) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1414,73)-(1414,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions?");
+            #line hidden
+            #line (1414,86)-(1414,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,87)-(1414,94) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options");
+            #line hidden
+            #line (1414,94)-(1414,95) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,95)-(1414,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1414,96)-(1414,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,97)-(1414,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null,");
+            #line hidden
+            #line (1414,102)-(1414,103) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,103)-(1414,110) 25 "SyntaxGenerator.mxg"
+            __cb.Write("string?");
+            #line hidden
+            #line (1414,110)-(1414,111) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,111)-(1414,115) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path");
+            #line hidden
+            #line (1414,115)-(1414,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,116)-(1414,117) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1414,117)-(1414,118) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,118)-(1414,121) 25 "SyntaxGenerator.mxg"
+            __cb.Write("\"\",");
+            #line hidden
+            #line (1414,121)-(1414,122) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,122)-(1414,133) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__Encoding?");
+            #line hidden
+            #line (1414,133)-(1414,134) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,134)-(1414,142) 25 "SyntaxGenerator.mxg"
+            __cb.Write("encoding");
+            #line hidden
+            #line (1414,142)-(1414,143) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,143)-(1414,144) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1414,144)-(1414,145) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1414,145)-(1414,150) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1415,13)-(1415,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1416,17)-(1416,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1416,23)-(1416,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1416,25)-(1416,29) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1416,30)-(1416,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxTree.Create((");
+            #line hidden
+            #line (1416,50)-(1416,54) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1416,55)-(1416,71) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxNode)root,");
+            #line hidden
+            #line (1416,71)-(1416,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1416,72)-(1416,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__IncrementalParseData.Empty,");
+            #line hidden
+            #line (1416,101)-(1416,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1416,102)-(1416,110) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options,");
+            #line hidden
+            #line (1416,110)-(1416,111) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1416,111)-(1416,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path,");
+            #line hidden
+            #line (1416,116)-(1416,117) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1416,117)-(1416,122) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null,");
+            #line hidden
+            #line (1416,122)-(1416,123) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1416,123)-(1416,133) 25 "SyntaxGenerator.mxg"
+            __cb.Write("encoding);");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1417,13)-(1417,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1419,13)-(1419,16) 25 "SyntaxGenerator.mxg"
@@ -21928,68 +21904,101 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1419,16)-(1419,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1419,17)-(1419,27) 25 "SyntaxGenerator.mxg"
+            #line (1419,17)-(1419,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1420,13)-(1420,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1420,16)-(1420,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,17)-(1420,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Produces");
+            #line hidden
+            #line (1420,25)-(1420,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,26)-(1420,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1420,27)-(1420,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,28)-(1420,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1420,34)-(1420,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,35)-(1420,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write("tree");
+            #line hidden
+            #line (1420,39)-(1420,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,40)-(1420,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write("by");
+            #line hidden
+            #line (1420,42)-(1420,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,43)-(1420,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write("parsing");
+            #line hidden
+            #line (1420,50)-(1420,51) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,51)-(1420,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1420,54)-(1420,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,55)-(1420,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("source");
+            #line hidden
+            #line (1420,61)-(1420,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1420,62)-(1420,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text.");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1421,13)-(1421,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1421,16)-(1421,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1421,17)-(1421,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("</summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1420,13)-(1420,19) 25 "SyntaxGenerator.mxg"
+            #line (1422,13)-(1422,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1420,19)-(1420,20) 25 "SyntaxGenerator.mxg"
+            #line (1422,19)-(1422,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1420,21)-(1420,25) 24 "SyntaxGenerator.mxg"
+            #line (1422,21)-(1422,25) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1420,26)-(1420,36) 25 "SyntaxGenerator.mxg"
+            #line (1422,26)-(1422,36) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxTree");
             #line hidden
-            #line (1420,36)-(1420,37) 25 "SyntaxGenerator.mxg"
+            #line (1422,36)-(1422,37) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1420,37)-(1420,53) 25 "SyntaxGenerator.mxg"
+            #line (1422,37)-(1422,53) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseSyntaxTree(");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1421,17)-(1421,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("string");
-            #line hidden
-            #line (1421,23)-(1421,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1421,24)-(1421,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text,");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1422,18)-(1422,22) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1422,23)-(1422,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions");
-            #line hidden
-            #line (1422,35)-(1422,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1422,36)-(1422,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options");
-            #line hidden
-            #line (1422,43)-(1422,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1422,44)-(1422,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1422,45)-(1422,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1422,46)-(1422,51) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -22000,198 +22009,165 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1423,23)-(1423,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1423,24)-(1423,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path");
-            #line hidden
-            #line (1423,28)-(1423,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1423,29)-(1423,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1423,30)-(1423,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1423,31)-(1423,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("\"\",");
+            #line (1423,24)-(1423,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1424,17)-(1424,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__Encoding");
+            #line (1424,18)-(1424,22) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
             #line hidden
-            #line (1424,27)-(1424,28) 25 "SyntaxGenerator.mxg"
+            #line (1424,23)-(1424,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions");
+            #line hidden
+            #line (1424,35)-(1424,36) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1424,28)-(1424,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("encoding");
+            #line (1424,36)-(1424,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options");
             #line hidden
-            #line (1424,36)-(1424,37) 25 "SyntaxGenerator.mxg"
+            #line (1424,43)-(1424,44) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1424,37)-(1424,38) 25 "SyntaxGenerator.mxg"
+            #line (1424,44)-(1424,45) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1424,38)-(1424,39) 25 "SyntaxGenerator.mxg"
+            #line (1424,45)-(1424,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1424,39)-(1424,44) 25 "SyntaxGenerator.mxg"
+            #line (1424,46)-(1424,51) 25 "SyntaxGenerator.mxg"
             __cb.Write("null,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1425,17)-(1425,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__CancellationToken");
+            #line (1425,17)-(1425,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("string");
             #line hidden
-            #line (1425,36)-(1425,37) 25 "SyntaxGenerator.mxg"
+            #line (1425,23)-(1425,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1425,37)-(1425,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("cancellationToken");
+            #line (1425,24)-(1425,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path");
             #line hidden
-            #line (1425,54)-(1425,55) 25 "SyntaxGenerator.mxg"
+            #line (1425,28)-(1425,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1425,55)-(1425,56) 25 "SyntaxGenerator.mxg"
+            #line (1425,29)-(1425,30) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1425,56)-(1425,57) 25 "SyntaxGenerator.mxg"
+            #line (1425,30)-(1425,31) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1425,57)-(1425,65) 25 "SyntaxGenerator.mxg"
+            #line (1425,31)-(1425,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("\"\",");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1426,17)-(1426,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__Encoding");
+            #line hidden
+            #line (1426,27)-(1426,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1426,28)-(1426,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("encoding");
+            #line hidden
+            #line (1426,36)-(1426,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1426,37)-(1426,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1426,38)-(1426,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1426,39)-(1426,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null,");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1427,17)-(1427,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__CancellationToken");
+            #line hidden
+            #line (1427,36)-(1427,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1427,37)-(1427,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("cancellationToken");
+            #line hidden
+            #line (1427,54)-(1427,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1427,55)-(1427,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1427,56)-(1427,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1427,57)-(1427,65) 25 "SyntaxGenerator.mxg"
             __cb.Write("default)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1426,13)-(1426,14) 25 "SyntaxGenerator.mxg"
+            #line (1428,13)-(1428,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1427,17)-(1427,23) 25 "SyntaxGenerator.mxg"
+            #line (1429,17)-(1429,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1427,23)-(1427,24) 25 "SyntaxGenerator.mxg"
+            #line (1429,23)-(1429,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1427,24)-(1427,25) 25 "SyntaxGenerator.mxg"
+            #line (1429,24)-(1429,25) 25 "SyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (1427,26)-(1427,30) 24 "SyntaxGenerator.mxg"
+            #line (1429,26)-(1429,30) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1427,31)-(1427,90) 25 "SyntaxGenerator.mxg"
+            #line (1429,31)-(1429,90) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxTree)this.ParseSyntaxTreeCore(__SourceText.From(text,");
             #line hidden
-            #line (1427,90)-(1427,91) 25 "SyntaxGenerator.mxg"
+            #line (1429,90)-(1429,91) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1427,91)-(1427,101) 25 "SyntaxGenerator.mxg"
+            #line (1429,91)-(1429,101) 25 "SyntaxGenerator.mxg"
             __cb.Write("encoding),");
             #line hidden
-            #line (1427,101)-(1427,102) 25 "SyntaxGenerator.mxg"
+            #line (1429,101)-(1429,102) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1427,102)-(1427,110) 25 "SyntaxGenerator.mxg"
+            #line (1429,102)-(1429,110) 25 "SyntaxGenerator.mxg"
             __cb.Write("options,");
             #line hidden
-            #line (1427,110)-(1427,111) 25 "SyntaxGenerator.mxg"
+            #line (1429,110)-(1429,111) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1427,111)-(1427,116) 25 "SyntaxGenerator.mxg"
+            #line (1429,111)-(1429,116) 25 "SyntaxGenerator.mxg"
             __cb.Write("path,");
             #line hidden
-            #line (1427,116)-(1427,117) 25 "SyntaxGenerator.mxg"
+            #line (1429,116)-(1429,117) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1427,117)-(1427,136) 25 "SyntaxGenerator.mxg"
+            #line (1429,117)-(1429,136) 25 "SyntaxGenerator.mxg"
             __cb.Write("cancellationToken);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1428,13)-(1428,14) 25 "SyntaxGenerator.mxg"
+            #line (1430,13)-(1430,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1430,13)-(1430,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1430,16)-(1430,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1430,17)-(1430,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1431,13)-(1431,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1431,16)-(1431,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,17)-(1431,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Produces");
-            #line hidden
-            #line (1431,25)-(1431,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,26)-(1431,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1431,27)-(1431,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,28)-(1431,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1431,34)-(1431,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,35)-(1431,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write("tree");
-            #line hidden
-            #line (1431,39)-(1431,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,40)-(1431,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write("by");
-            #line hidden
-            #line (1431,42)-(1431,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,43)-(1431,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write("parsing");
-            #line hidden
-            #line (1431,50)-(1431,51) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,51)-(1431,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1431,54)-(1431,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,55)-(1431,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("source");
-            #line hidden
-            #line (1431,61)-(1431,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1431,62)-(1431,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text.");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1432,13)-(1432,16) 25 "SyntaxGenerator.mxg"
@@ -22200,634 +22176,574 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1432,16)-(1432,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1432,17)-(1432,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1433,13)-(1433,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1433,19)-(1433,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1433,21)-(1433,25) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1433,26)-(1433,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxTree");
-            #line hidden
-            #line (1433,36)-(1433,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1433,37)-(1433,53) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseSyntaxTree(");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1434,17)-(1434,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__SourceText");
-            #line hidden
-            #line (1434,29)-(1434,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1434,30)-(1434,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text,");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1435,18)-(1435,22) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1435,23)-(1435,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions?");
-            #line hidden
-            #line (1435,36)-(1435,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1435,37)-(1435,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options");
-            #line hidden
-            #line (1435,44)-(1435,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1435,45)-(1435,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1435,46)-(1435,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1435,47)-(1435,52) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null,");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1436,17)-(1436,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("string");
-            #line hidden
-            #line (1436,23)-(1436,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1436,24)-(1436,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path");
-            #line hidden
-            #line (1436,28)-(1436,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1436,29)-(1436,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1436,30)-(1436,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1436,31)-(1436,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("\"\",");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1437,17)-(1437,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__CancellationToken");
-            #line hidden
-            #line (1437,36)-(1437,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1437,37)-(1437,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("cancellationToken");
-            #line hidden
-            #line (1437,54)-(1437,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1437,55)-(1437,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1437,56)-(1437,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1437,57)-(1437,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("default)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1438,13)-(1438,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1439,17)-(1439,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1439,23)-(1439,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1439,24)-(1439,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("(");
-            #line hidden
-            #line (1439,26)-(1439,30) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1439,31)-(1439,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxTree)this.ParseSyntaxTreeCore(text,");
-            #line hidden
-            #line (1439,72)-(1439,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1439,73)-(1439,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options,");
-            #line hidden
-            #line (1439,81)-(1439,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1439,82)-(1439,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path,");
-            #line hidden
-            #line (1439,87)-(1439,88) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1439,88)-(1439,107) 25 "SyntaxGenerator.mxg"
-            __cb.Write("cancellationToken);");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1440,13)-(1440,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1442,13)-(1442,22) 25 "SyntaxGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (1442,22)-(1442,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1442,23)-(1442,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (1442,31)-(1442,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1442,32)-(1442,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__SyntaxTree");
-            #line hidden
-            #line (1442,44)-(1442,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1442,45)-(1442,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseSyntaxTreeCore(");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1443,17)-(1443,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__SourceText");
-            #line hidden
-            #line (1443,29)-(1443,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1443,30)-(1443,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text,");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1444,17)-(1444,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__ParseOptions?");
-            #line hidden
-            #line (1444,32)-(1444,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1444,33)-(1444,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options");
-            #line hidden
-            #line (1444,40)-(1444,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1444,41)-(1444,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1444,42)-(1444,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1444,43)-(1444,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null,");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1445,17)-(1445,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("string");
-            #line hidden
-            #line (1445,23)-(1445,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1445,24)-(1445,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path");
-            #line hidden
-            #line (1445,28)-(1445,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1445,29)-(1445,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1445,30)-(1445,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1445,31)-(1445,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("\"\",");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1446,17)-(1446,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__CancellationToken");
-            #line hidden
-            #line (1446,36)-(1446,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1446,37)-(1446,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("cancellationToken");
-            #line hidden
-            #line (1446,54)-(1446,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1446,55)-(1446,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1446,56)-(1446,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1446,57)-(1446,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("default)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1447,13)-(1447,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1448,17)-(1448,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1448,23)-(1448,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1448,25)-(1448,29) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1448,30)-(1448,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxTree.ParseText(text,");
-            #line hidden
-            #line (1448,56)-(1448,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1448,57)-(1448,58) 25 "SyntaxGenerator.mxg"
-            __cb.Write("(");
-            #line hidden
-            #line (1448,59)-(1448,63) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1448,64)-(1448,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions?)options,");
-            #line hidden
-            #line (1448,86)-(1448,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1448,87)-(1448,92) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path,");
-            #line hidden
-            #line (1448,92)-(1448,93) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1448,93)-(1448,112) 25 "SyntaxGenerator.mxg"
-            __cb.Write("cancellationToken);");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1449,13)-(1449,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1451,13)-(1451,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1451,19)-(1451,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,20)-(1451,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (1451,28)-(1451,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,29)-(1451,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__SyntaxTree");
-            #line hidden
-            #line (1451,41)-(1451,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,42)-(1451,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write("MakeSyntaxTree(__SyntaxNode");
-            #line hidden
-            #line (1451,69)-(1451,70) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,70)-(1451,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write("root,");
-            #line hidden
-            #line (1451,75)-(1451,76) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,76)-(1451,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__ParseOptions?");
-            #line hidden
-            #line (1451,91)-(1451,92) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,92)-(1451,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options");
-            #line hidden
-            #line (1451,99)-(1451,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,100)-(1451,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1451,101)-(1451,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,102)-(1451,107) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null,");
-            #line hidden
-            #line (1451,107)-(1451,108) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,108)-(1451,114) 25 "SyntaxGenerator.mxg"
-            __cb.Write("string");
-            #line hidden
-            #line (1451,114)-(1451,115) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,115)-(1451,119) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path");
-            #line hidden
-            #line (1451,119)-(1451,120) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,120)-(1451,121) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1451,121)-(1451,122) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,122)-(1451,125) 25 "SyntaxGenerator.mxg"
-            __cb.Write("\"\",");
-            #line hidden
-            #line (1451,125)-(1451,126) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,126)-(1451,137) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__Encoding?");
-            #line hidden
-            #line (1451,137)-(1451,138) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,138)-(1451,146) 25 "SyntaxGenerator.mxg"
-            __cb.Write("encoding");
-            #line hidden
-            #line (1451,146)-(1451,147) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,147)-(1451,148) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1451,148)-(1451,149) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1451,149)-(1451,154) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1452,13)-(1452,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1453,17)-(1453,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1453,23)-(1453,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1453,25)-(1453,29) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1453,30)-(1453,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxTree.Create((");
-            #line hidden
-            #line (1453,50)-(1453,54) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1453,55)-(1453,71) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxNode)root,");
-            #line hidden
-            #line (1453,71)-(1453,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1453,72)-(1453,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__IncrementalParseData.Empty,");
-            #line hidden
-            #line (1453,101)-(1453,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1453,102)-(1453,103) 25 "SyntaxGenerator.mxg"
-            __cb.Write("(");
-            #line hidden
-            #line (1453,104)-(1453,108) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1453,109)-(1453,130) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions)options,");
-            #line hidden
-            #line (1453,130)-(1453,131) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1453,131)-(1453,136) 25 "SyntaxGenerator.mxg"
-            __cb.Write("path,");
-            #line hidden
-            #line (1453,136)-(1453,137) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1453,137)-(1453,142) 25 "SyntaxGenerator.mxg"
-            __cb.Write("null,");
-            #line hidden
-            #line (1453,142)-(1453,143) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1453,143)-(1453,153) 25 "SyntaxGenerator.mxg"
-            __cb.Write("encoding);");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1454,13)-(1454,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1456,13)-(1456,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1456,16)-(1456,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1456,17)-(1456,26) 25 "SyntaxGenerator.mxg"
+            #line (1432,17)-(1432,26) 25 "SyntaxGenerator.mxg"
             __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1457,13)-(1457,16) 25 "SyntaxGenerator.mxg"
+            #line (1433,13)-(1433,16) 25 "SyntaxGenerator.mxg"
             __cb.Write("///");
             #line hidden
-            #line (1457,16)-(1457,17) 25 "SyntaxGenerator.mxg"
+            #line (1433,16)-(1433,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,17)-(1457,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Creates");
+            #line (1433,17)-(1433,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Produces");
             #line hidden
-            #line (1457,24)-(1457,25) 25 "SyntaxGenerator.mxg"
+            #line (1433,25)-(1433,26) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,25)-(1457,26) 25 "SyntaxGenerator.mxg"
+            #line (1433,26)-(1433,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("a");
             #line hidden
-            #line (1457,26)-(1457,27) 25 "SyntaxGenerator.mxg"
+            #line (1433,27)-(1433,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,27)-(1457,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1457,32)-(1457,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,33)-(1457,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write("corresponding");
-            #line hidden
-            #line (1457,46)-(1457,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,47)-(1457,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1457,49)-(1457,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,50)-(1457,51) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1457,51)-(1457,52) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,52)-(1457,58) 25 "SyntaxGenerator.mxg"
+            #line (1433,28)-(1433,34) 25 "SyntaxGenerator.mxg"
             __cb.Write("syntax");
             #line hidden
-            #line (1457,58)-(1457,59) 25 "SyntaxGenerator.mxg"
+            #line (1433,34)-(1433,35) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,59)-(1457,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind.");
+            #line (1433,35)-(1433,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write("tree");
             #line hidden
-            #line (1457,64)-(1457,65) 25 "SyntaxGenerator.mxg"
+            #line (1433,39)-(1433,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,65)-(1457,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write("This");
+            #line (1433,40)-(1433,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write("by");
             #line hidden
-            #line (1457,69)-(1457,70) 25 "SyntaxGenerator.mxg"
+            #line (1433,42)-(1433,43) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,70)-(1457,76) 25 "SyntaxGenerator.mxg"
-            __cb.Write("method");
+            #line (1433,43)-(1433,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write("parsing");
             #line hidden
-            #line (1457,76)-(1457,77) 25 "SyntaxGenerator.mxg"
+            #line (1433,50)-(1433,51) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,77)-(1457,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write("can");
+            #line (1433,51)-(1433,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
             #line hidden
-            #line (1457,80)-(1457,81) 25 "SyntaxGenerator.mxg"
+            #line (1433,54)-(1433,55) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,81)-(1457,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("be");
+            #line (1433,55)-(1433,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("source");
             #line hidden
-            #line (1457,83)-(1457,84) 25 "SyntaxGenerator.mxg"
+            #line (1433,61)-(1433,62) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1457,84)-(1457,88) 25 "SyntaxGenerator.mxg"
-            __cb.Write("used");
-            #line hidden
-            #line (1457,88)-(1457,89) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,89)-(1457,92) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1457,92)-(1457,93) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,93)-(1457,98) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1457,98)-(1457,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,99)-(1457,105) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1457,105)-(1457,106) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,106)-(1457,111) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kinds");
-            #line hidden
-            #line (1457,111)-(1457,112) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,112)-(1457,117) 25 "SyntaxGenerator.mxg"
-            __cb.Write("whose");
-            #line hidden
-            #line (1457,117)-(1457,118) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1457,118)-(1457,122) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text");
+            #line (1433,62)-(1433,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text.");
             #line hidden
             __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1434,13)-(1434,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1434,16)-(1434,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1434,17)-(1434,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1435,13)-(1435,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1435,19)-(1435,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1435,21)-(1435,25) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1435,26)-(1435,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxTree");
+            #line hidden
+            #line (1435,36)-(1435,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1435,37)-(1435,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseSyntaxTree(");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1436,17)-(1436,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__SourceText");
+            #line hidden
+            #line (1436,29)-(1436,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1436,30)-(1436,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text,");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1437,18)-(1437,22) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1437,23)-(1437,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions?");
+            #line hidden
+            #line (1437,36)-(1437,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1437,37)-(1437,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options");
+            #line hidden
+            #line (1437,44)-(1437,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1437,45)-(1437,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1437,46)-(1437,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1437,47)-(1437,52) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null,");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1438,17)-(1438,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("string");
+            #line hidden
+            #line (1438,23)-(1438,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1438,24)-(1438,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path");
+            #line hidden
+            #line (1438,28)-(1438,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1438,29)-(1438,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1438,30)-(1438,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1438,31)-(1438,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("\"\",");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1439,17)-(1439,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__CancellationToken");
+            #line hidden
+            #line (1439,36)-(1439,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1439,37)-(1439,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("cancellationToken");
+            #line hidden
+            #line (1439,54)-(1439,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1439,55)-(1439,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1439,56)-(1439,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1439,57)-(1439,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("default)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1440,13)-(1440,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1441,17)-(1441,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1441,23)-(1441,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1441,24)-(1441,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("(");
+            #line hidden
+            #line (1441,26)-(1441,30) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1441,31)-(1441,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxTree)this.ParseSyntaxTreeCore(text,");
+            #line hidden
+            #line (1441,72)-(1441,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1441,73)-(1441,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options,");
+            #line hidden
+            #line (1441,81)-(1441,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1441,82)-(1441,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path,");
+            #line hidden
+            #line (1441,87)-(1441,88) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1441,88)-(1441,107) 25 "SyntaxGenerator.mxg"
+            __cb.Write("cancellationToken);");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1442,13)-(1442,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1444,13)-(1444,22) 25 "SyntaxGenerator.mxg"
+            __cb.Write("protected");
+            #line hidden
+            #line (1444,22)-(1444,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1444,23)-(1444,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (1444,31)-(1444,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1444,32)-(1444,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__SyntaxTree");
+            #line hidden
+            #line (1444,44)-(1444,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1444,45)-(1444,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseSyntaxTreeCore(");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1445,17)-(1445,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__SourceText");
+            #line hidden
+            #line (1445,29)-(1445,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1445,30)-(1445,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text,");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1446,17)-(1446,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__ParseOptions?");
+            #line hidden
+            #line (1446,32)-(1446,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1446,33)-(1446,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options");
+            #line hidden
+            #line (1446,40)-(1446,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1446,41)-(1446,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1446,42)-(1446,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1446,43)-(1446,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null,");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1447,17)-(1447,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("string");
+            #line hidden
+            #line (1447,23)-(1447,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1447,24)-(1447,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path");
+            #line hidden
+            #line (1447,28)-(1447,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1447,29)-(1447,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1447,30)-(1447,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1447,31)-(1447,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("\"\",");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1448,17)-(1448,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__CancellationToken");
+            #line hidden
+            #line (1448,36)-(1448,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1448,37)-(1448,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("cancellationToken");
+            #line hidden
+            #line (1448,54)-(1448,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1448,55)-(1448,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1448,56)-(1448,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1448,57)-(1448,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("default)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1449,13)-(1449,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1450,17)-(1450,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1450,23)-(1450,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1450,25)-(1450,29) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1450,30)-(1450,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxTree.ParseText(text,");
+            #line hidden
+            #line (1450,56)-(1450,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1450,57)-(1450,58) 25 "SyntaxGenerator.mxg"
+            __cb.Write("(");
+            #line hidden
+            #line (1450,59)-(1450,63) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1450,64)-(1450,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions?)options,");
+            #line hidden
+            #line (1450,86)-(1450,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1450,87)-(1450,92) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path,");
+            #line hidden
+            #line (1450,92)-(1450,93) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1450,93)-(1450,112) 25 "SyntaxGenerator.mxg"
+            __cb.Write("cancellationToken);");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1451,13)-(1451,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1453,13)-(1453,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1453,19)-(1453,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,20)-(1453,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (1453,28)-(1453,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,29)-(1453,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__SyntaxTree");
+            #line hidden
+            #line (1453,41)-(1453,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,42)-(1453,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write("MakeSyntaxTree(__SyntaxNode");
+            #line hidden
+            #line (1453,69)-(1453,70) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,70)-(1453,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write("root,");
+            #line hidden
+            #line (1453,75)-(1453,76) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,76)-(1453,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__ParseOptions?");
+            #line hidden
+            #line (1453,91)-(1453,92) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,92)-(1453,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options");
+            #line hidden
+            #line (1453,99)-(1453,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,100)-(1453,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1453,101)-(1453,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,102)-(1453,107) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null,");
+            #line hidden
+            #line (1453,107)-(1453,108) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,108)-(1453,114) 25 "SyntaxGenerator.mxg"
+            __cb.Write("string");
+            #line hidden
+            #line (1453,114)-(1453,115) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,115)-(1453,119) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path");
+            #line hidden
+            #line (1453,119)-(1453,120) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,120)-(1453,121) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1453,121)-(1453,122) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,122)-(1453,125) 25 "SyntaxGenerator.mxg"
+            __cb.Write("\"\",");
+            #line hidden
+            #line (1453,125)-(1453,126) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,126)-(1453,137) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__Encoding?");
+            #line hidden
+            #line (1453,137)-(1453,138) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,138)-(1453,146) 25 "SyntaxGenerator.mxg"
+            __cb.Write("encoding");
+            #line hidden
+            #line (1453,146)-(1453,147) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,147)-(1453,148) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1453,148)-(1453,149) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1453,149)-(1453,154) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1454,13)-(1454,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1455,17)-(1455,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1455,23)-(1455,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1455,25)-(1455,29) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1455,30)-(1455,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxTree.Create((");
+            #line hidden
+            #line (1455,50)-(1455,54) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1455,55)-(1455,71) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxNode)root,");
+            #line hidden
+            #line (1455,71)-(1455,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1455,72)-(1455,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__IncrementalParseData.Empty,");
+            #line hidden
+            #line (1455,101)-(1455,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1455,102)-(1455,103) 25 "SyntaxGenerator.mxg"
+            __cb.Write("(");
+            #line hidden
+            #line (1455,104)-(1455,108) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1455,109)-(1455,130) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions)options,");
+            #line hidden
+            #line (1455,130)-(1455,131) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1455,131)-(1455,136) 25 "SyntaxGenerator.mxg"
+            __cb.Write("path,");
+            #line hidden
+            #line (1455,136)-(1455,137) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1455,137)-(1455,142) 25 "SyntaxGenerator.mxg"
+            __cb.Write("null,");
+            #line hidden
+            #line (1455,142)-(1455,143) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1455,143)-(1455,153) 25 "SyntaxGenerator.mxg"
+            __cb.Write("encoding);");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1456,13)-(1456,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1458,13)-(1458,16) 25 "SyntaxGenerator.mxg"
@@ -22836,44 +22752,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1458,16)-(1458,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1458,17)-(1458,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write("can");
-            #line hidden
-            #line (1458,20)-(1458,21) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1458,21)-(1458,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("be");
-            #line hidden
-            #line (1458,23)-(1458,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1458,24)-(1458,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write("inferred");
-            #line hidden
-            #line (1458,32)-(1458,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1458,33)-(1458,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("by");
-            #line hidden
-            #line (1458,35)-(1458,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1458,36)-(1458,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1458,39)-(1458,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1458,40)-(1458,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
-            #line hidden
-            #line (1458,44)-(1458,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1458,45)-(1458,51) 25 "SyntaxGenerator.mxg"
-            __cb.Write("alone.");
+            #line (1458,17)-(1458,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -22884,8 +22764,116 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1459,16)-(1459,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1459,17)-(1459,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
+            #line (1459,17)-(1459,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Creates");
+            #line hidden
+            #line (1459,24)-(1459,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,25)-(1459,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1459,26)-(1459,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,27)-(1459,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1459,32)-(1459,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,33)-(1459,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("corresponding");
+            #line hidden
+            #line (1459,46)-(1459,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,47)-(1459,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
+            #line hidden
+            #line (1459,49)-(1459,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,50)-(1459,51) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1459,51)-(1459,52) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,52)-(1459,58) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1459,58)-(1459,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,59)-(1459,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind.");
+            #line hidden
+            #line (1459,64)-(1459,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,65)-(1459,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write("This");
+            #line hidden
+            #line (1459,69)-(1459,70) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,70)-(1459,76) 25 "SyntaxGenerator.mxg"
+            __cb.Write("method");
+            #line hidden
+            #line (1459,76)-(1459,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,77)-(1459,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write("can");
+            #line hidden
+            #line (1459,80)-(1459,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,81)-(1459,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("be");
+            #line hidden
+            #line (1459,83)-(1459,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,84)-(1459,88) 25 "SyntaxGenerator.mxg"
+            __cb.Write("used");
+            #line hidden
+            #line (1459,88)-(1459,89) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,89)-(1459,92) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (1459,92)-(1459,93) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,93)-(1459,98) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1459,98)-(1459,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,99)-(1459,105) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1459,105)-(1459,106) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,106)-(1459,111) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kinds");
+            #line hidden
+            #line (1459,111)-(1459,112) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,112)-(1459,117) 25 "SyntaxGenerator.mxg"
+            __cb.Write("whose");
+            #line hidden
+            #line (1459,117)-(1459,118) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1459,118)-(1459,122) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -22896,92 +22884,44 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1460,16)-(1460,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1460,17)-(1460,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
+            #line (1460,17)-(1460,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write("can");
+            #line hidden
+            #line (1460,20)-(1460,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1460,21)-(1460,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("be");
             #line hidden
             #line (1460,23)-(1460,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1460,24)-(1460,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"kind\">A");
+            #line (1460,24)-(1460,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("inferred");
             #line hidden
-            #line (1460,37)-(1460,38) 25 "SyntaxGenerator.mxg"
+            #line (1460,32)-(1460,33) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1460,38)-(1460,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
+            #line (1460,33)-(1460,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("by");
+            #line hidden
+            #line (1460,35)-(1460,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1460,36)-(1460,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1460,39)-(1460,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1460,40)-(1460,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
             #line hidden
             #line (1460,44)-(1460,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1460,45)-(1460,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
-            #line hidden
-            #line (1460,49)-(1460,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,50)-(1460,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("value");
-            #line hidden
-            #line (1460,55)-(1460,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,56)-(1460,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1460,59)-(1460,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,60)-(1460,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1460,61)-(1460,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,62)-(1460,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.");
-            #line hidden
-            #line (1460,68)-(1460,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,69)-(1460,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("These");
-            #line hidden
-            #line (1460,74)-(1460,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,75)-(1460,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write("have");
-            #line hidden
-            #line (1460,79)-(1460,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,80)-(1460,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1460,83)-(1460,84) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,84)-(1460,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("suffix");
-            #line hidden
-            #line (1460,90)-(1460,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,91)-(1460,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Token");
-            #line hidden
-            #line (1460,96)-(1460,97) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,97)-(1460,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write("or");
-            #line hidden
-            #line (1460,99)-(1460,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1460,100)-(1460,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Keyword.</param>");
+            #line (1460,45)-(1460,51) 25 "SyntaxGenerator.mxg"
+            __cb.Write("alone.");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -22992,204 +22932,180 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1461,16)-(1461,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1461,17)-(1461,36) 25 "SyntaxGenerator.mxg"
+            #line (1461,17)-(1461,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1462,13)-(1462,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1462,16)-(1462,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,17)-(1462,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
+            #line hidden
+            #line (1462,23)-(1462,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,24)-(1462,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"kind\">A");
+            #line hidden
+            #line (1462,37)-(1462,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,38)-(1462,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1462,44)-(1462,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,45)-(1462,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
+            #line hidden
+            #line (1462,49)-(1462,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,50)-(1462,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("value");
+            #line hidden
+            #line (1462,55)-(1462,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,56)-(1462,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (1462,59)-(1462,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,60)-(1462,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1462,61)-(1462,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,62)-(1462,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.");
+            #line hidden
+            #line (1462,68)-(1462,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,69)-(1462,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("These");
+            #line hidden
+            #line (1462,74)-(1462,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,75)-(1462,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write("have");
+            #line hidden
+            #line (1462,79)-(1462,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,80)-(1462,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1462,83)-(1462,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,84)-(1462,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("suffix");
+            #line hidden
+            #line (1462,90)-(1462,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,91)-(1462,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Token");
+            #line hidden
+            #line (1462,96)-(1462,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,97)-(1462,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write("or");
+            #line hidden
+            #line (1462,99)-(1462,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1462,100)-(1462,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Keyword.</param>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1463,13)-(1463,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1463,16)-(1463,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1463,17)-(1463,36) 25 "SyntaxGenerator.mxg"
             __cb.Write("<returns></returns>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1462,13)-(1462,19) 25 "SyntaxGenerator.mxg"
+            #line (1464,13)-(1464,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1462,19)-(1462,20) 25 "SyntaxGenerator.mxg"
+            #line (1464,19)-(1464,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1462,20)-(1462,27) 25 "SyntaxGenerator.mxg"
+            #line (1464,20)-(1464,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("virtual");
             #line hidden
-            #line (1462,27)-(1462,28) 25 "SyntaxGenerator.mxg"
+            #line (1464,27)-(1464,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1462,28)-(1462,41) 25 "SyntaxGenerator.mxg"
+            #line (1464,28)-(1464,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("__SyntaxToken");
             #line hidden
-            #line (1462,41)-(1462,42) 25 "SyntaxGenerator.mxg"
+            #line (1464,41)-(1464,42) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1462,42)-(1462,48) 25 "SyntaxGenerator.mxg"
+            #line (1464,42)-(1464,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("Token(");
             #line hidden
-            #line (1462,49)-(1462,53) 24 "SyntaxGenerator.mxg"
+            #line (1464,49)-(1464,53) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1462,54)-(1462,64) 25 "SyntaxGenerator.mxg"
+            #line (1464,54)-(1464,64) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (1462,64)-(1462,65) 25 "SyntaxGenerator.mxg"
+            #line (1464,64)-(1464,65) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1462,65)-(1462,70) 25 "SyntaxGenerator.mxg"
+            #line (1464,65)-(1464,70) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1463,13)-(1463,14) 25 "SyntaxGenerator.mxg"
+            #line (1465,13)-(1465,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1464,17)-(1464,23) 25 "SyntaxGenerator.mxg"
+            #line (1466,17)-(1466,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1464,23)-(1464,24) 25 "SyntaxGenerator.mxg"
+            #line (1466,23)-(1466,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1464,24)-(1464,46) 25 "SyntaxGenerator.mxg"
+            #line (1466,24)-(1466,46) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.Token((int)kind);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1465,13)-(1465,14) 25 "SyntaxGenerator.mxg"
+            #line (1467,13)-(1467,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1467,13)-(1467,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1467,16)-(1467,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1467,17)-(1467,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1468,13)-(1468,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1468,16)-(1468,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,17)-(1468,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Creates");
-            #line hidden
-            #line (1468,24)-(1468,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,25)-(1468,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1468,26)-(1468,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,27)-(1468,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1468,32)-(1468,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,33)-(1468,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write("corresponding");
-            #line hidden
-            #line (1468,46)-(1468,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,47)-(1468,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1468,49)-(1468,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,50)-(1468,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1468,56)-(1468,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,57)-(1468,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind.");
-            #line hidden
-            #line (1468,62)-(1468,63) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,63)-(1468,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("This");
-            #line hidden
-            #line (1468,67)-(1468,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,68)-(1468,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("method");
-            #line hidden
-            #line (1468,74)-(1468,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,75)-(1468,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write("can");
-            #line hidden
-            #line (1468,78)-(1468,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,79)-(1468,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write("be");
-            #line hidden
-            #line (1468,81)-(1468,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,82)-(1468,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write("used");
-            #line hidden
-            #line (1468,86)-(1468,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,87)-(1468,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1468,90)-(1468,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,91)-(1468,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1468,96)-(1468,97) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,97)-(1468,103) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1468,103)-(1468,104) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,104)-(1468,109) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kinds");
-            #line hidden
-            #line (1468,109)-(1468,110) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,110)-(1468,115) 25 "SyntaxGenerator.mxg"
-            __cb.Write("whose");
-            #line hidden
-            #line (1468,115)-(1468,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,116)-(1468,120) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text");
-            #line hidden
-            #line (1468,120)-(1468,121) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1468,121)-(1468,124) 25 "SyntaxGenerator.mxg"
-            __cb.Write("can");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1469,13)-(1469,16) 25 "SyntaxGenerator.mxg"
@@ -23198,38 +23114,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1469,16)-(1469,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1469,17)-(1469,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("be");
-            #line hidden
-            #line (1469,19)-(1469,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1469,20)-(1469,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("inferred");
-            #line hidden
-            #line (1469,28)-(1469,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1469,29)-(1469,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write("by");
-            #line hidden
-            #line (1469,31)-(1469,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1469,32)-(1469,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1469,35)-(1469,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1469,36)-(1469,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
-            #line hidden
-            #line (1469,40)-(1469,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1469,41)-(1469,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("alone.");
+            #line (1469,17)-(1469,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23240,8 +23126,116 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1470,16)-(1470,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1470,17)-(1470,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
+            #line (1470,17)-(1470,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Creates");
+            #line hidden
+            #line (1470,24)-(1470,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,25)-(1470,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1470,26)-(1470,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,27)-(1470,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1470,32)-(1470,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,33)-(1470,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("corresponding");
+            #line hidden
+            #line (1470,46)-(1470,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,47)-(1470,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
+            #line hidden
+            #line (1470,49)-(1470,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,50)-(1470,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1470,56)-(1470,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,57)-(1470,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind.");
+            #line hidden
+            #line (1470,62)-(1470,63) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,63)-(1470,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write("This");
+            #line hidden
+            #line (1470,67)-(1470,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,68)-(1470,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("method");
+            #line hidden
+            #line (1470,74)-(1470,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,75)-(1470,78) 25 "SyntaxGenerator.mxg"
+            __cb.Write("can");
+            #line hidden
+            #line (1470,78)-(1470,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,79)-(1470,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write("be");
+            #line hidden
+            #line (1470,81)-(1470,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,82)-(1470,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("used");
+            #line hidden
+            #line (1470,86)-(1470,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,87)-(1470,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (1470,90)-(1470,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,91)-(1470,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1470,96)-(1470,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,97)-(1470,103) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1470,103)-(1470,104) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,104)-(1470,109) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kinds");
+            #line hidden
+            #line (1470,109)-(1470,110) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,110)-(1470,115) 25 "SyntaxGenerator.mxg"
+            __cb.Write("whose");
+            #line hidden
+            #line (1470,115)-(1470,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,116)-(1470,120) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text");
+            #line hidden
+            #line (1470,120)-(1470,121) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1470,121)-(1470,124) 25 "SyntaxGenerator.mxg"
+            __cb.Write("can");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23252,56 +23246,38 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1471,16)-(1471,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1471,17)-(1471,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
+            #line (1471,17)-(1471,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("be");
             #line hidden
-            #line (1471,23)-(1471,24) 25 "SyntaxGenerator.mxg"
+            #line (1471,19)-(1471,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1471,24)-(1471,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"leading\">A");
+            #line (1471,20)-(1471,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("inferred");
+            #line hidden
+            #line (1471,28)-(1471,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1471,29)-(1471,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write("by");
+            #line hidden
+            #line (1471,31)-(1471,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1471,32)-(1471,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1471,35)-(1471,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1471,36)-(1471,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
             #line hidden
             #line (1471,40)-(1471,41) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1471,41)-(1471,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("list");
-            #line hidden
-            #line (1471,45)-(1471,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1471,46)-(1471,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("of");
-            #line hidden
-            #line (1471,48)-(1471,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1471,49)-(1471,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("trivia");
-            #line hidden
-            #line (1471,55)-(1471,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1471,56)-(1471,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("immediately");
-            #line hidden
-            #line (1471,67)-(1471,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1471,68)-(1471,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("preceding");
-            #line hidden
-            #line (1471,77)-(1471,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1471,78)-(1471,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1471,81)-(1471,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1471,82)-(1471,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.</param>");
+            #line (1471,41)-(1471,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("alone.");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23312,92 +23288,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1472,16)-(1472,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1472,17)-(1472,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
-            #line hidden
-            #line (1472,23)-(1472,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,24)-(1472,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"kind\">A");
-            #line hidden
-            #line (1472,37)-(1472,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,38)-(1472,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1472,44)-(1472,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,45)-(1472,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
-            #line hidden
-            #line (1472,49)-(1472,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,50)-(1472,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("value");
-            #line hidden
-            #line (1472,55)-(1472,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,56)-(1472,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1472,59)-(1472,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,60)-(1472,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1472,61)-(1472,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,62)-(1472,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.");
-            #line hidden
-            #line (1472,68)-(1472,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,69)-(1472,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("These");
-            #line hidden
-            #line (1472,74)-(1472,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,75)-(1472,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write("have");
-            #line hidden
-            #line (1472,79)-(1472,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,80)-(1472,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1472,83)-(1472,84) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,84)-(1472,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("suffix");
-            #line hidden
-            #line (1472,90)-(1472,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,91)-(1472,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Token");
-            #line hidden
-            #line (1472,96)-(1472,97) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,97)-(1472,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write("or");
-            #line hidden
-            #line (1472,99)-(1472,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1472,100)-(1472,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Keyword.</param>");
+            #line (1472,17)-(1472,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23414,142 +23306,298 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1473,23)-(1473,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,24)-(1473,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"trailing\">A");
+            #line (1473,24)-(1473,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"leading\">A");
             #line hidden
-            #line (1473,41)-(1473,42) 25 "SyntaxGenerator.mxg"
+            #line (1473,40)-(1473,41) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,42)-(1473,46) 25 "SyntaxGenerator.mxg"
+            #line (1473,41)-(1473,45) 25 "SyntaxGenerator.mxg"
             __cb.Write("list");
             #line hidden
-            #line (1473,46)-(1473,47) 25 "SyntaxGenerator.mxg"
+            #line (1473,45)-(1473,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,47)-(1473,49) 25 "SyntaxGenerator.mxg"
+            #line (1473,46)-(1473,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("of");
             #line hidden
-            #line (1473,49)-(1473,50) 25 "SyntaxGenerator.mxg"
+            #line (1473,48)-(1473,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,50)-(1473,56) 25 "SyntaxGenerator.mxg"
+            #line (1473,49)-(1473,55) 25 "SyntaxGenerator.mxg"
             __cb.Write("trivia");
             #line hidden
-            #line (1473,56)-(1473,57) 25 "SyntaxGenerator.mxg"
+            #line (1473,55)-(1473,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,57)-(1473,68) 25 "SyntaxGenerator.mxg"
+            #line (1473,56)-(1473,67) 25 "SyntaxGenerator.mxg"
             __cb.Write("immediately");
             #line hidden
-            #line (1473,68)-(1473,69) 25 "SyntaxGenerator.mxg"
+            #line (1473,67)-(1473,68) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,69)-(1473,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write("following");
+            #line (1473,68)-(1473,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("preceding");
             #line hidden
-            #line (1473,78)-(1473,79) 25 "SyntaxGenerator.mxg"
+            #line (1473,77)-(1473,78) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,79)-(1473,82) 25 "SyntaxGenerator.mxg"
+            #line (1473,78)-(1473,81) 25 "SyntaxGenerator.mxg"
             __cb.Write("the");
             #line hidden
-            #line (1473,82)-(1473,83) 25 "SyntaxGenerator.mxg"
+            #line (1473,81)-(1473,82) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1473,83)-(1473,97) 25 "SyntaxGenerator.mxg"
+            #line (1473,82)-(1473,96) 25 "SyntaxGenerator.mxg"
             __cb.Write("token.</param>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1474,13)-(1474,19) 25 "SyntaxGenerator.mxg"
+            #line (1474,13)-(1474,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1474,16)-(1474,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,17)-(1474,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
+            #line hidden
+            #line (1474,23)-(1474,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,24)-(1474,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"kind\">A");
+            #line hidden
+            #line (1474,37)-(1474,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,38)-(1474,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1474,44)-(1474,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,45)-(1474,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
+            #line hidden
+            #line (1474,49)-(1474,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,50)-(1474,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("value");
+            #line hidden
+            #line (1474,55)-(1474,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,56)-(1474,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (1474,59)-(1474,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,60)-(1474,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1474,61)-(1474,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,62)-(1474,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.");
+            #line hidden
+            #line (1474,68)-(1474,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,69)-(1474,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("These");
+            #line hidden
+            #line (1474,74)-(1474,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,75)-(1474,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write("have");
+            #line hidden
+            #line (1474,79)-(1474,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,80)-(1474,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1474,83)-(1474,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,84)-(1474,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("suffix");
+            #line hidden
+            #line (1474,90)-(1474,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,91)-(1474,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Token");
+            #line hidden
+            #line (1474,96)-(1474,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,97)-(1474,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write("or");
+            #line hidden
+            #line (1474,99)-(1474,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1474,100)-(1474,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Keyword.</param>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1475,13)-(1475,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1475,16)-(1475,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,17)-(1475,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
+            #line hidden
+            #line (1475,23)-(1475,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,24)-(1475,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"trailing\">A");
+            #line hidden
+            #line (1475,41)-(1475,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,42)-(1475,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("list");
+            #line hidden
+            #line (1475,46)-(1475,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,47)-(1475,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("of");
+            #line hidden
+            #line (1475,49)-(1475,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,50)-(1475,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("trivia");
+            #line hidden
+            #line (1475,56)-(1475,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,57)-(1475,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("immediately");
+            #line hidden
+            #line (1475,68)-(1475,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,69)-(1475,78) 25 "SyntaxGenerator.mxg"
+            __cb.Write("following");
+            #line hidden
+            #line (1475,78)-(1475,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,79)-(1475,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1475,82)-(1475,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1475,83)-(1475,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.</param>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1476,13)-(1476,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1474,19)-(1474,20) 25 "SyntaxGenerator.mxg"
+            #line (1476,19)-(1476,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,20)-(1474,27) 25 "SyntaxGenerator.mxg"
+            #line (1476,20)-(1476,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("virtual");
             #line hidden
-            #line (1474,27)-(1474,28) 25 "SyntaxGenerator.mxg"
+            #line (1476,27)-(1476,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,28)-(1474,41) 25 "SyntaxGenerator.mxg"
+            #line (1476,28)-(1476,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("__SyntaxToken");
             #line hidden
-            #line (1474,41)-(1474,42) 25 "SyntaxGenerator.mxg"
+            #line (1476,41)-(1476,42) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,42)-(1474,66) 25 "SyntaxGenerator.mxg"
+            #line (1476,42)-(1476,66) 25 "SyntaxGenerator.mxg"
             __cb.Write("Token(__SyntaxTriviaList");
             #line hidden
-            #line (1474,66)-(1474,67) 25 "SyntaxGenerator.mxg"
+            #line (1476,66)-(1476,67) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,67)-(1474,75) 25 "SyntaxGenerator.mxg"
+            #line (1476,67)-(1476,75) 25 "SyntaxGenerator.mxg"
             __cb.Write("leading,");
             #line hidden
-            #line (1474,75)-(1474,76) 25 "SyntaxGenerator.mxg"
+            #line (1476,75)-(1476,76) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,77)-(1474,81) 24 "SyntaxGenerator.mxg"
+            #line (1476,77)-(1476,81) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1474,82)-(1474,92) 25 "SyntaxGenerator.mxg"
+            #line (1476,82)-(1476,92) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (1474,92)-(1474,93) 25 "SyntaxGenerator.mxg"
+            #line (1476,92)-(1476,93) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,93)-(1474,98) 25 "SyntaxGenerator.mxg"
+            #line (1476,93)-(1476,98) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind,");
             #line hidden
-            #line (1474,98)-(1474,99) 25 "SyntaxGenerator.mxg"
+            #line (1476,98)-(1476,99) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,99)-(1474,117) 25 "SyntaxGenerator.mxg"
+            #line (1476,99)-(1476,117) 25 "SyntaxGenerator.mxg"
             __cb.Write("__SyntaxTriviaList");
             #line hidden
-            #line (1474,117)-(1474,118) 25 "SyntaxGenerator.mxg"
+            #line (1476,117)-(1476,118) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1474,118)-(1474,127) 25 "SyntaxGenerator.mxg"
+            #line (1476,118)-(1476,127) 25 "SyntaxGenerator.mxg"
             __cb.Write("trailing)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1475,13)-(1475,14) 25 "SyntaxGenerator.mxg"
+            #line (1477,13)-(1477,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1476,17)-(1476,23) 25 "SyntaxGenerator.mxg"
+            #line (1478,17)-(1478,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1476,23)-(1476,24) 25 "SyntaxGenerator.mxg"
+            #line (1478,23)-(1478,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1476,24)-(1476,43) 25 "SyntaxGenerator.mxg"
+            #line (1478,24)-(1478,43) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.Token(leading,");
             #line hidden
-            #line (1476,43)-(1476,44) 25 "SyntaxGenerator.mxg"
+            #line (1478,43)-(1478,44) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1476,44)-(1476,54) 25 "SyntaxGenerator.mxg"
+            #line (1478,44)-(1478,54) 25 "SyntaxGenerator.mxg"
             __cb.Write("(int)kind,");
             #line hidden
-            #line (1476,54)-(1476,55) 25 "SyntaxGenerator.mxg"
+            #line (1478,54)-(1478,55) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1476,55)-(1476,65) 25 "SyntaxGenerator.mxg"
+            #line (1478,55)-(1478,65) 25 "SyntaxGenerator.mxg"
             __cb.Write("trailing);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1477,13)-(1477,14) 25 "SyntaxGenerator.mxg"
+            #line (1479,13)-(1479,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -23557,125 +23605,14 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1479,13)-(1479,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1479,16)-(1479,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1479,17)-(1479,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1480,13)-(1480,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1480,16)-(1480,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,17)-(1480,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Creates");
-            #line hidden
-            #line (1480,24)-(1480,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,25)-(1480,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1480,26)-(1480,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,27)-(1480,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1480,32)-(1480,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,33)-(1480,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write("corresponding");
-            #line hidden
-            #line (1480,46)-(1480,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,47)-(1480,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1480,49)-(1480,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,50)-(1480,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1480,56)-(1480,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,57)-(1480,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind.");
-            #line hidden
-            #line (1480,62)-(1480,63) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,63)-(1480,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("This");
-            #line hidden
-            #line (1480,67)-(1480,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,68)-(1480,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("method");
-            #line hidden
-            #line (1480,74)-(1480,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,75)-(1480,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write("gives");
-            #line hidden
-            #line (1480,80)-(1480,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,81)-(1480,88) 25 "SyntaxGenerator.mxg"
-            __cb.Write("control");
-            #line hidden
-            #line (1480,88)-(1480,89) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,89)-(1480,93) 25 "SyntaxGenerator.mxg"
-            __cb.Write("over");
-            #line hidden
-            #line (1480,93)-(1480,94) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,94)-(1480,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1480,99)-(1480,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,100)-(1480,104) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Text");
-            #line hidden
-            #line (1480,104)-(1480,105) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,105)-(1480,108) 25 "SyntaxGenerator.mxg"
-            __cb.Write("and");
-            #line hidden
-            #line (1480,108)-(1480,109) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1480,109)-(1480,119) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ValueText.");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
             #line (1481,13)-(1481,16) 25 "SyntaxGenerator.mxg"
             __cb.Write("///");
             #line hidden
             #line (1481,16)-(1481,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
+            #line hidden
+            #line (1481,17)-(1481,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23686,98 +23623,98 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1482,16)-(1482,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,17)-(1482,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write("For");
+            #line (1482,17)-(1482,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Creates");
             #line hidden
-            #line (1482,20)-(1482,21) 25 "SyntaxGenerator.mxg"
+            #line (1482,24)-(1482,25) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,21)-(1482,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write("example,");
+            #line (1482,25)-(1482,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
             #line hidden
-            #line (1482,29)-(1482,30) 25 "SyntaxGenerator.mxg"
+            #line (1482,26)-(1482,27) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,30)-(1482,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("consider");
+            #line (1482,27)-(1482,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
             #line hidden
-            #line (1482,38)-(1482,39) 25 "SyntaxGenerator.mxg"
+            #line (1482,32)-(1482,33) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,39)-(1482,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1482,33)-(1482,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("corresponding");
             #line hidden
-            #line (1482,42)-(1482,43) 25 "SyntaxGenerator.mxg"
+            #line (1482,46)-(1482,47) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,43)-(1482,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text");
+            #line (1482,47)-(1482,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
             #line hidden
-            #line (1482,47)-(1482,48) 25 "SyntaxGenerator.mxg"
+            #line (1482,49)-(1482,50) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,48)-(1482,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("'&lt;see");
+            #line (1482,50)-(1482,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
             #line hidden
             #line (1482,56)-(1482,57) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,57)-(1482,71) 25 "SyntaxGenerator.mxg"
-            __cb.Write("cref=\"operator");
+            #line (1482,57)-(1482,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind.");
             #line hidden
-            #line (1482,71)-(1482,72) 25 "SyntaxGenerator.mxg"
+            #line (1482,62)-(1482,63) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,72)-(1482,89) 25 "SyntaxGenerator.mxg"
-            __cb.Write("&amp;#43;\"/&gt;'.");
+            #line (1482,63)-(1482,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write("This");
             #line hidden
-            #line (1482,89)-(1482,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write("  ");
+            #line (1482,67)-(1482,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
             #line hidden
-            #line (1482,91)-(1482,93) 25 "SyntaxGenerator.mxg"
-            __cb.Write("To");
+            #line (1482,68)-(1482,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("method");
+            #line hidden
+            #line (1482,74)-(1482,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1482,75)-(1482,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write("gives");
+            #line hidden
+            #line (1482,80)-(1482,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1482,81)-(1482,88) 25 "SyntaxGenerator.mxg"
+            __cb.Write("control");
+            #line hidden
+            #line (1482,88)-(1482,89) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1482,89)-(1482,93) 25 "SyntaxGenerator.mxg"
+            __cb.Write("over");
             #line hidden
             #line (1482,93)-(1482,94) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,94)-(1482,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write("create");
-            #line hidden
-            #line (1482,100)-(1482,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1482,101)-(1482,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1482,102)-(1482,103) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1482,103)-(1482,108) 25 "SyntaxGenerator.mxg"
+            #line (1482,94)-(1482,99) 25 "SyntaxGenerator.mxg"
             __cb.Write("token");
+            #line hidden
+            #line (1482,99)-(1482,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1482,100)-(1482,104) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Text");
+            #line hidden
+            #line (1482,104)-(1482,105) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1482,105)-(1482,108) 25 "SyntaxGenerator.mxg"
+            __cb.Write("and");
             #line hidden
             #line (1482,108)-(1482,109) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1482,109)-(1482,112) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1482,112)-(1482,113) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1482,113)-(1482,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1482,116)-(1482,117) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1482,117)-(1482,122) 25 "SyntaxGenerator.mxg"
-            __cb.Write("value");
-            #line hidden
-            #line (1482,122)-(1482,123) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1482,123)-(1482,125) 25 "SyntaxGenerator.mxg"
-            __cb.Write("of");
+            #line (1482,109)-(1482,119) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ValueText.");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23786,48 +23723,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.Write("///");
             #line hidden
             #line (1483,16)-(1483,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1483,17)-(1483,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1483,20)-(1483,21) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1483,21)-(1483,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write("operator");
-            #line hidden
-            #line (1483,29)-(1483,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1483,30)-(1483,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("symbol");
-            #line hidden
-            #line (1483,36)-(1483,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1483,37)-(1483,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("(&amp;#43;),");
-            #line hidden
-            #line (1483,49)-(1483,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1483,50)-(1483,53) 25 "SyntaxGenerator.mxg"
-            __cb.Write("one");
-            #line hidden
-            #line (1483,53)-(1483,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1483,54)-(1483,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("would");
-            #line hidden
-            #line (1483,59)-(1483,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1483,60)-(1483,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write("call");
-            #line hidden
-            #line (1483,64)-(1483,65) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
@@ -23839,32 +23734,98 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1484,16)-(1484,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1484,17)-(1484,51) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Token(default(__SyntaxTriviaList),");
+            #line (1484,17)-(1484,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write("For");
             #line hidden
-            #line (1484,51)-(1484,52) 25 "SyntaxGenerator.mxg"
+            #line (1484,20)-(1484,21) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1484,52)-(1484,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write("int.PlusToken,");
+            #line (1484,21)-(1484,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write("example,");
             #line hidden
-            #line (1484,66)-(1484,67) 25 "SyntaxGenerator.mxg"
+            #line (1484,29)-(1484,30) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1484,67)-(1484,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write("\"&amp;#43;\",");
+            #line (1484,30)-(1484,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("consider");
             #line hidden
-            #line (1484,79)-(1484,80) 25 "SyntaxGenerator.mxg"
+            #line (1484,38)-(1484,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1484,80)-(1484,84) 25 "SyntaxGenerator.mxg"
-            __cb.Write("\"+\",");
+            #line (1484,39)-(1484,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
             #line hidden
-            #line (1484,84)-(1484,85) 25 "SyntaxGenerator.mxg"
+            #line (1484,42)-(1484,43) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1484,85)-(1484,114) 25 "SyntaxGenerator.mxg"
-            __cb.Write("default(__SyntaxTriviaList)).");
+            #line (1484,43)-(1484,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text");
+            #line hidden
+            #line (1484,47)-(1484,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,48)-(1484,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("'&lt;see");
+            #line hidden
+            #line (1484,56)-(1484,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,57)-(1484,71) 25 "SyntaxGenerator.mxg"
+            __cb.Write("cref=\"operator");
+            #line hidden
+            #line (1484,71)-(1484,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,72)-(1484,89) 25 "SyntaxGenerator.mxg"
+            __cb.Write("&amp;#43;\"/&gt;'.");
+            #line hidden
+            #line (1484,89)-(1484,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write("  ");
+            #line hidden
+            #line (1484,91)-(1484,93) 25 "SyntaxGenerator.mxg"
+            __cb.Write("To");
+            #line hidden
+            #line (1484,93)-(1484,94) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,94)-(1484,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write("create");
+            #line hidden
+            #line (1484,100)-(1484,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,101)-(1484,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1484,102)-(1484,103) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,103)-(1484,108) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1484,108)-(1484,109) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,109)-(1484,112) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (1484,112)-(1484,113) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,113)-(1484,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1484,116)-(1484,117) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,117)-(1484,122) 25 "SyntaxGenerator.mxg"
+            __cb.Write("value");
+            #line hidden
+            #line (1484,122)-(1484,123) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1484,123)-(1484,125) 25 "SyntaxGenerator.mxg"
+            __cb.Write("of");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23875,8 +23836,47 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1485,16)-(1485,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1485,17)-(1485,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
+            #line (1485,17)-(1485,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1485,20)-(1485,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1485,21)-(1485,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write("operator");
+            #line hidden
+            #line (1485,29)-(1485,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1485,30)-(1485,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("symbol");
+            #line hidden
+            #line (1485,36)-(1485,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1485,37)-(1485,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("(&amp;#43;),");
+            #line hidden
+            #line (1485,49)-(1485,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1485,50)-(1485,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write("one");
+            #line hidden
+            #line (1485,53)-(1485,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1485,54)-(1485,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("would");
+            #line hidden
+            #line (1485,59)-(1485,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1485,60)-(1485,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write("call");
+            #line hidden
+            #line (1485,64)-(1485,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23887,56 +23887,32 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1486,16)-(1486,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1486,17)-(1486,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
+            #line (1486,17)-(1486,51) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Token(default(__SyntaxTriviaList),");
             #line hidden
-            #line (1486,23)-(1486,24) 25 "SyntaxGenerator.mxg"
+            #line (1486,51)-(1486,52) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1486,24)-(1486,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"leading\">A");
+            #line (1486,52)-(1486,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("int.PlusToken,");
             #line hidden
-            #line (1486,40)-(1486,41) 25 "SyntaxGenerator.mxg"
+            #line (1486,66)-(1486,67) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1486,41)-(1486,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("list");
+            #line (1486,67)-(1486,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write("\"&amp;#43;\",");
             #line hidden
-            #line (1486,45)-(1486,46) 25 "SyntaxGenerator.mxg"
+            #line (1486,79)-(1486,80) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1486,46)-(1486,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("of");
+            #line (1486,80)-(1486,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write("\"+\",");
             #line hidden
-            #line (1486,48)-(1486,49) 25 "SyntaxGenerator.mxg"
+            #line (1486,84)-(1486,85) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1486,49)-(1486,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("trivia");
-            #line hidden
-            #line (1486,55)-(1486,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1486,56)-(1486,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("immediately");
-            #line hidden
-            #line (1486,67)-(1486,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1486,68)-(1486,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("preceding");
-            #line hidden
-            #line (1486,77)-(1486,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1486,78)-(1486,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1486,81)-(1486,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1486,82)-(1486,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.</param>");
+            #line (1486,85)-(1486,114) 25 "SyntaxGenerator.mxg"
+            __cb.Write("default(__SyntaxTriviaList)).");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -23947,92 +23923,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1487,16)-(1487,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1487,17)-(1487,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
-            #line hidden
-            #line (1487,23)-(1487,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,24)-(1487,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"kind\">A");
-            #line hidden
-            #line (1487,37)-(1487,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,38)-(1487,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1487,44)-(1487,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,45)-(1487,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
-            #line hidden
-            #line (1487,49)-(1487,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,50)-(1487,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("value");
-            #line hidden
-            #line (1487,55)-(1487,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,56)-(1487,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1487,59)-(1487,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,60)-(1487,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1487,61)-(1487,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,62)-(1487,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.");
-            #line hidden
-            #line (1487,68)-(1487,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,69)-(1487,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("These");
-            #line hidden
-            #line (1487,74)-(1487,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,75)-(1487,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write("have");
-            #line hidden
-            #line (1487,79)-(1487,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,80)-(1487,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1487,83)-(1487,84) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,84)-(1487,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("suffix");
-            #line hidden
-            #line (1487,90)-(1487,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,91)-(1487,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Token");
-            #line hidden
-            #line (1487,96)-(1487,97) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,97)-(1487,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write("or");
-            #line hidden
-            #line (1487,99)-(1487,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1487,100)-(1487,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Keyword.</param>");
+            #line (1487,17)-(1487,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -24049,62 +23941,50 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1488,23)-(1488,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,24)-(1488,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"text\">The");
+            #line (1488,24)-(1488,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"leading\">A");
             #line hidden
-            #line (1488,39)-(1488,40) 25 "SyntaxGenerator.mxg"
+            #line (1488,40)-(1488,41) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,40)-(1488,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text");
+            #line (1488,41)-(1488,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write("list");
             #line hidden
-            #line (1488,44)-(1488,45) 25 "SyntaxGenerator.mxg"
+            #line (1488,45)-(1488,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,45)-(1488,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("from");
+            #line (1488,46)-(1488,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write("of");
             #line hidden
-            #line (1488,49)-(1488,50) 25 "SyntaxGenerator.mxg"
+            #line (1488,48)-(1488,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,50)-(1488,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("which");
+            #line (1488,49)-(1488,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("trivia");
             #line hidden
             #line (1488,55)-(1488,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,56)-(1488,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write("this");
+            #line (1488,56)-(1488,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write("immediately");
             #line hidden
-            #line (1488,60)-(1488,61) 25 "SyntaxGenerator.mxg"
+            #line (1488,67)-(1488,68) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,61)-(1488,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
+            #line (1488,68)-(1488,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("preceding");
             #line hidden
-            #line (1488,66)-(1488,67) 25 "SyntaxGenerator.mxg"
+            #line (1488,77)-(1488,78) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,67)-(1488,70) 25 "SyntaxGenerator.mxg"
-            __cb.Write("was");
+            #line (1488,78)-(1488,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
             #line hidden
-            #line (1488,70)-(1488,71) 25 "SyntaxGenerator.mxg"
+            #line (1488,81)-(1488,82) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1488,71)-(1488,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write("created");
-            #line hidden
-            #line (1488,78)-(1488,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1488,79)-(1488,84) 25 "SyntaxGenerator.mxg"
-            __cb.Write("(e.g.");
-            #line hidden
-            #line (1488,84)-(1488,85) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1488,85)-(1488,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write("lexed).</param>");
+            #line (1488,82)-(1488,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.</param>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -24121,56 +24001,86 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1489,23)-(1489,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,24)-(1489,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"valueText\">How");
+            #line (1489,24)-(1489,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"kind\">A");
+            #line hidden
+            #line (1489,37)-(1489,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1489,38)-(1489,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
             #line hidden
             #line (1489,44)-(1489,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,45)-(1489,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("C#");
+            #line (1489,45)-(1489,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
             #line hidden
-            #line (1489,47)-(1489,48) 25 "SyntaxGenerator.mxg"
+            #line (1489,49)-(1489,50) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,48)-(1489,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("should");
+            #line (1489,50)-(1489,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("value");
             #line hidden
-            #line (1489,54)-(1489,55) 25 "SyntaxGenerator.mxg"
+            #line (1489,55)-(1489,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,55)-(1489,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write("interpret");
+            #line (1489,56)-(1489,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
             #line hidden
-            #line (1489,64)-(1489,65) 25 "SyntaxGenerator.mxg"
+            #line (1489,59)-(1489,60) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,65)-(1489,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1489,60)-(1489,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1489,61)-(1489,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1489,62)-(1489,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.");
             #line hidden
             #line (1489,68)-(1489,69) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,69)-(1489,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text");
+            #line (1489,69)-(1489,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("These");
             #line hidden
-            #line (1489,73)-(1489,74) 25 "SyntaxGenerator.mxg"
+            #line (1489,74)-(1489,75) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,74)-(1489,76) 25 "SyntaxGenerator.mxg"
-            __cb.Write("of");
+            #line (1489,75)-(1489,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write("have");
             #line hidden
-            #line (1489,76)-(1489,77) 25 "SyntaxGenerator.mxg"
+            #line (1489,79)-(1489,80) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,77)-(1489,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write("this");
+            #line (1489,80)-(1489,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
             #line hidden
-            #line (1489,81)-(1489,82) 25 "SyntaxGenerator.mxg"
+            #line (1489,83)-(1489,84) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1489,82)-(1489,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.</param>");
+            #line (1489,84)-(1489,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("suffix");
+            #line hidden
+            #line (1489,90)-(1489,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1489,91)-(1489,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Token");
+            #line hidden
+            #line (1489,96)-(1489,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1489,97)-(1489,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write("or");
+            #line hidden
+            #line (1489,99)-(1489,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1489,100)-(1489,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Keyword.</param>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -24187,309 +24097,321 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1490,23)-(1490,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,24)-(1490,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"trailing\">A");
+            #line (1490,24)-(1490,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"text\">The");
             #line hidden
-            #line (1490,41)-(1490,42) 25 "SyntaxGenerator.mxg"
+            #line (1490,39)-(1490,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,42)-(1490,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write("list");
+            #line (1490,40)-(1490,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text");
             #line hidden
-            #line (1490,46)-(1490,47) 25 "SyntaxGenerator.mxg"
+            #line (1490,44)-(1490,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,47)-(1490,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("of");
+            #line (1490,45)-(1490,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("from");
             #line hidden
             #line (1490,49)-(1490,50) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,50)-(1490,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("trivia");
+            #line (1490,50)-(1490,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("which");
             #line hidden
-            #line (1490,56)-(1490,57) 25 "SyntaxGenerator.mxg"
+            #line (1490,55)-(1490,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,57)-(1490,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("immediately");
+            #line (1490,56)-(1490,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write("this");
             #line hidden
-            #line (1490,68)-(1490,69) 25 "SyntaxGenerator.mxg"
+            #line (1490,60)-(1490,61) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,69)-(1490,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write("following");
+            #line (1490,61)-(1490,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1490,66)-(1490,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1490,67)-(1490,70) 25 "SyntaxGenerator.mxg"
+            __cb.Write("was");
+            #line hidden
+            #line (1490,70)-(1490,71) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1490,71)-(1490,78) 25 "SyntaxGenerator.mxg"
+            __cb.Write("created");
             #line hidden
             #line (1490,78)-(1490,79) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,79)-(1490,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1490,79)-(1490,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write("(e.g.");
             #line hidden
-            #line (1490,82)-(1490,83) 25 "SyntaxGenerator.mxg"
+            #line (1490,84)-(1490,85) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1490,83)-(1490,97) 25 "SyntaxGenerator.mxg"
+            #line (1490,85)-(1490,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write("lexed).</param>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1491,13)-(1491,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1491,16)-(1491,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,17)-(1491,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
+            #line hidden
+            #line (1491,23)-(1491,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,24)-(1491,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"valueText\">How");
+            #line hidden
+            #line (1491,44)-(1491,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,45)-(1491,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("C#");
+            #line hidden
+            #line (1491,47)-(1491,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,48)-(1491,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("should");
+            #line hidden
+            #line (1491,54)-(1491,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,55)-(1491,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write("interpret");
+            #line hidden
+            #line (1491,64)-(1491,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,65)-(1491,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1491,68)-(1491,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,69)-(1491,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text");
+            #line hidden
+            #line (1491,73)-(1491,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,74)-(1491,76) 25 "SyntaxGenerator.mxg"
+            __cb.Write("of");
+            #line hidden
+            #line (1491,76)-(1491,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,77)-(1491,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write("this");
+            #line hidden
+            #line (1491,81)-(1491,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1491,82)-(1491,96) 25 "SyntaxGenerator.mxg"
             __cb.Write("token.</param>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1491,13)-(1491,19) 25 "SyntaxGenerator.mxg"
+            #line (1492,13)-(1492,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1492,16)-(1492,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,17)-(1492,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
+            #line hidden
+            #line (1492,23)-(1492,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,24)-(1492,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"trailing\">A");
+            #line hidden
+            #line (1492,41)-(1492,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,42)-(1492,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("list");
+            #line hidden
+            #line (1492,46)-(1492,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,47)-(1492,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("of");
+            #line hidden
+            #line (1492,49)-(1492,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,50)-(1492,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("trivia");
+            #line hidden
+            #line (1492,56)-(1492,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,57)-(1492,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("immediately");
+            #line hidden
+            #line (1492,68)-(1492,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,69)-(1492,78) 25 "SyntaxGenerator.mxg"
+            __cb.Write("following");
+            #line hidden
+            #line (1492,78)-(1492,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,79)-(1492,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1492,82)-(1492,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1492,83)-(1492,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.</param>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1493,13)-(1493,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1491,19)-(1491,20) 25 "SyntaxGenerator.mxg"
+            #line (1493,19)-(1493,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,20)-(1491,27) 25 "SyntaxGenerator.mxg"
+            #line (1493,20)-(1493,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("virtual");
             #line hidden
-            #line (1491,27)-(1491,28) 25 "SyntaxGenerator.mxg"
+            #line (1493,27)-(1493,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,28)-(1491,41) 25 "SyntaxGenerator.mxg"
+            #line (1493,28)-(1493,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("__SyntaxToken");
             #line hidden
-            #line (1491,41)-(1491,42) 25 "SyntaxGenerator.mxg"
+            #line (1493,41)-(1493,42) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,42)-(1491,66) 25 "SyntaxGenerator.mxg"
+            #line (1493,42)-(1493,66) 25 "SyntaxGenerator.mxg"
             __cb.Write("Token(__SyntaxTriviaList");
             #line hidden
-            #line (1491,66)-(1491,67) 25 "SyntaxGenerator.mxg"
+            #line (1493,66)-(1493,67) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,67)-(1491,75) 25 "SyntaxGenerator.mxg"
+            #line (1493,67)-(1493,75) 25 "SyntaxGenerator.mxg"
             __cb.Write("leading,");
             #line hidden
-            #line (1491,75)-(1491,76) 25 "SyntaxGenerator.mxg"
+            #line (1493,75)-(1493,76) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,77)-(1491,81) 24 "SyntaxGenerator.mxg"
+            #line (1493,77)-(1493,81) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1491,82)-(1491,92) 25 "SyntaxGenerator.mxg"
+            #line (1493,82)-(1493,92) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (1491,92)-(1491,93) 25 "SyntaxGenerator.mxg"
+            #line (1493,92)-(1493,93) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,93)-(1491,98) 25 "SyntaxGenerator.mxg"
+            #line (1493,93)-(1493,98) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind,");
             #line hidden
-            #line (1491,98)-(1491,99) 25 "SyntaxGenerator.mxg"
+            #line (1493,98)-(1493,99) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,99)-(1491,105) 25 "SyntaxGenerator.mxg"
+            #line (1493,99)-(1493,105) 25 "SyntaxGenerator.mxg"
             __cb.Write("string");
             #line hidden
-            #line (1491,105)-(1491,106) 25 "SyntaxGenerator.mxg"
+            #line (1493,105)-(1493,106) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,106)-(1491,111) 25 "SyntaxGenerator.mxg"
+            #line (1493,106)-(1493,111) 25 "SyntaxGenerator.mxg"
             __cb.Write("text,");
             #line hidden
-            #line (1491,111)-(1491,112) 25 "SyntaxGenerator.mxg"
+            #line (1493,111)-(1493,112) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,112)-(1491,118) 25 "SyntaxGenerator.mxg"
+            #line (1493,112)-(1493,118) 25 "SyntaxGenerator.mxg"
             __cb.Write("string");
             #line hidden
-            #line (1491,118)-(1491,119) 25 "SyntaxGenerator.mxg"
+            #line (1493,118)-(1493,119) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,119)-(1491,129) 25 "SyntaxGenerator.mxg"
+            #line (1493,119)-(1493,129) 25 "SyntaxGenerator.mxg"
             __cb.Write("valueText,");
             #line hidden
-            #line (1491,129)-(1491,130) 25 "SyntaxGenerator.mxg"
+            #line (1493,129)-(1493,130) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,130)-(1491,148) 25 "SyntaxGenerator.mxg"
+            #line (1493,130)-(1493,148) 25 "SyntaxGenerator.mxg"
             __cb.Write("__SyntaxTriviaList");
             #line hidden
-            #line (1491,148)-(1491,149) 25 "SyntaxGenerator.mxg"
+            #line (1493,148)-(1493,149) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1491,149)-(1491,158) 25 "SyntaxGenerator.mxg"
+            #line (1493,149)-(1493,158) 25 "SyntaxGenerator.mxg"
             __cb.Write("trailing)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1492,13)-(1492,14) 25 "SyntaxGenerator.mxg"
+            #line (1494,13)-(1494,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1493,17)-(1493,23) 25 "SyntaxGenerator.mxg"
+            #line (1495,17)-(1495,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1493,23)-(1493,24) 25 "SyntaxGenerator.mxg"
+            #line (1495,23)-(1495,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1493,24)-(1493,43) 25 "SyntaxGenerator.mxg"
+            #line (1495,24)-(1495,43) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.Token(leading,");
             #line hidden
-            #line (1493,43)-(1493,44) 25 "SyntaxGenerator.mxg"
+            #line (1495,43)-(1495,44) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1493,44)-(1493,54) 25 "SyntaxGenerator.mxg"
+            #line (1495,44)-(1495,54) 25 "SyntaxGenerator.mxg"
             __cb.Write("(int)kind,");
             #line hidden
-            #line (1493,54)-(1493,55) 25 "SyntaxGenerator.mxg"
+            #line (1495,54)-(1495,55) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1493,55)-(1493,60) 25 "SyntaxGenerator.mxg"
+            #line (1495,55)-(1495,60) 25 "SyntaxGenerator.mxg"
             __cb.Write("text,");
             #line hidden
-            #line (1493,60)-(1493,61) 25 "SyntaxGenerator.mxg"
+            #line (1495,60)-(1495,61) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1493,61)-(1493,71) 25 "SyntaxGenerator.mxg"
+            #line (1495,61)-(1495,71) 25 "SyntaxGenerator.mxg"
             __cb.Write("valueText,");
             #line hidden
-            #line (1493,71)-(1493,72) 25 "SyntaxGenerator.mxg"
+            #line (1495,71)-(1495,72) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1493,72)-(1493,82) 25 "SyntaxGenerator.mxg"
+            #line (1495,72)-(1495,82) 25 "SyntaxGenerator.mxg"
             __cb.Write("trailing);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1494,13)-(1494,14) 25 "SyntaxGenerator.mxg"
+            #line (1496,13)-(1496,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1496,13)-(1496,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1496,16)-(1496,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1496,17)-(1496,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1497,13)-(1497,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1497,16)-(1497,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,17)-(1497,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Creates");
-            #line hidden
-            #line (1497,24)-(1497,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,25)-(1497,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1497,26)-(1497,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,27)-(1497,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("missing");
-            #line hidden
-            #line (1497,34)-(1497,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,35)-(1497,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1497,40)-(1497,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,41)-(1497,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("corresponding");
-            #line hidden
-            #line (1497,54)-(1497,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,55)-(1497,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1497,57)-(1497,58) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,58)-(1497,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1497,64)-(1497,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,65)-(1497,70) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind.");
-            #line hidden
-            #line (1497,70)-(1497,71) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,71)-(1497,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("A");
-            #line hidden
-            #line (1497,72)-(1497,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,73)-(1497,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write("missing");
-            #line hidden
-            #line (1497,80)-(1497,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,81)-(1497,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1497,86)-(1497,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,87)-(1497,89) 25 "SyntaxGenerator.mxg"
-            __cb.Write("is");
-            #line hidden
-            #line (1497,89)-(1497,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,90)-(1497,98) 25 "SyntaxGenerator.mxg"
-            __cb.Write("produced");
-            #line hidden
-            #line (1497,98)-(1497,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,99)-(1497,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("by");
-            #line hidden
-            #line (1497,101)-(1497,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,102)-(1497,105) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1497,105)-(1497,106) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,106)-(1497,112) 25 "SyntaxGenerator.mxg"
-            __cb.Write("parser");
-            #line hidden
-            #line (1497,112)-(1497,113) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,113)-(1497,117) 25 "SyntaxGenerator.mxg"
-            __cb.Write("when");
-            #line hidden
-            #line (1497,117)-(1497,118) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1497,118)-(1497,120) 25 "SyntaxGenerator.mxg"
-            __cb.Write("an");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1498,13)-(1498,16) 25 "SyntaxGenerator.mxg"
@@ -24498,98 +24420,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1498,16)-(1498,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1498,17)-(1498,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("expected");
-            #line hidden
-            #line (1498,25)-(1498,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,26)-(1498,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1498,31)-(1498,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,32)-(1498,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("is");
-            #line hidden
-            #line (1498,34)-(1498,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,35)-(1498,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("not");
-            #line hidden
-            #line (1498,38)-(1498,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,39)-(1498,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("found.");
-            #line hidden
-            #line (1498,45)-(1498,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,46)-(1498,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("A");
-            #line hidden
-            #line (1498,47)-(1498,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,48)-(1498,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("missing");
-            #line hidden
-            #line (1498,55)-(1498,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,56)-(1498,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1498,61)-(1498,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,62)-(1498,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("has");
-            #line hidden
-            #line (1498,65)-(1498,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,66)-(1498,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("no");
-            #line hidden
-            #line (1498,68)-(1498,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,69)-(1498,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text");
-            #line hidden
-            #line (1498,73)-(1498,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,74)-(1498,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("and");
-            #line hidden
-            #line (1498,77)-(1498,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,78)-(1498,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write("normally");
-            #line hidden
-            #line (1498,86)-(1498,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,87)-(1498,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("has");
-            #line hidden
-            #line (1498,90)-(1498,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,91)-(1498,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("associated");
-            #line hidden
-            #line (1498,101)-(1498,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1498,102)-(1498,114) 25 "SyntaxGenerator.mxg"
-            __cb.Write("diagnostics.");
+            #line (1498,17)-(1498,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -24600,8 +24432,110 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1499,16)-(1499,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1499,17)-(1499,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
+            #line (1499,17)-(1499,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Creates");
+            #line hidden
+            #line (1499,24)-(1499,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,25)-(1499,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1499,26)-(1499,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,27)-(1499,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("missing");
+            #line hidden
+            #line (1499,34)-(1499,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,35)-(1499,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1499,40)-(1499,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,41)-(1499,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("corresponding");
+            #line hidden
+            #line (1499,54)-(1499,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,55)-(1499,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
+            #line hidden
+            #line (1499,57)-(1499,58) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,58)-(1499,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1499,64)-(1499,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,65)-(1499,70) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind.");
+            #line hidden
+            #line (1499,70)-(1499,71) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,71)-(1499,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("A");
+            #line hidden
+            #line (1499,72)-(1499,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,73)-(1499,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write("missing");
+            #line hidden
+            #line (1499,80)-(1499,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,81)-(1499,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1499,86)-(1499,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,87)-(1499,89) 25 "SyntaxGenerator.mxg"
+            __cb.Write("is");
+            #line hidden
+            #line (1499,89)-(1499,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,90)-(1499,98) 25 "SyntaxGenerator.mxg"
+            __cb.Write("produced");
+            #line hidden
+            #line (1499,98)-(1499,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,99)-(1499,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("by");
+            #line hidden
+            #line (1499,101)-(1499,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,102)-(1499,105) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1499,105)-(1499,106) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,106)-(1499,112) 25 "SyntaxGenerator.mxg"
+            __cb.Write("parser");
+            #line hidden
+            #line (1499,112)-(1499,113) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,113)-(1499,117) 25 "SyntaxGenerator.mxg"
+            __cb.Write("when");
+            #line hidden
+            #line (1499,117)-(1499,118) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1499,118)-(1499,120) 25 "SyntaxGenerator.mxg"
+            __cb.Write("an");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -24612,282 +24546,270 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1500,16)-(1500,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,17)-(1500,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
+            #line (1500,17)-(1500,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("expected");
             #line hidden
-            #line (1500,23)-(1500,24) 25 "SyntaxGenerator.mxg"
+            #line (1500,25)-(1500,26) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,24)-(1500,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"kind\">A");
+            #line (1500,26)-(1500,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
             #line hidden
-            #line (1500,37)-(1500,38) 25 "SyntaxGenerator.mxg"
+            #line (1500,31)-(1500,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,38)-(1500,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
+            #line (1500,32)-(1500,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("is");
             #line hidden
-            #line (1500,44)-(1500,45) 25 "SyntaxGenerator.mxg"
+            #line (1500,34)-(1500,35) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,45)-(1500,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
+            #line (1500,35)-(1500,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("not");
             #line hidden
-            #line (1500,49)-(1500,50) 25 "SyntaxGenerator.mxg"
+            #line (1500,38)-(1500,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,50)-(1500,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("value");
+            #line (1500,39)-(1500,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write("found.");
+            #line hidden
+            #line (1500,45)-(1500,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1500,46)-(1500,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("A");
+            #line hidden
+            #line (1500,47)-(1500,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1500,48)-(1500,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("missing");
             #line hidden
             #line (1500,55)-(1500,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,56)-(1500,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1500,59)-(1500,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1500,60)-(1500,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
+            #line (1500,56)-(1500,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
             #line hidden
             #line (1500,61)-(1500,62) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,62)-(1500,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.");
+            #line (1500,62)-(1500,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("has");
+            #line hidden
+            #line (1500,65)-(1500,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1500,66)-(1500,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("no");
             #line hidden
             #line (1500,68)-(1500,69) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,69)-(1500,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("These");
+            #line (1500,69)-(1500,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text");
             #line hidden
-            #line (1500,74)-(1500,75) 25 "SyntaxGenerator.mxg"
+            #line (1500,73)-(1500,74) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,75)-(1500,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write("have");
+            #line (1500,74)-(1500,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("and");
             #line hidden
-            #line (1500,79)-(1500,80) 25 "SyntaxGenerator.mxg"
+            #line (1500,77)-(1500,78) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,80)-(1500,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1500,78)-(1500,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("normally");
             #line hidden
-            #line (1500,83)-(1500,84) 25 "SyntaxGenerator.mxg"
+            #line (1500,86)-(1500,87) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,84)-(1500,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("suffix");
+            #line (1500,87)-(1500,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("has");
             #line hidden
             #line (1500,90)-(1500,91) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,91)-(1500,96) 25 "SyntaxGenerator.mxg"
+            #line (1500,91)-(1500,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("associated");
+            #line hidden
+            #line (1500,101)-(1500,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1500,102)-(1500,114) 25 "SyntaxGenerator.mxg"
+            __cb.Write("diagnostics.");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1501,13)-(1501,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1501,16)-(1501,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1501,17)-(1501,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1502,13)-(1502,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1502,16)-(1502,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,17)-(1502,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
+            #line hidden
+            #line (1502,23)-(1502,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,24)-(1502,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"kind\">A");
+            #line hidden
+            #line (1502,37)-(1502,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,38)-(1502,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1502,44)-(1502,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,45)-(1502,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
+            #line hidden
+            #line (1502,49)-(1502,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,50)-(1502,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("value");
+            #line hidden
+            #line (1502,55)-(1502,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,56)-(1502,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (1502,59)-(1502,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,60)-(1502,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1502,61)-(1502,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,62)-(1502,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.");
+            #line hidden
+            #line (1502,68)-(1502,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,69)-(1502,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("These");
+            #line hidden
+            #line (1502,74)-(1502,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,75)-(1502,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write("have");
+            #line hidden
+            #line (1502,79)-(1502,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,80)-(1502,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1502,83)-(1502,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,84)-(1502,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("suffix");
+            #line hidden
+            #line (1502,90)-(1502,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1502,91)-(1502,96) 25 "SyntaxGenerator.mxg"
             __cb.Write("Token");
             #line hidden
-            #line (1500,96)-(1500,97) 25 "SyntaxGenerator.mxg"
+            #line (1502,96)-(1502,97) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,97)-(1500,99) 25 "SyntaxGenerator.mxg"
+            #line (1502,97)-(1502,99) 25 "SyntaxGenerator.mxg"
             __cb.Write("or");
             #line hidden
-            #line (1500,99)-(1500,100) 25 "SyntaxGenerator.mxg"
+            #line (1502,99)-(1502,100) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1500,100)-(1500,116) 25 "SyntaxGenerator.mxg"
+            #line (1502,100)-(1502,116) 25 "SyntaxGenerator.mxg"
             __cb.Write("Keyword.</param>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1501,13)-(1501,19) 25 "SyntaxGenerator.mxg"
+            #line (1503,13)-(1503,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1501,19)-(1501,20) 25 "SyntaxGenerator.mxg"
+            #line (1503,19)-(1503,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1501,20)-(1501,27) 25 "SyntaxGenerator.mxg"
+            #line (1503,20)-(1503,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("virtual");
             #line hidden
-            #line (1501,27)-(1501,28) 25 "SyntaxGenerator.mxg"
+            #line (1503,27)-(1503,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1501,28)-(1501,41) 25 "SyntaxGenerator.mxg"
+            #line (1503,28)-(1503,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("__SyntaxToken");
             #line hidden
-            #line (1501,41)-(1501,42) 25 "SyntaxGenerator.mxg"
+            #line (1503,41)-(1503,42) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1501,42)-(1501,55) 25 "SyntaxGenerator.mxg"
+            #line (1503,42)-(1503,55) 25 "SyntaxGenerator.mxg"
             __cb.Write("MissingToken(");
             #line hidden
-            #line (1501,56)-(1501,60) 24 "SyntaxGenerator.mxg"
+            #line (1503,56)-(1503,60) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1501,61)-(1501,71) 25 "SyntaxGenerator.mxg"
+            #line (1503,61)-(1503,71) 25 "SyntaxGenerator.mxg"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (1501,71)-(1501,72) 25 "SyntaxGenerator.mxg"
+            #line (1503,71)-(1503,72) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1501,72)-(1501,77) 25 "SyntaxGenerator.mxg"
+            #line (1503,72)-(1503,77) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1502,13)-(1502,14) 25 "SyntaxGenerator.mxg"
+            #line (1504,13)-(1504,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1503,17)-(1503,23) 25 "SyntaxGenerator.mxg"
+            #line (1505,17)-(1505,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1503,23)-(1503,24) 25 "SyntaxGenerator.mxg"
+            #line (1505,23)-(1505,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1503,24)-(1503,53) 25 "SyntaxGenerator.mxg"
+            #line (1505,24)-(1505,53) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.MissingToken((int)kind);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1504,13)-(1504,14) 25 "SyntaxGenerator.mxg"
+            #line (1506,13)-(1506,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1506,13)-(1506,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1506,16)-(1506,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1506,17)-(1506,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1507,13)-(1507,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1507,16)-(1507,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,17)-(1507,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Creates");
-            #line hidden
-            #line (1507,24)-(1507,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,25)-(1507,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1507,26)-(1507,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,27)-(1507,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("missing");
-            #line hidden
-            #line (1507,34)-(1507,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,35)-(1507,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1507,40)-(1507,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,41)-(1507,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("corresponding");
-            #line hidden
-            #line (1507,54)-(1507,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,55)-(1507,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1507,57)-(1507,58) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,58)-(1507,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1507,64)-(1507,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,65)-(1507,70) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind.");
-            #line hidden
-            #line (1507,70)-(1507,71) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,71)-(1507,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("A");
-            #line hidden
-            #line (1507,72)-(1507,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,73)-(1507,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write("missing");
-            #line hidden
-            #line (1507,80)-(1507,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,81)-(1507,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1507,86)-(1507,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,87)-(1507,89) 25 "SyntaxGenerator.mxg"
-            __cb.Write("is");
-            #line hidden
-            #line (1507,89)-(1507,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,90)-(1507,98) 25 "SyntaxGenerator.mxg"
-            __cb.Write("produced");
-            #line hidden
-            #line (1507,98)-(1507,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,99)-(1507,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("by");
-            #line hidden
-            #line (1507,101)-(1507,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,102)-(1507,105) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1507,105)-(1507,106) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,106)-(1507,112) 25 "SyntaxGenerator.mxg"
-            __cb.Write("parser");
-            #line hidden
-            #line (1507,112)-(1507,113) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,113)-(1507,117) 25 "SyntaxGenerator.mxg"
-            __cb.Write("when");
-            #line hidden
-            #line (1507,117)-(1507,118) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1507,118)-(1507,120) 25 "SyntaxGenerator.mxg"
-            __cb.Write("an");
-            #line hidden
-            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1508,13)-(1508,16) 25 "SyntaxGenerator.mxg"
@@ -24896,98 +24818,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1508,16)-(1508,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1508,17)-(1508,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("expected");
-            #line hidden
-            #line (1508,25)-(1508,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,26)-(1508,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1508,31)-(1508,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,32)-(1508,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("is");
-            #line hidden
-            #line (1508,34)-(1508,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,35)-(1508,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("not");
-            #line hidden
-            #line (1508,38)-(1508,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,39)-(1508,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("found.");
-            #line hidden
-            #line (1508,45)-(1508,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,46)-(1508,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("A");
-            #line hidden
-            #line (1508,47)-(1508,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,48)-(1508,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("missing");
-            #line hidden
-            #line (1508,55)-(1508,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,56)-(1508,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token");
-            #line hidden
-            #line (1508,61)-(1508,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,62)-(1508,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("has");
-            #line hidden
-            #line (1508,65)-(1508,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,66)-(1508,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("no");
-            #line hidden
-            #line (1508,68)-(1508,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,69)-(1508,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write("text");
-            #line hidden
-            #line (1508,73)-(1508,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,74)-(1508,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("and");
-            #line hidden
-            #line (1508,77)-(1508,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,78)-(1508,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write("normally");
-            #line hidden
-            #line (1508,86)-(1508,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,87)-(1508,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("has");
-            #line hidden
-            #line (1508,90)-(1508,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,91)-(1508,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("associated");
-            #line hidden
-            #line (1508,101)-(1508,102) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1508,102)-(1508,114) 25 "SyntaxGenerator.mxg"
-            __cb.Write("diagnostics.");
+            #line (1508,17)-(1508,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -24998,8 +24830,110 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1509,16)-(1509,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1509,17)-(1509,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
+            #line (1509,17)-(1509,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Creates");
+            #line hidden
+            #line (1509,24)-(1509,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,25)-(1509,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1509,26)-(1509,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,27)-(1509,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("missing");
+            #line hidden
+            #line (1509,34)-(1509,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,35)-(1509,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1509,40)-(1509,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,41)-(1509,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("corresponding");
+            #line hidden
+            #line (1509,54)-(1509,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,55)-(1509,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
+            #line hidden
+            #line (1509,57)-(1509,58) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,58)-(1509,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
+            #line hidden
+            #line (1509,64)-(1509,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,65)-(1509,70) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind.");
+            #line hidden
+            #line (1509,70)-(1509,71) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,71)-(1509,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("A");
+            #line hidden
+            #line (1509,72)-(1509,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,73)-(1509,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write("missing");
+            #line hidden
+            #line (1509,80)-(1509,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,81)-(1509,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
+            #line hidden
+            #line (1509,86)-(1509,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,87)-(1509,89) 25 "SyntaxGenerator.mxg"
+            __cb.Write("is");
+            #line hidden
+            #line (1509,89)-(1509,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,90)-(1509,98) 25 "SyntaxGenerator.mxg"
+            __cb.Write("produced");
+            #line hidden
+            #line (1509,98)-(1509,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,99)-(1509,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("by");
+            #line hidden
+            #line (1509,101)-(1509,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,102)-(1509,105) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1509,105)-(1509,106) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,106)-(1509,112) 25 "SyntaxGenerator.mxg"
+            __cb.Write("parser");
+            #line hidden
+            #line (1509,112)-(1509,113) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,113)-(1509,117) 25 "SyntaxGenerator.mxg"
+            __cb.Write("when");
+            #line hidden
+            #line (1509,117)-(1509,118) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1509,118)-(1509,120) 25 "SyntaxGenerator.mxg"
+            __cb.Write("an");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -25010,56 +24944,98 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1510,16)-(1510,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,17)-(1510,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
+            #line (1510,17)-(1510,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("expected");
             #line hidden
-            #line (1510,23)-(1510,24) 25 "SyntaxGenerator.mxg"
+            #line (1510,25)-(1510,26) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,24)-(1510,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"leading\">A");
+            #line (1510,26)-(1510,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
             #line hidden
-            #line (1510,40)-(1510,41) 25 "SyntaxGenerator.mxg"
+            #line (1510,31)-(1510,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,41)-(1510,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("list");
+            #line (1510,32)-(1510,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("is");
+            #line hidden
+            #line (1510,34)-(1510,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1510,35)-(1510,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("not");
+            #line hidden
+            #line (1510,38)-(1510,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1510,39)-(1510,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write("found.");
             #line hidden
             #line (1510,45)-(1510,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,46)-(1510,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("of");
+            #line (1510,46)-(1510,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("A");
             #line hidden
-            #line (1510,48)-(1510,49) 25 "SyntaxGenerator.mxg"
+            #line (1510,47)-(1510,48) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,49)-(1510,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("trivia");
+            #line (1510,48)-(1510,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("missing");
             #line hidden
             #line (1510,55)-(1510,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,56)-(1510,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("immediately");
+            #line (1510,56)-(1510,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token");
             #line hidden
-            #line (1510,67)-(1510,68) 25 "SyntaxGenerator.mxg"
+            #line (1510,61)-(1510,62) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,68)-(1510,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("preceding");
+            #line (1510,62)-(1510,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("has");
+            #line hidden
+            #line (1510,65)-(1510,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1510,66)-(1510,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("no");
+            #line hidden
+            #line (1510,68)-(1510,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1510,69)-(1510,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write("text");
+            #line hidden
+            #line (1510,73)-(1510,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1510,74)-(1510,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("and");
             #line hidden
             #line (1510,77)-(1510,78) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,78)-(1510,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1510,78)-(1510,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("normally");
             #line hidden
-            #line (1510,81)-(1510,82) 25 "SyntaxGenerator.mxg"
+            #line (1510,86)-(1510,87) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1510,82)-(1510,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.</param>");
+            #line (1510,87)-(1510,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("has");
+            #line hidden
+            #line (1510,90)-(1510,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1510,91)-(1510,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("associated");
+            #line hidden
+            #line (1510,101)-(1510,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1510,102)-(1510,114) 25 "SyntaxGenerator.mxg"
+            __cb.Write("diagnostics.");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -25070,92 +25046,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1511,16)-(1511,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1511,17)-(1511,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<param");
-            #line hidden
-            #line (1511,23)-(1511,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,24)-(1511,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"kind\">A");
-            #line hidden
-            #line (1511,37)-(1511,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,38)-(1511,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("syntax");
-            #line hidden
-            #line (1511,44)-(1511,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,45)-(1511,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
-            #line hidden
-            #line (1511,49)-(1511,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,50)-(1511,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("value");
-            #line hidden
-            #line (1511,55)-(1511,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,56)-(1511,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (1511,59)-(1511,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,60)-(1511,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("a");
-            #line hidden
-            #line (1511,61)-(1511,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,62)-(1511,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("token.");
-            #line hidden
-            #line (1511,68)-(1511,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,69)-(1511,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("These");
-            #line hidden
-            #line (1511,74)-(1511,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,75)-(1511,79) 25 "SyntaxGenerator.mxg"
-            __cb.Write("have");
-            #line hidden
-            #line (1511,79)-(1511,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,80)-(1511,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1511,83)-(1511,84) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,84)-(1511,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("suffix");
-            #line hidden
-            #line (1511,90)-(1511,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,91)-(1511,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Token");
-            #line hidden
-            #line (1511,96)-(1511,97) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,97)-(1511,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write("or");
-            #line hidden
-            #line (1511,99)-(1511,100) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1511,100)-(1511,116) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Keyword.</param>");
+            #line (1511,17)-(1511,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -25172,142 +25064,298 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1512,23)-(1512,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,24)-(1512,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("name=\"trailing\">A");
+            #line (1512,24)-(1512,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"leading\">A");
             #line hidden
-            #line (1512,41)-(1512,42) 25 "SyntaxGenerator.mxg"
+            #line (1512,40)-(1512,41) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,42)-(1512,46) 25 "SyntaxGenerator.mxg"
+            #line (1512,41)-(1512,45) 25 "SyntaxGenerator.mxg"
             __cb.Write("list");
             #line hidden
-            #line (1512,46)-(1512,47) 25 "SyntaxGenerator.mxg"
+            #line (1512,45)-(1512,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,47)-(1512,49) 25 "SyntaxGenerator.mxg"
+            #line (1512,46)-(1512,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("of");
             #line hidden
-            #line (1512,49)-(1512,50) 25 "SyntaxGenerator.mxg"
+            #line (1512,48)-(1512,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,50)-(1512,56) 25 "SyntaxGenerator.mxg"
+            #line (1512,49)-(1512,55) 25 "SyntaxGenerator.mxg"
             __cb.Write("trivia");
             #line hidden
-            #line (1512,56)-(1512,57) 25 "SyntaxGenerator.mxg"
+            #line (1512,55)-(1512,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,57)-(1512,68) 25 "SyntaxGenerator.mxg"
+            #line (1512,56)-(1512,67) 25 "SyntaxGenerator.mxg"
             __cb.Write("immediately");
             #line hidden
-            #line (1512,68)-(1512,69) 25 "SyntaxGenerator.mxg"
+            #line (1512,67)-(1512,68) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,69)-(1512,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write("following");
+            #line (1512,68)-(1512,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("preceding");
             #line hidden
-            #line (1512,78)-(1512,79) 25 "SyntaxGenerator.mxg"
+            #line (1512,77)-(1512,78) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,79)-(1512,82) 25 "SyntaxGenerator.mxg"
+            #line (1512,78)-(1512,81) 25 "SyntaxGenerator.mxg"
             __cb.Write("the");
             #line hidden
-            #line (1512,82)-(1512,83) 25 "SyntaxGenerator.mxg"
+            #line (1512,81)-(1512,82) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1512,83)-(1512,97) 25 "SyntaxGenerator.mxg"
+            #line (1512,82)-(1512,96) 25 "SyntaxGenerator.mxg"
             __cb.Write("token.</param>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1513,13)-(1513,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
+            #line (1513,13)-(1513,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
             #line hidden
-            #line (1513,19)-(1513,20) 25 "SyntaxGenerator.mxg"
+            #line (1513,16)-(1513,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,20)-(1513,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("virtual");
+            #line (1513,17)-(1513,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
             #line hidden
-            #line (1513,27)-(1513,28) 25 "SyntaxGenerator.mxg"
+            #line (1513,23)-(1513,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,28)-(1513,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("__SyntaxToken");
+            #line (1513,24)-(1513,37) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"kind\">A");
             #line hidden
-            #line (1513,41)-(1513,42) 25 "SyntaxGenerator.mxg"
+            #line (1513,37)-(1513,38) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,42)-(1513,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write("MissingToken(__SyntaxTriviaList");
+            #line (1513,38)-(1513,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("syntax");
             #line hidden
-            #line (1513,73)-(1513,74) 25 "SyntaxGenerator.mxg"
+            #line (1513,44)-(1513,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,74)-(1513,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write("leading,");
+            #line (1513,45)-(1513,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
             #line hidden
-            #line (1513,82)-(1513,83) 25 "SyntaxGenerator.mxg"
+            #line (1513,49)-(1513,50) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,84)-(1513,88) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
+            #line (1513,50)-(1513,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("value");
             #line hidden
-            #line (1513,89)-(1513,99) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SyntaxKind");
+            #line (1513,55)-(1513,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,56)-(1513,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (1513,59)-(1513,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,60)-(1513,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("a");
+            #line hidden
+            #line (1513,61)-(1513,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,62)-(1513,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.");
+            #line hidden
+            #line (1513,68)-(1513,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,69)-(1513,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("These");
+            #line hidden
+            #line (1513,74)-(1513,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,75)-(1513,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write("have");
+            #line hidden
+            #line (1513,79)-(1513,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,80)-(1513,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1513,83)-(1513,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,84)-(1513,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("suffix");
+            #line hidden
+            #line (1513,90)-(1513,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,91)-(1513,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Token");
+            #line hidden
+            #line (1513,96)-(1513,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1513,97)-(1513,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write("or");
             #line hidden
             #line (1513,99)-(1513,100) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,100)-(1513,105) 25 "SyntaxGenerator.mxg"
+            #line (1513,100)-(1513,116) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Keyword.</param>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1514,13)-(1514,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1514,16)-(1514,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,17)-(1514,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<param");
+            #line hidden
+            #line (1514,23)-(1514,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,24)-(1514,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write("name=\"trailing\">A");
+            #line hidden
+            #line (1514,41)-(1514,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,42)-(1514,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("list");
+            #line hidden
+            #line (1514,46)-(1514,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,47)-(1514,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("of");
+            #line hidden
+            #line (1514,49)-(1514,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,50)-(1514,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("trivia");
+            #line hidden
+            #line (1514,56)-(1514,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,57)-(1514,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("immediately");
+            #line hidden
+            #line (1514,68)-(1514,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,69)-(1514,78) 25 "SyntaxGenerator.mxg"
+            __cb.Write("following");
+            #line hidden
+            #line (1514,78)-(1514,79) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,79)-(1514,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1514,82)-(1514,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1514,83)-(1514,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write("token.</param>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1515,13)-(1515,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1515,19)-(1515,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1515,20)-(1515,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("virtual");
+            #line hidden
+            #line (1515,27)-(1515,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1515,28)-(1515,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__SyntaxToken");
+            #line hidden
+            #line (1515,41)-(1515,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1515,42)-(1515,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write("MissingToken(__SyntaxTriviaList");
+            #line hidden
+            #line (1515,73)-(1515,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1515,74)-(1515,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write("leading,");
+            #line hidden
+            #line (1515,82)-(1515,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1515,84)-(1515,88) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1515,89)-(1515,99) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SyntaxKind");
+            #line hidden
+            #line (1515,99)-(1515,100) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1515,100)-(1515,105) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind,");
             #line hidden
-            #line (1513,105)-(1513,106) 25 "SyntaxGenerator.mxg"
+            #line (1515,105)-(1515,106) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,106)-(1513,124) 25 "SyntaxGenerator.mxg"
+            #line (1515,106)-(1515,124) 25 "SyntaxGenerator.mxg"
             __cb.Write("__SyntaxTriviaList");
             #line hidden
-            #line (1513,124)-(1513,125) 25 "SyntaxGenerator.mxg"
+            #line (1515,124)-(1515,125) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1513,125)-(1513,134) 25 "SyntaxGenerator.mxg"
+            #line (1515,125)-(1515,134) 25 "SyntaxGenerator.mxg"
             __cb.Write("trailing)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1514,13)-(1514,14) 25 "SyntaxGenerator.mxg"
+            #line (1516,13)-(1516,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1515,17)-(1515,23) 25 "SyntaxGenerator.mxg"
+            #line (1517,17)-(1517,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1515,23)-(1515,24) 25 "SyntaxGenerator.mxg"
+            #line (1517,23)-(1517,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1515,24)-(1515,50) 25 "SyntaxGenerator.mxg"
+            #line (1517,24)-(1517,50) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.MissingToken(leading,");
             #line hidden
-            #line (1515,50)-(1515,51) 25 "SyntaxGenerator.mxg"
+            #line (1517,50)-(1517,51) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1515,51)-(1515,61) 25 "SyntaxGenerator.mxg"
+            #line (1517,51)-(1517,61) 25 "SyntaxGenerator.mxg"
             __cb.Write("(int)kind,");
             #line hidden
-            #line (1515,61)-(1515,62) 25 "SyntaxGenerator.mxg"
+            #line (1517,61)-(1517,62) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1515,62)-(1515,72) 25 "SyntaxGenerator.mxg"
+            #line (1517,62)-(1517,72) 25 "SyntaxGenerator.mxg"
             __cb.Write("trailing);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1516,13)-(1516,14) 25 "SyntaxGenerator.mxg"
+            #line (1518,13)-(1518,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -25315,7 +25363,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             var __first147 = true;
-            #line (1518,14)-(1518,51) 13 "SyntaxGenerator.mxg"
+            #line (1520,14)-(1520,51) 13 "SyntaxGenerator.mxg"
             foreach (var token in nonFixedTokens)
             #line hidden
             
@@ -25327,70 +25375,70 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (1520,17)-(1520,23) 29 "SyntaxGenerator.mxg"
+                #line (1522,17)-(1522,23) 29 "SyntaxGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (1520,23)-(1520,24) 29 "SyntaxGenerator.mxg"
+                #line (1522,23)-(1522,24) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1520,24)-(1520,37) 29 "SyntaxGenerator.mxg"
+                #line (1522,24)-(1522,37) 29 "SyntaxGenerator.mxg"
                 __cb.Write("__SyntaxToken");
                 #line hidden
-                #line (1520,37)-(1520,38) 29 "SyntaxGenerator.mxg"
+                #line (1522,37)-(1522,38) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1520,39)-(1520,55) 28 "SyntaxGenerator.mxg"
+                #line (1522,39)-(1522,55) 28 "SyntaxGenerator.mxg"
                 __cb.Write(token.CSharpName);
                 #line hidden
-                #line (1520,56)-(1520,63) 29 "SyntaxGenerator.mxg"
+                #line (1522,56)-(1522,63) 29 "SyntaxGenerator.mxg"
                 __cb.Write("(string");
                 #line hidden
-                #line (1520,63)-(1520,64) 29 "SyntaxGenerator.mxg"
+                #line (1522,63)-(1522,64) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1520,64)-(1520,69) 29 "SyntaxGenerator.mxg"
+                #line (1522,64)-(1522,69) 29 "SyntaxGenerator.mxg"
                 __cb.Write("text)");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (1521,17)-(1521,18) 29 "SyntaxGenerator.mxg"
+                #line (1523,17)-(1523,18) 29 "SyntaxGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("            ");
-                #line (1522,21)-(1522,27) 29 "SyntaxGenerator.mxg"
+                #line (1524,21)-(1524,27) 29 "SyntaxGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (1522,27)-(1522,28) 29 "SyntaxGenerator.mxg"
+                #line (1524,27)-(1524,28) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1522,28)-(1522,31) 29 "SyntaxGenerator.mxg"
+                #line (1524,28)-(1524,31) 29 "SyntaxGenerator.mxg"
                 __cb.Write("new");
                 #line hidden
-                #line (1522,31)-(1522,32) 29 "SyntaxGenerator.mxg"
+                #line (1524,31)-(1524,32) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1522,32)-(1522,46) 29 "SyntaxGenerator.mxg"
+                #line (1524,32)-(1524,46) 29 "SyntaxGenerator.mxg"
                 __cb.Write("__SyntaxToken(");
                 #line hidden
-                #line (1522,47)-(1522,51) 28 "SyntaxGenerator.mxg"
+                #line (1524,47)-(1524,51) 28 "SyntaxGenerator.mxg"
                 __cb.Write(Lang);
                 #line hidden
-                #line (1522,52)-(1522,92) 29 "SyntaxGenerator.mxg"
+                #line (1524,52)-(1524,92) 29 "SyntaxGenerator.mxg"
                 __cb.Write("Language.Instance.InternalSyntaxFactory.");
                 #line hidden
-                #line (1522,93)-(1522,109) 28 "SyntaxGenerator.mxg"
+                #line (1524,93)-(1524,109) 28 "SyntaxGenerator.mxg"
                 __cb.Write(token.CSharpName);
                 #line hidden
-                #line (1522,110)-(1522,118) 29 "SyntaxGenerator.mxg"
+                #line (1524,110)-(1524,118) 29 "SyntaxGenerator.mxg"
                 __cb.Write("(text));");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (1523,17)-(1523,18) 29 "SyntaxGenerator.mxg"
+                #line (1525,17)-(1525,18) 29 "SyntaxGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -25398,88 +25446,88 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (1525,17)-(1525,23) 29 "SyntaxGenerator.mxg"
+                #line (1527,17)-(1527,23) 29 "SyntaxGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (1525,23)-(1525,24) 29 "SyntaxGenerator.mxg"
+                #line (1527,23)-(1527,24) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1525,24)-(1525,37) 29 "SyntaxGenerator.mxg"
+                #line (1527,24)-(1527,37) 29 "SyntaxGenerator.mxg"
                 __cb.Write("__SyntaxToken");
                 #line hidden
-                #line (1525,37)-(1525,38) 29 "SyntaxGenerator.mxg"
+                #line (1527,37)-(1527,38) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1525,39)-(1525,55) 28 "SyntaxGenerator.mxg"
+                #line (1527,39)-(1527,55) 28 "SyntaxGenerator.mxg"
                 __cb.Write(token.CSharpName);
                 #line hidden
-                #line (1525,56)-(1525,63) 29 "SyntaxGenerator.mxg"
+                #line (1527,56)-(1527,63) 29 "SyntaxGenerator.mxg"
                 __cb.Write("(string");
                 #line hidden
-                #line (1525,63)-(1525,64) 29 "SyntaxGenerator.mxg"
+                #line (1527,63)-(1527,64) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1525,64)-(1525,69) 29 "SyntaxGenerator.mxg"
+                #line (1527,64)-(1527,69) 29 "SyntaxGenerator.mxg"
                 __cb.Write("text,");
                 #line hidden
-                #line (1525,69)-(1525,70) 29 "SyntaxGenerator.mxg"
+                #line (1527,69)-(1527,70) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1525,70)-(1525,76) 29 "SyntaxGenerator.mxg"
+                #line (1527,70)-(1527,76) 29 "SyntaxGenerator.mxg"
                 __cb.Write("object");
                 #line hidden
-                #line (1525,76)-(1525,77) 29 "SyntaxGenerator.mxg"
+                #line (1527,76)-(1527,77) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1525,77)-(1525,83) 29 "SyntaxGenerator.mxg"
+                #line (1527,77)-(1527,83) 29 "SyntaxGenerator.mxg"
                 __cb.Write("value)");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (1526,17)-(1526,18) 29 "SyntaxGenerator.mxg"
+                #line (1528,17)-(1528,18) 29 "SyntaxGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("            ");
-                #line (1527,21)-(1527,27) 29 "SyntaxGenerator.mxg"
+                #line (1529,21)-(1529,27) 29 "SyntaxGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (1527,27)-(1527,28) 29 "SyntaxGenerator.mxg"
+                #line (1529,27)-(1529,28) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1527,28)-(1527,31) 29 "SyntaxGenerator.mxg"
+                #line (1529,28)-(1529,31) 29 "SyntaxGenerator.mxg"
                 __cb.Write("new");
                 #line hidden
-                #line (1527,31)-(1527,32) 29 "SyntaxGenerator.mxg"
+                #line (1529,31)-(1529,32) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1527,32)-(1527,46) 29 "SyntaxGenerator.mxg"
+                #line (1529,32)-(1529,46) 29 "SyntaxGenerator.mxg"
                 __cb.Write("__SyntaxToken(");
                 #line hidden
-                #line (1527,47)-(1527,51) 28 "SyntaxGenerator.mxg"
+                #line (1529,47)-(1529,51) 28 "SyntaxGenerator.mxg"
                 __cb.Write(Lang);
                 #line hidden
-                #line (1527,52)-(1527,92) 29 "SyntaxGenerator.mxg"
+                #line (1529,52)-(1529,92) 29 "SyntaxGenerator.mxg"
                 __cb.Write("Language.Instance.InternalSyntaxFactory.");
                 #line hidden
-                #line (1527,93)-(1527,109) 28 "SyntaxGenerator.mxg"
+                #line (1529,93)-(1529,109) 28 "SyntaxGenerator.mxg"
                 __cb.Write(token.CSharpName);
                 #line hidden
-                #line (1527,110)-(1527,116) 29 "SyntaxGenerator.mxg"
+                #line (1529,110)-(1529,116) 29 "SyntaxGenerator.mxg"
                 __cb.Write("(text,");
                 #line hidden
-                #line (1527,116)-(1527,117) 29 "SyntaxGenerator.mxg"
+                #line (1529,116)-(1529,117) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1527,117)-(1527,125) 29 "SyntaxGenerator.mxg"
+                #line (1529,117)-(1529,125) 29 "SyntaxGenerator.mxg"
                 __cb.Write("value));");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("        ");
-                #line (1528,17)-(1528,18) 29 "SyntaxGenerator.mxg"
+                #line (1530,17)-(1530,18) 29 "SyntaxGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -25487,7 +25535,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             }
             if (!__first147) __cb.AppendLine();
             var __first148 = true;
-            #line (1530,14)-(1530,50) 13 "SyntaxGenerator.mxg"
+            #line (1532,14)-(1532,50) 13 "SyntaxGenerator.mxg"
             foreach (var rule in RulesAndBlocks)
             #line hidden
             
@@ -25497,7 +25545,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __first148 = false;
                 }
                 var __first149 = true;
-                #line (1531,18)-(1531,56) 17 "SyntaxGenerator.mxg"
+                #line (1533,18)-(1533,56) 17 "SyntaxGenerator.mxg"
                 foreach (var alt in rule.Alternatives)
                 #line hidden
                 
@@ -25509,7 +25557,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                     __cb.Push("        ");
-                    #line (1533,22)-(1533,54) 32 "SyntaxGenerator.mxg"
+                    #line (1535,22)-(1535,54) 32 "SyntaxGenerator.mxg"
                     __cb.Write(GenerateSyntaxFactoryCreate(alt));
                     #line hidden
                     __cb.AppendLine();
@@ -25521,64 +25569,138 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1537,13)-(1537,21) 25 "SyntaxGenerator.mxg"
-            __cb.Write("internal");
+            #line (1539,13)-(1539,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
             #line hidden
-            #line (1537,21)-(1537,22) 25 "SyntaxGenerator.mxg"
+            #line (1539,19)-(1539,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1537,22)-(1537,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("static");
+            #line (1539,20)-(1539,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("override");
             #line hidden
-            #line (1537,28)-(1537,29) 25 "SyntaxGenerator.mxg"
+            #line (1539,28)-(1539,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1537,29)-(1537,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("global::System.Collections.Generic.IEnumerable<__Type>");
+            #line (1539,29)-(1539,51) 25 "SyntaxGenerator.mxg"
+            __cb.Write("__BinderFactoryVisitor");
             #line hidden
-            #line (1537,83)-(1537,84) 25 "SyntaxGenerator.mxg"
+            #line (1539,51)-(1539,52) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1537,84)-(1537,98) 25 "SyntaxGenerator.mxg"
-            __cb.Write("GetNodeTypes()");
+            #line (1539,52)-(1539,94) 25 "SyntaxGenerator.mxg"
+            __cb.Write("CreateBinderFactoryVisitor(__BinderFactory");
+            #line hidden
+            #line (1539,94)-(1539,95) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1539,95)-(1539,109) 25 "SyntaxGenerator.mxg"
+            __cb.Write("binderFactory)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1538,13)-(1538,14) 25 "SyntaxGenerator.mxg"
+            #line (1540,13)-(1540,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1539,17)-(1539,23) 25 "SyntaxGenerator.mxg"
+            #line (1541,17)-(1541,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1539,23)-(1539,24) 25 "SyntaxGenerator.mxg"
+            #line (1541,23)-(1541,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1539,24)-(1539,27) 25 "SyntaxGenerator.mxg"
+            #line (1541,24)-(1541,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (1539,27)-(1539,28) 25 "SyntaxGenerator.mxg"
+            #line (1541,27)-(1541,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1539,28)-(1539,34) 25 "SyntaxGenerator.mxg"
+            #line (1541,28)-(1541,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("global::");
+            #line hidden
+            #line (1541,37)-(1541,46) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Namespace);
+            #line hidden
+            #line (1541,47)-(1541,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write(".Binding.");
+            #line hidden
+            #line (1541,57)-(1541,61) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1541,62)-(1541,98) 25 "SyntaxGenerator.mxg"
+            __cb.Write("BinderFactoryVisitor(binderFactory);");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1542,13)-(1542,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1544,13)-(1544,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write("internal");
+            #line hidden
+            #line (1544,21)-(1544,22) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1544,22)-(1544,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("static");
+            #line hidden
+            #line (1544,28)-(1544,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1544,29)-(1544,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("global::System.Collections.Generic.IEnumerable<__Type>");
+            #line hidden
+            #line (1544,83)-(1544,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1544,84)-(1544,98) 25 "SyntaxGenerator.mxg"
+            __cb.Write("GetNodeTypes()");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1545,13)-(1545,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1546,17)-(1546,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1546,23)-(1546,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1546,24)-(1546,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (1546,27)-(1546,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1546,28)-(1546,34) 25 "SyntaxGenerator.mxg"
             __cb.Write("__Type");
             #line hidden
-            #line (1539,35)-(1539,39) 24 "SyntaxGenerator.mxg"
+            #line (1546,35)-(1546,39) 24 "SyntaxGenerator.mxg"
             __cb.Write("[]");
             #line hidden
-            #line (1539,40)-(1539,41) 25 "SyntaxGenerator.mxg"
+            #line (1546,40)-(1546,41) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1539,41)-(1539,42) 25 "SyntaxGenerator.mxg"
+            #line (1546,41)-(1546,42) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first150 = true;
-            #line (1540,22)-(1540,58) 13 "SyntaxGenerator.mxg"
+            #line (1547,22)-(1547,58) 13 "SyntaxGenerator.mxg"
             foreach (var rule in RulesAndBlocks)
             #line hidden
             
@@ -25588,7 +25710,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __first150 = false;
                 }
                 var __first151 = true;
-                #line (1541,26)-(1541,63) 17 "SyntaxGenerator.mxg"
+                #line (1548,26)-(1548,63) 17 "SyntaxGenerator.mxg"
                 foreach(var alt in rule.Alternatives)
                 #line hidden
                 
@@ -25598,13 +25720,13 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         __first151 = false;
                     }
                     __cb.Push("                ");
-                    #line (1542,29)-(1542,36) 33 "SyntaxGenerator.mxg"
+                    #line (1549,29)-(1549,36) 33 "SyntaxGenerator.mxg"
                     __cb.Write("typeof(");
                     #line hidden
-                    #line (1542,37)-(1542,48) 32 "SyntaxGenerator.mxg"
+                    #line (1549,37)-(1549,48) 32 "SyntaxGenerator.mxg"
                     __cb.Write(alt.RedName);
                     #line hidden
-                    #line (1542,49)-(1542,51) 33 "SyntaxGenerator.mxg"
+                    #line (1549,49)-(1549,51) 33 "SyntaxGenerator.mxg"
                     __cb.Write("),");
                     #line hidden
                     __cb.AppendLine();
@@ -25614,13 +25736,13 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             }
             if (!__first150) __cb.AppendLine();
             __cb.Push("            ");
-            #line (1545,17)-(1545,19) 25 "SyntaxGenerator.mxg"
+            #line (1552,17)-(1552,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("};");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1546,13)-(1546,14) 25 "SyntaxGenerator.mxg"
+            #line (1553,13)-(1553,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -25628,16 +25750,16 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (1548,9)-(1548,10) 25 "SyntaxGenerator.mxg"
+            #line (1555,9)-(1555,10) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (1549,5)-(1549,6) 25 "SyntaxGenerator.mxg"
+            #line (1556,5)-(1556,6) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
-            #line (1549,6)-(1549,10) 25 "SyntaxGenerator.mxg"
+            #line (1556,6)-(1556,10) 25 "SyntaxGenerator.mxg"
             __cb.Write("    ");
             #line hidden
             __cb.AppendLine();
@@ -25645,46 +25767,46 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (1552,9)-(1552,54) 22 "SyntaxGenerator.mxg"
+        #line (1559,9)-(1559,54) 22 "SyntaxGenerator.mxg"
         public string GenerateSyntaxFactoryCreate(Alternative alt)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (1553,5)-(1553,11) 25 "SyntaxGenerator.mxg"
+            #line (1560,5)-(1560,11) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1553,11)-(1553,12) 25 "SyntaxGenerator.mxg"
+            #line (1560,11)-(1560,12) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1553,13)-(1553,24) 24 "SyntaxGenerator.mxg"
+            #line (1560,13)-(1560,24) 24 "SyntaxGenerator.mxg"
             __cb.Write(alt.RedName);
             #line hidden
-            #line (1553,25)-(1553,26) 25 "SyntaxGenerator.mxg"
+            #line (1560,25)-(1560,26) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1553,27)-(1553,41) 24 "SyntaxGenerator.mxg"
+            #line (1560,27)-(1560,41) 24 "SyntaxGenerator.mxg"
             __cb.Write(alt.CSharpName);
             #line hidden
-            #line (1553,42)-(1553,43) 25 "SyntaxGenerator.mxg"
+            #line (1560,42)-(1560,43) 25 "SyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (1553,44)-(1553,67) 24 "SyntaxGenerator.mxg"
+            #line (1560,44)-(1560,67) 24 "SyntaxGenerator.mxg"
             __cb.Write(alt.RedUpdateParameters);
             #line hidden
-            #line (1553,68)-(1553,69) 25 "SyntaxGenerator.mxg"
+            #line (1560,68)-(1560,69) 25 "SyntaxGenerator.mxg"
             __cb.Write(")");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (1554,5)-(1554,6) 25 "SyntaxGenerator.mxg"
+            #line (1561,5)-(1561,6) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first152 = true;
-            #line (1555,10)-(1555,44) 13 "SyntaxGenerator.mxg"
+            #line (1562,10)-(1562,44) 13 "SyntaxGenerator.mxg"
             foreach (var elem in alt.Elements)
             #line hidden
             
@@ -25693,12 +25815,12 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 {
                     __first152 = false;
                 }
-                #line (1556,14)-(1556,70) 17 "SyntaxGenerator.mxg"
+                #line (1563,14)-(1563,70) 17 "SyntaxGenerator.mxg"
                 var redSyntaxNullCondition = elem.RedSyntaxNullCondition;
                 #line hidden
                 
                 var __first153 = true;
-                #line (1557,14)-(1557,53) 17 "SyntaxGenerator.mxg"
+                #line (1564,14)-(1564,53) 17 "SyntaxGenerator.mxg"
                 if (redSyntaxNullCondition is not null)
                 #line hidden
                 
@@ -25708,55 +25830,55 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         __first153 = false;
                     }
                     __cb.Push("    ");
-                    #line (1558,17)-(1558,19) 33 "SyntaxGenerator.mxg"
+                    #line (1565,17)-(1565,19) 33 "SyntaxGenerator.mxg"
                     __cb.Write("if");
                     #line hidden
-                    #line (1558,19)-(1558,20) 33 "SyntaxGenerator.mxg"
+                    #line (1565,19)-(1565,20) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1558,20)-(1558,21) 33 "SyntaxGenerator.mxg"
+                    #line (1565,20)-(1565,21) 33 "SyntaxGenerator.mxg"
                     __cb.Write("(");
                     #line hidden
-                    #line (1558,22)-(1558,44) 32 "SyntaxGenerator.mxg"
+                    #line (1565,22)-(1565,44) 32 "SyntaxGenerator.mxg"
                     __cb.Write(redSyntaxNullCondition);
                     #line hidden
-                    #line (1558,45)-(1558,46) 33 "SyntaxGenerator.mxg"
+                    #line (1565,45)-(1565,46) 33 "SyntaxGenerator.mxg"
                     __cb.Write(")");
                     #line hidden
-                    #line (1558,46)-(1558,47) 33 "SyntaxGenerator.mxg"
+                    #line (1565,46)-(1565,47) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1558,47)-(1558,52) 33 "SyntaxGenerator.mxg"
+                    #line (1565,47)-(1565,52) 33 "SyntaxGenerator.mxg"
                     __cb.Write("throw");
                     #line hidden
-                    #line (1558,52)-(1558,53) 33 "SyntaxGenerator.mxg"
+                    #line (1565,52)-(1565,53) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1558,53)-(1558,56) 33 "SyntaxGenerator.mxg"
+                    #line (1565,53)-(1565,56) 33 "SyntaxGenerator.mxg"
                     __cb.Write("new");
                     #line hidden
-                    #line (1558,56)-(1558,57) 33 "SyntaxGenerator.mxg"
+                    #line (1565,56)-(1565,57) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1558,57)-(1558,88) 33 "SyntaxGenerator.mxg"
+                    #line (1565,57)-(1565,88) 33 "SyntaxGenerator.mxg"
                     __cb.Write("__ArgumentNullException(nameof(");
                     #line hidden
-                    #line (1558,89)-(1558,107) 32 "SyntaxGenerator.mxg"
+                    #line (1565,89)-(1565,107) 32 "SyntaxGenerator.mxg"
                     __cb.Write(elem.ParameterName);
                     #line hidden
-                    #line (1558,108)-(1558,111) 33 "SyntaxGenerator.mxg"
+                    #line (1565,108)-(1565,111) 33 "SyntaxGenerator.mxg"
                     __cb.Write("));");
                     #line hidden
                     __cb.AppendLine();
                     __cb.Pop();
                 }
                 if (!__first153) __cb.AppendLine();
-                #line (1560,14)-(1560,62) 17 "SyntaxGenerator.mxg"
+                #line (1567,14)-(1567,62) 17 "SyntaxGenerator.mxg"
                 var redSyntaxCondition = elem.RedSyntaxCondition;
                 #line hidden
                 
                 var __first154 = true;
-                #line (1561,14)-(1561,49) 17 "SyntaxGenerator.mxg"
+                #line (1568,14)-(1568,49) 17 "SyntaxGenerator.mxg"
                 if (redSyntaxCondition is not null)
                 #line hidden
                 
@@ -25766,43 +25888,43 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         __first154 = false;
                     }
                     __cb.Push("    ");
-                    #line (1562,17)-(1562,19) 33 "SyntaxGenerator.mxg"
+                    #line (1569,17)-(1569,19) 33 "SyntaxGenerator.mxg"
                     __cb.Write("if");
                     #line hidden
-                    #line (1562,19)-(1562,20) 33 "SyntaxGenerator.mxg"
+                    #line (1569,19)-(1569,20) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1562,20)-(1562,21) 33 "SyntaxGenerator.mxg"
+                    #line (1569,20)-(1569,21) 33 "SyntaxGenerator.mxg"
                     __cb.Write("(");
                     #line hidden
-                    #line (1562,22)-(1562,40) 32 "SyntaxGenerator.mxg"
+                    #line (1569,22)-(1569,40) 32 "SyntaxGenerator.mxg"
                     __cb.Write(redSyntaxCondition);
                     #line hidden
-                    #line (1562,41)-(1562,42) 33 "SyntaxGenerator.mxg"
+                    #line (1569,41)-(1569,42) 33 "SyntaxGenerator.mxg"
                     __cb.Write(")");
                     #line hidden
-                    #line (1562,42)-(1562,43) 33 "SyntaxGenerator.mxg"
+                    #line (1569,42)-(1569,43) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1562,43)-(1562,48) 33 "SyntaxGenerator.mxg"
+                    #line (1569,43)-(1569,48) 33 "SyntaxGenerator.mxg"
                     __cb.Write("throw");
                     #line hidden
-                    #line (1562,48)-(1562,49) 33 "SyntaxGenerator.mxg"
+                    #line (1569,48)-(1569,49) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1562,49)-(1562,52) 33 "SyntaxGenerator.mxg"
+                    #line (1569,49)-(1569,52) 33 "SyntaxGenerator.mxg"
                     __cb.Write("new");
                     #line hidden
-                    #line (1562,52)-(1562,53) 33 "SyntaxGenerator.mxg"
+                    #line (1569,52)-(1569,53) 33 "SyntaxGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (1562,53)-(1562,80) 33 "SyntaxGenerator.mxg"
+                    #line (1569,53)-(1569,80) 33 "SyntaxGenerator.mxg"
                     __cb.Write("__ArgumentException(nameof(");
                     #line hidden
-                    #line (1562,81)-(1562,99) 32 "SyntaxGenerator.mxg"
+                    #line (1569,81)-(1569,99) 32 "SyntaxGenerator.mxg"
                     __cb.Write(elem.ParameterName);
                     #line hidden
-                    #line (1562,100)-(1562,103) 33 "SyntaxGenerator.mxg"
+                    #line (1569,100)-(1569,103) 33 "SyntaxGenerator.mxg"
                     __cb.Write("));");
                     #line hidden
                     __cb.AppendLine();
@@ -25812,49 +25934,49 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             }
             if (!__first152) __cb.AppendLine();
             __cb.Push("    ");
-            #line (1565,9)-(1565,15) 25 "SyntaxGenerator.mxg"
+            #line (1572,9)-(1572,15) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1565,15)-(1565,16) 25 "SyntaxGenerator.mxg"
+            #line (1572,15)-(1572,16) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1565,16)-(1565,17) 25 "SyntaxGenerator.mxg"
+            #line (1572,16)-(1572,17) 25 "SyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (1565,18)-(1565,29) 24 "SyntaxGenerator.mxg"
+            #line (1572,18)-(1572,29) 24 "SyntaxGenerator.mxg"
             __cb.Write(alt.RedName);
             #line hidden
-            #line (1565,30)-(1565,31) 25 "SyntaxGenerator.mxg"
+            #line (1572,30)-(1572,31) 25 "SyntaxGenerator.mxg"
             __cb.Write(")");
             #line hidden
-            #line (1565,32)-(1565,36) 24 "SyntaxGenerator.mxg"
+            #line (1572,32)-(1572,36) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1565,37)-(1565,77) 25 "SyntaxGenerator.mxg"
+            #line (1572,37)-(1572,77) 25 "SyntaxGenerator.mxg"
             __cb.Write("Language.Instance.InternalSyntaxFactory.");
             #line hidden
-            #line (1565,78)-(1565,92) 24 "SyntaxGenerator.mxg"
+            #line (1572,78)-(1572,92) 24 "SyntaxGenerator.mxg"
             __cb.Write(alt.CSharpName);
             #line hidden
-            #line (1565,93)-(1565,94) 25 "SyntaxGenerator.mxg"
+            #line (1572,93)-(1572,94) 25 "SyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (1565,95)-(1565,121) 24 "SyntaxGenerator.mxg"
+            #line (1572,95)-(1572,121) 24 "SyntaxGenerator.mxg"
             __cb.Write(alt.RedToGreenArgumentList);
             #line hidden
-            #line (1565,122)-(1565,136) 25 "SyntaxGenerator.mxg"
+            #line (1572,122)-(1572,136) 25 "SyntaxGenerator.mxg"
             __cb.Write(").CreateRed();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (1566,5)-(1566,6) 25 "SyntaxGenerator.mxg"
+            #line (1573,5)-(1573,6) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             var __first155 = true;
-            #line (1567,6)-(1567,45) 13 "SyntaxGenerator.mxg"
+            #line (1574,6)-(1574,45) 13 "SyntaxGenerator.mxg"
             if (alt.HasRedToGreenOptionalArguments)
             #line hidden
             
@@ -25866,64 +25988,64 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (1569,9)-(1569,15) 29 "SyntaxGenerator.mxg"
+                #line (1576,9)-(1576,15) 29 "SyntaxGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
-                #line (1569,15)-(1569,16) 29 "SyntaxGenerator.mxg"
+                #line (1576,15)-(1576,16) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1569,17)-(1569,28) 28 "SyntaxGenerator.mxg"
+                #line (1576,17)-(1576,28) 28 "SyntaxGenerator.mxg"
                 __cb.Write(alt.RedName);
                 #line hidden
-                #line (1569,29)-(1569,30) 29 "SyntaxGenerator.mxg"
+                #line (1576,29)-(1576,30) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1569,31)-(1569,45) 28 "SyntaxGenerator.mxg"
+                #line (1576,31)-(1576,45) 28 "SyntaxGenerator.mxg"
                 __cb.Write(alt.CSharpName);
                 #line hidden
-                #line (1569,46)-(1569,47) 29 "SyntaxGenerator.mxg"
+                #line (1576,46)-(1576,47) 29 "SyntaxGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
-                #line (1569,48)-(1569,79) 28 "SyntaxGenerator.mxg"
+                #line (1576,48)-(1576,79) 28 "SyntaxGenerator.mxg"
                 __cb.Write(alt.RedOptionalUpdateParameters);
                 #line hidden
-                #line (1569,80)-(1569,81) 29 "SyntaxGenerator.mxg"
+                #line (1576,80)-(1576,81) 29 "SyntaxGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (1570,9)-(1570,10) 29 "SyntaxGenerator.mxg"
+                #line (1577,9)-(1577,10) 29 "SyntaxGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (1571,13)-(1571,19) 29 "SyntaxGenerator.mxg"
+                #line (1578,13)-(1578,19) 29 "SyntaxGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
-                #line (1571,19)-(1571,20) 29 "SyntaxGenerator.mxg"
+                #line (1578,19)-(1578,20) 29 "SyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (1571,20)-(1571,25) 29 "SyntaxGenerator.mxg"
+                #line (1578,20)-(1578,25) 29 "SyntaxGenerator.mxg"
                 __cb.Write("this.");
                 #line hidden
-                #line (1571,26)-(1571,40) 28 "SyntaxGenerator.mxg"
+                #line (1578,26)-(1578,40) 28 "SyntaxGenerator.mxg"
                 __cb.Write(alt.CSharpName);
                 #line hidden
-                #line (1571,41)-(1571,42) 29 "SyntaxGenerator.mxg"
+                #line (1578,41)-(1578,42) 29 "SyntaxGenerator.mxg"
                 __cb.Write("(");
                 #line hidden
-                #line (1571,43)-(1571,77) 28 "SyntaxGenerator.mxg"
+                #line (1578,43)-(1578,77) 28 "SyntaxGenerator.mxg"
                 __cb.Write(alt.RedToGreenOptionalArgumentList);
                 #line hidden
-                #line (1571,78)-(1571,80) 29 "SyntaxGenerator.mxg"
+                #line (1578,78)-(1578,80) 29 "SyntaxGenerator.mxg"
                 __cb.Write(");");
                 #line hidden
                 __cb.AppendLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (1572,9)-(1572,10) 29 "SyntaxGenerator.mxg"
+                #line (1579,9)-(1579,10) 29 "SyntaxGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -25933,95 +26055,11 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (1576,9)-(1576,32) 22 "SyntaxGenerator.mxg"
+        #line (1583,9)-(1583,32) 22 "SyntaxGenerator.mxg"
         public string GenerateParseOptions()
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.Push("");
-            #line (1577,5)-(1577,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
-            #line hidden
-            #line (1577,10)-(1577,11) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1577,11)-(1577,18) 25 "SyntaxGenerator.mxg"
-            __cb.Write("System;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (1578,5)-(1578,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
-            #line hidden
-            #line (1578,10)-(1578,11) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1578,11)-(1578,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("System.Collections.Generic;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (1579,5)-(1579,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
-            #line hidden
-            #line (1579,10)-(1579,11) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1579,11)-(1579,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("System.Collections.Immutable;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (1580,5)-(1580,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
-            #line hidden
-            #line (1580,10)-(1580,11) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1580,11)-(1580,30) 25 "SyntaxGenerator.mxg"
-            __cb.Write("System.Diagnostics;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (1581,5)-(1581,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
-            #line hidden
-            #line (1581,10)-(1581,11) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1581,11)-(1581,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write("MetaDslx.CodeAnalysis;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (1582,5)-(1582,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
-            #line hidden
-            #line (1582,10)-(1582,11) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1582,11)-(1582,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("MetaDslx.CodeAnalysis.Syntax;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (1583,5)-(1583,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
-            #line hidden
-            #line (1583,10)-(1583,11) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1583,11)-(1583,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("MetaDslx.CodeAnalysis.PooledObjects;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
             __cb.Push("");
             #line (1584,5)-(1584,10) 25 "SyntaxGenerator.mxg"
             __cb.Write("using");
@@ -26029,7 +26067,91 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1584,10)-(1584,11) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1584,11)-(1584,28) 25 "SyntaxGenerator.mxg"
+            #line (1584,11)-(1584,18) 25 "SyntaxGenerator.mxg"
+            __cb.Write("System;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (1585,5)-(1585,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1585,10)-(1585,11) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1585,11)-(1585,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("System.Collections.Generic;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (1586,5)-(1586,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1586,10)-(1586,11) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1586,11)-(1586,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("System.Collections.Immutable;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (1587,5)-(1587,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1587,10)-(1587,11) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1587,11)-(1587,30) 25 "SyntaxGenerator.mxg"
+            __cb.Write("System.Diagnostics;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (1588,5)-(1588,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1588,10)-(1588,11) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1588,11)-(1588,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write("MetaDslx.CodeAnalysis;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (1589,5)-(1589,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1589,10)-(1589,11) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1589,11)-(1589,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("MetaDslx.CodeAnalysis.Syntax;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (1590,5)-(1590,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1590,10)-(1590,11) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1590,11)-(1590,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("MetaDslx.CodeAnalysis.PooledObjects;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (1591,5)-(1591,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1591,10)-(1591,11) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1591,11)-(1591,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("Roslyn.Utilities;");
             #line hidden
             __cb.AppendLine();
@@ -26037,13 +26159,13 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (1586,5)-(1586,14) 25 "SyntaxGenerator.mxg"
+            #line (1593,5)-(1593,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("#nullable");
             #line hidden
-            #line (1586,14)-(1586,15) 25 "SyntaxGenerator.mxg"
+            #line (1593,14)-(1593,15) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1586,15)-(1586,21) 25 "SyntaxGenerator.mxg"
+            #line (1593,15)-(1593,21) 25 "SyntaxGenerator.mxg"
             __cb.Write("enable");
             #line hidden
             __cb.AppendLine();
@@ -26051,362 +26173,208 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (1588,5)-(1588,14) 25 "SyntaxGenerator.mxg"
+            #line (1595,5)-(1595,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("namespace");
             #line hidden
-            #line (1588,14)-(1588,15) 25 "SyntaxGenerator.mxg"
+            #line (1595,14)-(1595,15) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1588,16)-(1588,25) 24 "SyntaxGenerator.mxg"
+            #line (1595,16)-(1595,25) 24 "SyntaxGenerator.mxg"
             __cb.Write(Namespace);
             #line hidden
-            #line (1588,26)-(1588,33) 25 "SyntaxGenerator.mxg"
+            #line (1595,26)-(1595,33) 25 "SyntaxGenerator.mxg"
             __cb.Write(".Syntax");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (1589,5)-(1589,6) 25 "SyntaxGenerator.mxg"
+            #line (1596,5)-(1596,6) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (1590,9)-(1590,12) 25 "SyntaxGenerator.mxg"
+            #line (1597,9)-(1597,12) 25 "SyntaxGenerator.mxg"
             __cb.Write("///");
             #line hidden
-            #line (1590,12)-(1590,13) 25 "SyntaxGenerator.mxg"
+            #line (1597,12)-(1597,13) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1590,13)-(1590,22) 25 "SyntaxGenerator.mxg"
+            #line (1597,13)-(1597,22) 25 "SyntaxGenerator.mxg"
             __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (1591,9)-(1591,12) 25 "SyntaxGenerator.mxg"
+            #line (1598,9)-(1598,12) 25 "SyntaxGenerator.mxg"
             __cb.Write("///");
             #line hidden
-            #line (1591,12)-(1591,13) 25 "SyntaxGenerator.mxg"
+            #line (1598,12)-(1598,13) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1591,13)-(1591,17) 25 "SyntaxGenerator.mxg"
+            #line (1598,13)-(1598,17) 25 "SyntaxGenerator.mxg"
             __cb.Write("This");
             #line hidden
-            #line (1591,17)-(1591,18) 25 "SyntaxGenerator.mxg"
+            #line (1598,17)-(1598,18) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1591,18)-(1591,23) 25 "SyntaxGenerator.mxg"
+            #line (1598,18)-(1598,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (1591,23)-(1591,24) 25 "SyntaxGenerator.mxg"
+            #line (1598,23)-(1598,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1591,24)-(1591,30) 25 "SyntaxGenerator.mxg"
+            #line (1598,24)-(1598,30) 25 "SyntaxGenerator.mxg"
             __cb.Write("stores");
             #line hidden
-            #line (1591,30)-(1591,31) 25 "SyntaxGenerator.mxg"
+            #line (1598,30)-(1598,31) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1591,31)-(1591,38) 25 "SyntaxGenerator.mxg"
+            #line (1598,31)-(1598,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("several");
             #line hidden
-            #line (1591,38)-(1591,39) 25 "SyntaxGenerator.mxg"
+            #line (1598,38)-(1598,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1591,39)-(1591,45) 25 "SyntaxGenerator.mxg"
+            #line (1598,39)-(1598,45) 25 "SyntaxGenerator.mxg"
             __cb.Write("source");
-            #line hidden
-            #line (1591,45)-(1591,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,46)-(1591,53) 25 "SyntaxGenerator.mxg"
-            __cb.Write("parsing");
-            #line hidden
-            #line (1591,53)-(1591,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,54)-(1591,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("related");
-            #line hidden
-            #line (1591,61)-(1591,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,62)-(1591,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options");
-            #line hidden
-            #line (1591,69)-(1591,70) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,70)-(1591,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write("and");
-            #line hidden
-            #line (1591,73)-(1591,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,74)-(1591,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write("offers");
-            #line hidden
-            #line (1591,80)-(1591,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,81)-(1591,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write("access");
-            #line hidden
-            #line (1591,87)-(1591,88) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,88)-(1591,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1591,90)-(1591,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,91)-(1591,96) 25 "SyntaxGenerator.mxg"
-            __cb.Write("their");
-            #line hidden
-            #line (1591,96)-(1591,97) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1591,97)-(1591,104) 25 "SyntaxGenerator.mxg"
-            __cb.Write("values.");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (1592,9)-(1592,12) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1592,12)-(1592,13) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1592,13)-(1592,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (1593,9)-(1593,15) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1593,15)-(1593,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1593,16)-(1593,22) 25 "SyntaxGenerator.mxg"
-            __cb.Write("sealed");
-            #line hidden
-            #line (1593,22)-(1593,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1593,23)-(1593,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("class");
-            #line hidden
-            #line (1593,28)-(1593,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1593,30)-(1593,34) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1593,35)-(1593,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions");
-            #line hidden
-            #line (1593,47)-(1593,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1593,48)-(1593,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write(":");
-            #line hidden
-            #line (1593,49)-(1593,50) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1593,50)-(1593,63) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions,");
-            #line hidden
-            #line (1593,63)-(1593,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1593,64)-(1593,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write("IEquatable<");
-            #line hidden
-            #line (1593,76)-(1593,80) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1593,81)-(1593,94) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (1594,9)-(1594,10) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1595,13)-(1595,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1595,16)-(1595,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1595,17)-(1595,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1596,13)-(1596,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1596,16)-(1596,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1596,17)-(1596,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write("The");
-            #line hidden
-            #line (1596,20)-(1596,21) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1596,21)-(1596,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("default");
-            #line hidden
-            #line (1596,28)-(1596,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1596,29)-(1596,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("parse");
-            #line hidden
-            #line (1596,34)-(1596,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1596,35)-(1596,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write("options.");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1597,13)-(1597,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1597,16)-(1597,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1597,17)-(1597,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("</summary>");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1598,13)-(1598,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1598,19)-(1598,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1598,20)-(1598,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("static");
-            #line hidden
-            #line (1598,26)-(1598,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1598,28)-(1598,32) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1598,33)-(1598,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions");
             #line hidden
             #line (1598,45)-(1598,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             #line (1598,46)-(1598,53) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Default");
+            __cb.Write("parsing");
             #line hidden
             #line (1598,53)-(1598,54) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1598,54)-(1598,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            #line (1598,55)-(1598,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1598,56)-(1598,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write("get;");
-            #line hidden
-            #line (1598,60)-(1598,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
+            #line (1598,54)-(1598,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("related");
             #line hidden
             #line (1598,61)-(1598,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            #line (1598,62)-(1598,63) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1598,63)-(1598,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
+            #line (1598,62)-(1598,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options");
             #line hidden
-            #line (1598,64)-(1598,65) 25 "SyntaxGenerator.mxg"
+            #line (1598,69)-(1598,70) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1598,65)-(1598,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write("new");
+            #line (1598,70)-(1598,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write("and");
             #line hidden
-            #line (1598,68)-(1598,69) 25 "SyntaxGenerator.mxg"
+            #line (1598,73)-(1598,74) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1598,70)-(1598,74) 24 "SyntaxGenerator.mxg"
+            #line (1598,74)-(1598,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write("offers");
+            #line hidden
+            #line (1598,80)-(1598,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1598,81)-(1598,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write("access");
+            #line hidden
+            #line (1598,87)-(1598,88) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1598,88)-(1598,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
+            #line hidden
+            #line (1598,90)-(1598,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1598,91)-(1598,96) 25 "SyntaxGenerator.mxg"
+            __cb.Write("their");
+            #line hidden
+            #line (1598,96)-(1598,97) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1598,97)-(1598,104) 25 "SyntaxGenerator.mxg"
+            __cb.Write("values.");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (1599,9)-(1599,12) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1599,12)-(1599,13) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1599,13)-(1599,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (1600,9)-(1600,15) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1600,15)-(1600,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1600,16)-(1600,22) 25 "SyntaxGenerator.mxg"
+            __cb.Write("sealed");
+            #line hidden
+            #line (1600,22)-(1600,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1600,23)-(1600,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("class");
+            #line hidden
+            #line (1600,28)-(1600,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1600,30)-(1600,34) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1598,75)-(1598,90) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions();");
+            #line (1600,35)-(1600,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions");
+            #line hidden
+            #line (1600,47)-(1600,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1600,48)-(1600,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write(":");
+            #line hidden
+            #line (1600,49)-(1600,50) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1600,50)-(1600,63) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions,");
+            #line hidden
+            #line (1600,63)-(1600,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1600,64)-(1600,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write("IEquatable<");
+            #line hidden
+            #line (1600,76)-(1600,80) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1600,81)-(1600,94) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            __cb.WriteLine();
+            __cb.Push("    ");
+            #line (1601,9)-(1601,10) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1600,13)-(1600,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write("private");
+            #line (1602,13)-(1602,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
             #line hidden
-            #line (1600,20)-(1600,21) 25 "SyntaxGenerator.mxg"
+            #line (1602,16)-(1602,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1600,21)-(1600,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ImmutableArray<string>");
-            #line hidden
-            #line (1600,43)-(1600,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1600,44)-(1600,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("_preprocessorSymbols;");
+            #line (1602,17)-(1602,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1601,13)-(1601,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write("private");
-            #line hidden
-            #line (1601,20)-(1601,21) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1601,21)-(1601,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ImmutableDictionary<string,");
-            #line hidden
-            #line (1601,48)-(1601,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1601,49)-(1601,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("string>");
-            #line hidden
-            #line (1601,56)-(1601,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1601,57)-(1601,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("_features;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1603,13)-(1603,16) 25 "SyntaxGenerator.mxg"
@@ -26415,8 +26383,26 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1603,16)-(1603,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1603,17)-(1603,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
+            #line (1603,17)-(1603,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write("The");
+            #line hidden
+            #line (1603,20)-(1603,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1603,21)-(1603,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("default");
+            #line hidden
+            #line (1603,28)-(1603,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1603,29)-(1603,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("parse");
+            #line hidden
+            #line (1603,34)-(1603,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1603,35)-(1603,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write("options.");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -26427,201 +26413,122 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1604,16)-(1604,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1604,17)-(1604,21) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Gets");
-            #line hidden
-            #line (1604,21)-(1604,22) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,22)-(1604,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1604,25)-(1604,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,26)-(1604,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("effective");
-            #line hidden
-            #line (1604,35)-(1604,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,36)-(1604,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("language");
-            #line hidden
-            #line (1604,44)-(1604,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,45)-(1604,53) 25 "SyntaxGenerator.mxg"
-            __cb.Write("version,");
-            #line hidden
-            #line (1604,53)-(1604,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,54)-(1604,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("which");
-            #line hidden
-            #line (1604,59)-(1604,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,60)-(1604,63) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1604,63)-(1604,64) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,64)-(1604,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("compiler");
-            #line hidden
-            #line (1604,72)-(1604,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,73)-(1604,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("uses");
-            #line hidden
-            #line (1604,77)-(1604,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,78)-(1604,80) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1604,80)-(1604,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,81)-(1604,87) 25 "SyntaxGenerator.mxg"
-            __cb.Write("select");
-            #line hidden
-            #line (1604,87)-(1604,88) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1604,88)-(1604,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1605,13)-(1605,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1605,16)-(1605,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1605,17)-(1605,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("language");
-            #line hidden
-            #line (1605,25)-(1605,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1605,26)-(1605,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write("rules");
-            #line hidden
-            #line (1605,31)-(1605,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1605,32)-(1605,34) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1605,34)-(1605,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1605,35)-(1605,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("apply");
-            #line hidden
-            #line (1605,40)-(1605,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1605,41)-(1605,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
-            #line hidden
-            #line (1605,43)-(1605,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1605,44)-(1605,47) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1605,47)-(1605,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1605,48)-(1605,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("program.");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1606,13)-(1606,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
-            #line hidden
-            #line (1606,16)-(1606,17) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1606,17)-(1606,27) 25 "SyntaxGenerator.mxg"
+            #line (1604,17)-(1604,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("</summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1607,13)-(1607,19) 25 "SyntaxGenerator.mxg"
+            #line (1605,13)-(1605,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1607,19)-(1607,20) 25 "SyntaxGenerator.mxg"
+            #line (1605,19)-(1605,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1607,21)-(1607,25) 24 "SyntaxGenerator.mxg"
+            #line (1605,20)-(1605,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("static");
+            #line hidden
+            #line (1605,26)-(1605,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1605,28)-(1605,32) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1607,26)-(1607,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("LanguageVersion");
+            #line (1605,33)-(1605,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions");
             #line hidden
-            #line (1607,41)-(1607,42) 25 "SyntaxGenerator.mxg"
+            #line (1605,45)-(1605,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1607,42)-(1607,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write("LanguageVersion");
+            #line (1605,46)-(1605,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Default");
             #line hidden
-            #line (1607,57)-(1607,58) 25 "SyntaxGenerator.mxg"
+            #line (1605,53)-(1605,54) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1607,58)-(1607,59) 25 "SyntaxGenerator.mxg"
+            #line (1605,54)-(1605,55) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            #line (1607,59)-(1607,60) 25 "SyntaxGenerator.mxg"
+            #line (1605,55)-(1605,56) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1607,60)-(1607,64) 25 "SyntaxGenerator.mxg"
+            #line (1605,56)-(1605,60) 25 "SyntaxGenerator.mxg"
             __cb.Write("get;");
             #line hidden
-            #line (1607,64)-(1607,65) 25 "SyntaxGenerator.mxg"
+            #line (1605,60)-(1605,61) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1607,65)-(1607,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("private");
-            #line hidden
-            #line (1607,72)-(1607,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1607,73)-(1607,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("set;");
-            #line hidden
-            #line (1607,77)-(1607,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1607,78)-(1607,79) 25 "SyntaxGenerator.mxg"
+            #line (1605,61)-(1605,62) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
+            #line hidden
+            #line (1605,62)-(1605,63) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1605,63)-(1605,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1605,64)-(1605,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1605,65)-(1605,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (1605,68)-(1605,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1605,70)-(1605,74) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1605,75)-(1605,90) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1609,13)-(1609,16) 25 "SyntaxGenerator.mxg"
-            __cb.Write("///");
+            #line (1607,13)-(1607,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write("private");
             #line hidden
-            #line (1609,16)-(1609,17) 25 "SyntaxGenerator.mxg"
+            #line (1607,20)-(1607,21) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1609,17)-(1609,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<summary>");
+            #line (1607,21)-(1607,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ImmutableArray<string>");
+            #line hidden
+            #line (1607,43)-(1607,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1607,44)-(1607,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("_preprocessorSymbols;");
             #line hidden
             __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1608,13)-(1608,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write("private");
+            #line hidden
+            #line (1608,20)-(1608,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1608,21)-(1608,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ImmutableDictionary<string,");
+            #line hidden
+            #line (1608,48)-(1608,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1608,49)-(1608,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("string>");
+            #line hidden
+            #line (1608,56)-(1608,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1608,57)-(1608,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write("_features;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1610,13)-(1610,16) 25 "SyntaxGenerator.mxg"
@@ -26630,80 +26537,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1610,16)-(1610,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1610,17)-(1610,21) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Gets");
-            #line hidden
-            #line (1610,21)-(1610,22) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,22)-(1610,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1610,25)-(1610,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,26)-(1610,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("specified");
-            #line hidden
-            #line (1610,35)-(1610,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,36)-(1610,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write("language");
-            #line hidden
-            #line (1610,44)-(1610,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,45)-(1610,53) 25 "SyntaxGenerator.mxg"
-            __cb.Write("version,");
-            #line hidden
-            #line (1610,53)-(1610,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,54)-(1610,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("which");
-            #line hidden
-            #line (1610,59)-(1610,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,60)-(1610,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write("is");
-            #line hidden
-            #line (1610,62)-(1610,63) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,63)-(1610,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1610,66)-(1610,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,67)-(1610,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("value");
-            #line hidden
-            #line (1610,72)-(1610,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,73)-(1610,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("that");
-            #line hidden
-            #line (1610,77)-(1610,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,78)-(1610,81) 25 "SyntaxGenerator.mxg"
-            __cb.Write("was");
-            #line hidden
-            #line (1610,81)-(1610,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,82)-(1610,91) 25 "SyntaxGenerator.mxg"
-            __cb.Write("specified");
-            #line hidden
-            #line (1610,91)-(1610,92) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1610,92)-(1610,94) 25 "SyntaxGenerator.mxg"
-            __cb.Write("in");
+            #line (1610,17)-(1610,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -26714,74 +26549,74 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1611,16)-(1611,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1611,17)-(1611,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1611,17)-(1611,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Gets");
             #line hidden
-            #line (1611,20)-(1611,21) 25 "SyntaxGenerator.mxg"
+            #line (1611,21)-(1611,22) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1611,21)-(1611,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("call");
+            #line (1611,22)-(1611,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
             #line hidden
             #line (1611,25)-(1611,26) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1611,26)-(1611,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("to");
+            #line (1611,26)-(1611,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("effective");
             #line hidden
-            #line (1611,28)-(1611,29) 25 "SyntaxGenerator.mxg"
+            #line (1611,35)-(1611,36) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1611,29)-(1611,32) 25 "SyntaxGenerator.mxg"
+            #line (1611,36)-(1611,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("language");
+            #line hidden
+            #line (1611,44)-(1611,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1611,45)-(1611,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write("version,");
+            #line hidden
+            #line (1611,53)-(1611,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1611,54)-(1611,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("which");
+            #line hidden
+            #line (1611,59)-(1611,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1611,60)-(1611,63) 25 "SyntaxGenerator.mxg"
             __cb.Write("the");
-            #line hidden
-            #line (1611,32)-(1611,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1611,33)-(1611,45) 25 "SyntaxGenerator.mxg"
-            __cb.Write("constructor,");
-            #line hidden
-            #line (1611,45)-(1611,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1611,46)-(1611,48) 25 "SyntaxGenerator.mxg"
-            __cb.Write("or");
-            #line hidden
-            #line (1611,48)-(1611,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1611,49)-(1611,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write("modified");
-            #line hidden
-            #line (1611,57)-(1611,58) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1611,58)-(1611,63) 25 "SyntaxGenerator.mxg"
-            __cb.Write("using");
             #line hidden
             #line (1611,63)-(1611,64) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1611,64)-(1611,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
-            #line hidden
-            #line (1611,67)-(1611,68) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1611,68)-(1611,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("<see");
+            #line (1611,64)-(1611,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("compiler");
             #line hidden
             #line (1611,72)-(1611,73) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1611,73)-(1611,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("cref=\"WithLanguageVersion\"/>");
+            #line (1611,73)-(1611,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("uses");
             #line hidden
-            #line (1611,101)-(1611,102) 25 "SyntaxGenerator.mxg"
+            #line (1611,77)-(1611,78) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1611,102)-(1611,109) 25 "SyntaxGenerator.mxg"
-            __cb.Write("method,");
+            #line (1611,78)-(1611,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
+            #line hidden
+            #line (1611,80)-(1611,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1611,81)-(1611,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write("select");
+            #line hidden
+            #line (1611,87)-(1611,88) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1611,88)-(1611,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -26792,38 +26627,44 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1612,16)-(1612,17) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1612,17)-(1612,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("or");
+            #line (1612,17)-(1612,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("language");
             #line hidden
-            #line (1612,19)-(1612,20) 25 "SyntaxGenerator.mxg"
+            #line (1612,25)-(1612,26) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1612,20)-(1612,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("provided");
-            #line hidden
-            #line (1612,28)-(1612,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1612,29)-(1612,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write("on");
+            #line (1612,26)-(1612,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write("rules");
             #line hidden
             #line (1612,31)-(1612,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1612,32)-(1612,35) 25 "SyntaxGenerator.mxg"
-            __cb.Write("the");
+            #line (1612,32)-(1612,34) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
             #line hidden
-            #line (1612,35)-(1612,36) 25 "SyntaxGenerator.mxg"
+            #line (1612,34)-(1612,35) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1612,36)-(1612,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write("command");
+            #line (1612,35)-(1612,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("apply");
+            #line hidden
+            #line (1612,40)-(1612,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1612,41)-(1612,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
             #line hidden
             #line (1612,43)-(1612,44) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1612,44)-(1612,49) 25 "SyntaxGenerator.mxg"
-            __cb.Write("line.");
+            #line (1612,44)-(1612,47) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1612,47)-(1612,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1612,48)-(1612,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("program.");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -26855,37 +26696,37 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1614,41)-(1614,42) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1614,42)-(1614,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write("SpecifiedLanguageVersion");
+            #line (1614,42)-(1614,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write("LanguageVersion");
             #line hidden
-            #line (1614,66)-(1614,67) 25 "SyntaxGenerator.mxg"
+            #line (1614,57)-(1614,58) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1614,67)-(1614,68) 25 "SyntaxGenerator.mxg"
+            #line (1614,58)-(1614,59) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            #line (1614,68)-(1614,69) 25 "SyntaxGenerator.mxg"
+            #line (1614,59)-(1614,60) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1614,69)-(1614,73) 25 "SyntaxGenerator.mxg"
+            #line (1614,60)-(1614,64) 25 "SyntaxGenerator.mxg"
             __cb.Write("get;");
             #line hidden
-            #line (1614,73)-(1614,74) 25 "SyntaxGenerator.mxg"
+            #line (1614,64)-(1614,65) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1614,74)-(1614,81) 25 "SyntaxGenerator.mxg"
+            #line (1614,65)-(1614,72) 25 "SyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (1614,81)-(1614,82) 25 "SyntaxGenerator.mxg"
+            #line (1614,72)-(1614,73) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1614,82)-(1614,86) 25 "SyntaxGenerator.mxg"
+            #line (1614,73)-(1614,77) 25 "SyntaxGenerator.mxg"
             __cb.Write("set;");
             #line hidden
-            #line (1614,86)-(1614,87) 25 "SyntaxGenerator.mxg"
+            #line (1614,77)-(1614,78) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1614,87)-(1614,88) 25 "SyntaxGenerator.mxg"
+            #line (1614,78)-(1614,79) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -26893,37 +26734,318 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1616,13)-(1616,19) 25 "SyntaxGenerator.mxg"
+            #line (1616,13)-(1616,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1616,16)-(1616,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1616,17)-(1616,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1617,13)-(1617,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1617,16)-(1617,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,17)-(1617,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Gets");
+            #line hidden
+            #line (1617,21)-(1617,22) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,22)-(1617,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1617,25)-(1617,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,26)-(1617,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("specified");
+            #line hidden
+            #line (1617,35)-(1617,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,36)-(1617,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write("language");
+            #line hidden
+            #line (1617,44)-(1617,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,45)-(1617,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write("version,");
+            #line hidden
+            #line (1617,53)-(1617,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,54)-(1617,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("which");
+            #line hidden
+            #line (1617,59)-(1617,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,60)-(1617,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write("is");
+            #line hidden
+            #line (1617,62)-(1617,63) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,63)-(1617,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1617,66)-(1617,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,67)-(1617,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("value");
+            #line hidden
+            #line (1617,72)-(1617,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,73)-(1617,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("that");
+            #line hidden
+            #line (1617,77)-(1617,78) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,78)-(1617,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write("was");
+            #line hidden
+            #line (1617,81)-(1617,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,82)-(1617,91) 25 "SyntaxGenerator.mxg"
+            __cb.Write("specified");
+            #line hidden
+            #line (1617,91)-(1617,92) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1617,92)-(1617,94) 25 "SyntaxGenerator.mxg"
+            __cb.Write("in");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1618,13)-(1618,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1618,16)-(1618,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,17)-(1618,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1618,20)-(1618,21) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,21)-(1618,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("call");
+            #line hidden
+            #line (1618,25)-(1618,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,26)-(1618,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("to");
+            #line hidden
+            #line (1618,28)-(1618,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,29)-(1618,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1618,32)-(1618,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,33)-(1618,45) 25 "SyntaxGenerator.mxg"
+            __cb.Write("constructor,");
+            #line hidden
+            #line (1618,45)-(1618,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,46)-(1618,48) 25 "SyntaxGenerator.mxg"
+            __cb.Write("or");
+            #line hidden
+            #line (1618,48)-(1618,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,49)-(1618,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write("modified");
+            #line hidden
+            #line (1618,57)-(1618,58) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,58)-(1618,63) 25 "SyntaxGenerator.mxg"
+            __cb.Write("using");
+            #line hidden
+            #line (1618,63)-(1618,64) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,64)-(1618,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1618,67)-(1618,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,68)-(1618,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("<see");
+            #line hidden
+            #line (1618,72)-(1618,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,73)-(1618,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("cref=\"WithLanguageVersion\"/>");
+            #line hidden
+            #line (1618,101)-(1618,102) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1618,102)-(1618,109) 25 "SyntaxGenerator.mxg"
+            __cb.Write("method,");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1619,13)-(1619,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1619,16)-(1619,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1619,17)-(1619,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("or");
+            #line hidden
+            #line (1619,19)-(1619,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1619,20)-(1619,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("provided");
+            #line hidden
+            #line (1619,28)-(1619,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1619,29)-(1619,31) 25 "SyntaxGenerator.mxg"
+            __cb.Write("on");
+            #line hidden
+            #line (1619,31)-(1619,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1619,32)-(1619,35) 25 "SyntaxGenerator.mxg"
+            __cb.Write("the");
+            #line hidden
+            #line (1619,35)-(1619,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1619,36)-(1619,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write("command");
+            #line hidden
+            #line (1619,43)-(1619,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1619,44)-(1619,49) 25 "SyntaxGenerator.mxg"
+            __cb.Write("line.");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1620,13)-(1620,16) 25 "SyntaxGenerator.mxg"
+            __cb.Write("///");
+            #line hidden
+            #line (1620,16)-(1620,17) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1620,17)-(1620,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("</summary>");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1621,13)-(1621,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1616,19)-(1616,20) 25 "SyntaxGenerator.mxg"
+            #line (1621,19)-(1621,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1616,20)-(1616,28) 25 "SyntaxGenerator.mxg"
+            #line (1621,21)-(1621,25) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1621,26)-(1621,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write("LanguageVersion");
+            #line hidden
+            #line (1621,41)-(1621,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1621,42)-(1621,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("SpecifiedLanguageVersion");
+            #line hidden
+            #line (1621,66)-(1621,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1621,67)-(1621,68) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            #line (1621,68)-(1621,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1621,69)-(1621,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write("get;");
+            #line hidden
+            #line (1621,73)-(1621,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1621,74)-(1621,81) 25 "SyntaxGenerator.mxg"
+            __cb.Write("private");
+            #line hidden
+            #line (1621,81)-(1621,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1621,82)-(1621,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write("set;");
+            #line hidden
+            #line (1621,86)-(1621,87) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1621,87)-(1621,88) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1623,13)-(1623,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1623,19)-(1623,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1623,20)-(1623,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (1616,28)-(1616,29) 25 "SyntaxGenerator.mxg"
+            #line (1623,28)-(1623,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1616,29)-(1616,51) 25 "SyntaxGenerator.mxg"
+            #line (1623,29)-(1623,51) 25 "SyntaxGenerator.mxg"
             __cb.Write("ImmutableArray<string>");
             #line hidden
-            #line (1616,51)-(1616,52) 25 "SyntaxGenerator.mxg"
+            #line (1623,51)-(1623,52) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1616,52)-(1616,71) 25 "SyntaxGenerator.mxg"
+            #line (1623,52)-(1623,71) 25 "SyntaxGenerator.mxg"
             __cb.Write("PreprocessorSymbols");
             #line hidden
-            #line (1616,71)-(1616,72) 25 "SyntaxGenerator.mxg"
+            #line (1623,71)-(1623,72) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1616,72)-(1616,74) 25 "SyntaxGenerator.mxg"
+            #line (1623,72)-(1623,74) 25 "SyntaxGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (1616,74)-(1616,75) 25 "SyntaxGenerator.mxg"
+            #line (1623,74)-(1623,75) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1616,75)-(1616,96) 25 "SyntaxGenerator.mxg"
+            #line (1623,75)-(1623,96) 25 "SyntaxGenerator.mxg"
             __cb.Write("_preprocessorSymbols;");
             #line hidden
             __cb.AppendLine();
@@ -26931,172 +27053,172 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1618,13)-(1618,19) 25 "SyntaxGenerator.mxg"
+            #line (1625,13)-(1625,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1618,19)-(1618,20) 25 "SyntaxGenerator.mxg"
+            #line (1625,19)-(1625,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1618,21)-(1618,25) 24 "SyntaxGenerator.mxg"
+            #line (1625,21)-(1625,25) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1618,26)-(1618,39) 25 "SyntaxGenerator.mxg"
+            #line (1625,26)-(1625,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions(");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1619,18)-(1619,22) 24 "SyntaxGenerator.mxg"
+            #line (1626,18)-(1626,22) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1619,23)-(1619,38) 25 "SyntaxGenerator.mxg"
+            #line (1626,23)-(1626,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("LanguageVersion");
             #line hidden
-            #line (1619,38)-(1619,39) 25 "SyntaxGenerator.mxg"
+            #line (1626,38)-(1626,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1619,39)-(1619,54) 25 "SyntaxGenerator.mxg"
+            #line (1626,39)-(1626,54) 25 "SyntaxGenerator.mxg"
             __cb.Write("languageVersion");
             #line hidden
-            #line (1619,54)-(1619,55) 25 "SyntaxGenerator.mxg"
+            #line (1626,54)-(1626,55) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1619,55)-(1619,56) 25 "SyntaxGenerator.mxg"
+            #line (1626,55)-(1626,56) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1619,56)-(1619,57) 25 "SyntaxGenerator.mxg"
+            #line (1626,56)-(1626,57) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1619,58)-(1619,62) 24 "SyntaxGenerator.mxg"
+            #line (1626,58)-(1626,62) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1619,63)-(1619,87) 25 "SyntaxGenerator.mxg"
+            #line (1626,63)-(1626,87) 25 "SyntaxGenerator.mxg"
             __cb.Write("LanguageVersion.Default,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1620,17)-(1620,34) 25 "SyntaxGenerator.mxg"
+            #line (1627,17)-(1627,34) 25 "SyntaxGenerator.mxg"
             __cb.Write("DocumentationMode");
             #line hidden
-            #line (1620,34)-(1620,35) 25 "SyntaxGenerator.mxg"
+            #line (1627,34)-(1627,35) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1620,35)-(1620,52) 25 "SyntaxGenerator.mxg"
+            #line (1627,35)-(1627,52) 25 "SyntaxGenerator.mxg"
             __cb.Write("documentationMode");
             #line hidden
-            #line (1620,52)-(1620,53) 25 "SyntaxGenerator.mxg"
+            #line (1627,52)-(1627,53) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1620,53)-(1620,54) 25 "SyntaxGenerator.mxg"
+            #line (1627,53)-(1627,54) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1620,54)-(1620,55) 25 "SyntaxGenerator.mxg"
+            #line (1627,54)-(1627,55) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1620,55)-(1620,79) 25 "SyntaxGenerator.mxg"
+            #line (1627,55)-(1627,79) 25 "SyntaxGenerator.mxg"
             __cb.Write("DocumentationMode.Parse,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1621,17)-(1621,31) 25 "SyntaxGenerator.mxg"
+            #line (1628,17)-(1628,31) 25 "SyntaxGenerator.mxg"
             __cb.Write("SourceCodeKind");
             #line hidden
-            #line (1621,31)-(1621,32) 25 "SyntaxGenerator.mxg"
+            #line (1628,31)-(1628,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1621,32)-(1621,36) 25 "SyntaxGenerator.mxg"
+            #line (1628,32)-(1628,36) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind");
             #line hidden
-            #line (1621,36)-(1621,37) 25 "SyntaxGenerator.mxg"
+            #line (1628,36)-(1628,37) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1621,37)-(1621,38) 25 "SyntaxGenerator.mxg"
+            #line (1628,37)-(1628,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1621,38)-(1621,39) 25 "SyntaxGenerator.mxg"
+            #line (1628,38)-(1628,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1621,39)-(1621,62) 25 "SyntaxGenerator.mxg"
+            #line (1628,39)-(1628,62) 25 "SyntaxGenerator.mxg"
             __cb.Write("SourceCodeKind.Regular,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1622,17)-(1622,72) 25 "SyntaxGenerator.mxg"
+            #line (1629,17)-(1629,72) 25 "SyntaxGenerator.mxg"
             __cb.Write("global::System.Collections.Generic.IEnumerable<string>?");
             #line hidden
-            #line (1622,72)-(1622,73) 25 "SyntaxGenerator.mxg"
+            #line (1629,72)-(1629,73) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1622,73)-(1622,92) 25 "SyntaxGenerator.mxg"
+            #line (1629,73)-(1629,92) 25 "SyntaxGenerator.mxg"
             __cb.Write("preprocessorSymbols");
             #line hidden
-            #line (1622,92)-(1622,93) 25 "SyntaxGenerator.mxg"
+            #line (1629,92)-(1629,93) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1622,93)-(1622,94) 25 "SyntaxGenerator.mxg"
+            #line (1629,93)-(1629,94) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1622,94)-(1622,95) 25 "SyntaxGenerator.mxg"
+            #line (1629,94)-(1629,95) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1622,95)-(1622,100) 25 "SyntaxGenerator.mxg"
+            #line (1629,95)-(1629,100) 25 "SyntaxGenerator.mxg"
             __cb.Write("null)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1623,17)-(1623,18) 25 "SyntaxGenerator.mxg"
+            #line (1630,17)-(1630,18) 25 "SyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (1623,18)-(1623,19) 25 "SyntaxGenerator.mxg"
+            #line (1630,18)-(1630,19) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1623,19)-(1623,40) 25 "SyntaxGenerator.mxg"
+            #line (1630,19)-(1630,40) 25 "SyntaxGenerator.mxg"
             __cb.Write("this(languageVersion,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                  ");
-            #line (1624,23)-(1624,41) 25 "SyntaxGenerator.mxg"
+            #line (1631,23)-(1631,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("documentationMode,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                  ");
-            #line (1625,23)-(1625,28) 25 "SyntaxGenerator.mxg"
+            #line (1632,23)-(1632,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                  ");
-            #line (1626,23)-(1626,69) 25 "SyntaxGenerator.mxg"
+            #line (1633,23)-(1633,69) 25 "SyntaxGenerator.mxg"
             __cb.Write("preprocessorSymbols.ToImmutableArrayOrEmpty(),");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                  ");
-            #line (1627,23)-(1627,50) 25 "SyntaxGenerator.mxg"
+            #line (1634,23)-(1634,50) 25 "SyntaxGenerator.mxg"
             __cb.Write("ImmutableDictionary<string,");
             #line hidden
-            #line (1627,50)-(1627,51) 25 "SyntaxGenerator.mxg"
+            #line (1634,50)-(1634,51) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1627,51)-(1627,65) 25 "SyntaxGenerator.mxg"
+            #line (1634,51)-(1634,65) 25 "SyntaxGenerator.mxg"
             __cb.Write("string>.Empty)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1628,13)-(1628,14) 25 "SyntaxGenerator.mxg"
+            #line (1635,13)-(1635,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1629,13)-(1629,14) 25 "SyntaxGenerator.mxg"
+            #line (1636,13)-(1636,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27104,205 +27226,205 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1631,13)-(1631,21) 25 "SyntaxGenerator.mxg"
+            #line (1638,13)-(1638,21) 25 "SyntaxGenerator.mxg"
             __cb.Write("internal");
             #line hidden
-            #line (1631,21)-(1631,22) 25 "SyntaxGenerator.mxg"
+            #line (1638,21)-(1638,22) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1631,23)-(1631,27) 24 "SyntaxGenerator.mxg"
+            #line (1638,23)-(1638,27) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1631,28)-(1631,41) 25 "SyntaxGenerator.mxg"
+            #line (1638,28)-(1638,41) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions(");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1632,18)-(1632,22) 24 "SyntaxGenerator.mxg"
+            #line (1639,18)-(1639,22) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1632,23)-(1632,38) 25 "SyntaxGenerator.mxg"
+            #line (1639,23)-(1639,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("LanguageVersion");
             #line hidden
-            #line (1632,38)-(1632,39) 25 "SyntaxGenerator.mxg"
+            #line (1639,38)-(1639,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1632,39)-(1632,55) 25 "SyntaxGenerator.mxg"
+            #line (1639,39)-(1639,55) 25 "SyntaxGenerator.mxg"
             __cb.Write("languageVersion,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1633,17)-(1633,34) 25 "SyntaxGenerator.mxg"
+            #line (1640,17)-(1640,34) 25 "SyntaxGenerator.mxg"
             __cb.Write("DocumentationMode");
             #line hidden
-            #line (1633,34)-(1633,35) 25 "SyntaxGenerator.mxg"
+            #line (1640,34)-(1640,35) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1633,35)-(1633,53) 25 "SyntaxGenerator.mxg"
+            #line (1640,35)-(1640,53) 25 "SyntaxGenerator.mxg"
             __cb.Write("documentationMode,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1634,17)-(1634,31) 25 "SyntaxGenerator.mxg"
+            #line (1641,17)-(1641,31) 25 "SyntaxGenerator.mxg"
             __cb.Write("SourceCodeKind");
             #line hidden
-            #line (1634,31)-(1634,32) 25 "SyntaxGenerator.mxg"
+            #line (1641,31)-(1641,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1634,32)-(1634,37) 25 "SyntaxGenerator.mxg"
+            #line (1641,32)-(1641,37) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1635,17)-(1635,39) 25 "SyntaxGenerator.mxg"
+            #line (1642,17)-(1642,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("ImmutableArray<string>");
             #line hidden
-            #line (1635,39)-(1635,40) 25 "SyntaxGenerator.mxg"
+            #line (1642,39)-(1642,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1635,40)-(1635,60) 25 "SyntaxGenerator.mxg"
+            #line (1642,40)-(1642,60) 25 "SyntaxGenerator.mxg"
             __cb.Write("preprocessorSymbols,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1636,17)-(1636,44) 25 "SyntaxGenerator.mxg"
+            #line (1643,17)-(1643,44) 25 "SyntaxGenerator.mxg"
             __cb.Write("IReadOnlyDictionary<string,");
             #line hidden
-            #line (1636,44)-(1636,45) 25 "SyntaxGenerator.mxg"
+            #line (1643,44)-(1643,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1636,45)-(1636,53) 25 "SyntaxGenerator.mxg"
+            #line (1643,45)-(1643,53) 25 "SyntaxGenerator.mxg"
             __cb.Write("string>?");
             #line hidden
-            #line (1636,53)-(1636,54) 25 "SyntaxGenerator.mxg"
+            #line (1643,53)-(1643,54) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1636,54)-(1636,63) 25 "SyntaxGenerator.mxg"
+            #line (1643,54)-(1643,63) 25 "SyntaxGenerator.mxg"
             __cb.Write("features)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1637,17)-(1637,18) 25 "SyntaxGenerator.mxg"
+            #line (1644,17)-(1644,18) 25 "SyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (1637,18)-(1637,19) 25 "SyntaxGenerator.mxg"
+            #line (1644,18)-(1644,19) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1637,19)-(1637,29) 25 "SyntaxGenerator.mxg"
+            #line (1644,19)-(1644,29) 25 "SyntaxGenerator.mxg"
             __cb.Write("base(kind,");
             #line hidden
-            #line (1637,29)-(1637,30) 25 "SyntaxGenerator.mxg"
+            #line (1644,29)-(1644,30) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1637,30)-(1637,48) 25 "SyntaxGenerator.mxg"
+            #line (1644,30)-(1644,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("documentationMode)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1638,13)-(1638,14) 25 "SyntaxGenerator.mxg"
+            #line (1645,13)-(1645,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1639,17)-(1639,46) 25 "SyntaxGenerator.mxg"
+            #line (1646,17)-(1646,46) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.SpecifiedLanguageVersion");
             #line hidden
-            #line (1639,46)-(1639,47) 25 "SyntaxGenerator.mxg"
+            #line (1646,46)-(1646,47) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1639,47)-(1639,48) 25 "SyntaxGenerator.mxg"
+            #line (1646,47)-(1646,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1639,48)-(1639,49) 25 "SyntaxGenerator.mxg"
+            #line (1646,48)-(1646,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1639,49)-(1639,65) 25 "SyntaxGenerator.mxg"
+            #line (1646,49)-(1646,65) 25 "SyntaxGenerator.mxg"
             __cb.Write("languageVersion;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1640,17)-(1640,37) 25 "SyntaxGenerator.mxg"
+            #line (1647,17)-(1647,37) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.LanguageVersion");
             #line hidden
-            #line (1640,37)-(1640,38) 25 "SyntaxGenerator.mxg"
+            #line (1647,37)-(1647,38) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1640,38)-(1640,39) 25 "SyntaxGenerator.mxg"
+            #line (1647,38)-(1647,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1640,39)-(1640,40) 25 "SyntaxGenerator.mxg"
+            #line (1647,39)-(1647,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1640,40)-(1640,89) 25 "SyntaxGenerator.mxg"
+            #line (1647,40)-(1647,89) 25 "SyntaxGenerator.mxg"
             __cb.Write("languageVersion.MapSpecifiedToEffectiveVersion();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1641,17)-(1641,37) 25 "SyntaxGenerator.mxg"
+            #line (1648,17)-(1648,37) 25 "SyntaxGenerator.mxg"
             __cb.Write("_preprocessorSymbols");
             #line hidden
-            #line (1641,37)-(1641,38) 25 "SyntaxGenerator.mxg"
+            #line (1648,37)-(1648,38) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1641,38)-(1641,39) 25 "SyntaxGenerator.mxg"
+            #line (1648,38)-(1648,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1641,39)-(1641,40) 25 "SyntaxGenerator.mxg"
+            #line (1648,39)-(1648,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1641,40)-(1641,86) 25 "SyntaxGenerator.mxg"
+            #line (1648,40)-(1648,86) 25 "SyntaxGenerator.mxg"
             __cb.Write("preprocessorSymbols.ToImmutableArrayOrEmpty();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1642,17)-(1642,26) 25 "SyntaxGenerator.mxg"
+            #line (1649,17)-(1649,26) 25 "SyntaxGenerator.mxg"
             __cb.Write("_features");
             #line hidden
-            #line (1642,26)-(1642,27) 25 "SyntaxGenerator.mxg"
+            #line (1649,26)-(1649,27) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1642,27)-(1642,28) 25 "SyntaxGenerator.mxg"
+            #line (1649,27)-(1649,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1642,28)-(1642,29) 25 "SyntaxGenerator.mxg"
+            #line (1649,28)-(1649,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1642,29)-(1642,62) 25 "SyntaxGenerator.mxg"
+            #line (1649,29)-(1649,62) 25 "SyntaxGenerator.mxg"
             __cb.Write("features?.ToImmutableDictionary()");
             #line hidden
-            #line (1642,62)-(1642,63) 25 "SyntaxGenerator.mxg"
+            #line (1649,62)-(1649,63) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1642,63)-(1642,65) 25 "SyntaxGenerator.mxg"
+            #line (1649,63)-(1649,65) 25 "SyntaxGenerator.mxg"
             __cb.Write("??");
             #line hidden
-            #line (1642,65)-(1642,66) 25 "SyntaxGenerator.mxg"
+            #line (1649,65)-(1649,66) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1642,66)-(1642,93) 25 "SyntaxGenerator.mxg"
+            #line (1649,66)-(1649,93) 25 "SyntaxGenerator.mxg"
             __cb.Write("ImmutableDictionary<string,");
             #line hidden
-            #line (1642,93)-(1642,94) 25 "SyntaxGenerator.mxg"
+            #line (1649,93)-(1649,94) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1642,94)-(1642,108) 25 "SyntaxGenerator.mxg"
+            #line (1649,94)-(1649,108) 25 "SyntaxGenerator.mxg"
             __cb.Write("string>.Empty;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1643,13)-(1643,14) 25 "SyntaxGenerator.mxg"
+            #line (1650,13)-(1650,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27310,100 +27432,100 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1645,13)-(1645,20) 25 "SyntaxGenerator.mxg"
+            #line (1652,13)-(1652,20) 25 "SyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (1645,20)-(1645,21) 25 "SyntaxGenerator.mxg"
+            #line (1652,20)-(1652,21) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1645,22)-(1645,26) 24 "SyntaxGenerator.mxg"
+            #line (1652,22)-(1652,26) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1645,27)-(1645,40) 25 "SyntaxGenerator.mxg"
+            #line (1652,27)-(1652,40) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions(");
             #line hidden
-            #line (1645,41)-(1645,45) 24 "SyntaxGenerator.mxg"
+            #line (1652,41)-(1652,45) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1645,46)-(1645,58) 25 "SyntaxGenerator.mxg"
+            #line (1652,46)-(1652,58) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions");
             #line hidden
-            #line (1645,58)-(1645,59) 25 "SyntaxGenerator.mxg"
+            #line (1652,58)-(1652,59) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1645,59)-(1645,65) 25 "SyntaxGenerator.mxg"
+            #line (1652,59)-(1652,65) 25 "SyntaxGenerator.mxg"
             __cb.Write("other)");
             #line hidden
-            #line (1645,65)-(1645,66) 25 "SyntaxGenerator.mxg"
+            #line (1652,65)-(1652,66) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1645,66)-(1645,67) 25 "SyntaxGenerator.mxg"
+            #line (1652,66)-(1652,67) 25 "SyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (1645,67)-(1645,68) 25 "SyntaxGenerator.mxg"
+            #line (1652,67)-(1652,68) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1645,68)-(1645,73) 25 "SyntaxGenerator.mxg"
+            #line (1652,68)-(1652,73) 25 "SyntaxGenerator.mxg"
             __cb.Write("this(");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1646,17)-(1646,33) 25 "SyntaxGenerator.mxg"
+            #line (1653,17)-(1653,33) 25 "SyntaxGenerator.mxg"
             __cb.Write("languageVersion:");
             #line hidden
-            #line (1646,33)-(1646,34) 25 "SyntaxGenerator.mxg"
+            #line (1653,33)-(1653,34) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1646,34)-(1646,65) 25 "SyntaxGenerator.mxg"
+            #line (1653,34)-(1653,65) 25 "SyntaxGenerator.mxg"
             __cb.Write("other.SpecifiedLanguageVersion,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1647,17)-(1647,35) 25 "SyntaxGenerator.mxg"
+            #line (1654,17)-(1654,35) 25 "SyntaxGenerator.mxg"
             __cb.Write("documentationMode:");
             #line hidden
-            #line (1647,35)-(1647,36) 25 "SyntaxGenerator.mxg"
+            #line (1654,35)-(1654,36) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1647,36)-(1647,60) 25 "SyntaxGenerator.mxg"
+            #line (1654,36)-(1654,60) 25 "SyntaxGenerator.mxg"
             __cb.Write("other.DocumentationMode,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1648,17)-(1648,22) 25 "SyntaxGenerator.mxg"
+            #line (1655,17)-(1655,22) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind:");
             #line hidden
-            #line (1648,22)-(1648,23) 25 "SyntaxGenerator.mxg"
+            #line (1655,22)-(1655,23) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1648,23)-(1648,34) 25 "SyntaxGenerator.mxg"
+            #line (1655,23)-(1655,34) 25 "SyntaxGenerator.mxg"
             __cb.Write("other.Kind,");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1649,17)-(1649,37) 25 "SyntaxGenerator.mxg"
+            #line (1656,17)-(1656,37) 25 "SyntaxGenerator.mxg"
             __cb.Write("preprocessorSymbols:");
             #line hidden
-            #line (1649,37)-(1649,38) 25 "SyntaxGenerator.mxg"
+            #line (1656,37)-(1656,38) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1649,38)-(1649,64) 25 "SyntaxGenerator.mxg"
+            #line (1656,38)-(1656,64) 25 "SyntaxGenerator.mxg"
             __cb.Write("other.PreprocessorSymbols)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1650,13)-(1650,14) 25 "SyntaxGenerator.mxg"
+            #line (1657,13)-(1657,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1651,13)-(1651,14) 25 "SyntaxGenerator.mxg"
+            #line (1658,13)-(1658,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27411,40 +27533,40 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1653,13)-(1653,19) 25 "SyntaxGenerator.mxg"
+            #line (1660,13)-(1660,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1653,19)-(1653,20) 25 "SyntaxGenerator.mxg"
+            #line (1660,19)-(1660,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1653,20)-(1653,28) 25 "SyntaxGenerator.mxg"
+            #line (1660,20)-(1660,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (1653,28)-(1653,29) 25 "SyntaxGenerator.mxg"
+            #line (1660,28)-(1660,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1653,29)-(1653,37) 25 "SyntaxGenerator.mxg"
+            #line (1660,29)-(1660,37) 25 "SyntaxGenerator.mxg"
             __cb.Write("Language");
             #line hidden
-            #line (1653,37)-(1653,38) 25 "SyntaxGenerator.mxg"
+            #line (1660,37)-(1660,38) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1653,38)-(1653,46) 25 "SyntaxGenerator.mxg"
+            #line (1660,38)-(1660,46) 25 "SyntaxGenerator.mxg"
             __cb.Write("Language");
             #line hidden
-            #line (1653,46)-(1653,47) 25 "SyntaxGenerator.mxg"
+            #line (1660,46)-(1660,47) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1653,47)-(1653,49) 25 "SyntaxGenerator.mxg"
+            #line (1660,47)-(1660,49) 25 "SyntaxGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (1653,49)-(1653,50) 25 "SyntaxGenerator.mxg"
+            #line (1660,49)-(1660,50) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1653,51)-(1653,55) 24 "SyntaxGenerator.mxg"
+            #line (1660,51)-(1660,55) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1653,56)-(1653,74) 25 "SyntaxGenerator.mxg"
+            #line (1660,56)-(1660,74) 25 "SyntaxGenerator.mxg"
             __cb.Write("Language.Instance;");
             #line hidden
             __cb.AppendLine();
@@ -27452,147 +27574,147 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1655,13)-(1655,19) 25 "SyntaxGenerator.mxg"
+            #line (1662,13)-(1662,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1655,19)-(1655,20) 25 "SyntaxGenerator.mxg"
+            #line (1662,19)-(1662,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1655,20)-(1655,23) 25 "SyntaxGenerator.mxg"
+            #line (1662,20)-(1662,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("new");
-            #line hidden
-            #line (1655,23)-(1655,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1655,25)-(1655,29) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1655,30)-(1655,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions");
-            #line hidden
-            #line (1655,42)-(1655,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1655,43)-(1655,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write("WithKind(SourceCodeKind");
-            #line hidden
-            #line (1655,66)-(1655,67) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1655,67)-(1655,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1656,13)-(1656,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1657,17)-(1657,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("if");
-            #line hidden
-            #line (1657,19)-(1657,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1657,20)-(1657,25) 25 "SyntaxGenerator.mxg"
-            __cb.Write("(kind");
-            #line hidden
-            #line (1657,25)-(1657,26) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1657,26)-(1657,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("==");
-            #line hidden
-            #line (1657,28)-(1657,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1657,29)-(1657,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write("this.Kind)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1658,17)-(1658,18) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("                ");
-            #line (1659,21)-(1659,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1659,27)-(1659,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1659,28)-(1659,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write("this;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1660,17)-(1660,18) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1662,17)-(1662,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
             #line hidden
             #line (1662,23)-(1662,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1662,24)-(1662,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("new");
-            #line hidden
-            #line (1662,27)-(1662,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1662,29)-(1662,33) 24 "SyntaxGenerator.mxg"
+            #line (1662,25)-(1662,29) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1662,34)-(1662,52) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions(this)");
+            #line (1662,30)-(1662,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions");
             #line hidden
-            #line (1662,52)-(1662,53) 25 "SyntaxGenerator.mxg"
+            #line (1662,42)-(1662,43) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1662,53)-(1662,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            #line (1662,54)-(1662,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1662,55)-(1662,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Kind");
-            #line hidden
-            #line (1662,59)-(1662,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1662,60)-(1662,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1662,61)-(1662,62) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1662,62)-(1662,66) 25 "SyntaxGenerator.mxg"
-            __cb.Write("kind");
+            #line (1662,43)-(1662,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("WithKind(SourceCodeKind");
             #line hidden
             #line (1662,66)-(1662,67) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1662,67)-(1662,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write("};");
+            #line (1662,67)-(1662,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1663,13)-(1663,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1664,17)-(1664,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("if");
+            #line hidden
+            #line (1664,19)-(1664,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1664,20)-(1664,25) 25 "SyntaxGenerator.mxg"
+            __cb.Write("(kind");
+            #line hidden
+            #line (1664,25)-(1664,26) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1664,26)-(1664,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("==");
+            #line hidden
+            #line (1664,28)-(1664,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1664,29)-(1664,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write("this.Kind)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1665,17)-(1665,18) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("                ");
+            #line (1666,21)-(1666,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1666,27)-(1666,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1666,28)-(1666,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write("this;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1667,17)-(1667,18) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1669,17)-(1669,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1669,23)-(1669,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1669,24)-(1669,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (1669,27)-(1669,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1669,29)-(1669,33) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1669,34)-(1669,52) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions(this)");
+            #line hidden
+            #line (1669,52)-(1669,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1669,53)-(1669,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            #line (1669,54)-(1669,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1669,55)-(1669,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Kind");
+            #line hidden
+            #line (1669,59)-(1669,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1669,60)-(1669,61) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1669,61)-(1669,62) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1669,62)-(1669,66) 25 "SyntaxGenerator.mxg"
+            __cb.Write("kind");
+            #line hidden
+            #line (1669,66)-(1669,67) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1669,67)-(1669,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write("};");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1670,13)-(1670,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27600,88 +27722,88 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1665,13)-(1665,19) 25 "SyntaxGenerator.mxg"
+            #line (1672,13)-(1672,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1665,19)-(1665,20) 25 "SyntaxGenerator.mxg"
+            #line (1672,19)-(1672,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1665,21)-(1665,25) 24 "SyntaxGenerator.mxg"
+            #line (1672,21)-(1672,25) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1665,26)-(1665,38) 25 "SyntaxGenerator.mxg"
+            #line (1672,26)-(1672,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions");
             #line hidden
-            #line (1665,38)-(1665,39) 25 "SyntaxGenerator.mxg"
+            #line (1672,38)-(1672,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1665,39)-(1665,59) 25 "SyntaxGenerator.mxg"
+            #line (1672,39)-(1672,59) 25 "SyntaxGenerator.mxg"
             __cb.Write("WithLanguageVersion(");
             #line hidden
-            #line (1665,60)-(1665,64) 24 "SyntaxGenerator.mxg"
+            #line (1672,60)-(1672,64) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1665,65)-(1665,80) 25 "SyntaxGenerator.mxg"
+            #line (1672,65)-(1672,80) 25 "SyntaxGenerator.mxg"
             __cb.Write("LanguageVersion");
             #line hidden
-            #line (1665,80)-(1665,81) 25 "SyntaxGenerator.mxg"
+            #line (1672,80)-(1672,81) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1665,81)-(1665,89) 25 "SyntaxGenerator.mxg"
+            #line (1672,81)-(1672,89) 25 "SyntaxGenerator.mxg"
             __cb.Write("version)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1666,13)-(1666,14) 25 "SyntaxGenerator.mxg"
+            #line (1673,13)-(1673,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1667,17)-(1667,19) 25 "SyntaxGenerator.mxg"
+            #line (1674,17)-(1674,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1667,19)-(1667,20) 25 "SyntaxGenerator.mxg"
+            #line (1674,19)-(1674,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1667,20)-(1667,28) 25 "SyntaxGenerator.mxg"
+            #line (1674,20)-(1674,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("(version");
             #line hidden
-            #line (1667,28)-(1667,29) 25 "SyntaxGenerator.mxg"
+            #line (1674,28)-(1674,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1667,29)-(1667,31) 25 "SyntaxGenerator.mxg"
+            #line (1674,29)-(1674,31) 25 "SyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (1667,31)-(1667,32) 25 "SyntaxGenerator.mxg"
+            #line (1674,31)-(1674,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1667,32)-(1667,62) 25 "SyntaxGenerator.mxg"
+            #line (1674,32)-(1674,62) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.SpecifiedLanguageVersion)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1668,17)-(1668,18) 25 "SyntaxGenerator.mxg"
+            #line (1675,17)-(1675,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1669,21)-(1669,27) 25 "SyntaxGenerator.mxg"
+            #line (1676,21)-(1676,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1669,27)-(1669,28) 25 "SyntaxGenerator.mxg"
+            #line (1676,27)-(1676,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1669,28)-(1669,33) 25 "SyntaxGenerator.mxg"
+            #line (1676,28)-(1676,33) 25 "SyntaxGenerator.mxg"
             __cb.Write("this;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1670,17)-(1670,18) 25 "SyntaxGenerator.mxg"
+            #line (1677,17)-(1677,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27689,100 +27811,100 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1672,17)-(1672,20) 25 "SyntaxGenerator.mxg"
+            #line (1679,17)-(1679,20) 25 "SyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (1672,20)-(1672,21) 25 "SyntaxGenerator.mxg"
+            #line (1679,20)-(1679,21) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1672,21)-(1672,45) 25 "SyntaxGenerator.mxg"
+            #line (1679,21)-(1679,45) 25 "SyntaxGenerator.mxg"
             __cb.Write("effectiveLanguageVersion");
             #line hidden
-            #line (1672,45)-(1672,46) 25 "SyntaxGenerator.mxg"
+            #line (1679,45)-(1679,46) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1672,46)-(1672,47) 25 "SyntaxGenerator.mxg"
+            #line (1679,46)-(1679,47) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1672,47)-(1672,48) 25 "SyntaxGenerator.mxg"
+            #line (1679,47)-(1679,48) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1672,48)-(1672,89) 25 "SyntaxGenerator.mxg"
+            #line (1679,48)-(1679,89) 25 "SyntaxGenerator.mxg"
             __cb.Write("version.MapSpecifiedToEffectiveVersion();");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1673,17)-(1673,23) 25 "SyntaxGenerator.mxg"
+            #line (1680,17)-(1680,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1673,23)-(1673,24) 25 "SyntaxGenerator.mxg"
+            #line (1680,23)-(1680,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,24)-(1673,27) 25 "SyntaxGenerator.mxg"
+            #line (1680,24)-(1680,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (1673,27)-(1673,28) 25 "SyntaxGenerator.mxg"
+            #line (1680,27)-(1680,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,29)-(1673,33) 24 "SyntaxGenerator.mxg"
+            #line (1680,29)-(1680,33) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1673,34)-(1673,52) 25 "SyntaxGenerator.mxg"
+            #line (1680,34)-(1680,52) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions(this)");
             #line hidden
-            #line (1673,52)-(1673,53) 25 "SyntaxGenerator.mxg"
+            #line (1680,52)-(1680,53) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,53)-(1673,54) 25 "SyntaxGenerator.mxg"
+            #line (1680,53)-(1680,54) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
-            #line (1673,54)-(1673,55) 25 "SyntaxGenerator.mxg"
+            #line (1680,54)-(1680,55) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,55)-(1673,79) 25 "SyntaxGenerator.mxg"
+            #line (1680,55)-(1680,79) 25 "SyntaxGenerator.mxg"
             __cb.Write("SpecifiedLanguageVersion");
             #line hidden
-            #line (1673,79)-(1673,80) 25 "SyntaxGenerator.mxg"
+            #line (1680,79)-(1680,80) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,80)-(1673,81) 25 "SyntaxGenerator.mxg"
+            #line (1680,80)-(1680,81) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1673,81)-(1673,82) 25 "SyntaxGenerator.mxg"
+            #line (1680,81)-(1680,82) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,82)-(1673,90) 25 "SyntaxGenerator.mxg"
+            #line (1680,82)-(1680,90) 25 "SyntaxGenerator.mxg"
             __cb.Write("version,");
             #line hidden
-            #line (1673,90)-(1673,91) 25 "SyntaxGenerator.mxg"
+            #line (1680,90)-(1680,91) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,91)-(1673,106) 25 "SyntaxGenerator.mxg"
+            #line (1680,91)-(1680,106) 25 "SyntaxGenerator.mxg"
             __cb.Write("LanguageVersion");
             #line hidden
-            #line (1673,106)-(1673,107) 25 "SyntaxGenerator.mxg"
+            #line (1680,106)-(1680,107) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,107)-(1673,108) 25 "SyntaxGenerator.mxg"
+            #line (1680,107)-(1680,108) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1673,108)-(1673,109) 25 "SyntaxGenerator.mxg"
+            #line (1680,108)-(1680,109) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,109)-(1673,133) 25 "SyntaxGenerator.mxg"
+            #line (1680,109)-(1680,133) 25 "SyntaxGenerator.mxg"
             __cb.Write("effectiveLanguageVersion");
             #line hidden
-            #line (1673,133)-(1673,134) 25 "SyntaxGenerator.mxg"
+            #line (1680,133)-(1680,134) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1673,134)-(1673,136) 25 "SyntaxGenerator.mxg"
+            #line (1680,134)-(1680,136) 25 "SyntaxGenerator.mxg"
             __cb.Write("};");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1674,13)-(1674,14) 25 "SyntaxGenerator.mxg"
+            #line (1681,13)-(1681,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27790,117 +27912,52 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1676,13)-(1676,19) 25 "SyntaxGenerator.mxg"
+            #line (1683,13)-(1683,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1676,19)-(1676,20) 25 "SyntaxGenerator.mxg"
+            #line (1683,19)-(1683,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1676,21)-(1676,25) 24 "SyntaxGenerator.mxg"
+            #line (1683,21)-(1683,25) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1676,26)-(1676,38) 25 "SyntaxGenerator.mxg"
+            #line (1683,26)-(1683,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions");
             #line hidden
-            #line (1676,38)-(1676,39) 25 "SyntaxGenerator.mxg"
+            #line (1683,38)-(1683,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1676,39)-(1676,118) 25 "SyntaxGenerator.mxg"
+            #line (1683,39)-(1683,118) 25 "SyntaxGenerator.mxg"
             __cb.Write("WithPreprocessorSymbols(global::System.Collections.Generic.IEnumerable<string>?");
             #line hidden
-            #line (1676,118)-(1676,119) 25 "SyntaxGenerator.mxg"
+            #line (1683,118)-(1683,119) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1676,119)-(1676,139) 25 "SyntaxGenerator.mxg"
+            #line (1683,119)-(1683,139) 25 "SyntaxGenerator.mxg"
             __cb.Write("preprocessorSymbols)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1677,13)-(1677,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1678,17)-(1678,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1678,23)-(1678,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1678,24)-(1678,89) 25 "SyntaxGenerator.mxg"
-            __cb.Write("WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1679,13)-(1679,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1681,13)-(1681,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1681,19)-(1681,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1681,21)-(1681,25) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1681,26)-(1681,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions");
-            #line hidden
-            #line (1681,38)-(1681,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1681,39)-(1681,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write("WithPreprocessorSymbols(params");
-            #line hidden
-            #line (1681,69)-(1681,70) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1681,70)-(1681,76) 25 "SyntaxGenerator.mxg"
-            __cb.Write("string");
-            #line hidden
-            #line (1681,77)-(1681,81) 24 "SyntaxGenerator.mxg"
-            __cb.Write("[]");
-            #line hidden
-            #line (1681,82)-(1681,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write("?");
-            #line hidden
-            #line (1681,83)-(1681,84) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1681,84)-(1681,104) 25 "SyntaxGenerator.mxg"
-            __cb.Write("preprocessorSymbols)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1682,13)-(1682,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1683,17)-(1683,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1683,23)-(1683,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1683,24)-(1683,89) 25 "SyntaxGenerator.mxg"
-            __cb.Write("WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1684,13)-(1684,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1685,17)-(1685,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1685,23)-(1685,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1685,24)-(1685,89) 25 "SyntaxGenerator.mxg"
+            __cb.Write("WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1686,13)-(1686,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27908,76 +27965,141 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1686,13)-(1686,19) 25 "SyntaxGenerator.mxg"
+            #line (1688,13)-(1688,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1686,19)-(1686,20) 25 "SyntaxGenerator.mxg"
+            #line (1688,19)-(1688,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1686,21)-(1686,25) 24 "SyntaxGenerator.mxg"
+            #line (1688,21)-(1688,25) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1686,26)-(1686,38) 25 "SyntaxGenerator.mxg"
+            #line (1688,26)-(1688,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions");
             #line hidden
-            #line (1686,38)-(1686,39) 25 "SyntaxGenerator.mxg"
+            #line (1688,38)-(1688,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1686,39)-(1686,85) 25 "SyntaxGenerator.mxg"
+            #line (1688,39)-(1688,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write("WithPreprocessorSymbols(params");
+            #line hidden
+            #line (1688,69)-(1688,70) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1688,70)-(1688,76) 25 "SyntaxGenerator.mxg"
+            __cb.Write("string");
+            #line hidden
+            #line (1688,77)-(1688,81) 24 "SyntaxGenerator.mxg"
+            __cb.Write("[]");
+            #line hidden
+            #line (1688,82)-(1688,83) 25 "SyntaxGenerator.mxg"
+            __cb.Write("?");
+            #line hidden
+            #line (1688,83)-(1688,84) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1688,84)-(1688,104) 25 "SyntaxGenerator.mxg"
+            __cb.Write("preprocessorSymbols)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1689,13)-(1689,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1690,17)-(1690,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1690,23)-(1690,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1690,24)-(1690,89) 25 "SyntaxGenerator.mxg"
+            __cb.Write("WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1691,13)-(1691,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1693,13)-(1693,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1693,19)-(1693,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1693,21)-(1693,25) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1693,26)-(1693,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions");
+            #line hidden
+            #line (1693,38)-(1693,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1693,39)-(1693,85) 25 "SyntaxGenerator.mxg"
             __cb.Write("WithPreprocessorSymbols(ImmutableArray<string>");
             #line hidden
-            #line (1686,85)-(1686,86) 25 "SyntaxGenerator.mxg"
+            #line (1693,85)-(1693,86) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1686,86)-(1686,94) 25 "SyntaxGenerator.mxg"
+            #line (1693,86)-(1693,94) 25 "SyntaxGenerator.mxg"
             __cb.Write("symbols)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1687,13)-(1687,14) 25 "SyntaxGenerator.mxg"
+            #line (1694,13)-(1694,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1688,17)-(1688,19) 25 "SyntaxGenerator.mxg"
+            #line (1695,17)-(1695,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1688,19)-(1688,20) 25 "SyntaxGenerator.mxg"
+            #line (1695,19)-(1695,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1688,20)-(1688,39) 25 "SyntaxGenerator.mxg"
+            #line (1695,20)-(1695,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("(symbols.IsDefault)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1689,17)-(1689,18) 25 "SyntaxGenerator.mxg"
+            #line (1696,17)-(1696,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1690,21)-(1690,28) 25 "SyntaxGenerator.mxg"
+            #line (1697,21)-(1697,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("symbols");
             #line hidden
-            #line (1690,28)-(1690,29) 25 "SyntaxGenerator.mxg"
+            #line (1697,28)-(1697,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1690,29)-(1690,30) 25 "SyntaxGenerator.mxg"
+            #line (1697,29)-(1697,30) 25 "SyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (1690,30)-(1690,31) 25 "SyntaxGenerator.mxg"
+            #line (1697,30)-(1697,31) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1690,31)-(1690,60) 25 "SyntaxGenerator.mxg"
+            #line (1697,31)-(1697,60) 25 "SyntaxGenerator.mxg"
             __cb.Write("ImmutableArray<string>.Empty;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1691,17)-(1691,18) 25 "SyntaxGenerator.mxg"
+            #line (1698,17)-(1698,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -27985,37 +28107,37 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1693,17)-(1693,19) 25 "SyntaxGenerator.mxg"
+            #line (1700,17)-(1700,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1693,19)-(1693,20) 25 "SyntaxGenerator.mxg"
+            #line (1700,19)-(1700,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1693,20)-(1693,62) 25 "SyntaxGenerator.mxg"
+            #line (1700,20)-(1700,62) 25 "SyntaxGenerator.mxg"
             __cb.Write("(symbols.Equals(this.PreprocessorSymbols))");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1694,17)-(1694,18) 25 "SyntaxGenerator.mxg"
+            #line (1701,17)-(1701,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1695,21)-(1695,27) 25 "SyntaxGenerator.mxg"
+            #line (1702,21)-(1702,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1695,27)-(1695,28) 25 "SyntaxGenerator.mxg"
+            #line (1702,27)-(1702,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1695,28)-(1695,33) 25 "SyntaxGenerator.mxg"
+            #line (1702,28)-(1702,33) 25 "SyntaxGenerator.mxg"
             __cb.Write("this;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1696,17)-(1696,18) 25 "SyntaxGenerator.mxg"
+            #line (1703,17)-(1703,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -28023,206 +28145,206 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1698,17)-(1698,23) 25 "SyntaxGenerator.mxg"
+            #line (1705,17)-(1705,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1698,23)-(1698,24) 25 "SyntaxGenerator.mxg"
+            #line (1705,23)-(1705,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1698,24)-(1698,27) 25 "SyntaxGenerator.mxg"
+            #line (1705,24)-(1705,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("new");
-            #line hidden
-            #line (1698,27)-(1698,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1698,29)-(1698,33) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1698,34)-(1698,52) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions(this)");
-            #line hidden
-            #line (1698,52)-(1698,53) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1698,53)-(1698,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            #line (1698,54)-(1698,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1698,55)-(1698,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write("_preprocessorSymbols");
-            #line hidden
-            #line (1698,75)-(1698,76) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1698,76)-(1698,77) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1698,77)-(1698,78) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1698,78)-(1698,85) 25 "SyntaxGenerator.mxg"
-            __cb.Write("symbols");
-            #line hidden
-            #line (1698,85)-(1698,86) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1698,86)-(1698,88) 25 "SyntaxGenerator.mxg"
-            __cb.Write("};");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1699,13)-(1699,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1701,13)-(1701,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1701,19)-(1701,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1701,20)-(1701,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("new");
-            #line hidden
-            #line (1701,23)-(1701,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1701,25)-(1701,29) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1701,30)-(1701,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions");
-            #line hidden
-            #line (1701,42)-(1701,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1701,43)-(1701,82) 25 "SyntaxGenerator.mxg"
-            __cb.Write("WithDocumentationMode(DocumentationMode");
-            #line hidden
-            #line (1701,82)-(1701,83) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1701,83)-(1701,101) 25 "SyntaxGenerator.mxg"
-            __cb.Write("documentationMode)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1702,13)-(1702,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1703,17)-(1703,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("if");
-            #line hidden
-            #line (1703,19)-(1703,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1703,20)-(1703,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("(documentationMode");
-            #line hidden
-            #line (1703,38)-(1703,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1703,39)-(1703,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write("==");
-            #line hidden
-            #line (1703,41)-(1703,42) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1703,42)-(1703,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("this.DocumentationMode)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1704,17)-(1704,18) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("                ");
-            #line (1705,21)-(1705,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
             #line hidden
             #line (1705,27)-(1705,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1705,28)-(1705,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write("this;");
+            #line (1705,29)-(1705,33) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1705,34)-(1705,52) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions(this)");
+            #line hidden
+            #line (1705,52)-(1705,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1705,53)-(1705,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            #line (1705,54)-(1705,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1705,55)-(1705,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write("_preprocessorSymbols");
+            #line hidden
+            #line (1705,75)-(1705,76) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1705,76)-(1705,77) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1705,77)-(1705,78) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1705,78)-(1705,85) 25 "SyntaxGenerator.mxg"
+            __cb.Write("symbols");
+            #line hidden
+            #line (1705,85)-(1705,86) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1705,86)-(1705,88) 25 "SyntaxGenerator.mxg"
+            __cb.Write("};");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
-            __cb.Push("            ");
-            #line (1706,17)-(1706,18) 25 "SyntaxGenerator.mxg"
+            __cb.Push("        ");
+            #line (1706,13)-(1706,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("            ");
-            #line (1708,17)-(1708,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
+            __cb.Push("        ");
+            #line (1708,13)-(1708,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1708,19)-(1708,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1708,20)-(1708,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("new");
             #line hidden
             #line (1708,23)-(1708,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1708,24)-(1708,27) 25 "SyntaxGenerator.mxg"
-            __cb.Write("new");
-            #line hidden
-            #line (1708,27)-(1708,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1708,29)-(1708,33) 24 "SyntaxGenerator.mxg"
+            #line (1708,25)-(1708,29) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1708,34)-(1708,52) 25 "SyntaxGenerator.mxg"
-            __cb.Write("ParseOptions(this)");
+            #line (1708,30)-(1708,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions");
             #line hidden
-            #line (1708,52)-(1708,53) 25 "SyntaxGenerator.mxg"
+            #line (1708,42)-(1708,43) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1708,53)-(1708,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
+            #line (1708,43)-(1708,82) 25 "SyntaxGenerator.mxg"
+            __cb.Write("WithDocumentationMode(DocumentationMode");
             #line hidden
-            #line (1708,54)-(1708,55) 25 "SyntaxGenerator.mxg"
+            #line (1708,82)-(1708,83) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1708,55)-(1708,72) 25 "SyntaxGenerator.mxg"
-            __cb.Write("DocumentationMode");
-            #line hidden
-            #line (1708,72)-(1708,73) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1708,73)-(1708,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1708,74)-(1708,75) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1708,75)-(1708,92) 25 "SyntaxGenerator.mxg"
-            __cb.Write("documentationMode");
-            #line hidden
-            #line (1708,92)-(1708,93) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1708,93)-(1708,95) 25 "SyntaxGenerator.mxg"
-            __cb.Write("};");
+            #line (1708,83)-(1708,101) 25 "SyntaxGenerator.mxg"
+            __cb.Write("documentationMode)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
             #line (1709,13)-(1709,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1710,17)-(1710,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("if");
+            #line hidden
+            #line (1710,19)-(1710,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1710,20)-(1710,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("(documentationMode");
+            #line hidden
+            #line (1710,38)-(1710,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1710,39)-(1710,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write("==");
+            #line hidden
+            #line (1710,41)-(1710,42) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1710,42)-(1710,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("this.DocumentationMode)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1711,17)-(1711,18) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("                ");
+            #line (1712,21)-(1712,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1712,27)-(1712,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1712,28)-(1712,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write("this;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1713,17)-(1713,18) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1715,17)-(1715,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1715,23)-(1715,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1715,24)-(1715,27) 25 "SyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (1715,27)-(1715,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1715,29)-(1715,33) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1715,34)-(1715,52) 25 "SyntaxGenerator.mxg"
+            __cb.Write("ParseOptions(this)");
+            #line hidden
+            #line (1715,52)-(1715,53) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1715,53)-(1715,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            #line (1715,54)-(1715,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1715,55)-(1715,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write("DocumentationMode");
+            #line hidden
+            #line (1715,72)-(1715,73) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1715,73)-(1715,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1715,74)-(1715,75) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1715,75)-(1715,92) 25 "SyntaxGenerator.mxg"
+            __cb.Write("documentationMode");
+            #line hidden
+            #line (1715,92)-(1715,93) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1715,93)-(1715,95) 25 "SyntaxGenerator.mxg"
+            __cb.Write("};");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1716,13)-(1716,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -28230,55 +28352,55 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1711,13)-(1711,22) 25 "SyntaxGenerator.mxg"
+            #line (1718,13)-(1718,22) 25 "SyntaxGenerator.mxg"
             __cb.Write("protected");
             #line hidden
-            #line (1711,22)-(1711,23) 25 "SyntaxGenerator.mxg"
+            #line (1718,22)-(1718,23) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1711,23)-(1711,31) 25 "SyntaxGenerator.mxg"
+            #line (1718,23)-(1718,31) 25 "SyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (1711,31)-(1711,32) 25 "SyntaxGenerator.mxg"
+            #line (1718,31)-(1718,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1711,32)-(1711,44) 25 "SyntaxGenerator.mxg"
+            #line (1718,32)-(1718,44) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions");
             #line hidden
-            #line (1711,44)-(1711,45) 25 "SyntaxGenerator.mxg"
+            #line (1718,44)-(1718,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1711,45)-(1711,74) 25 "SyntaxGenerator.mxg"
+            #line (1718,45)-(1718,74) 25 "SyntaxGenerator.mxg"
             __cb.Write("CommonWithKind(SourceCodeKind");
             #line hidden
-            #line (1711,74)-(1711,75) 25 "SyntaxGenerator.mxg"
+            #line (1718,74)-(1718,75) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1711,75)-(1711,80) 25 "SyntaxGenerator.mxg"
+            #line (1718,75)-(1718,80) 25 "SyntaxGenerator.mxg"
             __cb.Write("kind)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1712,13)-(1712,14) 25 "SyntaxGenerator.mxg"
+            #line (1719,13)-(1719,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1713,17)-(1713,23) 25 "SyntaxGenerator.mxg"
+            #line (1720,17)-(1720,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1713,23)-(1713,24) 25 "SyntaxGenerator.mxg"
+            #line (1720,23)-(1720,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1713,24)-(1713,39) 25 "SyntaxGenerator.mxg"
+            #line (1720,24)-(1720,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("WithKind(kind);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1714,13)-(1714,14) 25 "SyntaxGenerator.mxg"
+            #line (1721,13)-(1721,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -28286,151 +28408,38 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1716,13)-(1716,22) 25 "SyntaxGenerator.mxg"
+            #line (1723,13)-(1723,22) 25 "SyntaxGenerator.mxg"
             __cb.Write("protected");
             #line hidden
-            #line (1716,22)-(1716,23) 25 "SyntaxGenerator.mxg"
+            #line (1723,22)-(1723,23) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1716,23)-(1716,31) 25 "SyntaxGenerator.mxg"
+            #line (1723,23)-(1723,31) 25 "SyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (1716,31)-(1716,32) 25 "SyntaxGenerator.mxg"
+            #line (1723,31)-(1723,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1716,32)-(1716,44) 25 "SyntaxGenerator.mxg"
+            #line (1723,32)-(1723,44) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions");
             #line hidden
-            #line (1716,44)-(1716,45) 25 "SyntaxGenerator.mxg"
+            #line (1723,44)-(1723,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1716,45)-(1716,90) 25 "SyntaxGenerator.mxg"
+            #line (1723,45)-(1723,90) 25 "SyntaxGenerator.mxg"
             __cb.Write("CommonWithDocumentationMode(DocumentationMode");
             #line hidden
-            #line (1716,90)-(1716,91) 25 "SyntaxGenerator.mxg"
+            #line (1723,90)-(1723,91) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1716,91)-(1716,109) 25 "SyntaxGenerator.mxg"
+            #line (1723,91)-(1723,109) 25 "SyntaxGenerator.mxg"
             __cb.Write("documentationMode)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1717,13)-(1717,14) 25 "SyntaxGenerator.mxg"
+            #line (1724,13)-(1724,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1718,17)-(1718,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (1718,23)-(1718,24) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1718,24)-(1718,65) 25 "SyntaxGenerator.mxg"
-            __cb.Write("WithDocumentationMode(documentationMode);");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1719,13)-(1719,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1721,13)-(1721,22) 25 "SyntaxGenerator.mxg"
-            __cb.Write("protected");
-            #line hidden
-            #line (1721,22)-(1721,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1721,23)-(1721,31) 25 "SyntaxGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (1721,31)-(1721,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1721,32)-(1721,36) 25 "SyntaxGenerator.mxg"
-            __cb.Write("bool");
-            #line hidden
-            #line (1721,36)-(1721,37) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1721,37)-(1721,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write("IsFeatureEnabled(string");
-            #line hidden
-            #line (1721,60)-(1721,61) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1721,61)-(1721,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write("feature)");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1722,13)-(1722,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1723,18)-(1723,22) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1723,23)-(1723,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("LanguageVersion");
-            #line hidden
-            #line (1723,38)-(1723,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1723,39)-(1723,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write("availableVersion");
-            #line hidden
-            #line (1723,55)-(1723,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1723,56)-(1723,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1723,57)-(1723,58) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1723,58)-(1723,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("LanguageVersion;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1724,18)-(1724,22) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1724,23)-(1724,38) 25 "SyntaxGenerator.mxg"
-            __cb.Write("LanguageVersion");
-            #line hidden
-            #line (1724,38)-(1724,39) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1724,39)-(1724,54) 25 "SyntaxGenerator.mxg"
-            __cb.Write("requiredVersion");
-            #line hidden
-            #line (1724,54)-(1724,55) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1724,55)-(1724,56) 25 "SyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (1724,56)-(1724,57) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1724,58)-(1724,62) 24 "SyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (1724,63)-(1724,129) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -28441,20 +28450,8 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line (1725,23)-(1725,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1725,24)-(1725,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("availableVersion");
-            #line hidden
-            #line (1725,40)-(1725,41) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1725,41)-(1725,43) 25 "SyntaxGenerator.mxg"
-            __cb.Write(">=");
-            #line hidden
-            #line (1725,43)-(1725,44) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1725,44)-(1725,60) 25 "SyntaxGenerator.mxg"
-            __cb.Write("requiredVersion;");
+            #line (1725,24)-(1725,65) 25 "SyntaxGenerator.mxg"
+            __cb.Write("WithDocumentationMode(documentationMode);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -28467,31 +28464,31 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1728,13)-(1728,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
+            #line (1728,13)-(1728,22) 25 "SyntaxGenerator.mxg"
+            __cb.Write("protected");
             #line hidden
-            #line (1728,19)-(1728,20) 25 "SyntaxGenerator.mxg"
+            #line (1728,22)-(1728,23) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1728,20)-(1728,28) 25 "SyntaxGenerator.mxg"
+            #line (1728,23)-(1728,31) 25 "SyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (1728,28)-(1728,29) 25 "SyntaxGenerator.mxg"
+            #line (1728,31)-(1728,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1728,29)-(1728,40) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Diagnostic?");
+            #line (1728,32)-(1728,36) 25 "SyntaxGenerator.mxg"
+            __cb.Write("bool");
             #line hidden
-            #line (1728,40)-(1728,41) 25 "SyntaxGenerator.mxg"
+            #line (1728,36)-(1728,37) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1728,41)-(1728,71) 25 "SyntaxGenerator.mxg"
-            __cb.Write("GetDiagnosticForFeature(string");
+            #line (1728,37)-(1728,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write("IsFeatureEnabled(string");
             #line hidden
-            #line (1728,71)-(1728,72) 25 "SyntaxGenerator.mxg"
+            #line (1728,60)-(1728,61) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1728,72)-(1728,80) 25 "SyntaxGenerator.mxg"
+            #line (1728,61)-(1728,69) 25 "SyntaxGenerator.mxg"
             __cb.Write("feature)");
             #line hidden
             __cb.AppendLine();
@@ -28560,97 +28557,222 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1732,17)-(1732,19) 25 "SyntaxGenerator.mxg"
+            #line (1732,17)-(1732,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (1732,23)-(1732,24) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1732,24)-(1732,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("availableVersion");
+            #line hidden
+            #line (1732,40)-(1732,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1732,41)-(1732,43) 25 "SyntaxGenerator.mxg"
+            __cb.Write(">=");
+            #line hidden
+            #line (1732,43)-(1732,44) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1732,44)-(1732,60) 25 "SyntaxGenerator.mxg"
+            __cb.Write("requiredVersion;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1733,13)-(1733,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1735,13)-(1735,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1735,19)-(1735,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1735,20)-(1735,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (1735,28)-(1735,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1735,29)-(1735,40) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Diagnostic?");
+            #line hidden
+            #line (1735,40)-(1735,41) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1735,41)-(1735,71) 25 "SyntaxGenerator.mxg"
+            __cb.Write("GetDiagnosticForFeature(string");
+            #line hidden
+            #line (1735,71)-(1735,72) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1735,72)-(1735,80) 25 "SyntaxGenerator.mxg"
+            __cb.Write("feature)");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1736,13)-(1736,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1737,18)-(1737,22) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1737,23)-(1737,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("LanguageVersion");
+            #line hidden
+            #line (1737,38)-(1737,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1737,39)-(1737,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write("availableVersion");
+            #line hidden
+            #line (1737,55)-(1737,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1737,56)-(1737,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1737,57)-(1737,58) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1737,58)-(1737,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("LanguageVersion;");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1738,18)-(1738,22) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1738,23)-(1738,38) 25 "SyntaxGenerator.mxg"
+            __cb.Write("LanguageVersion");
+            #line hidden
+            #line (1738,38)-(1738,39) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1738,39)-(1738,54) 25 "SyntaxGenerator.mxg"
+            __cb.Write("requiredVersion");
+            #line hidden
+            #line (1738,54)-(1738,55) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1738,55)-(1738,56) 25 "SyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (1738,56)-(1738,57) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1738,58)-(1738,62) 24 "SyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (1738,63)-(1738,129) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1739,17)-(1739,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1732,19)-(1732,20) 25 "SyntaxGenerator.mxg"
+            #line (1739,19)-(1739,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1732,20)-(1732,37) 25 "SyntaxGenerator.mxg"
+            #line (1739,20)-(1739,37) 25 "SyntaxGenerator.mxg"
             __cb.Write("(availableVersion");
             #line hidden
-            #line (1732,37)-(1732,38) 25 "SyntaxGenerator.mxg"
+            #line (1739,37)-(1739,38) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1732,38)-(1732,39) 25 "SyntaxGenerator.mxg"
+            #line (1739,38)-(1739,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("<");
             #line hidden
-            #line (1732,39)-(1732,40) 25 "SyntaxGenerator.mxg"
+            #line (1739,39)-(1739,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1732,40)-(1732,56) 25 "SyntaxGenerator.mxg"
+            #line (1739,40)-(1739,56) 25 "SyntaxGenerator.mxg"
             __cb.Write("requiredVersion)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1733,17)-(1733,18) 25 "SyntaxGenerator.mxg"
+            #line (1740,17)-(1740,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1734,21)-(1734,27) 25 "SyntaxGenerator.mxg"
+            #line (1741,21)-(1741,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1734,27)-(1734,28) 25 "SyntaxGenerator.mxg"
+            #line (1741,27)-(1741,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1734,28)-(1734,95) 25 "SyntaxGenerator.mxg"
+            #line (1741,28)-(1741,95) 25 "SyntaxGenerator.mxg"
             __cb.Write("Diagnostic.Create(CommonErrorCode.ERR_FeatureNotAvailableInVersion,");
             #line hidden
-            #line (1734,95)-(1734,96) 25 "SyntaxGenerator.mxg"
+            #line (1741,95)-(1741,96) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1734,96)-(1734,110) 25 "SyntaxGenerator.mxg"
+            #line (1741,96)-(1741,110) 25 "SyntaxGenerator.mxg"
             __cb.Write("Location.None,");
             #line hidden
-            #line (1734,110)-(1734,111) 25 "SyntaxGenerator.mxg"
+            #line (1741,110)-(1741,111) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1734,111)-(1734,119) 25 "SyntaxGenerator.mxg"
+            #line (1741,111)-(1741,119) 25 "SyntaxGenerator.mxg"
             __cb.Write("feature,");
             #line hidden
-            #line (1734,119)-(1734,120) 25 "SyntaxGenerator.mxg"
+            #line (1741,119)-(1741,120) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1734,120)-(1734,134) 25 "SyntaxGenerator.mxg"
+            #line (1741,120)-(1741,134) 25 "SyntaxGenerator.mxg"
             __cb.Write("Language.Name,");
             #line hidden
-            #line (1734,134)-(1734,135) 25 "SyntaxGenerator.mxg"
+            #line (1741,134)-(1741,135) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1734,135)-(1734,170) 25 "SyntaxGenerator.mxg"
+            #line (1741,135)-(1741,170) 25 "SyntaxGenerator.mxg"
             __cb.Write("availableVersion.ToDisplayString(),");
             #line hidden
-            #line (1734,170)-(1734,171) 25 "SyntaxGenerator.mxg"
+            #line (1741,170)-(1741,171) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1734,171)-(1734,206) 25 "SyntaxGenerator.mxg"
+            #line (1741,171)-(1741,206) 25 "SyntaxGenerator.mxg"
             __cb.Write("requiredVersion.ToDisplayString());");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1735,17)-(1735,18) 25 "SyntaxGenerator.mxg"
+            #line (1742,17)-(1742,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1736,17)-(1736,23) 25 "SyntaxGenerator.mxg"
+            #line (1743,17)-(1743,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1736,23)-(1736,24) 25 "SyntaxGenerator.mxg"
+            #line (1743,23)-(1743,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1736,24)-(1736,29) 25 "SyntaxGenerator.mxg"
+            #line (1743,24)-(1743,29) 25 "SyntaxGenerator.mxg"
             __cb.Write("null;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1737,13)-(1737,14) 25 "SyntaxGenerator.mxg"
+            #line (1744,13)-(1744,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -28658,139 +28780,139 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1739,13)-(1739,22) 25 "SyntaxGenerator.mxg"
+            #line (1746,13)-(1746,22) 25 "SyntaxGenerator.mxg"
             __cb.Write("protected");
             #line hidden
-            #line (1739,22)-(1739,23) 25 "SyntaxGenerator.mxg"
+            #line (1746,22)-(1746,23) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1739,23)-(1739,31) 25 "SyntaxGenerator.mxg"
+            #line (1746,23)-(1746,31) 25 "SyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (1739,31)-(1739,32) 25 "SyntaxGenerator.mxg"
+            #line (1746,31)-(1746,32) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1739,32)-(1739,36) 25 "SyntaxGenerator.mxg"
+            #line (1746,32)-(1746,36) 25 "SyntaxGenerator.mxg"
             __cb.Write("void");
             #line hidden
-            #line (1739,36)-(1739,37) 25 "SyntaxGenerator.mxg"
+            #line (1746,36)-(1746,37) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1739,37)-(1739,83) 25 "SyntaxGenerator.mxg"
+            #line (1746,37)-(1746,83) 25 "SyntaxGenerator.mxg"
             __cb.Write("CommonValidateOptions(ArrayBuilder<Diagnostic>");
             #line hidden
-            #line (1739,83)-(1739,84) 25 "SyntaxGenerator.mxg"
+            #line (1746,83)-(1746,84) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1739,84)-(1739,92) 25 "SyntaxGenerator.mxg"
+            #line (1746,84)-(1746,92) 25 "SyntaxGenerator.mxg"
             __cb.Write("builder)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1740,13)-(1740,14) 25 "SyntaxGenerator.mxg"
+            #line (1747,13)-(1747,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1741,17)-(1741,19) 25 "SyntaxGenerator.mxg"
+            #line (1748,17)-(1748,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("//");
             #line hidden
-            #line (1741,19)-(1741,20) 25 "SyntaxGenerator.mxg"
+            #line (1748,19)-(1748,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,20)-(1741,28) 25 "SyntaxGenerator.mxg"
+            #line (1748,20)-(1748,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("Validate");
             #line hidden
-            #line (1741,28)-(1741,29) 25 "SyntaxGenerator.mxg"
+            #line (1748,28)-(1748,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,29)-(1741,44) 25 "SyntaxGenerator.mxg"
+            #line (1748,29)-(1748,44) 25 "SyntaxGenerator.mxg"
             __cb.Write("LanguageVersion");
             #line hidden
-            #line (1741,44)-(1741,45) 25 "SyntaxGenerator.mxg"
+            #line (1748,44)-(1748,45) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,45)-(1741,48) 25 "SyntaxGenerator.mxg"
+            #line (1748,45)-(1748,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("not");
             #line hidden
-            #line (1741,48)-(1741,49) 25 "SyntaxGenerator.mxg"
+            #line (1748,48)-(1748,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,49)-(1741,74) 25 "SyntaxGenerator.mxg"
+            #line (1748,49)-(1748,74) 25 "SyntaxGenerator.mxg"
             __cb.Write("SpecifiedLanguageVersion,");
             #line hidden
-            #line (1741,74)-(1741,75) 25 "SyntaxGenerator.mxg"
+            #line (1748,74)-(1748,75) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,75)-(1741,80) 25 "SyntaxGenerator.mxg"
+            #line (1748,75)-(1748,80) 25 "SyntaxGenerator.mxg"
             __cb.Write("after");
             #line hidden
-            #line (1741,80)-(1741,81) 25 "SyntaxGenerator.mxg"
+            #line (1748,80)-(1748,81) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,81)-(1741,95) 25 "SyntaxGenerator.mxg"
+            #line (1748,81)-(1748,95) 25 "SyntaxGenerator.mxg"
             __cb.Write("Latest/Default");
             #line hidden
-            #line (1741,95)-(1741,96) 25 "SyntaxGenerator.mxg"
+            #line (1748,95)-(1748,96) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,96)-(1741,99) 25 "SyntaxGenerator.mxg"
+            #line (1748,96)-(1748,99) 25 "SyntaxGenerator.mxg"
             __cb.Write("has");
             #line hidden
-            #line (1741,99)-(1741,100) 25 "SyntaxGenerator.mxg"
+            #line (1748,99)-(1748,100) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,100)-(1741,104) 25 "SyntaxGenerator.mxg"
+            #line (1748,100)-(1748,104) 25 "SyntaxGenerator.mxg"
             __cb.Write("been");
             #line hidden
-            #line (1741,104)-(1741,105) 25 "SyntaxGenerator.mxg"
+            #line (1748,104)-(1748,105) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1741,105)-(1741,115) 25 "SyntaxGenerator.mxg"
+            #line (1748,105)-(1748,115) 25 "SyntaxGenerator.mxg"
             __cb.Write("converted:");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1742,17)-(1742,19) 25 "SyntaxGenerator.mxg"
+            #line (1749,17)-(1749,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1742,19)-(1742,20) 25 "SyntaxGenerator.mxg"
+            #line (1749,19)-(1749,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1742,20)-(1742,48) 25 "SyntaxGenerator.mxg"
+            #line (1749,20)-(1749,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("(!LanguageVersion.IsValid())");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1743,17)-(1743,18) 25 "SyntaxGenerator.mxg"
+            #line (1750,17)-(1750,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1744,21)-(1744,90) 25 "SyntaxGenerator.mxg"
+            #line (1751,21)-(1751,90) 25 "SyntaxGenerator.mxg"
             __cb.Write("builder.Add(Diagnostic.Create(CommonErrorCode.ERR_BadLanguageVersion,");
             #line hidden
-            #line (1744,90)-(1744,91) 25 "SyntaxGenerator.mxg"
+            #line (1751,90)-(1751,91) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1744,91)-(1744,105) 25 "SyntaxGenerator.mxg"
+            #line (1751,91)-(1751,105) 25 "SyntaxGenerator.mxg"
             __cb.Write("Location.None,");
             #line hidden
-            #line (1744,105)-(1744,106) 25 "SyntaxGenerator.mxg"
+            #line (1751,105)-(1751,106) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1744,106)-(1744,135) 25 "SyntaxGenerator.mxg"
+            #line (1751,106)-(1751,135) 25 "SyntaxGenerator.mxg"
             __cb.Write("LanguageVersion.ToString()));");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1745,17)-(1745,18) 25 "SyntaxGenerator.mxg"
+            #line (1752,17)-(1752,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -28798,175 +28920,175 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1747,17)-(1747,19) 25 "SyntaxGenerator.mxg"
+            #line (1754,17)-(1754,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1747,19)-(1747,20) 25 "SyntaxGenerator.mxg"
+            #line (1754,19)-(1754,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1747,20)-(1747,59) 25 "SyntaxGenerator.mxg"
+            #line (1754,20)-(1754,59) 25 "SyntaxGenerator.mxg"
             __cb.Write("(!PreprocessorSymbols.IsDefaultOrEmpty)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1748,17)-(1748,18) 25 "SyntaxGenerator.mxg"
+            #line (1755,17)-(1755,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1749,21)-(1749,28) 25 "SyntaxGenerator.mxg"
+            #line (1756,21)-(1756,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("foreach");
             #line hidden
-            #line (1749,28)-(1749,29) 25 "SyntaxGenerator.mxg"
+            #line (1756,28)-(1756,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1749,29)-(1749,33) 25 "SyntaxGenerator.mxg"
+            #line (1756,29)-(1756,33) 25 "SyntaxGenerator.mxg"
             __cb.Write("(var");
             #line hidden
-            #line (1749,33)-(1749,34) 25 "SyntaxGenerator.mxg"
+            #line (1756,33)-(1756,34) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1749,34)-(1749,40) 25 "SyntaxGenerator.mxg"
+            #line (1756,34)-(1756,40) 25 "SyntaxGenerator.mxg"
             __cb.Write("symbol");
             #line hidden
-            #line (1749,40)-(1749,41) 25 "SyntaxGenerator.mxg"
+            #line (1756,40)-(1756,41) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1749,41)-(1749,43) 25 "SyntaxGenerator.mxg"
+            #line (1756,41)-(1756,43) 25 "SyntaxGenerator.mxg"
             __cb.Write("in");
             #line hidden
-            #line (1749,43)-(1749,44) 25 "SyntaxGenerator.mxg"
+            #line (1756,43)-(1756,44) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1749,44)-(1749,64) 25 "SyntaxGenerator.mxg"
+            #line (1756,44)-(1756,64) 25 "SyntaxGenerator.mxg"
             __cb.Write("PreprocessorSymbols)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1750,21)-(1750,22) 25 "SyntaxGenerator.mxg"
+            #line (1757,21)-(1757,22) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                    ");
-            #line (1751,25)-(1751,27) 25 "SyntaxGenerator.mxg"
+            #line (1758,25)-(1758,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1751,27)-(1751,28) 25 "SyntaxGenerator.mxg"
+            #line (1758,27)-(1758,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1751,28)-(1751,35) 25 "SyntaxGenerator.mxg"
+            #line (1758,28)-(1758,35) 25 "SyntaxGenerator.mxg"
             __cb.Write("(symbol");
             #line hidden
-            #line (1751,35)-(1751,36) 25 "SyntaxGenerator.mxg"
+            #line (1758,35)-(1758,36) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1751,36)-(1751,38) 25 "SyntaxGenerator.mxg"
+            #line (1758,36)-(1758,38) 25 "SyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (1751,38)-(1751,39) 25 "SyntaxGenerator.mxg"
+            #line (1758,38)-(1758,39) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1751,39)-(1751,44) 25 "SyntaxGenerator.mxg"
+            #line (1758,39)-(1758,44) 25 "SyntaxGenerator.mxg"
             __cb.Write("null)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                    ");
-            #line (1752,25)-(1752,26) 25 "SyntaxGenerator.mxg"
+            #line (1759,25)-(1759,26) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                        ");
-            #line (1753,29)-(1753,106) 25 "SyntaxGenerator.mxg"
+            #line (1760,29)-(1760,106) 25 "SyntaxGenerator.mxg"
             __cb.Write("builder.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidPreprocessingSymbol,");
             #line hidden
-            #line (1753,106)-(1753,107) 25 "SyntaxGenerator.mxg"
+            #line (1760,106)-(1760,107) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1753,107)-(1753,121) 25 "SyntaxGenerator.mxg"
+            #line (1760,107)-(1760,121) 25 "SyntaxGenerator.mxg"
             __cb.Write("Location.None,");
             #line hidden
-            #line (1753,121)-(1753,122) 25 "SyntaxGenerator.mxg"
+            #line (1760,121)-(1760,122) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1753,122)-(1753,131) 25 "SyntaxGenerator.mxg"
+            #line (1760,122)-(1760,131) 25 "SyntaxGenerator.mxg"
             __cb.Write("\"null\"));");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                    ");
-            #line (1754,25)-(1754,26) 25 "SyntaxGenerator.mxg"
+            #line (1761,25)-(1761,26) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                    ");
-            #line (1755,25)-(1755,29) 25 "SyntaxGenerator.mxg"
+            #line (1762,25)-(1762,29) 25 "SyntaxGenerator.mxg"
             __cb.Write("else");
             #line hidden
-            #line (1755,29)-(1755,30) 25 "SyntaxGenerator.mxg"
+            #line (1762,29)-(1762,30) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1755,30)-(1755,32) 25 "SyntaxGenerator.mxg"
+            #line (1762,30)-(1762,32) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1755,32)-(1755,33) 25 "SyntaxGenerator.mxg"
+            #line (1762,32)-(1762,33) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1755,33)-(1755,82) 25 "SyntaxGenerator.mxg"
+            #line (1762,33)-(1762,82) 25 "SyntaxGenerator.mxg"
             __cb.Write("(!Language.SyntaxFacts.IsValidIdentifier(symbol))");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                    ");
-            #line (1756,25)-(1756,26) 25 "SyntaxGenerator.mxg"
+            #line (1763,25)-(1763,26) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                        ");
-            #line (1757,29)-(1757,106) 25 "SyntaxGenerator.mxg"
+            #line (1764,29)-(1764,106) 25 "SyntaxGenerator.mxg"
             __cb.Write("builder.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidPreprocessingSymbol,");
             #line hidden
-            #line (1757,106)-(1757,107) 25 "SyntaxGenerator.mxg"
+            #line (1764,106)-(1764,107) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1757,107)-(1757,121) 25 "SyntaxGenerator.mxg"
+            #line (1764,107)-(1764,121) 25 "SyntaxGenerator.mxg"
             __cb.Write("Location.None,");
             #line hidden
-            #line (1757,121)-(1757,122) 25 "SyntaxGenerator.mxg"
+            #line (1764,121)-(1764,122) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1757,122)-(1757,131) 25 "SyntaxGenerator.mxg"
+            #line (1764,122)-(1764,131) 25 "SyntaxGenerator.mxg"
             __cb.Write("symbol));");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                    ");
-            #line (1758,25)-(1758,26) 25 "SyntaxGenerator.mxg"
+            #line (1765,25)-(1765,26) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1759,21)-(1759,22) 25 "SyntaxGenerator.mxg"
+            #line (1766,21)-(1766,22) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1760,17)-(1760,18) 25 "SyntaxGenerator.mxg"
+            #line (1767,17)-(1767,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1761,13)-(1761,14) 25 "SyntaxGenerator.mxg"
+            #line (1768,13)-(1768,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -28974,70 +29096,70 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1763,13)-(1763,19) 25 "SyntaxGenerator.mxg"
+            #line (1770,13)-(1770,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1763,19)-(1763,20) 25 "SyntaxGenerator.mxg"
+            #line (1770,19)-(1770,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1763,20)-(1763,28) 25 "SyntaxGenerator.mxg"
+            #line (1770,20)-(1770,28) 25 "SyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (1763,28)-(1763,29) 25 "SyntaxGenerator.mxg"
+            #line (1770,28)-(1770,29) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1763,29)-(1763,33) 25 "SyntaxGenerator.mxg"
+            #line (1770,29)-(1770,33) 25 "SyntaxGenerator.mxg"
             __cb.Write("bool");
             #line hidden
-            #line (1763,33)-(1763,34) 25 "SyntaxGenerator.mxg"
+            #line (1770,33)-(1770,34) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1763,34)-(1763,48) 25 "SyntaxGenerator.mxg"
+            #line (1770,34)-(1770,48) 25 "SyntaxGenerator.mxg"
             __cb.Write("Equals(object?");
             #line hidden
-            #line (1763,48)-(1763,49) 25 "SyntaxGenerator.mxg"
+            #line (1770,48)-(1770,49) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1763,49)-(1763,53) 25 "SyntaxGenerator.mxg"
+            #line (1770,49)-(1770,53) 25 "SyntaxGenerator.mxg"
             __cb.Write("obj)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1764,13)-(1764,14) 25 "SyntaxGenerator.mxg"
+            #line (1771,13)-(1771,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1765,17)-(1765,23) 25 "SyntaxGenerator.mxg"
+            #line (1772,17)-(1772,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1765,23)-(1765,24) 25 "SyntaxGenerator.mxg"
+            #line (1772,23)-(1772,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1765,24)-(1765,39) 25 "SyntaxGenerator.mxg"
+            #line (1772,24)-(1772,39) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.Equals(obj");
             #line hidden
-            #line (1765,39)-(1765,40) 25 "SyntaxGenerator.mxg"
+            #line (1772,39)-(1772,40) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1765,40)-(1765,42) 25 "SyntaxGenerator.mxg"
+            #line (1772,40)-(1772,42) 25 "SyntaxGenerator.mxg"
             __cb.Write("as");
             #line hidden
-            #line (1765,42)-(1765,43) 25 "SyntaxGenerator.mxg"
+            #line (1772,42)-(1772,43) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1765,44)-(1765,48) 24 "SyntaxGenerator.mxg"
+            #line (1772,44)-(1772,48) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1765,49)-(1765,63) 25 "SyntaxGenerator.mxg"
+            #line (1772,49)-(1772,63) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions);");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1766,13)-(1766,14) 25 "SyntaxGenerator.mxg"
+            #line (1773,13)-(1773,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -29045,79 +29167,79 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1768,13)-(1768,19) 25 "SyntaxGenerator.mxg"
+            #line (1775,13)-(1775,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (1768,19)-(1768,20) 25 "SyntaxGenerator.mxg"
+            #line (1775,19)-(1775,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1768,20)-(1768,24) 25 "SyntaxGenerator.mxg"
+            #line (1775,20)-(1775,24) 25 "SyntaxGenerator.mxg"
             __cb.Write("bool");
             #line hidden
-            #line (1768,24)-(1768,25) 25 "SyntaxGenerator.mxg"
+            #line (1775,24)-(1775,25) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1768,25)-(1768,32) 25 "SyntaxGenerator.mxg"
+            #line (1775,25)-(1775,32) 25 "SyntaxGenerator.mxg"
             __cb.Write("Equals(");
             #line hidden
-            #line (1768,33)-(1768,37) 24 "SyntaxGenerator.mxg"
+            #line (1775,33)-(1775,37) 24 "SyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (1768,38)-(1768,51) 25 "SyntaxGenerator.mxg"
+            #line (1775,38)-(1775,51) 25 "SyntaxGenerator.mxg"
             __cb.Write("ParseOptions?");
             #line hidden
-            #line (1768,51)-(1768,52) 25 "SyntaxGenerator.mxg"
+            #line (1775,51)-(1775,52) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1768,52)-(1768,58) 25 "SyntaxGenerator.mxg"
+            #line (1775,52)-(1775,58) 25 "SyntaxGenerator.mxg"
             __cb.Write("other)");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (1769,13)-(1769,14) 25 "SyntaxGenerator.mxg"
+            #line (1776,13)-(1776,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1770,17)-(1770,19) 25 "SyntaxGenerator.mxg"
+            #line (1777,17)-(1777,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1770,19)-(1770,20) 25 "SyntaxGenerator.mxg"
+            #line (1777,19)-(1777,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1770,20)-(1770,49) 25 "SyntaxGenerator.mxg"
+            #line (1777,20)-(1777,49) 25 "SyntaxGenerator.mxg"
             __cb.Write("(object.ReferenceEquals(this,");
             #line hidden
-            #line (1770,49)-(1770,50) 25 "SyntaxGenerator.mxg"
+            #line (1777,49)-(1777,50) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1770,50)-(1770,57) 25 "SyntaxGenerator.mxg"
+            #line (1777,50)-(1777,57) 25 "SyntaxGenerator.mxg"
             __cb.Write("other))");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1771,17)-(1771,18) 25 "SyntaxGenerator.mxg"
+            #line (1778,17)-(1778,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1772,21)-(1772,27) 25 "SyntaxGenerator.mxg"
+            #line (1779,21)-(1779,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1772,27)-(1772,28) 25 "SyntaxGenerator.mxg"
+            #line (1779,27)-(1779,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1772,28)-(1772,33) 25 "SyntaxGenerator.mxg"
+            #line (1779,28)-(1779,33) 25 "SyntaxGenerator.mxg"
             __cb.Write("true;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1773,17)-(1773,18) 25 "SyntaxGenerator.mxg"
+            #line (1780,17)-(1780,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -29125,37 +29247,37 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1775,17)-(1775,19) 25 "SyntaxGenerator.mxg"
+            #line (1782,17)-(1782,19) 25 "SyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (1775,19)-(1775,20) 25 "SyntaxGenerator.mxg"
+            #line (1782,19)-(1782,20) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1775,20)-(1775,47) 25 "SyntaxGenerator.mxg"
+            #line (1782,20)-(1782,47) 25 "SyntaxGenerator.mxg"
             __cb.Write("(!base.EqualsHelper(other))");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1776,17)-(1776,18) 25 "SyntaxGenerator.mxg"
+            #line (1783,17)-(1783,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (1777,21)-(1777,27) 25 "SyntaxGenerator.mxg"
+            #line (1784,21)-(1784,27) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1777,27)-(1777,28) 25 "SyntaxGenerator.mxg"
+            #line (1784,27)-(1784,28) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1777,28)-(1777,34) 25 "SyntaxGenerator.mxg"
+            #line (1784,28)-(1784,34) 25 "SyntaxGenerator.mxg"
             __cb.Write("false;");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1778,17)-(1778,18) 25 "SyntaxGenerator.mxg"
+            #line (1785,17)-(1785,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
@@ -29163,88 +29285,26 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (1780,17)-(1780,23) 25 "SyntaxGenerator.mxg"
+            #line (1787,17)-(1787,23) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (1780,23)-(1780,24) 25 "SyntaxGenerator.mxg"
+            #line (1787,23)-(1787,24) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1780,24)-(1780,53) 25 "SyntaxGenerator.mxg"
+            #line (1787,24)-(1787,53) 25 "SyntaxGenerator.mxg"
             __cb.Write("this.SpecifiedLanguageVersion");
             #line hidden
-            #line (1780,53)-(1780,54) 25 "SyntaxGenerator.mxg"
+            #line (1787,53)-(1787,54) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1780,54)-(1780,56) 25 "SyntaxGenerator.mxg"
+            #line (1787,54)-(1787,56) 25 "SyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (1780,56)-(1780,57) 25 "SyntaxGenerator.mxg"
+            #line (1787,56)-(1787,57) 25 "SyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (1780,57)-(1780,88) 25 "SyntaxGenerator.mxg"
+            #line (1787,57)-(1787,88) 25 "SyntaxGenerator.mxg"
             __cb.Write("other.SpecifiedLanguageVersion;");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1781,13)-(1781,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1783,13)-(1783,19) 25 "SyntaxGenerator.mxg"
-            __cb.Write("public");
-            #line hidden
-            #line (1783,19)-(1783,20) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1783,20)-(1783,28) 25 "SyntaxGenerator.mxg"
-            __cb.Write("override");
-            #line hidden
-            #line (1783,28)-(1783,29) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1783,29)-(1783,32) 25 "SyntaxGenerator.mxg"
-            __cb.Write("int");
-            #line hidden
-            #line (1783,32)-(1783,33) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1783,33)-(1783,46) 25 "SyntaxGenerator.mxg"
-            __cb.Write("GetHashCode()");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("        ");
-            #line (1784,13)-(1784,14) 25 "SyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("            ");
-            #line (1785,17)-(1785,23) 25 "SyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("                ");
-            #line (1786,21)-(1786,59) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Hash.Combine(base.GetHashCodeHelper(),");
-            #line hidden
-            __cb.AppendLine();
-            __cb.Pop();
-            __cb.Push("                ");
-            #line (1787,21)-(1787,69) 25 "SyntaxGenerator.mxg"
-            __cb.Write("Hash.Combine((int)this.SpecifiedLanguageVersion,");
-            #line hidden
-            #line (1787,69)-(1787,70) 25 "SyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (1787,70)-(1787,74) 25 "SyntaxGenerator.mxg"
-            __cb.Write("0));");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -29254,14 +29314,76 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1790,13)-(1790,19) 25 "SyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (1790,19)-(1790,20) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1790,20)-(1790,28) 25 "SyntaxGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (1790,28)-(1790,29) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1790,29)-(1790,32) 25 "SyntaxGenerator.mxg"
+            __cb.Write("int");
+            #line hidden
+            #line (1790,32)-(1790,33) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1790,33)-(1790,46) 25 "SyntaxGenerator.mxg"
+            __cb.Write("GetHashCode()");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1791,13)-(1791,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (1792,17)-(1792,23) 25 "SyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("                ");
+            #line (1793,21)-(1793,59) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Hash.Combine(base.GetHashCodeHelper(),");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("                ");
+            #line (1794,21)-(1794,69) 25 "SyntaxGenerator.mxg"
+            __cb.Write("Hash.Combine((int)this.SpecifiedLanguageVersion,");
+            #line hidden
+            #line (1794,69)-(1794,70) 25 "SyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (1794,70)-(1794,74) 25 "SyntaxGenerator.mxg"
+            __cb.Write("0));");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (1795,13)-(1795,14) 25 "SyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.AppendLine();
+            __cb.Pop();
             __cb.Push("    ");
-            #line (1789,9)-(1789,10) 25 "SyntaxGenerator.mxg"
+            #line (1796,9)-(1796,10) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
             __cb.Push("");
-            #line (1790,5)-(1790,6) 25 "SyntaxGenerator.mxg"
+            #line (1797,5)-(1797,6) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.AppendLine();

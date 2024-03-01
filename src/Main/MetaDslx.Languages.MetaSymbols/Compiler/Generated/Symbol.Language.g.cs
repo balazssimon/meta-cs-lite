@@ -31,7 +31,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
             TryRegisterGlobal<InternalSyntaxFactory, SymbolInternalSyntaxFactory>();
             TryRegisterGlobal<SyntaxFactory, SymbolSyntaxFactory>();
             TryRegisterGlobal<CompilationFactory, SymbolCompilationFactory>();
-            TryRegisterCompilationScoped<SemanticsFactory, SymbolSemanticsFactory>();
         }
 
         partial void RegisterServices();

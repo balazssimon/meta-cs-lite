@@ -19,7 +19,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             this.Compilation = compilation;
         }
 
-        public override Language Language => Compilation.MainLanguage;
+        public override Language Language => Language.NoLanguage;
         public override SyntaxTree SyntaxTree => null;
         public RootBinder? RootBinder => null;
 

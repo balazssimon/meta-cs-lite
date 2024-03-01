@@ -12,10 +12,14 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
     public class ErrorSymbolFactory : SymbolFactory<ErrorSymbolInfo>
     {
         private readonly ConditionalWeakTable<Type, SymbolConstructor> s_constructors = new ConditionalWeakTable<Type, SymbolConstructor>();
+        private readonly Compilation _compilation;
 
-        public ErrorSymbolFactory() 
+        public ErrorSymbolFactory(Compilation compilation) 
         {
+            _compilation = compilation;
         }
+
+        public Compilation Compilation => _compilation;
 
         public override string? GetName(ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

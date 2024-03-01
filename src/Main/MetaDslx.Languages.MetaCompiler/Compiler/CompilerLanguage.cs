@@ -14,7 +14,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
         partial void RegisterServices()
         {
             RegisterGlobal<SyntaxFacts, CustomCompilerSyntaxFacts>();
-            RegisterGlobal<CompilationFactory, CustomCompilerCompilationFactory>();
         }
     }
 }

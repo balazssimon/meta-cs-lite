@@ -45,7 +45,7 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
-            @"..\..\..\..\MetaDslx.CodeAnalysis.Common",
+            //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
             //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
@@ -81,6 +81,9 @@ namespace MetaDslx.BuildTools
             var systemTextEncodingCodePagesPath = Path.Combine(coreDir, "System.Text.Encoding.CodePages.dll");
             var systemRuntimeCompilerServicesUnsafePath = Path.Combine(coreDir, "System.Runtime.CompilerServices.Unsafe.dll");
             var systemDiagnosticsDiagnosticSourcePath = Path.Combine(coreDir, "System.Diagnostics.DiagnosticSource.dll");
+            //*/
+            PackageReferences = [];
+            /*/
             PackageReferences = [
                 Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(netstandardPath),
                 Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(mscorlibPath),
@@ -109,6 +112,7 @@ namespace MetaDslx.BuildTools
                 Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(Autofac.IContainer).GetTypeInfo().Assembly.Location),
                 Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(DynamicAttribute).GetTypeInfo().Assembly.Location),
             ];
+            //*/
             if (BootstrapProjects.Length > 0)
             {
                 foreach (string project in BootstrapProjects)
@@ -150,22 +154,21 @@ namespace MetaDslx.BuildTools
                 var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
                 var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
                 var mxsFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxs").ToImmutableArray();
-                /*/
+                //*/
                 foreach (var mxgFile in mxgFiles)
                 {
                     await CompileMetaGenerator(mxgFile);
                 }
-                //*/
+                /*/
                 var compilation = await project.GetCompilationAsync() as CSharpCompilation;
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
                     await CompileMetaSymbols(compilation, mxsFiles);
-                    //await CompileMetaModels(compilation, mxmFiles);
-                    //await CompileMetaLanguages(compilation, mxlFiles);
+                    await CompileMetaModels(compilation, mxmFiles);
+                    await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
-                // Perform analysis...
             }
         }
 
@@ -594,8 +597,6 @@ namespace MetaDslx.BuildTools
                 await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SyntaxFactory.g.cs"), syntaxFactoryCode);
                 var binderFactoryVisitorCode = generator.GenerateBinderFactoryVisitor();
                 await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.BinderFactoryVisitor.g.cs"), binderFactoryVisitorCode);
-                var semanticsFactoryCode = generator.GenerateSemanticsFactory();
-                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SemanticsFactory.g.cs"), semanticsFactoryCode);
                 var compilationFactoryCode = generator.GenerateCompilationFactory();
                 await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.CompilationFactory.g.cs"), compilationFactoryCode);
             }

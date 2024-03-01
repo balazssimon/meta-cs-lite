@@ -27,6 +27,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
     using __CancellationToken = global::System.Threading.CancellationToken;
     using __ArgumentNullException = global::System.ArgumentNullException;
     using __ArgumentException = global::System.ArgumentException;
+    using MetaDslx.CodeAnalysis.Binding;
 
     public class CompilerSyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
     {
@@ -1182,6 +1183,11 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
         public QualifierIdentifierBlockSyntax QualifierIdentifierBlock(IdentifierSyntax identifier)
         {
             return this.QualifierIdentifierBlock(this.Token(CompilerSyntaxKind.TDot), identifier);
+        }
+
+        public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+        {
+            return new global::MetaDslx.Languages.MetaCompiler.Compiler.Binding.CompilerBinderFactoryVisitor(binderFactory);
         }
 
         internal static global::System.Collections.Generic.IEnumerable<__Type> GetNodeTypes()

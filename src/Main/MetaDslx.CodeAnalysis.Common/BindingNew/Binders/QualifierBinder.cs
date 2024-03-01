@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Declarations;
+﻿using Autofac;
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.Errors;
@@ -143,7 +144,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                     var name = _identifiers[i].GetName(cancellationToken);
                     var metadataName = _identifiers[i].GetMetadataName(cancellationToken);
                     var location = ((Binder)_identifiers[i]).Location;
-                    result[i] = Compilation[Language].ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(container, new ErrorSymbolInfo(typeof(DeclarationSymbol), name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")), null, cancellationToken);
+                    var errorSymbolFactory = Compilation.ServiceProvider.Resolve<ErrorSymbolFactory>();
+                    result[i] = errorSymbolFactory.CreateSymbol<DeclarationSymbol>(container, new ErrorSymbolInfo(typeof(DeclarationSymbol), name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")), null, cancellationToken);
                 }
             }
             return result.ToImmutableArray();

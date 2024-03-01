@@ -23,6 +23,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             _syntaxTree = syntaxTree;
         }
 
+        public override Language Language => _syntaxTree.Language;
         public override SyntaxTree SyntaxTree => _syntaxTree;
 
         public RootSingleDeclaration BuildDeclarationTree(string? scriptClassName, bool isSubmission)

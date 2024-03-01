@@ -43,8 +43,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected virtual MultiModelFactory CreateModelFactory()
         {
-            var compilationFactory = _compilation.MainLanguage.CompilationFactory;
-            return compilationFactory.CreateModelFactory(_compilation);
+            var metaModels = new List<MetaModel>();
+            foreach (var reference in _compilation.ExternalReferences.OfType<MetaModelReference>())
+            {
+                metaModels.Add(reference.MetaModel);
+            }
+            return new MultiModelFactory(metaModels);
         }
 
         public override string? GetName(MergedDeclaration underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)

@@ -19,6 +19,7 @@ using Autofac;
 using MetaDslx.CodeAnalysis.Symbols.Errors;
 using MetaDslx.CodeAnalysis.Binding.Lookup;
 using MetaDslx.Modeling;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 
 namespace MetaDslx.CodeAnalysis
 {
@@ -39,22 +40,24 @@ namespace MetaDslx.CodeAnalysis
         private WeakReference<BinderFactory>[]? _ignoreAccessibilityBinderFactories;
 
         private readonly string? _assemblyName;
+        private readonly CompilationFactory _compilationFactory;
         private readonly ImmutableArray<Language> _languages;
-        private readonly Language _mainLanguage;
         private readonly CompilationOptions _options;
         private readonly ImmutableArray<MetadataReference> _externalReferences;
         private readonly ScriptCompilationInfo? _scriptCompilationInfo;
 
-        private Dictionary<Language, LanguageScope> _languageScopes;
+        private ContainerBuilder _containerBuilder;
+        private IContainer _serviceProvider;
 
         private CSharpCompilation _initialCompilation;
         internal ReferenceManager _referenceManager;
         internal AssemblySymbol? _lazyAssemblySymbol;
 
-        private AccessCheck? _lazyAccessCheck;
-
         private BuckStopsHereBinder? _buckStopsHereBinder;
         private DiagnosticBag? _binderDiagnostics;
+
+        private AccessCheck? _accessCheck;
+        private DefaultLookupValidator? _defaultLookupValidator;
         private SymbolValueConverter? _symbolValueConverter;
 
         private ImmutableArray<Diagnostic> _diagnostics;
@@ -66,7 +69,7 @@ namespace MetaDslx.CodeAnalysis
 
         internal protected Compilation(
             string? assemblyName,
-            Language? mainLanguage,
+            CompilationFactory compilationFactory,
             CompilationOptions options,
             CSharpCompilation? initialCompilation,
             ImmutableArray<MetadataReference> references,
@@ -79,27 +82,20 @@ namespace MetaDslx.CodeAnalysis
             if (references.IsDefault) throw new ArgumentNullException(nameof(references));
             Debug.Assert(scriptCompilationInfo is not null || options.ReferencesSupersedeLowerVersions);
 
+            _compilationFactory = compilationFactory;
+
+            _containerBuilder = new ContainerBuilder();
+            _containerBuilder.RegisterInstance<Compilation>(this).SingleInstance();
+
             _assemblyName = assemblyName;
-            _mainLanguage = mainLanguage ?? syntaxAndDeclarations.ExternalSyntaxTrees.FirstOrDefault()?.Language ?? Language.NoLanguage;
 
             var languagesBuilder = ArrayBuilder<Language>.GetInstance();
-            languagesBuilder.Add(Language.NoLanguage);
-            if (_mainLanguage is not null && !languagesBuilder.Contains(_mainLanguage)) languagesBuilder.Add(_mainLanguage);
             foreach (var language in syntaxAndDeclarations.ExternalSyntaxTrees.Select(st => st.Language).Distinct().OrderBy(l => l.Name))
             {
                 if (!languagesBuilder.Contains(language)) languagesBuilder.Add(language);
             }
             _languages = languagesBuilder.ToImmutableAndFree();
 
-            _languageScopes = new Dictionary<Language, LanguageScope>();
-            foreach (var language in _languages)
-            {
-                var scope = language.ServiceProvider.BeginLifetimeScope(Language.CompilationScopeTag,
-                    builder => builder.RegisterInstance<Compilation>(this));
-                var languageScope = new LanguageScope(this, language, scope);
-                _languageScopes.Add(language, languageScope);
-            }
-            
             _options = options;
             _initialCompilation = initialCompilation;
             _externalReferences = references;
@@ -123,14 +119,19 @@ namespace MetaDslx.CodeAnalysis
             
                 referenceManager.AssertCanReuseForCompilation(this);
                 _referenceManager = referenceManager;
+                _containerBuilder.RegisterInstance<ReferenceManager>(_referenceManager).SingleInstance();
             }
             else
             {
-                _referenceManager = MainLanguage.CompilationFactory.CreateReferenceManager(this);
+                _referenceManager = new ReferenceManager();
                 _referenceManager._simpleAssemblyName = assemblyName;
+                _containerBuilder.RegisterInstance<ReferenceManager>(_referenceManager).SingleInstance();
             }
 
             _syntaxAndDeclarations = syntaxAndDeclarations;
+
+            RegisterServicesCore();
+            _serviceProvider = _containerBuilder.Build();
 
             Debug.Assert(_lazyAssemblySymbol is null);
             //if (EventQueue != null) EventQueue.TryEnqueue(new CompilationStartedEvent(this));
@@ -138,45 +139,47 @@ namespace MetaDslx.CodeAnalysis
 
         public void Dispose()
         {
-            foreach (var language in _languageScopes.Keys)
-            {
-                var scope = _languageScopes[language];
-                scope.ServiceScope.Dispose();
-            }
+
+        }
+
+        private void RegisterServicesCore()
+        {
+            RegisterServices();
+            TryRegister<AccessCheck, AccessCheck>();
+            TryRegister<ModelSymbolFactory, ModelSymbolFactory>();
+            TryRegister<SourceSymbolFactory, SourceSymbolFactory>();
+            TryRegister<ErrorSymbolFactory, ErrorSymbolFactory>();
+            TryRegister<CSharpSymbolFactory, CSharpSymbolFactory>();
+            TryRegister<SymbolValueConverter, SymbolValueConverter>();
+            TryRegister<DefaultLookupValidator, DefaultLookupValidator>();
+        }
+
+        protected virtual void RegisterServices()
+        {
+        }
+
+        protected void Register<TService, TCustomService>() where TCustomService : class, TService
+        {
+            _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance();
+        }
+
+        protected void TryRegister<TService, TCustomService>() where TCustomService : class, TService
+        {
+            _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance().IfNotRegistered(typeof(TService));
         }
 
         public string? Name => _assemblyName;
-        public Language MainLanguage => _mainLanguage;
+        public IContainer ServiceProvider => _serviceProvider;
+        public CompilationFactory CompilationFactory => _compilationFactory;
         public ImmutableArray<Language> Languages => _languages;
-        public LanguageScope this[Language language]
-        {
-            get
-            {
-                if (!_languageScopes.ContainsKey(language)) throw new ArgumentException(nameof(language));
-                return _languageScopes[language];
-            }
-        }
         public CompilationOptions Options => _options;
         public ScriptCompilationInfo? ScriptCompilationInfo => _scriptCompilationInfo;
         public ReferenceManager ReferenceManager => _referenceManager;
         public ImmutableArray<MetadataReference> ExternalReferences => _externalReferences;
 
-        public AccessCheck AccessCheck
-        {
-            get
-            {
-                if (_lazyAccessCheck is null)
-                {
-                    var accessCheck = MainLanguage.CompilationFactory.CreateAccessCheck(this);
-                    Interlocked.CompareExchange(ref _lazyAccessCheck, accessCheck, null);
-                }
-                return _lazyAccessCheck;
-            }
-        }
-
         protected virtual Compilation Update(
             string? assemblyName,
-            Language? mainLanguage,
+            CompilationFactory compilationFactory,
             CompilationOptions options,
             CSharpCompilation? initialCompilation,
             ImmutableArray<MetadataReference> externalReferences,
@@ -185,28 +188,29 @@ namespace MetaDslx.CodeAnalysis
             bool reuseReferenceManager,
             SyntaxAndDeclarationManager syntaxAndDeclarations)
         {
-            var defaultLanguage = mainLanguage ?? Language.NoLanguage;
-            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options, initialCompilation, externalReferences, scriptCompilationInfo,
+            return compilationFactory.CreateCompilation(assemblyName, compilationFactory, options, initialCompilation, externalReferences, scriptCompilationInfo,
                     referenceManager, reuseReferenceManager, syntaxAndDeclarations);
         }
 
         public static Compilation Create(
             string? assemblyName = null,
+            CompilationFactory? compilationFactory = null,
             Language? mainLanguage = null,
             IEnumerable<SyntaxTree>? syntaxTrees = null,
             CSharpCompilation? initialCompilation = null,
             IEnumerable<MetadataReference>? references = null, 
             CompilationOptions? options = null)
         {
-            var defaultLanguage = mainLanguage ?? Language.NoLanguage;
+            var factory = compilationFactory ?? (mainLanguage ?? Language.NoLanguage).CompilationFactory;
             var externalReferences = references is null ? ImmutableArray<MetadataReference>.Empty : references.ToImmutableArray();
             var externalSyntaxTrees = syntaxTrees is null ? ImmutableArray<SyntaxTree>.Empty : syntaxTrees.ToImmutableArray();
             var declarationManager = new SyntaxAndDeclarationManager(externalSyntaxTrees, null, null, false, null);
-            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, initialCompilation, externalReferences, null, null, false, declarationManager);
+            return factory.CreateCompilation(assemblyName, factory, options ?? CompilationOptions.Default, initialCompilation, externalReferences, null, null, false, declarationManager);
         }
 
         public static Compilation CreateScriptCompilation(
             string assemblyName,
+            CompilationFactory? compilationFactory = null,
             Language? mainLanguage = null,
             SyntaxTree? syntaxTree = null,
             CSharpCompilation? initialCompilation = null,
@@ -216,18 +220,12 @@ namespace MetaDslx.CodeAnalysis
             Type? returnType = null,
             Type? globalsType = null)
         {
-            var defaultLanguage = mainLanguage ?? Language.NoLanguage;
+            var factory = compilationFactory ?? (mainLanguage ?? Language.NoLanguage).CompilationFactory;
             var externalReferences = references is null ? ImmutableArray<MetadataReference>.Empty : references.ToImmutableArray();
             var externalSyntaxTrees = syntaxTree is null ? ImmutableArray<SyntaxTree>.Empty : ImmutableArray.Create(syntaxTree);
             var declarationManager = new SyntaxAndDeclarationManager(externalSyntaxTrees, null, null, false, null);
             var scriptCompilationInfo = new ScriptCompilationInfo(previousScriptCompilation, returnType, globalsType);
-            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, initialCompilation, externalReferences, scriptCompilationInfo, null, false, declarationManager);
-        }
-
-        public Compilation WithMainLanguage(Language language)
-        {
-            if (_mainLanguage != language) return Update(_assemblyName, language, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager, true, _syntaxAndDeclarations);
-            else return this;
+            return factory.CreateCompilation(assemblyName, factory, options ?? CompilationOptions.Default, initialCompilation, externalReferences, scriptCompilationInfo, null, false, declarationManager);
         }
 
         internal int CompareSourceLocations(Location location1, Location location2)
@@ -350,7 +348,7 @@ namespace MetaDslx.CodeAnalysis
 
         public Compilation WithScriptCompilationInfo(ScriptCompilationInfo? info)
         {
-            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, info, _referenceManager, true, _syntaxAndDeclarations);
+            return this.Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences, info, _referenceManager, true, _syntaxAndDeclarations);
         }
 
         #endregion
@@ -441,7 +439,7 @@ namespace MetaDslx.CodeAnalysis
 
             syntaxAndDeclarations = syntaxAndDeclarations.AddSyntaxTrees(trees);
 
-            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager, reuseReferenceManager, syntaxAndDeclarations);
+            return Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager, reuseReferenceManager, syntaxAndDeclarations);
         }
 
         /// <summary>
@@ -503,7 +501,7 @@ namespace MetaDslx.CodeAnalysis
             syntaxAndDeclarations = syntaxAndDeclarations.RemoveSyntaxTrees(removeSet);
             removeSet.Free();
 
-            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
+            return Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
                 reuseReferenceManager, syntaxAndDeclarations);
         }
 
@@ -514,7 +512,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveAllSyntaxTrees()
         {
             var syntaxAndDeclarations = _syntaxAndDeclarations;
-            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
+            return Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
                 reuseReferenceManager: !syntaxAndDeclarations.MayHaveReferenceDirectives(),
                 syntaxAndDeclarations: syntaxAndDeclarations.WithExternalSyntaxTrees(ImmutableArray<SyntaxTree>.Empty));
         }
@@ -569,7 +567,7 @@ namespace MetaDslx.CodeAnalysis
             var reuseReferenceManager = !oldTree.HasReferenceOrLoadDirectives && !newTree.HasReferenceOrLoadDirectives;
             syntaxAndDeclarations = syntaxAndDeclarations.ReplaceSyntaxTree(oldTree, newTree);
 
-            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
+            return Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
                 reuseReferenceManager, syntaxAndDeclarations);
         }
 
@@ -621,7 +619,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation WithInitialCompilation(CSharpCompilation? initialCompilation)
         {
             if (initialCompilation == _initialCompilation) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, initialCompilation, _externalReferences, _scriptCompilationInfo,
+            return this.Update(_assemblyName, _compilationFactory, _options, initialCompilation, _externalReferences, _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -631,7 +629,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation AddReferences(params MetadataReference[] references)
         {
             if (references.Length == 0) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.AddRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences.AddRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -641,7 +639,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation AddReferences(IEnumerable<MetadataReference> references)
         {
             if (!references.Any()) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.AddRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences.AddRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -651,7 +649,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveReferences(params MetadataReference[] references)
         {
             if (references.Length == 0) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -661,7 +659,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveReferences(IEnumerable<MetadataReference> references)
         {
             if (!references.Any()) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _compilationFactory, _options, _initialCompilation, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -671,7 +669,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveAllReferences()
         {
             if (_externalReferences.Length == 0) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, ImmutableArray<MetadataReference>.Empty, _scriptCompilationInfo,
+            return this.Update(_assemblyName, _compilationFactory, _options, _initialCompilation, ImmutableArray<MetadataReference>.Empty, _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -694,7 +692,7 @@ namespace MetaDslx.CodeAnalysis
                     builder.Add(oldRef);
                 }
             }
-            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, builder.ToImmutableAndFree(), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _compilationFactory, _options, _initialCompilation, builder.ToImmutableAndFree(), _scriptCompilationInfo,
                 _referenceManager, !replaced, _syntaxAndDeclarations);
         }
 
@@ -850,18 +848,6 @@ namespace MetaDslx.CodeAnalysis
         public NamespaceSymbol GetRootNamespace(SyntaxTree syntaxTree)
         {
             return SourceModule.GetRootNamespace(syntaxTree);
-        }
-
-        public SymbolValueConverter SymbolValueConverter
-        {
-            get
-            {
-                if (_symbolValueConverter is null)
-                {
-                    Interlocked.CompareExchange(ref _symbolValueConverter, MainLanguage.CompilationFactory.SymbolValueConverter(this), null);
-                }
-                return _symbolValueConverter;
-            }
         }
 
         #endregion
@@ -1055,6 +1041,45 @@ namespace MetaDslx.CodeAnalysis
         }
 
         #endregion
+
+        public AccessCheck AccessCheck
+        {
+            get
+            {
+                if (_accessCheck is null)
+                {
+                    var accessCheck = _serviceProvider.Resolve<AccessCheck>();
+                    Interlocked.CompareExchange(ref _accessCheck, accessCheck, null);
+                }
+                return _accessCheck;
+            }
+        }
+
+        public DefaultLookupValidator DefaultLookupValidator
+        {
+            get
+            {
+                if (_defaultLookupValidator is null)
+                {
+                    var defaultLookupValidator = _serviceProvider.Resolve<DefaultLookupValidator>();
+                    Interlocked.CompareExchange(ref _defaultLookupValidator, defaultLookupValidator, null);
+                }
+                return _defaultLookupValidator;
+            }
+        }
+
+        public SymbolValueConverter SymbolValueConverter
+        {
+            get
+            {
+                if (_symbolValueConverter is null)
+                {
+                    var symbolValueConverter = _serviceProvider.Resolve<SymbolValueConverter>();
+                    Interlocked.CompareExchange(ref _symbolValueConverter, symbolValueConverter, null);
+                }
+                return _symbolValueConverter;
+            }
+        }
 
         public TypeSymbol? ResolveType(string? fullName)
         {

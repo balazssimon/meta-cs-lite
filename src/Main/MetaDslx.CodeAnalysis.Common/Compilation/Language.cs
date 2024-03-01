@@ -51,19 +51,9 @@ namespace MetaDslx.CodeAnalysis
             _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance();
         }
 
-        protected void RegisterCompilationScoped<TService, TCustomService>() where TCustomService : class, TService
-        {
-            _containerBuilder.RegisterType<TCustomService>().As<TService>().InstancePerMatchingLifetimeScope(CompilationScopeTag);
-        }
-
         protected void TryRegisterGlobal<TService, TCustomService>() where TCustomService : class, TService
         {
             _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance().IfNotRegistered(typeof(TService));
-        }
-
-        protected void TryRegisterCompilationScoped<TService, TCustomService>() where TCustomService : class, TService
-        {
-            _containerBuilder.RegisterType<TCustomService>().As<TService>().InstancePerMatchingLifetimeScope(CompilationScopeTag).IfNotRegistered(typeof(TService));
         }
 
         private class NoLanguageImplementation : Language
@@ -76,7 +66,6 @@ namespace MetaDslx.CodeAnalysis
                 RegisterGlobal<InternalSyntaxFactory, NoInternalSyntaxFactory>();
                 RegisterGlobal<SyntaxFactory, NoSyntaxFactory>();
                 RegisterGlobal<CompilationFactory, NoCompilationFactory>();
-                RegisterCompilationScoped<SemanticsFactory, NoSemanticsFactory>();
             }
 
         }
@@ -271,6 +260,11 @@ namespace MetaDslx.CodeAnalysis
 
             public override ParseOptions DefaultParseOptions => throw new NotImplementedException();
 
+            public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+            {
+                throw new NotImplementedException();
+            }
+
             public override SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null)
             {
                 throw new NotImplementedException();
@@ -281,19 +275,6 @@ namespace MetaDslx.CodeAnalysis
                 throw new NotImplementedException();
             }
 
-        }
-
-        private class NoSemanticsFactory : SemanticsFactory
-        {
-            public NoSemanticsFactory(Compilation compilation, Language language) 
-                : base(compilation, language)
-            {
-            }
-
-            public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
-            {
-                throw new NotImplementedException();
-            }
         }
 
         private class NoCompilationFactory : CompilationFactory

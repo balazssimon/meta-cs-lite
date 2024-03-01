@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using Autofac;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.Symbols.Impl;
@@ -17,7 +18,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis
 {
-    public class ReferenceManager
+    public sealed class ReferenceManager
     {
         /// <summary>
         /// Must be acquired whenever the following data are about to be modified:
@@ -68,7 +69,7 @@ namespace MetaDslx.CodeAnalysis
         /// </remarks>
         private ThreeState _lazyHasCircularReference;
 
-        public ReferenceManager()
+        internal ReferenceManager()
         {
         }
 
@@ -231,7 +232,7 @@ namespace MetaDslx.CodeAnalysis
         // Returns false if another compilation sharing this manager finished binding earlier and we should reuse its results.
         private bool CreateAndSetSourceAssemblyFullBind(Compilation compilation, CSharpCompilation? csharpCompilation)
         {
-            var compilationFactory = compilation.MainLanguage.CompilationFactory;
+            var serviceProvider = compilation.ServiceProvider;
             var csharpReferencesBuilder = ArrayBuilder<Microsoft.CodeAnalysis.MetadataReference>.GetInstance();
             foreach (var reference in compilation.ExternalReferences.OfType<CSharpMetadataReference>())
             {
@@ -240,7 +241,7 @@ namespace MetaDslx.CodeAnalysis
             var csharpReferences = csharpReferencesBuilder.ToImmutableAndFree();
             if (csharpCompilation is null) csharpCompilation = CSharpCompilation.Create(_simpleAssemblyName, references: csharpReferences);
             else if (csharpReferences.Length > 0) csharpCompilation = csharpCompilation.AddReferences(csharpReferences);
-            var csharpSymbolFactory = compilationFactory.CreateCSharpSymbolFactory();
+            var csharpSymbolFactory = serviceProvider.Resolve<CSharpSymbolFactory>();
             var referencedModulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
             var csharpSourceAssembly = new AssemblySymbolImpl(compilation, csharpSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly);
             csharpSymbolFactory.AddSymbol(csharpSourceAssembly);
@@ -260,7 +261,7 @@ namespace MetaDslx.CodeAnalysis
                 }
                 assembly.DangerousSetModules(modulesBuilder.ToImmutableAndFree());
             }
-            var modelSymbolFactory = compilationFactory.CreateModelSymbolFactory(compilation);
+            var modelSymbolFactory = serviceProvider.Resolve<ModelSymbolFactory>();
             foreach (var reference in compilation.ExternalReferences.OfType<MetaModelReference>())
             {
                 var module = new ModuleSymbolImpl(null, modelSymbolFactory, reference.MetaModel.MModel);
@@ -273,9 +274,8 @@ namespace MetaDslx.CodeAnalysis
                 modelSymbolFactory.AddSymbol(module);
                 referencedModulesBuilder.Add(module);
             }
-            referencedModulesBuilder.AddRange(CreateModules(compilation));
             var referencedModules = referencedModulesBuilder.ToImmutableAndFree();
-            var sourceSymbolFactory = compilationFactory.CreateSourceSymbolFactory(compilation);
+            var sourceSymbolFactory = serviceProvider.Resolve<SourceSymbolFactory>();
             var assemblySymbol = new AssemblySymbolImpl(compilation, sourceSymbolFactory, csharpCompilation.SourceModule.ContainingAssembly.Name, csharpCompilation.SourceModule.Name, referencedModules);
             //sourceSymbolFactory.AddSymbol(assemblySymbol);
             if ((object)compilation._lazyAssemblySymbol == null)
@@ -304,11 +304,6 @@ namespace MetaDslx.CodeAnalysis
                 }
             }
             return true;
-        }
-
-        protected virtual ImmutableArray<ModuleSymbol> CreateModules(Compilation compilation)
-        {
-            return ImmutableArray<ModuleSymbol>.Empty;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
     using TypeKind = Microsoft.CodeAnalysis.TypeKind;
     using SymbolsModelMultiFactory = MetaDslx.Languages.MetaSymbols.Model.SymbolsModelMultiFactory;
 
-    internal class SymbolModelFactory : CSharpModelFactory
+    internal class SymbolCSharpModelFactory : CSharpModelFactory
     {
         private SymbolsModelMultiFactory _modelFactory = new SymbolsModelMultiFactory();
 

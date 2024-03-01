@@ -14,7 +14,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
         partial void RegisterServices()
         {
             RegisterGlobal<SyntaxFacts, CustomSymbolSyntaxFacts>();
-            RegisterGlobal<CompilationFactory, CustomSymbolCompilationFactory>();
         }
     }
 }

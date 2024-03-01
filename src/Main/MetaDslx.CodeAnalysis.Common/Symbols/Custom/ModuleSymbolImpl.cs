@@ -54,7 +54,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Impl
             {
                 if (_model is null)
                 {
-                    var model = DeclaringCompilation?.MainLanguage?.CompilationFactory?.CreateModel(this) ?? new MetaDslx.Modeling.Model(name: this.Name);
+                    var model = new MetaDslx.Modeling.Model(name: this.Name);
                     Interlocked.CompareExchange(ref _model, model, null);
                 }
                 return _model;

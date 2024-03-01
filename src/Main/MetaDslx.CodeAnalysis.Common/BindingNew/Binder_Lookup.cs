@@ -7,13 +7,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
     public partial class Binder : ILookupValidator
     {
-        public DefaultLookupValidator DefaultLookupValidator => Compilation[Language].DefaultLookupValidator;
+        public DefaultLookupValidator DefaultLookupValidator => Compilation.DefaultLookupValidator;
 
         public LookupContext AllocateLookupContext(
             string? name = null,
@@ -30,7 +29,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             object? multiLookupKey = null,
             IEnumerable<ILookupValidator>? validators = null)
         {
-            var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
+            var context = LookupContext.GetInstance(Compilation, Language);
             context.MultiLookupKey = multiLookupKey;
             context.OriginalBinder = this;
             context.Location = this.Location;

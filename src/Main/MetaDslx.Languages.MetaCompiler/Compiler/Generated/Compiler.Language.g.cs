@@ -31,7 +31,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler
             TryRegisterGlobal<InternalSyntaxFactory, CompilerInternalSyntaxFactory>();
             TryRegisterGlobal<SyntaxFactory, CompilerSyntaxFactory>();
             TryRegisterGlobal<CompilationFactory, CompilerCompilationFactory>();
-            TryRegisterCompilationScoped<SemanticsFactory, CompilerSemanticsFactory>();
         }
 
         partial void RegisterServices();
