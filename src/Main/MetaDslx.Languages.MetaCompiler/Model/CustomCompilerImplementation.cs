@@ -14,8 +14,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public override string Declaration_FullName(Declaration _this)
         {
-            if (_this.MParent is Declaration parent && !string.IsNullOrEmpty(parent.Name)) return $"{parent.FullName}.{_this.Name}";
-            else return _this.Name;
+            if (string.IsNullOrEmpty(_this.Namespace)) return _this.Name;
+            else return $"{_this.Namespace}.{_this.Name}";
+        }
+
+        public override string Declaration_Namespace(Declaration _this)
+        {
+            return _this.MRootNamespace ?? string.Empty;
         }
 
         public override string? LAlternative_FixedText(LAlternative _this)
@@ -545,11 +550,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             return _this.Grammar?.Language;
         }
 
-        public override string Language_Namespace(Language _this)
-        {
-            return _this.Parent?.FullName;
-        }
-
         public override Token? RuleRef_Token(RuleRef _this)
         {
             return _this.GrammarRule as Token;
@@ -585,6 +585,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             return _this.RedName;
         }
 
+        public override Language Grammar_Language(Grammar _this)
+        {
+            return (Language)_this.MParent;
+        }
+
+        public override Grammar GrammarRule_Grammar(GrammarRule _this)
+        {
+            return (Grammar)_this.MParent;
+        }
     }
 
 }

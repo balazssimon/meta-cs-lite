@@ -25,17 +25,17 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface Grammar : global::MetaDslx.Languages.MetaCompiler.Model.Declaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Block> Blocks { get; }
-        Token? DefaultEndOfLine { get; set; }
-        Token? DefaultIdentifier { get; set; }
-        Token? DefaultSeparator { get; set; }
-        Token? DefaultWhitespace { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<GrammarRule> GrammarRules { get; }
-        Language Language { get; set; }
-        Rule? MainRule { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<Rule> Rules { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<TokenKind> TokenKinds { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Token> Tokens { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Block> Blocks { get; }
+        MetaDslx.Languages.MetaCompiler.Model.Token? DefaultEndOfLine { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.Token? DefaultIdentifier { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.Token? DefaultSeparator { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.Token? DefaultWhitespace { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.GrammarRule> GrammarRules { get; }
+        MetaDslx.Languages.MetaCompiler.Model.Language Language { get; }
+        MetaDslx.Languages.MetaCompiler.Model.Rule? MainRule { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Rule> Rules { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.TokenKind> TokenKinds { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Token> Tokens { get; }
     
     }
 }

@@ -31,15 +31,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<AnnotationArgument> Arguments
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.AnnotationArgument> Arguments
         {
             get => MGetCollection<AnnotationArgument>(Compiler.Annotation_Arguments);
         }
     
-        public __MetaType AttributeClass
+        public MetaDslx.CodeAnalysis.MetaType AttributeClass
         {
-            get => MGet<__MetaType>(Compiler.Annotation_AttributeClass);
-            set => MSet<__MetaType>(Compiler.Annotation_AttributeClass, value);
+            get => MGet<MetaDslx.CodeAnalysis.MetaType>(Compiler.Annotation_AttributeClass);
+            set => MSet<MetaDslx.CodeAnalysis.MetaType>(Compiler.Annotation_AttributeClass, value);
         }
     
     

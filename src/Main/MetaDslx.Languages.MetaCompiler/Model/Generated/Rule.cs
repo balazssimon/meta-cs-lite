@@ -25,11 +25,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface Rule : global::MetaDslx.Languages.MetaCompiler.Model.GrammarRule
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives { get; }
-        Alternative? BaseRule { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Alternative> Alternatives { get; }
+        MetaDslx.Languages.MetaCompiler.Model.Alternative? BaseRule { get; set; }
         string GreenName { get; }
         string RedName { get; }
-        __MetaType ReturnType { get; set; }
+        MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
     
     }
 }

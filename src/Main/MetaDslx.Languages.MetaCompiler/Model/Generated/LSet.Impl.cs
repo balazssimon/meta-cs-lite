@@ -42,7 +42,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
             get => Compiler.__CustomImpl.LSet_IsFixed(this);
         }
     
-        public global::MetaDslx.Modeling.ICollectionSlot<LSetItem> Items
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.LSetItem> Items
         {
             get => MGetCollection<LSetItem>(Compiler.LSet_Items);
         }

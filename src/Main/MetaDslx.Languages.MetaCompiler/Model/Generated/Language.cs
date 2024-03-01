@@ -25,9 +25,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface Language : global::MetaDslx.Languages.MetaCompiler.Model.Declaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<__MetaType> BaseLanguages { get; }
-        Grammar Grammar { get; set; }
-        string Namespace { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaType> BaseLanguages { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.Grammar Grammar { get; set; }
     
     }
 }

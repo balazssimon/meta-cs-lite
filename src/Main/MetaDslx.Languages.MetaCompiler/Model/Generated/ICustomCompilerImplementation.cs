@@ -30,6 +30,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         /// </summary>
         void Compiler(ICompiler _this);
     
+        void Alternative(Alternative _this);
+    
         void Annotation(Annotation _this);
     
         void AnnotationArgument(AnnotationArgument _this);
@@ -40,17 +42,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         void BinderArgument(BinderArgument _this);
     
+        void Block(Block _this);
+    
         void CSharpElement(CSharpElement _this);
     
         void Declaration(Declaration _this);
     
-        void Alternative(Alternative _this);
+        void Element(Element _this);
     
         void ElementValue(ElementValue _this);
-    
-        void Block(Block _this);
-    
-        void Element(Element _this);
     
         void Eof(Eof _this);
     
@@ -58,23 +58,23 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         void Fixed(Fixed _this);
     
-        void GrammarRule(GrammarRule _this);
-    
-        void Language(Language _this);
-    
-        void LexerRule(LexerRule _this);
-    
         void Fragment(Fragment _this);
     
         void Grammar(Grammar _this);
     
+        void GrammarRule(GrammarRule _this);
+    
         void LAlternative(LAlternative _this);
+    
+        void Language(Language _this);
+    
+        void LBlock(LBlock _this);
     
         void LElement(LElement _this);
     
         void LElementValue(LElementValue _this);
     
-        void LBlock(LBlock _this);
+        void LexerRule(LexerRule _this);
     
         void LFixed(LFixed _this);
     
@@ -84,15 +84,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         void LSet(LSet _this);
     
-        void LSetItem(LSetItem _this);
-    
         void LSetChar(LSetChar _this);
+    
+        void LSetItem(LSetItem _this);
     
         void LSetRange(LSetRange _this);
     
         void LWildCard(LWildCard _this);
-    
-        void Namespace(Namespace _this);
     
         void Rule(Rule _this);
     
@@ -106,10 +104,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         void TokenKind(TokenKind _this);
     
-    
-        string Binder_ConstructorArguments(Binder _this);
-    
-        string? Declaration_FullName(Declaration _this);
     
         string Alternative_GreenName(Alternative _this);
     
@@ -135,17 +129,17 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         bool Alternative_HasRedToGreenOptionalArguments(Alternative _this);
     
-        string ElementValue_GreenType(ElementValue _this);
-    
-        string? ElementValue_GreenSyntaxCondition(ElementValue _this);
-    
-        string ElementValue_RedType(ElementValue _this);
+        string Binder_ConstructorArguments(Binder _this);
     
         string Block_GreenType(Block _this);
     
         string? Block_GreenSyntaxCondition(Block _this);
     
         string Block_RedType(Block _this);
+    
+        string Declaration_Namespace(Declaration _this);
+    
+        string? Declaration_FullName(Declaration _this);
     
         bool Element_IsToken(Element _this);
     
@@ -189,23 +183,31 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         string? Element_VisitCall(Element _this);
     
+        string ElementValue_GreenType(ElementValue _this);
+    
+        string? ElementValue_GreenSyntaxCondition(ElementValue _this);
+    
+        string ElementValue_RedType(ElementValue _this);
+    
         string Eof_GreenType(Eof _this);
     
         string? Eof_GreenSyntaxCondition(Eof _this);
     
         string Eof_RedType(Eof _this);
     
-        Language GrammarRule_Language(GrammarRule _this);
+        MetaDslx.Languages.MetaCompiler.Model.Language Grammar_Language(Grammar _this);
     
-        string Language_Namespace(Language _this);
+        MetaDslx.Languages.MetaCompiler.Model.Language GrammarRule_Language(GrammarRule _this);
     
-        bool LexerRule_IsFixed(LexerRule _this);
-    
-        string? LexerRule_FixedText(LexerRule _this);
+        MetaDslx.Languages.MetaCompiler.Model.Grammar GrammarRule_Grammar(GrammarRule _this);
     
         bool LAlternative_IsFixed(LAlternative _this);
     
         string? LAlternative_FixedText(LAlternative _this);
+    
+        bool LBlock_IsFixed(LBlock _this);
+    
+        string? LBlock_FixedText(LBlock _this);
     
         bool LElement_IsFixed(LElement _this);
     
@@ -215,9 +217,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         string? LElementValue_FixedText(LElementValue _this);
     
-        bool LBlock_IsFixed(LBlock _this);
+        bool LexerRule_IsFixed(LexerRule _this);
     
-        string? LBlock_FixedText(LBlock _this);
+        string? LexerRule_FixedText(LexerRule _this);
     
         bool LFixed_IsFixed(LFixed _this);
     
@@ -235,13 +237,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         string? LSet_FixedText(LSet _this);
     
-        bool LSetItem_IsFixed(LSetItem _this);
-    
-        string? LSetItem_FixedText(LSetItem _this);
-    
         bool LSetChar_IsFixed(LSetChar _this);
     
         string? LSetChar_FixedText(LSetChar _this);
+    
+        bool LSetItem_IsFixed(LSetItem _this);
+    
+        string? LSetItem_FixedText(LSetItem _this);
     
         bool LSetRange_IsFixed(LSetRange _this);
     
@@ -255,9 +257,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     
         string Rule_RedName(Rule _this);
     
-        Token? RuleRef_Token(RuleRef _this);
+        MetaDslx.Languages.MetaCompiler.Model.Token? RuleRef_Token(RuleRef _this);
     
-        Rule? RuleRef_Rule(RuleRef _this);
+        MetaDslx.Languages.MetaCompiler.Model.Rule? RuleRef_Rule(RuleRef _this);
     
         string RuleRef_GreenType(RuleRef _this);
     

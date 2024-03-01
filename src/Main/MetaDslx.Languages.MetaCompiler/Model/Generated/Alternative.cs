@@ -25,7 +25,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface Alternative : global::MetaDslx.Languages.MetaCompiler.Model.Declaration, global::MetaDslx.Languages.MetaCompiler.Model.CSharpElement
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Element> Elements { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Element> Elements { get; }
         string GreenConstructorArguments { get; }
         string GreenConstructorParameters { get; }
         string GreenName { get; }
@@ -38,8 +38,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         string RedToGreenOptionalArgumentList { get; }
         string RedUpdateArguments { get; }
         string RedUpdateParameters { get; }
-        __MetaType ReturnType { get; set; }
-        Expression ReturnValue { get; set; }
+        MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.Expression ReturnValue { get; set; }
     
     }
 }

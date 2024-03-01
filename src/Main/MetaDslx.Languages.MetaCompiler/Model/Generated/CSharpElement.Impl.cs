@@ -31,7 +31,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Annotation> Annotations
         {
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
@@ -42,7 +42,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
             set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
-        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Binder> Binders
         {
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }

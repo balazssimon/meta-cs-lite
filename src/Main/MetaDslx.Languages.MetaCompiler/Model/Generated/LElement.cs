@@ -28,8 +28,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         string? FixedText { get; }
         bool IsFixed { get; }
         bool IsNegated { get; set; }
-        global::MetaDslx.Languages.MetaCompiler.Model.Multiplicity Multiplicity { get; set; }
-        LElementValue Value { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.Multiplicity Multiplicity { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.LElementValue Value { get; set; }
     
     }
 }

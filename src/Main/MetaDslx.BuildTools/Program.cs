@@ -37,8 +37,8 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
             //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaModel"
+            @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaModel"
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
@@ -156,8 +156,8 @@ namespace MetaDslx.BuildTools
                     compilation = compilation.AddReferences(PackageReferences);
                     //await CompileMeta(compilation, mxFiles);
                     //await CompileMetaSymbols(compilation, mxsFiles);
-                    await CompileMetaModels(compilation, mxmFiles);
-                    //await CompileMetaLanguages(compilation, mxlFiles);
+                    //await CompileMetaModels(compilation, mxmFiles);
+                    await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
             }

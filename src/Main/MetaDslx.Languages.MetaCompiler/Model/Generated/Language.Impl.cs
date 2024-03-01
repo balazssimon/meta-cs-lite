@@ -32,25 +32,16 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<__MetaType> BaseLanguages
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaType> BaseLanguages
         {
-            get => MGetCollection<__MetaType>(Compiler.Language_BaseLanguages);
+            get => MGet<global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaType>>(Compiler.Language_BaseLanguages);
+            set => MSet<global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaType>>(Compiler.Language_BaseLanguages, value);
         }
     
-        public Grammar Grammar
+        public MetaDslx.Languages.MetaCompiler.Model.Grammar Grammar
         {
-            get => MGet<Grammar>(Compiler.Language_Grammar);
-            set => MSet<Grammar>(Compiler.Language_Grammar, value);
-        }
-    
-        public string Namespace
-        {
-            get => Compiler.__CustomImpl.Language_Namespace(this);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
-        {
-            get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
+            get => MGet<MetaDslx.Languages.MetaCompiler.Model.Grammar>(Compiler.Language_Grammar);
+            set => MSet<MetaDslx.Languages.MetaCompiler.Model.Grammar>(Compiler.Language_Grammar, value);
         }
     
         public string? FullName
@@ -64,10 +55,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
             set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
-        public Declaration? Parent
+        public string Namespace
         {
-            get => MGet<Declaration?>(Compiler.Declaration_Parent);
-            set => MSet<Declaration?>(Compiler.Declaration_Parent, value);
+            get => Compiler.__CustomImpl.Declaration_Namespace(this);
         }
     
     
@@ -92,26 +82,22 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Language_Namespace);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Namespace);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Namespace);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
                 publicPropertiesByName.Add("BaseLanguages", Compiler.Language_BaseLanguages);
                 publicPropertiesByName.Add("Grammar", Compiler.Language_Grammar);
-                publicPropertiesByName.Add("Namespace", Compiler.Language_Namespace);
-                publicPropertiesByName.Add("Declarations", Compiler.Declaration_Declarations);
                 publicPropertiesByName.Add("FullName", Compiler.Declaration_FullName);
                 publicPropertiesByName.Add("Name", Compiler.Declaration_Name);
-                publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
+                publicPropertiesByName.Add("Namespace", Compiler.Declaration_Namespace);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.Language_BaseLanguages, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_BaseLanguages, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Language_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Language_Namespace, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Namespace, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Namespace), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Language_BaseLanguages, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_BaseLanguages, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Language_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Declaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_FullName, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_FullName), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Declaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Name), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Parent, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Namespace, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Namespace, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Namespace), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 _modelPropertyInfos = modelPropertyInfos.ToImmutable();
     
                 _declaredOperations = __ImmutableArray.Create<__ModelOperation>();

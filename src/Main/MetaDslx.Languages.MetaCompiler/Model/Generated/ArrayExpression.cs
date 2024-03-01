@@ -25,7 +25,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface ArrayExpression : global::MetaDslx.Languages.MetaCompiler.Model.Expression
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Expression> Items { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Expression> Items { get; }
     
     }
 }

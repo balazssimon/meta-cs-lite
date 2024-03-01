@@ -27,7 +27,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         string? GreenSyntaxCondition { get; }
         string GreenType { get; }
-        global::MetaDslx.Languages.MetaCompiler.Model.Multiplicity Multiplicity { get; set; }
+        MetaDslx.Languages.MetaCompiler.Model.Multiplicity Multiplicity { get; set; }
         string RedType { get; }
     
     }

@@ -32,15 +32,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<Expression> Items
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.Expression> Items
         {
             get => MGetCollection<Expression>(Compiler.ArrayExpression_Items);
         }
     
-        public __MetaSymbol Value
+        public MetaDslx.CodeAnalysis.MetaSymbol Value
         {
-            get => MGet<__MetaSymbol>(Compiler.Expression_Value);
-            set => MSet<__MetaSymbol>(Compiler.Expression_Value, value);
+            get => MGet<MetaDslx.CodeAnalysis.MetaSymbol>(Compiler.Expression_Value);
+            set => MSet<MetaDslx.CodeAnalysis.MetaSymbol>(Compiler.Expression_Value, value);
         }
     
     

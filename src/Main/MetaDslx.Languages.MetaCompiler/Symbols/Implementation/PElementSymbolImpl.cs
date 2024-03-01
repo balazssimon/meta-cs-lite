@@ -77,7 +77,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Implementation
                 }
                 else if (prop.ModelObject is MetaProperty mProp)
                 {
-                    result = mProp.Type;
+                    result = mProp.Type.Type;
                 }
             }
             var kind = ExpectedTypeKind.None;

@@ -7,6 +7,7 @@ using MetaDslx.CodeAnalysis;
 namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
 {
     using global::MetaDslx.Languages.MetaCompiler.Compiler.Syntax;
+    using MetaDslx.CodeAnalysis.Symbols;
 
     public class CompilerBinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, ICompilerSyntaxVisitor
     {
@@ -18,11 +19,11 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
 
         public virtual void VisitMain(MainSyntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaCompiler.Model.Namespace));
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(NamespaceSymbol));
             this.Begin(__annot2, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: MetaDslx.Languages.MetaCompiler.Model.Compiler.Declaration_Declarations);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder();
                 this.Begin(__annot0, node.Qualifier);
                 try
                 {
@@ -1795,16 +1796,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot1, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
-                this.Begin(__annot0, node.Declarations);
-                try
-                {
                     this.Visit(node.Declarations);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
             }
             finally
             {

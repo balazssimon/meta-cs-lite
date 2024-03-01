@@ -25,7 +25,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface Binder : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<BinderArgument> Arguments { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.BinderArgument> Arguments { get; }
         string ConstructorArguments { get; }
         bool IsNegated { get; set; }
         string TypeName { get; set; }

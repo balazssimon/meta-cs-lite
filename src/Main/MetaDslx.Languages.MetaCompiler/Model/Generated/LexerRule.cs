@@ -25,7 +25,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface LexerRule : global::MetaDslx.Languages.MetaCompiler.Model.GrammarRule
     {
-        global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.LAlternative> Alternatives { get; }
         string? FixedText { get; }
         bool IsFixed { get; }
     

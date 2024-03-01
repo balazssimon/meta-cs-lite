@@ -31,7 +31,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<BinderArgument> Arguments
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaCompiler.Model.BinderArgument> Arguments
         {
             get => MGetCollection<BinderArgument>(Compiler.Binder_Arguments);
         }
