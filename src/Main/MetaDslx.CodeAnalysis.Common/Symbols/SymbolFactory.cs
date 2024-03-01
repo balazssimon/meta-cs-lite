@@ -199,5 +199,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public abstract void ComputeNonSymbolProperties(Symbol symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         protected abstract T? GetParentCore(T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
         protected abstract Symbol? CreateSymbolCore(Symbol container, T underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken);
+
+        internal static string GetSymbolImplementationTypeName(string symbolNamespace, string symbolTypeName)
+        {
+            return $"{symbolNamespace}.Implementation.{symbolTypeName}Impl";
+        }
     }
 }

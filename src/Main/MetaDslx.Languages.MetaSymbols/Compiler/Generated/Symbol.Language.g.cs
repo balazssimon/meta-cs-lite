@@ -22,7 +22,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
 
         public new SymbolSyntaxFactory SyntaxFactory => (SymbolSyntaxFactory)base.SyntaxFactory;
 
-        public new SymbolCompilationFactory CompilationFactory => (SymbolCompilationFactory)base.CompilationFactory;
+        public new CustomSymbolCompilationFactory CompilationFactory => (CustomSymbolCompilationFactory)base.CompilationFactory;
 
         protected override void RegisterServicesCore()
         {

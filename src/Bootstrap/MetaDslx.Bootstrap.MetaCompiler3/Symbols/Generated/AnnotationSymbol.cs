@@ -54,11 +54,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 );
         }
 
-        private global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> _arguments;
-        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> _constructors;
-        private global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>> _parameters;
-        private global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol _selectedConstructor;
-        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> _selectedParameters;
+        private global::System.Collections.Immutable.ImmutableArray<global::AnnotationArgument> _arguments;
+        private global::System.Collections.Immutable.ImmutableArray<global::Declaration> _constructors;
+        private global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::Declaration>> _parameters;
+        private global::Declaration _selectedConstructor;
+        private global::System.Collections.Immutable.ImmutableArray<global::Declaration> _selectedParameters;
 
         public AnnotationSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -70,7 +70,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Arguments
+        public global::System.Collections.Immutable.ImmutableArray<global::AnnotationArgument> Arguments
         {
             get
             {
@@ -80,7 +80,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Constructors
+        public global::System.Collections.Immutable.ImmutableArray<global::Declaration> Constructors
         {
             get
             {
@@ -90,7 +90,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>> Parameters
+        public global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::Declaration>> Parameters
         {
             get
             {
@@ -100,7 +100,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol SelectedConstructor
+        public global::Declaration SelectedConstructor
         {
             get
             {
@@ -110,7 +110,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute(nameof(SelectedConstructor))]
         [__DerivedAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> SelectedParameters
+        public global::System.Collections.Immutable.ImmutableArray<global::Declaration> SelectedParameters
         {
             get
             {
@@ -182,15 +182,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Compute_Arguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::AnnotationArgument> Compute_Arguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::AnnotationArgument>(this, nameof(Arguments), diagnostics, cancellationToken);
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Compute_Constructors(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::Declaration> Compute_Constructors(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>> Compute_Parameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::Declaration>> Compute_Parameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract (global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol SelectedConstructor, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> SelectedParameters) Compute_SelectedConstructor(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract (global::Declaration SelectedConstructor, global::System.Collections.Immutable.ImmutableArray<global::Declaration> SelectedParameters) Compute_SelectedConstructor(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

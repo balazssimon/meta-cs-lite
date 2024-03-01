@@ -27,7 +27,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
     using __CancellationToken = global::System.Threading.CancellationToken;
     using __ArgumentNullException = global::System.ArgumentNullException;
     using __ArgumentException = global::System.ArgumentException;
-    using MetaDslx.CodeAnalysis.Binding;
+    using __BinderFactory = global::MetaDslx.CodeAnalysis.Binding.BinderFactory;
+    using __BinderFactoryVisitor = global::MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor;
 
     public class CompilerSyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
     {
@@ -1185,7 +1186,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             return this.QualifierIdentifierBlock(this.Token(CompilerSyntaxKind.TDot), identifier);
         }
 
-        public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+        public override __BinderFactoryVisitor CreateBinderFactoryVisitor(__BinderFactory binderFactory)
         {
             return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding.CompilerBinderFactoryVisitor(binderFactory);
         }

@@ -63,13 +63,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 );
         }
 
-        private ParserRuleSymbol? _containingParserRuleSymbol;
-        private PBlockSymbol? _containingPBlockSymbol;
-        private global::System.Collections.Immutable.ImmutableArray<PElementSymbol> _elements;
-        private ExpressionSymbol? _returnValue;
-        private global::MetaDslx.CodeAnalysis.MetaType _returnType;
-        private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
-        private global::System.Collections.Immutable.ImmutableArray<PElementSymbol> _allSimpleElements;
+        private global::ParserRule? _containingParserRuleSymbol;
+        private global::PBlock? _containingPBlockSymbol;
+        private global::System.Collections.Immutable.ImmutableArray<global::PElement> _elements;
+        private global::Expression? _returnValue;
+        private global::MetaType _returnType;
+        private global::MetaType _expectedType;
+        private global::System.Collections.Immutable.ImmutableArray<global::PElement> _allSimpleElements;
 
         public PAlternativeSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -81,7 +81,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public ParserRuleSymbol? ContainingParserRuleSymbol
+        public global::ParserRule? ContainingParserRuleSymbol
         {
             get
             {
@@ -91,7 +91,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public PBlockSymbol? ContainingPBlockSymbol
+        public global::PBlock? ContainingPBlockSymbol
         {
             get
             {
@@ -101,7 +101,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<PElementSymbol> Elements
+        public global::System.Collections.Immutable.ImmutableArray<global::PElement> Elements
         {
             get
             {
@@ -111,7 +111,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public ExpressionSymbol? ReturnValue
+        public global::Expression? ReturnValue
         {
             get
             {
@@ -121,7 +121,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaDslx.CodeAnalysis.MetaType ReturnType
+        public global::MetaType ReturnType
         {
             get
             {
@@ -131,7 +131,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
+        public global::MetaType ExpectedType
         {
             get
             {
@@ -141,7 +141,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<PElementSymbol> AllSimpleElements
+        public global::System.Collections.Immutable.ImmutableArray<global::PElement> AllSimpleElements
         {
             get
             {
@@ -251,24 +251,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
 
-        protected abstract ParserRuleSymbol? Compute_ContainingParserRuleSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::ParserRule? Compute_ContainingParserRuleSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract PBlockSymbol? Compute_ContainingPBlockSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::PBlock? Compute_ContainingPBlockSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<PElementSymbol> Compute_Elements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::PElement> Compute_Elements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::PElement>(this, nameof(Elements), diagnostics, cancellationToken);
         }
 
-        protected virtual ExpressionSymbol? Compute_ReturnValue(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::Expression? Compute_ReturnValue(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(ReturnValue), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::Expression>(this, nameof(ReturnValue), diagnostics, cancellationToken);
         }
 
-        protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ReturnType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaType Compute_ReturnType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<PElementSymbol> Compute_AllSimpleElements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::PElement> Compute_AllSimpleElements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

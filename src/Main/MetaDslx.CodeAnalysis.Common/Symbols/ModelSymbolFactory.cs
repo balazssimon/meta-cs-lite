@@ -81,7 +81,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
                 diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.MLocation, $"Model object '{underlyingObject.MName}' has no SymbolType."));
                 return null;
             }
-            var symbolImplTypeName = $"{symbolType.Namespace}.Impl.{symbolType.Name}Impl";
+            var symbolImplTypeName = GetSymbolImplementationTypeName(symbolType.Namespace, symbolType.Name);
             var symbolImplType = symbolType.Assembly.GetType(symbolImplTypeName);
             if (symbolImplType is null)
             {

@@ -162,7 +162,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     }
 
-    
     public sealed class MainSyntax : CompilerSyntaxNode, global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax
     {
         private QualifierSyntax _qualifier;
@@ -330,7 +329,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class UsingMetaModelSyntax : UsingSyntax
     {
         private QualifierSyntax _metaModelSymbols;
@@ -497,7 +495,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LanguageDeclarationSyntax : CompilerSyntaxNode
     {
         private NameSyntax _name;
@@ -634,7 +631,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class GrammarSyntax : CompilerSyntaxNode
     {
         private GrammarBlock1Syntax _block;
@@ -723,7 +719,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class GrammarRuleAlt1Syntax : GrammarRuleSyntax
     {
         private RuleSyntax _rule;
@@ -876,7 +871,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class RuleSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _annotations1;
@@ -1023,7 +1017,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class AlternativeSyntax : CompilerSyntaxNode
     {
         private AlternativeBlock1Syntax _block1;
@@ -1137,7 +1130,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ElementSyntax : CompilerSyntaxNode
     {
         private ElementBlock1Syntax _block;
@@ -1242,7 +1234,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class ElementValueAlt1Syntax : ElementValueSyntax
     {
         private BlockSyntax _block;
@@ -1547,7 +1538,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class BlockSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _annotations1;
@@ -1694,7 +1684,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class BlockAlternativeSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _elements;
@@ -1804,7 +1793,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class RuleRefAlt1Syntax : RuleRefSyntax
     {
         private __SyntaxNode _annotations1;
@@ -2207,7 +2195,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class Eof1Syntax : CompilerSyntaxNode
     {
     
@@ -2282,7 +2269,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class FixedSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _annotations1;
@@ -2406,7 +2392,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class LexerRuleAlt1Syntax : LexerRuleSyntax
     {
         private TokenSyntax _token;
@@ -2559,7 +2544,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class TokenSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _annotations1;
@@ -2706,7 +2690,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class FragmentSyntax : CompilerSyntaxNode
     {
         private NameSyntax _name;
@@ -2846,7 +2829,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LAlternativeSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _elements;
@@ -2928,7 +2910,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LElementSyntax : CompilerSyntaxNode
     {
         private LElementValueSyntax _value;
@@ -3047,7 +3028,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class LElementValueAlt1Syntax : LElementValueSyntax
     {
         private LBlockSyntax _lBlock;
@@ -3428,7 +3408,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LReferenceSyntax : CompilerSyntaxNode
     {
         private IdentifierSyntax _rule;
@@ -3505,7 +3484,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LFixedSyntax : CompilerSyntaxNode
     {
     
@@ -3580,7 +3558,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LWildCardSyntax : CompilerSyntaxNode
     {
     
@@ -3655,7 +3632,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LRangeSyntax : CompilerSyntaxNode
     {
     
@@ -3758,7 +3734,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LBlockSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _alternatives;
@@ -3880,7 +3855,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class ExpressionAlt1Syntax : ExpressionSyntax
     {
         private SingleExpressionSyntax _singleExpression;
@@ -4045,7 +4019,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class SingleExpressionAlt1Syntax : SingleExpressionSyntax
     {
         private SingleExpressionAlt1Block1Syntax _value;
@@ -4198,7 +4171,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ArrayExpressionSyntax : CompilerSyntaxNode
     {
         private ArrayExpressionBlock1Syntax _block;
@@ -4303,7 +4275,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ParserAnnotationSyntax : CompilerSyntaxNode
     {
         private QualifierSyntax _attributeClass;
@@ -4424,7 +4395,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LexerAnnotationSyntax : CompilerSyntaxNode
     {
         private QualifierSyntax _attributeClass;
@@ -4545,7 +4515,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class AnnotationArgumentSyntax : CompilerSyntaxNode
     {
         private AnnotationArgumentBlock1Syntax _block;
@@ -4638,7 +4607,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class AssignmentSyntax : CompilerSyntaxNode
     {
     
@@ -4713,7 +4681,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class MultiplicitySyntax : CompilerSyntaxNode
     {
     
@@ -4800,7 +4767,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class TypeReferenceIdentifierAlt1Syntax : TypeReferenceIdentifierSyntax
     {
         private PrimitiveTypeSyntax _primitiveType;
@@ -4965,7 +4931,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class TypeReferenceAlt1Syntax : TypeReferenceSyntax
     {
         private PrimitiveTypeSyntax _primitiveType;
@@ -5118,7 +5083,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class PrimitiveTypeSyntax : CompilerSyntaxNode
     {
     
@@ -5193,7 +5157,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class NameSyntax : CompilerSyntaxNode
     {
         private IdentifierSyntax _identifier;
@@ -5270,7 +5233,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class QualifierSyntax : CompilerSyntaxNode
     {
         private __SyntaxNode _identifier;
@@ -5352,7 +5314,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class IdentifierSyntax : CompilerSyntaxNode
     {
     
@@ -5427,7 +5388,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class MainBlock1Syntax : CompilerSyntaxNode
     {
         private UsingSyntax _using;
@@ -5532,7 +5492,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class MainBlock2Syntax : CompilerSyntaxNode
     {
         private LanguageDeclarationSyntax _declarations;
@@ -5609,7 +5568,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LanguageDeclarationBlock1Syntax : CompilerSyntaxNode
     {
         private __SyntaxNode _baseLanguages;
@@ -5705,7 +5663,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LanguageDeclarationBlock1baseLanguagesBlockSyntax : CompilerSyntaxNode
     {
         private QualifierSyntax _baseLanguages;
@@ -5796,7 +5753,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class GrammarBlock1Syntax : CompilerSyntaxNode
     {
         private __SyntaxNode _grammarRules;
@@ -5890,7 +5846,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class RuleBlock1Alt1Syntax : RuleBlock1Syntax
     {
         private TypeReferenceIdentifierSyntax _returnType;
@@ -6073,7 +6028,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class RulealternativesBlockSyntax : CompilerSyntaxNode
     {
         private AlternativeSyntax _alternatives;
@@ -6164,7 +6118,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class AlternativeBlock1Syntax : CompilerSyntaxNode
     {
         private __SyntaxNode _annotations1;
@@ -6302,7 +6255,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class AlternativeBlock1Block1Alt1Syntax : AlternativeBlock1Block1Syntax
     {
         private TypeReferenceIdentifierSyntax _returnType;
@@ -6485,7 +6437,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class AlternativeBlock2Syntax : CompilerSyntaxNode
     {
         private ExpressionSyntax _returnValue;
@@ -6576,7 +6527,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ElementBlock1Syntax : CompilerSyntaxNode
     {
         private __SyntaxNode _annotations1;
@@ -6690,7 +6640,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class BlockalternativesBlockSyntax : CompilerSyntaxNode
     {
         private BlockAlternativeSyntax _alternatives;
@@ -6781,7 +6730,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class BlockAlternativeBlock1Syntax : CompilerSyntaxNode
     {
         private ExpressionSyntax _returnValue;
@@ -6872,7 +6820,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class RuleRefAlt3referencedTypesBlockSyntax : CompilerSyntaxNode
     {
         private TypeReferenceSyntax _referencedTypes;
@@ -6963,7 +6910,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class RuleRefAlt3Block1Syntax : CompilerSyntaxNode
     {
         private IdentifierSyntax _grammarRule;
@@ -7066,7 +7012,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class TokenBlock1Alt1Syntax : TokenBlock1Syntax
     {
         private NameSyntax _name;
@@ -7263,7 +7208,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class TokenBlock1Alt1Block1Syntax : CompilerSyntaxNode
     {
         private TypeReferenceSyntax _returnType;
@@ -7354,7 +7298,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class TokenalternativesBlockSyntax : CompilerSyntaxNode
     {
         private LAlternativeSyntax _alternatives;
@@ -7445,7 +7388,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class FragmentalternativesBlockSyntax : CompilerSyntaxNode
     {
         private LAlternativeSyntax _alternatives;
@@ -7536,7 +7478,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LBlockalternativesBlockSyntax : CompilerSyntaxNode
     {
         private LAlternativeSyntax _alternatives;
@@ -7639,7 +7580,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     }
-    
     public sealed class SingleExpressionAlt1Block1Alt1Syntax : SingleExpressionAlt1Block1Syntax
     {
     
@@ -8160,7 +8100,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ArrayExpressionBlock1Syntax : CompilerSyntaxNode
     {
         private __SyntaxNode _items;
@@ -8242,7 +8181,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ArrayExpressionBlock1itemsBlockSyntax : CompilerSyntaxNode
     {
         private SingleExpressionSyntax _items;
@@ -8333,7 +8271,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ParserAnnotationBlock1Syntax : CompilerSyntaxNode
     {
         private __SyntaxNode _arguments;
@@ -8443,7 +8380,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class ParserAnnotationBlock1argumentsBlockSyntax : CompilerSyntaxNode
     {
         private AnnotationArgumentSyntax _arguments;
@@ -8534,7 +8470,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LexerAnnotationBlock1Syntax : CompilerSyntaxNode
     {
         private __SyntaxNode _arguments;
@@ -8644,7 +8579,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class LexerAnnotationBlock1argumentsBlockSyntax : CompilerSyntaxNode
     {
         private AnnotationArgumentSyntax _arguments;
@@ -8735,7 +8669,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class AnnotationArgumentBlock1Syntax : CompilerSyntaxNode
     {
         private IdentifierSyntax _namedParameter;
@@ -8826,7 +8759,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         }
     
     }
-    
     public sealed class QualifierIdentifierBlockSyntax : CompilerSyntaxNode
     {
         private IdentifierSyntax _identifier;

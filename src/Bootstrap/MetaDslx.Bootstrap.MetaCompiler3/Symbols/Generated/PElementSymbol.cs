@@ -58,10 +58,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
         private bool _isNamedElement;
-        private PAlternativeSymbol? _containingPAlternativeSymbol;
-        private global::MetaDslx.CodeAnalysis.MetaSymbol _value;
+        private global::PAlternative? _containingPAlternativeSymbol;
+        private global::MetaSymbol _value;
         private global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment _assignment;
-        private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
+        private global::MetaType _expectedType;
         private global::MetaDslx.Bootstrap.MetaCompiler3.Model.ExpectedTypeKind _expectedKind;
 
         public PElementSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
@@ -84,7 +84,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public PAlternativeSymbol? ContainingPAlternativeSymbol
+        public global::PAlternative? ContainingPAlternativeSymbol
         {
             get
             {
@@ -94,7 +94,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::MetaDslx.CodeAnalysis.MetaSymbol Value
+        public global::MetaSymbol Value
         {
             get
             {
@@ -114,7 +114,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
+        public global::MetaType ExpectedType
         {
             get
             {
@@ -211,11 +211,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         protected abstract bool Compute_IsNamedElement(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract PAlternativeSymbol? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::PAlternative? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
         }
 
         protected virtual global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment Compute_Assignment(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
@@ -223,6 +223,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment>(this, nameof(Assignment), diagnostics, cancellationToken);
         }
 
-        protected abstract (global::MetaDslx.CodeAnalysis.MetaType ExpectedType, global::MetaDslx.Bootstrap.MetaCompiler3.Model.ExpectedTypeKind ExpectedKind) Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract (global::MetaType ExpectedType, global::MetaDslx.Bootstrap.MetaCompiler3.Model.ExpectedTypeKind ExpectedKind) Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

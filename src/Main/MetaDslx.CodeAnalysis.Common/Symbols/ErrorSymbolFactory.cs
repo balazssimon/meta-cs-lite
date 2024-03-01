@@ -53,9 +53,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
 
         protected override Symbol? CreateSymbolCore(Symbol container, ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (container is null) throw new ArgumentNullException(nameof(container));
-            if (container is ModuleSymbol) throw new ArgumentException("ModuleSymbol is unexpected here.", nameof(container));
-            if (container is AssemblySymbol) throw new ArgumentException("AssemblySymbol is unexpected here.", nameof(container));
+            //if (container is null) throw new ArgumentNullException(nameof(container));
+            //if (container is ModuleSymbol) throw new ArgumentException("ModuleSymbol is unexpected here.", nameof(container));
+            //if (container is AssemblySymbol) throw new ArgumentException("AssemblySymbol is unexpected here.", nameof(container));
             var symbolConstructor = GetConstructor(container, underlyingObject, diagnostics, cancellationToken);
             if (symbolConstructor is null) return null;
             return symbolConstructor.Invoke(container, underlyingObject);
@@ -63,21 +63,22 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
 
         private SymbolConstructor? GetConstructor(Symbol container, ErrorSymbolInfo underlyingObject, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            if (underlyingObject is null) return null;
             var symbolType = underlyingObject.SymbolType;
             if (symbolType is null)
             {
-                diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.Location, $"Error symbol '{underlyingObject.Name}' has no SymbolType."));
+                if (diagnostics is not null) diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.Location, $"Error symbol '{underlyingObject.Name}' has no SymbolType."));
                 return null;
             }
             if (s_constructors.TryGetValue(symbolType, out var symbolConstructor))
             {
                 return symbolConstructor;
             }
-            var symbolImplTypeName = $"{symbolType.Namespace}.Impl.{symbolType.Name}Impl";
+            var symbolImplTypeName = GetSymbolImplementationTypeName(symbolType.Namespace, symbolType.Name);
             var symbolImplType = symbolType.Assembly.GetType(symbolImplTypeName);
             if (symbolImplType is null)
             {
-                diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.Location, $"Could not instantiate symbol '{symbolType.FullName}', because it's implementation '{symbolImplTypeName}' could not be resolved as a type."));
+                if (diagnostics is not null) diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.Location, $"Could not instantiate symbol '{symbolType.FullName}', because it's implementation '{symbolImplTypeName}' could not be resolved as a type."));
                 return s_constructors.GetValue(symbolType, t => null);
             }
             foreach (var ctr in symbolImplType.GetConstructors())
@@ -99,7 +100,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
             }
             if (symbolConstructor is null)
             {
-                diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.Location, $"Could not instantiate error symbol '{symbolType.FullName}', because it's implementation '{symbolImplTypeName}' does not have a constructor with parameters 'container' and 'errorInfo'."));
+                if (diagnostics is not null) diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, underlyingObject.Location, $"Could not instantiate error symbol '{symbolType.FullName}', because it's implementation '{symbolImplTypeName}' does not have a constructor with parameters 'container' and 'errorInfo'."));
                 return s_constructors.GetValue(symbolType, t => null);
             }
             return symbolConstructor;

@@ -118,7 +118,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     return s_constructors.GetValue(mobjType, t => null);
                 }
             }
-            var symbolImplTypeName = $"{symbolType.Namespace}.Impl.{symbolType.Name}Impl";
+            var symbolImplTypeName = GetSymbolImplementationTypeName(symbolType.Namespace, symbolType.Name);
             var symbolImplType = symbolType.Assembly.GetType(symbolImplTypeName);
             if (symbolImplType is null)
             {

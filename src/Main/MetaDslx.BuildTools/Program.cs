@@ -3,13 +3,8 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Text;
-#if MetaDslxBootstrap
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler;
-using MetaDslx.Bootstrap.MetaCompiler2.Model;
-#else
 using MetaDslx.Languages.MetaCompiler.Compiler;
 using MetaDslx.Languages.MetaCompiler.Model;
-#endif
 using MetaDslx.Languages.MetaGenerator.Syntax;
 using MetaDslx.Languages.MetaModel.Compiler;
 using MetaDslx.Languages.MetaModel.Generators;
@@ -41,19 +36,14 @@ namespace MetaDslx.BuildTools
         private const bool EraseOutputDirectory = true;
         private static readonly string[] BootstrapProjects =
         [
-#if MetaDslxBootstrap
-            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
-#else
             //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
-            @"..\..\..\..\MetaDslx.Languages.MetaSymbols",
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
-            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Emf",
-#endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
 
@@ -151,6 +141,7 @@ namespace MetaDslx.BuildTools
             {
                 var project = await workspace.OpenProjectAsync(projectFile);
                 var mxgFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxg").ToImmutableArray();
+                var mxFiles = project.AdditionalDocuments.Where(doc => { var ext = Path.GetExtension(doc.FilePath); return ext == ".mxm" || ext == ".mxl" || ext == ".mxs"; }).ToImmutableArray();
                 var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
                 var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
                 var mxsFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxs").ToImmutableArray();
@@ -164,9 +155,10 @@ namespace MetaDslx.BuildTools
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
+                    await CompileMeta(compilation, mxFiles);
                     //await CompileMetaSymbols(compilation, mxsFiles);
                     //await CompileMetaModels(compilation, mxmFiles);
-                    await CompileMetaLanguages(compilation, mxlFiles);
+                    //await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
             }
@@ -203,6 +195,166 @@ namespace MetaDslx.BuildTools
             }
         }
 
+        private static async Task CompileMeta(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxFiles)
+        {
+            var filePaths = ArrayBuilder<string>.GetInstance();
+            foreach (var mxFile in mxFiles)
+            {
+                var filePath = mxFile.FilePath;
+                if (File.Exists(filePath))
+                {
+                    filePaths.Add(filePath);
+                }
+                else
+                {
+                    await Console.Out.WriteLineAsync($"{filePath}(1,1,1,1): error: File '{filePath}' does not exist.");
+                }
+            }
+            if (filePaths.Count == 0) return;
+            try
+            {
+                var mxTrees = ArrayBuilder<SyntaxTree>.GetInstance();
+                foreach (var filePath in filePaths)
+                {
+                    var mxCode = await File.ReadAllTextAsync(filePath);
+                    var extension = Path.GetExtension(filePath);
+                    SyntaxTree? mxTree;
+                    if (extension == ".mxs") mxTree = SymbolSyntaxTree.ParseText(mxCode, path: filePath);
+                    else if (extension == ".mxm") mxTree = MetaSyntaxTree.ParseText(mxCode, path: filePath);
+                    else if (extension == ".mxl") mxTree = CompilerSyntaxTree.ParseText(mxCode, path: filePath);
+                    else mxTree = null;
+                    if (mxTree is not null) mxTrees.Add(mxTree);
+                }
+                var mxCompiler = Compilation.Create("Meta",
+                                syntaxTrees: mxTrees,
+                                compilationFactory: new MetaCompilationFactory(),
+                                initialCompilation: initialCompilation,
+                                references: new[]
+                                {
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.MInstance),
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaSymbols.Model.Symbols.MInstance),
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaCompiler.Model.Compiler.MInstance)
+                                },
+                                options: CompilationOptions.Default.WithConcurrentBuild(false));
+                mxCompiler.Compile();
+                var diagnostics = mxCompiler.GetDiagnostics();
+                var mxDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
+                foreach (var diag in mxDiagnostics)
+                {
+                    await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+                }
+                if (!mxDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                {
+                    foreach (var filePath in filePaths)
+                    {
+                        var outputDir = Path.Combine(Path.GetDirectoryName(filePath), "Generated");
+                        Directory.CreateDirectory(outputDir);
+                        if (EraseOutputDirectory)
+                        {
+                            var dirInfo = new DirectoryInfo(outputDir);
+                            foreach (FileInfo file in dirInfo.EnumerateFiles())
+                            {
+                                file.Delete();
+                            }
+                            foreach (DirectoryInfo dir in dirInfo.EnumerateDirectories())
+                            {
+                                dir.Delete(true);
+                            }
+                        }
+                    }
+                    var model = mxCompiler.SourceModule.Model;
+                    await GenerateMetaSymbols(model, mxDiagnostics);
+                    await GenerateMetaModels(model, mxDiagnostics);
+                    await GenerateMetaLanguages(model, mxDiagnostics);
+                }
+            }
+            catch (Exception ex)
+            {
+                var exLocation = ExternalFileLocation.Create(filePaths[0], TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
+                var exDiag = Diagnostic.Create(ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(exDiag));
+            }
+            filePaths.Free();
+        }
+
+        private static async Task GenerateMetaSymbols(Model model, ImmutableArray<Diagnostic> mxDiagnostics)
+        {
+            var generator = new SymbolGenerator();
+            var symbols = model.Objects.OfType<MetaDslx.Languages.MetaSymbols.Model.Symbol>().ToImmutableArray();
+            foreach (var symbol in symbols)
+            {
+                var modelFilePath = symbol.MSourceLocation?.GetLineSpan().Path;
+                if (!mxDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
+                {
+                    await GenerateMetaSymbolFiles(generator, modelFilePath, symbol);
+                }
+            }
+            var genDiagnostics = generator.Diagnostics;
+            foreach (var diag in genDiagnostics)
+            {
+                await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+            }
+        }
+
+        private static async Task GenerateMetaModels(Model model, ImmutableArray<Diagnostic> mxDiagnostics)
+        {
+            var metaModels = model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>().ToImmutableArray();
+            foreach (var metaModel in metaModels)
+            {
+                var modelFilePath = metaModel.MSourceLocation?.GetLineSpan().Path;
+                if (!mxDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
+                {
+                    var isMetaMetaModel = modelFilePath?.Contains("MetaDslx.Languages.MetaModel") ?? false;
+                    var generator = new MetaModelGenerator(isMetaMetaModel, model, metaModel);
+                    var genDiagnostics = generator.Diagnostics;
+                    if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                    {
+                        if (GenerateSeparateMetaModelFiles)
+                        {
+                            await GenerateMetaModelFiles(generator, modelFilePath);
+                            genDiagnostics = generator.Diagnostics;
+                        }
+                        else
+                        {
+                            var csharpCode = generator.Generate();
+                            var csharpFilePath = $"{modelFilePath}.cs";
+                            genDiagnostics = generator.Diagnostics;
+                            if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                            {
+                                await AddGeneratedFile(csharpFilePath, csharpCode);
+                            }
+                        }
+                    }
+                    foreach (var diag in genDiagnostics)
+                    {
+                        await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+                    }
+                }
+            }
+        }
+
+        private static async Task GenerateMetaLanguages(Model model, ImmutableArray<Diagnostic> mxDiagnostics)
+        {
+            var languages = model.Objects.OfType<MetaCompiler.Model.Language>().ToImmutableArray();
+            foreach (var language in languages)
+            {
+                var modelFilePath = language.MSourceLocation?.GetLineSpan().Path;
+                if (!mxDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
+                {
+                    var pp = new CompilerModelPostProcessor(language);
+                    pp.Execute(default);
+                    var ppDiagnostics = pp.GetDiagnostics();
+                    foreach (var diag in ppDiagnostics)
+                    {
+                        await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+                    }
+                    if (!ppDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                    {
+                        await GenerateCompilerFiles(language, modelFilePath);
+                    }
+                }
+            }
+        }
 
         private static async Task CompileMetaSymbols(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxsFiles)
         {
@@ -231,6 +383,7 @@ namespace MetaDslx.BuildTools
                 }
                 var mxsCompiler = Compilation.Create("Meta",
                                 syntaxTrees: mxsTrees,
+                                compilationFactory: new CustomSymbolCompilationFactory(),
                                 initialCompilation: initialCompilation,
                                 references: new[]
                                 {
@@ -265,22 +418,7 @@ namespace MetaDslx.BuildTools
                     }
                 }
                 var model = mxsCompiler.SourceModule.Model;
-                var generator = new SymbolGenerator();
-                foreach (var symbol in model.Objects.OfType<MetaDslx.Languages.MetaSymbols.Model.Symbol>())
-                {
-                    var modelFilePath = symbol.MSourceLocation?.GetLineSpan().Path;
-                    //var xmi = new XmiSerializer();
-                    //xmi.WriteModelToFile(Path.Combine(modelFilePath + ".xmi"), model);
-                    if (!mxsDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
-                    {
-                        await GenerateMetaSymbolFiles(generator, modelFilePath, symbol);
-                    }
-                }
-                var genDiagnostics = generator.Diagnostics;
-                foreach (var diag in genDiagnostics)
-                {
-                    await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
-                }
+                await GenerateMetaSymbols(model, mxsDiagnostics);
                 mxsTrees.Free();
             }
             catch (Exception ex)
@@ -295,7 +433,7 @@ namespace MetaDslx.BuildTools
         private static async Task GenerateMetaSymbolFiles(SymbolGenerator generator, string originalFilePath, MetaDslx.Languages.MetaSymbols.Model.Symbol symbol)
         {
             if (symbol.FullName == "MetaDslx.CodeAnalysis.Symbols.Symbol") return;
-            var implDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Impl");
+            var implDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Implementation");
             Directory.CreateDirectory(implDir);
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             Directory.CreateDirectory(outputDir);
@@ -346,40 +484,7 @@ namespace MetaDslx.BuildTools
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
                 var model = mxmCompiler.SourceModule.Model;
-                foreach (var mxm in model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>())
-                {
-                    var modelFilePath = mxm.MSourceLocation?.GetLineSpan().Path;
-                    //var xmi = new XmiSerializer();
-                    //xmi.WriteModelToFile(Path.Combine(modelFilePath + ".xmi"), model);
-                    if (!mxmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
-                    {
-                        var isMetaMetaModel = modelFilePath?.Contains("MetaDslx.Languages.MetaModel") ?? false;
-                        var generator = new MetaModelGenerator(isMetaMetaModel, model, mxm);
-                        var genDiagnostics = generator.Diagnostics;
-                        if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
-                        {
-                            if (GenerateSeparateMetaModelFiles)
-                            {
-                                await GenerateMetaModelFiles(generator, modelFilePath);
-                                genDiagnostics = generator.Diagnostics;
-                            }
-                            else
-                            {
-                                var csharpCode = generator.Generate();
-                                var csharpFilePath = $"{modelFilePath}.cs";
-                                genDiagnostics = generator.Diagnostics;
-                                if (!genDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
-                                {
-                                    await AddGeneratedFile(csharpFilePath, csharpCode);
-                                }
-                            }
-                        }
-                        foreach (var diag in genDiagnostics)
-                        {
-                            await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
-                        }
-                    }
-                }
+                await GenerateMetaModels(model, mxmDiagnostics);
                 mxmTrees.Free();
             }
             catch (Exception ex)
@@ -485,12 +590,8 @@ namespace MetaDslx.BuildTools
                                 initialCompilation: initialCompilation,
                                 references: new[]
                                 {
-#if MetaDslxBootstrap
-                                    MetadataReference.CreateFromMetaModel(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.MInstance)
-#else
                                     MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaCompiler.Model.Compiler.MInstance)
-#endif
-            },
+                                },
                                 options: CompilationOptions.Default.WithConcurrentBuild(false));
                 mxlCompiler.Compile();
                 var diagnostics = mxlCompiler.GetDiagnostics();

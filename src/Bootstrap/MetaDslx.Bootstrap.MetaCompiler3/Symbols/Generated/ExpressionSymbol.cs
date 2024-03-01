@@ -54,11 +54,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 );
         }
 
-        private PAlternativeSymbol? _containingPAlternativeSymbol;
-        private AnnotationArgumentSymbol? _containingAnnotationArgumentSymbol;
-        private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
-        private global::MetaDslx.CodeAnalysis.MetaSymbol _value;
-        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _values;
+        private global::PAlternative? _containingPAlternativeSymbol;
+        private global::AnnotationArgument? _containingAnnotationArgumentSymbol;
+        private global::MetaType _expectedType;
+        private global::MetaSymbol _value;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaSymbol> _values;
 
         public ExpressionSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -70,7 +70,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public PAlternativeSymbol? ContainingPAlternativeSymbol
+        public global::PAlternative? ContainingPAlternativeSymbol
         {
             get
             {
@@ -80,7 +80,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public AnnotationArgumentSymbol? ContainingAnnotationArgumentSymbol
+        public global::AnnotationArgument? ContainingAnnotationArgumentSymbol
         {
             get
             {
@@ -90,7 +90,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
+        public global::MetaType ExpectedType
         {
             get
             {
@@ -100,7 +100,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaDslx.CodeAnalysis.MetaSymbol Value
+        public global::MetaSymbol Value
         {
             get
             {
@@ -110,7 +110,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute(nameof(Value))]
         [__DerivedAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> Values
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaSymbol> Values
         {
             get
             {
@@ -182,12 +182,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
 
-        protected abstract PAlternativeSymbol? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::PAlternative? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract AnnotationArgumentSymbol? Compute_ContainingAnnotationArgumentSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::AnnotationArgument? Compute_ContainingAnnotationArgumentSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract (global::MetaDslx.CodeAnalysis.MetaSymbol Value, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> Values) Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract (global::MetaSymbol Value, global::System.Collections.Immutable.ImmutableArray<global::MetaSymbol> Values) Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

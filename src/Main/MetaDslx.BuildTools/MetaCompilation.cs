@@ -1,18 +1,19 @@
 ﻿using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
-using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace MetaDslx.Languages.MetaSymbols.Compiler
+namespace MetaDslx.BuildTools
 {
-    public class SymbolCompilation : Compilation
+    internal class MetaCompilation : Compilation
     {
-        protected internal SymbolCompilation(string? assemblyName, CompilationFactory compilationFactory, CompilationOptions options, CSharpCompilation? initialCompilation, ImmutableArray<MetadataReference> references, ScriptCompilationInfo? scriptCompilationInfo, ReferenceManager? referenceManager, bool reuseReferenceManager, SyntaxAndDeclarationManager syntaxAndDeclarations)
+        protected internal MetaCompilation(string? assemblyName, CompilationFactory compilationFactory, CompilationOptions options, CSharpCompilation? initialCompilation, ImmutableArray<MetadataReference> references, ScriptCompilationInfo? scriptCompilationInfo, ReferenceManager? referenceManager, bool reuseReferenceManager, SyntaxAndDeclarationManager syntaxAndDeclarations) 
             : base(assemblyName, compilationFactory, options, initialCompilation, references, scriptCompilationInfo, referenceManager, reuseReferenceManager, syntaxAndDeclarations)
         {
         }
@@ -20,7 +21,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
         protected override void RegisterServices()
         {
             base.RegisterServices();
-            Register<CSharpSymbolFactory, SymbolCSharpSymbolFactory>();
+            Register<CSharpSymbolFactory, MetaCSharpSymbolFactory>();
         }
     }
 }

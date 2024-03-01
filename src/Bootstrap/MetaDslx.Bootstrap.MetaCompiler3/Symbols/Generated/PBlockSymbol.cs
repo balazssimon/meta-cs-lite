@@ -48,8 +48,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 );
         }
 
-        private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
-        private global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> _alternatives;
+        private global::MetaType _expectedType;
+        private global::System.Collections.Immutable.ImmutableArray<global::PAlternative> _alternatives;
 
         public PBlockSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -61,7 +61,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
+        public global::MetaType ExpectedType
         {
             get
             {
@@ -71,7 +71,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> Alternatives
+        public global::System.Collections.Immutable.ImmutableArray<global::PAlternative> Alternatives
         {
             get
             {
@@ -116,11 +116,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
 
-        protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> Compute_Alternatives(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::PAlternative> Compute_Alternatives(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::PAlternative>(this, nameof(Alternatives), diagnostics, cancellationToken);
         }
     }
 }

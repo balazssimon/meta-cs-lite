@@ -65,7 +65,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         }
                         else
                         {
-                            convertedValue = MetaSymbol.FromValue(value);
+                            convertedValue = MetaType.FromName(value?.ToString());
                             return true;
                         }
                     }

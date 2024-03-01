@@ -1,4 +1,4 @@
-#line (1,10)-(1,53) 10 "InternalSyntaxGenerator.mxg"
+#line (1,10)-(1,54) 10 "InternalSyntaxGenerator.mxg"
 namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 #line hidden
 
@@ -7,7 +7,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
     using
     #line hidden
     global::
-    #line (3,7)-(3,44) 13 "InternalSyntaxGenerator.mxg"
+    #line (3,7)-(3,45) 13 "InternalSyntaxGenerator.mxg"
     MetaDslx.Bootstrap.MetaCompiler3.Model;
     #line hidden
     #line (4,1)-(4,6) 5 "InternalSyntaxGenerator.mxg"
