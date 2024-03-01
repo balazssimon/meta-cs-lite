@@ -11,7 +11,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler
     {
         partial void RegisterServices()
         {
-            RegisterGlobal<SyntaxFacts, SymbolSyntaxFacts>();
+            Register<SyntaxFacts, SymbolSyntaxFacts>();
         }
     }
 }

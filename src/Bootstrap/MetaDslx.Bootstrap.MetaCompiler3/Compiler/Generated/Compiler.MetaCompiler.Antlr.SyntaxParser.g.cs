@@ -85,7 +85,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             {
                 if (node?.Symbol == null)
                 {
-                    if (kind != CompilerSyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
+                    if (kind != CompilerSyntaxKind.None) return _factory.MissingToken(kind);
                     else return null;
                 }
                 var green = _tokenStream.ConsumeGreenToken(node.Symbol, _parser);
@@ -778,19 +778,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             
             public override GreenNode? VisitPr_Assignment(CompilerParser.Pr_AssignmentContext? context)
             {
-                if (context?.E_Token == null) return AssignmentGreen.__Missing;
+                if (context == null) return AssignmentGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_TEq() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TEq());
                 if (context.LR_TQuestionEq() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestionEq());
                 if (context.LR_TExclEq() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TExclEq());
                 if (context.LR_TPlusEq() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlusEq());
-                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TEq);
+                if (token is null) token = _factory.None;
                 return _factory.Assignment(token);
             }
             
             public override GreenNode? VisitPr_Multiplicity(CompilerParser.Pr_MultiplicityContext? context)
             {
-                if (context?.E_Token == null) return MultiplicityGreen.__Missing;
+                if (context == null) return MultiplicityGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_TQuestion() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestion());
                 if (context.LR_TAsterisk() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsterisk());
@@ -798,7 +798,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
                 if (context.LR_TQuestionQuestion() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestionQuestion());
                 if (context.LR_TAsteriskQuestion() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsteriskQuestion());
                 if (context.LR_TPlusQuestion() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlusQuestion());
-                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TQuestion);
+                if (token is null) token = _factory.None;
                 return _factory.Multiplicity(token);
             }
             
@@ -840,7 +840,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             
             public override GreenNode? VisitPr_PrimitiveType(CompilerParser.Pr_PrimitiveTypeContext? context)
             {
-                if (context?.E_Token == null) return PrimitiveTypeGreen.__Missing;
+                if (context == null) return PrimitiveTypeGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_KObject() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KObject());
                 if (context.LR_KBool() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KBool());
@@ -860,7 +860,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
                 if (context.LR_KType() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KType());
                 if (context.LR_KSymbol() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KSymbol());
                 if (context.LR_KVoid() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KVoid());
-                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.KObject);
+                if (token is null) token = _factory.None;
                 return _factory.PrimitiveType(token);
             }
             
@@ -904,11 +904,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             
             public override GreenNode? VisitPr_Identifier(CompilerParser.Pr_IdentifierContext? context)
             {
-                if (context?.E_Token == null) return IdentifierGreen.__Missing;
+                if (context == null) return IdentifierGreen.__Missing;
                 InternalSyntaxToken? token = null;
                 if (context.LR_TIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TIdentifier());
                 if (context.LR_TVerbatimIdentifier() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TVerbatimIdentifier());
-                if (token is null) token = (InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TIdentifier);
+                if (token is null) token = _factory.None;
                 return _factory.Identifier(token);
             }
             

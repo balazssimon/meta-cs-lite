@@ -31,9 +31,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class PReferenceSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
+    public abstract partial class PReferenceSymbol: global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl
     {
-        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_Rule = new __CompletionPart(nameof(Start_Rule));
             public static readonly __CompletionPart Finish_Rule = new __CompletionPart(nameof(Finish_Rule));
@@ -42,7 +42,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_Rule, Finish_Rule
                     , Start_ReferencedTypes, Finish_ReferencedTypes
                 );
@@ -51,8 +51,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         private global::MetaDslx.CodeAnalysis.MetaSymbol _rule;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> _referencedTypes;
 
-        public PReferenceSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public PReferenceSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -68,10 +68,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_Rule, null, default);
                 return _rule;
             }
-            protected set
-            {
-                _rule = value;
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -82,10 +78,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_ReferencedTypes, null, default);
                 return _referencedTypes;
             }
-            protected set
-            {
-                _referencedTypes = value;
-            }
         }
 
 
@@ -95,14 +87,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Rule))
                 {
-                    if (_rule == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Rule(diagnostics, cancellationToken);
-                        _rule = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Rule(diagnostics, cancellationToken);
+                    _rule = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Rule);
                 }
                 return true;
@@ -111,14 +100,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ReferencedTypes))
                 {
-                    if (_referencedTypes == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ReferencedTypes(diagnostics, cancellationToken);
-                        _referencedTypes = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ReferencedTypes(diagnostics, cancellationToken);
+                    _referencedTypes = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ReferencedTypes);
                 }
                 return true;

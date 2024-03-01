@@ -171,41 +171,20 @@ namespace MetaDslx.CodeAnalysis.Binding
             var module = Compilation.SourceModule;
             var symbolFactory = module.SymbolFactory;
             MetaType propertyType = default;
-            if (typeof(Symbol).IsAssignableFrom(modelObjectType))
+            var property = modelObjectType.GetAllProperties(this.Name);
+            if (property is not null)
             {
-                var symbolProperty = modelObjectType.GetProperty(this.Name, BindingFlags.Public | BindingFlags.Instance);
-                if (symbolProperty is not null)
+                propertyType = property.PropertyType;
+                //if (propertyType.TryExtractNullableType(out var innerType, diagnostics, cancellationToken)) propertyType = innerType;
+                if (propertyType.IsDefaultOrNull)
                 {
-                    propertyType = symbolProperty.PropertyType;
-                    if (propertyType.IsDefaultOrNull)
-                    {
-                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of symbol '{modelObjectType}' has no type."));
-                    }
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of '{modelObjectType.FullName}' has no type."));
                 }
-                else
-                {
-                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of symbol '{modelObjectType}' does not exist."));
-                }
+                if (propertyType.TryExtractCollectionType(out var itemType, diagnostics, cancellationToken)) propertyType = itemType;
             }
             else
             {
-                var info = symbolFactory.GetModelObjectInfo(modelObjectType);
-                if (info is not null)
-                {
-                    var modelProperty = info.GetProperty(this.Name);
-                    if (modelProperty is not null)
-                    {
-                        propertyType = modelProperty.Type;
-                        if (propertyType.IsDefaultOrNull)
-                        {
-                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
-                        }
-                    }
-                    else
-                    {
-                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
-                    }
-                }
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of '{modelObjectType.FullName}' does not exist."));
             }
             return propertyType;
         }

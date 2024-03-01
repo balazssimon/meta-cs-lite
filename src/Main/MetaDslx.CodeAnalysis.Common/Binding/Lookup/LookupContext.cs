@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using Autofac;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.Errors;
 using Microsoft.CodeAnalysis;
@@ -28,11 +29,13 @@ namespace MetaDslx.CodeAnalysis.Binding
             IgnoreDiagnostics = 0x20,
         }
 
+        private static ObjectPool<LookupContext> s_lookupContextPool;
+
         private readonly ObjectPool<LookupContext> _pool;
-        private readonly Compilation _compilation;
-        private readonly Language _language;
-        private readonly DefaultLookupValidator _defaultLookupValidator;
-        private readonly ErrorSymbolFactory _errorSymbolFactory;
+        private Compilation _compilation;
+        private Language _language;
+        private DefaultLookupValidator _defaultLookupValidator;
+        private ErrorSymbolFactory _errorSymbolFactory;
         private object? _multiLookupKey;
         private Binder _originalBinder;
         private Binder _currentBinder;
@@ -55,13 +58,9 @@ namespace MetaDslx.CodeAnalysis.Binding
         private HashSet<DiagnosticInfo> _useSiteDiagnostics;
         private CancellationToken _cancellationToken;
 
-        internal protected LookupContext(ObjectPool<LookupContext> pool, Compilation compilation, Language language)
+        internal LookupContext(ObjectPool<LookupContext> pool)
         {
             _pool = pool;
-            _compilation = compilation;
-            _language = language;
-            _defaultLookupValidator = _compilation[_language].DefaultLookupValidator;
-            _errorSymbolFactory = _compilation[_language].ErrorSymbolFactory;
             _validators = new HashSet<ILookupValidator>();
             _namePrefixes = new HashSet<string>();
             _nameSuffixes = new HashSet<string>();
@@ -182,6 +181,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         public void Free()
         {
             this.Clear();
+            _compilation = null;
+            _language = null;
+            _defaultLookupValidator = null;
+            _errorSymbolFactory = null;
             if (_pool != null)
             {
                 _pool.Free(this);
@@ -219,9 +222,25 @@ namespace MetaDslx.CodeAnalysis.Binding
             _useSiteDiagnostics.Clear();
         }
 
+        public static LookupContext GetInstance(Compilation compilation, Language language)
+        {
+            if (compilation is null) throw new ArgumentNullException(nameof(compilation));
+            if (language is null) throw new ArgumentNullException(nameof(language));
+            if (s_lookupContextPool is null)
+            {
+                Interlocked.CompareExchange(ref s_lookupContextPool, new ObjectPool<LookupContext>(() => new LookupContext(s_lookupContextPool), 128), null);
+            }
+            var result = s_lookupContextPool.Allocate();
+            result._compilation = compilation;
+            result._language = language;
+            result._defaultLookupValidator = compilation.DefaultLookupValidator;
+            result._errorSymbolFactory = compilation.ServiceProvider.Resolve<ErrorSymbolFactory>();
+            return result;
+        }
+
         public virtual LookupContext AllocateCopy()
         {
-            var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
+            var context = GetInstance(_compilation, _language);
             context.MultiLookupKey = _multiLookupKey;
             context.OriginalBinder = _originalBinder;
             context.CurrentBinder = _currentBinder;
@@ -250,7 +269,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (_namePrefixes.Count == 0 && !prefixes.Any()) return;
             _namePrefixes.Clear();
-            _namePrefixes.UnionWith(prefixes.Where(p => !string.IsNullOrWhiteSpace(p)));
+            _namePrefixes.UnionWith(prefixes);
             ComputeViableNames();
         }
 
@@ -258,7 +277,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (_nameSuffixes.Count == 0 && !suffixes.Any()) return;
             _nameSuffixes.Clear();
-            _nameSuffixes.UnionWith(suffixes.Where(s => !string.IsNullOrWhiteSpace(s)));
+            _nameSuffixes.UnionWith(suffixes);
             ComputeViableNames();
         }
 
@@ -337,7 +356,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public SingleLookupResult Validate(DeclarationSymbol symbol)
         {
-            var unwrappedSymbol = AliasSymbol.UnwrapAlias(this, symbol) as DeclarationSymbol;
+            var unwrappedSymbol = Binder.UnwrapAlias(symbol) as DeclarationSymbol;
             if (_originalBinder is not null) return ((ILookupValidator)_originalBinder).ValidateResult(this, symbol, unwrappedSymbol);
             else return DefaultLookupValidator.ValidateResult(this, symbol, unwrappedSymbol);
         }

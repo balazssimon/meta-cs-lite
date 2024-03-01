@@ -25,7 +25,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             _compilation = compilation;
             _syntaxTree = syntaxTree;
-            _pool = new ObjectPool<BinderFactoryVisitor>(() => _compilation[_syntaxTree.Language].SemanticsFactory.CreateBinderFactoryVisitor(this), 64);
+            _pool = new ObjectPool<BinderFactoryVisitor>(() => _syntaxTree.Language.SyntaxFactory.CreateBinderFactoryVisitor(this), 64);
         }
 
         public Compilation Compilation => _compilation;

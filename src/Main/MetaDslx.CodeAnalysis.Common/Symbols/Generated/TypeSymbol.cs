@@ -31,9 +31,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class TypeSymbol: Impl.DeclarationSymbolImpl
+    public abstract partial class TypeSymbol: Implementation.DeclarationSymbolImpl
     {
-        public new class CompletionParts : Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : Implementation.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_IsReferenceType = new __CompletionPart(nameof(Start_IsReferenceType));
             public static readonly __CompletionPart Finish_IsReferenceType = new __CompletionPart(nameof(Finish_IsReferenceType));
@@ -48,7 +48,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_IsReferenceType, Finish_IsReferenceType
                     , Start_IsValueType, Finish_IsValueType
                     , Start_TypeParameters, Finish_TypeParameters

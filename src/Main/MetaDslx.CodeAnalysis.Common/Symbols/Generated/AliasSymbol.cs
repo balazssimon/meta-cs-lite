@@ -31,16 +31,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class AliasSymbol: Impl.DeclarationSymbolImpl
+    public abstract partial class AliasSymbol: Implementation.DeclarationSymbolImpl
     {
-        public new class CompletionParts : Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : Implementation.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_Target = new __CompletionPart(nameof(Start_Target));
             public static readonly __CompletionPart Finish_Target = new __CompletionPart(nameof(Finish_Target));
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_Target, Finish_Target
                 );
         }

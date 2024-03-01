@@ -249,7 +249,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
 
-namespace [symbol.NamespaceName].Impl
+namespace [symbol.NamespaceName].Implementation
 {
     using __Model = MetaDslx.Modeling.Model;
     using __IModelObject = MetaDslx.Modeling.IModelObject;

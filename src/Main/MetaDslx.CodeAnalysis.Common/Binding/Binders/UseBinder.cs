@@ -57,11 +57,11 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (_types.IsDefaultOrEmpty) return true;
             if (_isType) return symbol is TypeSymbol;
             if (_isSymbol) return true;
-            if (symbol is IModelSymbol modelSymbol)
+            if (symbol.ModelObjectType is not null)
             {
                 foreach (var type in _types)
                 {
-                    if (type.IsAssignableFrom(modelSymbol.ModelObjectType)) return true;
+                    if (type.IsAssignableFrom(symbol.ModelObjectType)) return true;
                 }
             }
             foreach (var type in _types)

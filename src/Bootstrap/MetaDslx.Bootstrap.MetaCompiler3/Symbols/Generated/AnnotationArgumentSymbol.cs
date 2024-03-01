@@ -64,8 +64,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         private global::MetaDslx.CodeAnalysis.MetaType _parameterType;
         private ExpressionSymbol _value;
 
-        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -81,10 +81,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_AnnotationSymbol, null, default);
                 return _annotationSymbol;
             }
-            protected set
-            {
-                _annotationSymbol = value;
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -94,10 +90,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_IsNamedArgument, null, default);
                 return _isNamedArgument;
-            }
-            protected set
-            {
-                _isNamedArgument = value;
             }
         }
         [__ModelPropertyAttribute]
@@ -109,10 +101,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_NamedParameter, null, default);
                 return _namedParameter;
             }
-            protected set
-            {
-                _namedParameter = value;
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -122,10 +110,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_Parameter, null, default);
                 return _parameter;
-            }
-            protected set
-            {
-                _parameter = value;
             }
         }
         [__PhaseAttribute(nameof(Parameter))]
@@ -137,10 +121,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_Parameter, null, default);
                 return _parameterType;
             }
-            protected set
-            {
-                _parameterType = value;
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -151,10 +131,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_Value, null, default);
                 return _value;
             }
-            protected set
-            {
-                _value = value;
-            }
         }
 
 
@@ -164,14 +140,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_AnnotationSymbol))
                 {
-                    if (_annotationSymbol == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_AnnotationSymbol(diagnostics, cancellationToken);
-                        _annotationSymbol = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_AnnotationSymbol(diagnostics, cancellationToken);
+                    _annotationSymbol = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_AnnotationSymbol);
                 }
                 return true;
@@ -180,14 +153,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_IsNamedArgument))
                 {
-                    if (_isNamedArgument == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_IsNamedArgument(diagnostics, cancellationToken);
-                        _isNamedArgument = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_IsNamedArgument(diagnostics, cancellationToken);
+                    _isNamedArgument = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_IsNamedArgument);
                 }
                 return true;
@@ -196,14 +166,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_NamedParameter))
                 {
-                    if (_namedParameter == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_NamedParameter(diagnostics, cancellationToken);
-                        _namedParameter = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_NamedParameter(diagnostics, cancellationToken);
+                    _namedParameter = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_NamedParameter);
                 }
                 return true;
@@ -214,14 +181,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 {
                     var diagnostics = __DiagnosticBag.GetInstance();
                     var result = Compute_Parameter(diagnostics, cancellationToken);
-                    if (_parameter == default)
-                    {
-                        _parameter = result.Parameter;
-                    }
-                    if (_parameterType == default)
-                    {
-                        _parameterType = result.ParameterType;
-                    }
+                    _parameter = result.Parameter;
+                    _parameterType = result.ParameterType;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Parameter);
@@ -232,14 +193,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Value))
                 {
-                    if (_value == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Value(diagnostics, cancellationToken);
-                        _value = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Value(diagnostics, cancellationToken);
+                    _value = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Value);
                 }
                 return true;

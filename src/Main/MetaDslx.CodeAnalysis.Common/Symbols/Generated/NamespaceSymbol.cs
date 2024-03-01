@@ -31,9 +31,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class NamespaceSymbol: Impl.DeclarationSymbolImpl
+    public abstract partial class NamespaceSymbol: Implementation.DeclarationSymbolImpl
     {
-        public new class CompletionParts : Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : Implementation.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_ConstituentNamespaces = new __CompletionPart(nameof(Start_ConstituentNamespaces));
             public static readonly __CompletionPart Finish_ConstituentNamespaces = new __CompletionPart(nameof(Finish_ConstituentNamespaces));
@@ -42,7 +42,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_ConstituentNamespaces, Finish_ConstituentNamespaces
                     , Start_NamespaceMembers, Finish_NamespaceMembers
                 );

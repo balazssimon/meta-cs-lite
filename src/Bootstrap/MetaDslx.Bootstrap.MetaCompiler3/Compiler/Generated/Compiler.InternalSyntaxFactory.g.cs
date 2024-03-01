@@ -266,6 +266,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new MainGreen(CompilerSyntaxKind.Main, kNamespace, qualifier, tSemicolon, block1.Node, block2, endOfFileToken);
         }
+        
         internal UsingMetaModelGreen UsingMetaModel(__InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
         {
             #if DEBUG
@@ -285,6 +286,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal UsingAlt2Green UsingAlt2(QualifierGreen namespaces)
         {
             #if DEBUG
@@ -302,6 +304,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LanguageDeclarationGreen LanguageDeclaration(__InternalSyntaxToken kLanguage, NameGreen name, LanguageDeclarationBlock1Green block, __InternalSyntaxToken tSemicolon, GrammarGreen grammar)
         {
             #if DEBUG
@@ -314,6 +317,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new LanguageDeclarationGreen(CompilerSyntaxKind.LanguageDeclaration, kLanguage, name, block, tSemicolon, grammar);
         }
+        
         internal GrammarGreen Grammar(GrammarBlock1Green block)
         {
             #if DEBUG
@@ -331,6 +335,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal GrammarRuleAlt1Green GrammarRuleAlt1(RuleGreen rule)
         {
             #if DEBUG
@@ -348,6 +353,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal GrammarRuleAlt2Green GrammarRuleAlt2(LexerRuleGreen lexerRule)
         {
             #if DEBUG
@@ -365,6 +371,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RuleGreen Rule(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, RuleBlock1Green block, __InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen> alternatives, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
@@ -376,6 +383,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new RuleGreen(CompilerSyntaxKind.Rule, annotations1.Node, block, tColon, alternatives.Node, tSemicolon);
         }
+        
         internal AlternativeGreen Alternative(AlternativeBlock1Green block1, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen> elements, AlternativeBlock2Green block2)
         {
             #if DEBUG
@@ -392,6 +400,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ElementGreen Element(ElementBlock1Green block, ElementValueGreen value)
         {
             #if DEBUG
@@ -409,6 +418,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ElementValueAlt1Green ElementValueAlt1(BlockGreen block)
         {
             #if DEBUG
@@ -426,6 +436,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ElementValueAlt2Green ElementValueAlt2(Eof1Green eof1)
         {
             #if DEBUG
@@ -443,6 +454,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ElementValueAlt3Green ElementValueAlt3(FixedGreen @fixed)
         {
             #if DEBUG
@@ -460,6 +472,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ElementValueAlt4Green ElementValueAlt4(RuleRefGreen ruleRef)
         {
             #if DEBUG
@@ -477,6 +490,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal BlockGreen Block(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, __InternalSyntaxToken tLParen, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<BlockAlternativeGreen> alternatives, __InternalSyntaxToken tRParen, MultiplicityGreen multiplicity)
         {
             #if DEBUG
@@ -487,6 +501,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new BlockGreen(CompilerSyntaxKind.Block, annotations1.Node, tLParen, alternatives.Node, tRParen, multiplicity);
         }
+        
         internal BlockAlternativeGreen BlockAlternative(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen> elements, BlockAlternativeBlock1Green block)
         {
             #if DEBUG
@@ -503,6 +518,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RuleRefAlt1Green RuleRefAlt1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, IdentifierGreen grammarRule, MultiplicityGreen multiplicity)
         {
             #if DEBUG
@@ -520,6 +536,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RuleRefAlt2Green RuleRefAlt2(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, __InternalSyntaxToken tHash, TypeReferenceGreen referencedTypes, MultiplicityGreen multiplicity)
         {
             #if DEBUG
@@ -529,6 +546,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new RuleRefAlt2Green(CompilerSyntaxKind.RuleRefAlt2, annotations1.Node, tHash, referencedTypes, multiplicity);
         }
+        
         internal RuleRefAlt3Green RuleRefAlt3(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, __InternalSyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeReferenceGreen> referencedTypes, RuleRefAlt3Block1Green block, __InternalSyntaxToken tRBrace, MultiplicityGreen multiplicity)
         {
             #if DEBUG
@@ -539,6 +557,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new RuleRefAlt3Green(CompilerSyntaxKind.RuleRefAlt3, annotations1.Node, tHashLBrace, referencedTypes.Node, block, tRBrace, multiplicity);
         }
+        
         internal Eof1Green Eof1(__InternalSyntaxToken kEof)
         {
             #if DEBUG
@@ -557,6 +576,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal FixedGreen Fixed(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, __InternalSyntaxToken text, MultiplicityGreen multiplicity)
         {
             #if DEBUG
@@ -575,6 +595,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LexerRuleAlt1Green LexerRuleAlt1(TokenGreen token)
         {
             #if DEBUG
@@ -592,6 +613,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LexerRuleAlt2Green LexerRuleAlt2(FragmentGreen fragment)
         {
             #if DEBUG
@@ -609,6 +631,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TokenGreen Token(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LexerAnnotationGreen> annotations1, TokenBlock1Green block, __InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> alternatives, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
@@ -620,6 +643,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new TokenGreen(CompilerSyntaxKind.Token, annotations1.Node, block, tColon, alternatives.Node, tSemicolon);
         }
+        
         internal FragmentGreen Fragment(__InternalSyntaxToken kFragment, NameGreen name, __InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> alternatives, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
@@ -633,6 +657,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new FragmentGreen(CompilerSyntaxKind.Fragment, kFragment, name, tColon, alternatives.Node, tSemicolon);
         }
+        
         internal LAlternativeGreen LAlternative(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LElementGreen> elements)
         {
             #if DEBUG
@@ -649,6 +674,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LElementGreen LElement(__InternalSyntaxToken isNegated, LElementValueGreen value, MultiplicityGreen multiplicity)
         {
             #if DEBUG
@@ -667,6 +693,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LElementValueAlt1Green LElementValueAlt1(LBlockGreen lBlock)
         {
             #if DEBUG
@@ -684,6 +711,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LElementValueAlt2Green LElementValueAlt2(LFixedGreen lFixed)
         {
             #if DEBUG
@@ -701,6 +729,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LElementValueAlt3Green LElementValueAlt3(LWildCardGreen lWildCard)
         {
             #if DEBUG
@@ -718,6 +747,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LElementValueAlt4Green LElementValueAlt4(LRangeGreen lRange)
         {
             #if DEBUG
@@ -735,6 +765,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LElementValueAlt5Green LElementValueAlt5(LReferenceGreen lReference)
         {
             #if DEBUG
@@ -752,6 +783,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LReferenceGreen LReference(IdentifierGreen rule)
         {
             #if DEBUG
@@ -769,6 +801,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LFixedGreen LFixed(__InternalSyntaxToken text)
         {
             #if DEBUG
@@ -787,6 +820,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LWildCardGreen LWildCard(__InternalSyntaxToken tDot)
         {
             #if DEBUG
@@ -805,6 +839,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LRangeGreen LRange(__InternalSyntaxToken startChar, __InternalSyntaxToken tDotDot, __InternalSyntaxToken endChar)
         {
             #if DEBUG
@@ -827,6 +862,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LBlockGreen LBlock(__InternalSyntaxToken tLParen, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> alternatives, __InternalSyntaxToken tRParen)
         {
             #if DEBUG
@@ -847,6 +883,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ExpressionAlt1Green ExpressionAlt1(SingleExpressionGreen singleExpression)
         {
             #if DEBUG
@@ -864,6 +901,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ExpressionAlt2Green ExpressionAlt2(ArrayExpressionGreen arrayExpression)
         {
             #if DEBUG
@@ -881,6 +919,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Green SingleExpressionAlt1(SingleExpressionAlt1Block1Green value)
         {
             #if DEBUG
@@ -898,6 +937,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt2Green SingleExpressionAlt2(QualifierGreen value)
         {
             #if DEBUG
@@ -915,6 +955,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ArrayExpressionGreen ArrayExpression(__InternalSyntaxToken tLBrace, ArrayExpressionBlock1Green block, __InternalSyntaxToken tRBrace)
         {
             #if DEBUG
@@ -935,6 +976,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ParserAnnotationGreen ParserAnnotation(__InternalSyntaxToken tLBracket, QualifierGreen attributeClass, ParserAnnotationBlock1Green block, __InternalSyntaxToken tRBracket)
         {
             #if DEBUG
@@ -946,6 +988,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new ParserAnnotationGreen(CompilerSyntaxKind.ParserAnnotation, tLBracket, attributeClass, block, tRBracket);
         }
+        
         internal LexerAnnotationGreen LexerAnnotation(__InternalSyntaxToken tLBracket, QualifierGreen attributeClass, LexerAnnotationBlock1Green block, __InternalSyntaxToken tRBracket)
         {
             #if DEBUG
@@ -957,6 +1000,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new LexerAnnotationGreen(CompilerSyntaxKind.LexerAnnotation, tLBracket, attributeClass, block, tRBracket);
         }
+        
         internal AnnotationArgumentGreen AnnotationArgument(AnnotationArgumentBlock1Green block, ExpressionGreen value)
         {
             #if DEBUG
@@ -974,6 +1018,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal AssignmentGreen Assignment(__InternalSyntaxToken token)
         {
             #if DEBUG
@@ -992,6 +1037,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal MultiplicityGreen Multiplicity(__InternalSyntaxToken token)
         {
             #if DEBUG
@@ -1010,6 +1056,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TypeReferenceIdentifierAlt1Green TypeReferenceIdentifierAlt1(PrimitiveTypeGreen primitiveType)
         {
             #if DEBUG
@@ -1027,6 +1074,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TypeReferenceIdentifierAlt2Green TypeReferenceIdentifierAlt2(IdentifierGreen identifier)
         {
             #if DEBUG
@@ -1044,6 +1092,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TypeReferenceAlt1Green TypeReferenceAlt1(PrimitiveTypeGreen primitiveType)
         {
             #if DEBUG
@@ -1061,6 +1110,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TypeReferenceAlt2Green TypeReferenceAlt2(QualifierGreen qualifier)
         {
             #if DEBUG
@@ -1078,6 +1128,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal PrimitiveTypeGreen PrimitiveType(__InternalSyntaxToken token)
         {
             #if DEBUG
@@ -1096,6 +1147,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal NameGreen Name(IdentifierGreen identifier)
         {
             #if DEBUG
@@ -1113,6 +1165,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal QualifierGreen Qualifier(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> identifier)
         {
             #if DEBUG
@@ -1129,6 +1182,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal IdentifierGreen Identifier(__InternalSyntaxToken token)
         {
             #if DEBUG
@@ -1147,6 +1201,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal MainBlock1Green MainBlock1(__InternalSyntaxToken kUsing, UsingGreen @using, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
@@ -1168,6 +1223,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal MainBlock2Green MainBlock2(LanguageDeclarationGreen declarations)
         {
             #if DEBUG
@@ -1185,6 +1241,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LanguageDeclarationBlock1Green LanguageDeclarationBlock1(__InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> baseLanguages)
         {
             #if DEBUG
@@ -1203,6 +1260,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LanguageDeclarationBlock1baseLanguagesBlockGreen LanguageDeclarationBlock1baseLanguagesBlock(__InternalSyntaxToken tComma, QualifierGreen baseLanguages)
         {
             #if DEBUG
@@ -1222,6 +1280,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal GrammarBlock1Green GrammarBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<GrammarRuleGreen> grammarRules)
         {
             #if DEBUG
@@ -1238,6 +1297,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RuleBlock1Alt1Green RuleBlock1Alt1(TypeReferenceIdentifierGreen returnType)
         {
             #if DEBUG
@@ -1255,6 +1315,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RuleBlock1Alt2Green RuleBlock1Alt2(IdentifierGreen identifier, __InternalSyntaxToken kReturns, TypeReferenceGreen returnType)
         {
             #if DEBUG
@@ -1275,6 +1336,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RulealternativesBlockGreen RulealternativesBlock(__InternalSyntaxToken tBar, AlternativeGreen alternatives)
         {
             #if DEBUG
@@ -1294,6 +1356,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal AlternativeBlock1Green AlternativeBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, __InternalSyntaxToken kAlt, AlternativeBlock1Block1Green block, __InternalSyntaxToken tColon)
         {
             #if DEBUG
@@ -1305,6 +1368,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             #endif
             return new AlternativeBlock1Green(CompilerSyntaxKind.AlternativeBlock1, annotations1.Node, kAlt, block, tColon);
         }
+        
         internal AlternativeBlock1Block1Alt1Green AlternativeBlock1Block1Alt1(TypeReferenceIdentifierGreen returnType)
         {
             #if DEBUG
@@ -1322,6 +1386,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal AlternativeBlock1Block1Alt2Green AlternativeBlock1Block1Alt2(IdentifierGreen identifier, __InternalSyntaxToken kReturns, TypeReferenceGreen returnType)
         {
             #if DEBUG
@@ -1342,6 +1407,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal AlternativeBlock2Green AlternativeBlock2(__InternalSyntaxToken tEqGt, ExpressionGreen returnValue)
         {
             #if DEBUG
@@ -1361,6 +1427,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ElementBlock1Green ElementBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, NameGreen name, AssignmentGreen assignment)
         {
             #if DEBUG
@@ -1379,6 +1446,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal BlockalternativesBlockGreen BlockalternativesBlock(__InternalSyntaxToken tBar, BlockAlternativeGreen alternatives)
         {
             #if DEBUG
@@ -1398,6 +1466,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal BlockAlternativeBlock1Green BlockAlternativeBlock1(__InternalSyntaxToken tEqGt, ExpressionGreen returnValue)
         {
             #if DEBUG
@@ -1417,6 +1486,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RuleRefAlt3referencedTypesBlockGreen RuleRefAlt3referencedTypesBlock(__InternalSyntaxToken tComma, TypeReferenceGreen referencedTypes)
         {
             #if DEBUG
@@ -1436,6 +1506,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal RuleRefAlt3Block1Green RuleRefAlt3Block1(__InternalSyntaxToken tBar, IdentifierGreen grammarRule)
         {
             #if DEBUG
@@ -1455,6 +1526,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TokenBlock1Alt1Green TokenBlock1Alt1(__InternalSyntaxToken kToken, NameGreen name, TokenBlock1Alt1Block1Green block)
         {
             #if DEBUG
@@ -1474,6 +1546,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TokenBlock1Alt2Green TokenBlock1Alt2(__InternalSyntaxToken isTrivia, NameGreen name)
         {
             #if DEBUG
@@ -1493,6 +1566,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TokenBlock1Alt1Block1Green TokenBlock1Alt1Block1(__InternalSyntaxToken kReturns, TypeReferenceGreen returnType)
         {
             #if DEBUG
@@ -1512,6 +1586,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal TokenalternativesBlockGreen TokenalternativesBlock(__InternalSyntaxToken tBar, LAlternativeGreen alternatives)
         {
             #if DEBUG
@@ -1531,6 +1606,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal FragmentalternativesBlockGreen FragmentalternativesBlock(__InternalSyntaxToken tBar, LAlternativeGreen alternatives)
         {
             #if DEBUG
@@ -1550,6 +1626,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LBlockalternativesBlockGreen LBlockalternativesBlock(__InternalSyntaxToken tBar, LAlternativeGreen alternatives)
         {
             #if DEBUG
@@ -1569,6 +1646,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Block1Alt1Green SingleExpressionAlt1Block1Alt1(__InternalSyntaxToken kNull)
         {
             #if DEBUG
@@ -1587,6 +1665,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Block1Alt2Green SingleExpressionAlt1Block1Alt2(__InternalSyntaxToken kTrue)
         {
             #if DEBUG
@@ -1605,6 +1684,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Block1Alt3Green SingleExpressionAlt1Block1Alt3(__InternalSyntaxToken kFalse)
         {
             #if DEBUG
@@ -1623,6 +1703,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Block1Alt4Green SingleExpressionAlt1Block1Alt4(__InternalSyntaxToken tString)
         {
             #if DEBUG
@@ -1641,6 +1722,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Block1Alt5Green SingleExpressionAlt1Block1Alt5(__InternalSyntaxToken tInteger)
         {
             #if DEBUG
@@ -1659,6 +1741,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Block1Alt6Green SingleExpressionAlt1Block1Alt6(__InternalSyntaxToken tDecimal)
         {
             #if DEBUG
@@ -1677,6 +1760,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal SingleExpressionAlt1Block1Alt7Green SingleExpressionAlt1Block1Alt7(PrimitiveTypeGreen primitiveType)
         {
             #if DEBUG
@@ -1694,6 +1778,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ArrayExpressionBlock1Green ArrayExpressionBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SingleExpressionGreen> items)
         {
             #if DEBUG
@@ -1710,6 +1795,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ArrayExpressionBlock1itemsBlockGreen ArrayExpressionBlock1itemsBlock(__InternalSyntaxToken tComma, SingleExpressionGreen items)
         {
             #if DEBUG
@@ -1729,6 +1815,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ParserAnnotationBlock1Green ParserAnnotationBlock1(__InternalSyntaxToken tLParen, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen> arguments, __InternalSyntaxToken tRParen)
         {
             #if DEBUG
@@ -1749,6 +1836,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal ParserAnnotationBlock1argumentsBlockGreen ParserAnnotationBlock1argumentsBlock(__InternalSyntaxToken tComma, AnnotationArgumentGreen arguments)
         {
             #if DEBUG
@@ -1768,6 +1856,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LexerAnnotationBlock1Green LexerAnnotationBlock1(__InternalSyntaxToken tLParen, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen> arguments, __InternalSyntaxToken tRParen)
         {
             #if DEBUG
@@ -1788,6 +1877,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal LexerAnnotationBlock1argumentsBlockGreen LexerAnnotationBlock1argumentsBlock(__InternalSyntaxToken tComma, AnnotationArgumentGreen arguments)
         {
             #if DEBUG
@@ -1807,6 +1897,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(IdentifierGreen namedParameter, __InternalSyntaxToken tColon)
         {
             #if DEBUG
@@ -1826,6 +1917,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
         internal QualifierIdentifierBlockGreen QualifierIdentifierBlock(__InternalSyntaxToken tDot, IdentifierGreen identifier)
         {
             #if DEBUG
@@ -1845,5 +1937,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        
     }
 }

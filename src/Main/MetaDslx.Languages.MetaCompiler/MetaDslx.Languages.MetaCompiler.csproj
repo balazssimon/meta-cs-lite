@@ -5,7 +5,6 @@
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 		<!--CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath-->
-		<MetaDslxBootstrap>false</MetaDslxBootstrap>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<NoWarn>$(NoWarn);nullable</NoWarn>
@@ -30,7 +29,7 @@
 		<AdditionalFiles Include="Generators\*.mxg" />
 		<AdditionalFiles Include="Model\*.mxm" />
 		<AdditionalFiles Include="Compiler\*.mxl" />
-		<AdditionalFiles Include="SymbolsNew\*.mxs" />
+		<AdditionalFiles Include="Symbols\*.mxs" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Symbols\CompilerSymbols.mxs" />
@@ -42,11 +41,4 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
-		<Compile Remove="Symbols\**" Condition="!$(MetaDslxBootstrap)" />
-		<None Remove="Symbols\**" Condition="!$(MetaDslxBootstrap)" />
-
-		<Compile Remove="SymbolsNew\**" Condition="$(MetaDslxBootstrap)" />
-		<None Remove="SymbolsNew\**" Condition="$(MetaDslxBootstrap)" />
-	</ItemGroup>
 </Project>

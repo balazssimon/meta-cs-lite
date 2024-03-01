@@ -1394,6 +1394,8 @@ template GenerateSyntaxFactory()
         using __CancellationToken = global::System.Threading.CancellationToken;
         using __ArgumentNullException = global::System.ArgumentNullException;
         using __ArgumentException = global::System.ArgumentException;
+        using __BinderFactory = global::MetaDslx.CodeAnalysis.Binding.BinderFactory;
+        using __BinderFactoryVisitor = global::MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor;
 
         public class [Lang]SyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
         {
@@ -1533,6 +1535,11 @@ template GenerateSyntaxFactory()
                     [GenerateSyntaxFactoryCreate(alt)]
                 [end foreach]
             [end foreach]
+
+            public override __BinderFactoryVisitor CreateBinderFactoryVisitor(__BinderFactory binderFactory)
+            {
+                return new global::[Namespace].Binding.[Lang]BinderFactoryVisitor(binderFactory);
+            }
 
             internal static global::System.Collections.Generic.IEnumerable<__Type> GetNodeTypes()
             {

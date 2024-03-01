@@ -31,14 +31,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class TypeParameterSymbol: Impl.TypeSymbolImpl
+    public abstract partial class TypeParameterSymbol: Implementation.TypeSymbolImpl
     {
-        public new class CompletionParts : Impl.TypeSymbolImpl.CompletionParts
+        public new class CompletionParts : Implementation.TypeSymbolImpl.CompletionParts
         {
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    Impl.TypeSymbolImpl.CompletionParts.CompletionGraph
+                    Implementation.TypeSymbolImpl.CompletionParts.CompletionGraph
                 );
         }
 

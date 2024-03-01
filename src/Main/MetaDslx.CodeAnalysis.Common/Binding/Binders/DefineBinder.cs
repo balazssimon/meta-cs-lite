@@ -139,19 +139,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             return _definedSymbols.Cast<Symbol, object?>();
         }
 
-        protected override void MarkSymbolAsUsed(DeclarationSymbol symbol)
-        {
-            foreach (var definedSymbol in DefinedSymbols)
-            {
-                //if (definedSymbol is DeclarationSymbol declarationSymbol && declarationSymbol.Members.Contains(symbol)) return;
-                foreach (var import in definedSymbol.ContainedSymbols.OfType<ImportSymbol>())
-                {
-                    if (import.MarkImportedSymbolAsUsed(symbol)) return;
-                }
-            }
-            base.MarkSymbolAsUsed(symbol);
-        }
-
         public override string ToString()
         {
             var builder = PooledStringBuilder.GetInstance();

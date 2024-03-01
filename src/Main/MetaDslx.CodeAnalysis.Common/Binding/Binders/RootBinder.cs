@@ -23,6 +23,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             _syntaxTree = syntaxTree;
         }
 
+        public override Language Language => _syntaxTree.Language;
         public override SyntaxTree SyntaxTree => _syntaxTree;
 
         public RootSingleDeclaration BuildDeclarationTree(string? scriptClassName, bool isSubmission)
@@ -89,7 +90,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     foreach (var rootNamespace in DefinedSymbols)
                     {
-                        foreach (var symbol in rootNamespace.ContainedSymbols.Where(s => s is ISourceSymbol ss && ss.DeclaringSyntaxReferences.Any(d => d.SyntaxTree == this.SyntaxTree)))
+                        foreach (var symbol in rootNamespace.ContainedSymbols.Where(s => s.DeclaringSyntaxReferences.Any(d => d.SyntaxTree == this.SyntaxTree)))
                         {
                             if (symbol is DeclarationSymbol declaredSymbol && context.IsViable(declaredSymbol))
                             {

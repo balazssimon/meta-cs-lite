@@ -225,13 +225,13 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public static SingleLookupResult WrongModelObjectType(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, bool diagnose)
         {
-            var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeUnknown, unwrappedSymbol.Name, (unwrappedSymbol as IModelSymbol)?.ModelObjectType) : null;
+            var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeUnknown, unwrappedSymbol.Name, unwrappedSymbol.ModelObjectType) : null;
             return new SingleLookupResult(LookupResultKind.WrongModelObjectType, symbol, diagInfo);
         }
 
         public static SingleLookupResult WrongModelObjectType(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, string expectedTypes, bool diagnose)
         {
-            var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeKnown, unwrappedSymbol.Name, (unwrappedSymbol as IModelSymbol)?.ModelObjectType, expectedTypes) : null;
+            var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeKnown, unwrappedSymbol.Name, unwrappedSymbol.ModelObjectType, expectedTypes) : null;
             return new SingleLookupResult(LookupResultKind.WrongModelObjectType, symbol, diagInfo);
         }
 
@@ -250,7 +250,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     }
                 }
                 var expectedTypeNames = psb.ToStringAndFree();
-                var diagInfo = new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeKnown, unwrappedSymbol.Name, (unwrappedSymbol as IModelSymbol)?.ModelObjectType, expectedTypeNames);
+                var diagInfo = new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeKnown, unwrappedSymbol.Name, unwrappedSymbol.ModelObjectType, expectedTypeNames);
                 return new SingleLookupResult(LookupResultKind.WrongModelObjectType, symbol, diagInfo);
             }
             else

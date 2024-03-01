@@ -31,9 +31,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class PAlternativeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl
+    public abstract partial class PAlternativeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl
     {
-        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_ContainingParserRuleSymbol = new __CompletionPart(nameof(Start_ContainingParserRuleSymbol));
             public static readonly __CompletionPart Finish_ContainingParserRuleSymbol = new __CompletionPart(nameof(Finish_ContainingParserRuleSymbol));
@@ -52,7 +52,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    global::MetaDslx.CodeAnalysis.Symbols.Impl.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_ContainingParserRuleSymbol, Finish_ContainingParserRuleSymbol
                     , Start_ContainingPBlockSymbol, Finish_ContainingPBlockSymbol
                     , Start_Elements, Finish_Elements
@@ -71,8 +71,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
         private global::System.Collections.Immutable.ImmutableArray<PElementSymbol> _allSimpleElements;
 
-        public PAlternativeSymbol(__Symbol? container, __Compilation? compilation = null, __MergedDeclaration? declaration = null, __Model? model = null, __IModelObject? modelObject = null, __ISymbol csharpSymbol = null, __ErrorSymbolInfo? errorInfo = null) 
-            : base(container, compilation, declaration, model, modelObject, csharpSymbol, errorInfo)
+        public PAlternativeSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
+            : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
         {
         }
 
@@ -88,10 +88,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_ContainingParserRuleSymbol, null, default);
                 return _containingParserRuleSymbol;
             }
-            protected set
-            {
-                _containingParserRuleSymbol = value;
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -101,10 +97,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_ContainingPBlockSymbol, null, default);
                 return _containingPBlockSymbol;
-            }
-            protected set
-            {
-                _containingPBlockSymbol = value;
             }
         }
         [__ModelPropertyAttribute]
@@ -116,10 +108,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_Elements, null, default);
                 return _elements;
             }
-            protected set
-            {
-                _elements = value;
-            }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
@@ -129,10 +117,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_ReturnValue, null, default);
                 return _returnValue;
-            }
-            protected set
-            {
-                _returnValue = value;
             }
         }
         [__PhaseAttribute]
@@ -144,10 +128,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_ReturnType, null, default);
                 return _returnType;
             }
-            protected set
-            {
-                _returnType = value;
-            }
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
@@ -157,10 +137,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 this.ForceComplete(CompletionParts.Finish_ExpectedType, null, default);
                 return _expectedType;
-            }
-            protected set
-            {
-                _expectedType = value;
             }
         }
         [__PhaseAttribute]
@@ -172,10 +148,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 this.ForceComplete(CompletionParts.Finish_AllSimpleElements, null, default);
                 return _allSimpleElements;
             }
-            protected set
-            {
-                _allSimpleElements = value;
-            }
         }
 
 
@@ -185,14 +157,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ContainingParserRuleSymbol))
                 {
-                    if (_containingParserRuleSymbol == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ContainingParserRuleSymbol(diagnostics, cancellationToken);
-                        _containingParserRuleSymbol = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ContainingParserRuleSymbol(diagnostics, cancellationToken);
+                    _containingParserRuleSymbol = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ContainingParserRuleSymbol);
                 }
                 return true;
@@ -201,14 +170,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ContainingPBlockSymbol))
                 {
-                    if (_containingPBlockSymbol == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ContainingPBlockSymbol(diagnostics, cancellationToken);
-                        _containingPBlockSymbol = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ContainingPBlockSymbol(diagnostics, cancellationToken);
+                    _containingPBlockSymbol = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ContainingPBlockSymbol);
                 }
                 return true;
@@ -217,14 +183,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_Elements))
                 {
-                    if (_elements == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_Elements(diagnostics, cancellationToken);
-                        _elements = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_Elements(diagnostics, cancellationToken);
+                    _elements = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_Elements);
                 }
                 return true;
@@ -233,14 +196,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ReturnValue))
                 {
-                    if (_returnValue == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ReturnValue(diagnostics, cancellationToken);
-                        _returnValue = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ReturnValue(diagnostics, cancellationToken);
+                    _returnValue = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ReturnValue);
                 }
                 return true;
@@ -249,14 +209,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ReturnType))
                 {
-                    if (_returnType == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ReturnType(diagnostics, cancellationToken);
-                        _returnType = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ReturnType(diagnostics, cancellationToken);
+                    _returnType = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ReturnType);
                 }
                 return true;
@@ -265,14 +222,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_ExpectedType))
                 {
-                    if (_expectedType == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_ExpectedType(diagnostics, cancellationToken);
-                        _expectedType = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_ExpectedType(diagnostics, cancellationToken);
+                    _expectedType = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_ExpectedType);
                 }
                 return true;
@@ -281,14 +235,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.Start_AllSimpleElements))
                 {
-                    if (_allSimpleElements == default)
-                    {
-                        var diagnostics = __DiagnosticBag.GetInstance();
-                        var result = Compute_AllSimpleElements(diagnostics, cancellationToken);
-                        _allSimpleElements = result;
-                        AddSymbolDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    var diagnostics = __DiagnosticBag.GetInstance();
+                    var result = Compute_AllSimpleElements(diagnostics, cancellationToken);
+                    _allSimpleElements = result;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
                     NotePartComplete(CompletionParts.Finish_AllSimpleElements);
                 }
                 return true;

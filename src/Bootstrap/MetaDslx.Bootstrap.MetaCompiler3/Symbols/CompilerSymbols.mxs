@@ -2,7 +2,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
 using MetaDslx.CodeAnalysis
 using MetaDslx.CodeAnalysis.Symbols
-//using MetaDslx.Bootstrap.MetaCompiler3.Model
 
 symbol Annotation : Attribute
 {

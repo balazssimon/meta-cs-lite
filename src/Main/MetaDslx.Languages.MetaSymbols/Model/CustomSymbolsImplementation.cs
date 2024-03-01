@@ -23,11 +23,4 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         }
     }
 
-    public interface AAA
-    {
-        public static class BBB
-        {
-            public static readonly string S = "s";
-        }
-    }
 }

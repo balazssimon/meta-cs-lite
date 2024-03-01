@@ -772,11 +772,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj1.Name = "MetaDslx";
             obj2.MChildren.Add(obj3);
             obj2.Declarations.Add(obj3);
-            obj2.Name = "Bootstrap";
+            obj2.Name = "Languages";
             obj2.Parent = obj1;
             obj3.MChildren.Add(obj4);
             obj3.Declarations.Add(obj4);
-            obj3.Name = "MetaCompiler3";
+            obj3.Name = "MetaCompiler";
             obj3.Parent = obj2;
             obj4.MChildren.Add(obj5);
             obj4.MChildren.Add(obj6);

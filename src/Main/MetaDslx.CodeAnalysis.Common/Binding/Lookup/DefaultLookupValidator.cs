@@ -40,7 +40,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 if (context.NamePrefixes.Count > 0 && !context.NamePrefixes.Any(p => symbol.Name.StartsWith(p, StringComparison.OrdinalIgnoreCase))) return false;
                 if (context.NameSuffixes.Count > 0 && !context.NameSuffixes.Any(s => symbol.Name.EndsWith(s, StringComparison.OrdinalIgnoreCase))) return false;
             }
-            var unwrapped = AliasSymbol.UnwrapAlias(context, symbol) as DeclarationSymbol;
+            var unwrapped = Binder.UnwrapAlias(symbol) as DeclarationSymbol;
             if (unwrapped is null) return false;
             foreach (var validator in context.Validators)
             {
@@ -75,7 +75,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (result.IsEmpty)
             {
                 var errorInfo = NotFound(context);
-                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(context.Qualifier ?? _compilation.GlobalNamespace, errorInfo);
+                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(context.Qualifier ?? _compilation.GlobalNamespace, errorInfo, null, default);
                 return false;
             }
             if (result.IsMultiViable && symbols.Count > 1)
@@ -119,7 +119,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (sameSymbols && IsFromCompilation(info.BestLocation) && !IsFromCompilation(info.SecondLocation))
             {
                 // The {1} in '{0}' conflicts with the imported {3} in '{2}'. Using the symbol defined in '{0}'.
-                var errorInfo = new ErrorSymbolInfo(best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.WRN_SameFullNameThisAggAgg, location, bestLocation, best, GetContainingAssembly(second), second));
+                var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.WRN_SameFullNameThisAggAgg, location, bestLocation, SymbolDisplayFormat.FullyQualifiedFormat.ToString(best), GetContainingAssembly(second), SymbolDisplayFormat.FullyQualifiedFormat.ToString(second)));
                 context.AddDiagnostic(errorInfo.Diagnostic);
                 resultSymbol = best;
                 return errorInfo;
@@ -130,12 +130,12 @@ namespace MetaDslx.CodeAnalysis.Binding
                 // since an error has already been reported from the declaration
                 var reportError = !(info.BestLocation == AmbiguousSymbolLocation.FromSourceModule && info.SecondLocation == AmbiguousSymbolLocation.FromSourceModule);
                 // '{0}' is an ambiguous reference between '{1}' and '{2}'
-                var errorInfo = new ErrorSymbolInfo(best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.ERR_AmbigContext, location, best.Name, best, second));
+                var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.ERR_AmbigContext, location, best.Name, SymbolDisplayFormat.FullyQualifiedFormat.ToString(best), SymbolDisplayFormat.FullyQualifiedFormat.ToString(second)));
                 if (reportError)
                 {
                     context.AddDiagnostic(errorInfo.Diagnostic);
                 }
-                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(best.ContainingDeclaration ?? _compilation.GlobalNamespace, errorInfo);
+                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(best.ContainingDeclaration ?? _compilation.GlobalNamespace, errorInfo, null, default);
                 return errorInfo;
             }
         }
@@ -264,7 +264,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     if (ReferenceEquals(qualifierOpt, Compilation.GlobalNamespace))
                     {
                         Debug.Assert(aliasOpt == null || syntaxFacts.IsGlobalAlias(aliasOpt));
-                        var errorInfo = new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_GlobalSingleNameNotFound, context.Location, name, qualifierOpt));
+                        var errorInfo = new ErrorSymbolInfo(qualifierOpt.SymbolType, name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_GlobalSingleNameNotFound, context.Location, name, qualifierOpt));
                         context.AddDiagnostic(errorInfo.Diagnostic);
                         return errorInfo;
                     }
@@ -279,24 +279,24 @@ namespace MetaDslx.CodeAnalysis.Binding
                             container = aliasOpt;
                         }
 
-                        var errorInfo = new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInNS, context.Location, name, container));
+                        var errorInfo = new ErrorSymbolInfo(qualifierOpt.SymbolType, name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInNS, context.Location, name, container));
                         context.AddDiagnostic(errorInfo.Diagnostic);
                         return errorInfo;
                     }
                 }
                 else
                 {
-                    if (qualifierOpt is IErrorSymbol errorQualifier && errorQualifier.ErrorInfo != null)
+                    if (qualifierOpt.IsErrorSymbol)
                     {
-                        return errorQualifier.ErrorInfo;
+                        return qualifierOpt.ErrorInfo;
                     }
-                    var errorInfo = new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInAgg, context.Location, name, qualifierOpt));
+                    var errorInfo = new ErrorSymbolInfo(typeof(DeclarationSymbol), name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInAgg, context.Location, name, qualifierOpt));
                     context.AddDiagnostic(errorInfo.Diagnostic);
                     return errorInfo;
                 }
             }
 
-            var singleErrorInfo = new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_SingleNameNotFound, context.Location, name));
+            var singleErrorInfo = new ErrorSymbolInfo(typeof(DeclarationSymbol), name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_SingleNameNotFound, context.Location, name));
             context.AddDiagnostic(singleErrorInfo.Diagnostic);
             return singleErrorInfo;
         }

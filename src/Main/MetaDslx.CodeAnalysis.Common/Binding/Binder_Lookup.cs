@@ -7,13 +7,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
     public partial class Binder : ILookupValidator
     {
-        public DefaultLookupValidator DefaultLookupValidator => Compilation[Language].DefaultLookupValidator;
+        public DefaultLookupValidator DefaultLookupValidator => Compilation.DefaultLookupValidator;
 
         public LookupContext AllocateLookupContext(
             string? name = null,
@@ -30,7 +29,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             object? multiLookupKey = null,
             IEnumerable<ILookupValidator>? validators = null)
         {
-            var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
+            var context = LookupContext.GetInstance(Compilation, Language);
             context.MultiLookupKey = multiLookupKey;
             context.OriginalBinder = this;
             context.Location = this.Location;
@@ -179,7 +178,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 else
                 {
-                    context.Qualifier = AliasSymbol.UnwrapAlias(context, context.Qualifier) as DeclarationSymbol;
+                    context.Qualifier = UnwrapAlias(context.Qualifier) as DeclarationSymbol;
                     this.AddCandidateSymbolsInternal(context, result);
                 }
             }
@@ -194,7 +193,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var originalAccessThroughType = context.AccessThroughType;
             try
             {
-                var qualifierIsError = context.Qualifier is IErrorSymbol;
+                var qualifierIsError = context.Qualifier.IsErrorSymbol;
                 if (qualifierIsError)
                 {
                     AddLookupCandidateSymbolsInErrorSymbol(context, result);
@@ -216,8 +215,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         private void AddLookupCandidateSymbolsInErrorSymbol(LookupContext context, LookupCandidates result)
         {
             var qualifier = context.Qualifier;
-            var candidateSymbols = ((IErrorSymbol)qualifier).CandidateSymbols;
-            if (!candidateSymbols.IsDefault && candidateSymbols.Length == 1 && candidateSymbols[0] is DeclarationSymbol declaredSymbol && declaredSymbol is not IErrorSymbol)
+            var candidateSymbols = qualifier.ErrorInfo.CandidateSymbols;
+            if (!candidateSymbols.IsDefault && candidateSymbols.Length == 1 && candidateSymbols[0] is DeclarationSymbol declaredSymbol && !declaredSymbol.IsErrorSymbol)
             {
                 try
                 {
@@ -242,15 +241,12 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     foreach (var import in qualifier.Imports)
                     {
-                        if (!import.IsComputingImports)
+                        result.AddRange(import.Aliases.Where(a => context.IsViable(a)));
+                        foreach (var ns in import.Namespaces)
                         {
-                            result.AddRange(import.Aliases.Where(a => context.IsViable(a)));
-                            foreach (var ns in import.Namespaces)
-                            {
-                                result.AddRange(ns.GetMembersUnordered().Where(m => context.IsViable(m)));
-                            }
-                            result.AddRange(import.Symbols.Where(m => context.IsViable(m)));
+                            result.AddRange(ns.Members.Where(m => context.IsViable(m)));
                         }
+                        result.AddRange(import.Symbols.Where(m => context.IsViable(m)));
                     }
                 }
                 finally
@@ -265,7 +261,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var qualifier = context.Qualifier;
             if (qualifier is not null)
             {
-                result.AddRange(qualifier.GetMembersUnordered().Where(m => context.IsViable(m)));
+                result.AddRange(qualifier.Members.Where(m => context.IsViable(m)));
             }
         }
 
@@ -289,6 +285,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 context.Qualifier = type;
             }
+        }
+
+        public static Symbol UnwrapAlias(Symbol symbol)
+        {
+            if (symbol is AliasSymbol aliasSymbol) return aliasSymbol.Target;
+            else return symbol;
         }
     }
 }
