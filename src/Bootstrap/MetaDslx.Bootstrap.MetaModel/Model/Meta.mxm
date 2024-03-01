@@ -1,4 +1,4 @@
-namespace MetaDslx.Languages.MetaModel.Model
+namespace MetaDslx.Bootstrap.MetaModel.Model
 
 using MetaDslx.CodeAnalysis.Symbols
 

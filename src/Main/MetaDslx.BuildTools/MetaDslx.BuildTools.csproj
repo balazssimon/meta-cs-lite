@@ -70,11 +70,16 @@
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" PrivateAssets="all" />
-		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaSymbols\MetaDslx.Languages.MetaSymbols.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" PrivateAssets="all" />
+
+		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\..\Bootstrap\MetaDslx.Bootstrap.MetaModel\MetaDslx.Bootstrap.MetaModel.csproj" PrivateAssets="all" />
 	</ItemGroup>
 
+	<!--
+		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
+	-->
 	<!--ItemGroup>
 
 		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" PrivateAssets="all" />

@@ -1,0 +1,620 @@
+namespace MetaDslx.Bootstrap.MetaModel.Generators;
+
+using System;
+using System.Linq;
+using Roslyn.Utilities;
+using MetaDslx.Bootstrap.MetaModel.Model;
+
+generator MetaModelGenerator;
+
+template Generate()
+#nullable enable
+
+namespace [Namespace]
+{
+    using __MetaMetaModel = global::MetaDslx.Bootstrap.MetaModel.Model.Meta;
+    using __MetaModelFactory = global::MetaDslx.Bootstrap.MetaModel.Model.MetaModelFactory;
+    using __Model = global::MetaDslx.Modeling.Model;
+    using __MetaModel = global::MetaDslx.Modeling.MetaModel;
+    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __ModelFactory = global::MetaDslx.Modeling.ModelFactory;
+    using __MultiModelFactory = global::MetaDslx.Modeling.MultiModelFactory;
+    using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
+    using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
+    using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
+    using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+    using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
+    using __ModelOperation = global::MetaDslx.Modeling.ModelOperation;
+    using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
+    using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+    using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+    using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+    using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
+    using __Type = global::System.Type;
+    using __Enum = global::System.Enum;
+
+    [GenerateMetaModel()]
+
+    [GenerateFactory()]
+
+    [foreach (var enm in Enums)]
+        [GenerateEnum(enm)]
+
+    [end foreach]
+
+    [foreach (var cls in Classes)]
+        [GenerateInterface(cls)]
+
+    [end foreach]
+
+    [GenerateCustomInterface()]
+    
+    [GenerateCustomImplementation()]
+}
+
+namespace [Namespace].__Impl
+{
+    using __Model = global::MetaDslx.Modeling.Model;
+    using __MetaModel = global::MetaDslx.Modeling.MetaModel;
+    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
+    using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
+    using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
+    using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+    using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
+    using __ModelPropertyInfo = global::MetaDslx.Modeling.ModelPropertyInfo;
+    using __ModelPropertySlot = global::MetaDslx.Modeling.ModelPropertySlot;
+    using __ModelOperation = global::MetaDslx.Modeling.ModelOperation;
+    using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
+    using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+    using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+    using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+    using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
+    using __Type = global::System.Type;
+    using __Enum = global::System.Enum;
+
+    [foreach (var enm in Enums)]
+        [GenerateEnumInfo(enm)]
+
+    [end foreach]
+
+    [foreach (var cls in Classes)]
+        [GenerateClass(cls)]
+
+    [end foreach]
+}
+end template
+
+template GenerateSeparateIntf(string body)
+#nullable enable
+
+namespace [Namespace]
+{
+    using __MetaMetaModel = global::MetaDslx.Bootstrap.MetaModel.Model.Meta;
+    using __MetaModelFactory = global::MetaDslx.Bootstrap.MetaModel.Model.MetaModelFactory;
+    using __Model = global::MetaDslx.Modeling.Model;
+    using __MetaModel = global::MetaDslx.Modeling.MetaModel;
+    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __ModelFactory = global::MetaDslx.Modeling.ModelFactory;
+    using __MultiModelFactory = global::MetaDslx.Modeling.MultiModelFactory;
+    using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
+    using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
+    using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
+    using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+    using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
+    using __ModelOperation = global::MetaDslx.Modeling.ModelOperation;
+    using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
+    using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+    using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+    using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+    using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
+    using __Type = global::System.Type;
+    using __Enum = global::System.Enum;
+
+    [body]
+}
+end template
+
+template GenerateSeparateImpl(string body)
+#nullable enable
+
+namespace [Namespace].__Impl
+{
+    using __Model = global::MetaDslx.Modeling.Model;
+    using __MetaModel = global::MetaDslx.Modeling.MetaModel;
+    using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
+    using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
+    using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
+    using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+    using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
+    using __ModelPropertyInfo = global::MetaDslx.Modeling.ModelPropertyInfo;
+    using __ModelPropertySlot = global::MetaDslx.Modeling.ModelPropertySlot;
+    using __ModelOperation = global::MetaDslx.Modeling.ModelOperation;
+    using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
+    using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+    using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+    using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+    using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
+    using __Type = global::System.Type;
+    using __Enum = global::System.Enum;
+
+    [body]
+}
+end template
+
+
+template GenerateMetaModel()
+internal interface I[MetaModel.Name]
+{
+    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+        [ToCSharp(c.Type)] [c.Name] { get; }
+    [end foreach]
+}
+
+public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
+{
+    // If there is an error at the following line, create a new class called 'Custom[MetaModel.Name]Implementation'
+    // inheriting from the class 'Custom[MetaModel.Name]ImplementationBase' and provide the custom implementation
+    // for the derived properties and operations defined in the metamodel
+    internal static readonly Custom[MetaModel.Name]ImplementationBase __CustomImpl = new Custom[MetaModel.Name]Implementation();
+
+    private static readonly [MetaModel.Name] _instance;
+    public static [MetaModel.Name] MInstance => _instance;
+
+    [foreach (var cls in MetaModel.Parent.Declarations.OfType<MetaClass>())]
+        [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
+        [foreach (var prop in cls.Properties)]
+            private static readonly __ModelProperty _[cls.Name]_[prop.Name];
+        [end foreach]
+        [foreach (var op in metaCls.DeclaredOperations)]
+            private static readonly __ModelOperation _[cls.Name]_[op.UniqueName];
+        [end foreach]
+    [end foreach]
+
+    static [MetaModel.Name]()
+    {
+        [foreach (var cls in Classes)]
+            [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
+            [foreach (var prop in metaCls.DeclaredProperties)]
+                _[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), [ToDefaultValue(prop.Type, prop.DefaultValue)], [ToCSharp(prop.Flags)], [if(prop.SymbolProperty is null)]null[else]"[prop.SymbolProperty]"[end if]);
+            [end foreach]
+            [foreach (var op in metaCls.DeclaredOperations)]
+                _[cls.Name]_[op.UniqueName] = new __ModelOperation(typeof([cls.Name]), "[op.Name]", "[op.Signature]");
+            [end foreach]
+        [end foreach]
+        _instance = new [MetaModel.Name]();
+    }
+
+    private readonly __Model _model;
+
+    private readonly global::System.Collections.Immutable.ImmutableArray<__MetaType> _enumTypes;
+    private readonly global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo> _enumInfos;
+    private readonly global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelEnumInfo> _enumInfosByType;
+    private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelEnumInfo> _enumInfosByName;
+
+    private readonly global::System.Collections.Immutable.ImmutableArray<__MetaType> _classTypes;
+    private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _classInfos;
+    private readonly global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelClassInfo> _classInfosByType;
+    private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelClassInfo> _classInfosByName;
+
+    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+        private readonly [ToCSharp(c.Type)] _[c.Name.ToCamelCase()];
+    [end foreach]
+
+    private [MetaModel.Name]()
+    {
+        _enumTypes = __ImmutableArray.Create<__MetaType>([foreach (var enm in Enums) separator ", "]typeof([enm.Name])[end foreach]);
+        _enumInfos = __ImmutableArray.Create<__ModelEnumInfo>([foreach (var enm in Enums) separator ", "][enm.Name]Info[end foreach]);
+        var enumInfosByType = __ImmutableDictionary.CreateBuilder<__MetaType, __ModelEnumInfo>();
+        [foreach (var enm in Enums)]
+            enumInfosByType.Add(typeof([enm.Name]), [enm.Name]Info);
+        [end foreach]
+        _enumInfosByType = enumInfosByType.ToImmutable();
+        var enumInfosByName = __ImmutableDictionary.CreateBuilder<string, __ModelEnumInfo>();
+        [foreach (var enm in Enums)]
+            enumInfosByName.Add("[enm.Name]", [enm.Name]Info);
+        [end foreach]
+        _enumInfosByName = enumInfosByName.ToImmutable();
+
+        _classTypes = __ImmutableArray.Create<__MetaType>([foreach (var cls in Classes) separator ", "]typeof([cls.Name])[end foreach]);
+        _classInfos = __ImmutableArray.Create<__ModelClassInfo>([foreach (var cls in Classes) separator ", "][cls.Name]Info[end foreach]);
+        var classInfosByType = __ImmutableDictionary.CreateBuilder<__MetaType, __ModelClassInfo>();
+        [foreach (var cls in Classes)]
+            classInfosByType.Add(typeof([cls.Name]), [cls.Name]Info);
+        [end foreach]
+        _classInfosByType = classInfosByType.ToImmutable();
+        var classInfosByName = __ImmutableDictionary.CreateBuilder<string, __ModelClassInfo>();
+        [foreach (var cls in Classes)]
+            classInfosByName.Add("[cls.Name]", [cls.Name]Info);
+        [end foreach]
+        _classInfosByName = classInfosByName.ToImmutable();
+        _model = new __Model();
+        var cf = new [MetaModel.Name]ModelFactory(_model, this);
+        [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+            _[c.Name.ToCamelCase()] = cf.[c.Type.Name]();
+        [end foreach]
+        var f = [if (IsMetaMetaModel)]new __MetaModelFactory(_model, this)[else]new __MetaModelFactory(_model)[end if];
+        [foreach (var obj in Objects)]
+            var [GetName(obj)] = f.[obj.MInfo.MetaType.Name]();
+        [end foreach]
+        __CustomImpl.[MetaModel.Name](this);
+        [foreach (var obj in Objects)]
+            [foreach (var child in obj.MChildren)]
+                [GetName(obj)].MChildren.Add([GetName(child)]);
+            [end foreach]
+            [foreach (var prop in obj.MInfo.PublicProperties)]
+                [var slot = obj.MGetSlot(prop)]
+                [if (slot != null && !slot.IsDefault)]
+                    [if (prop.IsCollection)]
+                        [foreach (var value in slot.Values)]
+                            [GetName(obj)].[prop.Name].Add([ToCSharpValue(prop.Type, value)]);
+                        [end foreach]
+                    [else if (!prop.IsReadOnly)]
+                        [GetName(obj)].[prop.Name] = [ToCSharpValue(prop.Type, slot.AsSingle()?.Value)];
+                    [end if]
+                [end if]
+            [end foreach]
+        [end foreach]
+        _model.IsSealed = true;
+    }
+
+    public override string MName => nameof([MetaModel.Name]);
+    public override string MNamespace => "[Namespace]";
+    public override __ModelVersion MVersion => default;
+    public override string MUri => "[MetaModel.Uri ?? MetaModel.FullName]";
+    public override string MPrefix => "[string.Concat(MetaModel.Name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c)))]";
+    public override __Model MModel => _model;
+
+    public override global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelEnumInfo> MEnumInfosByType => _enumInfosByType;
+    public override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelEnumInfo> MEnumInfosByName => _enumInfosByName;
+    public override global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelClassInfo> MClassInfosByType => _classInfosByType;
+    public override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelClassInfo> MClassInfosByName => _classInfosByName;
+
+    public override global::System.Collections.Immutable.ImmutableArray<__MetaType> MEnumTypes => _enumTypes;
+    public override global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo> MEnumInfos => _enumInfos;
+    public override global::System.Collections.Immutable.ImmutableArray<__MetaType> MClassTypes => _classTypes;
+    public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> MClassInfos => _classInfos;
+
+    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+        [ToCSharp(c.Type)] I[MetaModel.Name].[c.Name] => _[c.Name.ToCamelCase()];
+    [end foreach]
+
+    [foreach (var c in MetaModel.Parent.Declarations.OfType<MetaConstant>())]
+        [GetDocumentationComment(c)]
+        public static [ToCSharp(c.Type)] [c.Name] => ((I[MetaModel.Name])MInstance).[c.Name];
+    [end foreach]
+
+    [foreach (var enm in Enums)]
+        public static __ModelEnumInfo [enm.Name]Info => __Impl.__[enm.Name]_Info.Instance;
+    [end foreach]
+    [foreach (var cls in Classes)]
+        public static __ModelClassInfo [cls.Name]Info => __Impl.[cls.Name]_Impl.__Info.Instance;
+        [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
+        [foreach (var prop in cls.Properties)]
+            public static __ModelProperty [cls.Name]_[prop.Name] => _[cls.Name]_[prop.Name];
+        [end foreach]
+        [foreach (var op in metaCls.DeclaredOperations)]
+            public static __ModelOperation [cls.Name]_[op.UniqueName] => _[cls.Name]_[op.UniqueName];
+        [end foreach]
+    [end foreach]
+}
+end template
+
+template GenerateFactory()
+public class [MetaModel.Name]ModelFactory : __ModelFactory
+{
+    public [MetaModel.Name]ModelFactory(__Model model)
+        : base(model, [MetaModel.Name].MInstance)
+    {
+    }
+
+    internal [MetaModel.Name]ModelFactory(__Model model, [MetaModel.Name] metaModel)
+        : base(model, metaModel)
+    {
+    }
+
+    [foreach (var cls in Classes.Where(c => !c.IsAbstract))]
+        [GetDocumentationComment(cls)]
+        public [ToCSharp(cls)] [cls.Name](string? id = null)
+        {
+            return ([ToCSharp(cls)])[MetaModel.Name].[cls.Name]Info.Create(base.Model, id)!;
+        }
+
+    [end foreach]
+}
+
+public class [MetaModel.Name]ModelMultiFactory : __MultiModelFactory
+{
+    public [MetaModel.Name]ModelMultiFactory()
+        : base(new __MetaModel["[]"] { [MetaModel.Name].MInstance })
+    {
+    }
+
+    [foreach (var cls in Classes.Where(c => !c.IsAbstract))]
+        [GetDocumentationComment(cls)]
+        public [ToCSharp(cls)] [cls.Name](__Model model, string? id = null)
+        {
+            return ([ToCSharp(cls)])[MetaModel.Name].[cls.Name]Info.Create(model, id)!;
+        }
+
+    [end foreach]
+}
+
+end template
+
+template GenerateEnum(MetaEnum enm)
+[GetDocumentationComment(enm)]
+public enum [enm.Name]
+{
+    [foreach (var lit in enm.Literals)]
+        [GetDocumentationComment(lit)]
+        [lit.Name],
+    [end foreach]
+}
+end template
+
+template GenerateEnumInfo(MetaEnum enm)
+internal class __[enm.Name]_Info : __ModelEnumInfo
+{
+    public static readonly __[enm.Name]_Info Instance = new __[enm.Name]_Info();
+
+    private readonly global::System.Collections.Immutable.ImmutableArray<string> _literals;
+    private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> _literalsByName;
+
+    private __[enm.Name]_Info()
+    {
+        _literals = __ImmutableArray.Create<string>([foreach (var lit in enm.Literals) separator ", "][StringUtilities.EncodeString(lit.Name)][end foreach]);
+        var literalsByName = __ImmutableDictionary.CreateBuilder<string, __MetaSymbol>();
+        [foreach (var lit in enm.Literals)]
+            literalsByName.Add("[lit.Name]", __MetaSymbol.FromValue([enm.Name].[lit.Name]));
+        [end foreach]
+        _literalsByName = literalsByName.ToImmutable();
+    }
+
+    public override __MetaModel MetaModel => [MetaModel.Name].MInstance;
+    public override __MetaType MetaType => typeof([enm.Name]);
+    public override global::System.Collections.Immutable.ImmutableArray<string> Literals => _literals;
+    protected override global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> LiteralsByName => _literalsByName;
+}
+end template
+
+template GenerateInterface(MetaClass cls)
+[var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
+[GetDocumentationComment(cls)]
+public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][else] : __IModelObject[end if]
+{
+    [foreach (var prop in metaCls.DeclaredProperties)]
+        [var info = metaCls.ModelPropertyInfos[prop]]
+        [GetDocumentationComment(prop.UnderlyingProperty)]
+        [if (info.HiddenProperties.Length > 0)]new [end if][prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name] { get; [if (HasSetter(prop))]set; [end if]}
+    [end foreach]
+
+    [foreach (var op in cls.Operations)]
+        [GetDocumentationComment(op)]
+        [ToCSharpOpType(op.ReturnType)] [op.Name]([foreach (var param in op.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]);
+    [end foreach]
+}
+end template
+
+template GenerateClass(MetaClass cls)
+[var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
+internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
+{
+    [foreach (var slot in metaCls.Slots)]
+        [var prop = slot.SlotProperty]
+        [if (prop.IsCollection)]
+        global::MetaDslx.Modeling.CollectionSlot<[ToCSharp(prop.Type)]> _[slot.SlotProperty.Name.ToCamelCase()];
+        [else]
+        global::MetaDslx.Modeling.SingleSlot<[ToCSharp(prop.Type)]> _[slot.SlotProperty.Name.ToCamelCase()];
+        [end if]
+    [end foreach]
+
+    private [cls.Name]_Impl(string? id)
+        : base(id)
+    {
+        [foreach (var slot in metaCls.Slots)]
+            [var prop = slot.SlotProperty]
+            [if (prop.IsCollection)]
+                _[slot.SlotProperty.Name.ToCamelCase()] = new global::MetaDslx.Modeling.CollectionSlot<[ToCSharp(prop.Type)]>(this, MInfo.GetSlot([ToCSharp(slot.SlotProperty)]));
+            [else]
+                _[slot.SlotProperty.Name.ToCamelCase()] = new global::MetaDslx.Modeling.SingleSlot<[ToCSharp(prop.Type)]>(this, MInfo.GetSlot([ToCSharp(slot.SlotProperty)]));
+                [var defaultValue = ToDefaultValue(prop.Type, prop.DefaultValue)]
+                [if (!string.IsNullOrEmpty(defaultValue) && defaultValue != "default")]
+                _[slot.SlotProperty.Name.ToCamelCase()].Value = ([ToCSharp(slot.SlotProperty.Type)])[defaultValue];
+                [end if]
+            [end if]
+        [end foreach]
+        [foreach (var baseType in metaCls.AllBaseTypes.Reverse())]
+            [MetaModel.Name].__CustomImpl.[baseType.Name](this);
+        [end foreach]
+        [MetaModel.Name].__CustomImpl.[cls.Name](this);
+    }
+
+    public override __ModelClassInfo MInfo => __Info.Instance;
+
+    public override __ISlot? MGetSlot(string propertyName)
+    {
+
+    }
+
+    public override __ISlot? MGetSlot(__ModelProperty propertyName)
+    {
+
+    }
+
+    [foreach (var prop in metaCls.AllDeclaredProperties)]
+        [var info = metaCls.ModelPropertyInfos[prop]]
+        [if (metaCls.PublicProperties.Contains(prop))]
+            public [prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name]
+        [else]
+            ["["]global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)["]"]
+            [prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
+        [end if]
+        {
+            [if (prop.UnderlyingProperty.IsDerived)]
+                [var actualProp = info.HidingProperties.FirstOrDefault() ?? prop]
+                get => [MetaModel.Name].__CustomImpl.[actualProp.DeclaringType.Name]_[actualProp.Name](this);
+            [else if (prop.IsCollection)]
+                get => MGetCollection<[ToCSharp(prop.Type)]>([ToCSharp(prop)]);
+            [else]
+                get => MGet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)]);
+                [if (HasSetter(prop))]
+                    set => MSet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)], value);
+                [end if]
+            [end if]
+        }
+
+    [end foreach]
+
+    [foreach (var op in metaCls.AllDeclaredOperations)]
+        [var info = metaCls.ModelOperationInfos[op]]
+        [var actualOp = info.OverridingOperations.FirstOrDefault() ?? op]
+        [ToCSharpOpType(op.UnderlyingOperation.ReturnType)] [ToCSharp(op.DeclaringType.UnderlyingType)].[op.Name]([foreach (var param in op.UnderlyingOperation.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]) => [MetaModel.Name].__CustomImpl.[actualOp.DeclaringType.Name]_[actualOp.Name](this[foreach (var param in actualOp.UnderlyingOperation.Parameters)], [param.Name.EscapeCSharpKeyword()][end foreach]);
+    [end foreach]
+
+    internal class __Info : __ModelClassInfo
+    {
+        public static readonly __Info Instance = new __Info();
+
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+        private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+        private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+        private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+        private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+
+        private __Info() 
+        {
+            _baseTypes = __ImmutableArray.Create<__ModelClassInfo>([foreach (var bt in metaCls.BaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
+            _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>([foreach (var bt in metaCls.AllBaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
+            _declaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.DeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
+            _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.AllDeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
+            _publicProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.PublicProperties) separator ", "][ToCSharp(prop)][end foreach]);
+            var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+            [foreach (var prop in metaCls.PublicProperties)]
+                publicPropertiesByName.Add("[prop.Name]", [ToCSharp(prop)]);
+            [end foreach]
+            _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+            var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+            [foreach (var prop in metaCls.AllDeclaredProperties)]
+                [var info = metaCls.ModelPropertyInfos[prop]]
+                [var slot = info.Slot]
+                modelPropertyInfos.Add([ToCSharp(prop)], new __ModelPropertyInfo(new __ModelPropertySlot([ToCSharp(slot.SlotProperty)], [ToCSharp(slot.SlotProperties)], [ToDefaultValue(prop.Type, prop.DefaultValue)], [ToCSharp(slot.Flags)]), [ToCSharp(info.OppositeProperties)], [ToCSharp(info.SubsettedProperties)], [ToCSharp(info.SubsettingProperties)], [ToCSharp(info.RedefinedProperties)], [ToCSharp(info.RedefiningProperties)], [ToCSharp(info.HiddenProperties)], [ToCSharp(info.HidingProperties)]));
+            [end foreach]
+            _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+
+            _declaredOperations = __ImmutableArray.Create<__ModelOperation>([foreach (var op in metaCls.DeclaredOperations) separator ", "][ToCSharp(op)][end foreach]);
+            _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>([foreach (var op in metaCls.AllDeclaredOperations) separator ", "][ToCSharp(op)][end foreach]);
+            _publicOperations = __ImmutableArray.Create<__ModelOperation>([foreach (var op in metaCls.PublicOperations) separator ", "][ToCSharp(op)][end foreach]);
+            var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+            [foreach (var op in metaCls.AllDeclaredOperations)]
+            [var info = metaCls.ModelOperationInfos[op]]
+                modelOperationInfos.Add([ToCSharp(op)], new __ModelOperationInfo([ToCSharp(info.OverridenOperations)], [ToCSharp(info.OverridingOperations)]));
+            [end foreach]
+            _modelOperationInfos = modelOperationInfos.ToImmutable();
+        }
+
+        public override __MetaModel MetaModel => [MetaModel.Name].MInstance;
+        public override __MetaType MetaType => typeof([cls.Name]);
+
+        public override __MetaType SymbolType => [if (metaCls.SymbolType is null)]default[else]typeof([ToCSharp(metaCls.SymbolType)])[end if];
+        public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][ToCSharp(metaCls.NameProperty)][end if];
+        public override __ModelProperty? TypeProperty => [if (metaCls.TypeProperty is null)]null[else][ToCSharp(metaCls.TypeProperty)][end if];
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+
+        protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+        protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+        protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+
+        public override __IModelObject? Create(__Model? model = null, string? id = null)
+        {
+            var result = new [cls.Name]_Impl(id);
+            if (model is not null) model.AttachObject(result);
+            return result;
+        }
+
+        public override string ToString()
+        {
+            return "[MetaModel.Name].[cls.Name]Info";
+        }
+    }
+}
+end template
+
+template GenerateCustomInterface()
+internal interface ICustom[MetaModel.Name]Implementation
+{
+    /// <summary>
+    /// Constructor for the meta model [MetaModel.Name]
+    /// </summary>
+    void [MetaModel.Name](I[MetaModel.Name] _this);
+
+    [foreach (var cls in Classes)]
+        void [cls.Name]([cls.Name] _this);
+
+    [end foreach]
+
+    [foreach (var cls in Classes)]
+        [foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
+            [ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
+
+        [end foreach]
+    [end foreach]
+
+    [foreach (var cls in Classes)]
+        [foreach (var op in cls.Operations)]
+            [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]);
+
+        [end foreach]
+    [end foreach]
+}
+end template
+
+template GenerateCustomImplementation()
+internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaModel.Name]Implementation
+{
+    /// <summary>
+    /// Constructor for the meta model [MetaModel.Name]
+    /// </summary>
+    public virtual void [MetaModel.Name](I[MetaModel.Name] _this)
+    {
+    }
+
+    [foreach (var cls in Classes)]
+        [GetDocumentationComment(cls)]
+        public virtual void [cls.Name]([cls.Name] _this)
+        {
+        }
+
+    [end foreach]
+
+    [foreach (var cls in Classes)]
+        [foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
+            [GetDocumentationComment(prop)]
+            public abstract [ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
+
+        [end foreach]
+    [end foreach]
+
+    [foreach (var cls in Classes)]
+        [foreach (var op in cls.Operations)]
+            [GetDocumentationComment(op)]
+            public abstract [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name.EscapeCSharpKeyword()][end foreach]);
+
+        [end foreach]
+    [end foreach]
+}
+end template
