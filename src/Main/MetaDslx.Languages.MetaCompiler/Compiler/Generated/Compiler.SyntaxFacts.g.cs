@@ -18,7 +18,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
         private MetaDslx.CodeAnalysis.Syntax.DefaultEndOfLineTokenKind TK_DefaultEndOfLine = new MetaDslx.CodeAnalysis.Syntax.DefaultEndOfLineTokenKind();
         private MetaDslx.CodeAnalysis.Syntax.SingleLineCommentTokenKind TK_SingleLineComment = new MetaDslx.CodeAnalysis.Syntax.SingleLineCommentTokenKind();
         private MetaDslx.CodeAnalysis.Syntax.MultiLineCommentTokenKind TK_MultiLineComment = new MetaDslx.CodeAnalysis.Syntax.MultiLineCommentTokenKind();
-        
+
         public CompilerSyntaxKind DefaultWhitespaceKind => CompilerSyntaxKind.TWhitespace;
         public CompilerSyntaxKind DefaultEndOfLineKind => CompilerSyntaxKind.TLineEnd;
         public CompilerSyntaxKind DefaultSeparatorKind => CompilerSyntaxKind.TComma;
@@ -66,33 +66,33 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
                 case CompilerSyntaxKind.KNull:
                 case CompilerSyntaxKind.KTrue:
                 case CompilerSyntaxKind.KFalse:
-                    return TK_Keyword;
+                return TK_Keyword;
                 case CompilerSyntaxKind.TComma:
-                    return TK_DefaultSeparator;
+                return TK_DefaultSeparator;
                 case CompilerSyntaxKind.TUtf8Bom:
-                    return TK_Whitespace;
+                return TK_Whitespace;
                 case CompilerSyntaxKind.TInteger:
                 case CompilerSyntaxKind.TDecimal:
-                    return TK_Number;
+                return TK_Number;
                 case CompilerSyntaxKind.TIdentifier:
-                    return TK_DefaultIdentifier;
+                return TK_DefaultIdentifier;
                 case CompilerSyntaxKind.TVerbatimIdentifier:
-                    return TK_Identifier;
+                return TK_Identifier;
                 case CompilerSyntaxKind.TString:
-                    return TK_String;
+                return TK_String;
                 case CompilerSyntaxKind.TWhitespace:
-                    return TK_DefaultWhitespace;
+                return TK_DefaultWhitespace;
                 case CompilerSyntaxKind.TLineEnd:
-                    return TK_DefaultEndOfLine;
+                return TK_DefaultEndOfLine;
                 case CompilerSyntaxKind.TSingleLineComment:
-                    return TK_SingleLineComment;
+                return TK_SingleLineComment;
                 case CompilerSyntaxKind.TMultiLineComment:
-                    return TK_MultiLineComment;
+                return TK_MultiLineComment;
                 default:
                     return null;
             }
         }
-
+            
         public override global::MetaDslx.CodeAnalysis.Syntax.TokenKind? GetTokenKind(int rawSyntaxKind)
         {
             return GetTokenKind((CompilerSyntaxKind)rawSyntaxKind);

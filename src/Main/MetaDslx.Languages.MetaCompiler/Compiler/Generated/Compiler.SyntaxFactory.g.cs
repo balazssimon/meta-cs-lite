@@ -27,7 +27,8 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
     using __CancellationToken = global::System.Threading.CancellationToken;
     using __ArgumentNullException = global::System.ArgumentNullException;
     using __ArgumentException = global::System.ArgumentException;
-    using MetaDslx.CodeAnalysis.Binding;
+    using __BinderFactory = global::MetaDslx.CodeAnalysis.Binding.BinderFactory;
+    using __BinderFactoryVisitor = global::MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor;
 
     public class CompilerSyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
     {
@@ -770,10 +771,10 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
             return this.MainBlock1(this.Token(CompilerSyntaxKind.KUsing), @using, this.Token(CompilerSyntaxKind.TSemicolon));
         }
 
-        public MainBlock2Syntax MainBlock2(LanguageDeclarationSyntax declarations)
+        public MainBlock2Syntax MainBlock2(LanguageDeclarationSyntax languageDeclaration)
         {
-            if (declarations is null) throw new __ArgumentNullException(nameof(declarations));
-            return (MainBlock2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.MainBlock2((InternalSyntax.LanguageDeclarationGreen)declarations.Green).CreateRed();
+            if (languageDeclaration is null) throw new __ArgumentNullException(nameof(languageDeclaration));
+            return (MainBlock2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.MainBlock2((InternalSyntax.LanguageDeclarationGreen)languageDeclaration.Green).CreateRed();
         }
 
         public LanguageDeclarationBlock1Syntax LanguageDeclarationBlock1(__SyntaxToken tColon, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseLanguages)
@@ -1185,7 +1186,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Syntax
             return this.QualifierIdentifierBlock(this.Token(CompilerSyntaxKind.TDot), identifier);
         }
 
-        public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+        public override __BinderFactoryVisitor CreateBinderFactoryVisitor(__BinderFactory binderFactory)
         {
             return new global::MetaDslx.Languages.MetaCompiler.Compiler.Binding.CompilerBinderFactoryVisitor(binderFactory);
         }

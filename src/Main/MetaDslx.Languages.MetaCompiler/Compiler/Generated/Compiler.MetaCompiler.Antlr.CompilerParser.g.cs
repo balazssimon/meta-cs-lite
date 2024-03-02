@@ -3223,7 +3223,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	}
 
 	public partial class Pr_MainBlock2Context : ParserRuleContext {
-		public Pr_LanguageDeclarationContext E_declarations;
+		public Pr_LanguageDeclarationContext E_LanguageDeclaration;
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_LanguageDeclarationContext pr_LanguageDeclaration() {
 			return GetRuleContext<Pr_LanguageDeclarationContext>(0);
 		}
@@ -3248,7 +3248,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 430;
-			_localctx.E_declarations = pr_LanguageDeclaration();
+			_localctx.E_LanguageDeclaration = pr_LanguageDeclaration();
 			}
 		}
 		catch (RecognitionException re) {

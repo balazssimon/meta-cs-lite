@@ -7,7 +7,6 @@ using MetaDslx.CodeAnalysis;
 namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
 {
     using global::MetaDslx.Languages.MetaCompiler.Compiler.Syntax;
-    using MetaDslx.CodeAnalysis.Symbols;
 
     public class CompilerBinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, ICompilerSyntaxVisitor
     {
@@ -19,7 +18,7 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
 
         public virtual void VisitMain(MainSyntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(NamespaceSymbol));
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol));
             this.Begin(__annot2, node);
             try
             {
@@ -640,7 +639,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -1004,7 +1002,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -1777,7 +1774,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -1792,15 +1788,15 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
 
         public virtual void VisitMainBlock2(MainBlock2Syntax node)
         {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
-            this.Begin(__annot1, node);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+            this.Begin(__annot0, node);
             try
             {
-                    this.Visit(node.Declarations);
+                this.Visit(node.LanguageDeclaration);
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot0);
             }
         }
 
@@ -2243,7 +2239,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -2257,7 +2252,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -2271,7 +2265,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -2285,7 +2278,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -2299,7 +2291,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {
@@ -2313,7 +2304,6 @@ namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
             this.Begin(__annot0, node);
             try
             {
-                
             }
             finally
             {

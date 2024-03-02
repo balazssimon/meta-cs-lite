@@ -142,7 +142,7 @@ pr_MainBlock1
     :  E_KUsing=LR_KUsing  E_Using=pr_Using  E_TSemicolon=LR_TSemicolon
     ;
 pr_MainBlock2
-    :  E_declarations=pr_LanguageDeclaration
+    :  E_LanguageDeclaration=pr_LanguageDeclaration
     ;
 pr_LanguageDeclarationBlock1
     :  E_TColon=LR_TColon   E_baseLanguages1=pr_Qualifier(E_TComma1+=LR_TComma E_baseLanguages2+=pr_Qualifier)*
