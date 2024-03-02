@@ -313,24 +313,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitSimpleTypeReferenceAlt2(SimpleTypeReferenceAlt2Syntax node)
         {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
-            this.Begin(__annot1, node);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)), suffixes: ImmutableArray.Create<string>("", "Symbol"));
+            this.Begin(__annot0, node.Qualifier);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)), suffixes: ImmutableArray.Create<string>("", "Symbol"));
-                this.Begin(__annot0, node.Qualifier);
-                try
-                {
-                    this.Visit(node.Qualifier);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
+                this.Visit(node.Qualifier);
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot0);
             }
         }
 

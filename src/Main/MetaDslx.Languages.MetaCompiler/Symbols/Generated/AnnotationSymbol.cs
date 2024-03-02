@@ -54,7 +54,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 );
         }
 
-        private global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> _arguments;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol> _arguments;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> _constructors;
         private global::System.Collections.Immutable.ImmutableArray<global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>> _parameters;
         private global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol _selectedConstructor;
@@ -70,7 +70,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Arguments
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol> Arguments
         {
             get
             {
@@ -182,9 +182,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
 
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<AnnotationArgumentSymbol> Compute_Arguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol> Compute_Arguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
         }
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Compute_Constructors(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);

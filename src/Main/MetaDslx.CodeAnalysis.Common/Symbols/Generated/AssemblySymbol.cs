@@ -51,15 +51,15 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public override __Type SymbolType => typeof(AssemblySymbol);
         protected override __CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public abstract ModuleSymbol? SourceModule
+        public abstract global::MetaDslx.CodeAnalysis.Symbols.ModuleSymbol? SourceModule
         {
             get;
         }
-        public abstract global::System.Collections.Immutable.ImmutableArray<ModuleSymbol> Modules
+        public abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.ModuleSymbol> Modules
         {
             get;
         }
-        public abstract NamespaceSymbol GlobalNamespace
+        public abstract global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol GlobalNamespace
         {
             get;
         }

@@ -58,10 +58,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         private global::System.Collections.Immutable.ImmutableArray<string> _files;
-        private global::System.Collections.Immutable.ImmutableArray<AliasSymbol> _aliases;
-        private global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> _namespaces;
-        private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _symbols;
-        private global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> _importedSymbols;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AliasSymbol> _aliases;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol> _namespaces;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> _symbols;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> _importedSymbols;
 
         public ImportSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -83,7 +83,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Aliases
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AliasSymbol> Aliases
         {
             get
             {
@@ -93,7 +93,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Namespaces
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol> Namespaces
         {
             get
             {
@@ -103,7 +103,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Symbols
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Symbols
         {
             get
             {
@@ -113,7 +113,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> ImportedSymbols
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> ImportedSymbols
         {
             get
             {
@@ -202,21 +202,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<AliasSymbol> Compute_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AliasSymbol> Compute_Aliases(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.Symbols.AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<NamespaceSymbol> Compute_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol> Compute_Namespaces(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Compute_Symbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_ImportedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol> Compute_ImportedSymbols(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

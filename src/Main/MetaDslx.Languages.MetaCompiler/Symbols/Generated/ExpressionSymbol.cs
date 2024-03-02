@@ -54,8 +54,8 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 );
         }
 
-        private PAlternativeSymbol? _containingPAlternativeSymbol;
-        private AnnotationArgumentSymbol? _containingAnnotationArgumentSymbol;
+        private global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol? _containingPAlternativeSymbol;
+        private global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol? _containingAnnotationArgumentSymbol;
         private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
         private global::MetaDslx.CodeAnalysis.MetaSymbol _value;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _values;
@@ -70,7 +70,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public PAlternativeSymbol? ContainingPAlternativeSymbol
+        public global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol? ContainingPAlternativeSymbol
         {
             get
             {
@@ -80,7 +80,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public AnnotationArgumentSymbol? ContainingAnnotationArgumentSymbol
+        public global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol? ContainingAnnotationArgumentSymbol
         {
             get
             {
@@ -182,9 +182,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
 
 
-        protected abstract PAlternativeSymbol? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract AnnotationArgumentSymbol? Compute_ContainingAnnotationArgumentSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol? Compute_ContainingAnnotationArgumentSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
         protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 

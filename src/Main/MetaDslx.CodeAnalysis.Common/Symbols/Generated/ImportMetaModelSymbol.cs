@@ -31,9 +31,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class ImportMetaModelSymbol: Implementation.ImportSymbolImpl
+    public abstract partial class ImportMetaModelSymbol: global::MetaDslx.CodeAnalysis.Symbols.Implementation.ImportSymbolImpl
     {
-        public new class CompletionParts : Implementation.ImportSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Implementation.ImportSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_MetaModelSymbols = new __CompletionPart(nameof(Start_MetaModelSymbols));
             public static readonly __CompletionPart Finish_MetaModelSymbols = new __CompletionPart(nameof(Finish_MetaModelSymbols));
@@ -42,7 +42,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    Implementation.ImportSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Implementation.ImportSymbolImpl.CompletionParts.CompletionGraph
                     , Start_MetaModelSymbols, Finish_MetaModelSymbols
                     , Start_MetaModels, Finish_MetaModels
                 );

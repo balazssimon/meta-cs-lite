@@ -31,9 +31,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class TypeSymbol: Implementation.DeclarationSymbolImpl
+    public abstract partial class TypeSymbol: global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl
     {
-        public new class CompletionParts : Implementation.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_IsReferenceType = new __CompletionPart(nameof(Start_IsReferenceType));
             public static readonly __CompletionPart Finish_IsReferenceType = new __CompletionPart(nameof(Finish_IsReferenceType));
@@ -48,7 +48,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_IsReferenceType, Finish_IsReferenceType
                     , Start_IsValueType, Finish_IsValueType
                     , Start_TypeParameters, Finish_TypeParameters
@@ -94,13 +94,13 @@ namespace MetaDslx.CodeAnalysis.Symbols
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
         [__WeakAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> TypeParameters
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeParameterSymbol> TypeParameters
         {
             get
             {
                 this.ForceComplete(CompletionParts.Finish_TypeParameters, null, default);
-                if (s_TypeParameters.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>)result;
-                else return global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol>.Empty;
+                if (s_TypeParameters.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeParameterSymbol>)result;
+                else return global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeParameterSymbol>.Empty;
             }
         }
         [__ModelPropertyAttribute]
@@ -221,9 +221,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(IsValueType), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeParameterSymbol> Compute_TypeParameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeParameterSymbol> Compute_TypeParameters(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<TypeParameterSymbol>(this, nameof(TypeParameters), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.Symbols.TypeParameterSymbol>(this, nameof(TypeParameters), diagnostics, cancellationToken);
         }
 
         protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_BaseTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)

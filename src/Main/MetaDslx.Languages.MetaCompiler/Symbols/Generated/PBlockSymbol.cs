@@ -49,7 +49,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
 
         private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
-        private global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> _alternatives;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol> _alternatives;
 
         public PBlockSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -71,7 +71,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> Alternatives
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol> Alternatives
         {
             get
             {
@@ -118,9 +118,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<PAlternativeSymbol> Compute_Alternatives(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol> Compute_Alternatives(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
         }
     }
 }

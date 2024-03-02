@@ -31,21 +31,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
     using __ImmutableAttributeSymbols = global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.AttributeSymbol>;
 
     [__SymbolAttribute]
-    public abstract partial class AliasSymbol: Implementation.DeclarationSymbolImpl
+    public abstract partial class AliasSymbol: global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl
     {
-        public new class CompletionParts : Implementation.DeclarationSymbolImpl.CompletionParts
+        public new class CompletionParts : global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts
         {
             public static readonly __CompletionPart Start_Target = new __CompletionPart(nameof(Start_Target));
             public static readonly __CompletionPart Finish_Target = new __CompletionPart(nameof(Finish_Target));
 
             public static readonly __CompletionGraph CompletionGraph = 
                 __CompletionGraph.CreateFromParts(
-                    Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
+                    global::MetaDslx.CodeAnalysis.Symbols.Implementation.DeclarationSymbolImpl.CompletionParts.CompletionGraph
                     , Start_Target, Finish_Target
                 );
         }
 
-        private Symbol _target;
+        private global::MetaDslx.CodeAnalysis.Symbols.Symbol _target;
 
         public AliasSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -57,7 +57,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public Symbol Target
+        public global::MetaDslx.CodeAnalysis.Symbols.Symbol Target
         {
             get
             {
@@ -89,9 +89,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        protected virtual Symbol Compute_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.CodeAnalysis.Symbols.Symbol Compute_Target(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<Symbol>(this, nameof(Target), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.Symbols.Symbol>(this, nameof(Target), diagnostics, cancellationToken);
         }
     }
 }

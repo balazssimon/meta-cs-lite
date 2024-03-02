@@ -80,8 +80,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object> s_TypeMembers = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, object>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>> s_GetMembers1 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>>();
         private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>> s_GetMembers2 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol>>>();
-        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers1 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
-        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>> s_GetTypeMembers2 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>>();
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>>> s_GetTypeMembers1 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>>>();
+        private static global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>>> s_GetTypeMembers2 = new global::System.Runtime.CompilerServices.ConditionalWeakTable<Symbol, global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>>>();
 
         public DeclarationSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -138,25 +138,25 @@ namespace MetaDslx.CodeAnalysis.Symbols
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
         [__WeakAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeArguments
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> TypeArguments
         {
             get
             {
                 this.ForceComplete(CompletionParts.Finish_TypeArguments, null, default);
-                if (s_TypeArguments.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<TypeSymbol>)result;
-                else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
+                if (s_TypeArguments.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>)result;
+                else return global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>.Empty;
             }
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
         [__WeakAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Imports
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol> Imports
         {
             get
             {
                 this.ForceComplete(CompletionParts.Finish_Imports, null, default);
-                if (s_Imports.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<ImportSymbol>)result;
-                else return global::System.Collections.Immutable.ImmutableArray<ImportSymbol>.Empty;
+                if (s_Imports.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol>)result;
+                else return global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol>.Empty;
             }
         }
         [__PhaseAttribute]
@@ -186,13 +186,13 @@ namespace MetaDslx.CodeAnalysis.Symbols
         [__PhaseAttribute]
         [__DerivedAttribute]
         [__WeakAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> TypeMembers
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> TypeMembers
         {
             get
             {
                 this.ForceComplete(CompletionParts.Finish_TypeMembers, null, default);
-                if (s_TypeMembers.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<TypeSymbol>)result;
-                else return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
+                if (s_TypeMembers.TryGetValue(this, out var result)) return (global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>)result;
+                else return global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>.Empty;
             }
         }
 
@@ -218,24 +218,24 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_GetMembers(string name, string metadataName);
 
         [__DerivedAttribute(Cached=true, Condition="MemberNames.Contains(name)")]
-        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name)
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> GetTypeMembers(string name)
         {
-            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
-            var __cachedDictionary = s_GetTypeMembers1.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>());
+            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>.Empty;
+            var __cachedDictionary = s_GetTypeMembers1.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<string, global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>>());
             return __cachedDictionary.GetOrAdd((name), __args => Compute_GetTypeMembers(name));
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_GetTypeMembers(string name);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> Compute_GetTypeMembers(string name);
 
         [__DerivedAttribute(Cached=true, Condition="MemberNames.Contains(name)")]
-        public global::System.Collections.Immutable.ImmutableArray<TypeSymbol> GetTypeMembers(string name, string metadataName)
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> GetTypeMembers(string name, string metadataName)
         {
-            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<TypeSymbol>.Empty;
-            var __cachedDictionary = s_GetTypeMembers2.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<TypeSymbol>>());
+            if (!(MemberNames.Contains(name))) return global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>.Empty;
+            var __cachedDictionary = s_GetTypeMembers2.GetValue(this, __this => new global::System.Collections.Concurrent.ConcurrentDictionary<(string, string), global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>>());
             return __cachedDictionary.GetOrAdd((name, metadataName), __args => Compute_GetTypeMembers(name, metadataName));
         }
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_GetTypeMembers(string name, string metadataName);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> Compute_GetTypeMembers(string name, string metadataName);
 
         protected override bool ForceCompletePart(ref __CompletionPart incompletePart, __SourceLocation? locationOpt, __CancellationToken cancellationToken)
         {
@@ -404,20 +404,20 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return SymbolFactory.GetSymbolPropertyValue<DeclarationSymbol>(this, nameof(OriginalDefinition), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> Compute_TypeArguments(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(this, nameof(TypeArguments), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>(this, nameof(TypeArguments), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<ImportSymbol> Compute_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol> Compute_Imports(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<ImportSymbol>(this, nameof(Imports), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol>(this, nameof(Imports), diagnostics, cancellationToken);
         }
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<string> Compute_MemberNames(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
         protected abstract global::System.Collections.Immutable.ImmutableArray<DeclarationSymbol> Compute_Members(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<TypeSymbol> Compute_TypeMembers(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol> Compute_TypeMembers(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

@@ -45,7 +45,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 );
         }
 
-        private TypeSymbol _attributeClass;
+        private global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol _attributeClass;
 
         public AttributeSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -57,7 +57,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public TypeSymbol AttributeClass
+        public global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol AttributeClass
         {
             get
             {
@@ -89,9 +89,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
 
-        protected virtual TypeSymbol Compute_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol Compute_AttributeClass(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<TypeSymbol>(this, nameof(AttributeClass), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>(this, nameof(AttributeClass), diagnostics, cancellationToken);
         }
     }
 }

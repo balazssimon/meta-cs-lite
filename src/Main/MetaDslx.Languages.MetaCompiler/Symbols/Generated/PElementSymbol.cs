@@ -58,7 +58,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
 
         private bool _isNamedElement;
-        private PAlternativeSymbol? _containingPAlternativeSymbol;
+        private global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol? _containingPAlternativeSymbol;
         private global::MetaDslx.CodeAnalysis.MetaSymbol _value;
         private global::MetaDslx.Languages.MetaCompiler.Model.Assignment _assignment;
         private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
@@ -84,7 +84,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public PAlternativeSymbol? ContainingPAlternativeSymbol
+        public global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol? ContainingPAlternativeSymbol
         {
             get
             {
@@ -211,7 +211,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected abstract bool Compute_IsNamedElement(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract PAlternativeSymbol? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol? Compute_ContainingPAlternativeSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
         protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {

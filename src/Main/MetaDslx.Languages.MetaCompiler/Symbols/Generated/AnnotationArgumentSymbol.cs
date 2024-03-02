@@ -57,12 +57,12 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                 );
         }
 
-        private AnnotationSymbol? _annotationSymbol;
+        private global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationSymbol? _annotationSymbol;
         private bool _isNamedArgument;
         private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaSymbol> _namedParameter;
         private global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol _parameter;
         private global::MetaDslx.CodeAnalysis.MetaType _parameterType;
-        private ExpressionSymbol _value;
+        private global::MetaDslx.Languages.MetaCompiler.Symbols.ExpressionSymbol _value;
 
         public AnnotationArgumentSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -74,7 +74,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public AnnotationSymbol? AnnotationSymbol
+        public global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationSymbol? AnnotationSymbol
         {
             get
             {
@@ -124,7 +124,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public ExpressionSymbol Value
+        public global::MetaDslx.Languages.MetaCompiler.Symbols.ExpressionSymbol Value
         {
             get
             {
@@ -209,7 +209,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
         }
 
 
-        protected abstract AnnotationSymbol? Compute_AnnotationSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationSymbol? Compute_AnnotationSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
         protected abstract bool Compute_IsNamedArgument(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
@@ -220,9 +220,9 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
 
         protected abstract (global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter, global::MetaDslx.CodeAnalysis.MetaType ParameterType) Compute_Parameter(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected virtual ExpressionSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.Languages.MetaCompiler.Symbols.ExpressionSymbol Compute_Value(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(Value), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.Languages.MetaCompiler.Symbols.ExpressionSymbol>(this, nameof(Value), diagnostics, cancellationToken);
         }
     }
 }

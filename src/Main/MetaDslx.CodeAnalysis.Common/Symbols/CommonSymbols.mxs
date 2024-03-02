@@ -1,97 +1,93 @@
-namespace MetaDslx.CodeAnalysis.Symbols
+namespace MetaDslx.CodeAnalysis.Symbols;
 
-using MetaDslx.CodeAnalysis
-using MetaDslx.CodeAnalysis.Symbols
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols;
 
 symbol Symbol
 {
-    weak Attribute[] Attributes
+    weak Attribute[] Attributes;
 }
 
 symbol Attribute
 {
-    Type AttributeClass
+    Type AttributeClass;
 }
 
 symbol Assembly
 {
-    plain abstract Module? SourceModule
-    plain abstract Module[] Modules
-    plain abstract Namespace GlobalNamespace
-    plain abstract bool IsCorLibrary
+    plain abstract Module? SourceModule;
+    plain abstract Module[] Modules;
+    plain abstract Namespace GlobalNamespace;
+    plain abstract bool IsCorLibrary;
 }
 
 symbol Module
 {
-    plain abstract Namespace GlobalNamespace
-    NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree)
+    plain abstract Namespace GlobalNamespace;
+    NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree);
 }
 
 symbol Declaration
 {
-    weak Accessibility DeclaredAccessibility
-    bool IsStatic
-    bool IsExtern
-    weak Declaration OriginalDefinition
-    weak Type[] TypeArguments
-    weak Import[] Imports
-    derived weak string[] MemberNames
-    derived weak Declaration[] Members
-    derived weak Type[] TypeMembers
-    cached Declaration[] GetMembers(string name)
-        if "MemberNames.Contains(name)"
-    cached Declaration[] GetMembers(string name, string metadataName)
-        if "MemberNames.Contains(name)"
-    cached Type[] GetTypeMembers(string name)
-        if "MemberNames.Contains(name)"
-    cached Type[] GetTypeMembers(string name, string metadataName)
-        if "MemberNames.Contains(name)"
+    weak Accessibility DeclaredAccessibility;
+    bool IsStatic;
+    bool IsExtern;
+    weak Declaration OriginalDefinition;
+    weak Type[] TypeArguments;
+    weak Import[] Imports;
+    derived weak string[] MemberNames;
+    derived weak Declaration[] Members;
+    derived weak Type[] TypeMembers;
+    cached Declaration[] GetMembers(string name) if "MemberNames.Contains(name)";
+    cached Declaration[] GetMembers(string name, string metadataName) if "MemberNames.Contains(name)";
+    cached Type[] GetTypeMembers(string name) if "MemberNames.Contains(name)";
+    cached Type[] GetTypeMembers(string name, string metadataName) if "MemberNames.Contains(name)";
 }
 
 symbol Import
 {
-    string[] Files
-    Alias[] Aliases
-    Namespace[] Namespaces
-    Declaration[] Symbols
+    string[] Files;
+    Alias[] Aliases;
+    Namespace[] Namespaces;
+    Declaration[] Symbols;
 
-    derived Declaration[] ImportedSymbols
+    derived Declaration[] ImportedSymbols;
 }
 
 symbol ImportMetaModel : Import
 {
-    MetaSymbol[] MetaModelSymbols
-    derived MetaDslx.Modeling.MetaModel[] MetaModels
+    MetaSymbol[] MetaModelSymbols;
+    derived MetaDslx.Modeling.MetaModel[] MetaModels;
 }
 
 symbol Alias : Declaration
 {
-    Symbol Target
+    Symbol Target;
 }
 
 symbol Namespace : Declaration
 {
-    plain abstract NamespaceExtent Extent
-    plain abstract bool IsGlobalNamespace
-    plain abstract NamespaceKind NamespaceKind
-    plain abstract Compilation? ContainingCompilation
+    plain abstract NamespaceExtent Extent;
+    plain abstract bool IsGlobalNamespace;
+    plain abstract NamespaceKind NamespaceKind;
+    plain abstract Compilation? ContainingCompilation;
 
-    derived Namespace[] ConstituentNamespaces
-    derived Namespace[] NamespaceMembers
-    Namespace? LookupNestedNamespace(string[] names)
-    Namespace? LookupNestedNamespace(string name)
+    derived Namespace[] ConstituentNamespaces;
+    derived Namespace[] NamespaceMembers;
+    Namespace? LookupNestedNamespace(string[] names);
+    Namespace? LookupNestedNamespace(string name);
 }
 
 symbol Type : Declaration
 {
-    bool IsReferenceType
-    bool IsValueType
-    weak TypeParameter[] TypeParameters
-    weak Type[] BaseTypes
-    derived Type[] AllBaseTypes
+    bool IsReferenceType;
+    bool IsValueType;
+    weak TypeParameter[] TypeParameters;
+    weak Type[] BaseTypes;
+    derived Type[] AllBaseTypes;
 
-    bool IsDerivedFrom(Type @type, TypeEqualityComparer comparison)
-    bool IsEqualToOrDerivedFrom(Type @type, TypeEqualityComparer comparison)
+    bool IsDerivedFrom(Type @type, TypeEqualityComparer comparison);
+    bool IsEqualToOrDerivedFrom(Type @type, TypeEqualityComparer comparison);
 }
 
 symbol TypeParameter : Type
