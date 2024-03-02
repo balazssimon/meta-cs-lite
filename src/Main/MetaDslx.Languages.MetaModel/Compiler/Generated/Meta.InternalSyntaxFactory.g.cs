@@ -695,16 +695,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal MainBlock1Green MainBlock1(MetaModelGreen members1, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaDeclarationGreen> members2)
+        internal MainBlock1Green MainBlock1(MetaModelGreen metaModel, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaDeclarationGreen> metaDeclarationList)
         {
             #if DEBUG
-                if (members1 is null) throw new __ArgumentNullException(nameof(members1));
+                if (metaModel is null) throw new __ArgumentNullException(nameof(metaModel));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MainBlock1, members1, members2.Node, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MainBlock1, metaModel, metaDeclarationList.Node, out hash);
             if (cached != null) return (MainBlock1Green)cached;
         
-            var result = new MainBlock1Green(MetaSyntaxKind.MainBlock1, members1, members2.Node);
+            var result = new MainBlock1Green(MetaSyntaxKind.MainBlock1, metaModel, metaDeclarationList.Node);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

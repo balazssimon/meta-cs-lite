@@ -2733,8 +2733,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     }
     public sealed class MainBlock1Syntax : MetaSyntaxNode
     {
-        private MetaModelSyntax _members1;
-        private __SyntaxNode _members2;
+        private MetaModelSyntax _metaModel;
+        private __SyntaxNode _metaDeclarationList;
     
         public MainBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -2746,19 +2746,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
         }
     
-        public MetaModelSyntax Members1 
+        public MetaModelSyntax MetaModel 
         { 
             get
             {
-            var red = this.GetRed(ref this._members1, 0);
+            var red = this.GetRed(ref this._metaModel, 0);
             return red;
             } 
         }
-        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> Members2 
+        public global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> MetaDeclarationList 
         { 
             get
             {
-            var red = this.GetRed(ref this._members2, 1);
+            var red = this.GetRed(ref this._metaDeclarationList, 1);
             return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax>(red);
             } 
         }
@@ -2767,8 +2767,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this.GetRed(ref this._members1, 0);
-                case 1: return this.GetRed(ref this._members2, 1);
+                case 0: return this.GetRed(ref this._metaModel, 0);
+                case 1: return this.GetRed(ref this._metaDeclarationList, 1);
                 default: return null;
             }
         }
@@ -2777,33 +2777,33 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this._members1;
-                case 1: return this._members2;
+                case 0: return this._metaModel;
+                case 1: return this._metaDeclarationList;
                 default: return null;
             }
         }
     
-        public MainBlock1Syntax WithMembers1(MetaModelSyntax members1)
+        public MainBlock1Syntax WithMetaModel(MetaModelSyntax metaModel)
         {
-            return this.Update(members1, this.Members2);
+            return this.Update(metaModel, this.MetaDeclarationList);
         }
     
-        public MainBlock1Syntax WithMembers2(global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> members2)
+        public MainBlock1Syntax WithMetaDeclarationList(global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> metaDeclarationList)
         {
-            return this.Update(this.Members1, members2);
+            return this.Update(this.MetaModel, metaDeclarationList);
         }
     
-        public MainBlock1Syntax AddMembers2(params MetaDeclarationSyntax[] members2)
+        public MainBlock1Syntax AddMetaDeclarationList(params MetaDeclarationSyntax[] metaDeclarationList)
         {
-            return this.WithMembers2(this.Members2.AddRange(members2));
+            return this.WithMetaDeclarationList(this.MetaDeclarationList.AddRange(metaDeclarationList));
         }
     
     
-        public MainBlock1Syntax Update(MetaModelSyntax members1, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> members2)
+        public MainBlock1Syntax Update(MetaModelSyntax metaModel, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> metaDeclarationList)
         {
-            if (this.Members1 != members1 || this.Members2 != members2)
+            if (this.MetaModel != metaModel || this.MetaDeclarationList != metaDeclarationList)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MainBlock1(members1, members2);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MainBlock1(metaModel, metaDeclarationList);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);

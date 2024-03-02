@@ -71,7 +71,7 @@ pr_TBoolean
     :  E_Token=(LR_KTrue | LR_KFalse)
     ;
 pr_MainBlock1
-    :  E_members=pr_MetaModel  E_members1+=pr_MetaDeclaration*
+    :  E_MetaModel=pr_MetaModel  E_MetaDeclarationList+=pr_MetaDeclaration*
     ;
 pr_MetaModelBlock1
     :  E_TEq=LR_TEq  E_uri=LR_TString

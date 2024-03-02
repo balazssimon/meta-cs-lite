@@ -14,7 +14,7 @@ language Meta : Common;
 Main returns NamespaceSymbol:
 	'namespace' [Name]Qualifier ';'
 	Using*
-	[Scope](members+=MetaModel members+=MetaDeclaration*)
+	[Scope](MetaModel MetaDeclaration*)
 	eof;
 
 Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';

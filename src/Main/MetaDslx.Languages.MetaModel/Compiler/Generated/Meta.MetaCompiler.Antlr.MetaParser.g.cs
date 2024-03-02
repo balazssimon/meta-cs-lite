@@ -1461,9 +1461,9 @@ public partial class MetaParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 	}
 
 	public partial class Pr_MainBlock1Context : ParserRuleContext {
-		public Pr_MetaModelContext E_members;
+		public Pr_MetaModelContext E_MetaModel;
 		public Pr_MetaDeclarationContext _pr_MetaDeclaration;
-		public IList<Pr_MetaDeclarationContext> _E_members1 = new List<Pr_MetaDeclarationContext>();
+		public IList<Pr_MetaDeclarationContext> _E_MetaDeclarationList = new List<Pr_MetaDeclarationContext>();
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_MetaModelContext pr_MetaModel() {
 			return GetRuleContext<Pr_MetaModelContext>(0);
 		}
@@ -1495,7 +1495,7 @@ public partial class MetaParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 192;
-			_localctx.E_members = pr_MetaModel();
+			_localctx.E_MetaModel = pr_MetaModel();
 			State = 196;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
@@ -1504,7 +1504,7 @@ public partial class MetaParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 				{
 				State = 193;
 				_localctx._pr_MetaDeclaration = pr_MetaDeclaration();
-				_localctx._E_members1.Add(_localctx._pr_MetaDeclaration);
+				_localctx._E_MetaDeclarationList.Add(_localctx._pr_MetaDeclaration);
 				}
 				}
 				State = 198;

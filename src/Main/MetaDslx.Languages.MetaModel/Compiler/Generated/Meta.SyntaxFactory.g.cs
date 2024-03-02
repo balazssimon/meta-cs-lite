@@ -507,10 +507,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return (TBooleanSyntax)MetaLanguage.Instance.InternalSyntaxFactory.TBoolean((__InternalSyntaxToken)token.Node).CreateRed();
         }
 
-        public MainBlock1Syntax MainBlock1(MetaModelSyntax members1, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> members2)
+        public MainBlock1Syntax MainBlock1(MetaModelSyntax metaModel, global::MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> metaDeclarationList)
         {
-            if (members1 is null) throw new __ArgumentNullException(nameof(members1));
-            return (MainBlock1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MainBlock1((InternalSyntax.MetaModelGreen)members1.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.MetaDeclarationGreen>(members2.Node)).CreateRed();
+            if (metaModel is null) throw new __ArgumentNullException(nameof(metaModel));
+            return (MainBlock1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MainBlock1((InternalSyntax.MetaModelGreen)metaModel.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.MetaDeclarationGreen>(metaDeclarationList.Node)).CreateRed();
         }
 
         public MetaModelBlock1Syntax MetaModelBlock1(__SyntaxToken tEq, __SyntaxToken uri)

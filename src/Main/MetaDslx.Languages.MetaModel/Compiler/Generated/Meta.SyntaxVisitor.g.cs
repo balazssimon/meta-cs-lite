@@ -1273,9 +1273,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 
         public virtual SyntaxNode VisitMainBlock1(MainBlock1Syntax node)
         {
-            var members1 = (MetaModelSyntax)this.Visit(node.Members1);
-            var members2 = this.VisitList(node.Members2);
-            return node.Update(members1, members2);
+            var metaModel = (MetaModelSyntax)this.Visit(node.MetaModel);
+            var metaDeclarationList = this.VisitList(node.MetaDeclarationList);
+            return node.Update(metaModel, metaDeclarationList);
         }
 
         public virtual SyntaxNode VisitMetaModelBlock1(MetaModelBlock1Syntax node)

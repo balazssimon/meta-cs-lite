@@ -801,38 +801,20 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitMainBlock1(MainBlock1Syntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
-            this.Begin(__annot2, node);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+            this.Begin(__annot0, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Members");
-                this.Begin(__annot0, node.Members1);
-                try
+                this.Visit(node.MetaModel);
+                var metaDeclarationListList = node.MetaDeclarationList;
+                for (var metaDeclarationListIndex = 0; metaDeclarationListIndex < metaDeclarationListList.Count; ++metaDeclarationListIndex)
                 {
-                    this.Visit(node.Members1);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
-                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Members");
-                this.Begin(__annot1, node.Members2.Node);
-                try
-                {
-                    var members2List = node.Members2;
-                    for (var members2Index = 0; members2Index < members2List.Count; ++members2Index)
-                    {
-                        this.Visit(node.Members2[members2Index]);
-                    }
-                }
-                finally
-                {
-                    this.End(__annot1);
+                    this.Visit(node.MetaDeclarationList[metaDeclarationListIndex]);
                 }
             }
             finally
             {
-                this.End(__annot2);
+                this.End(__annot0);
             }
         }
 

@@ -444,19 +444,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             public override GreenNode? VisitPr_MainBlock1(MetaParser.Pr_MainBlock1Context? context)
             {
                 if (context == null) return MainBlock1Green.__Missing;
-                MetaModelGreen? members1 = null;
-                if (context.E_members is not null) members1 = (MetaModelGreen?)this.Visit(context.E_members) ?? MetaModelGreen.__Missing;
-                else members1 = MetaModelGreen.__Missing;
-                var E_members1Context = context._E_members1;
-                var members2Builder = _pool.Allocate<MetaDeclarationGreen>();
-                for (int i = 0; i < E_members1Context.Count; ++i)
+                MetaModelGreen? metaModel = null;
+                if (context.E_MetaModel is not null) metaModel = (MetaModelGreen?)this.Visit(context.E_MetaModel) ?? MetaModelGreen.__Missing;
+                else metaModel = MetaModelGreen.__Missing;
+                var E_MetaDeclarationListContext = context._E_MetaDeclarationList;
+                var metaDeclarationListBuilder = _pool.Allocate<MetaDeclarationGreen>();
+                for (int i = 0; i < E_MetaDeclarationListContext.Count; ++i)
                 {
-                    if (E_members1Context[i] is not null) members2Builder.Add((MetaDeclarationGreen?)this.Visit(E_members1Context[i]) ?? MetaDeclarationGreen.__Missing);
-                    else members2Builder.Add(MetaDeclarationGreen.__Missing);
+                    if (E_MetaDeclarationListContext[i] is not null) metaDeclarationListBuilder.Add((MetaDeclarationGreen?)this.Visit(E_MetaDeclarationListContext[i]) ?? MetaDeclarationGreen.__Missing);
+                    else metaDeclarationListBuilder.Add(MetaDeclarationGreen.__Missing);
                 }
-                var members2 = members2Builder.ToList();
-                _pool.Free(members2Builder);
-                return _factory.MainBlock1(members1, members2);
+                var metaDeclarationList = metaDeclarationListBuilder.ToList();
+                _pool.Free(metaDeclarationListBuilder);
+                return _factory.MainBlock1(metaModel, metaDeclarationList);
             }
             
             public override GreenNode? VisitPr_MetaModelBlock1(MetaParser.Pr_MetaModelBlock1Context? context)
