@@ -25,7 +25,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public interface AnnotationArgument : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter { get; }
         MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter { get; set; }
         MetaDslx.CodeAnalysis.MetaType ParameterType { get; set; }
         MetaDslx.Languages.MetaCompiler.Model.Expression Value { get; set; }

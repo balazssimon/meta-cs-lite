@@ -241,13 +241,8 @@ namespace MetaDslx.Modeling.Meta
             keyType = default;
             keyFlags = ModelPropertyFlags.None;
             type = property.OriginalType;
-            flags = property.OriginalFlags | UpdateFlagsWithType(ModelPropertyFlags.None, ref type);
-            if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.EnumType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
-            {
-                flags |= ModelPropertyFlags.Single;
-                if (!property.HasSetter) flags |= ModelPropertyFlags.ReadOnly;
-            }
-            else if (IsMapType(type, out keyType, out keyFlags, out var valueType, out var valueFlags))
+            flags = property.OriginalFlags;
+            if (IsMapType(type, out keyType, out keyFlags, out var valueType, out var valueFlags))
             {
                 keyFlags = UpdateFlagsWithType(keyFlags, ref keyType);
                 valueFlags = UpdateFlagsWithType(valueFlags, ref valueType);
@@ -267,6 +262,15 @@ namespace MetaDslx.Modeling.Meta
                     type = itemType;
                     flags = itemFlags;
                     flags |= ModelPropertyFlags.Collection | collectionFlags;
+                }
+            }
+            else
+            {
+                flags |= UpdateFlagsWithType(ModelPropertyFlags.None, ref type);
+                if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.EnumType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
+                {
+                    flags |= ModelPropertyFlags.Single;
+                    if (!property.HasSetter) flags |= ModelPropertyFlags.ReadOnly;
                 }
             }
             if (!flags.HasFlag(ModelPropertyFlags.Collection) && !flags.HasFlag(ModelPropertyFlags.Map))
@@ -292,7 +296,7 @@ namespace MetaDslx.Modeling.Meta
             else flags |= ModelPropertyFlags.ReferenceType;
             if (IsEnumType(type)) flags |= ModelPropertyFlags.EnumType;
             if (IsPrimitiveType(type)) flags |= ModelPropertyFlags.BuiltInType;
-            if (_classTypes.Contains(type)) flags |= ModelPropertyFlags.ModelObjectType;
+            if (IsModelObjectType(type)) flags |= ModelPropertyFlags.ModelObjectType;
             return flags;
         }
         
@@ -592,6 +596,7 @@ namespace MetaDslx.Modeling.Meta
         protected abstract bool IsEnumType(TType type);
         protected abstract bool IsValueType(TType type);
         protected abstract bool IsPrimitiveType(TType type);
+        protected abstract bool IsModelObjectType(TType type);
         protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags);
         protected abstract MetaPropertyInfo<TType, TProperty, TOperation> MakePropertyInfo(
             MetaPropertySlot<TType, TProperty, TOperation> slot,

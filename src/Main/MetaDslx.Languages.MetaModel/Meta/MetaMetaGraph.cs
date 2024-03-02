@@ -38,7 +38,9 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override bool IsEnumType(MetaDslx.CodeAnalysis.MetaType type)
         {
-            return type.OriginalModelObject is MetaEnum;
+            if (type.OriginalModelObject is MetaEnum) return true;
+            if (type.OriginalModelObject is MetaTypeReference typeRef && typeRef.Type.OriginalModelObject is MetaEnum) return true;
+            return false;
         }
 
         protected override bool IsMapType(CodeAnalysis.MetaType type, out CodeAnalysis.MetaType keyType, out ModelPropertyFlags keyFlags, out CodeAnalysis.MetaType valueType, out ModelPropertyFlags valueFlags)
@@ -47,6 +49,13 @@ namespace MetaDslx.Languages.MetaModel.Meta
             keyFlags = ModelPropertyFlags.None;
             valueType = default;
             valueFlags = ModelPropertyFlags.None;
+            return false;
+        }
+
+        protected override bool IsModelObjectType(MetaType type)
+        {
+            if (type.OriginalModelObject is MetaClass) return true;
+            if (type.OriginalModelObject is MetaTypeReference typeRef && typeRef.Type.OriginalModelObject is MetaClass) return true;
             return false;
         }
 

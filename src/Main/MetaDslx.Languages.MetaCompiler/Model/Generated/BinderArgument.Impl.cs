@@ -51,7 +51,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
     
         public global::MetaDslx.Modeling.ICollectionSlot<string?> Values
         {
-            get => MGetCollection<string?>(Compiler.BinderArgument_Values);
+            get => MGetCollection<string>(Compiler.BinderArgument_Values);
         }
     
     
