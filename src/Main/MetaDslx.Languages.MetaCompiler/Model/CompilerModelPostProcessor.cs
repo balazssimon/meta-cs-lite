@@ -395,9 +395,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                         {
                             _diagnostics.Add(Diagnostic.Create(ErrorCode.WRN_SyntaxWarning, rule.MLocation, $"Rule '{rule.Name}' is never used."));
                         }
-                        //_model.DeleteObject(rule);
-                        //allRules.RemoveAt(i);
-                        //unusedRules = true;
+                        _model.DeleteObject(rule);
+                        allRules.RemoveAt(i);
+                        unusedRules = true;
                     }
                 }
                 first = false;
