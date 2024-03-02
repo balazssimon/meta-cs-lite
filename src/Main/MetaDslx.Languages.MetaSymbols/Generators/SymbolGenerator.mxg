@@ -8,7 +8,7 @@ using MetaDslx.Languages.MetaSymbols.Model
 generator SymbolGenerator
 
 template GenerateSymbol(Symbol symbol)
-namespace [symbol.NamespaceName]
+namespace [symbol.Namespace]
 {
     using __Type = global::System.Type;
     using __ISymbol = global::Microsoft.CodeAnalysis.ISymbol;
@@ -249,7 +249,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
 
-namespace [symbol.NamespaceName].Implementation
+namespace [symbol.Namespace].Implementation
 {
     using __Model = MetaDslx.Modeling.Model;
     using __IModelObject = MetaDslx.Modeling.IModelObject;

@@ -18,11 +18,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitMain(MainSyntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaSymbols.Model.Namespace));
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol));
             this.Begin(__annot2, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: MetaDslx.Languages.MetaSymbols.Model.Symbols.Declaration_Declarations);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder();
                 this.Begin(__annot0, node.Qualifier);
                 try
                 {
@@ -756,28 +756,19 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Binding
 
         public virtual void VisitMainBlock1(MainBlock1Syntax node)
         {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
-            this.Begin(__annot1, node);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+            this.Begin(__annot0, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
-                this.Begin(__annot0, node.Declarations.Node);
-                try
+                var symbolListList = node.SymbolList;
+                for (var symbolListIndex = 0; symbolListIndex < symbolListList.Count; ++symbolListIndex)
                 {
-                    var declarationsList = node.Declarations;
-                    for (var declarationsIndex = 0; declarationsIndex < declarationsList.Count; ++declarationsIndex)
-                    {
-                        this.Visit(node.Declarations[declarationsIndex]);
-                    }
-                }
-                finally
-                {
-                    this.End(__annot0);
+                    this.Visit(node.SymbolList[symbolListIndex]);
                 }
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot0);
             }
         }
 

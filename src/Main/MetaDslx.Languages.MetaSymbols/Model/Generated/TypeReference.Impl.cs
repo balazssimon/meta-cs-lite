@@ -43,10 +43,10 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
             set => MSet<bool>(Symbols.TypeReference_IsNullable, value);
         }
     
-        public __MetaType Type
+        public MetaDslx.CodeAnalysis.MetaType Type
         {
-            get => MGet<__MetaType>(Symbols.TypeReference_Type);
-            set => MSet<__MetaType>(Symbols.TypeReference_Type, value);
+            get => MGet<MetaDslx.CodeAnalysis.MetaType>(Symbols.TypeReference_Type);
+            set => MSet<MetaDslx.CodeAnalysis.MetaType>(Symbols.TypeReference_Type, value);
         }
     
     

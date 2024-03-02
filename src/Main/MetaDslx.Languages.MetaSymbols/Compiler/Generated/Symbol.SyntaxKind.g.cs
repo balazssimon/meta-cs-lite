@@ -32,6 +32,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         TComma,
         TUtf8Bom,
         KNamespace,
+        TSemicolon,
         KUsing,
         KAbstract,
         KSymbol,

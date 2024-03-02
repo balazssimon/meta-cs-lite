@@ -34,9 +34,9 @@ namespace MetaDslx.BuildTools
         private const bool EraseOutputDirectory = true;
         private static readonly string[] BootstrapProjects =
         [
-            //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
+            @"..\..\..\..\MetaDslx.CodeAnalysis.Common",
             //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaModel"
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
@@ -155,8 +155,8 @@ namespace MetaDslx.BuildTools
                 {
                     compilation = compilation.AddReferences(PackageReferences);
                     //await CompileMeta(compilation, mxFiles);
-                    //await CompileMetaSymbols(compilation, mxsFiles);
-                    await CompileMetaModels(compilation, mxmFiles);
+                    await CompileMetaSymbols(compilation, mxsFiles);
+                    //await CompileMetaModels(compilation, mxmFiles);
                     //await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/

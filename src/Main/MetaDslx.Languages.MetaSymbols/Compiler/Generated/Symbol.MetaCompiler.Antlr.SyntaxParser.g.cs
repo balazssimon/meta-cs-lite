@@ -105,6 +105,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 QualifierGreen? qualifier = null;
                 if (context.E_Qualifier is not null) qualifier = (QualifierGreen?)this.Visit(context.E_Qualifier) ?? QualifierGreen.__Missing;
                 else qualifier = QualifierGreen.__Missing;
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, SymbolSyntaxKind.TSemicolon);
                 var E_UsingListContext = context._E_UsingList;
                 var usingListBuilder = _pool.Allocate<UsingGreen>();
                 for (int i = 0; i < E_UsingListContext.Count; ++i)
@@ -118,7 +119,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.E_Block is not null) block = (MainBlock1Green?)this.Visit(context.E_Block) ?? MainBlock1Green.__Missing;
                 else block = MainBlock1Green.__Missing;
                 var endOfFileToken = (InternalSyntaxToken?)this.VisitTerminal(context.E_EndOfFileToken, SymbolSyntaxKind.Eof);
-                return _factory.Main(kNamespace, qualifier, usingList, block, endOfFileToken);
+                return _factory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
             }
             
             public override GreenNode? VisitPr_Using(SymbolParser.Pr_UsingContext? context)
@@ -128,7 +129,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 QualifierGreen? namespaces = null;
                 if (context.E_namespaces is not null) namespaces = (QualifierGreen?)this.Visit(context.E_namespaces) ?? QualifierGreen.__Missing;
                 else namespaces = QualifierGreen.__Missing;
-                return _factory.Using(kUsing, namespaces);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, SymbolSyntaxKind.TSemicolon);
+                return _factory.Using(kUsing, namespaces, tSemicolon);
             }
             
             public override GreenNode? VisitPr_Symbol(SymbolParser.Pr_SymbolContext? context)
@@ -162,7 +164,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 if (context.E_Block1 is not null) block2 = (PropertyBlock2Green?)this.Visit(context.E_Block1);
                 PropertyBlock3Green? block3 = null;
                 if (context.E_Block2 is not null) block3 = (PropertyBlock3Green?)this.Visit(context.E_Block2);
-                return _factory.Property(block1, type, name, block2, block3);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, SymbolSyntaxKind.TSemicolon);
+                return _factory.Property(block1, type, name, block2, block3, tSemicolon);
             }
             
             public override GreenNode? VisitPr_OperationAlt1(SymbolParser.Pr_OperationAlt1Context? context)
@@ -174,7 +177,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 else name = NameGreen.__Missing;
                 var tLParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TLParen, SymbolSyntaxKind.TLParen);
                 var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRParen, SymbolSyntaxKind.TRParen);
-                return _factory.OperationAlt1(isPhase, name, tLParen, tRParen);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, SymbolSyntaxKind.TSemicolon);
+                return _factory.OperationAlt1(isPhase, name, tLParen, tRParen, tSemicolon);
             }
             
             public override GreenNode? VisitPr_OperationAlt2(SymbolParser.Pr_OperationAlt2Context? context)
@@ -193,7 +197,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRParen1, SymbolSyntaxKind.TRParen);
                 OperationAlt2Block2Green? block2 = null;
                 if (context.E_Block1 is not null) block2 = (OperationAlt2Block2Green?)this.Visit(context.E_Block1);
-                return _factory.OperationAlt2(isCached, returnType, name, tLParen, block1, tRParen, block2);
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon1, SymbolSyntaxKind.TSemicolon);
+                return _factory.OperationAlt2(isCached, returnType, name, tLParen, block1, tRParen, block2, tSemicolon);
             }
             
             public override GreenNode? VisitPr_Parameter(SymbolParser.Pr_ParameterContext? context)
@@ -388,16 +393,16 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             public override GreenNode? VisitPr_MainBlock1(SymbolParser.Pr_MainBlock1Context? context)
             {
                 if (context == null) return MainBlock1Green.__Missing;
-                var E_declarationsContext = context._E_declarations;
-                var declarationsBuilder = _pool.Allocate<SymbolGreen>();
-                for (int i = 0; i < E_declarationsContext.Count; ++i)
+                var E_SymbolListContext = context._E_SymbolList;
+                var symbolListBuilder = _pool.Allocate<SymbolGreen>();
+                for (int i = 0; i < E_SymbolListContext.Count; ++i)
                 {
-                    if (E_declarationsContext[i] is not null) declarationsBuilder.Add((SymbolGreen?)this.Visit(E_declarationsContext[i]) ?? SymbolGreen.__Missing);
-                    else declarationsBuilder.Add(SymbolGreen.__Missing);
+                    if (E_SymbolListContext[i] is not null) symbolListBuilder.Add((SymbolGreen?)this.Visit(E_SymbolListContext[i]) ?? SymbolGreen.__Missing);
+                    else symbolListBuilder.Add(SymbolGreen.__Missing);
                 }
-                var declarations = declarationsBuilder.ToList();
-                _pool.Free(declarationsBuilder);
-                return _factory.MainBlock1(declarations);
+                var symbolList = symbolListBuilder.ToList();
+                _pool.Free(symbolListBuilder);
+                return _factory.MainBlock1(symbolList);
             }
             
             public override GreenNode? VisitPr_SymbolBlock1(SymbolParser.Pr_SymbolBlock1Context? context)

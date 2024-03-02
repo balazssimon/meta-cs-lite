@@ -108,6 +108,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.TComma:
                 case SymbolSyntaxKind.TUtf8Bom:
                 case SymbolSyntaxKind.KNamespace:
+                case SymbolSyntaxKind.TSemicolon:
                 case SymbolSyntaxKind.KUsing:
                 case SymbolSyntaxKind.KAbstract:
                 case SymbolSyntaxKind.KSymbol:
@@ -175,6 +176,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                 case SymbolSyntaxKind.TComma:
                 case SymbolSyntaxKind.TUtf8Bom:
                 case SymbolSyntaxKind.KNamespace:
+                case SymbolSyntaxKind.TSemicolon:
                 case SymbolSyntaxKind.KUsing:
                 case SymbolSyntaxKind.KAbstract:
                 case SymbolSyntaxKind.KSymbol:
@@ -238,6 +240,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return SymbolSyntaxKind.TUtf8Bom;
                 case "namespace": 
                     return SymbolSyntaxKind.KNamespace;
+                case ";": 
+                    return SymbolSyntaxKind.TSemicolon;
                 case "using": 
                     return SymbolSyntaxKind.KUsing;
                 case "abstract": 
@@ -361,6 +365,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "TUtf8Bom";
                 case SymbolSyntaxKind.KNamespace: 
                     return "KNamespace";
+                case SymbolSyntaxKind.TSemicolon: 
+                    return "TSemicolon";
                 case SymbolSyntaxKind.KUsing: 
                     return "KUsing";
                 case SymbolSyntaxKind.KAbstract: 
@@ -559,6 +565,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
                     return "\u00ef\u00bb\u00bf";
                 case SymbolSyntaxKind.KNamespace: 
                     return "namespace";
+                case SymbolSyntaxKind.TSemicolon: 
+                    return ";";
                 case SymbolSyntaxKind.KUsing: 
                     return "using";
                 case SymbolSyntaxKind.KAbstract: 

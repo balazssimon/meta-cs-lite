@@ -25,7 +25,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
 
     public interface Parameter : global::MetaDslx.Languages.MetaSymbols.Model.Declaration
     {
-        TypeReference Type { get; set; }
+        MetaDslx.Languages.MetaSymbols.Model.TypeReference Type { get; set; }
     
     }
 }

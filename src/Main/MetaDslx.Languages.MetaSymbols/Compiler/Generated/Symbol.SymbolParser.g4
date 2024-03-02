@@ -6,20 +6,20 @@ options
 } 
 
 pr_Main
-    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_UsingList+=pr_Using*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
+    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  E_UsingList+=pr_Using*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
     ;
 pr_Using
-    :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier
+    :  E_KUsing=LR_KUsing  E_namespaces=pr_Qualifier  E_TSemicolon=LR_TSemicolon
     ;
 pr_Symbol
     :  E_isAbstract=LR_KAbstract?  E_KSymbol=LR_KSymbol  E_Name=pr_Name  E_Block=pr_SymbolBlock1?  E_Block1=pr_SymbolBlock2
     ;
 pr_Property
-    :  E_Block=pr_PropertyBlock1?  E_type=pr_TypeReference  E_Name=pr_Name  E_Block1=pr_PropertyBlock2?  E_Block2=pr_PropertyBlock3?
+    :  E_Block=pr_PropertyBlock1?  E_type=pr_TypeReference  E_Name=pr_Name  E_Block1=pr_PropertyBlock2?  E_Block2=pr_PropertyBlock3?  E_TSemicolon=LR_TSemicolon
     ;
 pr_Operation
-    :  E_isPhase=LR_KPhase  E_Name=pr_Name  E_TLParen=LR_TLParen  E_TRParen=LR_TRParen #pr_OperationAlt1
-    |  E_isCached=LR_KCached?  E_returnType=pr_TypeReference  E_Name1=pr_Name  E_TLParen1=LR_TLParen  E_Block=pr_OperationAlt2Block1?  E_TRParen1=LR_TRParen  E_Block1=pr_OperationAlt2Block2? #pr_OperationAlt2
+    :  E_isPhase=LR_KPhase  E_Name=pr_Name  E_TLParen=LR_TLParen  E_TRParen=LR_TRParen  E_TSemicolon=LR_TSemicolon #pr_OperationAlt1
+    |  E_isCached=LR_KCached?  E_returnType=pr_TypeReference  E_Name1=pr_Name  E_TLParen1=LR_TLParen  E_Block=pr_OperationAlt2Block1?  E_TRParen1=LR_TRParen  E_Block1=pr_OperationAlt2Block2?  E_TSemicolon1=LR_TSemicolon #pr_OperationAlt2
     ;
 pr_Parameter
     :  E_type=pr_TypeReference  E_Name=pr_Name
@@ -58,7 +58,7 @@ pr_TBoolean
     :  E_Token=(LR_KTrue | LR_KFalse)
     ;
 pr_MainBlock1
-    :  E_declarations+=pr_Symbol*
+    :  E_SymbolList+=pr_Symbol*
     ;
 pr_SymbolBlock1
     :  E_TColon=LR_TColon  E_baseTypes=pr_Qualifier

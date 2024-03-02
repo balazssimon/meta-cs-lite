@@ -36,10 +36,6 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         {
         }
     
-        public virtual void Namespace(Namespace _this)
-        {
-        }
-    
         public virtual void Operation(Operation _this)
         {
         }
@@ -61,9 +57,9 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         }
     
     
-        public abstract string? Declaration_FullName(Declaration _this);
+        public abstract string Declaration_Namespace(Declaration _this);
     
-        public abstract string Symbol_NamespaceName(Symbol _this);
+        public abstract string? Declaration_FullName(Declaration _this);
     
     
     }

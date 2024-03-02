@@ -195,11 +195,20 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+            } 
+        }
         public global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> UsingList 
         { 
             get
             {
-            var red = this.GetRed(ref this._usingList, 2);
+            var red = this.GetRed(ref this._usingList, 3);
             return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax>(red);
             } 
         }
@@ -207,7 +216,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         { 
             get
             {
-            var red = this.GetRed(ref this._block, 3);
+            var red = this.GetRed(ref this._block, 4);
             return red;
             } 
         }
@@ -217,7 +226,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             {
             var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
             var greenToken = green.EndOfFileToken;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
             } 
         }
     
@@ -226,8 +235,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             switch (index)
             {
                 case 1: return this.GetRed(ref this._qualifier, 1);
-                case 2: return this.GetRed(ref this._usingList, 2);
-                case 3: return this.GetRed(ref this._block, 3);
+                case 3: return this.GetRed(ref this._usingList, 3);
+                case 4: return this.GetRed(ref this._block, 4);
                 default: return null;
             }
         }
@@ -237,25 +246,30 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             switch (index)
             {
                 case 1: return this._qualifier;
-                case 2: return this._usingList;
-                case 3: return this._block;
+                case 3: return this._usingList;
+                case 4: return this._block;
                 default: return null;
             }
         }
     
         public MainSyntax WithKNamespace(__SyntaxToken kNamespace)
         {
-            return this.Update(kNamespace, this.Qualifier, this.UsingList, this.Block, this.EndOfFileToken);
+            return this.Update(kNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax WithQualifier(QualifierSyntax qualifier)
         {
-            return this.Update(this.KNamespace, qualifier, this.UsingList, this.Block, this.EndOfFileToken);
+            return this.Update(this.KNamespace, qualifier, this.TSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
+        }
+    
+        public MainSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.KNamespace, this.Qualifier, tSemicolon, this.UsingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax WithUsingList(global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList)
         {
-            return this.Update(this.KNamespace, this.Qualifier, usingList, this.Block, this.EndOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, usingList, this.Block, this.EndOfFileToken);
         }
     
         public MainSyntax AddUsingList(params UsingSyntax[] usingList)
@@ -265,20 +279,20 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     
         public MainSyntax WithBlock(MainBlock1Syntax block)
         {
-            return this.Update(this.KNamespace, this.Qualifier, this.UsingList, block, this.EndOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, block, this.EndOfFileToken);
         }
     
         public MainSyntax WithEndOfFileToken(__SyntaxToken endOfFileToken)
         {
-            return this.Update(this.KNamespace, this.Qualifier, this.UsingList, this.Block, endOfFileToken);
+            return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Block, endOfFileToken);
         }
     
     
-        public MainSyntax Update(__SyntaxToken kNamespace, QualifierSyntax qualifier, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
+        public MainSyntax Update(__SyntaxToken kNamespace, QualifierSyntax qualifier, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
         {
-            if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.UsingList != usingList || this.Block != block || this.EndOfFileToken != endOfFileToken)
+            if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.TSemicolon != tSemicolon || this.UsingList != usingList || this.Block != block || this.EndOfFileToken != endOfFileToken)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, usingList, block, endOfFileToken);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -334,6 +348,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.UsingGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -355,20 +378,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     
         public UsingSyntax WithKUsing(__SyntaxToken kUsing)
         {
-            return this.Update(kUsing, this.Namespaces);
+            return this.Update(kUsing, this.Namespaces, this.TSemicolon);
         }
     
         public UsingSyntax WithNamespaces(QualifierSyntax namespaces)
         {
-            return this.Update(this.KUsing, namespaces);
+            return this.Update(this.KUsing, namespaces, this.TSemicolon);
+        }
+    
+        public UsingSyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.KUsing, this.Namespaces, tSemicolon);
         }
     
     
-        public UsingSyntax Update(__SyntaxToken kUsing, QualifierSyntax namespaces)
+        public UsingSyntax Update(__SyntaxToken kUsing, QualifierSyntax namespaces, __SyntaxToken tSemicolon)
         {
-            if (this.KUsing != kUsing || this.Namespaces != namespaces)
+            if (this.KUsing != kUsing || this.Namespaces != namespaces || this.TSemicolon != tSemicolon)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.Using(kUsing, namespaces);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.Using(kUsing, namespaces, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -587,6 +615,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.PropertyGreen)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -616,35 +653,40 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     
         public PropertySyntax WithBlock1(PropertyBlock1Syntax block1)
         {
-            return this.Update(block1, this.Type, this.Name, this.Block2, this.Block3);
+            return this.Update(block1, this.Type, this.Name, this.Block2, this.Block3, this.TSemicolon);
         }
     
         public PropertySyntax WithType(TypeReferenceSyntax type)
         {
-            return this.Update(this.Block1, type, this.Name, this.Block2, this.Block3);
+            return this.Update(this.Block1, type, this.Name, this.Block2, this.Block3, this.TSemicolon);
         }
     
         public PropertySyntax WithName(NameSyntax name)
         {
-            return this.Update(this.Block1, this.Type, name, this.Block2, this.Block3);
+            return this.Update(this.Block1, this.Type, name, this.Block2, this.Block3, this.TSemicolon);
         }
     
         public PropertySyntax WithBlock2(PropertyBlock2Syntax block2)
         {
-            return this.Update(this.Block1, this.Type, this.Name, block2, this.Block3);
+            return this.Update(this.Block1, this.Type, this.Name, block2, this.Block3, this.TSemicolon);
         }
     
         public PropertySyntax WithBlock3(PropertyBlock3Syntax block3)
         {
-            return this.Update(this.Block1, this.Type, this.Name, this.Block2, block3);
+            return this.Update(this.Block1, this.Type, this.Name, this.Block2, block3, this.TSemicolon);
+        }
+    
+        public PropertySyntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.Block1, this.Type, this.Name, this.Block2, this.Block3, tSemicolon);
         }
     
     
-        public PropertySyntax Update(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3)
+        public PropertySyntax Update(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3, __SyntaxToken tSemicolon)
         {
-            if (this.Block1 != block1 || this.Type != type || this.Name != name || this.Block2 != block2 || this.Block3 != block3)
+            if (this.Block1 != block1 || this.Type != type || this.Name != name || this.Block2 != block2 || this.Block3 != block3 || this.TSemicolon != tSemicolon)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.Property(block1, type, name, block2, block3);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.Property(block1, type, name, block2, block3, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -730,6 +772,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.OperationAlt1Green)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -751,30 +802,35 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     
         public OperationAlt1Syntax WithIsPhase(__SyntaxToken isPhase)
         {
-            return this.Update(isPhase, this.Name, this.TLParen, this.TRParen);
+            return this.Update(isPhase, this.Name, this.TLParen, this.TRParen, this.TSemicolon);
         }
     
         public OperationAlt1Syntax WithName(NameSyntax name)
         {
-            return this.Update(this.IsPhase, name, this.TLParen, this.TRParen);
+            return this.Update(this.IsPhase, name, this.TLParen, this.TRParen, this.TSemicolon);
         }
     
         public OperationAlt1Syntax WithTLParen(__SyntaxToken tLParen)
         {
-            return this.Update(this.IsPhase, this.Name, tLParen, this.TRParen);
+            return this.Update(this.IsPhase, this.Name, tLParen, this.TRParen, this.TSemicolon);
         }
     
         public OperationAlt1Syntax WithTRParen(__SyntaxToken tRParen)
         {
-            return this.Update(this.IsPhase, this.Name, this.TLParen, tRParen);
+            return this.Update(this.IsPhase, this.Name, this.TLParen, tRParen, this.TSemicolon);
+        }
+    
+        public OperationAlt1Syntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.IsPhase, this.Name, this.TLParen, this.TRParen, tSemicolon);
         }
     
     
-        public OperationAlt1Syntax Update(__SyntaxToken isPhase, NameSyntax name, __SyntaxToken tLParen, __SyntaxToken tRParen)
+        public OperationAlt1Syntax Update(__SyntaxToken isPhase, NameSyntax name, __SyntaxToken tLParen, __SyntaxToken tRParen, __SyntaxToken tSemicolon)
         {
-            if (this.IsPhase != isPhase || this.Name != name || this.TLParen != tLParen || this.TRParen != tRParen)
+            if (this.IsPhase != isPhase || this.Name != name || this.TLParen != tLParen || this.TRParen != tRParen || this.TSemicolon != tSemicolon)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.OperationAlt1(isPhase, name, tLParen, tRParen);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.OperationAlt1(isPhase, name, tLParen, tRParen, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -875,6 +931,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return red;
             } 
         }
+        public __SyntaxToken TSemicolon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax.OperationAlt2Green)this.Green;
+            var greenToken = green.TSemicolon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(7), this.GetChildIndex(7));
+            } 
+        }
     
         protected override __SyntaxNode GetNodeSlot(int index)
         {
@@ -902,45 +967,50 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     
         public OperationAlt2Syntax WithIsCached(__SyntaxToken isCached)
         {
-            return this.Update(isCached, this.ReturnType, this.Name, this.TLParen, this.Block1, this.TRParen, this.Block2);
+            return this.Update(isCached, this.ReturnType, this.Name, this.TLParen, this.Block1, this.TRParen, this.Block2, this.TSemicolon);
         }
     
         public OperationAlt2Syntax WithReturnType(TypeReferenceSyntax returnType)
         {
-            return this.Update(this.IsCached, returnType, this.Name, this.TLParen, this.Block1, this.TRParen, this.Block2);
+            return this.Update(this.IsCached, returnType, this.Name, this.TLParen, this.Block1, this.TRParen, this.Block2, this.TSemicolon);
         }
     
         public OperationAlt2Syntax WithName(NameSyntax name)
         {
-            return this.Update(this.IsCached, this.ReturnType, name, this.TLParen, this.Block1, this.TRParen, this.Block2);
+            return this.Update(this.IsCached, this.ReturnType, name, this.TLParen, this.Block1, this.TRParen, this.Block2, this.TSemicolon);
         }
     
         public OperationAlt2Syntax WithTLParen(__SyntaxToken tLParen)
         {
-            return this.Update(this.IsCached, this.ReturnType, this.Name, tLParen, this.Block1, this.TRParen, this.Block2);
+            return this.Update(this.IsCached, this.ReturnType, this.Name, tLParen, this.Block1, this.TRParen, this.Block2, this.TSemicolon);
         }
     
         public OperationAlt2Syntax WithBlock1(OperationAlt2Block1Syntax block1)
         {
-            return this.Update(this.IsCached, this.ReturnType, this.Name, this.TLParen, block1, this.TRParen, this.Block2);
+            return this.Update(this.IsCached, this.ReturnType, this.Name, this.TLParen, block1, this.TRParen, this.Block2, this.TSemicolon);
         }
     
         public OperationAlt2Syntax WithTRParen(__SyntaxToken tRParen)
         {
-            return this.Update(this.IsCached, this.ReturnType, this.Name, this.TLParen, this.Block1, tRParen, this.Block2);
+            return this.Update(this.IsCached, this.ReturnType, this.Name, this.TLParen, this.Block1, tRParen, this.Block2, this.TSemicolon);
         }
     
         public OperationAlt2Syntax WithBlock2(OperationAlt2Block2Syntax block2)
         {
-            return this.Update(this.IsCached, this.ReturnType, this.Name, this.TLParen, this.Block1, this.TRParen, block2);
+            return this.Update(this.IsCached, this.ReturnType, this.Name, this.TLParen, this.Block1, this.TRParen, block2, this.TSemicolon);
+        }
+    
+        public OperationAlt2Syntax WithTSemicolon(__SyntaxToken tSemicolon)
+        {
+            return this.Update(this.IsCached, this.ReturnType, this.Name, this.TLParen, this.Block1, this.TRParen, this.Block2, tSemicolon);
         }
     
     
-        public OperationAlt2Syntax Update(__SyntaxToken isCached, TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationAlt2Block1Syntax block1, __SyntaxToken tRParen, OperationAlt2Block2Syntax block2)
+        public OperationAlt2Syntax Update(__SyntaxToken isCached, TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationAlt2Block1Syntax block1, __SyntaxToken tRParen, OperationAlt2Block2Syntax block2, __SyntaxToken tSemicolon)
         {
-            if (this.IsCached != isCached || this.ReturnType != returnType || this.Name != name || this.TLParen != tLParen || this.Block1 != block1 || this.TRParen != tRParen || this.Block2 != block2)
+            if (this.IsCached != isCached || this.ReturnType != returnType || this.Name != name || this.TLParen != tLParen || this.Block1 != block1 || this.TRParen != tRParen || this.Block2 != block2 || this.TSemicolon != tSemicolon)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.OperationAlt2(isCached, returnType, name, tLParen, block1, tRParen, block2);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.OperationAlt2(isCached, returnType, name, tLParen, block1, tRParen, block2, tSemicolon);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -2251,7 +2321,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
     }
     public sealed class MainBlock1Syntax : SymbolSyntaxNode
     {
-        private __SyntaxNode _declarations;
+        private __SyntaxNode _symbolList;
     
         public MainBlock1Syntax(__InternalSyntaxNode green, SymbolSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -2263,11 +2333,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         {
         }
     
-        public global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> Declarations 
+        public global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> SymbolList 
         { 
             get
             {
-            var red = this.GetRed(ref this._declarations, 0);
+            var red = this.GetRed(ref this._symbolList, 0);
             return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax>(red);
             } 
         }
@@ -2276,7 +2346,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this.GetRed(ref this._declarations, 0);
+                case 0: return this.GetRed(ref this._symbolList, 0);
                 default: return null;
             }
         }
@@ -2285,27 +2355,27 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this._declarations;
+                case 0: return this._symbolList;
                 default: return null;
             }
         }
     
-        public MainBlock1Syntax WithDeclarations(global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> declarations)
+        public MainBlock1Syntax WithSymbolList(global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> symbolList)
         {
-            return this.Update(declarations);
+            return this.Update(symbolList);
         }
     
-        public MainBlock1Syntax AddDeclarations(params SymbolSyntax[] declarations)
+        public MainBlock1Syntax AddSymbolList(params SymbolSyntax[] symbolList)
         {
-            return this.WithDeclarations(this.Declarations.AddRange(declarations));
+            return this.WithSymbolList(this.SymbolList.AddRange(symbolList));
         }
     
     
-        public MainBlock1Syntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> declarations)
+        public MainBlock1Syntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> symbolList)
         {
-            if (this.Declarations != declarations)
+            if (this.SymbolList != symbolList)
             {
-                var newNode = SymbolLanguage.Instance.SyntaxFactory.MainBlock1(declarations);
+                var newNode = SymbolLanguage.Instance.SyntaxFactory.MainBlock1(symbolList);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);

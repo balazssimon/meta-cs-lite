@@ -251,33 +251,37 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return new __SyntaxToken(SymbolLanguage.Instance.InternalSyntaxFactory.TInvalidToken(text, value));
         }
 
-        public MainSyntax Main(__SyntaxToken kNamespace, QualifierSyntax qualifier, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
+        public MainSyntax Main(__SyntaxToken kNamespace, QualifierSyntax qualifier, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
         {
             if (kNamespace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kNamespace));
             if (kNamespace.RawKind != (int)SymbolSyntaxKind.KNamespace) throw new __ArgumentException(nameof(kNamespace));
             if (qualifier is null) throw new __ArgumentNullException(nameof(qualifier));
+            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
+            if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             if (block is null) throw new __ArgumentNullException(nameof(block));
             if (endOfFileToken.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(endOfFileToken));
             if (endOfFileToken.RawKind != (int)__InternalSyntaxKind.Eof) throw new __ArgumentException(nameof(endOfFileToken));
-            return (MainSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Main((__InternalSyntaxToken)kNamespace.Node, (InternalSyntax.QualifierGreen)qualifier.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.UsingGreen>(usingList.Node), (InternalSyntax.MainBlock1Green)block.Green, (__InternalSyntaxToken)endOfFileToken.Node).CreateRed();
+            return (MainSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Main((__InternalSyntaxToken)kNamespace.Node, (InternalSyntax.QualifierGreen)qualifier.Green, (__InternalSyntaxToken)tSemicolon.Node, __GreenNodeExtensions.ToGreenList<InternalSyntax.UsingGreen>(usingList.Node), (InternalSyntax.MainBlock1Green)block.Green, (__InternalSyntaxToken)endOfFileToken.Node).CreateRed();
         }
         
         public MainSyntax Main(QualifierSyntax qualifier, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, MainBlock1Syntax block, __SyntaxToken endOfFileToken)
         {
-            return this.Main(this.Token(SymbolSyntaxKind.KNamespace), qualifier, usingList, block, this.Token(SymbolSyntaxKind.Eof));
+            return this.Main(this.Token(SymbolSyntaxKind.KNamespace), qualifier, this.Token(SymbolSyntaxKind.TSemicolon), usingList, block, this.Token(SymbolSyntaxKind.Eof));
         }
 
-        public UsingSyntax Using(__SyntaxToken kUsing, QualifierSyntax namespaces)
+        public UsingSyntax Using(__SyntaxToken kUsing, QualifierSyntax namespaces, __SyntaxToken tSemicolon)
         {
             if (kUsing.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kUsing));
             if (kUsing.RawKind != (int)SymbolSyntaxKind.KUsing) throw new __ArgumentException(nameof(kUsing));
             if (namespaces is null) throw new __ArgumentNullException(nameof(namespaces));
-            return (UsingSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Using((__InternalSyntaxToken)kUsing.Node, (InternalSyntax.QualifierGreen)namespaces.Green).CreateRed();
+            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
+            if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
+            return (UsingSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Using((__InternalSyntaxToken)kUsing.Node, (InternalSyntax.QualifierGreen)namespaces.Green, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public UsingSyntax Using(QualifierSyntax namespaces)
         {
-            return this.Using(this.Token(SymbolSyntaxKind.KUsing), namespaces);
+            return this.Using(this.Token(SymbolSyntaxKind.KUsing), namespaces, this.Token(SymbolSyntaxKind.TSemicolon));
         }
 
         public SymbolSyntax Symbol(__SyntaxToken isAbstract, __SyntaxToken kSymbol, NameSyntax name, SymbolBlock1Syntax block1, SymbolBlock2Syntax block2)
@@ -295,19 +299,21 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return this.Symbol(default, this.Token(SymbolSyntaxKind.KSymbol), name, default, block2);
         }
 
-        public PropertySyntax Property(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3)
+        public PropertySyntax Property(PropertyBlock1Syntax block1, TypeReferenceSyntax type, NameSyntax name, PropertyBlock2Syntax block2, PropertyBlock3Syntax block3, __SyntaxToken tSemicolon)
         {
             if (type is null) throw new __ArgumentNullException(nameof(type));
             if (name is null) throw new __ArgumentNullException(nameof(name));
-            return (PropertySyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Property((InternalSyntax.PropertyBlock1Green)block1.Green, (InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.PropertyBlock2Green)block2.Green, (InternalSyntax.PropertyBlock3Green)block3.Green).CreateRed();
+            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
+            if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
+            return (PropertySyntax)SymbolLanguage.Instance.InternalSyntaxFactory.Property((InternalSyntax.PropertyBlock1Green)block1.Green, (InternalSyntax.TypeReferenceGreen)type.Green, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.PropertyBlock2Green)block2.Green, (InternalSyntax.PropertyBlock3Green)block3.Green, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public PropertySyntax Property(TypeReferenceSyntax type, NameSyntax name)
         {
-            return this.Property(default, type, name, default, default);
+            return this.Property(default, type, name, default, default, this.Token(SymbolSyntaxKind.TSemicolon));
         }
 
-        public OperationAlt1Syntax OperationAlt1(__SyntaxToken isPhase, NameSyntax name, __SyntaxToken tLParen, __SyntaxToken tRParen)
+        public OperationAlt1Syntax OperationAlt1(__SyntaxToken isPhase, NameSyntax name, __SyntaxToken tLParen, __SyntaxToken tRParen, __SyntaxToken tSemicolon)
         {
             if (isPhase.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isPhase));
             if (isPhase.RawKind != (int)SymbolSyntaxKind.KPhase) throw new __ArgumentException(nameof(isPhase));
@@ -316,15 +322,17 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
             if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
             if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-            return (OperationAlt1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt1((__InternalSyntaxToken)isPhase.Node, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (__InternalSyntaxToken)tRParen.Node).CreateRed();
+            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
+            if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
+            return (OperationAlt1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt1((__InternalSyntaxToken)isPhase.Node, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (__InternalSyntaxToken)tRParen.Node, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public OperationAlt1Syntax OperationAlt1(NameSyntax name)
         {
-            return this.OperationAlt1(this.Token(SymbolSyntaxKind.KPhase), name, this.Token(SymbolSyntaxKind.TLParen), this.Token(SymbolSyntaxKind.TRParen));
+            return this.OperationAlt1(this.Token(SymbolSyntaxKind.KPhase), name, this.Token(SymbolSyntaxKind.TLParen), this.Token(SymbolSyntaxKind.TRParen), this.Token(SymbolSyntaxKind.TSemicolon));
         }
 
-        public OperationAlt2Syntax OperationAlt2(__SyntaxToken isCached, TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationAlt2Block1Syntax block1, __SyntaxToken tRParen, OperationAlt2Block2Syntax block2)
+        public OperationAlt2Syntax OperationAlt2(__SyntaxToken isCached, TypeReferenceSyntax returnType, NameSyntax name, __SyntaxToken tLParen, OperationAlt2Block1Syntax block1, __SyntaxToken tRParen, OperationAlt2Block2Syntax block2, __SyntaxToken tSemicolon)
         {
             if (isCached.RawKind != (int)__InternalSyntaxKind.None && (isCached.RawKind != (int)SymbolSyntaxKind.KCached)) throw new __ArgumentException(nameof(isCached));
             if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
@@ -333,12 +341,14 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
             if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
             if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-            return (OperationAlt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2((__InternalSyntaxToken)isCached.Node, (InternalSyntax.TypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.OperationAlt2Block1Green)block1.Green, (__InternalSyntaxToken)tRParen.Node, (InternalSyntax.OperationAlt2Block2Green)block2.Green).CreateRed();
+            if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
+            if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
+            return (OperationAlt2Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2((__InternalSyntaxToken)isCached.Node, (InternalSyntax.TypeReferenceGreen)returnType.Green, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLParen.Node, (InternalSyntax.OperationAlt2Block1Green)block1.Green, (__InternalSyntaxToken)tRParen.Node, (InternalSyntax.OperationAlt2Block2Green)block2.Green, (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public OperationAlt2Syntax OperationAlt2(TypeReferenceSyntax returnType, NameSyntax name)
         {
-            return this.OperationAlt2(default, returnType, name, this.Token(SymbolSyntaxKind.TLParen), default, this.Token(SymbolSyntaxKind.TRParen), default);
+            return this.OperationAlt2(default, returnType, name, this.Token(SymbolSyntaxKind.TLParen), default, this.Token(SymbolSyntaxKind.TRParen), default, this.Token(SymbolSyntaxKind.TSemicolon));
         }
 
         public ParameterSyntax Parameter(TypeReferenceSyntax type, NameSyntax name)
@@ -454,9 +464,9 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             return (TBooleanSyntax)SymbolLanguage.Instance.InternalSyntaxFactory.TBoolean((__InternalSyntaxToken)token.Node).CreateRed();
         }
 
-        public MainBlock1Syntax MainBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> declarations)
+        public MainBlock1Syntax MainBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<SymbolSyntax> symbolList)
         {
-            return (MainBlock1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.MainBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.SymbolGreen>(declarations.Node)).CreateRed();
+            return (MainBlock1Syntax)SymbolLanguage.Instance.InternalSyntaxFactory.MainBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.SymbolGreen>(symbolList.Node)).CreateRed();
         }
 
         public SymbolBlock1Syntax SymbolBlock1(__SyntaxToken tColon, QualifierSyntax baseTypes)

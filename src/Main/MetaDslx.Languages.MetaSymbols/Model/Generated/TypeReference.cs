@@ -27,7 +27,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
     {
         int Dimensions { get; set; }
         bool IsNullable { get; set; }
-        __MetaType Type { get; set; }
+        MetaDslx.CodeAnalysis.MetaType Type { get; set; }
     
     }
 }

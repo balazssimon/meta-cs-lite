@@ -30,31 +30,31 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
         {
             if (type.FullName == "MetaDslx.CodeAnalysis.Symbols.Symbol")
             {
-                if (type.Parent == context.Parent) return "Symbol";
+                if (type == context) return "Symbol";
                 else return $"global::{type.FullName}";
             }
             else
             {
-                if (type.Parent == context.Parent) return $"{type.Name}Symbol";
+                if (type == context) return $"{type.Name}Symbol";
                 else return $"global::{type.FullName}Symbol";
             }
         }
 
         public string GetInstName(Symbol context, Symbol type)
         {
-            if (type.Parent == context.Parent) return $"{type.Name}SymbolInst";
+            if (type == context) return $"{type.Name}SymbolInst";
             else return $"global::{type.FullName}SymbolInst";
         }
 
         public string GetBaseName(Symbol context, Symbol type)
         {
-            if (type.Parent == context.Parent) return $"Implementation.{type.Name}SymbolImpl";
-            else return $"global::{type.Parent?.FullName ?? type.MRootNamespace}.Implementation.{type.Name}SymbolImpl";
+            if (type == context) return $"Implementation.{type.Name}SymbolImpl";
+            else return $"global::{type.Namespace}.Implementation.{type.Name}SymbolImpl";
         }
 
         public string GetImplName(Symbol context, Symbol type)
         {
-            if (type.Parent == context.Parent) return $"{type.Name}SymbolImpl";
+            if (type == context) return $"{type.Name}SymbolImpl";
             else return $"global::{type.FullName}SymbolImpl";
         }
 
@@ -251,16 +251,16 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             if (symbol is null) return ImmutableArray<string>.Empty;
             if (_phases.TryGetValue(symbol, out var phases)) return phases;
             var phs = ArrayBuilder<string>.GetInstance();
-            foreach (var decl in symbol.Declarations)
+            foreach (var prop in symbol.Properties)
             {
-                if (decl is Property prop && !prop.IsPlain)
+                if (!prop.IsPlain)
                 {
                     if (prop.Phase is null) phs.Add(prop.Name);
                 }
-                if (decl is Operation op)
-                {
-                    if (op.IsPhase) phs.Add(op.Name);
-                }
+            }
+            foreach (var op in symbol.Operations)
+            {
+                if (op.IsPhase) phs.Add(op.Name);
             }
             var result = phs.ToImmutableAndFree();
             _phases.Add(symbol, result);

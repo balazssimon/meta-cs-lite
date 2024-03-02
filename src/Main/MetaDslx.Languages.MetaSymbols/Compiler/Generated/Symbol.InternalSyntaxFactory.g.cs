@@ -252,30 +252,34 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             return Token(null, SymbolSyntaxKind.TInvalidToken, text, value, null);
         }
 
-        internal MainGreen Main(__InternalSyntaxToken kNamespace, QualifierGreen qualifier, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
+        internal MainGreen Main(__InternalSyntaxToken kNamespace, QualifierGreen qualifier, __InternalSyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
         {
             #if DEBUG
                 if (kNamespace is null) throw new __ArgumentNullException(nameof(kNamespace));
                 if (kNamespace.RawKind != (int)SymbolSyntaxKind.KNamespace) throw new __ArgumentException(nameof(kNamespace));
                 if (qualifier is null) throw new __ArgumentNullException(nameof(qualifier));
+                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
+                if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
                 if (block is null) throw new __ArgumentNullException(nameof(block));
                 if (endOfFileToken is null) throw new __ArgumentNullException(nameof(endOfFileToken));
                 if (endOfFileToken.RawKind != (int)__InternalSyntaxKind.Eof) throw new __ArgumentException(nameof(endOfFileToken));
             #endif
-            return new MainGreen(SymbolSyntaxKind.Main, kNamespace, qualifier, usingList.Node, block, endOfFileToken);
+            return new MainGreen(SymbolSyntaxKind.Main, kNamespace, qualifier, tSemicolon, usingList.Node, block, endOfFileToken);
         }
-        internal UsingGreen Using(__InternalSyntaxToken kUsing, QualifierGreen namespaces)
+        internal UsingGreen Using(__InternalSyntaxToken kUsing, QualifierGreen namespaces, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
                 if (kUsing is null) throw new __ArgumentNullException(nameof(kUsing));
                 if (kUsing.RawKind != (int)SymbolSyntaxKind.KUsing) throw new __ArgumentException(nameof(kUsing));
                 if (namespaces is null) throw new __ArgumentNullException(nameof(namespaces));
+                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
+                if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.Using, kUsing, namespaces, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.Using, kUsing, namespaces, tSemicolon, out hash);
             if (cached != null) return (UsingGreen)cached;
         
-            var result = new UsingGreen(SymbolSyntaxKind.Using, kUsing, namespaces);
+            var result = new UsingGreen(SymbolSyntaxKind.Using, kUsing, namespaces, tSemicolon);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);
@@ -294,15 +298,17 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             #endif
             return new SymbolGreen(SymbolSyntaxKind.Symbol, isAbstract, kSymbol, name, block1, block2);
         }
-        internal PropertyGreen Property(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
+        internal PropertyGreen Property(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
                 if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
+                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
+                if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new PropertyGreen(SymbolSyntaxKind.Property, block1, type, name, block2, block3);
+            return new PropertyGreen(SymbolSyntaxKind.Property, block1, type, name, block2, block3, tSemicolon);
         }
-        internal OperationAlt1Green OperationAlt1(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
+        internal OperationAlt1Green OperationAlt1(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
                 if (isPhase is null) throw new __ArgumentNullException(nameof(isPhase));
@@ -312,10 +318,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
                 if (tRParen is null) throw new __ArgumentNullException(nameof(tRParen));
                 if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
+                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
+                if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new OperationAlt1Green(SymbolSyntaxKind.OperationAlt1, isPhase, name, tLParen, tRParen);
+            return new OperationAlt1Green(SymbolSyntaxKind.OperationAlt1, isPhase, name, tLParen, tRParen, tSemicolon);
         }
-        internal OperationAlt2Green OperationAlt2(__InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2)
+        internal OperationAlt2Green OperationAlt2(__InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2, __InternalSyntaxToken tSemicolon)
         {
             #if DEBUG
                 if (isCached is not null && (isCached.RawKind != (int)SymbolSyntaxKind.KCached)) throw new __ArgumentException(nameof(isCached));
@@ -325,8 +333,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 if (tLParen.RawKind != (int)SymbolSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
                 if (tRParen is null) throw new __ArgumentNullException(nameof(tRParen));
                 if (tRParen.RawKind != (int)SymbolSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
+                if (tSemicolon is null) throw new __ArgumentNullException(nameof(tSemicolon));
+                if (tSemicolon.RawKind != (int)SymbolSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             #endif
-            return new OperationAlt2Green(SymbolSyntaxKind.OperationAlt2, isCached, returnType, name, tLParen, block1, tRParen, block2);
+            return new OperationAlt2Green(SymbolSyntaxKind.OperationAlt2, isCached, returnType, name, tLParen, block1, tRParen, block2, tSemicolon);
         }
         internal ParameterGreen Parameter(TypeReferenceGreen type, NameGreen name)
         {
@@ -607,15 +617,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal MainBlock1Green MainBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen> declarations)
+        internal MainBlock1Green MainBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen> symbolList)
         {
             #if DEBUG
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.MainBlock1, declarations.Node, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SymbolSyntaxKind)SymbolSyntaxKind.MainBlock1, symbolList.Node, out hash);
             if (cached != null) return (MainBlock1Green)cached;
         
-            var result = new MainBlock1Green(SymbolSyntaxKind.MainBlock1, declarations.Node);
+            var result = new MainBlock1Green(SymbolSyntaxKind.MainBlock1, symbolList.Node);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

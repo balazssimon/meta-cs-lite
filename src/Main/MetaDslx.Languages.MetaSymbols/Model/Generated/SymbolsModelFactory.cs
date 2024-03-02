@@ -40,11 +40,6 @@ namespace MetaDslx.Languages.MetaSymbols.Model
             return (Declaration)Symbols.DeclarationInfo.Create(base.Model, id)!;
         }
     
-        public Namespace Namespace(string? id = null)
-        {
-            return (Namespace)Symbols.NamespaceInfo.Create(base.Model, id)!;
-        }
-    
         public Operation Operation(string? id = null)
         {
             return (Operation)Symbols.OperationInfo.Create(base.Model, id)!;
@@ -82,11 +77,6 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         public Declaration Declaration(__Model model, string? id = null)
         {
             return (Declaration)Symbols.DeclarationInfo.Create(model, id)!;
-        }
-    
-        public Namespace Namespace(__Model model, string? id = null)
-        {
-            return (Namespace)Symbols.NamespaceInfo.Create(model, id)!;
         }
     
         public Operation Operation(__Model model, string? id = null)

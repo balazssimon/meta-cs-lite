@@ -1032,14 +1032,15 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         internal static new readonly MainGreen __Missing = new MainGreen();
         private __InternalSyntaxToken _kNamespace;
         private QualifierGreen _qualifier;
+        private __InternalSyntaxToken _tSemicolon;
         private __GreenNode _usingList;
         private MainBlock1Green _block;
         private __InternalSyntaxToken _endOfFileToken;
     
-        public MainGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kNamespace, QualifierGreen qualifier, __GreenNode usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
+        public MainGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kNamespace, QualifierGreen qualifier, __InternalSyntaxToken tSemicolon, __GreenNode usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
             : base(kind, null, null)
         {
-            SlotCount = 5;
+            SlotCount = 6;
             if (kNamespace != null)
             {
                 AdjustFlagsAndWidth(kNamespace);
@@ -1049,6 +1050,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(qualifier);
                 _qualifier = qualifier;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
             if (usingList != null)
             {
@@ -1067,10 +1073,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public MainGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kNamespace, QualifierGreen qualifier, __GreenNode usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public MainGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kNamespace, QualifierGreen qualifier, __InternalSyntaxToken tSemicolon, __GreenNode usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 5;
+            SlotCount = 6;
             if (kNamespace != null)
             {
                 AdjustFlagsAndWidth(kNamespace);
@@ -1080,6 +1086,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(qualifier);
                 _qualifier = qualifier;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
             if (usingList != null)
             {
@@ -1106,6 +1117,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public __InternalSyntaxToken KNamespace { get { return _kNamespace; } }
         public QualifierGreen Qualifier { get { return _qualifier; } }
+        public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
         public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> UsingList { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen>(_usingList); } }
         public MainBlock1Green Block { get { return _block; } }
         public __InternalSyntaxToken EndOfFileToken { get { return _endOfFileToken; } }
@@ -1121,9 +1133,10 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 case 0: return _kNamespace;
                 case 1: return _qualifier;
-                case 2: return _usingList;
-                case 3: return _block;
-                case 4: return _endOfFileToken;
+                case 2: return _tSemicolon;
+                case 3: return _usingList;
+                case 4: return _block;
+                case 5: return _endOfFileToken;
                 default: return null;
             }
         }
@@ -1134,25 +1147,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new MainGreen(this.Kind, _kNamespace, _qualifier, _usingList, _block, _endOfFileToken, diagnostics, this.GetAnnotations());
+            return new MainGreen(this.Kind, _kNamespace, _qualifier, _tSemicolon, _usingList, _block, _endOfFileToken, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new MainGreen(this.Kind, _kNamespace, _qualifier, _usingList, _block, _endOfFileToken, this.GetDiagnostics(), annotations);
+            return new MainGreen(this.Kind, _kNamespace, _qualifier, _tSemicolon, _usingList, _block, _endOfFileToken, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new MainGreen(this.Kind, _kNamespace, _qualifier, _usingList, _block, _endOfFileToken, this.GetDiagnostics(), this.GetAnnotations());
+            return new MainGreen(this.Kind, _kNamespace, _qualifier, _tSemicolon, _usingList, _block, _endOfFileToken, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public MainGreen Update(__InternalSyntaxToken kNamespace, QualifierGreen qualifier, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
+        public MainGreen Update(__InternalSyntaxToken kNamespace, QualifierGreen qualifier, __InternalSyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, MainBlock1Green block, __InternalSyntaxToken endOfFileToken)
         {
-            if (_kNamespace != kNamespace || _qualifier != qualifier || _usingList != usingList.Node || _block != block || _endOfFileToken != endOfFileToken)
+            if (_kNamespace != kNamespace || _qualifier != qualifier || _tSemicolon != tSemicolon || _usingList != usingList.Node || _block != block || _endOfFileToken != endOfFileToken)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Main(kNamespace, qualifier, usingList, block, endOfFileToken);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -1169,11 +1182,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         internal static new readonly UsingGreen __Missing = new UsingGreen();
         private __InternalSyntaxToken _kUsing;
         private QualifierGreen _namespaces;
+        private __InternalSyntaxToken _tSemicolon;
     
-        public UsingGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kUsing, QualifierGreen namespaces)
+        public UsingGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kUsing, QualifierGreen namespaces, __InternalSyntaxToken tSemicolon)
             : base(kind, null, null)
         {
-            SlotCount = 2;
+            SlotCount = 3;
             if (kUsing != null)
             {
                 AdjustFlagsAndWidth(kUsing);
@@ -1183,13 +1197,18 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(namespaces);
                 _namespaces = namespaces;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
-        public UsingGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kUsing, QualifierGreen namespaces, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public UsingGreen(SymbolSyntaxKind kind, __InternalSyntaxToken kUsing, QualifierGreen namespaces, __InternalSyntaxToken tSemicolon, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 2;
+            SlotCount = 3;
             if (kUsing != null)
             {
                 AdjustFlagsAndWidth(kUsing);
@@ -1199,6 +1218,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(namespaces);
                 _namespaces = namespaces;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
@@ -1210,6 +1234,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public __InternalSyntaxToken KUsing { get { return _kUsing; } }
         public QualifierGreen Namespaces { get { return _namespaces; } }
+        public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1222,6 +1247,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 case 0: return _kUsing;
                 case 1: return _namespaces;
+                case 2: return _tSemicolon;
                 default: return null;
             }
         }
@@ -1232,25 +1258,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new UsingGreen(this.Kind, _kUsing, _namespaces, diagnostics, this.GetAnnotations());
+            return new UsingGreen(this.Kind, _kUsing, _namespaces, _tSemicolon, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new UsingGreen(this.Kind, _kUsing, _namespaces, this.GetDiagnostics(), annotations);
+            return new UsingGreen(this.Kind, _kUsing, _namespaces, _tSemicolon, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new UsingGreen(this.Kind, _kUsing, _namespaces, this.GetDiagnostics(), this.GetAnnotations());
+            return new UsingGreen(this.Kind, _kUsing, _namespaces, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public UsingGreen Update(__InternalSyntaxToken kUsing, QualifierGreen namespaces)
+        public UsingGreen Update(__InternalSyntaxToken kUsing, QualifierGreen namespaces, __InternalSyntaxToken tSemicolon)
         {
-            if (_kUsing != kUsing || _namespaces != namespaces)
+            if (_kUsing != kUsing || _namespaces != namespaces || _tSemicolon != tSemicolon)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Using(kUsing, namespaces);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Using(kUsing, namespaces, tSemicolon);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -1407,11 +1433,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         private NameGreen _name;
         private PropertyBlock2Green _block2;
         private PropertyBlock3Green _block3;
+        private __InternalSyntaxToken _tSemicolon;
     
-        public PropertyGreen(SymbolSyntaxKind kind, PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
+        public PropertyGreen(SymbolSyntaxKind kind, PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3, __InternalSyntaxToken tSemicolon)
             : base(kind, null, null)
         {
-            SlotCount = 5;
+            SlotCount = 6;
             if (block1 != null)
             {
                 AdjustFlagsAndWidth(block1);
@@ -1436,13 +1463,18 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(block3);
                 _block3 = block3;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
-        public PropertyGreen(SymbolSyntaxKind kind, PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public PropertyGreen(SymbolSyntaxKind kind, PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3, __InternalSyntaxToken tSemicolon, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 5;
+            SlotCount = 6;
             if (block1 != null)
             {
                 AdjustFlagsAndWidth(block1);
@@ -1467,6 +1499,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(block3);
                 _block3 = block3;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
@@ -1481,6 +1518,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         public NameGreen Name { get { return _name; } }
         public PropertyBlock2Green Block2 { get { return _block2; } }
         public PropertyBlock3Green Block3 { get { return _block3; } }
+        public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1496,6 +1534,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 case 2: return _name;
                 case 3: return _block2;
                 case 4: return _block3;
+                case 5: return _tSemicolon;
                 default: return null;
             }
         }
@@ -1506,25 +1545,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, diagnostics, this.GetAnnotations());
+            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, _tSemicolon, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, this.GetDiagnostics(), annotations);
+            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, _tSemicolon, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, this.GetDiagnostics(), this.GetAnnotations());
+            return new PropertyGreen(this.Kind, _block1, _type, _name, _block2, _block3, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public PropertyGreen Update(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3)
+        public PropertyGreen Update(PropertyBlock1Green block1, TypeReferenceGreen type, NameGreen name, PropertyBlock2Green block2, PropertyBlock3Green block3, __InternalSyntaxToken tSemicolon)
         {
-            if (_block1 != block1 || _type != type || _name != name || _block2 != block2 || _block3 != block3)
+            if (_block1 != block1 || _type != type || _name != name || _block2 != block2 || _block3 != block3 || _tSemicolon != tSemicolon)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Property(block1, type, name, block2, block3);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.Property(block1, type, name, block2, block3, tSemicolon);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -1552,11 +1591,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         private NameGreen _name;
         private __InternalSyntaxToken _tLParen;
         private __InternalSyntaxToken _tRParen;
+        private __InternalSyntaxToken _tSemicolon;
     
-        public OperationAlt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
+        public OperationAlt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen, __InternalSyntaxToken tSemicolon)
             : base(kind, null, null)
         {
-            SlotCount = 4;
+            SlotCount = 5;
             if (isPhase != null)
             {
                 AdjustFlagsAndWidth(isPhase);
@@ -1576,13 +1616,18 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(tRParen);
                 _tRParen = tRParen;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
-        public OperationAlt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public OperationAlt1Green(SymbolSyntaxKind kind, __InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen, __InternalSyntaxToken tSemicolon, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 4;
+            SlotCount = 5;
             if (isPhase != null)
             {
                 AdjustFlagsAndWidth(isPhase);
@@ -1602,6 +1647,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(tRParen);
                 _tRParen = tRParen;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
@@ -1615,6 +1665,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         public NameGreen Name { get { return _name; } }
         public __InternalSyntaxToken TLParen { get { return _tLParen; } }
         public __InternalSyntaxToken TRParen { get { return _tRParen; } }
+        public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1629,6 +1680,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 case 1: return _name;
                 case 2: return _tLParen;
                 case 3: return _tRParen;
+                case 4: return _tSemicolon;
                 default: return null;
             }
         }
@@ -1639,25 +1691,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, diagnostics, this.GetAnnotations());
+            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, _tSemicolon, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, this.GetDiagnostics(), annotations);
+            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, _tSemicolon, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, this.GetDiagnostics(), this.GetAnnotations());
+            return new OperationAlt1Green(this.Kind, _isPhase, _name, _tLParen, _tRParen, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public OperationAlt1Green Update(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen)
+        public OperationAlt1Green Update(__InternalSyntaxToken isPhase, NameGreen name, __InternalSyntaxToken tLParen, __InternalSyntaxToken tRParen, __InternalSyntaxToken tSemicolon)
         {
-            if (_isPhase != isPhase || _name != name || _tLParen != tLParen || _tRParen != tRParen)
+            if (_isPhase != isPhase || _name != name || _tLParen != tLParen || _tRParen != tRParen || _tSemicolon != tSemicolon)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt1(isPhase, name, tLParen, tRParen);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt1(isPhase, name, tLParen, tRParen, tSemicolon);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -1679,11 +1731,12 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         private OperationAlt2Block1Green _block1;
         private __InternalSyntaxToken _tRParen;
         private OperationAlt2Block2Green _block2;
+        private __InternalSyntaxToken _tSemicolon;
     
-        public OperationAlt2Green(SymbolSyntaxKind kind, __InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2)
+        public OperationAlt2Green(SymbolSyntaxKind kind, __InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2, __InternalSyntaxToken tSemicolon)
             : base(kind, null, null)
         {
-            SlotCount = 7;
+            SlotCount = 8;
             if (isCached != null)
             {
                 AdjustFlagsAndWidth(isCached);
@@ -1718,13 +1771,18 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(block2);
                 _block2 = block2;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
-        public OperationAlt2Green(SymbolSyntaxKind kind, __InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public OperationAlt2Green(SymbolSyntaxKind kind, __InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2, __InternalSyntaxToken tSemicolon, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 7;
+            SlotCount = 8;
             if (isCached != null)
             {
                 AdjustFlagsAndWidth(isCached);
@@ -1759,6 +1817,11 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(block2);
                 _block2 = block2;
+            }
+            if (tSemicolon != null)
+            {
+                AdjustFlagsAndWidth(tSemicolon);
+                _tSemicolon = tSemicolon;
             }
         }
     
@@ -1775,6 +1838,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         public OperationAlt2Block1Green Block1 { get { return _block1; } }
         public __InternalSyntaxToken TRParen { get { return _tRParen; } }
         public OperationAlt2Block2Green Block2 { get { return _block2; } }
+        public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1792,6 +1856,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
                 case 4: return _block1;
                 case 5: return _tRParen;
                 case 6: return _block2;
+                case 7: return _tSemicolon;
                 default: return null;
             }
         }
@@ -1802,25 +1867,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new OperationAlt2Green(this.Kind, _isCached, _returnType, _name, _tLParen, _block1, _tRParen, _block2, diagnostics, this.GetAnnotations());
+            return new OperationAlt2Green(this.Kind, _isCached, _returnType, _name, _tLParen, _block1, _tRParen, _block2, _tSemicolon, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new OperationAlt2Green(this.Kind, _isCached, _returnType, _name, _tLParen, _block1, _tRParen, _block2, this.GetDiagnostics(), annotations);
+            return new OperationAlt2Green(this.Kind, _isCached, _returnType, _name, _tLParen, _block1, _tRParen, _block2, _tSemicolon, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new OperationAlt2Green(this.Kind, _isCached, _returnType, _name, _tLParen, _block1, _tRParen, _block2, this.GetDiagnostics(), this.GetAnnotations());
+            return new OperationAlt2Green(this.Kind, _isCached, _returnType, _name, _tLParen, _block1, _tRParen, _block2, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public OperationAlt2Green Update(__InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2)
+        public OperationAlt2Green Update(__InternalSyntaxToken isCached, TypeReferenceGreen returnType, NameGreen name, __InternalSyntaxToken tLParen, OperationAlt2Block1Green block1, __InternalSyntaxToken tRParen, OperationAlt2Block2Green block2, __InternalSyntaxToken tSemicolon)
         {
-            if (_isCached != isCached || _returnType != returnType || _name != name || _tLParen != tLParen || _block1 != block1 || _tRParen != tRParen || _block2 != block2)
+            if (_isCached != isCached || _returnType != returnType || _name != name || _tLParen != tLParen || _block1 != block1 || _tRParen != tRParen || _block2 != block2 || _tSemicolon != tSemicolon)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2(isCached, returnType, name, tLParen, block1, tRParen, block2);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.OperationAlt2(isCached, returnType, name, tLParen, block1, tRParen, block2, tSemicolon);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -3252,27 +3317,27 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     internal class MainBlock1Green : GreenSyntaxNode
     {
         internal static new readonly MainBlock1Green __Missing = new MainBlock1Green();
-        private __GreenNode _declarations;
+        private __GreenNode _symbolList;
     
-        public MainBlock1Green(SymbolSyntaxKind kind, __GreenNode declarations)
+        public MainBlock1Green(SymbolSyntaxKind kind, __GreenNode symbolList)
             : base(kind, null, null)
         {
             SlotCount = 1;
-            if (declarations != null)
+            if (symbolList != null)
             {
-                AdjustFlagsAndWidth(declarations);
-                _declarations = declarations;
+                AdjustFlagsAndWidth(symbolList);
+                _symbolList = symbolList;
             }
         }
     
-        public MainBlock1Green(SymbolSyntaxKind kind, __GreenNode declarations, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public MainBlock1Green(SymbolSyntaxKind kind, __GreenNode symbolList, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 1;
-            if (declarations != null)
+            if (symbolList != null)
             {
-                AdjustFlagsAndWidth(declarations);
-                _declarations = declarations;
+                AdjustFlagsAndWidth(symbolList);
+                _symbolList = symbolList;
             }
         }
     
@@ -3282,7 +3347,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen> Declarations { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen>(_declarations); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen> SymbolList { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen>(_symbolList); } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -3293,7 +3358,7 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
         {
             switch (index)
             {
-                case 0: return _declarations;
+                case 0: return _symbolList;
                 default: return null;
             }
         }
@@ -3304,25 +3369,25 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new MainBlock1Green(this.Kind, _declarations, diagnostics, this.GetAnnotations());
+            return new MainBlock1Green(this.Kind, _symbolList, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new MainBlock1Green(this.Kind, _declarations, this.GetDiagnostics(), annotations);
+            return new MainBlock1Green(this.Kind, _symbolList, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new MainBlock1Green(this.Kind, _declarations, this.GetDiagnostics(), this.GetAnnotations());
+            return new MainBlock1Green(this.Kind, _symbolList, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public MainBlock1Green Update(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen> declarations)
+        public MainBlock1Green Update(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SymbolGreen> symbolList)
         {
-            if (_declarations != declarations.Node)
+            if (_symbolList != symbolList.Node)
             {
-                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.MainBlock1(declarations);
+                __InternalSyntaxNode newNode = SymbolLanguage.Instance.InternalSyntaxFactory.MainBlock1(symbolList);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);

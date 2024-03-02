@@ -25,11 +25,10 @@ namespace MetaDslx.Languages.MetaSymbols.Model
 
     public interface Symbol : global::MetaDslx.Languages.MetaSymbols.Model.Declaration
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Symbol> BaseTypes { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaSymbols.Model.Symbol> BaseTypes { get; }
         bool IsAbstract { get; set; }
-        string NamespaceName { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Operation> Operations { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Property> Properties { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaSymbols.Model.Operation> Operations { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaSymbols.Model.Property> Properties { get; }
     
     }
 }

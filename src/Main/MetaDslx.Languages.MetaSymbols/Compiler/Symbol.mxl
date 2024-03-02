@@ -9,24 +9,24 @@ using MetaDslx.Languages.MetaSymbols.Model;
 
 language Symbol : Common;
 
-Main returns Namespace:
-	'namespace' [Name(qualifierProperty:Declarations)]Qualifier
+Main returns MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol:
+	'namespace' [Name]Qualifier ';'
 	Using*
-	[Scope](declarations+=Symbol*)
+	[Scope](Symbol*)
 	eof;
 
-Using returns MetaDslx.CodeAnalysis.Symbols.ImportSymbol: 'using' namespaces+=#MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol;
+Using returns MetaDslx.CodeAnalysis.Symbols.ImportSymbol: 'using' namespaces+=#MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol ';';
 
 Symbol: 
 	isAbstract?='abstract'? 'symbol' Name
 	(':' baseTypes+=[Use(types:MetaDslx.Languages.MetaSymbols.Model.Symbol,suffixes:{"","Symbol"})]Qualifier)?
 	[Scope]('{' (properties+=Property | operations+=Operation)* '}');
 
-Property: (isPlain?='plain' (isAbstract?='abstract' | isWeak?='weak')? | isDerived?='derived' isCached='cached'? isWeak?='weak'? | isWeak?='weak')? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})?;
+Property: (isPlain?='plain' (isAbstract?='abstract' | isWeak?='weak')? | isDerived?='derived' isCached='cached'? isWeak?='weak'? | isWeak?='weak')? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})? ';';
 
 Operation
-	: isPhase?='phase' Name '(' ')' 
-	| isCached?='cached'? returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')' ('if' cacheCondition=TString)?
+	: isPhase?='phase' Name '(' ')' ';'
+	| isCached?='cached'? returnType=TypeReference Name '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')' ('if' cacheCondition=TString)? ';'
 	;
 Parameter: @type=TypeReference Name;
 

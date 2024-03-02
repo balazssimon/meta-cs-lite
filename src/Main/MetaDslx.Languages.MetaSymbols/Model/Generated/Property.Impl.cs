@@ -68,21 +68,16 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
             set => MSet<bool>(Symbols.Property_IsWeak, value);
         }
     
-        public Property? Phase
+        public MetaDslx.Languages.MetaSymbols.Model.Property? Phase
         {
-            get => MGet<Property?>(Symbols.Property_Phase);
-            set => MSet<Property?>(Symbols.Property_Phase, value);
+            get => MGet<MetaDslx.Languages.MetaSymbols.Model.Property?>(Symbols.Property_Phase);
+            set => MSet<MetaDslx.Languages.MetaSymbols.Model.Property?>(Symbols.Property_Phase, value);
         }
     
-        public TypeReference Type
+        public MetaDslx.Languages.MetaSymbols.Model.TypeReference Type
         {
-            get => MGet<TypeReference>(Symbols.Property_Type);
-            set => MSet<TypeReference>(Symbols.Property_Type, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
-        {
-            get => MGetCollection<Declaration>(Symbols.Declaration_Declarations);
+            get => MGet<MetaDslx.Languages.MetaSymbols.Model.TypeReference>(Symbols.Property_Type);
+            set => MSet<MetaDslx.Languages.MetaSymbols.Model.TypeReference>(Symbols.Property_Type, value);
         }
     
         public string? FullName
@@ -96,10 +91,9 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
             set => MSet<string?>(Symbols.Declaration_Name, value);
         }
     
-        public Declaration? Parent
+        public string Namespace
         {
-            get => MGet<Declaration?>(Symbols.Declaration_Parent);
-            set => MSet<Declaration?>(Symbols.Declaration_Parent, value);
+            get => Symbols.__CustomImpl.Declaration_Namespace(this);
         }
     
     
@@ -125,8 +119,8 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Symbols.DeclarationInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Symbols.DeclarationInfo);
                 _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsAbstract, Symbols.Property_IsCached, Symbols.Property_IsDerived, Symbols.Property_IsPlain, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsAbstract, Symbols.Property_IsCached, Symbols.Property_IsDerived, Symbols.Property_IsPlain, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_Declarations, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsAbstract, Symbols.Property_IsCached, Symbols.Property_IsDerived, Symbols.Property_IsPlain, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_Declarations, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Parent);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsAbstract, Symbols.Property_IsCached, Symbols.Property_IsDerived, Symbols.Property_IsPlain, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Namespace);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue, Symbols.Property_IsAbstract, Symbols.Property_IsCached, Symbols.Property_IsDerived, Symbols.Property_IsPlain, Symbols.Property_IsWeak, Symbols.Property_Phase, Symbols.Property_Type, Symbols.Declaration_FullName, Symbols.Declaration_Name, Symbols.Declaration_Namespace);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
                 publicPropertiesByName.Add("DefaultValue", Symbols.Property_DefaultValue);
                 publicPropertiesByName.Add("IsAbstract", Symbols.Property_IsAbstract);
@@ -136,10 +130,9 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
                 publicPropertiesByName.Add("IsWeak", Symbols.Property_IsWeak);
                 publicPropertiesByName.Add("Phase", Symbols.Property_Phase);
                 publicPropertiesByName.Add("Type", Symbols.Property_Type);
-                publicPropertiesByName.Add("Declarations", Symbols.Declaration_Declarations);
                 publicPropertiesByName.Add("FullName", Symbols.Declaration_FullName);
                 publicPropertiesByName.Add("Name", Symbols.Declaration_Name);
-                publicPropertiesByName.Add("Parent", Symbols.Declaration_Parent);
+                publicPropertiesByName.Add("Namespace", Symbols.Declaration_Namespace);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
                 modelPropertyInfos.Add(Symbols.Property_DefaultValue, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_DefaultValue, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_DefaultValue), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -149,11 +142,10 @@ namespace MetaDslx.Languages.MetaSymbols.Model.__Impl
                 modelPropertyInfos.Add(Symbols.Property_IsPlain, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_IsPlain, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_IsPlain), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Property_IsWeak, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_IsWeak, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_IsWeak), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Property_Phase, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_Phase, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_Phase), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Symbols.Property_Type, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_Type, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_Type), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Symbols.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Symbols.Declaration_Declarations), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Symbols.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Symbols.Property_Type, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Property_Type, __ImmutableArray.Create<__ModelProperty>(Symbols.Property_Type), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Declaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Declaration_FullName, __ImmutableArray.Create<__ModelProperty>(Symbols.Declaration_FullName), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Symbols.Declaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Declaration_Name, __ImmutableArray.Create<__ModelProperty>(Symbols.Declaration_Name), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Symbols.Declaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Declaration_Parent, __ImmutableArray.Create<__ModelProperty>(Symbols.Declaration_Parent), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Symbols.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Symbols.Declaration_Namespace, new __ModelPropertyInfo(new __ModelPropertySlot(Symbols.Declaration_Namespace, __ImmutableArray.Create<__ModelProperty>(Symbols.Declaration_Namespace), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 _modelPropertyInfos = modelPropertyInfos.ToImmutable();
     
                 _declaredOperations = __ImmutableArray.Create<__ModelOperation>();

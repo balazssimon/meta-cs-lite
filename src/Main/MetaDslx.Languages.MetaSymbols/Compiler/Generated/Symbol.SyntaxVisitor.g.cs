@@ -793,17 +793,19 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
         {
             var kNamespace = this.VisitToken(node.KNamespace);
             var qualifier = (QualifierSyntax)this.Visit(node.Qualifier);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
             var usingList = this.VisitList(node.UsingList);
             var block = (MainBlock1Syntax)this.Visit(node.Block);
             var endOfFileToken = this.VisitToken(node.EndOfFileToken);
-            return node.Update(kNamespace, qualifier, usingList, block, endOfFileToken);
+            return node.Update(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
         }
 
         public virtual SyntaxNode VisitUsing(UsingSyntax node)
         {
             var kUsing = this.VisitToken(node.KUsing);
             var namespaces = (QualifierSyntax)this.Visit(node.Namespaces);
-            return node.Update(kUsing, namespaces);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(kUsing, namespaces, tSemicolon);
         }
 
         public virtual SyntaxNode VisitSymbol(SymbolSyntax node)
@@ -823,7 +825,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             var name = (NameSyntax)this.Visit(node.Name);
             var block2 = (PropertyBlock2Syntax)this.Visit(node.Block2);
             var block3 = (PropertyBlock3Syntax)this.Visit(node.Block3);
-            return node.Update(block1, type, name, block2, block3);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(block1, type, name, block2, block3, tSemicolon);
         }
 
         public virtual SyntaxNode VisitOperationAlt1(OperationAlt1Syntax node)
@@ -832,7 +835,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             var name = (NameSyntax)this.Visit(node.Name);
             var tLParen = this.VisitToken(node.TLParen);
             var tRParen = this.VisitToken(node.TRParen);
-            return node.Update(isPhase, name, tLParen, tRParen);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(isPhase, name, tLParen, tRParen, tSemicolon);
         }
 
         public virtual SyntaxNode VisitOperationAlt2(OperationAlt2Syntax node)
@@ -844,7 +848,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
             var block1 = (OperationAlt2Block1Syntax)this.Visit(node.Block1);
             var tRParen = this.VisitToken(node.TRParen);
             var block2 = (OperationAlt2Block2Syntax)this.Visit(node.Block2);
-            return node.Update(isCached, returnType, name, tLParen, block1, tRParen, block2);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            return node.Update(isCached, returnType, name, tLParen, block1, tRParen, block2, tSemicolon);
         }
 
         public virtual SyntaxNode VisitParameter(ParameterSyntax node)
@@ -948,8 +953,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
 
         public virtual SyntaxNode VisitMainBlock1(MainBlock1Syntax node)
         {
-            var declarations = this.VisitList(node.Declarations);
-            return node.Update(declarations);
+            var symbolList = this.VisitList(node.SymbolList);
+            return node.Update(symbolList);
         }
 
         public virtual SyntaxNode VisitSymbolBlock1(SymbolBlock1Syntax node)

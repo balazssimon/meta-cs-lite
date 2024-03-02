@@ -31,8 +31,8 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         bool IsDerived { get; set; }
         bool IsPlain { get; set; }
         bool IsWeak { get; set; }
-        Property? Phase { get; set; }
-        TypeReference Type { get; set; }
+        MetaDslx.Languages.MetaSymbols.Model.Property? Phase { get; set; }
+        MetaDslx.Languages.MetaSymbols.Model.TypeReference Type { get; set; }
     
     }
 }

@@ -1,61 +1,54 @@
-namespace MetaDslx.Languages.MetaSymbols.Model
+namespace MetaDslx.Languages.MetaSymbols.Model;
 
-using MetaDslx.CodeAnalysis.Symbols
+using MetaDslx.CodeAnalysis.Symbols;
 
-metamodel Symbols
+metamodel Symbols;
 
 class $Declaration
 {
-	string? $Name
-	Declaration? Parent opposite Declarations
-	contains Declaration[] Declarations opposite Parent
-	derived string? FullName
-}
-
-class $Namespace : Declaration
-{
+	string? $Name;
+	derived string Namespace;
+	derived string? FullName;
 }
 
 class Symbol $Type : Declaration
 {
-	bool IsAbstract
-	Symbol[] $BaseTypes
-	contains Property[] Properties subsets Declaration.Declarations
-	contains Operation[] Operations subsets Declaration.Declarations
-
-	derived string NamespaceName
+	bool IsAbstract;
+	Symbol[] $BaseTypes;
+	contains Property[] Properties;
+	contains Operation[] Operations;
 }
 
 class TypeReference $Type
 {
-	type Type
-	bool IsNullable
-	int Dimensions
+	type Type;
+	bool IsNullable;
+	int Dimensions;
 }
 
 class Property : Declaration
 {
-	TypeReference Type
-	bool IsPlain
-	bool IsAbstract
-	bool IsDerived
-	bool IsCached
-	bool IsWeak
-	object? DefaultValue
-	Property? Phase
+	TypeReference Type;
+	bool IsPlain;
+	bool IsAbstract;
+	bool IsDerived;
+	bool IsCached;
+	bool IsWeak;
+	object? DefaultValue;
+	Property? Phase;
 }
 
 class Operation: Declaration
 {
-	bool IsAbstract
-	bool IsPhase
-	bool IsCached
-	string CacheCondition
-	TypeReference ReturnType
-	contains Parameter[] Parameters redefines Declaration.Declarations
+	bool IsAbstract;
+	bool IsPhase;
+	bool IsCached;
+	string CacheCondition;
+	TypeReference ReturnType;
+	contains Parameter[] Parameters;
 }
 
 class Parameter : Declaration
 {
-	TypeReference Type
+	TypeReference Type;
 }

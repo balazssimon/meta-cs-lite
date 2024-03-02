@@ -32,8 +32,6 @@ namespace MetaDslx.Languages.MetaSymbols.Model
     
         void Declaration(Declaration _this);
     
-        void Namespace(Namespace _this);
-    
         void Operation(Operation _this);
     
         void Parameter(Parameter _this);
@@ -45,9 +43,9 @@ namespace MetaDslx.Languages.MetaSymbols.Model
         void TypeReference(TypeReference _this);
     
     
-        string? Declaration_FullName(Declaration _this);
+        string Declaration_Namespace(Declaration _this);
     
-        string Symbol_NamespaceName(Symbol _this);
+        string? Declaration_FullName(Declaration _this);
     
     
     }
