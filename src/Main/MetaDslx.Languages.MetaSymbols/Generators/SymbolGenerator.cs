@@ -35,27 +35,27 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             }
             else
             {
-                if (type == context) return $"{type.Name}Symbol";
-                else return $"global::{type.FullName}Symbol";
+                if (type == context) return type.Name;
+                else return $"global::{type.FullName}";
             }
         }
 
         public string GetInstName(Symbol context, Symbol type)
         {
-            if (type == context) return $"{type.Name}SymbolInst";
-            else return $"global::{type.FullName}SymbolInst";
+            if (type == context) return $"{type.Name}Inst";
+            else return $"global::{type.FullName}Inst";
         }
 
         public string GetBaseName(Symbol context, Symbol type)
         {
-            if (type == context) return $"Implementation.{type.Name}SymbolImpl";
-            else return $"global::{type.Namespace}.Implementation.{type.Name}SymbolImpl";
+            if (type == context) return $"Implementation.{type.Name}Impl";
+            else return $"global::{type.Namespace}.Implementation.{type.Name}Impl";
         }
 
         public string GetImplName(Symbol context, Symbol type)
         {
-            if (type == context) return $"{type.Name}SymbolImpl";
-            else return $"global::{type.FullName}SymbolImpl";
+            if (type == context) return $"{type.Name}Impl";
+            else return $"global::{type.FullName}Impl";
         }
 
         public string GetTypeName(Symbol context, TypeReference type)

@@ -3,74 +3,74 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 
-symbol Annotation : Attribute
+symbol AnnotationSymbol : AttributeSymbol
 {
-    AnnotationArgument[] Arguments;
-    derived Declaration[] Constructors;
-    derived Declaration[][] Parameters;
-    derived Declaration SelectedConstructor;
-    derived Declaration[] SelectedParameters phase SelectedConstructor;
+    AnnotationArgumentSymbol[] Arguments;
+    derived DeclarationSymbol[] Constructors;
+    derived DeclarationSymbol[][] Parameters;
+    derived DeclarationSymbol SelectedConstructor;
+    derived DeclarationSymbol[] SelectedParameters phase SelectedConstructor;
 }
 
-symbol AnnotationArgument
+symbol AnnotationArgumentSymbol
 {
-    derived Annotation? AnnotationSymbol;
+    derived AnnotationSymbol? AnnotationSymbol;
     derived bool IsNamedArgument;
     MetaSymbol[] NamedParameter;
-    derived Declaration Parameter;
+    derived DeclarationSymbol Parameter;
     derived MetaType ParameterType phase Parameter;
-    Expression Value;
+    ExpressionSymbol Value;
 }
 
-symbol Expression
+symbol ExpressionSymbol
 {
-    derived PAlternative? ContainingPAlternativeSymbol;
-    derived AnnotationArgument? ContainingAnnotationArgumentSymbol;
+    derived PAlternativeSymbol? ContainingPAlternativeSymbol;
+    derived AnnotationArgumentSymbol? ContainingAnnotationArgumentSymbol;
     derived MetaType ExpectedType;
     derived MetaSymbol Value;
     derived MetaSymbol[] Values phase Value;
 }
 
-symbol PAlternative : Declaration
+symbol PAlternativeSymbol : DeclarationSymbol
 {
-    derived ParserRule? ContainingParserRuleSymbol;
-    derived PBlock? ContainingPBlockSymbol;
-    PElement[] Elements;
-    Expression? ReturnValue;
+    derived ParserRuleSymbol? ContainingParserRuleSymbol;
+    derived PBlockSymbol? ContainingPBlockSymbol;
+    PElementSymbol[] Elements;
+    ExpressionSymbol? ReturnValue;
     derived MetaType ReturnType;
     derived MetaType ExpectedType;
-    derived PElement[] AllSimpleElements;
+    derived PElementSymbol[] AllSimpleElements;
 }
 
-symbol ParserRule : Declaration
+symbol ParserRuleSymbol : DeclarationSymbol
 {
     MetaType ReturnType;
-    PAlternative[] Alternatives;
+    PAlternativeSymbol[] Alternatives;
 }
 
-symbol PBlock : Declaration
+symbol PBlockSymbol : DeclarationSymbol
 {
     derived MetaType ExpectedType;
-    PAlternative[] Alternatives;
+    PAlternativeSymbol[] Alternatives;
 }
 
-symbol PElement : Declaration
+symbol PElementSymbol : DeclarationSymbol
 {
     derived bool IsNamedElement;
-    derived PAlternative? ContainingPAlternativeSymbol;
+    derived PAlternativeSymbol? ContainingPAlternativeSymbol;
     MetaSymbol Value;
     MetaDslx.Languages.MetaCompiler.Model.Assignment Assignment;
     derived MetaType ExpectedType;
     derived MetaDslx.Languages.MetaCompiler.Model.ExpectedTypeKind ExpectedKind phase ExpectedType;
 }
 
-symbol PReference : Declaration
+symbol PReferenceSymbol : DeclarationSymbol
 {
     MetaSymbol Rule;
     MetaType[] ReferencedTypes;
 }
 
-symbol Token : Declaration
+symbol TokenSymbol : DeclarationSymbol
 {
     MetaType ReturnType;
     derived MetaType ExpectedType;

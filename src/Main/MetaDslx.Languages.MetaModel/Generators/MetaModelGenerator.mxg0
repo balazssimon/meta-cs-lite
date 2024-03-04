@@ -236,22 +236,22 @@ public sealed class [MetaModel.Name] : __MetaModel, I[MetaModel.Name]
         [end foreach]
         var f = [if (IsMetaMetaModel)]new __MetaModelFactory(_model, this)[else]new __MetaModelFactory(_model)[end if];
         [foreach (var obj in Objects)]
-            var [GetName(obj)] = f.[obj.MInfo.MetaType.Name]();
+            var [GetObjectName(obj)] = f.[obj.MInfo.MetaType.Name]();
         [end foreach]
         __CustomImpl.[MetaModel.Name](this);
         [foreach (var obj in Objects)]
             [foreach (var child in obj.MChildren)]
-                [GetName(obj)].MChildren.Add([GetName(child)]);
+                [GetObjectName(obj)].MChildren.Add([GetObjectName(child)]);
             [end foreach]
             [foreach (var prop in obj.MInfo.PublicProperties)]
                 [var slot = obj.MGetSlot(prop)]
                 [if (slot != null && !slot.IsDefault)]
                     [if (prop.IsCollection)]
                         [foreach (var value in slot.Values)]
-                            [GetName(obj)].[prop.Name].Add([ToCSharpValue(prop.Type, value)]);
+                            [GetObjectName(obj)].[prop.Name].Add([ToCSharpValue(prop.Type, value)]);
                         [end foreach]
                     [else if (!prop.IsReadOnly)]
-                        [GetName(obj)].[prop.Name] = [ToCSharpValue(prop.Type, slot.AsSingle()?.Value)];
+                        [GetObjectName(obj)].[prop.Name] = [ToCSharpValue(prop.Type, slot.AsSingle()?.Value)];
                     [end if]
                 [end if]
             [end foreach]

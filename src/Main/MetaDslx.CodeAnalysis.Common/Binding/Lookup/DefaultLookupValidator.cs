@@ -80,8 +80,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             if (result.IsMultiViable && symbols.Count > 1)
             {
-                Ambiguous(context, out resultSymbol);
+                Ambiguous(context, out var isbestValid, out resultSymbol);
                 return false;
+                //return isbestValid;
             }
             // result.Error might be null if we have already generated parser errors
             if (result.Error != null)
@@ -101,7 +102,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         /// <remarks>
         /// This is only intended to be called when the name is ambiguous
         /// </remarks>
-        protected virtual ErrorSymbolInfo Ambiguous(LookupContext context, out DeclarationSymbol resultSymbol)
+        protected virtual ErrorSymbolInfo Ambiguous(LookupContext context, out bool isBestValid, out DeclarationSymbol resultSymbol)
         {
             var location = context.Location;
             var info = GetBestAmbiguousSymbols(context.Result);
@@ -122,20 +123,28 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.WRN_SameFullNameThisAggAgg, location, bestLocation, SymbolDisplayFormat.FullyQualifiedFormat.ToString(best), GetContainingAssembly(second), SymbolDisplayFormat.FullyQualifiedFormat.ToString(second)));
                 context.AddDiagnostic(errorInfo.Diagnostic);
                 resultSymbol = best;
+                isBestValid = true;
                 return errorInfo;
             }
             else
             {
+                // MetaDslx:TODO
                 // suppress reporting the error if we found multiple symbols from source module
                 // since an error has already been reported from the declaration
-                var reportError = !(info.BestLocation == AmbiguousSymbolLocation.FromSourceModule && info.SecondLocation == AmbiguousSymbolLocation.FromSourceModule);
+                //var reportError = !(info.BestLocation == AmbiguousSymbolLocation.FromSourceModule && info.SecondLocation == AmbiguousSymbolLocation.FromSourceModule);
+                
                 // '{0}' is an ambiguous reference between '{1}' and '{2}'
                 var errorInfo = new ErrorSymbolInfo(best.SymbolType, best.Name, best.MetadataName, errorSymbols, Diagnostic.Create(CommonErrorCode.ERR_AmbigContext, location, best.Name, SymbolDisplayFormat.FullyQualifiedFormat.ToString(best), SymbolDisplayFormat.FullyQualifiedFormat.ToString(second)));
-                if (reportError)
-                {
-                    context.AddDiagnostic(errorInfo.Diagnostic);
-                }
+                context.AddDiagnostic(errorInfo.Diagnostic);
+
+                // MetaDslx:TODO
+                //if (reportError)
+                //{
+                //    context.AddDiagnostic(errorInfo.Diagnostic);
+                //}
+
                 resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(best.ContainingDeclaration ?? _compilation.GlobalNamespace, errorInfo, null, default);
+                isBestValid = false;
                 return errorInfo;
             }
         }

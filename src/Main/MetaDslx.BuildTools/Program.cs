@@ -37,9 +37,9 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
             //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaModel"
-            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Emf",
@@ -144,7 +144,7 @@ namespace MetaDslx.BuildTools
                 var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
                 var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
                 var mxsFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxs").ToImmutableArray();
-                /*/
+                //*/
                 foreach (var mxgFile in mxgFiles)
                 {
                     await CompileMetaGenerator(mxgFile);
@@ -154,8 +154,8 @@ namespace MetaDslx.BuildTools
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
-                    //await CompileMeta(compilation, mxFiles);
-                    await CompileMetaSymbols(compilation, mxsFiles);
+                    await CompileMeta(compilation, mxFiles);
+                    //await CompileMetaSymbols(compilation, mxsFiles);
                     //await CompileMetaModels(compilation, mxmFiles);
                     //await CompileMetaLanguages(compilation, mxlFiles);
                 }
@@ -238,7 +238,7 @@ namespace MetaDslx.BuildTools
                 mxCompiler.Compile();
                 var diagnostics = mxCompiler.GetDiagnostics();
                 var mxDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
-                foreach (var diag in mxDiagnostics)
+                foreach (var diag in mxDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Error))
                 {
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
@@ -437,9 +437,9 @@ namespace MetaDslx.BuildTools
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
             Directory.CreateDirectory(outputDir);
             var intfCode = generator.GenerateSymbol(symbol);
-            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}Symbol.cs"), intfCode);
+            await AddGeneratedFile(Path.Combine(outputDir, $"{symbol.Name}.cs"), intfCode);
             var implCode = generator.GenerateImplementation(symbol);
-            await AddGeneratedFile(Path.Combine(implDir, $"{symbol.Name}SymbolImpl.cs"), implCode, overwrite: false);
+            await AddGeneratedFile(Path.Combine(implDir, $"{symbol.Name}Impl.cs"), implCode, overwrite: false);
         }
 
         private static async Task CompileMetaModels(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxmFiles)

@@ -31,7 +31,6 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
                     var symbol = _modelFactory.Symbol(model);
                     symbol.MRootNamespace = csharpSymbol.ContainingNamespace.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat);
                     var name = csharpSymbol.Name;
-                    if (name is not null && name.EndsWith("Symbol") && name != "Symbol") name = name.Substring(0, name.Length - 6);
                     symbol.Name = name;
                     return symbol;
                 }

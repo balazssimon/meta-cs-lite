@@ -230,7 +230,16 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 else if (value is string svalue) return $"typeof({PrimitiveTypeToString(svalue)})";
                 else if (value is Type t) return $"typeof(global::{t.FullName})";
                 else if (value is TypeSymbol ts) return $"typeof({SymbolDisplayFormat.FullyQualifiedFormat.ToString(ts)})";
-                return $"__MetaType.FromModelObject({GetName(value)})";
+                else
+                {
+                    var objName = GetObjectName(value);
+                    if (!string.IsNullOrEmpty(objName)) return $"__MetaType.FromModelObject({objName})";
+                    else if (value is IModelObject mobj)
+                    {
+                        if (!string.IsNullOrEmpty(mobj.MRootNamespace)) return $"typeof({mobj.MRootNamespace}.{mobj.MName})";
+                        else return $"typeof({mobj.MName}";
+                    }
+                }
             }
             if (propertyType == typeof(bool))
             {
@@ -248,8 +257,10 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 if (value is MetaEnumLiteral lit2) symbolValue = $"{lit2.MParent?.MName}.{lit2.MName}";
                 if (value is Symbol sym2)
                 {
-                    if (sym2.ModelObject is not null) return GetName(sym2.ModelObject);
-                    if (sym2.IsCSharpSymbol) symbolValue = sym2.Name.EncodeString();
+                    var objName = GetObjectName(sym2.ModelObject);
+                    if (!string.IsNullOrEmpty(objName)) symbolValue = objName;
+                    else if (value is IModelObject mobj) symbolValue = mobj.MName.EncodeString();
+                    else if (sym2.IsCSharpSymbol) symbolValue = sym2.Name.EncodeString();
                 }
                 return $"__MetaSymbol.FromValue({symbolValue})";
             }
@@ -259,10 +270,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type.IsPrimitive) return value.ToString();
             if (value is Symbol sym)
             {
-                if (sym.ModelObject is not null) return GetName(sym.ModelObject);
-                if (sym.IsCSharpSymbol) return sym.Name.EncodeString();
+                var objName = GetObjectName(sym.ModelObject);
+                if (!string.IsNullOrEmpty(objName)) return objName;
+                else if (value is IModelObject mobj) return mobj.MName.EncodeString();
+                else if (sym.IsCSharpSymbol) return sym.Name.EncodeString();
             }
-            return GetName(value);
+            return GetObjectName(value) ?? string.Empty;
         }
 
         public string ToDefaultValue(MetaDslx.CodeAnalysis.MetaType propertyType, object? value)
@@ -310,7 +323,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return ToCSharpValue(propertyType, value);
         }
 
-        public string GetName(object? obj)
+        public string? GetObjectName(object? obj)
         {
             if (obj is null) return string.Empty;
             if (_objectNames is null)
@@ -326,7 +339,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (_objectNames.TryGetValue(obj, out var name)) return name;
             else if (obj is IModelObject mobj && _objectNames.TryGetValue(mobj, out var mname)) return mname;
-            else return string.Empty;
+            else return null;
         }
 
         private object? ExtractMetaType(object? type)

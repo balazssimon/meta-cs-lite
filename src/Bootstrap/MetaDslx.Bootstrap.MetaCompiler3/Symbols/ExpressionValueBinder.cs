@@ -14,6 +14,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MetaDslx.Languages.MetaModel.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
@@ -109,6 +110,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 var expectedType = ExpectedType;
                 if (expectedType.IsEnum)
+                {
+                    context.Qualifier = expectedType.AsTypeSymbol(this.Compilation);
+                }
+                else if (expectedType.OriginalModelObject is MetaEnum)
                 {
                     context.Qualifier = expectedType.AsTypeSymbol(this.Compilation);
                 }

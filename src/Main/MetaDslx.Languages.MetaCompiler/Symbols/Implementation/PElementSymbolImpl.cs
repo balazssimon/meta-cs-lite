@@ -44,6 +44,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Implementation
             var nameSyntax = nameBlock.Name;
             if (nameSyntax is null) return default;
             MetaType result = default;
+            var kind = ExpectedTypeKind.None;
             if (qualifier.IsName)
             {
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInAgg, Location, Name, qualifier));
@@ -77,10 +78,19 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols.Implementation
                 }
                 else if (prop.ModelObject is MetaProperty mProp)
                 {
-                    result = mProp.Type.Type;
+                    var propType = mProp.Type;
+                    result = propType.Type;
+                    if (result.IsDefaultOrNull)
+                    {
+                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the property '{Name}' in type '{qualifier}'"));
+                        return default;
+                    }
+                    if (propType.IsArray) kind = ExpectedTypeKind.Collection;
+                    else if (result.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
+                    else kind = ExpectedTypeKind.Simple;
+                    return (result, kind);
                 }
             }
-            var kind = ExpectedTypeKind.None;
             if (result.IsNullable) result.TryExtractNullableType(out result, diagnostics, cancellationToken);
             if (result.IsCollection) kind = ExpectedTypeKind.Collection;
             else if (result.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;

@@ -5,92 +5,92 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 symbol Symbol
 {
-    weak Attribute[] Attributes;
+    weak AttributeSymbol[] Attributes;
 }
 
-symbol Attribute
+symbol AttributeSymbol
 {
-    Type AttributeClass;
+    TypeSymbol AttributeClass;
 }
 
-symbol Assembly
+symbol AssemblySymbol
 {
-    plain abstract Module? SourceModule;
-    plain abstract Module[] Modules;
-    plain abstract Namespace GlobalNamespace;
+    plain abstract ModuleSymbol? SourceModule;
+    plain abstract ModuleSymbol[] Modules;
+    plain abstract NamespaceSymbol GlobalNamespace;
     plain abstract bool IsCorLibrary;
 }
 
-symbol Module
+symbol ModuleSymbol
 {
-    plain abstract Namespace GlobalNamespace;
+    plain abstract NamespaceSymbol GlobalNamespace;
     NamespaceSymbol? GetRootNamespace(SyntaxTree syntaxTree);
 }
 
-symbol Declaration
+symbol DeclarationSymbol
 {
     weak Accessibility DeclaredAccessibility;
     bool IsStatic;
     bool IsExtern;
-    weak Declaration OriginalDefinition;
-    weak Type[] TypeArguments;
-    weak Import[] Imports;
+    weak DeclarationSymbol OriginalDefinition;
+    weak TypeSymbol[] TypeArguments;
+    weak ImportSymbol[] Imports;
     derived weak string[] MemberNames;
-    derived weak Declaration[] Members;
-    derived weak Type[] TypeMembers;
-    cached Declaration[] GetMembers(string name) if "MemberNames.Contains(name)";
-    cached Declaration[] GetMembers(string name, string metadataName) if "MemberNames.Contains(name)";
-    cached Type[] GetTypeMembers(string name) if "MemberNames.Contains(name)";
-    cached Type[] GetTypeMembers(string name, string metadataName) if "MemberNames.Contains(name)";
+    derived weak DeclarationSymbol[] Members;
+    derived weak TypeSymbol[] TypeMembers;
+    cached DeclarationSymbol[] GetMembers(string name) if "MemberNames.Contains(name)";
+    cached DeclarationSymbol[] GetMembers(string name, string metadataName) if "MemberNames.Contains(name)";
+    cached TypeSymbol[] GetTypeMembers(string name) if "MemberNames.Contains(name)";
+    cached TypeSymbol[] GetTypeMembers(string name, string metadataName) if "MemberNames.Contains(name)";
 }
 
-symbol Import
+symbol ImportSymbol
 {
     string[] Files;
-    Alias[] Aliases;
-    Namespace[] Namespaces;
-    Declaration[] Symbols;
+    AliasSymbol[] Aliases;
+    NamespaceSymbol[] Namespaces;
+    DeclarationSymbol[] Symbols;
 
-    derived Declaration[] ImportedSymbols;
+    derived DeclarationSymbol[] ImportedSymbols;
 }
 
-symbol ImportMetaModel : Import
+symbol ImportMetaModelSymbol : ImportSymbol
 {
     MetaSymbol[] MetaModelSymbols;
     derived MetaDslx.Modeling.MetaModel[] MetaModels;
 }
 
-symbol Alias : Declaration
+symbol AliasSymbol : DeclarationSymbol
 {
     Symbol Target;
 }
 
-symbol Namespace : Declaration
+symbol NamespaceSymbol : DeclarationSymbol
 {
     plain abstract NamespaceExtent Extent;
     plain abstract bool IsGlobalNamespace;
     plain abstract NamespaceKind NamespaceKind;
     plain abstract Compilation? ContainingCompilation;
 
-    derived Namespace[] ConstituentNamespaces;
-    derived Namespace[] NamespaceMembers;
-    Namespace? LookupNestedNamespace(string[] names);
-    Namespace? LookupNestedNamespace(string name);
+    derived NamespaceSymbol[] ConstituentNamespaces;
+    derived NamespaceSymbol[] NamespaceMembers;
+    NamespaceSymbol? LookupNestedNamespace(string[] names);
+    NamespaceSymbol? LookupNestedNamespace(string name);
 }
 
-symbol Type : Declaration
+symbol TypeSymbol : DeclarationSymbol
 {
     bool IsReferenceType;
     bool IsValueType;
-    weak TypeParameter[] TypeParameters;
-    weak Type[] BaseTypes;
-    derived Type[] AllBaseTypes;
+    weak TypeParameterSymbol[] TypeParameters;
+    weak TypeSymbol[] BaseTypes;
+    derived TypeSymbol[] AllBaseTypes;
 
-    bool IsDerivedFrom(Type @type, TypeEqualityComparer comparison);
-    bool IsEqualToOrDerivedFrom(Type @type, TypeEqualityComparer comparison);
+    bool IsDerivedFrom(TypeSymbol @type, TypeEqualityComparer comparison);
+    bool IsEqualToOrDerivedFrom(TypeSymbol @type, TypeEqualityComparer comparison);
 }
 
-symbol TypeParameter : Type
+symbol TypeParameterSymbol : TypeSymbol
 {
 }
 

@@ -4099,7 +4099,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 __cb.Write(" ");
                 #line hidden
                 #line (239,18)-(239,30) 28 "MetaModelGenerator.mxg"
-                __cb.Write(GetName(obj));
+                __cb.Write(GetObjectName(obj));
                 #line hidden
                 #line (239,31)-(239,32) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
@@ -4157,13 +4157,13 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     }
                     __cb.Push("        ");
                     #line (244,18)-(244,30) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(GetName(obj));
+                    __cb.Write(GetObjectName(obj));
                     #line hidden
                     #line (244,31)-(244,46) 33 "MetaModelGenerator.mxg"
                     __cb.Write(".MChildren.Add(");
                     #line hidden
                     #line (244,47)-(244,61) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(GetName(child));
+                    __cb.Write(GetObjectName(child));
                     #line hidden
                     #line (244,62)-(244,64) 33 "MetaModelGenerator.mxg"
                     __cb.Write(");");
@@ -4218,7 +4218,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                                 }
                                 __cb.Push("        ");
                                 #line (251,30)-(251,42) 44 "MetaModelGenerator.mxg"
-                                __cb.Write(GetName(obj));
+                                __cb.Write(GetObjectName(obj));
                                 #line hidden
                                 #line (251,43)-(251,44) 45 "MetaModelGenerator.mxg"
                                 __cb.Write(".");
@@ -4251,7 +4251,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                             }
                             __cb.Push("        ");
                             #line (254,26)-(254,38) 40 "MetaModelGenerator.mxg"
-                            __cb.Write(GetName(obj));
+                            __cb.Write(GetObjectName(obj));
                             #line hidden
                             #line (254,39)-(254,40) 41 "MetaModelGenerator.mxg"
                             __cb.Write(".");

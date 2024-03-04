@@ -48,7 +48,7 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             #line (11,10)-(11,11) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (11,12)-(11,32) 24 "SymbolGenerator.mxg"
+            #line (11,12)-(11,28) 24 "SymbolGenerator.mxg"
             __cb.Write(symbol.Namespace);
             #line hidden
             __cb.AppendLine();
@@ -3766,11 +3766,11 @@ namespace MetaDslx.Languages.MetaSymbols.Generators
             #line (252,10)-(252,11) 25 "SymbolGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (252,12)-(252,32) 24 "SymbolGenerator.mxg"
+            #line (252,12)-(252,28) 24 "SymbolGenerator.mxg"
             __cb.Write(symbol.Namespace);
             #line hidden
-            #line (252,33)-(252,38) 25 "SymbolGenerator.mxg"
-            __cb.Write(".Impl");
+            #line (252,29)-(252,44) 25 "SymbolGenerator.mxg"
+            __cb.Write(".Implementation");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();

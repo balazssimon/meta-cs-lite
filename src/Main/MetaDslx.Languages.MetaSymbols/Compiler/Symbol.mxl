@@ -19,7 +19,7 @@ Using returns MetaDslx.CodeAnalysis.Symbols.ImportSymbol: 'using' namespaces+=#M
 
 Symbol: 
 	isAbstract?='abstract'? 'symbol' Name
-	(':' baseTypes+=[Use(types:MetaDslx.Languages.MetaSymbols.Model.Symbol,suffixes:{"","Symbol"})]Qualifier)?
+	(':' baseTypes+=#MetaDslx.Languages.MetaSymbols.Model.Symbol)?
 	[Scope]('{' (properties+=Property | operations+=Operation)* '}');
 
 Property: (isPlain?='plain' (isAbstract?='abstract' | isWeak?='weak')? | isDerived?='derived' isCached='cached'? isWeak?='weak'? | isWeak?='weak')? @type=TypeReference Name ('=' defaultValue=Value)? ('phase' phase=#{Property|Identifier})? ';';
@@ -33,7 +33,7 @@ Parameter: @type=TypeReference Name;
 TypeReference: @type=SimpleTypeReference (isNullable?='?')? dimensions=ArrayDimensions;
 ArrayDimensions returns int: ('[' ']')*;
 
-SimpleTypeReference returns type: PrimitiveType | [Use(types:type,suffixes:{"","Symbol"})]Qualifier;
+SimpleTypeReference returns type: PrimitiveType | #type;
 
 PrimitiveType returns type
 	: 'object'
