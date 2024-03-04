@@ -26,8 +26,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     public interface Token : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LexerRule
     {
         bool IsTrivia { get; set; }
-        __MetaType ReturnType { get; set; }
-        TokenKind? TokenKind { get; set; }
+        MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.TokenKind? TokenKind { get; set; }
     
     }
 }

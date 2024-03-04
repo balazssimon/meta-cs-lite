@@ -25,9 +25,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface CSharpElement : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Annotation> Annotations { get; }
         string AntlrName { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Binder> Binders { get; }
         bool ContainsBinders { get; set; }
         string CSharpName { get; set; }
     

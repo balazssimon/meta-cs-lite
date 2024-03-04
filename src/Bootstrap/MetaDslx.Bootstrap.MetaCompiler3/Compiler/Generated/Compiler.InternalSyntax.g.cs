@@ -6647,27 +6647,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
     internal class MainBlock2Green : GreenSyntaxNode
     {
         internal static new readonly MainBlock2Green __Missing = new MainBlock2Green();
-        private LanguageDeclarationGreen _declarations;
+        private LanguageDeclarationGreen _languageDeclaration;
     
-        public MainBlock2Green(CompilerSyntaxKind kind, LanguageDeclarationGreen declarations)
+        public MainBlock2Green(CompilerSyntaxKind kind, LanguageDeclarationGreen languageDeclaration)
             : base(kind, null, null)
         {
             SlotCount = 1;
-            if (declarations != null)
+            if (languageDeclaration != null)
             {
-                AdjustFlagsAndWidth(declarations);
-                _declarations = declarations;
+                AdjustFlagsAndWidth(languageDeclaration);
+                _languageDeclaration = languageDeclaration;
             }
         }
     
-        public MainBlock2Green(CompilerSyntaxKind kind, LanguageDeclarationGreen declarations, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public MainBlock2Green(CompilerSyntaxKind kind, LanguageDeclarationGreen languageDeclaration, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 1;
-            if (declarations != null)
+            if (languageDeclaration != null)
             {
-                AdjustFlagsAndWidth(declarations);
-                _declarations = declarations;
+                AdjustFlagsAndWidth(languageDeclaration);
+                _languageDeclaration = languageDeclaration;
             }
         }
     
@@ -6677,7 +6677,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public LanguageDeclarationGreen Declarations { get { return _declarations; } }
+        public LanguageDeclarationGreen LanguageDeclaration { get { return _languageDeclaration; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -6688,7 +6688,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         {
             switch (index)
             {
-                case 0: return _declarations;
+                case 0: return _languageDeclaration;
                 default: return null;
             }
         }
@@ -6699,25 +6699,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new MainBlock2Green(this.Kind, _declarations, diagnostics, this.GetAnnotations());
+            return new MainBlock2Green(this.Kind, _languageDeclaration, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new MainBlock2Green(this.Kind, _declarations, this.GetDiagnostics(), annotations);
+            return new MainBlock2Green(this.Kind, _languageDeclaration, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new MainBlock2Green(this.Kind, _declarations, this.GetDiagnostics(), this.GetAnnotations());
+            return new MainBlock2Green(this.Kind, _languageDeclaration, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public MainBlock2Green Update(LanguageDeclarationGreen declarations)
+        public MainBlock2Green Update(LanguageDeclarationGreen languageDeclaration)
         {
-            if (_declarations != declarations)
+            if (_languageDeclaration != languageDeclaration)
             {
-                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.MainBlock2(declarations);
+                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.MainBlock2(languageDeclaration);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);

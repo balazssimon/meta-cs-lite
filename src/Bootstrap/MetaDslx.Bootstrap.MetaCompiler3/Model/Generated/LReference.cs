@@ -27,7 +27,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     {
         new string? FixedText { get; }
         new bool IsFixed { get; }
-        LexerRule Rule { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.LexerRule Rule { get; set; }
     
     }
 }

@@ -32,6 +32,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
+        public virtual void Alternative(Alternative _this)
+        {
+        }
+    
         public virtual void Annotation(Annotation _this)
         {
         }
@@ -52,6 +56,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
+        public virtual void Block(Block _this)
+        {
+        }
+    
         public virtual void CSharpElement(CSharpElement _this)
         {
         }
@@ -60,19 +68,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
-        public virtual void Alternative(Alternative _this)
+        public virtual void Element(Element _this)
         {
         }
     
         public virtual void ElementValue(ElementValue _this)
-        {
-        }
-    
-        public virtual void Block(Block _this)
-        {
-        }
-    
-        public virtual void Element(Element _this)
         {
         }
     
@@ -88,18 +88,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
-        public virtual void GrammarRule(GrammarRule _this)
-        {
-        }
-    
-        public virtual void Language(Language _this)
-        {
-        }
-    
-        public virtual void LexerRule(LexerRule _this)
-        {
-        }
-    
         public virtual void Fragment(Fragment _this)
         {
         }
@@ -108,7 +96,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
+        public virtual void GrammarRule(GrammarRule _this)
+        {
+        }
+    
         public virtual void LAlternative(LAlternative _this)
+        {
+        }
+    
+        public virtual void Language(Language _this)
+        {
+        }
+    
+        public virtual void LBlock(LBlock _this)
         {
         }
     
@@ -120,7 +120,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
-        public virtual void LBlock(LBlock _this)
+        public virtual void LexerRule(LexerRule _this)
         {
         }
     
@@ -140,11 +140,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
-        public virtual void LSetItem(LSetItem _this)
+        public virtual void LSetChar(LSetChar _this)
         {
         }
     
-        public virtual void LSetChar(LSetChar _this)
+        public virtual void LSetItem(LSetItem _this)
         {
         }
     
@@ -153,10 +153,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         }
     
         public virtual void LWildCard(LWildCard _this)
-        {
-        }
-    
-        public virtual void Namespace(Namespace _this)
         {
         }
     
@@ -185,10 +181,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         }
     
     
-        public abstract string Binder_ConstructorArguments(Binder _this);
-    
-        public abstract string? Declaration_FullName(Declaration _this);
-    
         public abstract string Alternative_GreenName(Alternative _this);
     
         public abstract string Alternative_GreenConstructorParameters(Alternative _this);
@@ -213,17 +205,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     
         public abstract bool Alternative_HasRedToGreenOptionalArguments(Alternative _this);
     
-        public abstract string ElementValue_GreenType(ElementValue _this);
-    
-        public abstract string? ElementValue_GreenSyntaxCondition(ElementValue _this);
-    
-        public abstract string ElementValue_RedType(ElementValue _this);
+        public abstract string Binder_ConstructorArguments(Binder _this);
     
         public abstract string Block_GreenType(Block _this);
     
         public abstract string? Block_GreenSyntaxCondition(Block _this);
     
         public abstract string Block_RedType(Block _this);
+    
+        public abstract string Declaration_Namespace(Declaration _this);
+    
+        public abstract string? Declaration_FullName(Declaration _this);
     
         public abstract bool Element_IsToken(Element _this);
     
@@ -267,23 +259,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     
         public abstract string? Element_VisitCall(Element _this);
     
+        public abstract string ElementValue_GreenType(ElementValue _this);
+    
+        public abstract string? ElementValue_GreenSyntaxCondition(ElementValue _this);
+    
+        public abstract string ElementValue_RedType(ElementValue _this);
+    
         public abstract string Eof_GreenType(Eof _this);
     
         public abstract string? Eof_GreenSyntaxCondition(Eof _this);
     
         public abstract string Eof_RedType(Eof _this);
     
-        public abstract Language GrammarRule_Language(GrammarRule _this);
+        public abstract MetaDslx.Bootstrap.MetaCompiler3.Model.Language Grammar_Language(Grammar _this);
     
-        public abstract string Language_Namespace(Language _this);
+        public abstract MetaDslx.Bootstrap.MetaCompiler3.Model.Language GrammarRule_Language(GrammarRule _this);
     
-        public abstract bool LexerRule_IsFixed(LexerRule _this);
-    
-        public abstract string? LexerRule_FixedText(LexerRule _this);
+        public abstract MetaDslx.Bootstrap.MetaCompiler3.Model.Grammar GrammarRule_Grammar(GrammarRule _this);
     
         public abstract bool LAlternative_IsFixed(LAlternative _this);
     
         public abstract string? LAlternative_FixedText(LAlternative _this);
+    
+        public abstract bool LBlock_IsFixed(LBlock _this);
+    
+        public abstract string? LBlock_FixedText(LBlock _this);
     
         public abstract bool LElement_IsFixed(LElement _this);
     
@@ -293,9 +293,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     
         public abstract string? LElementValue_FixedText(LElementValue _this);
     
-        public abstract bool LBlock_IsFixed(LBlock _this);
+        public abstract bool LexerRule_IsFixed(LexerRule _this);
     
-        public abstract string? LBlock_FixedText(LBlock _this);
+        public abstract string? LexerRule_FixedText(LexerRule _this);
     
         public abstract bool LFixed_IsFixed(LFixed _this);
     
@@ -313,13 +313,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     
         public abstract string? LSet_FixedText(LSet _this);
     
-        public abstract bool LSetItem_IsFixed(LSetItem _this);
-    
-        public abstract string? LSetItem_FixedText(LSetItem _this);
-    
         public abstract bool LSetChar_IsFixed(LSetChar _this);
     
         public abstract string? LSetChar_FixedText(LSetChar _this);
+    
+        public abstract bool LSetItem_IsFixed(LSetItem _this);
+    
+        public abstract string? LSetItem_FixedText(LSetItem _this);
     
         public abstract bool LSetRange_IsFixed(LSetRange _this);
     
@@ -333,9 +333,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     
         public abstract string Rule_RedName(Rule _this);
     
-        public abstract Token? RuleRef_Token(RuleRef _this);
+        public abstract MetaDslx.Bootstrap.MetaCompiler3.Model.Token? RuleRef_Token(RuleRef _this);
     
-        public abstract Rule? RuleRef_Rule(RuleRef _this);
+        public abstract MetaDslx.Bootstrap.MetaCompiler3.Model.Rule? RuleRef_Rule(RuleRef _this);
     
         public abstract string RuleRef_GreenType(RuleRef _this);
     

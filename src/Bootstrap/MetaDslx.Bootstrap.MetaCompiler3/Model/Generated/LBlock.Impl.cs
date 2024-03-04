@@ -32,7 +32,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.LAlternative> Alternatives
         {
             get => MGetCollection<LAlternative>(Compiler.LBlock_Alternatives);
         }

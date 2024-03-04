@@ -926,10 +926,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             public override GreenNode? VisitPr_MainBlock2(CompilerParser.Pr_MainBlock2Context? context)
             {
                 if (context == null) return MainBlock2Green.__Missing;
-                LanguageDeclarationGreen? declarations = null;
-                if (context.E_declarations is not null) declarations = (LanguageDeclarationGreen?)this.Visit(context.E_declarations) ?? LanguageDeclarationGreen.__Missing;
-                else declarations = LanguageDeclarationGreen.__Missing;
-                return _factory.MainBlock2(declarations);
+                LanguageDeclarationGreen? languageDeclaration = null;
+                if (context.E_LanguageDeclaration is not null) languageDeclaration = (LanguageDeclarationGreen?)this.Visit(context.E_LanguageDeclaration) ?? LanguageDeclarationGreen.__Missing;
+                else languageDeclaration = LanguageDeclarationGreen.__Missing;
+                return _factory.MainBlock2(languageDeclaration);
             }
             
             public override GreenNode? VisitPr_LanguageDeclarationBlock1(CompilerParser.Pr_LanguageDeclarationBlock1Context? context)

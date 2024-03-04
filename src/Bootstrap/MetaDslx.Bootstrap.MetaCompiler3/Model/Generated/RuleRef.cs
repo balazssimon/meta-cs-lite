@@ -25,13 +25,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface RuleRef : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
-        GrammarRule GrammarRule { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.GrammarRule GrammarRule { get; set; }
         new string? GreenSyntaxCondition { get; }
         new string GreenType { get; }
         new string RedType { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<__MetaType> ReferencedTypes { get; }
-        Rule? Rule { get; }
-        Token? Token { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaType> ReferencedTypes { get; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Rule? Rule { get; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Token? Token { get; }
     
     }
 }

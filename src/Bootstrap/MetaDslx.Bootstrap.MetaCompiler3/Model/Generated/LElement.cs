@@ -28,8 +28,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         string? FixedText { get; }
         bool IsFixed { get; }
         bool IsNegated { get; set; }
-        global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity { get; set; }
-        LElementValue Value { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue Value { get; set; }
     
     }
 }

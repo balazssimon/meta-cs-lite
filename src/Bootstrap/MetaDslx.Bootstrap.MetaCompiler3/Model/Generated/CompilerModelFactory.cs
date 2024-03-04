@@ -35,6 +35,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
+        public Alternative Alternative(string? id = null)
+        {
+            return (Alternative)Compiler.AlternativeInfo.Create(base.Model, id)!;
+        }
+    
         public Annotation Annotation(string? id = null)
         {
             return (Annotation)Compiler.AnnotationInfo.Create(base.Model, id)!;
@@ -60,19 +65,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             return (BinderArgument)Compiler.BinderArgumentInfo.Create(base.Model, id)!;
         }
     
+        public Block Block(string? id = null)
+        {
+            return (Block)Compiler.BlockInfo.Create(base.Model, id)!;
+        }
+    
         public CSharpElement CSharpElement(string? id = null)
         {
             return (CSharpElement)Compiler.CSharpElementInfo.Create(base.Model, id)!;
         }
     
-        public Alternative Alternative(string? id = null)
+        public Declaration Declaration(string? id = null)
         {
-            return (Alternative)Compiler.AlternativeInfo.Create(base.Model, id)!;
-        }
-    
-        public Block Block(string? id = null)
-        {
-            return (Block)Compiler.BlockInfo.Create(base.Model, id)!;
+            return (Declaration)Compiler.DeclarationInfo.Create(base.Model, id)!;
         }
     
         public Element Element(string? id = null)
@@ -95,11 +100,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             return (Fixed)Compiler.FixedInfo.Create(base.Model, id)!;
         }
     
-        public Language Language(string? id = null)
-        {
-            return (Language)Compiler.LanguageInfo.Create(base.Model, id)!;
-        }
-    
         public Fragment Fragment(string? id = null)
         {
             return (Fragment)Compiler.FragmentInfo.Create(base.Model, id)!;
@@ -115,14 +115,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             return (LAlternative)Compiler.LAlternativeInfo.Create(base.Model, id)!;
         }
     
-        public LElement LElement(string? id = null)
+        public Language Language(string? id = null)
         {
-            return (LElement)Compiler.LElementInfo.Create(base.Model, id)!;
+            return (Language)Compiler.LanguageInfo.Create(base.Model, id)!;
         }
     
         public LBlock LBlock(string? id = null)
         {
             return (LBlock)Compiler.LBlockInfo.Create(base.Model, id)!;
+        }
+    
+        public LElement LElement(string? id = null)
+        {
+            return (LElement)Compiler.LElementInfo.Create(base.Model, id)!;
         }
     
         public LFixed LFixed(string? id = null)
@@ -158,11 +163,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         public LWildCard LWildCard(string? id = null)
         {
             return (LWildCard)Compiler.LWildCardInfo.Create(base.Model, id)!;
-        }
-    
-        public Namespace Namespace(string? id = null)
-        {
-            return (Namespace)Compiler.NamespaceInfo.Create(base.Model, id)!;
         }
     
         public Rule Rule(string? id = null)
@@ -204,6 +204,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         {
         }
     
+        public Alternative Alternative(__Model model, string? id = null)
+        {
+            return (Alternative)Compiler.AlternativeInfo.Create(model, id)!;
+        }
+    
         public Annotation Annotation(__Model model, string? id = null)
         {
             return (Annotation)Compiler.AnnotationInfo.Create(model, id)!;
@@ -229,19 +234,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             return (BinderArgument)Compiler.BinderArgumentInfo.Create(model, id)!;
         }
     
+        public Block Block(__Model model, string? id = null)
+        {
+            return (Block)Compiler.BlockInfo.Create(model, id)!;
+        }
+    
         public CSharpElement CSharpElement(__Model model, string? id = null)
         {
             return (CSharpElement)Compiler.CSharpElementInfo.Create(model, id)!;
         }
     
-        public Alternative Alternative(__Model model, string? id = null)
+        public Declaration Declaration(__Model model, string? id = null)
         {
-            return (Alternative)Compiler.AlternativeInfo.Create(model, id)!;
-        }
-    
-        public Block Block(__Model model, string? id = null)
-        {
-            return (Block)Compiler.BlockInfo.Create(model, id)!;
+            return (Declaration)Compiler.DeclarationInfo.Create(model, id)!;
         }
     
         public Element Element(__Model model, string? id = null)
@@ -264,11 +269,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             return (Fixed)Compiler.FixedInfo.Create(model, id)!;
         }
     
-        public Language Language(__Model model, string? id = null)
-        {
-            return (Language)Compiler.LanguageInfo.Create(model, id)!;
-        }
-    
         public Fragment Fragment(__Model model, string? id = null)
         {
             return (Fragment)Compiler.FragmentInfo.Create(model, id)!;
@@ -284,14 +284,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             return (LAlternative)Compiler.LAlternativeInfo.Create(model, id)!;
         }
     
-        public LElement LElement(__Model model, string? id = null)
+        public Language Language(__Model model, string? id = null)
         {
-            return (LElement)Compiler.LElementInfo.Create(model, id)!;
+            return (Language)Compiler.LanguageInfo.Create(model, id)!;
         }
     
         public LBlock LBlock(__Model model, string? id = null)
         {
             return (LBlock)Compiler.LBlockInfo.Create(model, id)!;
+        }
+    
+        public LElement LElement(__Model model, string? id = null)
+        {
+            return (LElement)Compiler.LElementInfo.Create(model, id)!;
         }
     
         public LFixed LFixed(__Model model, string? id = null)
@@ -327,11 +332,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         public LWildCard LWildCard(__Model model, string? id = null)
         {
             return (LWildCard)Compiler.LWildCardInfo.Create(model, id)!;
-        }
-    
-        public Namespace Namespace(__Model model, string? id = null)
-        {
-            return (Namespace)Compiler.NamespaceInfo.Create(model, id)!;
         }
     
         public Rule Rule(__Model model, string? id = null)

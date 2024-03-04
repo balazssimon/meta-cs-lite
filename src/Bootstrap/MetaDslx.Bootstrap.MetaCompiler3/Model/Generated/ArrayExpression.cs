@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface ArrayExpression : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Expression
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Expression> Items { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Expression> Items { get; }
     
     }
 }

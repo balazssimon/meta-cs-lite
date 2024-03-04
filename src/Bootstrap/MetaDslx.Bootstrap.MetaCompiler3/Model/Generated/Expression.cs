@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface Expression : __IModelObject
     {
-        __MetaSymbol Value { get; set; }
+        MetaDslx.CodeAnalysis.MetaSymbol Value { get; set; }
     
     }
 }

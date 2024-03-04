@@ -25,16 +25,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface SeparatedList : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Element> FirstItems { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Element> FirstSeparators { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Element> FirstItems { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Element> FirstSeparators { get; }
         new string? GreenSyntaxCondition { get; }
         new string GreenType { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Element> LastItems { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Element> LastSeparators { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Element> LastItems { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Element> LastSeparators { get; }
         new string RedType { get; }
-        Element RepeatedBlock { get; set; }
-        Element RepeatedItem { get; set; }
-        Element RepeatedSeparator { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Element RepeatedBlock { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Element RepeatedItem { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Element RepeatedSeparator { get; set; }
         bool RepeatedSeparatorFirst { get; set; }
         bool SeparatorFirst { get; set; }
     

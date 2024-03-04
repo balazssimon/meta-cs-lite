@@ -25,8 +25,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface Annotation : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<AnnotationArgument> Arguments { get; }
-        __MetaType AttributeClass { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.AnnotationArgument> Arguments { get; }
+        MetaDslx.CodeAnalysis.MetaType AttributeClass { get; set; }
     
     }
 }

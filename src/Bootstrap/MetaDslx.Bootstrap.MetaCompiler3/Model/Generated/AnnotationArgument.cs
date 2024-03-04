@@ -25,10 +25,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface AnnotationArgument : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> NamedParameter { get; }
-        Declaration Parameter { get; set; }
-        __MetaType ParameterType { get; set; }
-        Expression Value { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter { get; }
+        MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter { get; set; }
+        MetaDslx.CodeAnalysis.MetaType ParameterType { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Expression Value { get; set; }
     
     }
 }

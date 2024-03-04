@@ -28,7 +28,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         new string? GreenSyntaxCondition { get; }
         new string GreenType { get; }
         new string RedType { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<RuleRef> Tokens { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.RuleRef> Tokens { get; }
     
     }
 }

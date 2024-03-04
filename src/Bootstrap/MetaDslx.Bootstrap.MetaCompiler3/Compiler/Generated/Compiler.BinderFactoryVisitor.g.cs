@@ -18,11 +18,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
 
         public virtual void VisitMain(MainSyntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler3.Model.Namespace));
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol));
             this.Begin(__annot2, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: MetaDslx.Bootstrap.MetaCompiler3.Model.Compiler.Declaration_Declarations);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder();
                 this.Begin(__annot0, node.Qualifier);
                 try
                 {
@@ -1788,24 +1788,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
 
         public virtual void VisitMainBlock2(MainBlock2Syntax node)
         {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
-            this.Begin(__annot1, node);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+            this.Begin(__annot0, node);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
-                this.Begin(__annot0, node.Declarations);
-                try
-                {
-                    this.Visit(node.Declarations);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
+                this.Visit(node.LanguageDeclaration);
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot0);
             }
         }
 

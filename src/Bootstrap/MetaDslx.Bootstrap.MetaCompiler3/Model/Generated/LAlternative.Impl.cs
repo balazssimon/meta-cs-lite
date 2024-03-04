@@ -31,7 +31,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<LElement> Elements
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.LElement> Elements
         {
             get => MGetCollection<LElement>(Compiler.LAlternative_Elements);
         }

@@ -12,10 +12,10 @@ using MetaDslx.Bootstrap.MetaCompiler3.Model;
 
 language Compiler;
 
-Main returns Namespace:
-	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
+Main returns NamespaceSymbol:
+	'namespace' [Name]Qualifier ';'
 	('using' Using ';')*
-	[Scope](declarations+=LanguageDeclaration)
+	[Scope](LanguageDeclaration)
 	eof;
 
 Using returns ImportSymbol 

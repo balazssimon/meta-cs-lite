@@ -27,7 +27,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     {
         new string? FixedText { get; }
         new bool IsFixed { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<LSetItem> Items { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.LSetItem> Items { get; }
     
     }
 }

@@ -2140,8 +2140,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
 
         public virtual SyntaxNode VisitMainBlock2(MainBlock2Syntax node)
         {
-            var declarations = (LanguageDeclarationSyntax)this.Visit(node.Declarations);
-            return node.Update(declarations);
+            var languageDeclaration = (LanguageDeclarationSyntax)this.Visit(node.LanguageDeclaration);
+            return node.Update(languageDeclaration);
         }
 
         public virtual SyntaxNode VisitLanguageDeclarationBlock1(LanguageDeclarationBlock1Syntax node)

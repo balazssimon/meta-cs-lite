@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface LBlock : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
-        global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.LAlternative> Alternatives { get; }
         new string? FixedText { get; }
         new bool IsFixed { get; }
     

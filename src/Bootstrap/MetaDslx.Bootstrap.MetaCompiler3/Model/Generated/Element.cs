@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface Element : global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
-        global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment Assignment { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment Assignment { get; set; }
         string FieldName { get; }
         string GreenFieldType { get; }
         string GreenParameterValue { get; }
@@ -47,7 +47,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         string? RedSyntaxNullCondition { get; }
         string RedToGreenArgument { get; }
         string RedToGreenOptionalArgument { get; }
-        ElementValue Value { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue Value { get; set; }
         string? VisitCall { get; }
     
     }

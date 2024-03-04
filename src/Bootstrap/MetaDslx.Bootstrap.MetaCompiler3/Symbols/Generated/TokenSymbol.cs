@@ -48,8 +48,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 );
         }
 
-        private global::MetaType _returnType;
-        private global::MetaType _expectedType;
+        private global::MetaDslx.CodeAnalysis.MetaType _returnType;
+        private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
 
         public TokenSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -61,7 +61,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::MetaType ReturnType
+        public global::MetaDslx.CodeAnalysis.MetaType ReturnType
         {
             get
             {
@@ -71,7 +71,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaType ExpectedType
+        public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
         {
             get
             {
@@ -116,11 +116,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
 
-        protected virtual global::MetaType Compute_ReturnType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.CodeAnalysis.MetaType Compute_ReturnType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<global::MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
         }
 
-        protected abstract global::MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }

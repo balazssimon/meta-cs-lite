@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface LAlternative : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<LElement> Elements { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.LElement> Elements { get; }
         string? FixedText { get; }
         bool IsFixed { get; }
     

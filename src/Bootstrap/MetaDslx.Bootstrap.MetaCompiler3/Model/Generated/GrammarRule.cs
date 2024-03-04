@@ -25,8 +25,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface GrammarRule : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
-        Grammar Grammar { get; set; }
-        Language Language { get; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Grammar Grammar { get; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Language Language { get; }
     
     }
 }

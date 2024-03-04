@@ -5494,7 +5494,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
     }
     public sealed class MainBlock2Syntax : CompilerSyntaxNode
     {
-        private LanguageDeclarationSyntax _declarations;
+        private LanguageDeclarationSyntax _languageDeclaration;
     
         public MainBlock2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -5506,11 +5506,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
         }
     
-        public LanguageDeclarationSyntax Declarations 
+        public LanguageDeclarationSyntax LanguageDeclaration 
         { 
             get
             {
-            var red = this.GetRed(ref this._declarations, 0);
+            var red = this.GetRed(ref this._languageDeclaration, 0);
             return red;
             } 
         }
@@ -5519,7 +5519,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this.GetRed(ref this._declarations, 0);
+                case 0: return this.GetRed(ref this._languageDeclaration, 0);
                 default: return null;
             }
         }
@@ -5528,22 +5528,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this._declarations;
+                case 0: return this._languageDeclaration;
                 default: return null;
             }
         }
     
-        public MainBlock2Syntax WithDeclarations(LanguageDeclarationSyntax declarations)
+        public MainBlock2Syntax WithLanguageDeclaration(LanguageDeclarationSyntax languageDeclaration)
         {
-            return this.Update(declarations);
+            return this.Update(languageDeclaration);
         }
     
     
-        public MainBlock2Syntax Update(LanguageDeclarationSyntax declarations)
+        public MainBlock2Syntax Update(LanguageDeclarationSyntax languageDeclaration)
         {
-            if (this.Declarations != declarations)
+            if (this.LanguageDeclaration != languageDeclaration)
             {
-                var newNode = CompilerLanguage.Instance.SyntaxFactory.MainBlock2(declarations);
+                var newNode = CompilerLanguage.Instance.SyntaxFactory.MainBlock2(languageDeclaration);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);

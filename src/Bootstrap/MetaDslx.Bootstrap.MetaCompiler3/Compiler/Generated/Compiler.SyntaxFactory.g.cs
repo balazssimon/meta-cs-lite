@@ -771,10 +771,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             return this.MainBlock1(this.Token(CompilerSyntaxKind.KUsing), @using, this.Token(CompilerSyntaxKind.TSemicolon));
         }
 
-        public MainBlock2Syntax MainBlock2(LanguageDeclarationSyntax declarations)
+        public MainBlock2Syntax MainBlock2(LanguageDeclarationSyntax languageDeclaration)
         {
-            if (declarations is null) throw new __ArgumentNullException(nameof(declarations));
-            return (MainBlock2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.MainBlock2((InternalSyntax.LanguageDeclarationGreen)declarations.Green).CreateRed();
+            if (languageDeclaration is null) throw new __ArgumentNullException(nameof(languageDeclaration));
+            return (MainBlock2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.MainBlock2((InternalSyntax.LanguageDeclarationGreen)languageDeclaration.Green).CreateRed();
         }
 
         public LanguageDeclarationBlock1Syntax LanguageDeclarationBlock1(__SyntaxToken tColon, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseLanguages)

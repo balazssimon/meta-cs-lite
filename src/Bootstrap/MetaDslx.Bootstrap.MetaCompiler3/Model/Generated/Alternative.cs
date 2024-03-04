@@ -25,7 +25,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface Alternative : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Element> Elements { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Element> Elements { get; }
         string GreenConstructorArguments { get; }
         string GreenConstructorParameters { get; }
         string GreenName { get; }
@@ -38,8 +38,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         string RedToGreenOptionalArgumentList { get; }
         string RedUpdateArguments { get; }
         string RedUpdateParameters { get; }
-        __MetaType ReturnType { get; set; }
-        Expression ReturnValue { get; set; }
+        MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Expression ReturnValue { get; set; }
     
     }
 }

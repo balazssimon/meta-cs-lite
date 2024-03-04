@@ -25,11 +25,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface Rule : global::MetaDslx.Bootstrap.MetaCompiler3.Model.GrammarRule
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives { get; }
-        Alternative? BaseRule { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Bootstrap.MetaCompiler3.Model.Alternative> Alternatives { get; }
+        MetaDslx.Bootstrap.MetaCompiler3.Model.Alternative? BaseRule { get; set; }
         string GreenName { get; }
         string RedName { get; }
-        __MetaType ReturnType { get; set; }
+        MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
     
     }
 }

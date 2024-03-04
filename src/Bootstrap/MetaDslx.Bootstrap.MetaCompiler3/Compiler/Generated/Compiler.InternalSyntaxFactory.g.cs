@@ -1168,16 +1168,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal MainBlock2Green MainBlock2(LanguageDeclarationGreen declarations)
+        internal MainBlock2Green MainBlock2(LanguageDeclarationGreen languageDeclaration)
         {
             #if DEBUG
-                if (declarations is null) throw new __ArgumentNullException(nameof(declarations));
+                if (languageDeclaration is null) throw new __ArgumentNullException(nameof(languageDeclaration));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.MainBlock2, declarations, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.MainBlock2, languageDeclaration, out hash);
             if (cached != null) return (MainBlock2Green)cached;
         
-            var result = new MainBlock2Green(CompilerSyntaxKind.MainBlock2, declarations);
+            var result = new MainBlock2Green(CompilerSyntaxKind.MainBlock2, languageDeclaration);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

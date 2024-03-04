@@ -48,8 +48,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 );
         }
 
-        private global::MetaSymbol _rule;
-        private global::System.Collections.Immutable.ImmutableArray<global::MetaType> _referencedTypes;
+        private global::MetaDslx.CodeAnalysis.MetaSymbol _rule;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> _referencedTypes;
 
         public PReferenceSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -61,7 +61,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::MetaSymbol Rule
+        public global::MetaDslx.CodeAnalysis.MetaSymbol Rule
         {
             get
             {
@@ -71,7 +71,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<global::MetaType> ReferencedTypes
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> ReferencedTypes
         {
             get
             {
@@ -116,14 +116,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
 
-        protected virtual global::MetaSymbol Compute_Rule(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.CodeAnalysis.MetaSymbol Compute_Rule(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<global::MetaSymbol>(this, nameof(Rule), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.CodeAnalysis.MetaSymbol>(this, nameof(Rule), diagnostics, cancellationToken);
         }
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaType> Compute_ReferencedTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.CodeAnalysis.MetaType> Compute_ReferencedTypes(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<global::MetaType>(this, nameof(ReferencedTypes), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.CodeAnalysis.MetaType>(this, nameof(ReferencedTypes), diagnostics, cancellationToken);
         }
     }
 }

@@ -63,13 +63,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 );
         }
 
-        private global::ParserRule? _containingParserRuleSymbol;
-        private global::PBlock? _containingPBlockSymbol;
-        private global::System.Collections.Immutable.ImmutableArray<global::PElement> _elements;
-        private global::Expression? _returnValue;
-        private global::MetaType _returnType;
-        private global::MetaType _expectedType;
-        private global::System.Collections.Immutable.ImmutableArray<global::PElement> _allSimpleElements;
+        private global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ParserRuleSymbol? _containingParserRuleSymbol;
+        private global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PBlockSymbol? _containingPBlockSymbol;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol> _elements;
+        private global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol? _returnValue;
+        private global::MetaDslx.CodeAnalysis.MetaType _returnType;
+        private global::MetaDslx.CodeAnalysis.MetaType _expectedType;
+        private global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol> _allSimpleElements;
 
         public PAlternativeSymbol(__Symbol? container, __Compilation? compilation, __MergedDeclaration? declaration, __IModelObject? modelObject, __ISymbol? csharpSymbol, __ErrorSymbolInfo? errorInfo) 
             : base(container, compilation, declaration, modelObject, csharpSymbol, errorInfo)
@@ -81,7 +81,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::ParserRule? ContainingParserRuleSymbol
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ParserRuleSymbol? ContainingParserRuleSymbol
         {
             get
             {
@@ -91,7 +91,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::PBlock? ContainingPBlockSymbol
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PBlockSymbol? ContainingPBlockSymbol
         {
             get
             {
@@ -101,7 +101,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<global::PElement> Elements
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol> Elements
         {
             get
             {
@@ -111,7 +111,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__ModelPropertyAttribute]
         [__PhaseAttribute]
-        public global::Expression? ReturnValue
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol? ReturnValue
         {
             get
             {
@@ -121,7 +121,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaType ReturnType
+        public global::MetaDslx.CodeAnalysis.MetaType ReturnType
         {
             get
             {
@@ -131,7 +131,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::MetaType ExpectedType
+        public global::MetaDslx.CodeAnalysis.MetaType ExpectedType
         {
             get
             {
@@ -141,7 +141,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
         [__PhaseAttribute]
         [__DerivedAttribute]
-        public global::System.Collections.Immutable.ImmutableArray<global::PElement> AllSimpleElements
+        public global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol> AllSimpleElements
         {
             get
             {
@@ -251,24 +251,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
         }
 
 
-        protected abstract global::ParserRule? Compute_ContainingParserRuleSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ParserRuleSymbol? Compute_ContainingParserRuleSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::PBlock? Compute_ContainingPBlockSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PBlockSymbol? Compute_ContainingPBlockSymbol(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected virtual global::System.Collections.Immutable.ImmutableArray<global::PElement> Compute_Elements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol> Compute_Elements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<global::PElement>(this, nameof(Elements), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
         }
 
-        protected virtual global::Expression? Compute_ReturnValue(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
+        protected virtual global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol? Compute_ReturnValue(__DiagnosticBag diagnostics, __CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<global::Expression>(this, nameof(ReturnValue), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValue<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol>(this, nameof(ReturnValue), diagnostics, cancellationToken);
         }
 
-        protected abstract global::MetaType Compute_ReturnType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ReturnType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::MetaDslx.CodeAnalysis.MetaType Compute_ExpectedType(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
 
-        protected abstract global::System.Collections.Immutable.ImmutableArray<global::PElement> Compute_AllSimpleElements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
+        protected abstract global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol> Compute_AllSimpleElements(__DiagnosticBag diagnostics, __CancellationToken cancellationToken);
     }
 }
