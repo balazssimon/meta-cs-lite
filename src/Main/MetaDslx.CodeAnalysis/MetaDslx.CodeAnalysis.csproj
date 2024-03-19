@@ -48,9 +48,10 @@
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaSymbols\MetaDslx.Languages.MetaSymbols.csproj" PrivateAssets="all" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<!--ItemGroup>
 		<None Include="$(OutputPath)\netstandard2.0\tools\antlr-4.13.0-complete.jar" Pack="true" PackagePath="analyzers/dotnet/cs/tools" Visible="false" />
 		<None Include="$(USERPROFILE)\.nuget\packages\microsoft.bcl.asyncinterfaces\$(MicrosoftBclAsyncInterfacesVersion)\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(USERPROFILE)\.nuget\packages\autofac\$(AutofacVersion)\lib\netstandard2.0\Autofac.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
@@ -67,9 +68,10 @@
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Parsers.Antlr.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaSymbols.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-	</ItemGroup>
+	</ItemGroup-->
 
 	<ItemGroup>
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.NetStandard20Extensions.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
@@ -78,8 +80,8 @@
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Parsers.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaSymbols.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
-		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -88,8 +90,8 @@
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Parsers.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaSymbols.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
-		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>

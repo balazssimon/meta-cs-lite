@@ -63,6 +63,11 @@
     <Compile Include="Languages\MetaModel\Classification\MetaModelClassificationTypes.cs" />
     <Compile Include="Languages\MetaModel\Classification\MetaModelClassifier.cs" />
     <Compile Include="Languages\MetaModel\MetaModelDefinition.cs" />
+    <Compile Include="Languages\MetaSymbols\Classification\MetaSymbolsClassificationDefinitions.cs" />
+    <Compile Include="Languages\MetaSymbols\Classification\MetaSymbolsClassificationProvider.cs" />
+    <Compile Include="Languages\MetaSymbols\Classification\MetaSymbolsClassificationTypes.cs" />
+    <Compile Include="Languages\MetaSymbols\Classification\MetaSymbolsClassifier.cs" />
+    <Compile Include="Languages\MetaSymbols\MetaSymbolsDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MetaDslx.VisualStudioPackage.cs" />
     <Compile Include="Utilities\Extensions.cs" />
@@ -119,6 +124,10 @@
     <ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj">
       <Project>{441e9f61-fcd4-44da-a9f4-7124e1214c55}</Project>
       <Name>MetaDslx.Languages.MetaModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaDslx.Languages.MetaSymbols\MetaDslx.Languages.MetaSymbols.csproj">
+      <Project>{a5ef4aed-da48-4d33-bc17-d302b3e46de3}</Project>
+      <Name>MetaDslx.Languages.MetaSymbols</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
