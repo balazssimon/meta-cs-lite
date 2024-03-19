@@ -67,6 +67,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KDerived:
                 case MetaSyntaxKind.KUnion:
                 case MetaSyntaxKind.KReadonly:
+                case MetaSyntaxKind.KLazy:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
@@ -149,6 +150,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KDerived:
                 case MetaSyntaxKind.KUnion:
                 case MetaSyntaxKind.KReadonly:
+                case MetaSyntaxKind.KLazy:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
@@ -223,6 +225,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KDerived:
                 case MetaSyntaxKind.KUnion:
                 case MetaSyntaxKind.KReadonly:
+                case MetaSyntaxKind.KLazy:
                 case MetaSyntaxKind.KOpposite:
                 case MetaSyntaxKind.KSubsets:
                 case MetaSyntaxKind.KRedefines:
@@ -329,6 +332,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KUnion;
                 case "readonly": 
                     return MetaSyntaxKind.KReadonly;
+                case "lazy": 
+                    return MetaSyntaxKind.KLazy;
                 case "opposite": 
                     return MetaSyntaxKind.KOpposite;
                 case "subsets": 
@@ -466,6 +471,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "KUnion";
                 case MetaSyntaxKind.KReadonly: 
                     return "KReadonly";
+                case MetaSyntaxKind.KLazy: 
+                    return "KLazy";
                 case MetaSyntaxKind.KOpposite: 
                     return "KOpposite";
                 case MetaSyntaxKind.KSubsets: 
@@ -584,6 +591,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "MetaPropertyBlock1Alt3";
                 case MetaSyntaxKind.MetaPropertyBlock1Alt4: 
                     return "MetaPropertyBlock1Alt4";
+                case MetaSyntaxKind.MetaPropertyBlock1Alt5: 
+                    return "MetaPropertyBlock1Alt5";
                 case MetaSyntaxKind.MetaPropertyBlock2Alt1: 
                     return "MetaPropertyBlock2Alt1";
                 case MetaSyntaxKind.MetaPropertyBlock2Alt2: 
@@ -710,6 +719,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "union";
                 case MetaSyntaxKind.KReadonly: 
                     return "readonly";
+                case MetaSyntaxKind.KLazy: 
+                    return "lazy";
                 case MetaSyntaxKind.KOpposite: 
                     return "opposite";
                 case MetaSyntaxKind.KSubsets: 
@@ -791,6 +802,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KDerived: 
                 case MetaSyntaxKind.KUnion: 
                 case MetaSyntaxKind.KReadonly: 
+                case MetaSyntaxKind.KLazy: 
                 case MetaSyntaxKind.KOpposite: 
                 case MetaSyntaxKind.KSubsets: 
                 case MetaSyntaxKind.KRedefines: 
@@ -839,6 +851,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             yield return MetaSyntaxKind.KDerived;
             yield return MetaSyntaxKind.KUnion;
             yield return MetaSyntaxKind.KReadonly;
+            yield return MetaSyntaxKind.KLazy;
             yield return MetaSyntaxKind.KOpposite;
             yield return MetaSyntaxKind.KSubsets;
             yield return MetaSyntaxKind.KRedefines;
@@ -918,6 +931,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KUnion;
                 case "readonly": 
                     return MetaSyntaxKind.KReadonly;
+                case "lazy": 
+                    return MetaSyntaxKind.KLazy;
                 case "opposite": 
                     return MetaSyntaxKind.KOpposite;
                 case "subsets": 

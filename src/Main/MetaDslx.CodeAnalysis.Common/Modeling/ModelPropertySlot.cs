@@ -36,6 +36,8 @@ namespace MetaDslx.Modeling
         public bool IsMultiMap => _flags.HasFlag(ModelPropertyFlags.MultiMap);
         public bool IsNullable => _flags.HasFlag(ModelPropertyFlags.NullableType);
         public bool IsReadOnly => _flags.HasFlag(ModelPropertyFlags.ReadOnly);
+        public bool IsLazy => _flags.HasFlag(ModelPropertyFlags.Lazy);
+        public bool IsDerived => _flags.HasFlag(ModelPropertyFlags.Derived);
         public bool IsUnordered => _flags.HasFlag(ModelPropertyFlags.Unordered);
         public bool IsNonUnique => _flags.HasFlag(ModelPropertyFlags.NonUnique);
         public bool IsUntracked => _flags.HasFlag(ModelPropertyFlags.Untracked);

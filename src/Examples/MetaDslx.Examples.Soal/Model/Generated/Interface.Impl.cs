@@ -26,21 +26,43 @@ namespace MetaDslx.Examples.Soal.Model.__Impl
         private Interface_Impl(string? id)
             : base(id)
         {
+            Soal.__CustomImpl.Element(this);
+            Soal.__CustomImpl.NamedElement(this);
+            Soal.__CustomImpl.Declaration(this);
             Soal.__CustomImpl.Interface(this);
         }
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public int Age
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Examples.Soal.Model.Operation> Operations
         {
-            get => MGet<int>(Soal.Interface_Age);
-            set => MSet<int>(Soal.Interface_Age, value);
+            get => MGetCollection<Operation>(Soal.Interface_Operations);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Examples.Soal.Model.Resource> Resources
+        {
+            get => MGetCollection<Resource>(Soal.Interface_Resources);
+        }
+    
+        public MetaDslx.Examples.Soal.Model.Documentation Documentation
+        {
+            get => Soal.__CustomImpl.NamedElement_Documentation(this);
+        }
+    
+        public string HoverDocumentation
+        {
+            get => Soal.__CustomImpl.NamedElement_HoverDocumentation(this);
         }
     
         public string Name
         {
-            get => MGet<string>(Soal.Interface_Name);
-            set => MSet<string>(Soal.Interface_Name, value);
+            get => MGet<string>(Soal.NamedElement_Name);
+            set => MSet<string>(Soal.NamedElement_Name, value);
+        }
+    
+        public string UniqueName
+        {
+            get => Soal.__CustomImpl.NamedElement_UniqueName(this);
         }
     
     
@@ -63,18 +85,26 @@ namespace MetaDslx.Examples.Soal.Model.__Impl
     
             private __Info() 
             {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Age, Soal.Interface_Name);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Age, Soal.Interface_Name);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Age, Soal.Interface_Name);
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Soal.DeclarationInfo);
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Soal.DeclarationInfo, Soal.NamedElementInfo, Soal.ElementInfo);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Operations, Soal.Interface_Resources);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Operations, Soal.Interface_Resources, Soal.NamedElement_Documentation, Soal.NamedElement_HoverDocumentation, Soal.NamedElement_Name, Soal.NamedElement_UniqueName);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Operations, Soal.Interface_Resources, Soal.NamedElement_Documentation, Soal.NamedElement_HoverDocumentation, Soal.NamedElement_Name, Soal.NamedElement_UniqueName);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("Age", Soal.Interface_Age);
-                publicPropertiesByName.Add("Name", Soal.Interface_Name);
+                publicPropertiesByName.Add("Operations", Soal.Interface_Operations);
+                publicPropertiesByName.Add("Resources", Soal.Interface_Resources);
+                publicPropertiesByName.Add("Documentation", Soal.NamedElement_Documentation);
+                publicPropertiesByName.Add("HoverDocumentation", Soal.NamedElement_HoverDocumentation);
+                publicPropertiesByName.Add("Name", Soal.NamedElement_Name);
+                publicPropertiesByName.Add("UniqueName", Soal.NamedElement_UniqueName);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Soal.Interface_Age, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.Interface_Age, __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Age), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Soal.Interface_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.Interface_Name, __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Name), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Soal.Interface_Operations, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.Interface_Operations, __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Operations), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Soal.Interface_Resources, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.Interface_Resources, __ImmutableArray.Create<__ModelProperty>(Soal.Interface_Resources), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Soal.NamedElement_Documentation, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.NamedElement_Documentation, __ImmutableArray.Create<__ModelProperty>(Soal.NamedElement_Documentation), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Lazy), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Soal.NamedElement_HoverDocumentation, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.NamedElement_HoverDocumentation, __ImmutableArray.Create<__ModelProperty>(Soal.NamedElement_HoverDocumentation), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Soal.NamedElement_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.NamedElement_Name, __ImmutableArray.Create<__ModelProperty>(Soal.NamedElement_Name), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Soal.NamedElement_UniqueName, new __ModelPropertyInfo(new __ModelPropertySlot(Soal.NamedElement_UniqueName, __ImmutableArray.Create<__ModelProperty>(Soal.NamedElement_UniqueName), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Lazy), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 _modelPropertyInfos = modelPropertyInfos.ToImmutable();
     
                 _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
@@ -87,8 +117,8 @@ namespace MetaDslx.Examples.Soal.Model.__Impl
             public override __MetaModel MetaModel => Soal.MInstance;
             public override __MetaType MetaType => typeof(Interface);
     
-            public override __MetaType SymbolType => default;
-            public override __ModelProperty? NameProperty => null;
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+            public override __ModelProperty? NameProperty => Soal.NamedElement_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;

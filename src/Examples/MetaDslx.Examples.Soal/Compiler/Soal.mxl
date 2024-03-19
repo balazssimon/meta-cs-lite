@@ -1,0 +1,61 @@
+namespace MetaDslx.Examples.Soal.Compiler;
+
+using System;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Annotations;
+using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Examples.Soal.Model;
+
+language Soal : Common;
+
+Main returns NamespaceSymbol:
+	'namespace' [Name]Qualifier ';'
+	Using*
+	[Scope](Declaration*)
+	eof;
+
+Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';
+
+Declaration:
+    EnumType | StructType | Interface | Service;
+
+EnumType: 'enum' Name '{' (literals+=EnumLiteral (',' literals+=EnumLiteral)*)? '}';
+EnumLiteral: Name;
+
+StructType: 'struct' Name (':' baseType=#StructType)? '{' fields+=Property* '}';
+Property: @type=TypeReference Name ';';
+
+Interface: 'interface' Name '{' resources+=Resource* operations+=Operation* '}';
+Resource: isReadOnly?='readonly'? 'resource' entity=#StructType ('throws' exceptions+=#StructType (',' exceptions+=#StructType)*)? ';';
+Operation: isAsync?='async'? responseParameters=OutputParameterList Name requestParameters=InputParameterList ('throws' exceptions+=#StructType (',' exceptions+=#StructType)*)? ';';
+InputParameterList returns ParameterList: '(' (parameters+=Parameter (',' parameters+=Parameter)*)? ')';
+OutputParameterList returns ParameterList
+    : 'void' 
+    | parameters+=SingleReturnParameter 
+    | '(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+    ;
+Parameter: @type=TypeReference Name;
+SingleReturnParameter returns Parameter: @type=TypeReference;
+
+Service: 'service' Name ':' interface=#Interface '{' 'binding' binding=BindingKind ';' '}';
+BindingKind: 'REST' => Rest | 'SOAP' => Soap;
+
+TypeReference: SimpleType isNullable?='?'? isArray?=('[' ']')?;
+
+SimpleType returns Type
+    : 'object' => Soal.ObjectType
+    | 'binary' => Soal.BinaryType
+    | 'bool' => Soal.BoolType
+    | 'string' => Soal.StringType
+    | 'int' => Soal.IntType
+    | 'long' => Soal.LongType
+    | 'float' => Soal.FloatType
+    | 'double' => Soal.DoubleType
+    | 'date' => Soal.DateType
+    | 'time' => Soal.TimeType
+    | 'datetime' => Soal.DateTimeType
+    | 'duration' => Soal.DurationType
+    | #Type
+    ;

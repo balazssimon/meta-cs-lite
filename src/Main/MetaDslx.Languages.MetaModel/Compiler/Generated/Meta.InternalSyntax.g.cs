@@ -5210,6 +5210,91 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return this;
         }
     }
+    internal class MetaPropertyBlock1Alt5Green : MetaPropertyBlock1Green
+    {
+        internal static new readonly MetaPropertyBlock1Alt5Green __Missing = new MetaPropertyBlock1Alt5Green();
+        private __InternalSyntaxToken _isLazy;
+    
+        public MetaPropertyBlock1Alt5Green(MetaSyntaxKind kind, __InternalSyntaxToken isLazy)
+            : base(kind, null, null)
+        {
+            SlotCount = 1;
+            if (isLazy != null)
+            {
+                AdjustFlagsAndWidth(isLazy);
+                _isLazy = isLazy;
+            }
+        }
+    
+        public MetaPropertyBlock1Alt5Green(MetaSyntaxKind kind, __InternalSyntaxToken isLazy, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 1;
+            if (isLazy != null)
+            {
+                AdjustFlagsAndWidth(isLazy);
+                _isLazy = isLazy;
+            }
+        }
+    
+        private MetaPropertyBlock1Alt5Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt5, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken IsLazy { get { return _isLazy; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaPropertyBlock1Alt5Syntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _isLazy;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaPropertyBlock1Alt5Green(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaPropertyBlock1Alt5Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new MetaPropertyBlock1Alt5Green(this.Kind, _isLazy, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new MetaPropertyBlock1Alt5Green(this.Kind, _isLazy, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new MetaPropertyBlock1Alt5Green(this.Kind, _isLazy, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public MetaPropertyBlock1Alt5Green Update(__InternalSyntaxToken isLazy)
+        {
+            if (_isLazy != isLazy)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt5(isLazy);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (MetaPropertyBlock1Alt5Green)newNode;
+            }
+            return this;
+        }
+    }
     internal abstract class MetaPropertyBlock2Green : GreenSyntaxNode
     {
         internal static readonly MetaPropertyBlock2Green __Missing = MetaPropertyBlock2Alt1Green.__Missing;

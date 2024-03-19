@@ -18,8 +18,10 @@
     <PackageReference Include="MetaDslx.CodeAnalysis" Version="0.201.0" />
   </ItemGroup>
 
+	<!--
   <Target Name="MetaDslx" BeforeTargets="BeforeBuild" Inputs="**\*.mxm;**\*.mxl;**\*.mxs;**\*.mxg" Outputs="**\*.cs">
     <Exec Command="..\..\Main\MetaDslx.BuildTools\bin\Release\net8.0\MetaDslx.BuildTools.exe" />
   </Target>
+	-->
 
 </Project>

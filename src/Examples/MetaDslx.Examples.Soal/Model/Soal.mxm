@@ -1,9 +1,201 @@
 namespace MetaDslx.Examples.Soal.Model;
 
+using MetaDslx.CodeAnalysis.Symbols;
+
 metamodel Soal;
 
-class Interface
+const BuiltInType ErrorType;
+const BuiltInType AnyType;
+const BuiltInType VoidType;
+const BuiltInType ObjectType;
+const BuiltInType BinaryType;
+const BuiltInType BoolType;
+const BuiltInType StringType;
+const BuiltInType IntType;
+const BuiltInType LongType;
+const BuiltInType FloatType;
+const BuiltInType DoubleType;
+const BuiltInType DateType;
+const BuiltInType TimeType;
+const BuiltInType DateTimeType;
+const BuiltInType DurationType;
+
+enum BuiltInTypeKind
 {
-	string Name;
-	int Age;
+    Error,
+    Any,
+    Void,
+    Object,
+    Binary,
+    Bool,
+    String,
+    Int,
+    Long,
+    Float,
+    Double,
+    Date,
+    Time,
+    DateTime,
+    Duration
 }
+
+enum DocumentationTagKind
+{
+    Unknown,
+    Version,
+    Alpha,
+    Beta,
+    Deprecated,
+    Test,
+    Internal,
+    Summary,
+    DefaultValue,
+    Param,
+    Returns,
+    Throws,
+    Label,
+    Example,
+    Remarks
+}
+
+class Documentation
+{
+    contains DocumentationTag[] Tags;
+}
+
+class DocumentationTag
+{
+    DocumentationTagKind Kind;
+    string Name;
+    string[] Lines;
+    lazy string Html;
+}
+
+abstract class Element
+{
+}
+
+abstract class NamedElement $Symbol : Element
+{
+    string $Name;
+    lazy string UniqueName;
+    lazy Documentation Documentation;
+    derived string HoverDocumentation;
+}
+
+abstract class $Type
+{
+}
+
+abstract class TypedElement : Element
+{
+    TypeReference Type;
+}
+
+abstract class Declaration : NamedElement
+{
+}
+
+abstract class NamedType $Type : Type, Declaration
+{
+}
+
+class BuiltInType : NamedType
+{
+    BuiltInTypeKind Kind;
+    derived string Name;
+}
+
+class TypeReference : Type
+{
+    bool IsNullable;
+    bool IsArray;
+    Type Type;
+}
+
+class EnumType : NamedType
+{
+    contains EnumLiteral[] Literals opposite EnumLiteral.Enum;
+}
+
+class EnumLiteral : NamedElement
+{
+    EnumType Enum opposite EnumType.Literals;
+}
+
+class StructType : NamedType
+{
+    StructType BaseType;
+    contains Property[] Fields;
+}
+
+class Variable : Declaration, TypedElement
+{
+}
+
+class Property : Variable
+{
+}
+
+class Parameter : Variable
+{
+}
+
+class Interface : Declaration
+{
+    contains Resource[] Resources;
+    contains Operation[] Operations;
+}
+
+class Resource : Declaration
+{
+    bool IsReadOnly;
+    StructType Entity;
+    StructType[] Exceptions;
+    derived string Name;
+}
+
+enum OperationKind
+{
+    Rpc,
+    GetAll,
+    Get,
+    Insert,
+    Update,
+    Delete
+}
+
+class Operation : Declaration
+{
+    OperationKind Kind;
+    bool IsAsync;
+    contains ParameterList RequestParameters;
+    contains ParameterList ResponseParameters;
+    Resource Resource;
+    StructType[] Exceptions;
+    derived bool HasRequestParameters;
+    derived bool HasResponseParameters;
+    derived bool HasManyRequestParameters;
+    derived bool HasManyResponseParameters;
+    derived bool HasSingleResponseParameter;
+    derived TypeReference SingleReturnType;
+}
+
+class ParameterList
+{
+    contains Parameter[] Parameters;
+}
+
+enum BindingKind
+{
+    Soap,
+    Rest
+}
+
+class Service : Declaration
+{
+    Interface Interface;
+    BindingKind Binding;
+}
+
+

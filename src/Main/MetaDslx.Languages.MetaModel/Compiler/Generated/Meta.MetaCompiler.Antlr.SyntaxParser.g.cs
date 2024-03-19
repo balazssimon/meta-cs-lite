@@ -632,6 +632,13 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 return _factory.MetaPropertyBlock1Alt4(isReadOnly);
             }
             
+            public override GreenNode? VisitPr_MetaPropertyBlock1Alt5(MetaParser.Pr_MetaPropertyBlock1Alt5Context? context)
+            {
+                if (context == null) return MetaPropertyBlock1Alt5Green.__Missing;
+                var isLazy = (InternalSyntaxToken?)this.VisitTerminal(context.E_isLazy, MetaSyntaxKind.KLazy);
+                return _factory.MetaPropertyBlock1Alt5(isLazy);
+            }
+            
             public override GreenNode? VisitPr_MetaPropertyBlock2Alt1(MetaParser.Pr_MetaPropertyBlock2Alt1Context? context)
             {
                 if (context == null) return MetaPropertyBlock2Alt1Green.__Missing;

@@ -42,6 +42,7 @@ LR_KContains: 'contains';
 LR_KDerived: 'derived';
 LR_KUnion: 'union';
 LR_KReadonly: 'readonly';
+LR_KLazy: 'lazy';
 LR_KOpposite: 'opposite';
 LR_KSubsets: 'subsets';
 LR_KRedefines: 'redefines';

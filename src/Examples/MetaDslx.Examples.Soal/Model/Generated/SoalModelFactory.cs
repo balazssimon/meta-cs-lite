@@ -35,9 +35,79 @@ namespace MetaDslx.Examples.Soal.Model
         {
         }
     
+        public BuiltInType BuiltInType(string? id = null)
+        {
+            return (BuiltInType)Soal.BuiltInTypeInfo.Create(base.Model, id)!;
+        }
+    
+        public Documentation Documentation(string? id = null)
+        {
+            return (Documentation)Soal.DocumentationInfo.Create(base.Model, id)!;
+        }
+    
+        public DocumentationTag DocumentationTag(string? id = null)
+        {
+            return (DocumentationTag)Soal.DocumentationTagInfo.Create(base.Model, id)!;
+        }
+    
+        public EnumLiteral EnumLiteral(string? id = null)
+        {
+            return (EnumLiteral)Soal.EnumLiteralInfo.Create(base.Model, id)!;
+        }
+    
+        public EnumType EnumType(string? id = null)
+        {
+            return (EnumType)Soal.EnumTypeInfo.Create(base.Model, id)!;
+        }
+    
         public Interface Interface(string? id = null)
         {
             return (Interface)Soal.InterfaceInfo.Create(base.Model, id)!;
+        }
+    
+        public Operation Operation(string? id = null)
+        {
+            return (Operation)Soal.OperationInfo.Create(base.Model, id)!;
+        }
+    
+        public Parameter Parameter(string? id = null)
+        {
+            return (Parameter)Soal.ParameterInfo.Create(base.Model, id)!;
+        }
+    
+        public ParameterList ParameterList(string? id = null)
+        {
+            return (ParameterList)Soal.ParameterListInfo.Create(base.Model, id)!;
+        }
+    
+        public Property Property(string? id = null)
+        {
+            return (Property)Soal.PropertyInfo.Create(base.Model, id)!;
+        }
+    
+        public Resource Resource(string? id = null)
+        {
+            return (Resource)Soal.ResourceInfo.Create(base.Model, id)!;
+        }
+    
+        public Service Service(string? id = null)
+        {
+            return (Service)Soal.ServiceInfo.Create(base.Model, id)!;
+        }
+    
+        public StructType StructType(string? id = null)
+        {
+            return (StructType)Soal.StructTypeInfo.Create(base.Model, id)!;
+        }
+    
+        public TypeReference TypeReference(string? id = null)
+        {
+            return (TypeReference)Soal.TypeReferenceInfo.Create(base.Model, id)!;
+        }
+    
+        public Variable Variable(string? id = null)
+        {
+            return (Variable)Soal.VariableInfo.Create(base.Model, id)!;
         }
     
     }
@@ -49,9 +119,79 @@ namespace MetaDslx.Examples.Soal.Model
         {
         }
     
+        public BuiltInType BuiltInType(__Model model, string? id = null)
+        {
+            return (BuiltInType)Soal.BuiltInTypeInfo.Create(model, id)!;
+        }
+    
+        public Documentation Documentation(__Model model, string? id = null)
+        {
+            return (Documentation)Soal.DocumentationInfo.Create(model, id)!;
+        }
+    
+        public DocumentationTag DocumentationTag(__Model model, string? id = null)
+        {
+            return (DocumentationTag)Soal.DocumentationTagInfo.Create(model, id)!;
+        }
+    
+        public EnumLiteral EnumLiteral(__Model model, string? id = null)
+        {
+            return (EnumLiteral)Soal.EnumLiteralInfo.Create(model, id)!;
+        }
+    
+        public EnumType EnumType(__Model model, string? id = null)
+        {
+            return (EnumType)Soal.EnumTypeInfo.Create(model, id)!;
+        }
+    
         public Interface Interface(__Model model, string? id = null)
         {
             return (Interface)Soal.InterfaceInfo.Create(model, id)!;
+        }
+    
+        public Operation Operation(__Model model, string? id = null)
+        {
+            return (Operation)Soal.OperationInfo.Create(model, id)!;
+        }
+    
+        public Parameter Parameter(__Model model, string? id = null)
+        {
+            return (Parameter)Soal.ParameterInfo.Create(model, id)!;
+        }
+    
+        public ParameterList ParameterList(__Model model, string? id = null)
+        {
+            return (ParameterList)Soal.ParameterListInfo.Create(model, id)!;
+        }
+    
+        public Property Property(__Model model, string? id = null)
+        {
+            return (Property)Soal.PropertyInfo.Create(model, id)!;
+        }
+    
+        public Resource Resource(__Model model, string? id = null)
+        {
+            return (Resource)Soal.ResourceInfo.Create(model, id)!;
+        }
+    
+        public Service Service(__Model model, string? id = null)
+        {
+            return (Service)Soal.ServiceInfo.Create(model, id)!;
+        }
+    
+        public StructType StructType(__Model model, string? id = null)
+        {
+            return (StructType)Soal.StructTypeInfo.Create(model, id)!;
+        }
+    
+        public TypeReference TypeReference(__Model model, string? id = null)
+        {
+            return (TypeReference)Soal.TypeReferenceInfo.Create(model, id)!;
+        }
+    
+        public Variable Variable(__Model model, string? id = null)
+        {
+            return (Variable)Soal.VariableInfo.Create(model, id)!;
         }
     
     }

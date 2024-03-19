@@ -28,6 +28,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         object? DefaultValue { get; set; }
         bool IsContainment { get; set; }
         bool IsDerived { get; set; }
+        bool IsLazy { get; set; }
         bool IsReadOnly { get; set; }
         bool IsUnion { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Languages.MetaModel.Model.MetaProperty> OppositeProperties { get; }

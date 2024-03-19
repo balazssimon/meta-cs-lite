@@ -34,6 +34,7 @@ namespace MetaDslx.Modeling
         public MetaType Type => _type;
         public object? DefaultValue => _defaultValue;
         public string? SymbolProperty => _symbolProperty;
+        public bool IsLazy => _flags.HasFlag(ModelPropertyFlags.Lazy);
         public bool IsDerived => _flags.HasFlag(ModelPropertyFlags.Derived);
         public bool IsDerivedUnion => _flags.HasFlag(ModelPropertyFlags.DerivedUnion);
         public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);

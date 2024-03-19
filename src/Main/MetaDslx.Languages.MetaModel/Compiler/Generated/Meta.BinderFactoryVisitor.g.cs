@@ -1139,6 +1139,20 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             }
         }
 
+        public virtual void VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node)
+        {
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsLazy", values: ImmutableArray.Create<object?>(true));
+            this.Begin(__annot0, node.IsLazy);
+            try
+            {
+                //this.VisitToken(node.IsLazy);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
+        }
+
         public virtual void VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)
         {
             var __annot2 = new MetaDslx.CodeAnalysis.Binding.NameBinder();

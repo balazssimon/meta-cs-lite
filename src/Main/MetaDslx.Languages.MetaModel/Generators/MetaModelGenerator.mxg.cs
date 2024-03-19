@@ -6483,32 +6483,32 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __cb.Write(" ");
                     #line hidden
                 }
-                #line (390,61)-(390,182) 28 "MetaModelGenerator.mxg"
-                __cb.Write(prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
+                #line (390,61)-(390,216) 28 "MetaModelGenerator.mxg"
+                __cb.Write(prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
                 #line hidden
-                #line (390,183)-(390,184) 29 "MetaModelGenerator.mxg"
+                #line (390,217)-(390,218) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (390,185)-(390,194) 28 "MetaModelGenerator.mxg"
+                #line (390,219)-(390,228) 28 "MetaModelGenerator.mxg"
                 __cb.Write(prop.Name);
                 #line hidden
-                #line (390,195)-(390,196) 29 "MetaModelGenerator.mxg"
+                #line (390,229)-(390,230) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (390,196)-(390,197) 29 "MetaModelGenerator.mxg"
+                #line (390,230)-(390,231) 29 "MetaModelGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
-                #line (390,197)-(390,198) 29 "MetaModelGenerator.mxg"
+                #line (390,231)-(390,232) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (390,198)-(390,202) 29 "MetaModelGenerator.mxg"
+                #line (390,232)-(390,236) 29 "MetaModelGenerator.mxg"
                 __cb.Write("get;");
                 #line hidden
-                #line (390,202)-(390,203) 29 "MetaModelGenerator.mxg"
+                #line (390,236)-(390,237) 29 "MetaModelGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
                 var __first46 = true;
-                #line (390,204)-(390,224) 17 "MetaModelGenerator.mxg"
+                #line (390,238)-(390,258) 17 "MetaModelGenerator.mxg"
                 if (HasSetter(prop))
                 #line hidden
                 
@@ -6517,14 +6517,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     {
                         __first46 = false;
                     }
-                    #line (390,225)-(390,229) 33 "MetaModelGenerator.mxg"
+                    #line (390,259)-(390,263) 33 "MetaModelGenerator.mxg"
                     __cb.Write("set;");
                     #line hidden
-                    #line (390,229)-(390,230) 33 "MetaModelGenerator.mxg"
+                    #line (390,263)-(390,264) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
                 }
-                #line (390,238)-(390,239) 29 "MetaModelGenerator.mxg"
+                #line (390,272)-(390,273) 29 "MetaModelGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.AppendLine();
@@ -6872,13 +6872,13 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     #line (424,19)-(424,20) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (424,21)-(424,142) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
+                    #line (424,21)-(424,176) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
                     #line hidden
-                    #line (424,143)-(424,144) 33 "MetaModelGenerator.mxg"
+                    #line (424,177)-(424,178) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (424,145)-(424,154) 32 "MetaModelGenerator.mxg"
+                    #line (424,179)-(424,188) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
                     __cb.AppendLine();
@@ -6906,19 +6906,19 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __cb.AppendLine();
                     __cb.Pop();
                     __cb.Push("    ");
-                    #line (427,14)-(427,135) 32 "MetaModelGenerator.mxg"
-                    __cb.Write(prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
+                    #line (427,14)-(427,169) 32 "MetaModelGenerator.mxg"
+                    __cb.Write(prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type));
                     #line hidden
-                    #line (427,136)-(427,137) 33 "MetaModelGenerator.mxg"
+                    #line (427,170)-(427,171) 33 "MetaModelGenerator.mxg"
                     __cb.Write(" ");
                     #line hidden
-                    #line (427,138)-(427,181) 32 "MetaModelGenerator.mxg"
+                    #line (427,172)-(427,215) 32 "MetaModelGenerator.mxg"
                     __cb.Write(ToCSharp(prop.DeclaringType.UnderlyingType));
                     #line hidden
-                    #line (427,182)-(427,183) 33 "MetaModelGenerator.mxg"
+                    #line (427,216)-(427,217) 33 "MetaModelGenerator.mxg"
                     __cb.Write(".");
                     #line hidden
-                    #line (427,184)-(427,193) 32 "MetaModelGenerator.mxg"
+                    #line (427,218)-(427,227) 32 "MetaModelGenerator.mxg"
                     __cb.Write(prop.Name);
                     #line hidden
                     __cb.AppendLine();
@@ -6932,8 +6932,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 __cb.AppendLine();
                 __cb.Pop();
                 var __first54 = true;
-                #line (430,14)-(430,52) 17 "MetaModelGenerator.mxg"
-                if (prop.UnderlyingProperty.IsDerived)
+                #line (430,14)-(430,86) 17 "MetaModelGenerator.mxg"
+                if (prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy)
                 #line hidden
                 
                 {
@@ -9495,8 +9495,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first74 = false;
                 }
                 var __first75 = true;
-                #line (546,10)-(546,70) 17 "MetaModelGenerator.mxg"
-                foreach (var prop in cls.Properties.Where(p => p.IsDerived))
+                #line (546,10)-(546,87) 17 "MetaModelGenerator.mxg"
+                foreach (var prop in cls.Properties.Where(p => p.IsDerived || p.IsLazy))
                 #line hidden
                 
                 {
@@ -9892,8 +9892,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
                     __first80 = false;
                 }
                 var __first81 = true;
-                #line (580,10)-(580,70) 17 "MetaModelGenerator.mxg"
-                foreach (var prop in cls.Properties.Where(p => p.IsDerived))
+                #line (580,10)-(580,81) 17 "MetaModelGenerator.mxg"
+                foreach (var prop in cls.Properties.Where(p => p.IsDerived | p.IsLazy))
                 #line hidden
                 
                 {

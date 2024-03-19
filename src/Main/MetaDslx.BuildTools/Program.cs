@@ -220,7 +220,29 @@ namespace MetaDslx.BuildTools
                     SyntaxTree? mxTree;
                     if (extension == ".mxs") mxTree = SymbolSyntaxTree.ParseText(mxCode, path: filePath);
                     else if (extension == ".mxm") mxTree = MetaSyntaxTree.ParseText(mxCode, path: filePath);
-                    else if (extension == ".mxl") mxTree = CompilerSyntaxTree.ParseText(mxCode, path: filePath);
+                    else if (extension == ".mxl")
+                    {
+                        var mxlCode = mxCode;
+                        var inheritsFromCommon = false;
+                        using (var reader = new StreamReader(filePath))
+                        {
+                            while (!reader.EndOfStream)
+                            {
+                                var line = await reader.ReadLineAsync();
+                                if (line == null) break;
+                                if (line.Contains("language") && line.Contains(":") && (line.Contains("Common") || line.Contains("CommonLanguage")))
+                                {
+                                    inheritsFromCommon = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (inheritsFromCommon)
+                        {
+                            mxlCode += CommonLanguage.Rules;
+                        }
+                        mxTree = CompilerSyntaxTree.ParseText(mxlCode, path: filePath);
+                    }
                     else mxTree = null;
                     if (mxTree is not null) mxTrees.Add(mxTree);
                 }
@@ -238,7 +260,7 @@ namespace MetaDslx.BuildTools
                 mxCompiler.Compile();
                 var diagnostics = mxCompiler.GetDiagnostics();
                 var mxDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
-                foreach (var diag in mxDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Error))
+                foreach (var diag in mxDiagnostics.Where(diag => diag.Descriptor != CommonErrorCode.WRN_SameFullNameThisAggAgg))
                 {
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }

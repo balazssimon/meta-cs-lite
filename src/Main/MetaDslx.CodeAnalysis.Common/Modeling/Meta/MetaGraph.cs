@@ -86,6 +86,7 @@ namespace MetaDslx.Modeling.Meta
                         declaredProperties.Add(prop);
                         ComputePropertyType(prop, out var type, out var flags, out var keyType, out var keyFlags);
                         var symbolProperty = prop.SymbolProperty;
+                        if (flags.HasFlag(ModelPropertyFlags.Lazy)) flags |= ModelPropertyFlags.ReadOnly;
                         if (flags.HasFlag(ModelPropertyFlags.Derived)) flags |= ModelPropertyFlags.ReadOnly;
                         if (flags.HasFlag(ModelPropertyFlags.DerivedUnion)) flags |= ModelPropertyFlags.ReadOnly;
                         if (symbolProperty == "Name") flags |= ModelPropertyFlags.Name;
@@ -518,6 +519,7 @@ namespace MetaDslx.Modeling.Meta
                         flag == ModelPropertyFlags.Map ||
                         flag == ModelPropertyFlags.MultiMap ||
                         flag == ModelPropertyFlags.ReadOnly ||
+                        flag == ModelPropertyFlags.Lazy ||
                         flag == ModelPropertyFlags.Derived ||
                         flag == ModelPropertyFlags.DerivedUnion)
                     {

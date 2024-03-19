@@ -672,6 +672,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.MetaPropertyBlock1Alt4(this.Token(MetaSyntaxKind.KReadonly));
         }
 
+        public MetaPropertyBlock1Alt5Syntax MetaPropertyBlock1Alt5(__SyntaxToken isLazy)
+        {
+            if (isLazy.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(isLazy));
+            if (isLazy.RawKind != (int)MetaSyntaxKind.KLazy) throw new __ArgumentException(nameof(isLazy));
+            return (MetaPropertyBlock1Alt5Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock1Alt5((__InternalSyntaxToken)isLazy.Node).CreateRed();
+        }
+        
+        public MetaPropertyBlock1Alt5Syntax MetaPropertyBlock1Alt5()
+        {
+            return this.MetaPropertyBlock1Alt5(this.Token(MetaSyntaxKind.KLazy));
+        }
+
         public MetaPropertyBlock2Alt1Syntax MetaPropertyBlock2Alt1(IdentifierSyntax identifier, __SyntaxToken tDollar, IdentifierSyntax symbolProperty)
         {
             if (tDollar.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tDollar));
@@ -886,6 +898,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 typeof(MetaPropertyBlock1Alt2Syntax),
                 typeof(MetaPropertyBlock1Alt3Syntax),
                 typeof(MetaPropertyBlock1Alt4Syntax),
+                typeof(MetaPropertyBlock1Alt5Syntax),
                 typeof(MetaPropertyBlock2Alt1Syntax),
                 typeof(MetaPropertyBlock2Alt2Syntax),
                 typeof(MetaPropertyBlock3Syntax),

@@ -32,10 +32,114 @@ namespace MetaDslx.Examples.Soal.Model
         {
         }
     
+        public virtual void BuiltInType(BuiltInType _this)
+        {
+        }
+    
+        public virtual void Declaration(Declaration _this)
+        {
+        }
+    
+        public virtual void Documentation(Documentation _this)
+        {
+        }
+    
+        public virtual void DocumentationTag(DocumentationTag _this)
+        {
+        }
+    
+        public virtual void Element(Element _this)
+        {
+        }
+    
+        public virtual void EnumLiteral(EnumLiteral _this)
+        {
+        }
+    
+        public virtual void EnumType(EnumType _this)
+        {
+        }
+    
         public virtual void Interface(Interface _this)
         {
         }
     
+        public virtual void NamedElement(NamedElement _this)
+        {
+        }
+    
+        public virtual void NamedType(NamedType _this)
+        {
+        }
+    
+        public virtual void Operation(Operation _this)
+        {
+        }
+    
+        public virtual void Parameter(Parameter _this)
+        {
+        }
+    
+        public virtual void ParameterList(ParameterList _this)
+        {
+        }
+    
+        public virtual void Property(Property _this)
+        {
+        }
+    
+        public virtual void Resource(Resource _this)
+        {
+        }
+    
+        public virtual void Service(Service _this)
+        {
+        }
+    
+        public virtual void StructType(StructType _this)
+        {
+        }
+    
+        public virtual void Type(Type _this)
+        {
+        }
+    
+        public virtual void TypedElement(TypedElement _this)
+        {
+        }
+    
+        public virtual void TypeReference(TypeReference _this)
+        {
+        }
+    
+        public virtual void Variable(Variable _this)
+        {
+        }
+    
+    
+        public abstract string BuiltInType_Name(BuiltInType _this);
+    
+        public abstract string DocumentationTag_Html(DocumentationTag _this);
+    
+        public abstract string NamedElement_UniqueName(NamedElement _this);
+    
+        public abstract MetaDslx.Examples.Soal.Model.Documentation NamedElement_Documentation(NamedElement _this);
+    
+        public abstract string NamedElement_HoverDocumentation(NamedElement _this);
+    
+        public abstract bool Operation_HasRequestParameters(Operation _this);
+    
+        public abstract bool Operation_HasResponseParameters(Operation _this);
+    
+        public abstract bool Operation_HasManyRequestParameters(Operation _this);
+    
+        public abstract bool Operation_HasManyResponseParameters(Operation _this);
+    
+        public abstract bool Operation_HasSingleResponseParameter(Operation _this);
+    
+        public abstract MetaDslx.Examples.Soal.Model.TypeReference Operation_SingleReturnType(Operation _this);
+    
+        public abstract string Resource_Name(Resource _this);
     
     
     }

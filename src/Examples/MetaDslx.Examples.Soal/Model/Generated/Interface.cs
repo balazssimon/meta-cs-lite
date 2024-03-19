@@ -23,10 +23,10 @@ namespace MetaDslx.Examples.Soal.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
-    public interface Interface : __IModelObject
+    public interface Interface : global::MetaDslx.Examples.Soal.Model.Declaration
     {
-        int Age { get; set; }
-        string Name { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Examples.Soal.Model.Operation> Operations { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Examples.Soal.Model.Resource> Resources { get; }
     
     }
 }

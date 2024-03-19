@@ -59,6 +59,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         void VisitMetaPropertyBlock1Alt2(MetaPropertyBlock1Alt2Syntax node);
         void VisitMetaPropertyBlock1Alt3(MetaPropertyBlock1Alt3Syntax node);
         void VisitMetaPropertyBlock1Alt4(MetaPropertyBlock1Alt4Syntax node);
+        void VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node);
         void VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node);
         void VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node);
         void VisitMetaPropertyBlock3(MetaPropertyBlock3Syntax node);
@@ -292,6 +293,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
+        public virtual void VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
         public virtual void VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)
         {
             this.DefaultVisit(node);
@@ -409,6 +415,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitMetaPropertyBlock1Alt2(MetaPropertyBlock1Alt2Syntax node);
         TResult VisitMetaPropertyBlock1Alt3(MetaPropertyBlock1Alt3Syntax node);
         TResult VisitMetaPropertyBlock1Alt4(MetaPropertyBlock1Alt4Syntax node);
+        TResult VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node);
         TResult VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node);
         TResult VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node);
         TResult VisitMetaPropertyBlock3(MetaPropertyBlock3Syntax node);
@@ -642,6 +649,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
+        public virtual TResult VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
         public virtual TResult VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)
         {
             return this.DefaultVisit(node);
@@ -759,6 +771,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         TResult VisitMetaPropertyBlock1Alt2(MetaPropertyBlock1Alt2Syntax node, TArg argument);
         TResult VisitMetaPropertyBlock1Alt3(MetaPropertyBlock1Alt3Syntax node, TArg argument);
         TResult VisitMetaPropertyBlock1Alt4(MetaPropertyBlock1Alt4Syntax node, TArg argument);
+        TResult VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node, TArg argument);
         TResult VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node, TArg argument);
         TResult VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node, TArg argument);
         TResult VisitMetaPropertyBlock3(MetaPropertyBlock3Syntax node, TArg argument);
@@ -988,6 +1001,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
 
         public virtual TResult VisitMetaPropertyBlock1Alt4(MetaPropertyBlock1Alt4Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -1370,6 +1388,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         {
             var isReadOnly = this.VisitToken(node.IsReadOnly);
             return node.Update(isReadOnly);
+        }
+
+        public virtual SyntaxNode VisitMetaPropertyBlock1Alt5(MetaPropertyBlock1Alt5Syntax node)
+        {
+            var isLazy = this.VisitToken(node.IsLazy);
+            return node.Update(isLazy);
         }
 
         public virtual SyntaxNode VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)

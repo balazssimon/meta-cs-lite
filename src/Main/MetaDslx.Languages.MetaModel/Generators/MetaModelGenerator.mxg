@@ -387,7 +387,7 @@ public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.
     [foreach (var prop in metaCls.DeclaredProperties)]
         [var info = metaCls.ModelPropertyInfos[prop]]
         [GetDocumentationComment(prop.UnderlyingProperty)]
-        [if (info.HiddenProperties.Length > 0)]new [end if][prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name] { get; [if (HasSetter(prop))]set; [end if]}
+        [if (info.HiddenProperties.Length > 0)]new [end if][prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name] { get; [if (HasSetter(prop))]set; [end if]}
     [end foreach]
 
     [foreach (var op in cls.Operations)]
@@ -421,13 +421,13 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
     [foreach (var prop in metaCls.AllDeclaredProperties)]
         [var info = metaCls.ModelPropertyInfos[prop]]
         [if (metaCls.PublicProperties.Contains(prop))]
-            public [prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name]
+            public [prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name]
         [else]
             ["["]global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)["]"]
-            [prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
+            [prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
         [end if]
         {
-            [if (prop.UnderlyingProperty.IsDerived)]
+            [if (prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy)]
                 [var actualProp = info.HidingProperties.FirstOrDefault() ?? prop]
                 get => [MetaModel.Name].__CustomImpl.[actualProp.DeclaringType.Name]_[actualProp.Name](this);
             [else if (prop.IsCollection)]
@@ -543,7 +543,7 @@ internal interface ICustom[MetaModel.Name]Implementation
     [end foreach]
 
     [foreach (var cls in Classes)]
-        [foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
+        [foreach (var prop in cls.Properties.Where(p => p.IsDerived || p.IsLazy))]
             [ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
 
         [end foreach]
@@ -577,7 +577,7 @@ internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaM
     [end foreach]
 
     [foreach (var cls in Classes)]
-        [foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
+        [foreach (var prop in cls.Properties.Where(p => p.IsDerived | p.IsLazy))]
             [GetDocumentationComment(prop)]
             public abstract [ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
 

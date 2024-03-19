@@ -970,6 +970,24 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         
             return result;
         }
+        internal MetaPropertyBlock1Alt5Green MetaPropertyBlock1Alt5(__InternalSyntaxToken isLazy)
+        {
+            #if DEBUG
+                if (isLazy is null) throw new __ArgumentNullException(nameof(isLazy));
+                if (isLazy.RawKind != (int)MetaSyntaxKind.KLazy) throw new __ArgumentException(nameof(isLazy));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock1Alt5, isLazy, out hash);
+            if (cached != null) return (MetaPropertyBlock1Alt5Green)cached;
+        
+            var result = new MetaPropertyBlock1Alt5Green(MetaSyntaxKind.MetaPropertyBlock1Alt5, isLazy);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
         internal MetaPropertyBlock2Alt1Green MetaPropertyBlock2Alt1(IdentifierGreen identifier, __InternalSyntaxToken tDollar, IdentifierGreen symbolProperty)
         {
             #if DEBUG

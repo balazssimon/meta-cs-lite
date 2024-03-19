@@ -47,6 +47,7 @@ class MetaProperty : MetaDeclaration
 	bool IsDerived;
 	bool IsReadOnly;
 	bool IsUnion;
+	bool IsLazy;
 	object? DefaultValue;
 	MetaProperty[] OppositeProperties;
 	MetaProperty[] SubsettedProperties;

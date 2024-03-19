@@ -24,16 +24,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="$(AutofacVersion)" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkGitHubVersion)" PrivateAssets="All" />
 	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
 		<PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
 		<PackageReference Include="System.Diagnostics.DiagnosticSource" Version="$(SystemDiagnosticsDiagnosticSourceVersion)" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
+		<PackageReference Include="Antlr4.Runtime.Standard" Version="$(Antlr4RuntimeStandardVersion)" />
+		<PackageReference Include="Autofac" Version="$(AutofacVersion)" />
 	</ItemGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<PackageReference Include="System.Buffers" Version="$(SystemBuffersVersion)" />
 		<PackageReference Include="System.Numerics.Vectors" Version="$(SystemNumericsVectorsVersion)" />

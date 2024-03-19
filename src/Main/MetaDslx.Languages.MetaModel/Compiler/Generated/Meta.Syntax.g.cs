@@ -4075,6 +4075,80 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         }
     
     }
+    public sealed class MetaPropertyBlock1Alt5Syntax : MetaPropertyBlock1Syntax
+    {
+    
+        public MetaPropertyBlock1Alt5Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public MetaPropertyBlock1Alt5Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken IsLazy 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyBlock1Alt5Green)this.Green;
+            var greenToken = green.IsLazy;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                default: return null;
+            }
+        }
+    
+        public MetaPropertyBlock1Alt5Syntax WithIsLazy(__SyntaxToken isLazy)
+        {
+            return this.Update(isLazy);
+        }
+    
+    
+        public MetaPropertyBlock1Alt5Syntax Update(__SyntaxToken isLazy)
+        {
+            if (this.IsLazy != isLazy)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaPropertyBlock1Alt5(isLazy);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MetaPropertyBlock1Alt5Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMetaPropertyBlock1Alt5(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMetaPropertyBlock1Alt5(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMetaPropertyBlock1Alt5(this);
+        }
+    
+    }
     public abstract class MetaPropertyBlock2Syntax : MetaSyntaxNode
     {
         protected MetaPropertyBlock2Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
