@@ -10,7 +10,8 @@ namespace MetaDslx.CodeAnalysis
     {
         internal protected override string FormatSourcePath(string path, string? basePath, IFormatProvider? formatter)
         {
-            return Path.GetFileName(path);
+            return path;
+            //return Path.GetFileName(path);
         }
 
         internal protected override string FormatSourceSpan(LinePositionSpan span, IFormatProvider? formatter)

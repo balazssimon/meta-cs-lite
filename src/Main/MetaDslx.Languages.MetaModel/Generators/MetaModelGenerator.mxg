@@ -49,7 +49,7 @@ namespace [Namespace]
 
     [GenerateCustomInterface()]
     
-    [GenerateCustomImplementation()]
+    [GenerateCustomImplementationBase()]
 }
 
 namespace [Namespace].__Impl
@@ -558,7 +558,7 @@ internal interface ICustom[MetaModel.Name]Implementation
 }
 end template
 
-template GenerateCustomImplementation()
+template GenerateCustomImplementationBase()
 internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaModel.Name]Implementation
 {
     /// <summary>
@@ -591,5 +591,14 @@ internal abstract class Custom[MetaModel.Name]ImplementationBase : ICustom[MetaM
 
         [end foreach]
     [end foreach]
+}
+end template
+
+template GenerateCustomImplementation()
+namespace [Namespace]
+{
+    internal class Custom[MetaModel.Name]Implementation : Custom[MetaModel.Name]ImplementationBase
+    {
+    }
 }
 end template

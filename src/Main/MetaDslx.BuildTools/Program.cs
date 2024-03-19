@@ -39,7 +39,7 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaModel"
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Uml",
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Emf",
@@ -497,7 +497,8 @@ namespace MetaDslx.BuildTools
 
         private static async Task GenerateMetaModelFiles(MetaModelGenerator generator, string originalFilePath)
         {
-            var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
+            var inputDir = Path.GetDirectoryName(originalFilePath) ?? ".";
+            var outputDir = Path.Combine(inputDir, "Generated");
             Directory.CreateDirectory(outputDir);
             if (EraseOutputDirectory)
             {
@@ -517,8 +518,10 @@ namespace MetaDslx.BuildTools
             await AddGeneratedFile(Path.Combine(outputDir, $"{generator.MetaModel.Name}ModelFactory.cs"), modelFactoryCode);
             var customIntfCode = generator.GenerateSeparateIntf(generator.GenerateCustomInterface());
             await AddGeneratedFile(Path.Combine(outputDir, $"ICustom{generator.MetaModel.Name}Implementation.cs"), customIntfCode);
-            var customImplCode = generator.GenerateSeparateIntf(generator.GenerateCustomImplementation());
-            await AddGeneratedFile(Path.Combine(outputDir, $"Custom{generator.MetaModel.Name}ImplementationBase.cs"), customImplCode);
+            var customImplBaseCode = generator.GenerateSeparateIntf(generator.GenerateCustomImplementationBase());
+            await AddGeneratedFile(Path.Combine(outputDir, $"Custom{generator.MetaModel.Name}ImplementationBase.cs"), customImplBaseCode);
+            var customImplCode = generator.GenerateCustomImplementation();
+            await AddGeneratedFile(Path.Combine(inputDir, $"Custom{generator.MetaModel.Name}Implementation.cs"), customImplCode, overwrite: false);
             foreach (var enm in generator.Enums)
             {
                 var enumCode = generator.GenerateSeparateIntf(generator.GenerateEnum(enm));

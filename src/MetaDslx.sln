@@ -54,6 +54,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Examples.Mof", "Ex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.MetaModel", "Bootstrap\MetaDslx.Bootstrap.MetaModel\MetaDslx.Bootstrap.MetaModel.csproj", "{FA05D690-1304-4DB0-92A4-EB086A25C780}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Examples.Soal", "Examples\MetaDslx.Examples.Soal\MetaDslx.Examples.Soal.csproj", "{8477F7C6-69F9-41E8-B416-728D1724DBE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -254,6 +256,14 @@ Global
 		{FA05D690-1304-4DB0-92A4-EB086A25C780}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA05D690-1304-4DB0-92A4-EB086A25C780}.Release|x86.ActiveCfg = Release|Any CPU
 		{FA05D690-1304-4DB0-92A4-EB086A25C780}.Release|x86.Build.0 = Release|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Debug|x86.Build.0 = Debug|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Release|x86.ActiveCfg = Release|Any CPU
+		{8477F7C6-69F9-41E8-B416-728D1724DBE0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
