@@ -71,11 +71,11 @@ class DocumentationTag
     lazy string Html;
 }
 
-abstract class Element
+abstract class Element $Symbol
 {
 }
 
-abstract class NamedElement $Symbol : Element
+abstract class NamedElement : Element
 {
     string $Name;
     lazy string UniqueName;
@@ -89,10 +89,10 @@ abstract class $Type
 
 abstract class TypedElement : Element
 {
-    TypeReference Type;
+    contains TypeReference Type;
 }
 
-abstract class Declaration : NamedElement
+abstract class $Declaration : NamedElement
 {
 }
 
@@ -181,7 +181,7 @@ class Operation : Declaration
     derived TypeReference SingleReturnType;
 }
 
-class ParameterList
+class ParameterList : Element
 {
     contains Parameter[] Parameters;
 }

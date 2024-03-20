@@ -604,17 +604,17 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
         
             return result;
         }
-        internal TypeReferenceGreen TypeReference(SimpleTypeGreen simpleType, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray)
+        internal TypeReferenceGreen TypeReference(SimpleTypeGreen type, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray)
         {
             #if DEBUG
-                if (simpleType is null) throw new __ArgumentNullException(nameof(simpleType));
+                if (type is null) throw new __ArgumentNullException(nameof(type));
                 if (isNullable is not null && (isNullable.RawKind != (int)SoalSyntaxKind.TQuestion)) throw new __ArgumentException(nameof(isNullable));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(SoalSyntaxKind)SoalSyntaxKind.TypeReference, simpleType, isNullable, isArray, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(SoalSyntaxKind)SoalSyntaxKind.TypeReference, type, isNullable, isArray, out hash);
             if (cached != null) return (TypeReferenceGreen)cached;
         
-            var result = new TypeReferenceGreen(SoalSyntaxKind.TypeReference, simpleType, isNullable, isArray);
+            var result = new TypeReferenceGreen(SoalSyntaxKind.TypeReference, type, isNullable, isArray);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

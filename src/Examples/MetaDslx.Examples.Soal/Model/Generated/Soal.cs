@@ -131,7 +131,7 @@ namespace MetaDslx.Examples.Soal.Model
             _Service_Interface = new __ModelProperty(typeof(Service), "Interface", typeof(MetaDslx.Examples.Soal.Model.Interface), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _StructType_BaseType = new __ModelProperty(typeof(StructType), "BaseType", typeof(MetaDslx.Examples.Soal.Model.StructType), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _StructType_Fields = new __ModelProperty(typeof(StructType), "Fields", typeof(Property), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _TypedElement_Type = new __ModelProperty(typeof(TypedElement), "Type", typeof(MetaDslx.Examples.Soal.Model.TypeReference), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
+            _TypedElement_Type = new __ModelProperty(typeof(TypedElement), "Type", typeof(MetaDslx.Examples.Soal.Model.TypeReference), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
             _TypeReference_IsArray = new __ModelProperty(typeof(TypeReference), "IsArray", typeof(bool), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _TypeReference_IsNullable = new __ModelProperty(typeof(TypeReference), "IsNullable", typeof(bool), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _TypeReference_Type = new __ModelProperty(typeof(TypeReference), "Type", typeof(MetaDslx.Examples.Soal.Model.Type), default, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
@@ -412,6 +412,7 @@ namespace MetaDslx.Examples.Soal.Model
             obj6.Type = typeof(string);
             obj7.BaseTypes.Add(obj32);
             obj7.IsAbstract = true;
+            obj7.SymbolType = typeof(MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             obj7.Name = "Declaration";
             obj8.MChildren.Add(obj9);
             obj8.Properties.Add(obj9);
@@ -450,6 +451,7 @@ namespace MetaDslx.Examples.Soal.Model
             obj18.Type = typeof(string);
             obj19.Type = typeof(string);
             obj20.IsAbstract = true;
+            obj20.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
             obj20.Name = "Element";
             obj21.MChildren.Add(obj22);
             obj21.BaseTypes.Add(obj32);
@@ -499,10 +501,9 @@ namespace MetaDslx.Examples.Soal.Model
             obj32.Properties.Add(obj34);
             obj32.Properties.Add(obj35);
             obj32.Properties.Add(obj36);
-            obj32.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
             obj32.Name = "NamedElement";
             obj33.MChildren.Add(obj37);
-            obj33.SymbolProperty = __MetaSymbol.FromValue("Name");
+            obj33.SymbolProperty = __MetaSymbol.FromValue(obj33);
             obj33.Type = obj37;
             obj33.Name = "Name";
             obj34.MChildren.Add(obj38);
@@ -612,6 +613,7 @@ namespace MetaDslx.Examples.Soal.Model
             obj67.BaseTypes.Add(obj102);
             obj67.Name = "Parameter";
             obj68.MChildren.Add(obj69);
+            obj68.BaseTypes.Add(obj20);
             obj68.Properties.Add(obj69);
             obj68.Name = "ParameterList";
             obj69.MChildren.Add(obj70);
@@ -689,6 +691,7 @@ namespace MetaDslx.Examples.Soal.Model
             obj92.Properties.Add(obj93);
             obj92.Name = "TypedElement";
             obj93.MChildren.Add(obj94);
+            obj93.IsContainment = true;
             obj93.Type = obj94;
             obj93.Name = "Type";
             obj94.Type = __MetaType.FromModelObject(obj95);

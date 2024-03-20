@@ -175,7 +175,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             var mobj = info.Create(container.Model);
             if (mobj is not null)
             {
-                mobj.MName = declaration.Name;
+                if (declaration.Name is not null) mobj.MName = declaration.Name;
                 if (container.ModelObject is not null)
                 {
                     container.ModelObject.MChildren.Add(mobj);

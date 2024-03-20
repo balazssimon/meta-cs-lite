@@ -403,13 +403,13 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax
             public override GreenNode? VisitPr_TypeReference(SoalParser.Pr_TypeReferenceContext? context)
             {
                 if (context == null) return TypeReferenceGreen.__Missing;
-                SimpleTypeGreen? simpleType = null;
-                if (context.E_SimpleType is not null) simpleType = (SimpleTypeGreen?)this.Visit(context.E_SimpleType) ?? SimpleTypeGreen.__Missing;
-                else simpleType = SimpleTypeGreen.__Missing;
+                SimpleTypeGreen? type = null;
+                if (context.E_type is not null) type = (SimpleTypeGreen?)this.Visit(context.E_type) ?? SimpleTypeGreen.__Missing;
+                else type = SimpleTypeGreen.__Missing;
                 var isNullable = (InternalSyntaxToken?)this.VisitTerminal(context.E_isNullable);
                 TypeReferenceBlock1Green? isArray = null;
                 if (context.E_isArray is not null) isArray = (TypeReferenceBlock1Green?)this.Visit(context.E_isArray);
-                return _factory.TypeReference(simpleType, isNullable, isArray);
+                return _factory.TypeReference(type, isNullable, isArray);
             }
             
             public override GreenNode? VisitPr_SimpleTypeAlt1(SoalParser.Pr_SimpleTypeAlt1Context? context)

@@ -1160,10 +1160,10 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax
 
         public virtual SyntaxNode VisitTypeReference(TypeReferenceSyntax node)
         {
-            var simpleType = (SimpleTypeSyntax)this.Visit(node.SimpleType);
+            var type = (SimpleTypeSyntax)this.Visit(node.Type);
             var isNullable = this.VisitToken(node.IsNullable);
             var isArray = (TypeReferenceBlock1Syntax)this.Visit(node.IsArray);
-            return node.Update(simpleType, isNullable, isArray);
+            return node.Update(type, isNullable, isArray);
         }
 
         public virtual SyntaxNode VisitSimpleTypeAlt1(SimpleTypeAlt1Syntax node)

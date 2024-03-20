@@ -23,7 +23,7 @@ namespace MetaDslx.Examples.Soal.Model
     using __Type = global::System.Type;
     using __Enum = global::System.Enum;
 
-    public interface ParameterList : __IModelObject
+    public interface ParameterList : global::MetaDslx.Examples.Soal.Model.Element
     {
         global::MetaDslx.Modeling.ICollectionSlot<MetaDslx.Examples.Soal.Model.Parameter> Parameters { get; }
     

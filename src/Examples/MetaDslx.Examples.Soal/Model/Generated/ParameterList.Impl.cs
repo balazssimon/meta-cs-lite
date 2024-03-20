@@ -26,6 +26,7 @@ namespace MetaDslx.Examples.Soal.Model.__Impl
         private ParameterList_Impl(string? id)
             : base(id)
         {
+            Soal.__CustomImpl.Element(this);
             Soal.__CustomImpl.ParameterList(this);
         }
     
@@ -56,8 +57,8 @@ namespace MetaDslx.Examples.Soal.Model.__Impl
     
             private __Info() 
             {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Soal.ElementInfo);
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Soal.ElementInfo);
                 _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Soal.ParameterList_Parameters);
                 _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Soal.ParameterList_Parameters);
                 _publicProperties = __ImmutableArray.Create<__ModelProperty>(Soal.ParameterList_Parameters);
@@ -78,7 +79,7 @@ namespace MetaDslx.Examples.Soal.Model.__Impl
             public override __MetaModel MetaModel => Soal.MInstance;
             public override __MetaType MetaType => typeof(ParameterList);
     
-            public override __MetaType SymbolType => default;
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;

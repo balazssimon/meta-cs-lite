@@ -1296,7 +1296,7 @@ public partial class SoalParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 	}
 
 	public partial class Pr_TypeReferenceContext : ParserRuleContext {
-		public Pr_SimpleTypeContext E_SimpleType;
+		public Pr_SimpleTypeContext E_type;
 		public IToken E_isNullable;
 		public Pr_TypeReferenceBlock1Context E_isArray;
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_SimpleTypeContext pr_SimpleType() {
@@ -1328,7 +1328,7 @@ public partial class SoalParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 194;
-			_localctx.E_SimpleType = pr_SimpleType();
+			_localctx.E_type = pr_SimpleType();
 			State = 196;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);

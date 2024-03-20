@@ -571,41 +571,50 @@ namespace MetaDslx.Examples.Soal.Compiler.Binding
 
         public virtual void VisitTypeReference(TypeReferenceSyntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Examples.Soal.Model.TypeReference));
-            this.Begin(__annot2, node);
+            var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Examples.Soal.Model.TypeReference));
+            this.Begin(__annot3, node);
             try
             {
-                this.Visit(node.SimpleType);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Type");
+                this.Begin(__annot0, node.Type);
+                try
+                {
+                    this.Visit(node.Type);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
                 if (node.IsNullable.GetSoalKind() != SoalSyntaxKind.None)
                 {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsNullable", values: ImmutableArray.Create<object?>(true));
-                    this.Begin(__annot0, node.IsNullable);
+                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsNullable", values: ImmutableArray.Create<object?>(true));
+                    this.Begin(__annot1, node.IsNullable);
                     try
                     {
                         //this.VisitToken(node.IsNullable);
                     }
                     finally
                     {
-                        this.End(__annot0);
+                        this.End(__annot1);
                     }
                 }
                 if (node.IsArray != null)
                 {
-                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsArray", values: ImmutableArray.Create<object?>(true));
-                    this.Begin(__annot1, node.IsArray);
+                    var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsArray", values: ImmutableArray.Create<object?>(true));
+                    this.Begin(__annot2, node.IsArray);
                     try
                     {
                         this.Visit(node.IsArray);
                     }
                     finally
                     {
-                        this.End(__annot1);
+                        this.End(__annot2);
                     }
                 }
             }
             finally
             {
-                this.End(__annot2);
+                this.End(__annot3);
             }
         }
 

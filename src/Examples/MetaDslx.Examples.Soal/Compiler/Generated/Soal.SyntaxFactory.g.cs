@@ -502,16 +502,16 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax
             return (BindingKindSyntax)SoalLanguage.Instance.InternalSyntaxFactory.BindingKind((__InternalSyntaxToken)token.Node).CreateRed();
         }
 
-        public TypeReferenceSyntax TypeReference(SimpleTypeSyntax simpleType, __SyntaxToken isNullable, TypeReferenceBlock1Syntax isArray)
+        public TypeReferenceSyntax TypeReference(SimpleTypeSyntax type, __SyntaxToken isNullable, TypeReferenceBlock1Syntax isArray)
         {
-            if (simpleType is null) throw new __ArgumentNullException(nameof(simpleType));
+            if (type is null) throw new __ArgumentNullException(nameof(type));
             if (isNullable.RawKind != (int)__InternalSyntaxKind.None && (isNullable.RawKind != (int)SoalSyntaxKind.TQuestion)) throw new __ArgumentException(nameof(isNullable));
-            return (TypeReferenceSyntax)SoalLanguage.Instance.InternalSyntaxFactory.TypeReference((InternalSyntax.SimpleTypeGreen)simpleType.Green, (__InternalSyntaxToken)isNullable.Node, (InternalSyntax.TypeReferenceBlock1Green)isArray.Green).CreateRed();
+            return (TypeReferenceSyntax)SoalLanguage.Instance.InternalSyntaxFactory.TypeReference((InternalSyntax.SimpleTypeGreen)type.Green, (__InternalSyntaxToken)isNullable.Node, (InternalSyntax.TypeReferenceBlock1Green)isArray.Green).CreateRed();
         }
         
-        public TypeReferenceSyntax TypeReference(SimpleTypeSyntax simpleType)
+        public TypeReferenceSyntax TypeReference(SimpleTypeSyntax type)
         {
-            return this.TypeReference(simpleType, default, default);
+            return this.TypeReference(type, default, default);
         }
 
         public SimpleTypeAlt1Syntax SimpleTypeAlt1(__SyntaxToken kObject)

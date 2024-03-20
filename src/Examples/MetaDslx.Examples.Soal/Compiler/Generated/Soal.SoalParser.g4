@@ -59,7 +59,7 @@ pr_BindingKind
     :  E_Token=(LR_KREST | LR_KSOAP)
     ;
 pr_TypeReference
-    :  E_SimpleType=pr_SimpleType  E_isNullable=LR_TQuestion?  E_isArray=pr_TypeReferenceBlock1?
+    :  E_type=pr_SimpleType  E_isNullable=LR_TQuestion?  E_isArray=pr_TypeReferenceBlock1?
     ;
 pr_SimpleType
     :  E_KObject=LR_KObject #pr_SimpleTypeAlt1

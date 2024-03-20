@@ -26,3 +26,8 @@ foreach (var mobj in model.Objects)
 {
     Console.WriteLine($"{mobj.MName}: {mobj.MInfo.MetaType}");
 }
+
+var xmi = new XmiSerializer();
+var opts = new XmiWriteOptions();
+opts.ModelToUriMap.Add(Soal.MInstance.MModel, @"soal.xmi");
+xmi.WriteModelToFile(@"..\..\..\HelloWorld.xmi", model, opts);

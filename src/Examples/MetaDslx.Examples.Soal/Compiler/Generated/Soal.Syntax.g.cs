@@ -2465,7 +2465,7 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax
     }
     public sealed class TypeReferenceSyntax : SoalSyntaxNode
     {
-        private SimpleTypeSyntax _simpleType;
+        private SimpleTypeSyntax _type;
         private TypeReferenceBlock1Syntax _isArray;
     
         public TypeReferenceSyntax(__InternalSyntaxNode green, SoalSyntaxTree syntaxTree, int position)
@@ -2478,11 +2478,11 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax
         {
         }
     
-        public SimpleTypeSyntax SimpleType 
+        public SimpleTypeSyntax Type 
         { 
             get
             {
-            var red = this.GetRed(ref this._simpleType, 0);
+            var red = this.GetRed(ref this._type, 0);
             return red;
             } 
         }
@@ -2508,7 +2508,7 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this.GetRed(ref this._simpleType, 0);
+                case 0: return this.GetRed(ref this._type, 0);
                 case 2: return this.GetRed(ref this._isArray, 2);
                 default: return null;
             }
@@ -2518,33 +2518,33 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax
         {
             switch (index)
             {
-                case 0: return this._simpleType;
+                case 0: return this._type;
                 case 2: return this._isArray;
                 default: return null;
             }
         }
     
-        public TypeReferenceSyntax WithSimpleType(SimpleTypeSyntax simpleType)
+        public TypeReferenceSyntax WithType(SimpleTypeSyntax type)
         {
-            return this.Update(simpleType, this.IsNullable, this.IsArray);
+            return this.Update(type, this.IsNullable, this.IsArray);
         }
     
         public TypeReferenceSyntax WithIsNullable(__SyntaxToken isNullable)
         {
-            return this.Update(this.SimpleType, isNullable, this.IsArray);
+            return this.Update(this.Type, isNullable, this.IsArray);
         }
     
         public TypeReferenceSyntax WithIsArray(TypeReferenceBlock1Syntax isArray)
         {
-            return this.Update(this.SimpleType, this.IsNullable, isArray);
+            return this.Update(this.Type, this.IsNullable, isArray);
         }
     
     
-        public TypeReferenceSyntax Update(SimpleTypeSyntax simpleType, __SyntaxToken isNullable, TypeReferenceBlock1Syntax isArray)
+        public TypeReferenceSyntax Update(SimpleTypeSyntax type, __SyntaxToken isNullable, TypeReferenceBlock1Syntax isArray)
         {
-            if (this.SimpleType != simpleType || this.IsNullable != isNullable || this.IsArray != isArray)
+            if (this.Type != type || this.IsNullable != isNullable || this.IsArray != isArray)
             {
-                var newNode = SoalLanguage.Instance.SyntaxFactory.TypeReference(simpleType, isNullable, isArray);
+                var newNode = SoalLanguage.Instance.SyntaxFactory.TypeReference(type, isNullable, isArray);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);

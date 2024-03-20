@@ -42,7 +42,7 @@ SingleReturnParameter returns Parameter: @type=TypeReference;
 Service: 'service' Name ':' interface=#Interface '{' 'binding' binding=BindingKind ';' '}';
 BindingKind: 'REST' => Rest | 'SOAP' => Soap;
 
-TypeReference: SimpleType isNullable?='?'? isArray?=('[' ']')?;
+TypeReference: @type=SimpleType isNullable?='?'? isArray?=('[' ']')?;
 
 SimpleType returns Type
     : 'object' => Soal.ObjectType

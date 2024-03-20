@@ -119,7 +119,7 @@ namespace MetaDslx.Examples.Soal.Model.__Impl
             public override __MetaModel MetaModel => Soal.MInstance;
             public override __MetaType MetaType => typeof(Service);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             public override __ModelProperty? NameProperty => Soal.NamedElement_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;

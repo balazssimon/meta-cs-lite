@@ -3418,18 +3418,18 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
     internal class TypeReferenceGreen : GreenSyntaxNode
     {
         internal static new readonly TypeReferenceGreen __Missing = new TypeReferenceGreen();
-        private SimpleTypeGreen _simpleType;
+        private SimpleTypeGreen _type;
         private __InternalSyntaxToken _isNullable;
         private TypeReferenceBlock1Green _isArray;
     
-        public TypeReferenceGreen(SoalSyntaxKind kind, SimpleTypeGreen simpleType, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray)
+        public TypeReferenceGreen(SoalSyntaxKind kind, SimpleTypeGreen type, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray)
             : base(kind, null, null)
         {
             SlotCount = 3;
-            if (simpleType != null)
+            if (type != null)
             {
-                AdjustFlagsAndWidth(simpleType);
-                _simpleType = simpleType;
+                AdjustFlagsAndWidth(type);
+                _type = type;
             }
             if (isNullable != null)
             {
@@ -3443,14 +3443,14 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public TypeReferenceGreen(SoalSyntaxKind kind, SimpleTypeGreen simpleType, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public TypeReferenceGreen(SoalSyntaxKind kind, SimpleTypeGreen type, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 3;
-            if (simpleType != null)
+            if (type != null)
             {
-                AdjustFlagsAndWidth(simpleType);
-                _simpleType = simpleType;
+                AdjustFlagsAndWidth(type);
+                _type = type;
             }
             if (isNullable != null)
             {
@@ -3470,7 +3470,7 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public SimpleTypeGreen SimpleType { get { return _simpleType; } }
+        public SimpleTypeGreen Type { get { return _type; } }
         public __InternalSyntaxToken IsNullable { get { return _isNullable; } }
         public TypeReferenceBlock1Green IsArray { get { return _isArray; } }
     
@@ -3483,7 +3483,7 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
         {
             switch (index)
             {
-                case 0: return _simpleType;
+                case 0: return _type;
                 case 1: return _isNullable;
                 case 2: return _isArray;
                 default: return null;
@@ -3496,25 +3496,25 @@ namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new TypeReferenceGreen(this.Kind, _simpleType, _isNullable, _isArray, diagnostics, this.GetAnnotations());
+            return new TypeReferenceGreen(this.Kind, _type, _isNullable, _isArray, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new TypeReferenceGreen(this.Kind, _simpleType, _isNullable, _isArray, this.GetDiagnostics(), annotations);
+            return new TypeReferenceGreen(this.Kind, _type, _isNullable, _isArray, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new TypeReferenceGreen(this.Kind, _simpleType, _isNullable, _isArray, this.GetDiagnostics(), this.GetAnnotations());
+            return new TypeReferenceGreen(this.Kind, _type, _isNullable, _isArray, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public TypeReferenceGreen Update(SimpleTypeGreen simpleType, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray)
+        public TypeReferenceGreen Update(SimpleTypeGreen type, __InternalSyntaxToken isNullable, TypeReferenceBlock1Green isArray)
         {
-            if (_simpleType != simpleType || _isNullable != isNullable || _isArray != isArray)
+            if (_type != type || _isNullable != isNullable || _isArray != isArray)
             {
-                __InternalSyntaxNode newNode = SoalLanguage.Instance.InternalSyntaxFactory.TypeReference(simpleType, isNullable, isArray);
+                __InternalSyntaxNode newNode = SoalLanguage.Instance.InternalSyntaxFactory.TypeReference(type, isNullable, isArray);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);

@@ -1,8 +1,15 @@
 namespace HelloWorld;
 
+struct Abc
+{
+	datetime Aaa;
+}
+
 interface IHello
 {
 	string SayHello(string name);
+	void Foo();
+	async void Bar(Abc abc);
 }
 
 service Hello : IHello
