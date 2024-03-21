@@ -5,8 +5,14 @@ struct Abc
 	datetime Aaa;
 }
 
+/// @summary
+///    Hello
 interface IHello
 {
+	/// @param name - name **of the** person
+	///    aaa
+    /// @returns
+	///    greeting
 	string SayHello(string name);
 	void Foo();
 	async void Bar(Abc abc);

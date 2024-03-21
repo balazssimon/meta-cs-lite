@@ -22,9 +22,19 @@ foreach (var diag in compilation.GetDiagnostics())
     Console.WriteLine(diag);
 }
 var model = compilation.SourceModule.Model;
-foreach (var mobj in model.Objects)
+var allObjs = model.Objects.ToList();
+foreach (var mobj in allObjs)
 {
     Console.WriteLine($"{mobj.MName}: {mobj.MInfo.MetaType}");
+    if (mobj is NamedElement ne)
+    {
+        var doc = ne.Documentation;
+        if (doc is not null)
+        {
+            Console.WriteLine("  " + doc.Tags.Count);
+            Console.WriteLine(ne.HoverDocumentation);
+        }
+    }
 }
 
 var xmi = new XmiSerializer();

@@ -1,3 +1,4 @@
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling;
 
 namespace MetaDslx.Examples.Soal.Model
@@ -52,17 +53,25 @@ namespace MetaDslx.Examples.Soal.Model
 
         public override string DocumentationTag_Html(DocumentationTag _this)
         {
-            throw new NotImplementedException();
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            foreach (var line in _this.Lines)
+            {
+                sb.Append(line);
+            }
+            return CommonMark.CommonMarkConverter.Convert(builder.ToStringAndFree());
         }
 
         public override Documentation NamedElement_Documentation(NamedElement _this)
         {
-            throw new NotImplementedException();
+            return DocumentationReader.GetDocumentation(_this);
         }
 
         public override string NamedElement_HoverDocumentation(NamedElement _this)
         {
-            throw new NotImplementedException();
+            var doc = _this.Documentation;
+            var summary = doc.Tags.Where(t => t.Kind == DocumentationTagKind.Summary).FirstOrDefault();
+            return summary?.Html;
         }
 
         public override string NamedElement_UniqueName(NamedElement _this)
