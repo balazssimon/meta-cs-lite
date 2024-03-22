@@ -8,6 +8,8 @@ using MetaDslx.Languages.MetaSymbols.Model
 generator SymbolGenerator
 
 template GenerateSymbol(Symbol symbol)
+#pragma warning disable CS8669
+
 namespace [symbol.Namespace]
 {
     using __Type = global::System.Type;

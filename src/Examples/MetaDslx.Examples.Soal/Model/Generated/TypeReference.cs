@@ -1,5 +1,3 @@
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Model
 {
     using __MetaMetaModel = global::MetaDslx.Languages.MetaModel.Model.Meta;

@@ -16,7 +16,7 @@ template GenerateAntlrSyntaxLexer()
     using MetaDslx.CodeAnalysis.Text;
     using MetaDslx.CodeAnalysis.Parsers.Antlr;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {
@@ -49,7 +49,7 @@ template GenerateAntlrSyntaxParser()
     using MetaDslx.CodeAnalysis.Parsers.Antlr;
     using [Namespace].Syntax.InternalSyntax;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {
@@ -314,7 +314,7 @@ template GenerateAntlrInternalSyntaxFactory()
     using MetaDslx.CodeAnalysis.Parsers.Antlr;
     using Antlr4.Runtime;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax.InternalSyntax
     {

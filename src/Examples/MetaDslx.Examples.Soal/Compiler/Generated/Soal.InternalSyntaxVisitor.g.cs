@@ -1,5 +1,3 @@
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
 {
     internal class SoalInternalSyntaxVisitor : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor

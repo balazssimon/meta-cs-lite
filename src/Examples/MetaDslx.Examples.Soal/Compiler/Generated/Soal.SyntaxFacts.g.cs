@@ -1,6 +1,4 @@
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     using System.Linq;

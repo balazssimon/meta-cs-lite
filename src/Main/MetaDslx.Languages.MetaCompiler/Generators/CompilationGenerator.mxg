@@ -14,7 +14,7 @@ template GenerateCompilationFactory()
     using MetaDslx.CodeAnalysis.Declarations;
     using MetaDslx.CodeAnalysis.Binding;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace]
     {
@@ -32,7 +32,7 @@ template GenerateCompilation()
     using MetaDslx.CodeAnalysis.Declarations;
     using MetaDslx.CodeAnalysis.Binding;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace]
     {

@@ -8,7 +8,8 @@ using System.Linq
 generator RoslynApiGenerator
 
 template GenerateInternalSyntax()
-    #nullable enable
+    #pragma warning disable CS8669
+    #pragma warning disable CS0109
 
     namespace [Namespace].Syntax.InternalSyntax
     {
@@ -1167,7 +1168,7 @@ template GenerateInternalSyntaxRuleAlt(Rule rule, Alternative alt)
 end template
 
 template GenerateInternalSyntaxVisitor()
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax.InternalSyntax
     {
@@ -1194,7 +1195,7 @@ template GenerateInternalSyntaxVisitor()
 end template
 
 template GenerateInternalSyntaxFactory()
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax.InternalSyntax
     {

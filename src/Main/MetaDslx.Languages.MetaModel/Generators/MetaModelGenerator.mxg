@@ -8,7 +8,7 @@ using MetaDslx.Languages.MetaModel.Model;
 generator MetaModelGenerator;
 
 template Generate()
-#nullable enable
+#pragma warning disable CS8669
 
 namespace [Namespace]
 {
@@ -86,7 +86,7 @@ namespace [Namespace].__Impl
 end template
 
 template GenerateSeparateIntf(string body)
-#nullable enable
+#pragma warning disable CS8669
 
 namespace [Namespace]
 {
@@ -116,7 +116,7 @@ namespace [Namespace]
 end template
 
 template GenerateSeparateImpl(string body)
-#nullable enable
+#pragma warning disable CS8669
 
 namespace [Namespace].__Impl
 {

@@ -12,7 +12,7 @@ template GenerateSyntaxKind()
     [var fixedTokens = Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
     [var nonFixedTokens = Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {
@@ -75,7 +75,7 @@ template GenerateSyntaxFacts()
     [var fixedTokens = Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
     [var keywordTokens = fixedTokens.Where(lr => lr.FixedText.IsIdentifier()).ToImmutableArray()]
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {
@@ -448,7 +448,7 @@ template GenerateSyntaxFacts()
 end template
 
 template GenerateSyntax()
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {
@@ -774,7 +774,7 @@ template GenerateSyntaxTree()
     using [Namespace].Syntax;
     using [Namespace].Syntax.InternalSyntax;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace]
     {
@@ -1241,7 +1241,7 @@ template GenerateSyntaxVisitor()
     using MetaDslx.CodeAnalysis.Syntax;
     using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {
@@ -1365,7 +1365,7 @@ end template
 
 template GenerateSyntaxFactory()
     [var nonFixedTokens = Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {
@@ -1590,7 +1590,7 @@ template GenerateParseOptions()
     using MetaDslx.CodeAnalysis.PooledObjects;
     using Roslyn.Utilities;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Syntax
     {

@@ -1,8 +1,6 @@
 using MetaDslx.CodeAnalysis;
 using Roslyn.Utilities;
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler
 {
     /// <summary>

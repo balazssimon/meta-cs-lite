@@ -3,8 +3,6 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler
 {
     using global::MetaDslx.Examples.Soal.Compiler.Syntax;

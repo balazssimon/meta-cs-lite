@@ -1,3 +1,4 @@
+#pragma warning disable CS8669
 #line (1,10)-(1,53) 10 "CompilationGenerator.mxg"
 namespace MetaDslx.Languages.MetaCompiler.Generators
 #line hidden
@@ -92,14 +93,26 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (17,5)-(17,14) 25 "CompilationGenerator.mxg"
-            __cb.Write("#nullable");
+            #line (17,5)-(17,12) 25 "CompilationGenerator.mxg"
+            __cb.Write("#pragma");
             #line hidden
-            #line (17,14)-(17,15) 25 "CompilationGenerator.mxg"
+            #line (17,12)-(17,13) 25 "CompilationGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (17,15)-(17,21) 25 "CompilationGenerator.mxg"
-            __cb.Write("enable");
+            #line (17,13)-(17,20) 25 "CompilationGenerator.mxg"
+            __cb.Write("warning");
+            #line hidden
+            #line (17,20)-(17,21) 25 "CompilationGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (17,21)-(17,28) 25 "CompilationGenerator.mxg"
+            __cb.Write("disable");
+            #line hidden
+            #line (17,28)-(17,29) 25 "CompilationGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (17,29)-(17,35) 25 "CompilationGenerator.mxg"
+            __cb.Write("CS8669");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();
@@ -235,14 +248,26 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (35,5)-(35,14) 25 "CompilationGenerator.mxg"
-            __cb.Write("#nullable");
+            #line (35,5)-(35,12) 25 "CompilationGenerator.mxg"
+            __cb.Write("#pragma");
             #line hidden
-            #line (35,14)-(35,15) 25 "CompilationGenerator.mxg"
+            #line (35,12)-(35,13) 25 "CompilationGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (35,15)-(35,21) 25 "CompilationGenerator.mxg"
-            __cb.Write("enable");
+            #line (35,13)-(35,20) 25 "CompilationGenerator.mxg"
+            __cb.Write("warning");
+            #line hidden
+            #line (35,20)-(35,21) 25 "CompilationGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (35,21)-(35,28) 25 "CompilationGenerator.mxg"
+            __cb.Write("disable");
+            #line hidden
+            #line (35,28)-(35,29) 25 "CompilationGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (35,29)-(35,35) 25 "CompilationGenerator.mxg"
+            __cb.Write("CS8669");
             #line hidden
             __cb.AppendLine();
             __cb.Pop();

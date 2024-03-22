@@ -1,5 +1,3 @@
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Model.__Impl
 {
     using __Model = global::MetaDslx.Modeling.Model;

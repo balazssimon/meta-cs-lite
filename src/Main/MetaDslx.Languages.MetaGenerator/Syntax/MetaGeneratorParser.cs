@@ -115,6 +115,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 }
                 EndInputSpan();
                 SkipWs(skipSemicolon: true);
+                _osb.WriteLine("#pragma warning disable CS8669");
                 StartOutputSpan(_osb.Prefix.Length + 9);
                 _osb.Write("namespace");
                 _osb.Write(_isb.ToString());

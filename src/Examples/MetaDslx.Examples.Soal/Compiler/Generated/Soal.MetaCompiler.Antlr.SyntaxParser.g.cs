@@ -13,7 +13,7 @@ using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {

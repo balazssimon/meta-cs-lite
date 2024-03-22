@@ -4,8 +4,6 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     public partial class SoalSyntaxLexer : AntlrSyntaxLexer

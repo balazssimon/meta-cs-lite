@@ -2,8 +2,6 @@ using System;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis;
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Binding
 {
     using global::MetaDslx.Examples.Soal.Compiler.Syntax;

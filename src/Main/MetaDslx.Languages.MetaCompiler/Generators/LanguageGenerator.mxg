@@ -13,7 +13,7 @@ template GenerateLanguage()
     using MetaDslx.CodeAnalysis.Syntax;
     using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace]
     {
@@ -52,7 +52,7 @@ template GenerateLanguageVersion()
     using MetaDslx.CodeAnalysis;
     using Roslyn.Utilities;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace]
     {

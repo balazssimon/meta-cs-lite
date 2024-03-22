@@ -1,5 +1,3 @@
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
 {
     using __Debug = System.Diagnostics.Debug;

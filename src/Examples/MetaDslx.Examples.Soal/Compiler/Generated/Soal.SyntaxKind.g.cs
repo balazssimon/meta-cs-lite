@@ -1,6 +1,4 @@
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;

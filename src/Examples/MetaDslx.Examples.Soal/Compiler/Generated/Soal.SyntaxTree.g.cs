@@ -13,8 +13,6 @@ using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Examples.Soal.Compiler.Syntax;
 using MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax;
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler
 {
     

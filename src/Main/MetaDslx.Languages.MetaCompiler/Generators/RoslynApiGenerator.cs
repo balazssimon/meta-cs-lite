@@ -97,7 +97,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         }
                         else
                         {
-                            code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
+                            code = GetGeneratedCode(Path.Combine(tempDirectory, antlrFile));
                         }
                         if (code is not null)
                         {
@@ -136,7 +136,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         }
                         else
                         {
-                            code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
+                            code = GetGeneratedCode(Path.Combine(tempDirectory, antlrFile));
                         }
                         if (code is not null)
                         {
@@ -172,9 +172,18 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             return result;
         }
 
+        private string GetGeneratedCode(string filePath)
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            builder.Builder.AppendLine("#pragma warning disable CS3021");
+            builder.Builder.AppendLine(File.ReadAllText(filePath));
+            return builder.ToStringAndFree();
+        }
+
         private string GetLexerCode(string filePath)
         {
             var builder = PooledStringBuilder.GetInstance();
+            builder.Builder.AppendLine("#pragma warning disable CS3021");
             using (var reader = new StreamReader(filePath))
             {
                 while (!reader.EndOfStream)
@@ -196,6 +205,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
         private string GetParserCode(string filePath)
         {
             var builder = PooledStringBuilder.GetInstance();
+            builder.Builder.AppendLine("#pragma warning disable CS3021");
             using (var reader = new StreamReader(filePath))
             {
                 while (!reader.EndOfStream)

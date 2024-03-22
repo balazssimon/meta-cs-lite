@@ -1,5 +1,3 @@
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     using __Type = global::System.Type;

@@ -13,7 +13,7 @@ template GenerateBinderFactoryVisitor()
     using System.Collections.Immutable;
     using MetaDslx.CodeAnalysis;
 
-    #nullable enable
+    #pragma warning disable CS8669
 
     namespace [Namespace].Binding
     {

@@ -7,8 +7,6 @@ using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-#nullable enable
-
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     /// <summary>
