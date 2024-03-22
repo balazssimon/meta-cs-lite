@@ -1,6 +1,8 @@
 using MetaDslx.CodeAnalysis;
 using Roslyn.Utilities;
 
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler
 {
     /// <summary>

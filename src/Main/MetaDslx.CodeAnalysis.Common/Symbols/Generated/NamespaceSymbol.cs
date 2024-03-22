@@ -1,3 +1,6 @@
+#pragma warning disable CS8669
+#pragma warning disable CS0108
+
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     using __Type = global::System.Type;

@@ -9,6 +9,7 @@ generator SymbolGenerator
 
 template GenerateSymbol(Symbol symbol)
 #pragma warning disable CS8669
+#pragma warning disable CS0108
 
 namespace [symbol.Namespace]
 {

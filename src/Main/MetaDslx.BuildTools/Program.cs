@@ -34,10 +34,10 @@ namespace MetaDslx.BuildTools
         private const bool EraseOutputDirectory = true;
         private static readonly string[] BootstrapProjects =
         [
-            @"..\..\..\..\MetaDslx.CodeAnalysis.Common",
-            @"..\..\..\..\MetaDslx.Languages.MetaSymbols",
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
-            @"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            //@"..\..\..\..\MetaDslx.CodeAnalysis.Common",
+            //@"..\..\..\..\MetaDslx.Languages.MetaSymbols",
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaModel"
             //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
             //@"..\..\..\..\..\Languages\MetaDslx.Languages.Mof",

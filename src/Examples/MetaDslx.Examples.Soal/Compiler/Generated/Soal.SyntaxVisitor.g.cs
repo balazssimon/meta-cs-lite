@@ -9,6 +9,8 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
 

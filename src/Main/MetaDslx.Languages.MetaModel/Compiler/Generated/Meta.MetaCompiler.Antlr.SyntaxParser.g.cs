@@ -13,7 +13,7 @@ using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 {

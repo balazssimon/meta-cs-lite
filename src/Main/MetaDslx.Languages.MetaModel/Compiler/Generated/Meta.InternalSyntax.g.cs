@@ -1,4 +1,5 @@
-#nullable enable
+#pragma warning disable CS8669
+#pragma warning disable CS0109
 
 namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 {

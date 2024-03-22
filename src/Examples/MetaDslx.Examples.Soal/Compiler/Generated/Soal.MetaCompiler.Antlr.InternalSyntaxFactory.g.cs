@@ -4,6 +4,8 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using Antlr4.Runtime;
 
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax
 {
     public partial class SoalInternalSyntaxFactory : IAntlrSyntaxFactory

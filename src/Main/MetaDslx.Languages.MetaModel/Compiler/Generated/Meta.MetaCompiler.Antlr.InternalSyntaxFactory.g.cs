@@ -4,7 +4,7 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using Antlr4.Runtime;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 {

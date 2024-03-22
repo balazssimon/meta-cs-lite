@@ -1,4 +1,4 @@
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaSymbols.Model
 {
@@ -201,7 +201,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
             obj2.Properties.Add(obj3);
             obj2.Properties.Add(obj4);
             obj2.Properties.Add(obj5);
-            obj2.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
+            obj2.SymbolType = typeof(MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             obj2.Name = "Declaration";
             obj3.MChildren.Add(obj6);
             obj3.SymbolProperty = __MetaSymbol.FromValue("Name");
@@ -329,7 +329,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
             obj42.Properties.Add(obj44);
             obj42.Properties.Add(obj45);
             obj42.Properties.Add(obj46);
-            obj42.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
+            obj42.SymbolType = typeof(MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
             obj42.Name = "Symbol";
             obj43.MChildren.Add(obj47);
             obj43.Type = obj47;
@@ -359,7 +359,7 @@ namespace MetaDslx.Languages.MetaSymbols.Model
             obj51.Properties.Add(obj52);
             obj51.Properties.Add(obj53);
             obj51.Properties.Add(obj54);
-            obj51.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
+            obj51.SymbolType = typeof(MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
             obj51.Name = "TypeReference";
             obj52.MChildren.Add(obj55);
             obj52.Type = obj55;

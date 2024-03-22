@@ -1,5 +1,5 @@
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaSymbols.Compiler.Syntax
 {

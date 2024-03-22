@@ -3,7 +3,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaModel.Compiler
 {

@@ -1,4 +1,4 @@
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaCompiler.Model.__Impl
 {

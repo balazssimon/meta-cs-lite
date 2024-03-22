@@ -1,4 +1,6 @@
 
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;

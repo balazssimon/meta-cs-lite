@@ -7,7 +7,7 @@ using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 {

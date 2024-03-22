@@ -13,6 +13,8 @@ using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Examples.Soal.Compiler.Syntax;
 using MetaDslx.Examples.Soal.Compiler.Syntax.InternalSyntax;
 
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler
 {
     
@@ -106,8 +108,8 @@ namespace MetaDslx.Examples.Soal.Compiler
         /// Internal helper for <see cref="SoalSyntaxNode"/> class to create a new syntax tree rooted at the given root node.
         /// This method does not create a clone of the given root, but instead preserves it's reference identity.
         /// </para>
-        /// <para>NOTE: This method is only intended to be used from <see cref="SoalSyntaxNode.SyntaxTree"/> property.</para>
-        /// <para>NOTE: Do not use this method elsewhere, instead use <see cref="Create(SoalSyntaxNode, CSharpParseOptions, string, Encoding)"/> method for creating a syntax tree.</para>
+        /// <para>NOTE: This method is only intended to be used from <see cref="SyntaxNode.SyntaxTree"/> property.</para>
+        /// <para>NOTE: Do not use this method elsewhere, instead use <see cref="Create(SoalSyntaxNode, IncrementalParseData, SoalParseOptions?, string, SourceText?, Encoding?, SourceHashAlgorithm)"/> method for creating a syntax tree.</para>
         /// </summary>
         internal static SoalSyntaxTree CreateWithoutClone(SoalSyntaxNode root, IncrementalParseData parseData)
         {

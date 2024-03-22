@@ -2,7 +2,7 @@ using System;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaCompiler.Compiler.Binding
 {

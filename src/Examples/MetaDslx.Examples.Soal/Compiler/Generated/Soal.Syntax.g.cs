@@ -1,3 +1,5 @@
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     using __Debug = System.Diagnostics.Debug;

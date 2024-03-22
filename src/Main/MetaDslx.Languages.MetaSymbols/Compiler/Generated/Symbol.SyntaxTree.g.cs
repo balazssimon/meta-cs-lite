@@ -13,7 +13,7 @@ using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Languages.MetaSymbols.Compiler.Syntax;
 using MetaDslx.Languages.MetaSymbols.Compiler.Syntax.InternalSyntax;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaSymbols.Compiler
 {
@@ -108,8 +108,8 @@ namespace MetaDslx.Languages.MetaSymbols.Compiler
         /// Internal helper for <see cref="SymbolSyntaxNode"/> class to create a new syntax tree rooted at the given root node.
         /// This method does not create a clone of the given root, but instead preserves it's reference identity.
         /// </para>
-        /// <para>NOTE: This method is only intended to be used from <see cref="SymbolSyntaxNode.SyntaxTree"/> property.</para>
-        /// <para>NOTE: Do not use this method elsewhere, instead use <see cref="Create(SymbolSyntaxNode, CSharpParseOptions, string, Encoding)"/> method for creating a syntax tree.</para>
+        /// <para>NOTE: This method is only intended to be used from <see cref="SyntaxNode.SyntaxTree"/> property.</para>
+        /// <para>NOTE: Do not use this method elsewhere, instead use <see cref="Create(SymbolSyntaxNode, IncrementalParseData, SymbolParseOptions?, string, SourceText?, Encoding?, SourceHashAlgorithm)"/> method for creating a syntax tree.</para>
         /// </summary>
         internal static SymbolSyntaxTree CreateWithoutClone(SymbolSyntaxNode root, IncrementalParseData parseData)
         {

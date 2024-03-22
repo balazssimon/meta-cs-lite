@@ -2,6 +2,8 @@ using System;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis;
 
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler.Binding
 {
     using global::MetaDslx.Examples.Soal.Compiler.Syntax;

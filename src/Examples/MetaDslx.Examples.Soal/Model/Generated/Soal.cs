@@ -1,3 +1,5 @@
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Model
 {
     using __MetaMetaModel = global::MetaDslx.Languages.MetaModel.Model.Meta;

@@ -1,3 +1,5 @@
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Model.__Impl
 {
     using __Model = global::MetaDslx.Modeling.Model;

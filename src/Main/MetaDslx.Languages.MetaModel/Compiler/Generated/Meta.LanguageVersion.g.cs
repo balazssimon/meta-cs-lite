@@ -1,7 +1,7 @@
 using MetaDslx.CodeAnalysis;
 using Roslyn.Utilities;
 
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaModel.Compiler
 {

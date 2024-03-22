@@ -1,4 +1,4 @@
-#nullable enable
+#pragma warning disable CS8669
 
 namespace MetaDslx.Languages.MetaCompiler.Model
 {
@@ -885,7 +885,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj2.Properties.Add(obj15);
             obj2.Properties.Add(obj16);
             obj2.Properties.Add(obj17);
-            obj2.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol);
+            obj2.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.PAlternativeSymbol);
             obj2.Name = "Alternative";
             obj3.MChildren.Add(obj18);
             obj3.SymbolProperty = __MetaSymbol.FromValue("ReturnType");
@@ -969,7 +969,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj33.MChildren.Add(obj35);
             obj33.Properties.Add(obj34);
             obj33.Properties.Add(obj35);
-            obj33.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationSymbol);
+            obj33.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.AnnotationSymbol);
             obj33.Name = "Annotation";
             obj34.MChildren.Add(obj36);
             obj34.SymbolProperty = __MetaSymbol.FromValue("AttributeClass");
@@ -991,7 +991,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj38.Properties.Add(obj40);
             obj38.Properties.Add(obj41);
             obj38.Properties.Add(obj42);
-            obj38.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol);
+            obj38.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.AnnotationArgumentSymbol);
             obj38.Name = "AnnotationArgument";
             obj39.MChildren.Add(obj43);
             obj39.SymbolProperty = __MetaSymbol.FromValue("NamedParameter");
@@ -1011,7 +1011,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj42.Name = "Value";
             obj43.IsArray = true;
             obj43.Type = typeof(__MetaSymbol);
-            obj44.Type = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
+            obj44.Type = typeof(MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             obj45.Type = typeof(__MetaType);
             obj46.Type = __MetaType.FromModelObject(obj158);
             obj47.MChildren.Add(obj48);
@@ -1086,7 +1086,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj68.Properties.Add(obj69);
             obj68.Properties.Add(obj70);
             obj68.Properties.Add(obj71);
-            obj68.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.PBlockSymbol);
+            obj68.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.PBlockSymbol);
             obj68.Name = "Block";
             obj69.MChildren.Add(obj72);
             obj69.IsDerived = true;
@@ -1145,7 +1145,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj86.Properties.Add(obj87);
             obj86.Properties.Add(obj88);
             obj86.Properties.Add(obj89);
-            obj86.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
+            obj86.SymbolType = typeof(MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             obj86.Name = "Declaration";
             obj87.MChildren.Add(obj90);
             obj87.SymbolProperty = __MetaSymbol.FromValue("Name");
@@ -1213,7 +1213,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj93.Properties.Add(obj115);
             obj93.Properties.Add(obj116);
             obj93.Properties.Add(obj117);
-            obj93.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.PElementSymbol);
+            obj93.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.PElementSymbol);
             obj93.Name = "Element";
             obj94.MChildren.Add(obj118);
             obj94.SymbolProperty = __MetaSymbol.FromValue("Name");
@@ -1400,7 +1400,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj157.Type = typeof(string);
             obj158.MChildren.Add(obj159);
             obj158.Properties.Add(obj159);
-            obj158.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.ExpressionSymbol);
+            obj158.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.ExpressionSymbol);
             obj158.Name = "Expression";
             obj159.MChildren.Add(obj160);
             obj159.SymbolProperty = __MetaSymbol.FromValue("Value");
@@ -1863,7 +1863,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj291.Properties.Add(obj294);
             obj291.Properties.Add(obj295);
             obj291.Properties.Add(obj296);
-            obj291.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.ParserRuleSymbol);
+            obj291.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.ParserRuleSymbol);
             obj291.Name = "Rule";
             obj292.MChildren.Add(obj297);
             obj292.SymbolProperty = __MetaSymbol.FromValue("ReturnType");
@@ -1907,7 +1907,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj302.Properties.Add(obj307);
             obj302.Properties.Add(obj308);
             obj302.Properties.Add(obj309);
-            obj302.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.PReferenceSymbol);
+            obj302.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.PReferenceSymbol);
             obj302.Name = "RuleRef";
             obj303.MChildren.Add(obj310);
             obj303.SymbolProperty = __MetaSymbol.FromValue("Rule");
@@ -2042,7 +2042,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             obj342.Properties.Add(obj343);
             obj342.Properties.Add(obj344);
             obj342.Properties.Add(obj345);
-            obj342.SymbolType = typeof(global::MetaDslx.Languages.MetaCompiler.Symbols.TokenSymbol);
+            obj342.SymbolType = typeof(MetaDslx.Languages.MetaCompiler.Symbols.TokenSymbol);
             obj342.Name = "Token";
             obj343.MChildren.Add(obj346);
             obj343.SymbolProperty = __MetaSymbol.FromValue("ReturnType");

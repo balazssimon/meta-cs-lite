@@ -7,6 +7,8 @@ using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
+#pragma warning disable CS8669
+
 namespace MetaDslx.Examples.Soal.Compiler.Syntax
 {
     /// <summary>
