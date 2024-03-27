@@ -306,8 +306,22 @@ namespace MetaDslx.Modeling.Meta
             var redefinedProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>>();
             var subsettedProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>>();
             var oppositeProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>>();
+            var index = 0;
             foreach (var prop in cls.AllDeclaredProperties)
             {
+                for (int i = index + 1; i < cls.AllDeclaredProperties.Length; ++i)
+                {
+                    var otherProp = cls.AllDeclaredProperties[i];
+                    if (otherProp.Name == prop.Name)
+                    {
+                        if (!redefinedProperties.TryGetValue(prop, out var propRedefined))
+                        {
+                            propRedefined = new HashSet<MetaProperty<TType, TProperty, TOperation>>();
+                            redefinedProperties.Add(prop, propRedefined);
+                        }
+                        propRedefined.Add(otherProp);
+                    }
+                }
                 foreach (var rprop in prop.GetRedefinedProperties())
                 {
                     var redefinedProp = cls.AllDeclaredProperties.Where(p => rprop.DeclaringType.Equals(p.DeclaringType.UnderlyingType) && p.Name == rprop.PropertyName).FirstOrDefault();

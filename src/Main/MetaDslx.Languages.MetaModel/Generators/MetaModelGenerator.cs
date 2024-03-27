@@ -159,6 +159,11 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return slot.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
+        public string ToField(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> property)
+        {
+            return $"_{property.Name.ToCamelCase()}";
+        }
+
         public string ToCSharp(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> property)
         {
             return $"{MetaModel.Name}.{property.DeclaringType.Name}_{property.Name}";

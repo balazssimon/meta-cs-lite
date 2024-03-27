@@ -123,6 +123,7 @@ namespace [Namespace].__Impl
     using __Model = global::MetaDslx.Modeling.Model;
     using __MetaModel = global::MetaDslx.Modeling.MetaModel;
     using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+    using __ISlot = global::MetaDslx.Modeling.ISlot;
     using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
     using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
     using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
@@ -401,13 +402,36 @@ template GenerateClass(MetaClass cls)
 [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
 internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 {
+    [foreach (var slot in metaCls.Slots)]
+        [var prop = slot.SlotProperty]
+        [if (!prop.IsDerived)]
+            [if (prop.IsLazy)]
+                global::MetaDslx.CodeAnalysis.Modeling.ResettableLazy<[ToCSharpOpType(prop.Type)]> [ToField(prop)];
+            [else if (prop.IsCollection)]
+                global::MetaDslx.Modeling.CollectionSlot<[ToCSharp(prop.Type)]> [ToField(prop)];
+            [else]
+                global::MetaDslx.Modeling.SingleSlot<[ToCSharp(prop.Type)]> [ToField(prop)];
+            [end if]
+        [end if]
+    [end foreach]
+
     private [cls.Name]_Impl(string? id)
         : base(id)
     {
         [foreach (var slot in metaCls.Slots)]
-            [var defaultValue = ToDefaultValue(slot.SlotProperty.Type, slot.SlotProperty.DefaultValue)]
-            [if (!string.IsNullOrEmpty(defaultValue) && defaultValue != "default")]
-                ((__IModelObject)this).MGetSlot([ToCSharp(slot.SlotProperty)])?.Add(([ToCSharp(slot.SlotProperty.Type)])[defaultValue]);
+            [var prop = slot.SlotProperty]
+            [if (!prop.IsDerived)]
+                [if (prop.IsLazy)]
+                    [ToField(prop)] = new global::MetaDslx.CodeAnalysis.Modeling.ResettableLazy<[ToCSharpOpType(prop.Type)]>(() => [MetaModel.Name].__CustomImpl.[prop.DeclaringType.Name]_[prop.Name](this), true);
+                [else if (prop.IsCollection)]
+                    [ToField(prop)] = new global::MetaDslx.Modeling.CollectionSlot<[ToCSharp(prop.Type)]>();
+                [else]
+                    [ToField(prop)] = new global::MetaDslx.Modeling.SingleSlot<[ToCSharp(prop.Type)]>();
+                    [var defaultValue = ToDefaultValue(slot.SlotProperty.Type, slot.SlotProperty.DefaultValue)]
+                    [if (!string.IsNullOrEmpty(defaultValue) && defaultValue != "default")]
+                        _[prop.Name.ToCamelCase()].Value = ([ToCSharp(prop.Type)])[defaultValue];
+                    [end if]
+                [end if]
             [end if]
         [end foreach]
         [foreach (var baseType in metaCls.AllBaseTypes.Reverse())]
@@ -418,8 +442,34 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 
     public override __ModelClassInfo MInfo => __Info.Instance;
 
+    protected override __ISlot? MGetSlot(string propertyName)
+    {
+        switch (propertyName)
+        {
+            [foreach (var prop in metaCls.PublicProperties)]
+                [var info = metaCls.ModelPropertyInfos[prop]]
+                [var slot = info.Slot]
+                [var slotProp = slot.SlotProperty]
+                case [prop.Name.EncodeString()]:
+                    return [ToField(slotProp)];
+            [end foreach]
+        }
+    }
+
+    protected override __ISlot? MGetSlot(__ModelProperty property)
+    {
+        [foreach (var prop in metaCls.AllDeclaredProperties)]
+            [var info = metaCls.ModelPropertyInfos[prop]]
+            [var slot = info.Slot]
+            [var slotProp = slot.SlotProperty]
+            if (property == [ToCSharp(prop)]) return [ToField(slotProp)];
+        [end foreach]
+    }
+
     [foreach (var prop in metaCls.AllDeclaredProperties)]
         [var info = metaCls.ModelPropertyInfos[prop]]
+        [var slot = info.Slot]
+        [var slotProp = slot.SlotProperty]
         [if (metaCls.PublicProperties.Contains(prop))]
             public [prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name]
         [else]
@@ -427,15 +477,19 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
             [prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
         [end if]
         {
-            [if (prop.UnderlyingProperty.IsDerived || prop.UnderlyingProperty.IsLazy)]
-                [var actualProp = info.HidingProperties.FirstOrDefault() ?? prop]
-                get => [MetaModel.Name].__CustomImpl.[actualProp.DeclaringType.Name]_[actualProp.Name](this);
-            [else if (prop.IsCollection)]
-                get => MGetCollection<[ToCSharp(prop.Type)]>([ToCSharp(prop)]);
-            [else]
-                get => MGet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)]);
+            [if (prop.UnderlyingProperty.IsDerived)]
+                get => [MetaModel.Name].__CustomImpl.[slotProp.DeclaringType.Name]_[slotProp.Name](this);
+            [else if (prop.UnderlyingProperty.IsLazy)]
+                get => [ToField(prop)].Value;
                 [if (HasSetter(prop))]
-                    set => MSet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)], value);
+                    set => [ToField(prop)].Value = value;
+                [end if]
+            [else if (prop.IsCollection)]
+                get => [ToField(prop)];
+            [else]
+                get => [ToField(prop)];
+                [if (HasSetter(prop))]
+                    set => [ToField(prop)] = value;
                 [end if]
             [end if]
         }
